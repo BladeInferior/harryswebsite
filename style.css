@@ -817,3 +817,37 @@ h1 {
     border: 1px solid #2ecc71;
     color: #2ecc71;
 }
+
+#github-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #2d2d2d;
+    border: 1px solid #555;
+    border-radius: 10px;
+
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+
+    cursor: pointer;
+
+    opacity: 0.8;
+    transition: 0.15s ease;
+
+    z-index: 2000;
+}
+
+#github-icon:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    border-color: #2ecc71;
+}
