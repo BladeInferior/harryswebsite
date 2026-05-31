@@ -155,7 +155,6 @@ function createPokemonCards(pokemonList) {
 
             updateCardHighlights();
             updateProgress();
-            updateBulkButtonText();
         });
 
         boxContainer.appendChild(card);
@@ -183,7 +182,6 @@ function createPokemonCards(pokemonList) {
 
                     updateCardHighlights();
                     updateProgress();
-                    updateBulkButtonText();
 
                     return;
                 }
@@ -496,7 +494,6 @@ document.addEventListener("click", (e) => {
 
     updateProgress();          
     updateCardHighlights();
-    updateBulkButtonText();
 });
 
 
@@ -805,7 +802,6 @@ document.getElementById("page-mode").addEventListener("click", () => {
 
     applyPagination();
     updateModeUI();
-    updateBulkButtonText();
 });
 
 document.getElementById("list-mode").addEventListener("click", () => {
@@ -828,7 +824,6 @@ document.getElementById("next-page").addEventListener("click", () => {
     if (currentPage < maxPage) {
         currentPage++;
         applyPagination();
-        updateBulkButtonText();
     }
 });
 
@@ -837,7 +832,6 @@ document.getElementById("prev-page").addEventListener("click", () => {
     if (currentPage > 1) {
         currentPage--;
         applyPagination();
-        updateBulkButtonText();
     }
 });
 
@@ -871,94 +865,6 @@ function updateModeUI() {
     listBtn.classList.toggle("active-mode", pageMode === false);
 
     pagination.classList.toggle("hidden", pageMode === false);
-    document.getElementById("bulk-apply")
-    .classList.toggle("hidden", !pageMode);
-}
-
-document.getElementById("bulk-apply").addEventListener("click", () => {
-
-    if (!pageMode || !activeDexEdit) return;
-
-    const btn = document.getElementById("bulk-apply");
-
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-
-    const pageList = allPokemon.slice(start, end);
-
-    // -----------------------------
-    // CHECK CURRENT STATE OF PAGE
-    // -----------------------------
-    const allSelected = pageList.every(pokemon => {
-
-        const key = normalizeName(pokemon.name);
-        const data = savedDexData[key] || {};
-
-        return !!data[activeDexEdit];
-    });
-    const makeSelected = !allSelected;
-
-    // -----------------------------
-    // TOGGLE BUTTON STYLE
-    // -----------------------------
-    bulkModeActive = !allSelected;
-
-    btn.classList.toggle("bulk-active", bulkModeActive);
-
-    // -----------------------------
-    // APPLY LOGIC
-    // -----------------------------
-    pageList.forEach(pokemon => {
-
-        const key = normalizeName(pokemon.name);
-        const data = savedDexData[key] || {};
-
-        if (activeDexEdit === "shinyDex") {
-
-            data.shinyDex = makeSelected;
-
-            // clear variants if removing shiny
-            if (!makeSelected) {
-                data.shinyDexData = {
-                    red: false,
-                    blue: false,
-                    yellow: false
-                };
-            }
-
-            savedDexData[key] = data;
-
-        } else {
-
-            data[activeDexEdit] = makeSelected;
-            savedDexData[key] = data;
-        }
-    });
-
-    saveData();
-    updateCardHighlights();
-    updateProgress();
-    updateBulkButtonText();
-});
-
-function updateBulkButtonText() {
-
-    const btn = document.getElementById("bulk-apply");
-
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-
-    const pageList = allPokemon.slice(start, end);
-
-    const allSelected = pageList.every(pokemon => {
-
-        const key = normalizeName(pokemon.name);
-        const data = savedDexData[key] || {};
-
-        return !!data[activeDexEdit];
-    });
-
-    btn.textContent = allSelected ? "Unselect All" : "Select All";
 }
 
 document.getElementById("export-pokedex").addEventListener("click", () => {
