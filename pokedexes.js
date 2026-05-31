@@ -1,4 +1,4 @@
-const savedDexData = JSON.parse(localStorage.getItem("dexData")) || {};
+let savedDexData = {};
 let shinyEditModeFlag = false;
 let gameFilterState = {};
 let allPokemon = [];
@@ -8,7 +8,6 @@ let activeDexEdit = null;
 let pageSize = 30;
 let currentPage = 1;
 let pageMode = false; 
-let bulkModeActive = false;
 
 const dexTypes = [
     { key: "masterDex", label: "MasterDex" },
@@ -25,6 +24,48 @@ function saveData() {
     updateProgress();
     updateCardHighlights();
 }
+
+Promise.all([
+    fetch("fullPokemonList.json").then(res => res.json()),
+    fetch("pokedex-backup.json").then(res => res.json())
+])
+.then(([pokemonList, dexList]) => {
+
+    allPokemon = pokemonList;
+
+    // convert exported array into your existing format
+    dexList.forEach(entry => {
+
+        const key = normalizeName(entry.name);
+
+        savedDexData[key] = {
+            masterDex: !!entry.masterDex,
+            tradeDex: !!entry.tradeDex,
+            wonderTradeDex: !!entry.wonderTradeDex,
+            pogoDex: !!entry.pogoDex,
+            cherishDex: !!entry.cherishDex,
+
+            shinyDex: !!entry.shinyDex,
+
+            shinyDexData: {
+                red: !!entry.shinyDexData?.red,
+                blue: !!entry.shinyDexData?.blue,
+                yellow: !!entry.shinyDexData?.yellow
+            }
+        };
+    });
+
+    createPokemonCards(allPokemon);
+    createProgressUI();
+    createFilterButtons();
+
+    updateProgress();
+    updateCardHighlights();
+
+    updateModeUI();
+});
+
+
 
 function imageName(name) {
     return name
@@ -63,23 +104,6 @@ function toggleShinyDex(pokemonKey) {
 
     return newState;
 }
-
-fetch("fullPokemonList.json")
-    .then(res => res.json())
-    .then(data => {
-
-        allPokemon = data;
-
-        createPokemonCards(allPokemon);
-        createProgressUI();
-        createFilterButtons();
-
-        updateProgress();
-        updateCardHighlights(); 
-
-        updateModeUI();
-    });
-
 
 function normalizeName(name) {
     return imageName(name).replace(/[^a-z0-9]/g, "");

@@ -1,4 +1,5 @@
-let sleeves = JSON.parse(localStorage.getItem("sleeves")) || [];
+
+let sleeves = [];
 
 let pageMode = false;
 let currentPage = 1;
@@ -20,10 +21,23 @@ const modalImage = document.getElementById("modal-image");
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
 const zoomImage = document.getElementById("zoom-image");
 
-// =========================
-// INIT
-// =========================
-document.addEventListener("DOMContentLoaded", () => {
+
+Promise.all([
+    fetch("sleeves-backup.json").then(res => res.json())
+])
+.then(([sleeveList]) => {
+
+    const local = localStorage.getItem("sleeves");
+
+    if (local) {
+        try {
+            sleeves = JSON.parse(local);
+        } catch {
+            sleeves = sleeveList;
+        }
+    } else {
+        sleeves = sleeveList;
+    }
 
     renderSleeves();
 
