@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sleeve Tracker</title>
+    <title>Pins</title>
 
     <link rel="stylesheet" href="style.css" />
 </head>
-<body class="collection-page items-page">
+<body class="item-page pins-page">
 
-    <h1>Pokémon Sleeve Tracker</h1>
+    <h1>Pins</h1>
 
     <!-- =========================
         SEARCH
     ========================== -->
     <div id="search-wrapper">
-        <input id="search" type="text" placeholder="Search Sleeves..." />
+        <input id="search" type="text" placeholder="Search Pins..." />
         <span id="clear-search">✕</span>
     </div>
 
@@ -42,8 +42,7 @@
 
         </div>
 
-        <!-- ADD ITEM BUTTON (replaces bulk apply) -->
-        <button id="add-item">Add Sleeve</button>
+        <button id="add-item">Add Pin</button>
         <input type="file" id="import-items" accept=".json">
         <button id="export-items">Export</button>
 
@@ -58,22 +57,22 @@
 
         <div class="add-item-box">
 
-            <h2 id="item-modal-title">Add Sleeve</h2>
+            <h2 id="item-modal-title">Add Pin</h2>
 
             <div id="item-error" class="hidden"></div>
 
             <label>
-                Name
+                Title
                 <input type="text" id="item-title">
             </label>
 
             <label>
-                Date
+                Acquisition Date
                 <input type="date" id="item-date">
             </label>
 
             <label>
-                Nationality
+                Franchise
                 <input type="text" id="item-custom">
             </label>
 
@@ -111,12 +110,12 @@
             <div class="modal-right">
 
                 <div class="item-field">
-                    <strong>Date Released:</strong>
+                    <strong>Acquisition Date:</strong>
                     <div id="modal-date"></div>
                 </div>
 
                 <div class="item-field">
-                    <strong>Nationality:</strong>
+                    <strong>Franchise:</strong>
                     <div id="modal-custom"></div>
                 </div>
 
@@ -127,8 +126,8 @@
 
                 <div class="item-actions">
 
-                    <button id="edit-item" class="item-action-btn">Edit Sleeve</button>
-                    <button id="delete-item" class="item-action-btn danger">Delete Sleeve</button>
+                    <button id="edit-item" class="item-action-btn">Edit Pin</button>
+                    <button id="delete-item" class="item-action-btn danger">Delete Pin</button>
 
                 </div>
 
@@ -144,15 +143,15 @@
 
     <script>
     const COLLECTION = {
-        name: "sleeves",
-        storageKey: "sleeves",
-        jsonFile: "sleeves-backup.json",
-        imageFolder: "sleeves",
+        name: "pins",
+        storageKey: "pins",
+        jsonFile: "pins-backup.json",
+        imageFolder: "pins",
 
         fields: {
-            title: "name",
-            date: "date",
-            custom: "nationality",
+            title: "title",
+            date: "dateAcquired",
+            secondary: "franchise",
             tags: "tags"
         }
     };

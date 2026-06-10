@@ -488,7 +488,7 @@ h1 {
     color: #2ecc71;
 }
 
-#add-sleeve-modal {
+#add-item-modal {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.7);
@@ -500,7 +500,7 @@ h1 {
     z-index: 3000;
 }
 
-.add-sleeve-box {
+.add-item-box {
     background: #2d2d2d;
     padding: 20px;
     border-radius: 12px;
@@ -512,7 +512,7 @@ h1 {
     gap: 10px;
 }
 
-.add-sleeve-box input {
+.add-item-box input {
     width: 100%;
     padding: 6px;
     border-radius: 6px;
@@ -548,7 +548,7 @@ h1 {
     cursor: pointer;
 }
 
-#sleeve-error {
+#item-error {
     color: #f81111;
     font-size: 13px;
     text-align: center;
@@ -556,7 +556,7 @@ h1 {
     min-height: 18px;
 }
 
-.sleeve-actions {
+.item-actions {
     grid-column: span 3; /* ensures full modal-right width */
     display: flex;
     flex-direction: column;
@@ -569,7 +569,7 @@ h1 {
     margin-top: 10px;
 }
 
-.sleeve-action-btn {
+.item-action-btn {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ffffff;
@@ -581,16 +581,16 @@ h1 {
     transition: 0.15s ease;
 }
 
-.sleeve-action-btn:hover {
+.item-action-btn:hover {
     background: #3a3a3a;
 }
 
-.sleeve-action-btn.danger {
+.item-action-btn.danger {
     border: 1px solid #e74c3c;
     color: #e74c3c;
 }
 
-.sleeve-action-btn.danger:hover {
+.item-action-btn.danger:hover {
     background: rgba(231, 76, 60, 0.15);
 }
 
@@ -608,27 +608,27 @@ h1 {
     grid-template-columns: repeat(6, 1fr);
 }
 
-.sleeves-page #box-container {
+.collection-page #box-container {
     display: grid;
     justify-content: center;
     gap: 12px;
     margin: 0 auto;
 }
 
-.sleeves-page.list-mode #box-container {
+.collection-page.list-mode #box-container {
     grid-template-columns: repeat(6, 1fr);
-    max-width: 1000px;
+    max-width: 1200px;
 }
 
-.sleeves-page.page-mode #box-container {
+.collection-page.page-mode #box-container {
     max-width: 900px;
 }
 
-.sleeves-page.page-mode.first-page #box-container {
+.collection-page.page-mode.first-page #box-container {
     grid-template-columns: repeat(4, 1fr);
 }
 
-.sleeves-page.page-mode:not(.first-page) #box-container {
+.collection-page.page-mode:not(.first-page) #box-container {
     grid-template-columns: repeat(8, 1fr);
 }
 
@@ -743,13 +743,13 @@ h1 {
 
 
 
-.sleeves-page.page-mode .pokemon-card:nth-child(8n + 4),
-.sleeves-page.page-mode .pokemon-card:nth-child(8n + 12) {
+.collection-page.page-mode .pokemon-card:nth-child(8n + 4),
+.collection-page.page-mode .pokemon-card:nth-child(8n + 12) {
     position: relative;
 }
 
-.sleeves-page.page-mode .pokemon-card:nth-child(8n + 4)::after,
-.sleeves-page.page-mode .pokemon-card:nth-child(8n + 12)::after {
+.collection-page.page-mode .pokemon-card:nth-child(8n + 4)::after,
+.collection-page.page-mode .pokemon-card:nth-child(8n + 12)::after {
     content: "";
 
     position: absolute;
@@ -850,4 +850,246 @@ h1 {
     opacity: 1;
     transform: scale(1.05);
     border-color: #2ecc71;
+}
+
+.completions-page #modal-image {
+    width: 100%;
+    height: auto;
+
+    max-width: none;
+    max-height: none;
+
+    height: 40vh;
+    object-fit: contain;
+
+    display: block;
+    margin: 0 auto;
+}
+
+.completions-page #pokemon-modal {
+    width: 95vw;
+    max-width: 1000px;
+    grid-template-columns: 2.5fr 1fr;
+}
+
+.completions-page #box-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.completions-page .pokemon-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.completions-page #modal-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.completions-page #zoom-image {
+    width: 95vw;
+    height: 95vh;
+    object-fit: contain;
+}
+
+
+.completions-page.list-mode #box-container {
+    max-width: 1500px;
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    background: rgba(0,0,0,0.4);
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+
+#modal-nav-left {
+    left: 350px;
+}
+
+#modal-nav-right {
+    right: 350px;
+}
+
+.modal-nav:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.dlc-editor {
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    width: 100%;
+
+    align-items: center;
+}
+
+.dlc-header {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+.dlc-header h3 {
+    margin: 0;
+
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+
+    text-align: center;
+}
+
+
+.completions-page .dlc-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.completions-page .dlc-header h3 {
+    margin: 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#add-dlc-btn {
+    position: absolute;
+    right: 0;
+
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+
+    background: #2d2d2d;
+    color: white;
+
+    cursor: pointer;
+
+    width: auto;
+}
+
+#add-dlc-btn:hover {
+    background: #3a3a3a;
+}
+
+.dlc-thumb {
+    width: 140px;
+    height: auto;
+
+    object-fit: contain;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    opacity: 0.95;
+
+    transition: transform 0.15s ease;
+}
+
+.dlc-thumb:hover {
+    transform: scale(1.05);
+}
+
+#modal-dlcs img {
+    width: 140px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#add-dlc-modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: 9999; 
+}
+
+#dlc-error {
+    color: #ff4d4d;
+    font-size: 13px;
+    text-align: center;
+    min-height: 16px;
+}
+
+.completions-page .modal-right {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.completions-page #modal-dlcs {
+    grid-column: 1 / -1; 
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px;
+
+    margin-top: 6px;
+
+    width: 100%;
+    justify-items: center;
+}
+
+.dlc-delete-btn {
+    justify-self: start;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #555;
+    background: #2d2d2d;
+    color: white;
+    cursor: pointer;
+}
+
+.dlc-delete-btn:hover {
+    background: #3a3a3a;
+}
+
+#delete-dlc-modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: 9999; 
+}
+
+.completions-page #page-mode,
+.completions-page #pagination-controls {
+    display: none !important;
 }

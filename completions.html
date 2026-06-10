@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sleeve Tracker</title>
+    <title>Completions</title>
 
     <link rel="stylesheet" href="style.css" />
 </head>
-<body class="collection-page items-page">
+<body class="item-page completions-page">
 
-    <h1>Pokémon Sleeve Tracker</h1>
+    <h1>Completions</h1>
 
     <!-- =========================
         SEARCH
     ========================== -->
     <div id="search-wrapper">
-        <input id="search" type="text" placeholder="Search Sleeves..." />
+        <input id="search" type="text" placeholder="Search Completions..." />
         <span id="clear-search">✕</span>
     </div>
 
@@ -42,8 +42,7 @@
 
         </div>
 
-        <!-- ADD ITEM BUTTON (replaces bulk apply) -->
-        <button id="add-item">Add Sleeve</button>
+        <button id="add-item">Add Completion</button>
         <input type="file" id="import-items" accept=".json">
         <button id="export-items">Export</button>
 
@@ -58,22 +57,22 @@
 
         <div class="add-item-box">
 
-            <h2 id="item-modal-title">Add Sleeve</h2>
+            <h2 id="item-modal-title">Add Completion</h2>
 
             <div id="item-error" class="hidden"></div>
 
             <label>
-                Name
+                Title
                 <input type="text" id="item-title">
             </label>
 
             <label>
-                Date
+                Completion Date
                 <input type="date" id="item-date">
             </label>
 
             <label>
-                Nationality
+                Franchise
                 <input type="text" id="item-custom">
             </label>
 
@@ -93,10 +92,51 @@
 
     </div>
 
+    <div id="add-dlc-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2>Add DLC</h2>
+
+            <label>
+                DLC Image Name
+                <input type="text" id="dlc-name">
+            </label>
+
+            <div id="dlc-error" class="hidden"></div>
+
+            <div class="modal-buttons">
+                <button id="save-dlc">Save</button>
+                <button id="cancel-dlc">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="delete-dlc-modal" class="hidden">
+
+        <div class="add-item-box">
+            
+            <h3>Delete DLC</h3>
+
+            <div id="delete-dlc-list"></div>
+
+            <div class="modal-buttons">
+                <button id="confirm-delete-dlc">Delete</button>
+                <button id="cancel-delete-dlc">Cancel</button>
+            </div>
+
+            <div id="delete-dlc-error"></div>
+        </div>
+    </div>
+
     <!-- =========================
         MODAL
     ========================== -->
     <div id="modal-overlay" class="hidden">
+
+        <div id="modal-nav-left" class="modal-nav">◀</div>
 
         <div id="pokemon-modal">
 
@@ -111,12 +151,12 @@
             <div class="modal-right">
 
                 <div class="item-field">
-                    <strong>Date Released:</strong>
+                    <strong>Completion Date:</strong>
                     <div id="modal-date"></div>
                 </div>
 
                 <div class="item-field">
-                    <strong>Nationality:</strong>
+                    <strong>Franchise:</strong>
                     <div id="modal-custom"></div>
                 </div>
 
@@ -127,14 +167,27 @@
 
                 <div class="item-actions">
 
-                    <button id="edit-item" class="item-action-btn">Edit Sleeve</button>
-                    <button id="delete-item" class="item-action-btn danger">Delete Sleeve</button>
+                    <button id="edit-item" class="item-action-btn">Edit Completion</button>
+                    <button id="delete-item" class="item-action-btn danger">Delete Completion</button>
+
+                    <div class="dlc-editor">
+                        <div class="dlc-header">
+                            <button id="delete-dlcs-btn" class="dlc-delete-btn">Delete DLC</button>
+                            <h3>DLCs</h3>
+                            <button id="add-dlc-btn">Add DLC</button>
+                        </div>
+
+                        <div id="modal-dlc-list"></div>
+
+                    </div>
 
                 </div>
 
             </div>
 
         </div>
+
+        <div id="modal-nav-right" class="modal-nav">▶</div>
 
     </div>
 
@@ -144,17 +197,18 @@
 
     <script>
     const COLLECTION = {
-        name: "sleeves",
-        storageKey: "sleeves",
-        jsonFile: "sleeves-backup.json",
-        imageFolder: "sleeves",
-
+        name: "completions",
+        storageKey: "completions",
+        jsonFile: "completions-backup.json",
+        imageFolder: "completions",
+        
         fields: {
-            title: "name",
-            date: "date",
-            custom: "nationality",
+            title: "title",
+            date: "dateCompleted",
+            secondary: "franchise",
             tags: "tags"
-        }
+        },
+
     };
     </script>
 

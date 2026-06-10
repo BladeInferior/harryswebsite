@@ -1,5 +1,4 @@
-
-let sleeves = [];
+let items = [];
 
 let pageMode = false;
 let currentPage = 1;
@@ -12,34 +11,43 @@ const pageDisplay = document.getElementById("page-display");
 const searchWrapper = document.getElementById("search-wrapper");
 const untaggedBtn = document.getElementById("untagged-filter");
 
-const modalTitle = document.getElementById("sleeve-modal-title");
+const modalTitle = document.getElementById("modal-title");
 const previewBtn = document.getElementById("preview-image-btn");
 const modalOverlay = document.getElementById("modal-overlay");
-const modalName = document.getElementById("modal-name");
 const modalImage = document.getElementById("modal-image");
+const navLeft = document.getElementById("modal-nav-left");
+const navRight = document.getElementById("modal-nav-right");
+
+const dlcInput = document.getElementById("dlc-name");
+const dlcError = document.getElementById("dlc-error");
+const deleteDlcModal = document.getElementById("delete-dlc-modal");
+const deleteDlcList = document.getElementById("delete-dlc-list");
+
+let selectedDlcIndex = null;
+let currentDeleteItem = null;
 
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
 const zoomImage = document.getElementById("zoom-image");
 
 
 Promise.all([
-    fetch("sleeves-backup.json").then(res => res.json())
+    fetch(COLLECTION.jsonFile).then(res => res.json())
 ])
-.then(([sleeveList]) => {
+.then(([itemList]) => {
 
-    const local = localStorage.getItem("sleeves");
+    const local = localStorage.getItem(COLLECTION.storageKey);
 
     if (local) {
         try {
-            sleeves = JSON.parse(local);
+            items = JSON.parse(local);
         } catch {
-            sleeves = sleeveList;
+            items = itemList;
         }
     } else {
-        sleeves = sleeveList;
+        items = itemList;
     }
 
-    renderSleeves();
+    renderItems();
 
     pageMode = false;
     currentPage = 1;
@@ -56,7 +64,7 @@ modalImage.addEventListener("click", () => {
     imageZoomOverlay.classList.remove("hidden");
 });
 
-function getSleeveImagePath(name) {
+function getItemImagePath(name) {
 
     const base = name
         .toLowerCase()
@@ -68,28 +76,28 @@ function getSleeveImagePath(name) {
     };
 }
 
-function setSleeveImage(imgElement, name) {
+function setItemImage(imgElement, name) {
 
-    const { base, tryFormats } = getSleeveImagePath(name);
+    const { base, tryFormats } = getItemImagePath(name);
 
     let i = 0;
 
     imgElement.onerror = () => {
         i++;
         if (i < tryFormats.length) {
-            imgElement.src = `sleeves/${base}${tryFormats[i]}`;
+            imgElement.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
         } else {
             imgElement.src = "";
         }
     };
 
-    imgElement.src = `sleeves/${base}${tryFormats[i]}`;
+    imgElement.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
 }
 
 function getCurrentPageSize() {
 
     if (!pageMode) {
-        return sleeves.length;
+        return items.length;
     }
 
     return currentPage === 1 ? 12 : 24;
@@ -98,29 +106,29 @@ function getCurrentPageSize() {
 // =========================
 // SAVE
 // =========================
-function saveSleeves() {
-    localStorage.setItem("sleeves", JSON.stringify(sleeves));
+function saveItems() {
+    localStorage.setItem(COLLECTION.storageKey, JSON.stringify(items));
 }
 
 // =========================
 // RENDER CARDS
 // =========================
-function renderSleeves() {
+function renderItems() {
 
     boxContainer.innerHTML = "";
 
-    sortSleevesByDate();
+    sortItemsByDate();
 
     const data = pageMode
-        ? getPageModeOrder(sleeves)
-        : sleeves;
+        ? getPageModeOrder(items)
+        : items;
 
-    data.forEach((sleeve, index) => {
+    data.forEach((item, index) => {
 
         // ---------------------------------
         // EMPTY PLACEHOLDER CARD
         // ---------------------------------
-        if (sleeve.empty) {
+        if (item.empty) {
 
             const spacer = document.createElement("div");
             spacer.classList.add("pokemon-card", "empty-card");
@@ -137,18 +145,41 @@ function renderSleeves() {
         card.classList.add("pokemon-card");
 
         const img = document.createElement("img");
-        setSleeveImage(img, sleeve.name);
+        setItemImage(img, item[COLLECTION.fields.title]);
 
         card.appendChild(img);
 
         const label = document.createElement("div");
         label.classList.add("pokemon-name");
-        label.textContent = sleeve.name;
-
+        label.textContent = item[COLLECTION.fields.title];
         card.appendChild(label);
 
+        const dlcContainer = document.createElement("div");
+        dlcContainer.classList.add("dlc-container");
+
+        const dlcs = item.dlcs || [];
+
+        dlcs.forEach(dlcName => {
+
+            const dlcItem = items.find(i =>
+                i[COLLECTION.fields.title] === dlcName
+            );
+
+            if (!dlcItem) return;
+
+            const dlcImg = document.createElement("img");
+
+            setItemImage(dlcImg, dlcItem[COLLECTION.fields.title]);
+
+            dlcImg.classList.add("dlc-thumb");
+
+            dlcContainer.appendChild(dlcImg);
+        });
+
+        card.appendChild(dlcContainer);
+
         card.addEventListener("click", () => {
-            openModal(sleeves.indexOf(sleeve));
+            openModal(items.indexOf(item));
         });
 
         boxContainer.appendChild(card);
@@ -157,34 +188,34 @@ function renderSleeves() {
     applyPagination();
 }
 
-/**function renderSleeves() {
+/**function renderItems() {
 
     boxContainer.innerHTML = "";
 
-    sortSleevesByDate();
+    sortItemsByDate();
 
     const data = pageMode
-        ? getPageModeOrder(sleeves)
-        : sleeves;
+        ? getPageModeOrder(items)
+        : items;
 
-    data.forEach((sleeve, index) => {
+    data.forEach((item, index) => {
 
         const card = document.createElement("div");
         card.classList.add("pokemon-card");
 
         const img = document.createElement("img");
-        setSleeveImage(img, sleeve.name);
+        setItemImage(img, item.name);
 
         card.appendChild(img);
 
         const label = document.createElement("div");
         label.classList.add("pokemon-name");
-        label.textContent = sleeve.name;
+        label.textContent = item.name;
 
         card.appendChild(label);
 
         card.addEventListener("click", () => {
-            openModal(sleeves.indexOf(sleeve));
+            openModal(items.indexOf(item));
         });
 
         boxContainer.appendChild(card);
@@ -193,9 +224,10 @@ function renderSleeves() {
     applyPagination();
 } **/
 
-function sortSleevesByDate() {
-    sleeves.sort((a, b) => {
-        return parseDate(a.date) - parseDate(b.date);
+function sortItemsByDate() {
+    items.sort((a, b) => {
+        return parseDate(a[COLLECTION.fields.date]) -
+       parseDate(b[COLLECTION.fields.date]);
     });
 }
 
@@ -228,19 +260,50 @@ function formatDateDisplay(dateStr) {
 
 function openModal(index) {
 
-    const sleeve = sleeves[index];
+    const item = items[index];
 
-    modalName.textContent = sleeve.name;
-    setSleeveImage(modalImage, sleeve.name);
+    modalTitle.textContent = item[COLLECTION.fields.title];
+    setItemImage(modalImage, item[COLLECTION.fields.title]);
 
     document.getElementById("modal-date").textContent =
-        formatDateDisplay(sleeve.date);
+        formatDateDisplay(item[COLLECTION.fields.date]);
 
-    document.getElementById("modal-nationality").textContent =
-        sleeve.nationality || "No nationality";
+    document.getElementById("modal-custom").textContent =
+        item[COLLECTION.fields.custom] || "";
 
     document.getElementById("modal-tags").textContent =
-        sleeve.tags?.join(", ") || "No tags";
+        item[COLLECTION.fields.tags]?.join(", ") || "No tags";
+
+    if (document.body.classList.contains("completions-page")) {
+
+        let dlcContainer = document.getElementById("modal-dlcs");
+
+        if (!dlcContainer) {
+
+            dlcContainer = document.createElement("div");
+            dlcContainer.id = "modal-dlcs";
+
+            document.querySelector(".modal-right")
+                .appendChild(dlcContainer);
+        }
+
+        dlcContainer.innerHTML = "";
+
+        (item.dlcs || []).forEach(name => {
+
+            const img = document.createElement("img");
+
+            setItemImage(img, name);
+
+            img.addEventListener("click", () => {
+
+                zoomImage.src = img.src;
+                imageZoomOverlay.classList.remove("hidden");
+            });
+
+            dlcContainer.appendChild(img);
+        });
+    }
 
     modalOverlay.classList.remove("hidden");
 
@@ -268,9 +331,9 @@ pageBtn.addEventListener("click", () => {
     currentPage = 1;
 
     searchInput.value = "";
-    filterSleeves("");
+    filterItems("");
 
-    renderSleeves();
+    renderItems();
     applyPagination();
     updateModeUI();
 });
@@ -281,9 +344,9 @@ listBtn.addEventListener("click", () => {
     currentPage = 1;
 
     searchInput.value = "";
-    filterSleeves("");
+    filterItems("");
 
-    renderSleeves();
+    renderItems();
     updateModeUI();
 });
 
@@ -292,16 +355,16 @@ listBtn.addEventListener("click", () => {
 // =========================
 document.getElementById("next-page").addEventListener("click", () => {
 
-    const remaining = Math.max(0, sleeves.length - 12);
+    const remaining = Math.max(0, items.length - 12);
 
     const maxPage =
-        sleeves.length <= 12
+        items.length <= 12
             ? 1
             : 1 + Math.ceil(remaining / 24);
 
     if (currentPage < maxPage) {
         currentPage++;
-        renderSleeves();
+        renderItems();
         updateModeUI();
     }
 });
@@ -310,7 +373,7 @@ document.getElementById("prev-page").addEventListener("click", () => {
 
     if (currentPage > 1) {
         currentPage--;
-        renderSleeves();
+        renderItems();
         updateModeUI();
     }
 });
@@ -350,38 +413,38 @@ function updateModeUI() {
 }
 
 // =========================
-// ADD SLEEVE
+// ADD ITEM
 // =========================
-const addModal = document.getElementById("add-sleeve-modal");
+const addModal = document.getElementById("add-item-modal");
 
-const nameInput = document.getElementById("sleeve-name");
-const dateInput = document.getElementById("sleeve-date");
-const nationalityInput = document.getElementById("sleeve-nationality");
-const tagsInput = document.getElementById("sleeve-tags");
+const titleInput = document.getElementById("item-title");
+const dateInput = document.getElementById("item-date");
+const customInput = document.getElementById("item-custom");
+const tagsInput = document.getElementById("item-tags");
 
 // OPEN MODAL
-document.getElementById("add-sleeve").addEventListener("click", () => {
+document.getElementById("add-item").addEventListener("click", () => {
 
     addModal.classList.remove("hidden");
-    modalTitle.textContent = "Add Sleeve";
+    modalTitle.textContent = "Add Item";
     previewBtn.style.display = "none";
 
     delete addModal.dataset.editIndex;
 
-    nameInput.value = "";
+    titleInput.value = "";
     dateInput.value = "";
-    nationalityInput.value = "";
+    customInput.value = "";
     tagsInput.value = "";
 });
 
 // SAVE
-const errorBox = document.getElementById("sleeve-error");
+const errorBox = document.getElementById("item-error");
 
-document.getElementById("save-sleeve").addEventListener("click", () => {
+document.getElementById("save-item").addEventListener("click", () => {
 
-    const name = nameInput.value.trim();
+    const title = titleInput.value.trim();
     const date = dateInput.value.trim();
-    const nationality = nationalityInput.value.trim();
+    const custom = customInput.value.trim();
     const tagsRaw = tagsInput.value.trim();
 
     const tags = tagsRaw
@@ -389,7 +452,7 @@ document.getElementById("save-sleeve").addEventListener("click", () => {
         : [];
 
 
-    if (!name || !date || !nationality) {
+    if (!title || !date || !custom) {
         errorBox.textContent = "Please fill out all required fields";
         errorBox.classList.remove("hidden");
         return;
@@ -399,66 +462,66 @@ document.getElementById("save-sleeve").addEventListener("click", () => {
 
     const editIndex = addModal.dataset.editIndex;
 
-    const sleeveData = {
-        name,
-        date,
-        nationality,
-        tags
-    };
+    const itemData = {};
+
+    itemData[COLLECTION.fields.title] = title;
+    itemData[COLLECTION.fields.date] = date;
+    itemData[COLLECTION.fields.custom] = custom;
+    itemData[COLLECTION.fields.tags] = tags;
 
     if (editIndex !== undefined && editIndex !== "") {
-        sleeves[editIndex] = sleeveData;
+        items[editIndex] = itemData;
     } else {
-        sleeves.push(sleeveData);
+        items.push(itemData);
     }
 
     delete addModal.dataset.editIndex;
 
-    saveSleeves();
-    sortSleevesByDate();
-    renderSleeves();
+    saveItems();
+    sortItemsByDate();
+    renderItems();
 
     addModal.classList.add("hidden");
 });
 
 // CANCEL
-document.getElementById("cancel-sleeve").addEventListener("click", () => {
+document.getElementById("cancel-item").addEventListener("click", () => {
     addModal.classList.add("hidden");
     errorBox.classList.add("hidden");
 });
 
 // DELETE
-document.getElementById("delete-sleeve").addEventListener("click", () => {
+document.getElementById("delete-item").addEventListener("click", () => {
 
     const index = modalOverlay.dataset.index;
     if (index === undefined) return;
 
-    sleeves.splice(index, 1);
+    items.splice(index, 1);
 
-    saveSleeves();
-    renderSleeves();
+    saveItems();
+    renderItems();
 
     modalOverlay.classList.add("hidden");
 });
 
-document.getElementById("edit-sleeve").addEventListener("click", () => {
+document.getElementById("edit-item").addEventListener("click", () => {
 
     const index = modalOverlay.dataset.index;
-    const sleeve = sleeves[index];
+    const item = items[index];
 
-    nameInput.value = sleeve.name;
-    dateInput.value = formatDateForInput(sleeve.date);
-    tagsInput.value = (sleeve.tags || []).join(", ");
-    nationalityInput.value = sleeve.nationality;
+    titleInput.value = item[COLLECTION.fields.title];
+    dateInput.value = formatDateForInput(item[COLLECTION.fields.date]);
+    tagsInput.value = (item[COLLECTION.fields.tags] || []).join(", ");
+    customInput.value = item[COLLECTION.fields.custom];
     const tagsContainer = document.getElementById("modal-tags");
 
     addModal.dataset.editIndex = index;
-    modalTitle.textContent = "Edit Sleeve";
+    modalTitle.textContent = "Edit Item";
     previewBtn.style.display = "inline-block";
 
     tagsContainer.innerHTML = "";
 
-    (sleeve.tags || []).forEach(tag => {
+    (item[COLLECTION.fields.tags] || []).forEach(tag => {
         const el = document.createElement("span");
         el.classList.add("tag-pill");
         el.textContent = tag;
@@ -473,7 +536,7 @@ document.getElementById("edit-sleeve").addEventListener("click", () => {
 });
 
 // IMPORT JSON BACKUP
-document.getElementById("import-sleeves").addEventListener("change", (e) => {
+document.getElementById("import-items").addEventListener("change", (e) => {
 
     const file = e.target.files[0];
 
@@ -485,19 +548,19 @@ document.getElementById("import-sleeves").addEventListener("change", (e) => {
 
         try {
 
-            const importedSleeves = JSON.parse(event.target.result);
+            const importedItems = JSON.parse(event.target.result);
 
-            if (!Array.isArray(importedSleeves)) {
+            if (!Array.isArray(importedItems)) {
                 alert("Invalid backup format");
                 return;
             }
 
-            sleeves = importedSleeves;
+            items = importedItems;
 
-            saveSleeves();
-            renderSleeves();
+            saveItems();
+            renderItems();
 
-            alert(`Imported ${sleeves.length} sleeves`);
+            alert(`Imported ${items.length} items`);
 
         } catch (err) {
 
@@ -509,16 +572,16 @@ document.getElementById("import-sleeves").addEventListener("change", (e) => {
     reader.readAsText(file);
 });
 
-document.getElementById("export-sleeves").addEventListener("click", () => {
+document.getElementById("export-items").addEventListener("click", () => {
 
-    const data = JSON.stringify(sleeves, null, 2);
+    const data = JSON.stringify(items, null, 2);
 
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `sleeves-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = COLLECTION.jsonFile;
 
     document.body.appendChild(a);
     a.click();
@@ -527,25 +590,25 @@ document.getElementById("export-sleeves").addEventListener("click", () => {
     URL.revokeObjectURL(url);
 });
 
-function filterSleeves(query) {
+function filterItems(query) {
 
     const q = query.toLowerCase().trim();
 
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
 
-        const sleeve = sleeves[index];
+        const item = items[index];
 
-        if (!sleeve) return;
+        if (!item) return;
 
-        const nameMatch =
-            sleeve.name.toLowerCase().includes(q);
+        const titleMatch =
+            item[COLLECTION.fields.title].toLowerCase().includes(q);
 
         const tagMatch =
-            (sleeve.tags || []).some(tag =>
+            (item[COLLECTION.fields.tags] || []).some(tag =>
                 tag.toLowerCase().includes(q)
             );
 
-        const match = nameMatch || tagMatch;
+        const match = titleMatch || tagMatch;
 
         card.style.display = match ? "block" : "none";
     });
@@ -653,49 +716,28 @@ const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clear-search");
 
 searchInput.addEventListener("input", (e) => {
-    filterSleeves(e.target.value);
+    filterItems(e.target.value);
 });
 
 clearBtn.addEventListener("click", () => {
     searchInput.value = "";
-    filterSleeves("");
+    filterItems("");
 
     untaggedBtn.classList.remove("active");
 });
 
-/** function filterSleeves(query) {
+function filterItems(query) {
 
     const q = query.toLowerCase().trim();
 
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
 
-        const sleeve = sleeves[index];
-        if (!sleeve) return;
+        const item = items[index];
+        if (!item) return;
 
-        const nameMatch = sleeve.name.toLowerCase().includes(q);
+        const titleMatch = item[COLLECTION.fields.title].toLowerCase().includes(q);
 
-        const tagMatch = (sleeve.tags || []).some(tag =>
-            tag.toLowerCase().includes(q)
-        );
-
-        const match = nameMatch || tagMatch;
-
-        card.style.display = match ? "block" : "none";
-    });
-} **/
-
-function filterSleeves(query) {
-
-    const q = query.toLowerCase().trim();
-
-    document.querySelectorAll(".pokemon-card").forEach((card, index) => {
-
-        const sleeve = sleeves[index];
-        if (!sleeve) return;
-
-        const nameMatch = sleeve.name.toLowerCase().includes(q);
-
-        const tagMatch = (sleeve.tags || []).some(tag =>
+        const tagMatch = (item[COLLECTION.fields.tags] || []).some(tag =>
             tag.toLowerCase().includes(q)
         );
 
@@ -704,9 +746,9 @@ function filterSleeves(query) {
         // -------------------------
         const untaggedMatch =
             (q === "untagged" || q === "no tags") &&
-            (!sleeve.tags || sleeve.tags.length === 0);
+            (!item[COLLECTION.fields.tags] || item[COLLECTION.fields.tags].length === 0);
 
-        const match = nameMatch || tagMatch || untaggedMatch;
+        const match = titleMatch || tagMatch || untaggedMatch;
 
         card.style.display = match ? "block" : "none";
     });
@@ -716,9 +758,9 @@ previewBtn.addEventListener("click", () => {
     const index = addModal.dataset.editIndex;
     if (index === undefined) return;
 
-    const sleeve = sleeves[index];
+    const item = items[index];
 
-    setSleeveImage(zoomImage, sleeve.name);
+    setItemImage(zoomImage, item[COLLECTION.fields.title]);
     imageZoomOverlay.classList.remove("hidden");
 });
 
@@ -728,78 +770,184 @@ untaggedBtn.addEventListener("click", () => {
 
     if (isActive) {
         searchInput.value = "untagged";
-        filterSleeves("untagged");
+        filterItems("untagged");
     } else {
         searchInput.value = "";
-        filterSleeves("");
+        filterItems("");
     }
 });
-// -----------------------------
-// CSV IMPORT
-// -----------------------------
-/** document.getElementById("import-sleeves").addEventListener("click", () => {
 
-    const fileInput = document.getElementById("import-file");
-    const file = fileInput.files[0];
+function openAdjacent(offset) {
+    const current = Number(modalOverlay.dataset.index);
+    if (isNaN(current)) return;
 
-    if (!file) {
-        alert("Please select a CSV file");
-        return;
-    }
+    let next = current + offset;
 
-    const reader = new FileReader();
+    if (next < 0) next = items.length - 1; // wrap
+    if (next >= items.length) next = 0;
 
-    reader.onload = (e) => {
+    openModal(next);
+}
 
-        const text = e.target.result;
+navLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacent(-1);
+});
 
-        const rows = text
-            .split("\n")
-            .map(r => r.replace("\r", "").split(","))
-            .map(r => r.map(v => v.trim()))
-            .filter(r => r.length >= 3);
+navRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacent(1);
+});
 
-        for (let i = 0; i < rows.length; i++) {
+document.addEventListener("keydown", (e) => {
+    if (modalOverlay.classList.contains("hidden")) return;
 
-            const row = rows[i];
+    if (e.key === "ArrowLeft") openAdjacent(-1);
+    if (e.key === "ArrowRight") openAdjacent(1);
+    if (e.key === "Escape") modalOverlay.classList.add("hidden");
+});
 
-            const date = (row[0] || "").trim();
-            const name = (row[1] || "").trim();
-            const nationality = (row[2] || "").trim();
+if (document.body.classList.contains("completions-page")) {
 
-            if (!date || !name) continue;
+    const addDlcBtn = document.getElementById("add-dlc-btn");
+    const dlcModal = document.getElementById("add-dlc-modal");
 
-            sleeves.push({
-                name,
-                date,
-                nationality,
-                tags: []
-            });
+    const dlcNameInput = document.getElementById("dlc-name");
+
+    let currentDlcItem = null;
+
+    addDlcBtn.addEventListener("click", () => {
+
+        currentDlcItem = modalOverlay.dataset.index;
+
+        dlcNameInput.value = "";
+
+        dlcModal.classList.remove("hidden");
+    });
+
+    dlcNameInput.addEventListener("input", () => {
+
+        dlcError.classList.add("hidden");
+        dlcError.textContent = "";
+
+    });
+
+    document.getElementById("save-dlc").addEventListener("click", () => {
+
+        const name = dlcNameInput.value.trim();
+
+        if (!name) {
+            dlcError.textContent = "Please enter a DLC name.";
+            dlcError.classList.remove("hidden");
+            return;
         }
 
-        saveSleeves();
-        renderSleeves();
+        const { base, tryFormats } = getItemImagePath(name);
 
-        alert("Import complete!");
-    };
+        let i = 0;
 
-    reader.readAsText(file);
-});
+        const tryNext = () => {
 
-document.getElementById("delete-all-sleeves").addEventListener("click", () => {
+            if (i >= tryFormats.length) {
+                dlcError.textContent = "No matching image found for that DLC name.";
+                dlcError.classList.remove("hidden");
+                return;
+            }
 
-    const confirmDelete = confirm("Delete ALL sleeves? This cannot be undone.");
+            const img = new Image();
 
-    if (!confirmDelete) return;
+            img.onload = () => {
 
-    sleeves = [];
+                const item = items[currentDlcItem];
 
-    saveSleeves();
-    renderSleeves();
+                item.dlcs = item.dlcs || [];
+                item.dlcs.push(name);
 
-    currentPage = 1;
-    pageMode = false;
-    updateModeUI();
+                saveItems();
 
-    console.log("All sleeves deleted");
-}); **/
+                dlcError.classList.add("hidden");
+                dlcModal.classList.add("hidden");
+
+                openModal(currentDlcItem);
+            };
+
+            img.onerror = () => {
+                i++;
+                tryNext();
+            };
+
+            img.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
+        };
+
+        tryNext();
+    });
+
+    document.getElementById("cancel-dlc").addEventListener("click", () => {
+        dlcModal.classList.add("hidden");
+    });
+
+
+    document.getElementById("delete-dlcs-btn").addEventListener("click", () => {
+
+        console.log("🟢 [DELETE DLC CLICKED]");
+
+        console.log("modalOverlay.dataset.index =", modalOverlay.dataset.index);
+        console.log("items length =", items.length);
+
+        const index = modalOverlay.dataset.index;
+        if (index === undefined) return;
+
+        currentDeleteItem = items[index];
+
+        deleteDlcList.innerHTML = "";
+        selectedDlcIndex = null;
+
+        (currentDeleteItem.dlcs || []).forEach((name, i) => {
+
+            const btn = document.createElement("div");
+            btn.textContent = name;
+            btn.classList.add("tag-pill");
+
+            btn.style.cursor = "pointer";
+
+            btn.addEventListener("click", () => {
+
+                console.log("🟡 DLC selected:", name, i);
+
+                document.querySelectorAll("#delete-dlc-list .tag-pill")
+                    .forEach(el => el.style.outline = "none");
+
+                btn.style.outline = "2px solid red";
+                selectedDlcIndex = i;
+
+                console.log("selectedDlcIndex =", selectedDlcIndex);
+            });
+
+            deleteDlcList.appendChild(btn);
+        });
+
+        console.log("opening modal...");
+        deleteDlcModal.classList.remove("hidden");
+    });
+
+    document.getElementById("cancel-delete-dlc").addEventListener("click", () => {
+        deleteDlcModal.classList.add("hidden");
+    });
+
+
+    document.getElementById("confirm-delete-dlc").addEventListener("click", () => {
+
+        if (selectedDlcIndex === null) return;
+
+        const item = currentDeleteItem;
+
+        item.dlcs.splice(selectedDlcIndex, 1);
+
+        saveItems();
+
+        deleteDlcModal.classList.add("hidden");
+
+        openModal(items.indexOf(item));
+    });
+}
+
