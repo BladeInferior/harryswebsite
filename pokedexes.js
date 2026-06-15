@@ -895,7 +895,7 @@ document.getElementById("export-pokedex").addEventListener("click", () => {
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = `pokedex-backup-${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `pokedex-backup.json`;
 
     document.body.appendChild(a);
     a.click();

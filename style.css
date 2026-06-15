@@ -1,8 +1,37 @@
-body {
-    background-color: #1e1e1e;
-    color: white;
-    font-family: Arial, sans-serif;
+:root {
+    /* base */
+    --bg: #14161a;
+    --surface: #1c1f26;
+    --surface-2: #232733;
+    --border: #2f3542;
 
+    /* text */
+    --text: #ffffff;
+    --text-dim: rgba(255,255,255,0.7);
+
+    /* accents (pick ONE primary direction) */
+    --accent: #4fd1c5;   /* teal (clean + “Pokémon tech” feel) */
+    --accent-2: #60a5fa; /* soft blue fallback */
+
+    /* semantic colours */
+    --success: #2ecc71;
+    --danger: #e74c3c;
+    --warning: #f1c40f;
+
+    /* effects */
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+body {
+    background: radial-gradient(
+        circle at top,
+        #1a1d24,
+        var(--bg)
+    );
+    color: var(--text);
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
 }
@@ -23,21 +52,20 @@ h1 {
 }
 
 .pokemon-card {
-    background-color: #2d2d2d;
-
-    border-radius: 12px;
-
-    padding: 10px;
-
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
     text-align: center;
-
-    transition: transform 0.15s ease;
-
+    transition: 0.2s ease;
     position: relative;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.2);
 }
 
 .pokemon-card:hover {
-    transform: scale(1.05);
+    transform: translateY(-4px);
+    border-color: rgba(79, 209, 197, 0.5);
+    box-shadow: var(--shadow);
 }
 
 .pokemon-card img {
@@ -75,7 +103,9 @@ h1 {
 }
 
 #pokemon-modal {
-    background-color: #2d2d2d;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+
+    border: 1px solid var(--border);
 
     border-radius: 20px;
 
@@ -86,8 +116,9 @@ h1 {
     display: flex;
 
     gap: 30px;
+    
 
-    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+    box-shadow: var(--shadow);
 }
 
 .modal-left {
@@ -249,10 +280,11 @@ h1 {
     display: flex;
     align-items: center;
 
-    background: #2d2d2d;
+    background: rgba(28, 31, 38, 0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius);
     padding: 6px 10px;
-    border-radius: 10px;
-
     z-index: 2000;
 }
 
@@ -305,7 +337,8 @@ h1 {
 .progress-bar {
     width: 100%;
     height: 8px;
-    background: #444;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 6px;
     overflow: hidden;
 }
@@ -1094,6 +1127,52 @@ h1 {
     display: none !important;
 }
 
+
+body {
+    background:
+        linear-gradient(120deg, #05070c, #070d12);
+
+    color: #f5f5f5;
+}
+
+/* soft ambient glow layer (blue + green only) */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(0, 229, 255, 0.16), transparent 50%),
+        radial-gradient(circle at 80% 40%, rgba(46, 204, 113, 0.14), transparent 52%),
+        radial-gradient(circle at 50% 90%, rgba(0, 255, 170, 0.08), transparent 55%);
+    pointer-events: none;
+}
+
+.pokemon-card,
+.home-card {
+    background:
+        linear-gradient(145deg, #182434, #1b2a3d);
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* hover state = blue → green shift */
+.pokemon-card:hover,
+.home-card:hover {
+    border-color: #00e5ff;
+    box-shadow:
+        0 0 18px rgba(0, 229, 255, 0.25),
+        0 0 28px rgba(46, 204, 113, 0.18);
+    transform: translateY(-2px);
+}
+
+/**
+
+//////////////
+//MOBILE CSS//
+//////////////
+
+*/
+
 @media (max-width: 768px) {
 
     #page-mode,
@@ -1101,8 +1180,22 @@ h1 {
     #import-items,
     #export-items,
     #add-item,
-    #untagged-filter {
+    #untagged-filter,
+    #game-filter-container,
+    #progress-container {
         display: none !important;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

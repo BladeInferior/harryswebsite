@@ -109,8 +109,10 @@
       "One"
     ],
     "dlcs": [
-      "12. Update 1.21.0: Tricky Trials, Update 1.21.50: The Garden Awakens, Update 1.21.90: Chase the Skies",
-      "12. Update 1.21.130: Mounts of Mayhem"
+      "12. Update 1.21.0: Tricky Trials",
+      "12. Update 1.21.50: The Garden Awakens",
+      "12. Update 1.21.90: Chase The Skies",
+      "12. Update 1.21.130: Mounts Of Mayhem"
     ]
   },
   {
@@ -228,7 +230,8 @@
       "One"
     ],
     "dlcs": [
-      "25. Local Co-op Update & Abyssal Terrors",
+      "25. Local Co-op Update",
+      "25. Abyssal Terrors",
       "25. Paws & Claws Update"
     ]
   },
@@ -264,10 +267,12 @@
     "dateCompleted": "2024-09-11",
     "undefined": "Star Wars",
     "tags": [
+      "DLC",
       "Series X"
     ],
     "dlcs": [
-      "29. Wild Card & A Pirate's Fortune"
+      "29. Wild Card",
+      "29. A Pirate's Fortune"
     ]
   },
   {
@@ -351,6 +356,7 @@
     "dateCompleted": "2024-12-14",
     "undefined": "Assassin's Creed",
     "tags": [
+      "DLC",
       "Series X"
     ],
     "dlcs": [
@@ -387,6 +393,7 @@
     "dateCompleted": "2025-01-08",
     "undefined": "Marvel",
     "tags": [
+      "DLC",
       "Series X"
     ],
     "dlcs": [
@@ -507,7 +514,8 @@
       "Series X"
     ],
     "dlcs": [
-      "54. A Critical Encounter"
+      "54. A Critical Encounter",
+      "54. Claws of Awaji"
     ]
   },
   {
@@ -563,7 +571,8 @@
     "tags": [
       "Sport",
       "Series X"
-    ]
+    ],
+    "dlcs": []
   },
   {
     "title": "61. Tempopo",
