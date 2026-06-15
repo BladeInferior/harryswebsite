@@ -535,6 +535,10 @@ document.getElementById("edit-item").addEventListener("click", () => {
     addModal.dataset.editIndex = index;
 });
 
+document.getElementById("import-button").addEventListener("click", () => {
+    document.getElementById("import-items").click();
+});
+
 // IMPORT JSON BACKUP
 document.getElementById("import-items").addEventListener("change", (e) => {
 

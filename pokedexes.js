@@ -904,6 +904,10 @@ document.getElementById("export-pokedex").addEventListener("click", () => {
     URL.revokeObjectURL(url);
 });
 
+document.getElementById("import-button").addEventListener("click", () => {
+    document.getElementById("import-pokedex").click();
+});
+
 document.getElementById("import-pokedex").addEventListener("change", (e) => {
 
     const file = e.target.files[0];

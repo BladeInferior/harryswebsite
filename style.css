@@ -480,7 +480,8 @@ h1 {
     transition: 0.15s ease;
 }
 
-#page-controls button.active-mode {
+#page-controls button.active-mode,
+#page-controls button:hover{
     opacity: 1;
     border: 1px solid gold;
     background: rgba(255, 215, 0, 0.15);
