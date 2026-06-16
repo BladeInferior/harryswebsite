@@ -644,7 +644,6 @@ h1 {
 
 .collection-page #box-container {
     display: grid;
-    justify-content: center;
     gap: 12px;
     margin: 0 auto;
 }
@@ -1182,6 +1181,7 @@ body::before {
     #export-items,
     #import-pokedex,
     #export-pokedex,
+    #import-button,
     #add-item,
     #untagged-filter,
     #game-filter-container,

@@ -186,6 +186,7 @@ function renderItems() {
     });
 
     applyPagination();
+    filterItems(searchInput.value);
 }
 
 /**function renderItems() {
