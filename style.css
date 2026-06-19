@@ -957,7 +957,7 @@ h1 {
     left: 350px;
 }
 
-#modal-nav-right {
+.completions-page #modal-nav-right {
     right: 350px;
 }
 
