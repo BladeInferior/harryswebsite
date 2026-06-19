@@ -146,11 +146,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": true,
+    "shinyDex": false,
     "shinyDexData": {
       "red": false,
       "blue": false,
-      "yellow": true
+      "yellow": false
     }
   },
   {
