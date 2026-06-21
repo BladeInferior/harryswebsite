@@ -1,7 +1,6 @@
 [
   {
     "name": "venusaur",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16,7 +15,6 @@
   },
   {
     "name": "bulbasaur",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -31,7 +29,6 @@
   },
   {
     "name": "ivysaur",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -46,7 +43,6 @@
   },
   {
     "name": "scyther",
-    "type": "Bug, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -61,7 +57,6 @@
   },
   {
     "name": "beedrill",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -76,7 +71,6 @@
   },
   {
     "name": "charmander",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -91,7 +85,6 @@
   },
   {
     "name": "butterfree",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -106,7 +99,6 @@
   },
   {
     "name": "fearow",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -121,7 +113,6 @@
   },
   {
     "name": "ekans",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -136,7 +127,6 @@
   },
   {
     "name": "rampardos",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -151,7 +141,6 @@
   },
   {
     "name": "blastoise",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -166,7 +155,6 @@
   },
   {
     "name": "primeape",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -181,7 +169,6 @@
   },
   {
     "name": "squirtle",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -196,7 +183,6 @@
   },
   {
     "name": "wartortle",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -211,7 +197,6 @@
   },
   {
     "name": "kakuna",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -226,7 +211,6 @@
   },
   {
     "name": "weedle",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -241,7 +225,6 @@
   },
   {
     "name": "rattata",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -256,7 +239,6 @@
   },
   {
     "name": "pidgey",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -271,7 +253,6 @@
   },
   {
     "name": "caterpie",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -286,7 +267,6 @@
   },
   {
     "name": "spearow",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -301,7 +281,6 @@
   },
   {
     "name": "raticate",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -316,7 +295,6 @@
   },
   {
     "name": "pidgeotto",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -331,7 +309,6 @@
   },
   {
     "name": "metapod",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -346,7 +323,6 @@
   },
   {
     "name": "pidgeot",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -361,7 +337,6 @@
   },
   {
     "name": "arbok",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -376,7 +351,6 @@
   },
   {
     "name": "nidoranf",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -391,7 +365,6 @@
   },
   {
     "name": "sandshrew",
-    "type": "Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -406,7 +379,6 @@
   },
   {
     "name": "raichu",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -421,7 +393,6 @@
   },
   {
     "name": "sandslash",
-    "type": "Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -436,7 +407,6 @@
   },
   {
     "name": "charmeleon",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -451,7 +421,6 @@
   },
   {
     "name": "charizard",
-    "type": "Fire, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -466,7 +435,6 @@
   },
   {
     "name": "nidorina",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -481,7 +449,6 @@
   },
   {
     "name": "clefairy",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -496,7 +463,6 @@
   },
   {
     "name": "nidoking",
-    "type": "Poison, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -511,7 +477,6 @@
   },
   {
     "name": "nidorino",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -526,7 +491,6 @@
   },
   {
     "name": "nidoranm",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -541,7 +505,6 @@
   },
   {
     "name": "nidoqueen",
-    "type": "Poison, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -556,7 +519,6 @@
   },
   {
     "name": "pikachu",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -571,7 +533,6 @@
   },
   {
     "name": "vulpix",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -586,7 +547,6 @@
   },
   {
     "name": "abra",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -601,7 +561,6 @@
   },
   {
     "name": "kadabra",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -616,7 +575,6 @@
   },
   {
     "name": "growlithe",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -631,7 +589,6 @@
   },
   {
     "name": "mankey",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -646,7 +603,6 @@
   },
   {
     "name": "poliwrath",
-    "type": "Water, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -661,7 +617,6 @@
   },
   {
     "name": "alakazam",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -676,7 +631,6 @@
   },
   {
     "name": "arcanine",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -691,7 +645,6 @@
   },
   {
     "name": "victreebel",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -706,7 +659,6 @@
   },
   {
     "name": "bellsprout",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -721,7 +673,6 @@
   },
   {
     "name": "weepinbell",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -736,7 +687,6 @@
   },
   {
     "name": "golem",
-    "type": "Rock, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -751,7 +701,6 @@
   },
   {
     "name": "graveler",
-    "type": "Rock, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -766,7 +715,6 @@
   },
   {
     "name": "togepi",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -781,7 +729,6 @@
   },
   {
     "name": "parasect",
-    "type": "Bug, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -796,7 +743,6 @@
   },
   {
     "name": "clefable",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -811,7 +757,6 @@
   },
   {
     "name": "ninetales",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -826,7 +771,6 @@
   },
   {
     "name": "meowth",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -841,7 +785,6 @@
   },
   {
     "name": "persian",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -856,7 +799,6 @@
   },
   {
     "name": "paras",
-    "type": "Bug, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -871,7 +813,6 @@
   },
   {
     "name": "venonat",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -886,7 +827,6 @@
   },
   {
     "name": "golbat",
-    "type": "Poison, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -901,7 +841,6 @@
   },
   {
     "name": "zubat",
-    "type": "Poison, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -916,7 +855,6 @@
   },
   {
     "name": "wigglytuff",
-    "type": "Normal, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -931,7 +869,6 @@
   },
   {
     "name": "jigglypuff",
-    "type": "Normal, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -946,7 +883,6 @@
   },
   {
     "name": "vileplume",
-    "type": "Grass, Poison",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -961,7 +897,6 @@
   },
   {
     "name": "gloom",
-    "type": "Grass, Poison",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -976,7 +911,6 @@
   },
   {
     "name": "oddish",
-    "type": "Grass, Poison",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -991,7 +925,6 @@
   },
   {
     "name": "diglett",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1006,7 +939,6 @@
   },
   {
     "name": "dugtrio",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1021,7 +953,6 @@
   },
   {
     "name": "venomoth",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1036,7 +967,6 @@
   },
   {
     "name": "golduck",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1051,7 +981,6 @@
   },
   {
     "name": "psyduck",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1066,7 +995,6 @@
   },
   {
     "name": "poliwag",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1081,7 +1009,6 @@
   },
   {
     "name": "poliwhirl",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1096,7 +1023,6 @@
   },
   {
     "name": "machoke",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1111,7 +1037,6 @@
   },
   {
     "name": "machamp",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1126,7 +1051,6 @@
   },
   {
     "name": "tentacool",
-    "type": "Water, Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1141,7 +1065,6 @@
   },
   {
     "name": "tentacruel",
-    "type": "Water, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1156,7 +1079,6 @@
   },
   {
     "name": "geodude",
-    "type": "Rock, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1171,7 +1093,6 @@
   },
   {
     "name": "goldeen",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1186,7 +1107,6 @@
   },
   {
     "name": "seadra",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1201,7 +1121,6 @@
   },
   {
     "name": "farfetchd",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1216,7 +1135,6 @@
   },
   {
     "name": "muk",
-    "type": "Poison",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1231,7 +1149,6 @@
   },
   {
     "name": "magneton",
-    "type": "Electric, Steel",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1246,7 +1163,6 @@
   },
   {
     "name": "shellder",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1261,7 +1177,6 @@
   },
   {
     "name": "dewgong",
-    "type": "Water, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1276,7 +1191,6 @@
   },
   {
     "name": "hydrapple",
-    "type": "Grass, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1291,7 +1205,6 @@
   },
   {
     "name": "hisuiandecidueye",
-    "type": "Grass, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1306,7 +1219,6 @@
   },
   {
     "name": "machop",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1321,7 +1233,6 @@
   },
   {
     "name": "ponyta",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1336,7 +1247,6 @@
   },
   {
     "name": "rapidash",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1351,7 +1261,6 @@
   },
   {
     "name": "slowpoke",
-    "type": "Water, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1366,7 +1275,6 @@
   },
   {
     "name": "slowbro",
-    "type": "Water, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1381,7 +1289,6 @@
   },
   {
     "name": "doduo",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1396,7 +1303,6 @@
   },
   {
     "name": "dodrio",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1411,7 +1317,6 @@
   },
   {
     "name": "seel",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1426,7 +1331,6 @@
   },
   {
     "name": "cloyster",
-    "type": "Water, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1441,7 +1345,6 @@
   },
   {
     "name": "gastly",
-    "type": "Ghost, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1456,7 +1359,6 @@
   },
   {
     "name": "gengar",
-    "type": "Ghost, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1471,7 +1373,6 @@
   },
   {
     "name": "onix",
-    "type": "Rock, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1486,7 +1387,6 @@
   },
   {
     "name": "drowzee",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1501,7 +1401,6 @@
   },
   {
     "name": "hypno",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1516,7 +1415,6 @@
   },
   {
     "name": "krabby",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1531,7 +1429,6 @@
   },
   {
     "name": "kingler",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1546,7 +1443,6 @@
   },
   {
     "name": "voltorb",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1561,7 +1457,6 @@
   },
   {
     "name": "electrode",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1576,7 +1471,6 @@
   },
   {
     "name": "exeggcute",
-    "type": "Grass, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1591,7 +1485,6 @@
   },
   {
     "name": "cubone",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1606,7 +1499,6 @@
   },
   {
     "name": "weezing",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1621,7 +1513,6 @@
   },
   {
     "name": "rhyhorn",
-    "type": "Ground, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1636,7 +1527,6 @@
   },
   {
     "name": "marowak",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1651,7 +1541,6 @@
   },
   {
     "name": "hitmonlee",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1666,7 +1555,6 @@
   },
   {
     "name": "rhydon",
-    "type": "Ground, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1681,7 +1569,6 @@
   },
   {
     "name": "chansey",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1696,7 +1583,6 @@
   },
   {
     "name": "hitmonchan",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1711,7 +1597,6 @@
   },
   {
     "name": "lickitung",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1726,7 +1611,6 @@
   },
   {
     "name": "staryu",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1741,7 +1625,6 @@
   },
   {
     "name": "seaking",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1756,7 +1639,6 @@
   },
   {
     "name": "tangela",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1771,7 +1653,6 @@
   },
   {
     "name": "kangaskhan",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1786,7 +1667,6 @@
   },
   {
     "name": "horsea",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1801,7 +1681,6 @@
   },
   {
     "name": "starmie",
-    "type": "Water, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1816,7 +1695,6 @@
   },
   {
     "name": "pinsir",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1831,7 +1709,6 @@
   },
   {
     "name": "eevee",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1846,7 +1723,6 @@
   },
   {
     "name": "omastar",
-    "type": "Rock, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1861,7 +1737,6 @@
   },
   {
     "name": "moltres",
-    "type": "Fire, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -1876,7 +1751,6 @@
   },
   {
     "name": "kabuto",
-    "type": "Rock, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1891,7 +1765,6 @@
   },
   {
     "name": "vaporeon",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1906,7 +1779,6 @@
   },
   {
     "name": "zapdos",
-    "type": "Electric, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -1921,7 +1793,6 @@
   },
   {
     "name": "tauros",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1936,7 +1807,6 @@
   },
   {
     "name": "mrmime",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1951,7 +1821,6 @@
   },
   {
     "name": "jynx",
-    "type": "Ice, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -1966,7 +1835,6 @@
   },
   {
     "name": "ditto",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1981,7 +1849,6 @@
   },
   {
     "name": "lapras",
-    "type": "Water, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -1996,7 +1863,6 @@
   },
   {
     "name": "gyarados",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2011,7 +1877,6 @@
   },
   {
     "name": "magikarp",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2026,7 +1891,6 @@
   },
   {
     "name": "magmar",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2041,7 +1905,6 @@
   },
   {
     "name": "omanyte",
-    "type": "Rock, Water",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -2056,7 +1919,6 @@
   },
   {
     "name": "porygon",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2071,7 +1933,6 @@
   },
   {
     "name": "flareon",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2086,7 +1947,6 @@
   },
   {
     "name": "jolteon",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2101,7 +1961,6 @@
   },
   {
     "name": "kabutops",
-    "type": "Rock, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2116,7 +1975,6 @@
   },
   {
     "name": "aerodactyl",
-    "type": "Rock, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2131,7 +1989,6 @@
   },
   {
     "name": "snorlax",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2146,7 +2003,6 @@
   },
   {
     "name": "articuno",
-    "type": "Ice, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2161,7 +2017,6 @@
   },
   {
     "name": "mewtwo",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2176,7 +2031,6 @@
   },
   {
     "name": "dragonite",
-    "type": "Dragon, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -2191,7 +2045,6 @@
   },
   {
     "name": "dragonair",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2206,7 +2059,6 @@
   },
   {
     "name": "dratini",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2221,7 +2073,6 @@
   },
   {
     "name": "typhlosion",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2236,7 +2087,6 @@
   },
   {
     "name": "hoothoot",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2251,7 +2101,6 @@
   },
   {
     "name": "noctowl",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2266,7 +2115,6 @@
   },
   {
     "name": "ledian",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2281,7 +2129,6 @@
   },
   {
     "name": "ariados",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2296,7 +2143,6 @@
   },
   {
     "name": "chinchou",
-    "type": "Water, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2311,7 +2157,6 @@
   },
   {
     "name": "togetic",
-    "type": "Fairy, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -2326,7 +2171,6 @@
   },
   {
     "name": "natu",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2341,7 +2185,6 @@
   },
   {
     "name": "xatu",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2356,7 +2199,6 @@
   },
   {
     "name": "mareep",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2371,7 +2213,6 @@
   },
   {
     "name": "pichu",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2386,7 +2227,6 @@
   },
   {
     "name": "ampharos",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2401,7 +2241,6 @@
   },
   {
     "name": "bellossom",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2416,7 +2255,6 @@
   },
   {
     "name": "sudowoodo",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2431,7 +2269,6 @@
   },
   {
     "name": "yanma",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2446,7 +2283,6 @@
   },
   {
     "name": "wooper",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2461,7 +2297,6 @@
   },
   {
     "name": "quagsire",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2476,7 +2311,6 @@
   },
   {
     "name": "hoppip",
-    "type": "Grass, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2491,7 +2325,6 @@
   },
   {
     "name": "unown",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2506,7 +2339,6 @@
   },
   {
     "name": "wobbuffet",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2521,7 +2353,6 @@
   },
   {
     "name": "girafarig",
-    "type": "Normal, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2536,7 +2367,6 @@
   },
   {
     "name": "snubbull",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -2551,7 +2381,6 @@
   },
   {
     "name": "qwilfish",
-    "type": "Water, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2566,7 +2395,6 @@
   },
   {
     "name": "shuckle",
-    "type": "Bug, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2581,7 +2409,6 @@
   },
   {
     "name": "sneasel",
-    "type": "Dark, Ice",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2596,7 +2423,6 @@
   },
   {
     "name": "teddiursa",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2611,7 +2437,6 @@
   },
   {
     "name": "electabuzz",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -2626,7 +2451,6 @@
   },
   {
     "name": "haunter",
-    "type": "Ghost, Poison",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2641,7 +2465,6 @@
   },
   {
     "name": "exeggutor",
-    "type": "Grass, Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2656,7 +2479,6 @@
   },
   {
     "name": "koffing",
-    "type": "Poison",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2671,7 +2493,6 @@
   },
   {
     "name": "magnemite",
-    "type": "Electric, Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2686,7 +2507,6 @@
   },
   {
     "name": "grimer",
-    "type": "Poison",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2701,7 +2521,6 @@
   },
   {
     "name": "ursaring",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2716,7 +2535,6 @@
   },
   {
     "name": "piloswine",
-    "type": "Ice, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2731,7 +2549,6 @@
   },
   {
     "name": "swinub",
-    "type": "Ice, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2746,7 +2563,6 @@
   },
   {
     "name": "octillery",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2761,7 +2577,6 @@
   },
   {
     "name": "delibird",
-    "type": "Ice, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2776,7 +2591,6 @@
   },
   {
     "name": "mantine",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2791,7 +2605,6 @@
   },
   {
     "name": "skarmory",
-    "type": "Steel, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2806,7 +2619,6 @@
   },
   {
     "name": "stantler",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2821,7 +2633,6 @@
   },
   {
     "name": "tyrogue",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -2836,7 +2647,6 @@
   },
   {
     "name": "miltank",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2851,7 +2661,6 @@
   },
   {
     "name": "blissey",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2866,7 +2675,6 @@
   },
   {
     "name": "raikou",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2881,7 +2689,6 @@
   },
   {
     "name": "entei",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2896,7 +2703,6 @@
   },
   {
     "name": "suicune",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2911,7 +2717,6 @@
   },
   {
     "name": "larvitar",
-    "type": "Rock, Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -2926,7 +2731,6 @@
   },
   {
     "name": "pupitar",
-    "type": "Rock, Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2941,7 +2745,6 @@
   },
   {
     "name": "tyranitar",
-    "type": "Rock, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2956,7 +2759,6 @@
   },
   {
     "name": "lugia",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2971,7 +2773,6 @@
   },
   {
     "name": "hooh",
-    "type": "Fire, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -2986,7 +2787,6 @@
   },
   {
     "name": "celebi",
-    "type": "Psychic, Grass",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3001,7 +2801,6 @@
   },
   {
     "name": "treecko",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3016,7 +2815,6 @@
   },
   {
     "name": "grovyle",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3031,7 +2829,6 @@
   },
   {
     "name": "sceptile",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3046,7 +2843,6 @@
   },
   {
     "name": "torchic",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3061,7 +2857,6 @@
   },
   {
     "name": "combusken",
-    "type": "Fire, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3076,7 +2871,6 @@
   },
   {
     "name": "blaziken",
-    "type": "Fire, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3091,7 +2885,6 @@
   },
   {
     "name": "mudkip",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3106,7 +2899,6 @@
   },
   {
     "name": "marshtomp",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3121,7 +2913,6 @@
   },
   {
     "name": "swampert",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3136,7 +2927,6 @@
   },
   {
     "name": "poochyena",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3151,7 +2941,6 @@
   },
   {
     "name": "mightyena",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3166,7 +2955,6 @@
   },
   {
     "name": "zigzagoon",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3181,7 +2969,6 @@
   },
   {
     "name": "linoone",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3196,7 +2983,6 @@
   },
   {
     "name": "wurmple",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3211,7 +2997,6 @@
   },
   {
     "name": "silcoon",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3226,7 +3011,6 @@
   },
   {
     "name": "beautifly",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3241,7 +3025,6 @@
   },
   {
     "name": "cascoon",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3256,7 +3039,6 @@
   },
   {
     "name": "dustox",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3271,7 +3053,6 @@
   },
   {
     "name": "lotad",
-    "type": "Water, Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3286,7 +3067,6 @@
   },
   {
     "name": "lombre",
-    "type": "Water, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3301,7 +3081,6 @@
   },
   {
     "name": "ludicolo",
-    "type": "Water, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3316,7 +3095,6 @@
   },
   {
     "name": "seedot",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3331,7 +3109,6 @@
   },
   {
     "name": "nuzleaf",
-    "type": "Grass, Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3346,7 +3123,6 @@
   },
   {
     "name": "shiftry",
-    "type": "Grass, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3361,7 +3137,6 @@
   },
   {
     "name": "taillow",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3376,7 +3151,6 @@
   },
   {
     "name": "swellow",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3391,7 +3165,6 @@
   },
   {
     "name": "wingull",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3406,7 +3179,6 @@
   },
   {
     "name": "pelipper",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3421,7 +3193,6 @@
   },
   {
     "name": "ralts",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3436,7 +3207,6 @@
   },
   {
     "name": "kirlia",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3451,7 +3221,6 @@
   },
   {
     "name": "gardevoir",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3466,7 +3235,6 @@
   },
   {
     "name": "surskit",
-    "type": "Bug, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3481,7 +3249,6 @@
   },
   {
     "name": "masquerain",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3496,7 +3263,6 @@
   },
   {
     "name": "shroomish",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3511,7 +3277,6 @@
   },
   {
     "name": "breloom",
-    "type": "Grass, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3526,7 +3291,6 @@
   },
   {
     "name": "slakoth",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3541,7 +3305,6 @@
   },
   {
     "name": "vigoroth",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3556,7 +3319,6 @@
   },
   {
     "name": "slaking",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3571,7 +3333,6 @@
   },
   {
     "name": "nincada",
-    "type": "Bug, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3586,7 +3347,6 @@
   },
   {
     "name": "ninjask",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3601,7 +3361,6 @@
   },
   {
     "name": "shedinja",
-    "type": "Bug, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3616,7 +3375,6 @@
   },
   {
     "name": "whismur",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3631,7 +3389,6 @@
   },
   {
     "name": "loudred",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3646,7 +3403,6 @@
   },
   {
     "name": "exploud",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3661,7 +3417,6 @@
   },
   {
     "name": "makuhita",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3676,7 +3431,6 @@
   },
   {
     "name": "hariyama",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3691,7 +3445,6 @@
   },
   {
     "name": "azurill",
-    "type": "Normal, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3706,7 +3459,6 @@
   },
   {
     "name": "nosepass",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3721,7 +3473,6 @@
   },
   {
     "name": "skitty",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3736,7 +3487,6 @@
   },
   {
     "name": "delcatty",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3751,7 +3501,6 @@
   },
   {
     "name": "sableye",
-    "type": "Dark, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3766,7 +3515,6 @@
   },
   {
     "name": "mawile",
-    "type": "Steel, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3781,7 +3529,6 @@
   },
   {
     "name": "aron",
-    "type": "Steel, Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3796,7 +3543,6 @@
   },
   {
     "name": "lairon",
-    "type": "Steel, Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3811,7 +3557,6 @@
   },
   {
     "name": "aggron",
-    "type": "Steel, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3826,7 +3571,6 @@
   },
   {
     "name": "meditite",
-    "type": "Fighting, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3841,7 +3585,6 @@
   },
   {
     "name": "medicham",
-    "type": "Fighting, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3856,7 +3599,6 @@
   },
   {
     "name": "electrike",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3871,7 +3613,6 @@
   },
   {
     "name": "manectric",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3886,7 +3627,6 @@
   },
   {
     "name": "plusle",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -3901,7 +3641,6 @@
   },
   {
     "name": "minun",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3916,7 +3655,6 @@
   },
   {
     "name": "volbeat",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3931,7 +3669,6 @@
   },
   {
     "name": "illumise",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3946,7 +3683,6 @@
   },
   {
     "name": "roselia",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -3961,7 +3697,6 @@
   },
   {
     "name": "gulpin",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -3976,7 +3711,6 @@
   },
   {
     "name": "swalot",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -3991,7 +3725,6 @@
   },
   {
     "name": "carvanha",
-    "type": "Water, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4006,7 +3739,6 @@
   },
   {
     "name": "sharpedo",
-    "type": "Water, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4021,7 +3753,6 @@
   },
   {
     "name": "wailmer",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -4036,7 +3767,6 @@
   },
   {
     "name": "wailord",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4051,7 +3781,6 @@
   },
   {
     "name": "numel",
-    "type": "Fire, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4066,7 +3795,6 @@
   },
   {
     "name": "camerupt",
-    "type": "Fire, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4081,7 +3809,6 @@
   },
   {
     "name": "torkoal",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -4096,7 +3823,6 @@
   },
   {
     "name": "spoink",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -4111,7 +3837,6 @@
   },
   {
     "name": "grumpig",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4126,7 +3851,6 @@
   },
   {
     "name": "spinda",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4141,7 +3865,6 @@
   },
   {
     "name": "trapinch",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4156,7 +3879,6 @@
   },
   {
     "name": "vibrava",
-    "type": "Ground, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4171,7 +3893,6 @@
   },
   {
     "name": "flygon",
-    "type": "Ground, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4186,7 +3907,6 @@
   },
   {
     "name": "cacnea",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4201,7 +3921,6 @@
   },
   {
     "name": "cacturne",
-    "type": "Grass, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4216,7 +3935,6 @@
   },
   {
     "name": "swablu",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4231,7 +3949,6 @@
   },
   {
     "name": "altaria",
-    "type": "Dragon, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4246,7 +3963,6 @@
   },
   {
     "name": "zangoose",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4261,7 +3977,6 @@
   },
   {
     "name": "seviper",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4276,7 +3991,6 @@
   },
   {
     "name": "lunatone",
-    "type": "Rock, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4291,7 +4005,6 @@
   },
   {
     "name": "solrock",
-    "type": "Rock, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4306,7 +4019,6 @@
   },
   {
     "name": "barboach",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4321,7 +4033,6 @@
   },
   {
     "name": "whiscash",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4336,7 +4047,6 @@
   },
   {
     "name": "corphish",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4351,7 +4061,6 @@
   },
   {
     "name": "crawdaunt",
-    "type": "Water, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4366,7 +4075,6 @@
   },
   {
     "name": "baltoy",
-    "type": "Ground, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4381,7 +4089,6 @@
   },
   {
     "name": "claydol",
-    "type": "Ground, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4396,7 +4103,6 @@
   },
   {
     "name": "lileep",
-    "type": "Rock, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4411,7 +4117,6 @@
   },
   {
     "name": "cradily",
-    "type": "Rock, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4426,7 +4131,6 @@
   },
   {
     "name": "anorith",
-    "type": "Rock, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4441,7 +4145,6 @@
   },
   {
     "name": "armaldo",
-    "type": "Rock, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4456,7 +4159,6 @@
   },
   {
     "name": "feebas",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4471,7 +4173,6 @@
   },
   {
     "name": "milotic",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4486,7 +4187,6 @@
   },
   {
     "name": "castform",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4501,7 +4201,6 @@
   },
   {
     "name": "kecleon",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4516,7 +4215,6 @@
   },
   {
     "name": "shuppet",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4531,7 +4229,6 @@
   },
   {
     "name": "banette",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4546,7 +4243,6 @@
   },
   {
     "name": "duskull",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -4561,7 +4257,6 @@
   },
   {
     "name": "dusclops",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4576,7 +4271,6 @@
   },
   {
     "name": "tropius",
-    "type": "Grass, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4591,7 +4285,6 @@
   },
   {
     "name": "chimecho",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4606,7 +4299,6 @@
   },
   {
     "name": "absol",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4621,7 +4313,6 @@
   },
   {
     "name": "wynaut",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4636,7 +4327,6 @@
   },
   {
     "name": "snorunt",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4651,7 +4341,6 @@
   },
   {
     "name": "glalie",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4666,7 +4355,6 @@
   },
   {
     "name": "spheal",
-    "type": "Ice, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4681,7 +4369,6 @@
   },
   {
     "name": "sealeo",
-    "type": "Ice, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4696,7 +4383,6 @@
   },
   {
     "name": "walrein",
-    "type": "Ice, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4711,7 +4397,6 @@
   },
   {
     "name": "clamperl",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4726,7 +4411,6 @@
   },
   {
     "name": "huntail",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4741,7 +4425,6 @@
   },
   {
     "name": "gorebyss",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4756,7 +4439,6 @@
   },
   {
     "name": "relicanth",
-    "type": "Water, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4771,7 +4453,6 @@
   },
   {
     "name": "luvdisc",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4786,7 +4467,6 @@
   },
   {
     "name": "bagon",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4801,7 +4481,6 @@
   },
   {
     "name": "shelgon",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4816,7 +4495,6 @@
   },
   {
     "name": "salamence",
-    "type": "Dragon, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4831,7 +4509,6 @@
   },
   {
     "name": "beldum",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4846,7 +4523,6 @@
   },
   {
     "name": "metang",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4861,7 +4537,6 @@
   },
   {
     "name": "metagross",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4876,7 +4551,6 @@
   },
   {
     "name": "regirock",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4891,7 +4565,6 @@
   },
   {
     "name": "regice",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4906,7 +4579,6 @@
   },
   {
     "name": "registeel",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4921,7 +4593,6 @@
   },
   {
     "name": "latias",
-    "type": "Dragon, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -4936,7 +4607,6 @@
   },
   {
     "name": "latios",
-    "type": "Dragon, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4951,7 +4621,6 @@
   },
   {
     "name": "kyogre",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4966,7 +4635,6 @@
   },
   {
     "name": "groudon",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -4981,7 +4649,6 @@
   },
   {
     "name": "rayquaza",
-    "type": "Dragon, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -4996,7 +4663,6 @@
   },
   {
     "name": "jirachi",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -5011,7 +4677,6 @@
   },
   {
     "name": "deoxys",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -5026,7 +4691,6 @@
   },
   {
     "name": "turtwig",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5041,7 +4705,6 @@
   },
   {
     "name": "grotle",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5056,7 +4719,6 @@
   },
   {
     "name": "torterra",
-    "type": "Grass, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5071,7 +4733,6 @@
   },
   {
     "name": "chimchar",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5086,7 +4747,6 @@
   },
   {
     "name": "monferno",
-    "type": "Fire, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5101,7 +4761,6 @@
   },
   {
     "name": "infernape",
-    "type": "Fire, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5116,7 +4775,6 @@
   },
   {
     "name": "piplup",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5131,7 +4789,6 @@
   },
   {
     "name": "prinplup",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5146,7 +4803,6 @@
   },
   {
     "name": "empoleon",
-    "type": "Water, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5161,7 +4817,6 @@
   },
   {
     "name": "starly",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5176,7 +4831,6 @@
   },
   {
     "name": "staravia",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5191,7 +4845,6 @@
   },
   {
     "name": "staraptor",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5206,7 +4859,6 @@
   },
   {
     "name": "bidoof",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5221,7 +4873,6 @@
   },
   {
     "name": "bibarel",
-    "type": "Normal, Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5236,7 +4887,6 @@
   },
   {
     "name": "kricketot",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5251,7 +4901,6 @@
   },
   {
     "name": "kricketune",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5266,7 +4915,6 @@
   },
   {
     "name": "shinx",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5281,7 +4929,6 @@
   },
   {
     "name": "luxio",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5296,7 +4943,6 @@
   },
   {
     "name": "luxray",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5311,7 +4957,6 @@
   },
   {
     "name": "budew",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5326,7 +4971,6 @@
   },
   {
     "name": "roserade",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5341,7 +4985,6 @@
   },
   {
     "name": "cranidos",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5356,7 +4999,6 @@
   },
   {
     "name": "shieldon",
-    "type": "Rock, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5371,7 +5013,6 @@
   },
   {
     "name": "bastiodon",
-    "type": "Rock, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5386,7 +5027,6 @@
   },
   {
     "name": "burmy",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5401,7 +5041,6 @@
   },
   {
     "name": "wormadam",
-    "type": "Bug, Grass, Ground, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5416,7 +5055,6 @@
   },
   {
     "name": "mothim",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5431,7 +5069,6 @@
   },
   {
     "name": "combee",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5446,7 +5083,6 @@
   },
   {
     "name": "vespiquen",
-    "type": "Bug, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5461,7 +5097,6 @@
   },
   {
     "name": "pachirisu",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5476,7 +5111,6 @@
   },
   {
     "name": "buizel",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5491,7 +5125,6 @@
   },
   {
     "name": "floatzel",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5506,7 +5139,6 @@
   },
   {
     "name": "cherubi",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5521,7 +5153,6 @@
   },
   {
     "name": "cherrim",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5536,7 +5167,6 @@
   },
   {
     "name": "shellos",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5551,7 +5181,6 @@
   },
   {
     "name": "gastrodon",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5566,7 +5195,6 @@
   },
   {
     "name": "ambipom",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5581,7 +5209,6 @@
   },
   {
     "name": "drifloon",
-    "type": "Ghost, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5596,7 +5223,6 @@
   },
   {
     "name": "drifblim",
-    "type": "Ghost, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5611,7 +5237,6 @@
   },
   {
     "name": "buneary",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5626,7 +5251,6 @@
   },
   {
     "name": "lopunny",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5641,7 +5265,6 @@
   },
   {
     "name": "mismagius",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5656,7 +5279,6 @@
   },
   {
     "name": "honchkrow",
-    "type": "Dark, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5671,7 +5293,6 @@
   },
   {
     "name": "glameow",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5686,7 +5307,6 @@
   },
   {
     "name": "purugly",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5701,7 +5321,6 @@
   },
   {
     "name": "chingling",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5716,7 +5335,6 @@
   },
   {
     "name": "stunky",
-    "type": "Poison, Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5731,7 +5349,6 @@
   },
   {
     "name": "skuntank",
-    "type": "Poison, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5746,7 +5363,6 @@
   },
   {
     "name": "bronzor",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5761,7 +5377,6 @@
   },
   {
     "name": "bronzong",
-    "type": "Steel, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5776,7 +5391,6 @@
   },
   {
     "name": "bonsly",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5791,7 +5405,6 @@
   },
   {
     "name": "mimejr",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5806,7 +5419,6 @@
   },
   {
     "name": "happiny",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -5821,7 +5433,6 @@
   },
   {
     "name": "chatot",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5836,7 +5447,6 @@
   },
   {
     "name": "spiritomb",
-    "type": "Ghost, Dark",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5851,7 +5461,6 @@
   },
   {
     "name": "gible",
-    "type": "Dragon, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5866,7 +5475,6 @@
   },
   {
     "name": "gabite",
-    "type": "Dragon, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5881,7 +5489,6 @@
   },
   {
     "name": "garchomp",
-    "type": "Dragon, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5896,7 +5503,6 @@
   },
   {
     "name": "munchlax",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5911,7 +5517,6 @@
   },
   {
     "name": "riolu",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5926,7 +5531,6 @@
   },
   {
     "name": "lucario",
-    "type": "Fighting, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5941,7 +5545,6 @@
   },
   {
     "name": "hippopotas",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5956,7 +5559,6 @@
   },
   {
     "name": "hippowdon",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -5971,7 +5573,6 @@
   },
   {
     "name": "skorupi",
-    "type": "Poison, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -5986,7 +5587,6 @@
   },
   {
     "name": "drapion",
-    "type": "Poison, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6001,7 +5601,6 @@
   },
   {
     "name": "croagunk",
-    "type": "Poison, Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -6016,7 +5615,6 @@
   },
   {
     "name": "toxicroak",
-    "type": "Poison, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6031,7 +5629,6 @@
   },
   {
     "name": "carnivine",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6046,7 +5643,6 @@
   },
   {
     "name": "finneon",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6061,7 +5657,6 @@
   },
   {
     "name": "lumineon",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6076,7 +5671,6 @@
   },
   {
     "name": "mantyke",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6091,7 +5685,6 @@
   },
   {
     "name": "snover",
-    "type": "Grass, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6106,7 +5699,6 @@
   },
   {
     "name": "abomasnow",
-    "type": "Grass, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6121,7 +5713,6 @@
   },
   {
     "name": "weavile",
-    "type": "Dark, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6136,7 +5727,6 @@
   },
   {
     "name": "magnezone",
-    "type": "Electric, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6151,7 +5741,6 @@
   },
   {
     "name": "lickilicky",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6166,7 +5755,6 @@
   },
   {
     "name": "rhyperior",
-    "type": "Ground, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6181,7 +5769,6 @@
   },
   {
     "name": "tangrowth",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6196,7 +5783,6 @@
   },
   {
     "name": "electivire",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6211,7 +5797,6 @@
   },
   {
     "name": "magmortar",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6226,7 +5811,6 @@
   },
   {
     "name": "togekiss",
-    "type": "Fairy, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6241,7 +5825,6 @@
   },
   {
     "name": "yanmega",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6256,7 +5839,6 @@
   },
   {
     "name": "leafeon",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6271,7 +5853,6 @@
   },
   {
     "name": "glaceon",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6286,7 +5867,6 @@
   },
   {
     "name": "gliscor",
-    "type": "Ground, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6301,7 +5881,6 @@
   },
   {
     "name": "mamoswine",
-    "type": "Ice, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6316,7 +5895,6 @@
   },
   {
     "name": "porygonz",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6331,7 +5909,6 @@
   },
   {
     "name": "gallade",
-    "type": "Psychic, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6346,7 +5923,6 @@
   },
   {
     "name": "probopass",
-    "type": "Rock, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6361,7 +5937,6 @@
   },
   {
     "name": "dusknoir",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6376,7 +5951,6 @@
   },
   {
     "name": "froslass",
-    "type": "Ice, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6391,7 +5965,6 @@
   },
   {
     "name": "rotom",
-    "type": "Electric, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6406,7 +5979,6 @@
   },
   {
     "name": "uxie",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6421,7 +5993,6 @@
   },
   {
     "name": "mesprit",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6436,7 +6007,6 @@
   },
   {
     "name": "azelf",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6451,7 +6021,6 @@
   },
   {
     "name": "dialga",
-    "type": "Steel, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6466,7 +6035,6 @@
   },
   {
     "name": "palkia",
-    "type": "Water, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6481,7 +6049,6 @@
   },
   {
     "name": "heatran",
-    "type": "Fire, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6496,7 +6063,6 @@
   },
   {
     "name": "regigigas",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6511,7 +6077,6 @@
   },
   {
     "name": "giratina",
-    "type": "Ghost, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6526,7 +6091,6 @@
   },
   {
     "name": "cresselia",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6541,7 +6105,6 @@
   },
   {
     "name": "phione",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6556,7 +6119,6 @@
   },
   {
     "name": "manaphy",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6571,7 +6133,6 @@
   },
   {
     "name": "darkrai",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6586,7 +6147,6 @@
   },
   {
     "name": "shaymin",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6601,7 +6161,6 @@
   },
   {
     "name": "arceus",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6616,7 +6175,6 @@
   },
   {
     "name": "victini",
-    "type": "Psychic, Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6631,7 +6189,6 @@
   },
   {
     "name": "snivy",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6646,7 +6203,6 @@
   },
   {
     "name": "servine",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6661,7 +6217,6 @@
   },
   {
     "name": "serperior",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6676,7 +6231,6 @@
   },
   {
     "name": "tepig",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6691,7 +6245,6 @@
   },
   {
     "name": "pignite",
-    "type": "Fire, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6706,7 +6259,6 @@
   },
   {
     "name": "emboar",
-    "type": "Fire, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6721,7 +6273,6 @@
   },
   {
     "name": "oshawott",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6736,7 +6287,6 @@
   },
   {
     "name": "dewott",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6751,7 +6301,6 @@
   },
   {
     "name": "samurott",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6766,7 +6315,6 @@
   },
   {
     "name": "patrat",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6781,7 +6329,6 @@
   },
   {
     "name": "watchog",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6796,7 +6343,6 @@
   },
   {
     "name": "lillipup",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -6811,7 +6357,6 @@
   },
   {
     "name": "herdier",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -6826,7 +6371,6 @@
   },
   {
     "name": "stoutland",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6841,7 +6385,6 @@
   },
   {
     "name": "purrloin",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6856,7 +6399,6 @@
   },
   {
     "name": "liepard",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6871,7 +6413,6 @@
   },
   {
     "name": "pansage",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6886,7 +6427,6 @@
   },
   {
     "name": "simisage",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6901,7 +6441,6 @@
   },
   {
     "name": "pansear",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6916,7 +6455,6 @@
   },
   {
     "name": "simisear",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6931,7 +6469,6 @@
   },
   {
     "name": "panpour",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6946,7 +6483,6 @@
   },
   {
     "name": "simipour",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -6961,7 +6497,6 @@
   },
   {
     "name": "munna",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6976,7 +6511,6 @@
   },
   {
     "name": "musharna",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -6991,7 +6525,6 @@
   },
   {
     "name": "pidove",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7006,7 +6539,6 @@
   },
   {
     "name": "tranquill",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7021,7 +6553,6 @@
   },
   {
     "name": "unfezant",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7036,7 +6567,6 @@
   },
   {
     "name": "blitzle",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7051,7 +6581,6 @@
   },
   {
     "name": "zebstrika",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7066,7 +6595,6 @@
   },
   {
     "name": "roggenrola",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7081,7 +6609,6 @@
   },
   {
     "name": "boldore",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7096,7 +6623,6 @@
   },
   {
     "name": "gigalith",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7111,7 +6637,6 @@
   },
   {
     "name": "woobat",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7126,7 +6651,6 @@
   },
   {
     "name": "swoobat",
-    "type": "Psychic, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7141,7 +6665,6 @@
   },
   {
     "name": "drilbur",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7156,7 +6679,6 @@
   },
   {
     "name": "excadrill",
-    "type": "Ground, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7171,7 +6693,6 @@
   },
   {
     "name": "audino",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7186,7 +6707,6 @@
   },
   {
     "name": "timburr",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7201,7 +6721,6 @@
   },
   {
     "name": "gurdurr",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7216,7 +6735,6 @@
   },
   {
     "name": "conkeldurr",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7231,7 +6749,6 @@
   },
   {
     "name": "tympole",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7246,7 +6763,6 @@
   },
   {
     "name": "palpitoad",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7261,7 +6777,6 @@
   },
   {
     "name": "seismitoad",
-    "type": "Water, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7276,7 +6791,6 @@
   },
   {
     "name": "throh",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7291,7 +6805,6 @@
   },
   {
     "name": "sawk",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7306,7 +6819,6 @@
   },
   {
     "name": "sewaddle",
-    "type": "Bug, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7321,7 +6833,6 @@
   },
   {
     "name": "swadloon",
-    "type": "Bug, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7336,7 +6847,6 @@
   },
   {
     "name": "leavanny",
-    "type": "Bug, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7351,7 +6861,6 @@
   },
   {
     "name": "venipede",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7366,7 +6875,6 @@
   },
   {
     "name": "whirlipede",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7381,7 +6889,6 @@
   },
   {
     "name": "scolipede",
-    "type": "Bug, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7396,7 +6903,6 @@
   },
   {
     "name": "cottonee",
-    "type": "Grass, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7411,7 +6917,6 @@
   },
   {
     "name": "whimsicott",
-    "type": "Grass, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7426,7 +6931,6 @@
   },
   {
     "name": "petilil",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7441,7 +6945,6 @@
   },
   {
     "name": "lilligant",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7456,7 +6959,6 @@
   },
   {
     "name": "basculin",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7471,7 +6973,6 @@
   },
   {
     "name": "sandile",
-    "type": "Ground, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7486,7 +6987,6 @@
   },
   {
     "name": "krokorok",
-    "type": "Ground, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7501,7 +7001,6 @@
   },
   {
     "name": "krookodile",
-    "type": "Ground, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7516,7 +7015,6 @@
   },
   {
     "name": "darumaka",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7531,7 +7029,6 @@
   },
   {
     "name": "darmanitan",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7546,7 +7043,6 @@
   },
   {
     "name": "maractus",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7561,7 +7057,6 @@
   },
   {
     "name": "dwebble",
-    "type": "Bug, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7576,7 +7071,6 @@
   },
   {
     "name": "crustle",
-    "type": "Bug, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7591,7 +7085,6 @@
   },
   {
     "name": "scraggy",
-    "type": "Dark, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7606,7 +7099,6 @@
   },
   {
     "name": "scrafty",
-    "type": "Dark, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7621,7 +7113,6 @@
   },
   {
     "name": "sigilyph",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7636,7 +7127,6 @@
   },
   {
     "name": "yamask",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7651,7 +7141,6 @@
   },
   {
     "name": "cofagrigus",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7666,7 +7155,6 @@
   },
   {
     "name": "tirtouga",
-    "type": "Water, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7681,7 +7169,6 @@
   },
   {
     "name": "carracosta",
-    "type": "Water, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7696,7 +7183,6 @@
   },
   {
     "name": "archen",
-    "type": "Rock, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7711,7 +7197,6 @@
   },
   {
     "name": "archeops",
-    "type": "Rock, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7726,7 +7211,6 @@
   },
   {
     "name": "trubbish",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7741,7 +7225,6 @@
   },
   {
     "name": "garbodor",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7756,7 +7239,6 @@
   },
   {
     "name": "zorua",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7771,7 +7253,6 @@
   },
   {
     "name": "zoroark",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7786,7 +7267,6 @@
   },
   {
     "name": "minccino",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7801,7 +7281,6 @@
   },
   {
     "name": "cinccino",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7816,7 +7295,6 @@
   },
   {
     "name": "gothita",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7831,7 +7309,6 @@
   },
   {
     "name": "gothorita",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7846,7 +7323,6 @@
   },
   {
     "name": "gothitelle",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7861,7 +7337,6 @@
   },
   {
     "name": "solosis",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7876,7 +7351,6 @@
   },
   {
     "name": "duosion",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7891,7 +7365,6 @@
   },
   {
     "name": "reuniclus",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7906,7 +7379,6 @@
   },
   {
     "name": "ducklett",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7921,7 +7393,6 @@
   },
   {
     "name": "swanna",
-    "type": "Water, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7936,7 +7407,6 @@
   },
   {
     "name": "vanillite",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7951,7 +7421,6 @@
   },
   {
     "name": "vanillish",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7966,7 +7435,6 @@
   },
   {
     "name": "vanilluxe",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -7981,7 +7449,6 @@
   },
   {
     "name": "deerling",
-    "type": "Normal, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -7996,7 +7463,6 @@
   },
   {
     "name": "sawsbuck",
-    "type": "Normal, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8011,7 +7477,6 @@
   },
   {
     "name": "emolga",
-    "type": "Electric, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8026,7 +7491,6 @@
   },
   {
     "name": "karrablast",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8041,7 +7505,6 @@
   },
   {
     "name": "escavalier",
-    "type": "Bug, Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8056,7 +7519,6 @@
   },
   {
     "name": "foongus",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8071,7 +7533,6 @@
   },
   {
     "name": "amoonguss",
-    "type": "Grass, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8086,7 +7547,6 @@
   },
   {
     "name": "frillish",
-    "type": "Water, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8101,7 +7561,6 @@
   },
   {
     "name": "jellicent",
-    "type": "Water, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8116,7 +7575,6 @@
   },
   {
     "name": "alomomola",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8131,7 +7589,6 @@
   },
   {
     "name": "joltik",
-    "type": "Bug, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8146,7 +7603,6 @@
   },
   {
     "name": "galvantula",
-    "type": "Bug, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8161,7 +7617,6 @@
   },
   {
     "name": "ferroseed",
-    "type": "Grass, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8176,7 +7631,6 @@
   },
   {
     "name": "ferrothorn",
-    "type": "Grass, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8191,7 +7645,6 @@
   },
   {
     "name": "klink",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8206,7 +7659,6 @@
   },
   {
     "name": "klang",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8221,7 +7673,6 @@
   },
   {
     "name": "klinklang",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8236,7 +7687,6 @@
   },
   {
     "name": "tynamo",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8251,7 +7701,6 @@
   },
   {
     "name": "eelektrik",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8266,7 +7715,6 @@
   },
   {
     "name": "eelektross",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8281,7 +7729,6 @@
   },
   {
     "name": "elgyem",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8296,7 +7743,6 @@
   },
   {
     "name": "beheeyem",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8311,7 +7757,6 @@
   },
   {
     "name": "litwick",
-    "type": "Ghost, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8326,7 +7771,6 @@
   },
   {
     "name": "lampent",
-    "type": "Ghost, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8341,7 +7785,6 @@
   },
   {
     "name": "chandelure",
-    "type": "Ghost, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8356,7 +7799,6 @@
   },
   {
     "name": "axew",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8371,7 +7813,6 @@
   },
   {
     "name": "fraxure",
-    "type": "Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8386,7 +7827,6 @@
   },
   {
     "name": "haxorus",
-    "type": "Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8401,7 +7841,6 @@
   },
   {
     "name": "cubchoo",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8416,7 +7855,6 @@
   },
   {
     "name": "beartic",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8431,7 +7869,6 @@
   },
   {
     "name": "cryogonal",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8446,7 +7883,6 @@
   },
   {
     "name": "shelmet",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8461,7 +7897,6 @@
   },
   {
     "name": "accelgor",
-    "type": "Bug",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8476,7 +7911,6 @@
   },
   {
     "name": "stunfisk",
-    "type": "Ground, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8491,7 +7925,6 @@
   },
   {
     "name": "mienfoo",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8506,7 +7939,6 @@
   },
   {
     "name": "mienshao",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8521,7 +7953,6 @@
   },
   {
     "name": "druddigon",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8536,7 +7967,6 @@
   },
   {
     "name": "golett",
-    "type": "Ground, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8551,7 +7981,6 @@
   },
   {
     "name": "golurk",
-    "type": "Ground, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8566,7 +7995,6 @@
   },
   {
     "name": "pawniard",
-    "type": "Dark, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8581,7 +8009,6 @@
   },
   {
     "name": "bisharp",
-    "type": "Dark, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8596,7 +8023,6 @@
   },
   {
     "name": "bouffalant",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8611,7 +8037,6 @@
   },
   {
     "name": "rufflet",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8626,7 +8051,6 @@
   },
   {
     "name": "braviary",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8641,7 +8065,6 @@
   },
   {
     "name": "vullaby",
-    "type": "Dark, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8656,7 +8079,6 @@
   },
   {
     "name": "mandibuzz",
-    "type": "Dark, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8671,7 +8093,6 @@
   },
   {
     "name": "heatmor",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8686,7 +8107,6 @@
   },
   {
     "name": "durant",
-    "type": "Bug, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8701,7 +8121,6 @@
   },
   {
     "name": "deino",
-    "type": "Dark, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -8716,7 +8135,6 @@
   },
   {
     "name": "zweilous",
-    "type": "Dark, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8731,7 +8149,6 @@
   },
   {
     "name": "hydreigon",
-    "type": "Dark, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8746,7 +8163,6 @@
   },
   {
     "name": "larvesta",
-    "type": "Bug, Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8761,7 +8177,6 @@
   },
   {
     "name": "volcarona",
-    "type": "Bug, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8776,7 +8191,6 @@
   },
   {
     "name": "cobalion",
-    "type": "Steel, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8791,7 +8205,6 @@
   },
   {
     "name": "terrakion",
-    "type": "Rock, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8806,7 +8219,6 @@
   },
   {
     "name": "virizion",
-    "type": "Grass, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8821,7 +8233,6 @@
   },
   {
     "name": "tornadus",
-    "type": "Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8836,7 +8247,6 @@
   },
   {
     "name": "thundurus",
-    "type": "Electric, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8851,7 +8261,6 @@
   },
   {
     "name": "reshiram",
-    "type": "Dragon, Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8866,7 +8275,6 @@
   },
   {
     "name": "zekrom",
-    "type": "Dragon, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8881,7 +8289,6 @@
   },
   {
     "name": "landorus",
-    "type": "Ground, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8896,7 +8303,6 @@
   },
   {
     "name": "kyurem",
-    "type": "Dragon, Ice",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8911,7 +8317,6 @@
   },
   {
     "name": "keldeo",
-    "type": "Water, Fighting",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8926,7 +8331,6 @@
   },
   {
     "name": "meloetta",
-    "type": "Normal, Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8941,7 +8345,6 @@
   },
   {
     "name": "genesect",
-    "type": "Bug, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -8956,7 +8359,6 @@
   },
   {
     "name": "chespin",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -8971,7 +8373,6 @@
   },
   {
     "name": "quilladin",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -8986,7 +8387,6 @@
   },
   {
     "name": "chesnaught",
-    "type": "Grass, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9001,7 +8401,6 @@
   },
   {
     "name": "fennekin",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9016,7 +8415,6 @@
   },
   {
     "name": "braixen",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9031,7 +8429,6 @@
   },
   {
     "name": "delphox",
-    "type": "Fire, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9046,7 +8443,6 @@
   },
   {
     "name": "froakie",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9061,7 +8457,6 @@
   },
   {
     "name": "frogadier",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9076,7 +8471,6 @@
   },
   {
     "name": "greninja",
-    "type": "Water, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9091,7 +8485,6 @@
   },
   {
     "name": "bunnelby",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -9106,7 +8499,6 @@
   },
   {
     "name": "diggersby",
-    "type": "Normal, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9121,7 +8513,6 @@
   },
   {
     "name": "fletchling",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9136,7 +8527,6 @@
   },
   {
     "name": "fletchinder",
-    "type": "Fire, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9151,7 +8541,6 @@
   },
   {
     "name": "talonflame",
-    "type": "Fire, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9166,7 +8555,6 @@
   },
   {
     "name": "scatterbug",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9181,7 +8569,6 @@
   },
   {
     "name": "spewpa",
-    "type": "Bug",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9196,7 +8583,6 @@
   },
   {
     "name": "vivillon",
-    "type": "Bug, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9211,7 +8597,6 @@
   },
   {
     "name": "litleo",
-    "type": "Fire, Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9226,7 +8611,6 @@
   },
   {
     "name": "pyroar",
-    "type": "Fire, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9241,7 +8625,6 @@
   },
   {
     "name": "flabebe",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9256,7 +8639,6 @@
   },
   {
     "name": "floette",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9271,7 +8653,6 @@
   },
   {
     "name": "florges",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9286,7 +8667,6 @@
   },
   {
     "name": "skiddo",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9301,7 +8681,6 @@
   },
   {
     "name": "gogoat",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9316,7 +8695,6 @@
   },
   {
     "name": "pancham",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9331,7 +8709,6 @@
   },
   {
     "name": "pangoro",
-    "type": "Fighting, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9346,7 +8723,6 @@
   },
   {
     "name": "furfrou",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9361,7 +8737,6 @@
   },
   {
     "name": "espurr",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9376,7 +8751,6 @@
   },
   {
     "name": "meowstic",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9391,7 +8765,6 @@
   },
   {
     "name": "honedge",
-    "type": "Steel, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9406,7 +8779,6 @@
   },
   {
     "name": "doublade",
-    "type": "Steel, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9421,7 +8793,6 @@
   },
   {
     "name": "aegislash",
-    "type": "Steel,Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9436,7 +8807,6 @@
   },
   {
     "name": "spritzee",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9451,7 +8821,6 @@
   },
   {
     "name": "aromatisse",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9466,7 +8835,6 @@
   },
   {
     "name": "swirlix",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9481,7 +8849,6 @@
   },
   {
     "name": "slurpuff",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9496,7 +8863,6 @@
   },
   {
     "name": "inkay",
-    "type": "Dark, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9511,7 +8877,6 @@
   },
   {
     "name": "malamar",
-    "type": "Dark, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9526,7 +8891,6 @@
   },
   {
     "name": "binacle",
-    "type": "Rock, Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -9541,7 +8905,6 @@
   },
   {
     "name": "barbaracle",
-    "type": "Rock, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9556,7 +8919,6 @@
   },
   {
     "name": "skrelp",
-    "type": "Poison, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9571,7 +8933,6 @@
   },
   {
     "name": "dragalge",
-    "type": "Poison, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9586,7 +8947,6 @@
   },
   {
     "name": "clauncher",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9601,7 +8961,6 @@
   },
   {
     "name": "clawitzer",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9616,7 +8975,6 @@
   },
   {
     "name": "helioptile",
-    "type": "Electric, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9631,7 +8989,6 @@
   },
   {
     "name": "heliolisk",
-    "type": "Electric, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9646,7 +9003,6 @@
   },
   {
     "name": "tyrunt",
-    "type": "Rock, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9661,7 +9017,6 @@
   },
   {
     "name": "tyrantrum",
-    "type": "Rock, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9676,7 +9031,6 @@
   },
   {
     "name": "amaura",
-    "type": "Rock, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9691,7 +9045,6 @@
   },
   {
     "name": "aurorus",
-    "type": "Rock, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9706,7 +9059,6 @@
   },
   {
     "name": "sylveon",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9721,7 +9073,6 @@
   },
   {
     "name": "hawlucha",
-    "type": "Fighting, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9736,7 +9087,6 @@
   },
   {
     "name": "dedenne",
-    "type": "Electric, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9751,7 +9101,6 @@
   },
   {
     "name": "carbink",
-    "type": "Rock, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9766,7 +9115,6 @@
   },
   {
     "name": "goomy",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9781,7 +9129,6 @@
   },
   {
     "name": "sliggoo",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9796,7 +9143,6 @@
   },
   {
     "name": "goodra",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9811,7 +9157,6 @@
   },
   {
     "name": "klefki",
-    "type": "Steel, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9826,7 +9171,6 @@
   },
   {
     "name": "phantump",
-    "type": "Ghost, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9841,7 +9185,6 @@
   },
   {
     "name": "trevenant",
-    "type": "Ghost, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9856,7 +9199,6 @@
   },
   {
     "name": "pumpkaboo",
-    "type": "Ghost, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9871,7 +9213,6 @@
   },
   {
     "name": "gourgeist",
-    "type": "Ghost, Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9886,7 +9227,6 @@
   },
   {
     "name": "bergmite",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -9901,7 +9241,6 @@
   },
   {
     "name": "avalugg",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9916,7 +9255,6 @@
   },
   {
     "name": "noibat",
-    "type": "Flying, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -9931,7 +9269,6 @@
   },
   {
     "name": "noivern",
-    "type": "Flying, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9946,7 +9283,6 @@
   },
   {
     "name": "xerneas",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -9961,7 +9297,6 @@
   },
   {
     "name": "yveltal",
-    "type": "Dark, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -9976,7 +9311,6 @@
   },
   {
     "name": "zygarde",
-    "type": "Dragon, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -9991,7 +9325,6 @@
   },
   {
     "name": "diancie",
-    "type": "Rock, Fairy",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10006,7 +9339,6 @@
   },
   {
     "name": "hoopa",
-    "type": "Psychic, Ghost",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10021,7 +9353,6 @@
   },
   {
     "name": "volcanion",
-    "type": "Fire, Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10036,7 +9367,6 @@
   },
   {
     "name": "rowlet",
-    "type": "Grass, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10051,7 +9381,6 @@
   },
   {
     "name": "dartrix",
-    "type": "Grass, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10066,7 +9395,6 @@
   },
   {
     "name": "decidueye",
-    "type": "Grass, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10081,7 +9409,6 @@
   },
   {
     "name": "litten",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10096,7 +9423,6 @@
   },
   {
     "name": "torracat",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10111,7 +9437,6 @@
   },
   {
     "name": "incineroar",
-    "type": "Fire, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10126,7 +9451,6 @@
   },
   {
     "name": "popplio",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10141,7 +9465,6 @@
   },
   {
     "name": "brionne",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10156,7 +9479,6 @@
   },
   {
     "name": "primarina",
-    "type": "Water, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10171,7 +9493,6 @@
   },
   {
     "name": "pikipek",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10186,7 +9507,6 @@
   },
   {
     "name": "trumbeak",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10201,7 +9521,6 @@
   },
   {
     "name": "toucannon",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10216,7 +9535,6 @@
   },
   {
     "name": "yungoos",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10231,7 +9549,6 @@
   },
   {
     "name": "gumshoos",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10246,7 +9563,6 @@
   },
   {
     "name": "alolanrattata",
-    "type": "Normal, Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10261,7 +9577,6 @@
   },
   {
     "name": "alolanraticate",
-    "type": "Normal, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10276,7 +9591,6 @@
   },
   {
     "name": "alolanraichu",
-    "type": "Electric, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10291,7 +9605,6 @@
   },
   {
     "name": "grubbin",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10306,7 +9619,6 @@
   },
   {
     "name": "charjabug",
-    "type": "Bug, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10321,7 +9633,6 @@
   },
   {
     "name": "vikavolt",
-    "type": "Bug, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10336,7 +9647,6 @@
   },
   {
     "name": "alolanmeowth",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10351,7 +9661,6 @@
   },
   {
     "name": "alolanpersian",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10366,7 +9675,6 @@
   },
   {
     "name": "alolangrimer",
-    "type": "Poison, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10381,7 +9689,6 @@
   },
   {
     "name": "alolanmuk",
-    "type": "Poison, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10396,7 +9703,6 @@
   },
   {
     "name": "crabrawler",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10411,7 +9717,6 @@
   },
   {
     "name": "crabominable",
-    "type": "Fighting, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10426,7 +9731,6 @@
   },
   {
     "name": "alolandiglett",
-    "type": "Ground, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10441,7 +9745,6 @@
   },
   {
     "name": "alolandugtrio",
-    "type": "Ground, Steel",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10456,7 +9759,6 @@
   },
   {
     "name": "oricorio",
-    "type": "Fire, Electric, Psychic, Ghost, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10471,7 +9773,6 @@
   },
   {
     "name": "cutiefly",
-    "type": "Bug, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10486,7 +9787,6 @@
   },
   {
     "name": "ribombee",
-    "type": "Bug, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10501,7 +9801,6 @@
   },
   {
     "name": "rockruff",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10516,7 +9815,6 @@
   },
   {
     "name": "lycanroc",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10531,7 +9829,6 @@
   },
   {
     "name": "wishiwashi",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10546,7 +9843,6 @@
   },
   {
     "name": "mareanie",
-    "type": "Poison, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10561,7 +9857,6 @@
   },
   {
     "name": "toxapex",
-    "type": "Poison, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10576,7 +9871,6 @@
   },
   {
     "name": "mudbray",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10591,7 +9885,6 @@
   },
   {
     "name": "mudsdale",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10606,7 +9899,6 @@
   },
   {
     "name": "dewpider",
-    "type": "Water, Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10621,7 +9913,6 @@
   },
   {
     "name": "araquanid",
-    "type": "Water, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10636,7 +9927,6 @@
   },
   {
     "name": "fomantis",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10651,7 +9941,6 @@
   },
   {
     "name": "lurantis",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10666,7 +9955,6 @@
   },
   {
     "name": "morelull",
-    "type": "Grass, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10681,7 +9969,6 @@
   },
   {
     "name": "shiinotic",
-    "type": "Grass, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10696,7 +9983,6 @@
   },
   {
     "name": "salandit",
-    "type": "Poison, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10711,7 +9997,6 @@
   },
   {
     "name": "salazzle",
-    "type": "Poison, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10726,7 +10011,6 @@
   },
   {
     "name": "alolanmarowak",
-    "type": "Fire, Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10741,7 +10025,6 @@
   },
   {
     "name": "stufful",
-    "type": "Normal, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10756,7 +10039,6 @@
   },
   {
     "name": "bewear",
-    "type": "Normal, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10771,7 +10053,6 @@
   },
   {
     "name": "bounsweet",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10786,7 +10067,6 @@
   },
   {
     "name": "steenee",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -10801,7 +10081,6 @@
   },
   {
     "name": "tsareena",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10816,7 +10095,6 @@
   },
   {
     "name": "comfey",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10831,7 +10109,6 @@
   },
   {
     "name": "oranguru",
-    "type": "Normal, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10846,7 +10123,6 @@
   },
   {
     "name": "passimian",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10861,7 +10137,6 @@
   },
   {
     "name": "wimpod",
-    "type": "Bug, Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -10876,7 +10151,6 @@
   },
   {
     "name": "golisopod",
-    "type": "Bug, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10891,7 +10165,6 @@
   },
   {
     "name": "sandygast",
-    "type": "Ghost, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10906,7 +10179,6 @@
   },
   {
     "name": "palossand",
-    "type": "Ghost, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10921,7 +10193,6 @@
   },
   {
     "name": "pyukumuku",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10936,7 +10207,6 @@
   },
   {
     "name": "typenull",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10951,7 +10221,6 @@
   },
   {
     "name": "silvally",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10966,7 +10235,6 @@
   },
   {
     "name": "minior",
-    "type": "Rock, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -10981,7 +10249,6 @@
   },
   {
     "name": "komala",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -10996,7 +10263,6 @@
   },
   {
     "name": "turtonator",
-    "type": "Fire, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11011,7 +10277,6 @@
   },
   {
     "name": "togedemaru",
-    "type": "Electric, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11026,7 +10291,6 @@
   },
   {
     "name": "alolangeodude",
-    "type": "Rock, Electric",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -11041,7 +10305,6 @@
   },
   {
     "name": "alolangraveler",
-    "type": "Rock, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11056,7 +10319,6 @@
   },
   {
     "name": "alolangolem",
-    "type": "Rock, Electric",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11071,7 +10333,6 @@
   },
   {
     "name": "mimikyu",
-    "type": "Ghost, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11086,7 +10347,6 @@
   },
   {
     "name": "bruxish",
-    "type": "Water, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11101,7 +10361,6 @@
   },
   {
     "name": "drampa",
-    "type": "Normal, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11116,7 +10375,6 @@
   },
   {
     "name": "alolansandshrew",
-    "type": "Ice, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11131,7 +10389,6 @@
   },
   {
     "name": "alolansandslash",
-    "type": "Ice, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11146,7 +10403,6 @@
   },
   {
     "name": "alolanvulpix",
-    "type": "Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11161,7 +10417,6 @@
   },
   {
     "name": "alolanninetales",
-    "type": "Ice, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11176,7 +10431,6 @@
   },
   {
     "name": "dhelmise",
-    "type": "Ghost, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11191,7 +10445,6 @@
   },
   {
     "name": "alolanexeggutor",
-    "type": "Grass, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11206,7 +10459,6 @@
   },
   {
     "name": "jangmoo",
-    "type": "Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -11221,7 +10473,6 @@
   },
   {
     "name": "hakamoo",
-    "type": "Dragon, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11236,7 +10487,6 @@
   },
   {
     "name": "kommoo",
-    "type": "Dragon, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11251,7 +10501,6 @@
   },
   {
     "name": "tapukoko",
-    "type": "Electric, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11266,7 +10515,6 @@
   },
   {
     "name": "tapulele",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11281,7 +10529,6 @@
   },
   {
     "name": "tapubulu",
-    "type": "Grass, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11296,7 +10543,6 @@
   },
   {
     "name": "tapufini",
-    "type": "Water, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11311,7 +10557,6 @@
   },
   {
     "name": "cosmog",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11326,7 +10571,6 @@
   },
   {
     "name": "cosmoem",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11341,7 +10585,6 @@
   },
   {
     "name": "solgaleo",
-    "type": "Psychic, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11356,7 +10599,6 @@
   },
   {
     "name": "lunala",
-    "type": "Psychic, Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11371,7 +10613,6 @@
   },
   {
     "name": "nihilego",
-    "type": "Rock, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11386,7 +10627,6 @@
   },
   {
     "name": "buzzwole",
-    "type": "Bug, Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11401,7 +10641,6 @@
   },
   {
     "name": "pheromosa",
-    "type": "Bug, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11416,7 +10655,6 @@
   },
   {
     "name": "xurkitree",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11431,7 +10669,6 @@
   },
   {
     "name": "celesteela",
-    "type": "Steel, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11446,7 +10683,6 @@
   },
   {
     "name": "kartana",
-    "type": "Grass, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11461,7 +10697,6 @@
   },
   {
     "name": "guzzlord",
-    "type": "Dark, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11476,7 +10711,6 @@
   },
   {
     "name": "necrozma",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11491,7 +10725,6 @@
   },
   {
     "name": "magearna",
-    "type": "Steel, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11506,7 +10739,6 @@
   },
   {
     "name": "marshadow",
-    "type": "Fighting, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11521,7 +10753,6 @@
   },
   {
     "name": "poipole",
-    "type": "Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11536,7 +10767,6 @@
   },
   {
     "name": "naganadel",
-    "type": "Poison, Dragon",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11551,7 +10781,6 @@
   },
   {
     "name": "stakataka",
-    "type": "Rock, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11566,7 +10795,6 @@
   },
   {
     "name": "blacephalon",
-    "type": "Fire, Ghost",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11581,7 +10809,6 @@
   },
   {
     "name": "zeraora",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11596,7 +10823,6 @@
   },
   {
     "name": "meltan",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11611,7 +10837,6 @@
   },
   {
     "name": "melmetal",
-    "type": "Steel",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -11626,7 +10851,6 @@
   },
   {
     "name": "grookey",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11641,7 +10865,6 @@
   },
   {
     "name": "thwackey",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11656,7 +10879,6 @@
   },
   {
     "name": "rillaboom",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11671,7 +10893,6 @@
   },
   {
     "name": "scorbunny",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11686,7 +10907,6 @@
   },
   {
     "name": "raboot",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11701,7 +10921,6 @@
   },
   {
     "name": "cinderace",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11716,7 +10935,6 @@
   },
   {
     "name": "sobble",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11731,7 +10949,6 @@
   },
   {
     "name": "drizzile",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11746,7 +10963,6 @@
   },
   {
     "name": "inteleon",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11761,7 +10977,6 @@
   },
   {
     "name": "skwovet",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11776,7 +10991,6 @@
   },
   {
     "name": "greedent",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11791,7 +11005,6 @@
   },
   {
     "name": "rookidee",
-    "type": "Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11806,7 +11019,6 @@
   },
   {
     "name": "corvisquire",
-    "type": "Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11821,7 +11033,6 @@
   },
   {
     "name": "corviknight",
-    "type": "Flying, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11836,7 +11047,6 @@
   },
   {
     "name": "blipbug",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11851,7 +11061,6 @@
   },
   {
     "name": "dottler",
-    "type": "Bug, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11866,7 +11075,6 @@
   },
   {
     "name": "orbeetle",
-    "type": "Bug, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11881,7 +11089,6 @@
   },
   {
     "name": "nickit",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11896,7 +11103,6 @@
   },
   {
     "name": "thievul",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11911,7 +11117,6 @@
   },
   {
     "name": "gossifleur",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -11926,7 +11131,6 @@
   },
   {
     "name": "eldegoss",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11941,7 +11145,6 @@
   },
   {
     "name": "wooloo",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11956,7 +11159,6 @@
   },
   {
     "name": "dubwool",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11971,7 +11173,6 @@
   },
   {
     "name": "chewtle",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -11986,7 +11187,6 @@
   },
   {
     "name": "drednaw",
-    "type": "Water, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12001,7 +11201,6 @@
   },
   {
     "name": "yamper",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12016,7 +11215,6 @@
   },
   {
     "name": "boltund",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12031,7 +11229,6 @@
   },
   {
     "name": "rolycoly",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12046,7 +11243,6 @@
   },
   {
     "name": "carkol",
-    "type": "Rock, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12061,7 +11257,6 @@
   },
   {
     "name": "coalossal",
-    "type": "Rock, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12076,7 +11271,6 @@
   },
   {
     "name": "applin",
-    "type": "Grass, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12091,7 +11285,6 @@
   },
   {
     "name": "flapple",
-    "type": "Grass, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12106,7 +11299,6 @@
   },
   {
     "name": "appletun",
-    "type": "Grass, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12121,7 +11313,6 @@
   },
   {
     "name": "galarianstunfisk",
-    "type": "Ground, Steel",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -12136,7 +11327,6 @@
   },
   {
     "name": "silicobra",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12151,7 +11341,6 @@
   },
   {
     "name": "sandaconda",
-    "type": "Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12166,7 +11355,6 @@
   },
   {
     "name": "cramorant",
-    "type": "Flying, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12181,7 +11369,6 @@
   },
   {
     "name": "arrokuda",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12196,7 +11383,6 @@
   },
   {
     "name": "barraskewda",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12211,7 +11397,6 @@
   },
   {
     "name": "toxel",
-    "type": "Electric, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12226,7 +11411,6 @@
   },
   {
     "name": "toxtricity",
-    "type": "Electric, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12241,7 +11425,6 @@
   },
   {
     "name": "sizzlipede",
-    "type": "Fire, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12256,7 +11439,6 @@
   },
   {
     "name": "centiskorch",
-    "type": "Fire, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12271,7 +11453,6 @@
   },
   {
     "name": "clobbopus",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12286,7 +11467,6 @@
   },
   {
     "name": "grapploct",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12301,7 +11481,6 @@
   },
   {
     "name": "galarianponyta",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12316,7 +11495,6 @@
   },
   {
     "name": "galarianrapidash",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12331,7 +11509,6 @@
   },
   {
     "name": "sinistea",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12346,7 +11523,6 @@
   },
   {
     "name": "polteageist",
-    "type": "Ghost",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12361,7 +11537,6 @@
   },
   {
     "name": "hatenna",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12376,7 +11551,6 @@
   },
   {
     "name": "hattrem",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12391,7 +11565,6 @@
   },
   {
     "name": "hatterene",
-    "type": "Psychic, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12406,7 +11579,6 @@
   },
   {
     "name": "impidimp",
-    "type": "Dark, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12421,7 +11593,6 @@
   },
   {
     "name": "morgrem",
-    "type": "Dark, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12436,7 +11607,6 @@
   },
   {
     "name": "grimmsnarl",
-    "type": "Dark, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12451,7 +11621,6 @@
   },
   {
     "name": "galarianweezing",
-    "type": "Poison, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -12466,7 +11635,6 @@
   },
   {
     "name": "galarianzigzagoon",
-    "type": "Dark, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12481,7 +11649,6 @@
   },
   {
     "name": "galarianlinoone",
-    "type": "Dark, Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12496,7 +11663,6 @@
   },
   {
     "name": "obstagoon",
-    "type": "Dark, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12511,7 +11677,6 @@
   },
   {
     "name": "galarianmeowth",
-    "type": "Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12526,7 +11691,6 @@
   },
   {
     "name": "perrserker",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12541,7 +11705,6 @@
   },
   {
     "name": "galariancorsola",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12556,7 +11719,6 @@
   },
   {
     "name": "cursola",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12571,7 +11733,6 @@
   },
   {
     "name": "galarianfarfetchd",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12586,7 +11747,6 @@
   },
   {
     "name": "sirfetchd",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12601,7 +11761,6 @@
   },
   {
     "name": "galarianmrmime",
-    "type": "Ice, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -12616,7 +11775,6 @@
   },
   {
     "name": "mrrime",
-    "type": "Ice, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12631,7 +11789,6 @@
   },
   {
     "name": "galarianyamask",
-    "type": "Ground, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12646,7 +11803,6 @@
   },
   {
     "name": "runerigus",
-    "type": "Ground, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12661,7 +11817,6 @@
   },
   {
     "name": "milcery",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12676,7 +11831,6 @@
   },
   {
     "name": "alcremie",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12691,7 +11845,6 @@
   },
   {
     "name": "falinks",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12706,7 +11859,6 @@
   },
   {
     "name": "pincurchin",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12721,7 +11873,6 @@
   },
   {
     "name": "frosmoth",
-    "type": "Ice, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12736,7 +11887,6 @@
   },
   {
     "name": "galariandarumaka",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12751,7 +11901,6 @@
   },
   {
     "name": "snom",
-    "type": "Ice, Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12766,7 +11915,6 @@
   },
   {
     "name": "indeedee",
-    "type": "Psychic, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12781,7 +11929,6 @@
   },
   {
     "name": "morpeko",
-    "type": "Electric, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12796,7 +11943,6 @@
   },
   {
     "name": "cufant",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12811,7 +11957,6 @@
   },
   {
     "name": "dracovish",
-    "type": "Water, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12826,7 +11971,6 @@
   },
   {
     "name": "duraludon",
-    "type": "Steel, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12841,7 +11985,6 @@
   },
   {
     "name": "copperajah",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12856,7 +11999,6 @@
   },
   {
     "name": "dracozolt",
-    "type": "Electric, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12871,7 +12013,6 @@
   },
   {
     "name": "drakloak",
-    "type": "Dragon, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12886,7 +12027,6 @@
   },
   {
     "name": "zamazenta",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12901,7 +12041,6 @@
   },
   {
     "name": "eternatus",
-    "type": "Poison, Dragon",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12916,7 +12055,6 @@
   },
   {
     "name": "regieleki",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12931,7 +12069,6 @@
   },
   {
     "name": "urshifu",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -12946,7 +12083,6 @@
   },
   {
     "name": "dragapult",
-    "type": "Dragon, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -12961,7 +12097,6 @@
   },
   {
     "name": "galarianzapdos",
-    "type": "Fighting, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -12976,7 +12111,6 @@
   },
   {
     "name": "galarianmoltres",
-    "type": "Dark, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -12991,7 +12125,6 @@
   },
   {
     "name": "glastrier",
-    "type": "Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13006,7 +12139,6 @@
   },
   {
     "name": "spectrier",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13021,7 +12153,6 @@
   },
   {
     "name": "calyrex",
-    "type": "Psychic, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13036,7 +12167,6 @@
   },
   {
     "name": "hisuiantyphlosion",
-    "type": "Fire, Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13051,7 +12181,6 @@
   },
   {
     "name": "hisuiansamurott",
-    "type": "Water, Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13066,7 +12195,6 @@
   },
   {
     "name": "wyrdeer",
-    "type": "Normal, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13081,7 +12209,6 @@
   },
   {
     "name": "kleavor",
-    "type": "Bug, Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13096,7 +12223,6 @@
   },
   {
     "name": "hisuianlilligant",
-    "type": "Grass, Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13111,7 +12237,6 @@
   },
   {
     "name": "ursaluna",
-    "type": "Ground, Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13126,7 +12251,6 @@
   },
   {
     "name": "hisuiansliggoo",
-    "type": "Dragon, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13141,7 +12265,6 @@
   },
   {
     "name": "hisuiangoodra",
-    "type": "Dragon, Steel",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13156,7 +12279,6 @@
   },
   {
     "name": "hisuiangrowlithe",
-    "type": "Fire, Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13171,7 +12293,6 @@
   },
   {
     "name": "hisuianarcanine",
-    "type": "Fire, Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13186,7 +12307,6 @@
   },
   {
     "name": "hisuianbasculin",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13201,7 +12321,6 @@
   },
   {
     "name": "basculegion",
-    "type": "Water, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13216,7 +12335,6 @@
   },
   {
     "name": "hisuianvoltorb",
-    "type": "Electric, Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13231,7 +12349,6 @@
   },
   {
     "name": "hisuianelectrode",
-    "type": "Electric, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13246,7 +12363,6 @@
   },
   {
     "name": "hisuiansneasel",
-    "type": "Fighting, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13261,7 +12377,6 @@
   },
   {
     "name": "sneasler",
-    "type": "Fighting, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13276,7 +12391,6 @@
   },
   {
     "name": "hisuianqwilfish",
-    "type": "Dark, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13291,7 +12405,6 @@
   },
   {
     "name": "overqwil",
-    "type": "Dark, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13306,7 +12419,6 @@
   },
   {
     "name": "hisuianavalugg",
-    "type": "Ice, Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13321,7 +12433,6 @@
   },
   {
     "name": "hisuianzorua",
-    "type": "Normal, Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13336,7 +12447,6 @@
   },
   {
     "name": "hisuianzoroark",
-    "type": "Normal, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13351,7 +12461,6 @@
   },
   {
     "name": "hisuianbraviary",
-    "type": "Psychic, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13366,7 +12475,6 @@
   },
   {
     "name": "enamorus",
-    "type": "Fairy, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13381,7 +12489,6 @@
   },
   {
     "name": "sprigatito",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13396,7 +12503,6 @@
   },
   {
     "name": "floragato",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13411,7 +12517,6 @@
   },
   {
     "name": "meowscarada",
-    "type": "Grass, Dark",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13426,7 +12531,6 @@
   },
   {
     "name": "fuecoco",
-    "type": "Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13441,7 +12545,6 @@
   },
   {
     "name": "crocalor",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13456,7 +12559,6 @@
   },
   {
     "name": "skeledirge",
-    "type": "Fire, Ghost",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13471,7 +12573,6 @@
   },
   {
     "name": "quaxly",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13486,7 +12587,6 @@
   },
   {
     "name": "quaxwell",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13501,7 +12601,6 @@
   },
   {
     "name": "quaquaval",
-    "type": "Water, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13516,7 +12615,6 @@
   },
   {
     "name": "lechonk",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13531,7 +12629,6 @@
   },
   {
     "name": "oinkologne",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13546,7 +12643,6 @@
   },
   {
     "name": "tarountula",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13561,7 +12657,6 @@
   },
   {
     "name": "spidops",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13576,7 +12671,6 @@
   },
   {
     "name": "nymble",
-    "type": "Bug",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13591,7 +12685,6 @@
   },
   {
     "name": "lokix",
-    "type": "Bug, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13606,7 +12699,6 @@
   },
   {
     "name": "pawmi",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13621,7 +12713,6 @@
   },
   {
     "name": "pawmo",
-    "type": "Electric, Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13636,7 +12727,6 @@
   },
   {
     "name": "pawmot",
-    "type": "Electric, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13651,7 +12741,6 @@
   },
   {
     "name": "tandemaus",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13666,7 +12755,6 @@
   },
   {
     "name": "maushold",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13681,7 +12769,6 @@
   },
   {
     "name": "fidough",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13696,7 +12783,6 @@
   },
   {
     "name": "dachsbun",
-    "type": "Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13711,7 +12797,6 @@
   },
   {
     "name": "smoliv",
-    "type": "Grass, Normal",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13726,7 +12811,6 @@
   },
   {
     "name": "dolliv",
-    "type": "Grass, Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13741,7 +12825,6 @@
   },
   {
     "name": "arboliva",
-    "type": "Grass, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13756,7 +12839,6 @@
   },
   {
     "name": "squawkabilly",
-    "type": "Normal, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -13771,7 +12853,6 @@
   },
   {
     "name": "nacli",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13786,7 +12867,6 @@
   },
   {
     "name": "naclstack",
-    "type": "Rock",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13801,7 +12881,6 @@
   },
   {
     "name": "garganacl",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13816,7 +12895,6 @@
   },
   {
     "name": "charcadet",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13831,7 +12909,6 @@
   },
   {
     "name": "armarouge",
-    "type": "Fire, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13846,7 +12923,6 @@
   },
   {
     "name": "ceruledge",
-    "type": "Fire, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13861,7 +12937,6 @@
   },
   {
     "name": "tadbulb",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13876,7 +12951,6 @@
   },
   {
     "name": "bellibolt",
-    "type": "Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13891,7 +12965,6 @@
   },
   {
     "name": "wattrel",
-    "type": "Electric, Flying",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -13906,7 +12979,6 @@
   },
   {
     "name": "kilowattrel",
-    "type": "Electric, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13921,7 +12993,6 @@
   },
   {
     "name": "maschiff",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13936,7 +13007,6 @@
   },
   {
     "name": "mabosstiff",
-    "type": "Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13951,7 +13021,6 @@
   },
   {
     "name": "shroodle",
-    "type": "Poison, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13966,7 +13035,6 @@
   },
   {
     "name": "grafaiai",
-    "type": "Poison, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -13981,7 +13049,6 @@
   },
   {
     "name": "paldeantauros",
-    "type": "Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -13996,7 +13063,6 @@
   },
   {
     "name": "bramblin",
-    "type": "Grass, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14011,7 +13077,6 @@
   },
   {
     "name": "brambleghast",
-    "type": "Grass, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14026,7 +13091,6 @@
   },
   {
     "name": "toedscool",
-    "type": "Ground, Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14041,7 +13105,6 @@
   },
   {
     "name": "toedscruel",
-    "type": "Ground, Grass",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14056,7 +13119,6 @@
   },
   {
     "name": "klawf",
-    "type": "Rock",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14071,7 +13133,6 @@
   },
   {
     "name": "capsakid",
-    "type": "Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14086,7 +13147,6 @@
   },
   {
     "name": "scovillain",
-    "type": "Grass, Fire",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14101,7 +13161,6 @@
   },
   {
     "name": "rellor",
-    "type": "Bug",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14116,7 +13175,6 @@
   },
   {
     "name": "rabsca",
-    "type": "Bug, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14131,7 +13189,6 @@
   },
   {
     "name": "flittle",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14146,7 +13203,6 @@
   },
   {
     "name": "espathra",
-    "type": "Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14161,7 +13217,6 @@
   },
   {
     "name": "tinkatink",
-    "type": "Fairy, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14176,7 +13231,6 @@
   },
   {
     "name": "tinkatuff",
-    "type": "Fairy, Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14191,7 +13245,6 @@
   },
   {
     "name": "tinkaton",
-    "type": "Fairy, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14206,7 +13259,6 @@
   },
   {
     "name": "wiglett",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14221,7 +13273,6 @@
   },
   {
     "name": "wugtrio",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14236,7 +13287,6 @@
   },
   {
     "name": "bombirdier",
-    "type": "Flying, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14251,7 +13301,6 @@
   },
   {
     "name": "finizen",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14266,7 +13315,6 @@
   },
   {
     "name": "palafin",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14281,7 +13329,6 @@
   },
   {
     "name": "varoom",
-    "type": "Steel, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14296,7 +13343,6 @@
   },
   {
     "name": "revavroom",
-    "type": "Steel, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14311,7 +13357,6 @@
   },
   {
     "name": "cyclizar",
-    "type": "Dragon, Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14326,7 +13371,6 @@
   },
   {
     "name": "orthworm",
-    "type": "Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14341,7 +13385,6 @@
   },
   {
     "name": "glimmet",
-    "type": "Rock, Poison",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14356,7 +13399,6 @@
   },
   {
     "name": "glimmora",
-    "type": "Rock, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14371,7 +13413,6 @@
   },
   {
     "name": "greavard",
-    "type": "Ghost",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14386,7 +13427,6 @@
   },
   {
     "name": "houndstone",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14401,7 +13441,6 @@
   },
   {
     "name": "flamigo",
-    "type": "Flying, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14416,7 +13455,6 @@
   },
   {
     "name": "cetoddle",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14431,7 +13469,6 @@
   },
   {
     "name": "cetitan",
-    "type": "Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14446,7 +13483,6 @@
   },
   {
     "name": "veluza",
-    "type": "Water, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14461,7 +13497,6 @@
   },
   {
     "name": "dondozo",
-    "type": "Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14476,7 +13511,6 @@
   },
   {
     "name": "tatsugiri",
-    "type": "Dragon, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14491,7 +13525,6 @@
   },
   {
     "name": "annihilape",
-    "type": "Fighting, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14506,7 +13539,6 @@
   },
   {
     "name": "paldeanwooper",
-    "type": "Poison, Ground",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14521,7 +13553,6 @@
   },
   {
     "name": "clodsire",
-    "type": "Poison, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14536,7 +13567,6 @@
   },
   {
     "name": "farigiraf",
-    "type": "Normal, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14551,7 +13581,6 @@
   },
   {
     "name": "dudunsparce",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14566,7 +13595,6 @@
   },
   {
     "name": "kingambit",
-    "type": "Dark, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14581,7 +13609,6 @@
   },
   {
     "name": "greattusk",
-    "type": "Ground, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14596,7 +13623,6 @@
   },
   {
     "name": "screamtail",
-    "type": "Fairy, Psychic",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14611,7 +13637,6 @@
   },
   {
     "name": "brutebonnet",
-    "type": "Grass, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14626,7 +13651,6 @@
   },
   {
     "name": "fluttermane",
-    "type": "Ghost, Fairy",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14641,7 +13665,6 @@
   },
   {
     "name": "slitherwing",
-    "type": "Bug, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14656,7 +13679,6 @@
   },
   {
     "name": "sandyshocks",
-    "type": "Electric, Ground",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14671,7 +13693,6 @@
   },
   {
     "name": "irontreads",
-    "type": "Ground, Steel",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14686,7 +13707,6 @@
   },
   {
     "name": "ironbundle",
-    "type": "Ice, Water",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14701,7 +13721,6 @@
   },
   {
     "name": "ironhands",
-    "type": "Fighting, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14716,7 +13735,6 @@
   },
   {
     "name": "ironjugulis",
-    "type": "Dark, Flying",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14731,7 +13749,6 @@
   },
   {
     "name": "ironmoth",
-    "type": "Fire, Poison",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14746,7 +13763,6 @@
   },
   {
     "name": "ironthorns",
-    "type": "Rock, Electric",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14761,7 +13777,6 @@
   },
   {
     "name": "frigibax",
-    "type": "Dragon, Ice",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14776,7 +13791,6 @@
   },
   {
     "name": "arctibax",
-    "type": "Dragon, Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -14791,7 +13805,6 @@
   },
   {
     "name": "baxcalibur",
-    "type": "Dragon, Ice",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14806,7 +13819,6 @@
   },
   {
     "name": "gimmighoul",
-    "type": "Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -14821,7 +13833,6 @@
   },
   {
     "name": "gholdengo",
-    "type": "Steel, Ghost",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14836,7 +13847,6 @@
   },
   {
     "name": "wochien",
-    "type": "Dark, Grass",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14851,7 +13861,6 @@
   },
   {
     "name": "chienpao",
-    "type": "Dark, Ice",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14866,7 +13875,6 @@
   },
   {
     "name": "tinglu",
-    "type": "Ground, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14881,7 +13889,6 @@
   },
   {
     "name": "chiyu",
-    "type": "Dark, Fire",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14896,7 +13903,6 @@
   },
   {
     "name": "roaringmoon",
-    "type": "Dragon, Dark",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14911,7 +13917,6 @@
   },
   {
     "name": "ironvaliant",
-    "type": "Fairy, Fighting",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -14926,7 +13931,6 @@
   },
   {
     "name": "koraidon",
-    "type": "Fighting, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14941,7 +13945,6 @@
   },
   {
     "name": "miraidon",
-    "type": "Electric, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14956,7 +13959,6 @@
   },
   {
     "name": "walkingwake",
-    "type": "Water, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14971,7 +13973,6 @@
   },
   {
     "name": "ironleaves",
-    "type": "Grass, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -14986,7 +13987,6 @@
   },
   {
     "name": "dipplin",
-    "type": "Grass, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15001,7 +14001,6 @@
   },
   {
     "name": "poltchageist",
-    "type": "Grass, Ghost",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15016,7 +14015,6 @@
   },
   {
     "name": "sinistcha",
-    "type": "Grass, Ghost",
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15031,7 +14029,6 @@
   },
   {
     "name": "bloodmoonursaluna",
-    "type": "Normal, Ground",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15046,7 +14043,6 @@
   },
   {
     "name": "okidogi",
-    "type": "Poison, Fighting",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15061,7 +14057,6 @@
   },
   {
     "name": "munkidori",
-    "type": "Poison, Psychic",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15076,7 +14071,6 @@
   },
   {
     "name": "fezandipiti",
-    "type": "Poison, Fairy",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15091,7 +14085,6 @@
   },
   {
     "name": "ogerpon",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15106,7 +14099,6 @@
   },
   {
     "name": "archaludon",
-    "type": "Steel, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15121,7 +14113,6 @@
   },
   {
     "name": "gougingfire",
-    "type": "Fire, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15136,7 +14127,6 @@
   },
   {
     "name": "ragingbolt",
-    "type": "Electric, Dragon",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15151,7 +14141,6 @@
   },
   {
     "name": "ironboulder",
-    "type": "Rock, Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15166,7 +14155,6 @@
   },
   {
     "name": "ironcrown",
-    "type": "Steel, Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15181,7 +14169,6 @@
   },
   {
     "name": "terapagos",
-    "type": "Normal",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15196,7 +14183,6 @@
   },
   {
     "name": "pecharunt",
-    "type": "Poison, Ghost",
     "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15211,7 +14197,6 @@
   },
   {
     "name": "mew",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15226,7 +14211,6 @@
   },
   {
     "name": "chikorita",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15241,7 +14225,6 @@
   },
   {
     "name": "bayleef",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15256,7 +14239,6 @@
   },
   {
     "name": "meganium",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15271,7 +14253,6 @@
   },
   {
     "name": "cyndaquil",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15286,7 +14267,6 @@
   },
   {
     "name": "quilava",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15301,7 +14281,6 @@
   },
   {
     "name": "totodile",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15316,7 +14295,6 @@
   },
   {
     "name": "croconaw",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15331,7 +14309,6 @@
   },
   {
     "name": "feraligatr",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15346,7 +14323,6 @@
   },
   {
     "name": "sentret",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15361,7 +14337,6 @@
   },
   {
     "name": "furret",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15376,7 +14351,6 @@
   },
   {
     "name": "ledyba",
-    "type": "Bug, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15391,7 +14365,6 @@
   },
   {
     "name": "spinarak",
-    "type": "Bug, Poison",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15406,7 +14379,6 @@
   },
   {
     "name": "crobat",
-    "type": "Poison, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15421,7 +14393,6 @@
   },
   {
     "name": "lanturn",
-    "type": "Water, Electric",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15436,7 +14407,6 @@
   },
   {
     "name": "cleffa",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15451,7 +14421,6 @@
   },
   {
     "name": "igglybuff",
-    "type": "Normal, Fairy",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15466,7 +14435,6 @@
   },
   {
     "name": "flaaffy",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15481,7 +14449,6 @@
   },
   {
     "name": "marill",
-    "type": "Water, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15496,7 +14463,6 @@
   },
   {
     "name": "azumarill",
-    "type": "Water, Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15511,7 +14477,6 @@
   },
   {
     "name": "politoed",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15526,7 +14491,6 @@
   },
   {
     "name": "skiploom",
-    "type": "Grass, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15541,7 +14505,6 @@
   },
   {
     "name": "jumpluff",
-    "type": "Grass, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15556,7 +14519,6 @@
   },
   {
     "name": "aipom",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15571,7 +14533,6 @@
   },
   {
     "name": "sunkern",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15586,7 +14547,6 @@
   },
   {
     "name": "sunflora",
-    "type": "Grass",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15601,7 +14561,6 @@
   },
   {
     "name": "espeon",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15616,7 +14575,6 @@
   },
   {
     "name": "umbreon",
-    "type": "Dark",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15631,7 +14589,6 @@
   },
   {
     "name": "murkrow",
-    "type": "Dark, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -15646,7 +14603,6 @@
   },
   {
     "name": "slowking",
-    "type": "Water, Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15661,7 +14617,6 @@
   },
   {
     "name": "misdreavus",
-    "type": "Ghost",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15676,7 +14631,6 @@
   },
   {
     "name": "pineco",
-    "type": "Bug",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15691,7 +14645,6 @@
   },
   {
     "name": "forretress",
-    "type": "Bug, Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15706,7 +14659,6 @@
   },
   {
     "name": "dunsparce",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15721,7 +14673,6 @@
   },
   {
     "name": "gligar",
-    "type": "Ground, Flying",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15736,7 +14687,6 @@
   },
   {
     "name": "steelix",
-    "type": "Steel, Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15751,7 +14701,6 @@
   },
   {
     "name": "granbull",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15766,7 +14715,6 @@
   },
   {
     "name": "scizor",
-    "type": "Bug, Steel",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15781,7 +14729,6 @@
   },
   {
     "name": "heracross",
-    "type": "Bug, Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15796,7 +14743,6 @@
   },
   {
     "name": "slugma",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15811,7 +14757,6 @@
   },
   {
     "name": "magcargo",
-    "type": "Fire, Rock",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15826,7 +14771,6 @@
   },
   {
     "name": "corsola",
-    "type": "Water, Rock",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15841,7 +14785,6 @@
   },
   {
     "name": "remoraid",
-    "type": "Water",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -15856,7 +14799,6 @@
   },
   {
     "name": "houndour",
-    "type": "Dark, Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15871,7 +14813,6 @@
   },
   {
     "name": "houndoom",
-    "type": "Dark, Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15886,7 +14827,6 @@
   },
   {
     "name": "kingdra",
-    "type": "Water, Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15901,7 +14841,6 @@
   },
   {
     "name": "phanpy",
-    "type": "Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15916,7 +14855,6 @@
   },
   {
     "name": "donphan",
-    "type": "Ground",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15931,7 +14869,6 @@
   },
   {
     "name": "porygon2",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15946,7 +14883,6 @@
   },
   {
     "name": "smeargle",
-    "type": "Normal",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15961,7 +14897,6 @@
   },
   {
     "name": "hitmontop",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -15976,7 +14911,6 @@
   },
   {
     "name": "smoochum",
-    "type": "Ice, Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -15991,7 +14925,6 @@
   },
   {
     "name": "elekid",
-    "type": "Electric",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16006,7 +14939,6 @@
   },
   {
     "name": "magby",
-    "type": "Fire",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16021,7 +14953,6 @@
   },
   {
     "name": "stonjourner",
-    "type": "Rock",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16036,7 +14967,6 @@
   },
   {
     "name": "eiscue",
-    "type": "Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16051,7 +14981,6 @@
   },
   {
     "name": "dreepy",
-    "type": "Dragon, Ghost",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16066,7 +14995,6 @@
   },
   {
     "name": "galarianslowpoke",
-    "type": "Psychic",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16081,7 +15009,6 @@
   },
   {
     "name": "galarianslowbro",
-    "type": "Poison, Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": true,
@@ -16096,7 +15023,6 @@
   },
   {
     "name": "galarianslowking",
-    "type": "Poison, Psychic",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -16111,7 +15037,6 @@
   },
   {
     "name": "galariandarmanitan",
-    "type": "Ice",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -16126,7 +15051,6 @@
   },
   {
     "name": "arctozolt",
-    "type": "Electric, Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16141,7 +15065,6 @@
   },
   {
     "name": "arctovish",
-    "type": "Water, Ice",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16156,7 +15079,6 @@
   },
   {
     "name": "zacian",
-    "type": "Fairy",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16171,7 +15093,6 @@
   },
   {
     "name": "kubfu",
-    "type": "Fighting",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
@@ -16186,7 +15107,6 @@
   },
   {
     "name": "zarude",
-    "type": "Dark, Grass",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
@@ -16201,7 +15121,6 @@
   },
   {
     "name": "regidrago",
-    "type": "Dragon",
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": true,
@@ -16216,7 +15135,6 @@
   },
   {
     "name": "galarianarticuno",
-    "type": "Psychic, Flying",
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
