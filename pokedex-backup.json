@@ -8224,11 +8224,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "red": false,
+      "red": true,
       "blue": false,
-      "yellow": false
+      "yellow": true
     }
   },
   {
