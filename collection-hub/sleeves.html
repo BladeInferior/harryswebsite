@@ -18,8 +18,19 @@
         .then(res => res.text())
         .then(data => {
             document.getElementById('navbar').innerHTML = data;
+
+            const basePath =
+                window.location.hostname === "bladeinferior.github.io"
+                    ? "/harryswebsite/"
+                    : "/";
+
+            document.querySelectorAll('#navbar [data-page]').forEach(link => {
+                link.href = basePath + link.dataset.page;
+            });
         });
     </script>
+
+    <a class="back-button" href="collectionhub.html">← Back</a>
 
     <h1>Pokémon Sleeve Tracker</h1>
 

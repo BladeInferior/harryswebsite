@@ -868,6 +868,10 @@ h1 {
     grid-template-columns: repeat(6, 1fr);
 }
 
+.collection-page {
+    padding-top: 20px;
+}
+
 .collection-page #box-container {
     display: grid;
     gap: 12px;
@@ -1366,6 +1370,32 @@ body::before {
         0 0 18px rgba(255, 215, 0, 0.25),
         0 0 28px rgba(255, 215, 0, 0.18);
     transform: translateY(-2px);
+}
+
+.page-content {
+    padding-top: 60px;
+}
+
+.back-button {
+    display: inline-block;
+    margin: 5px 0 0 20px;
+
+    padding: 6px 10px;
+    border-radius: 8px;
+
+    background: #2d2d2d;
+    border: 1px solid #555;
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.15s ease;
+}
+
+.back-button:hover {
+    border-color: gold;
+    background: rgba(255, 215, 0, 0.15);
 }
 
 /**

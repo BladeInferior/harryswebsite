@@ -22,84 +22,90 @@
         .then(res => res.text())
         .then(data => {
             document.getElementById('navbar').innerHTML = data;
+
+            const basePath =
+                window.location.hostname === "bladeinferior.github.io"
+                    ? "/harryswebsite/"
+                    : "/";
+
+            document.querySelectorAll('#navbar [data-page]').forEach(link => {
+                link.href = basePath + link.dataset.page;
+            });
         });
     </script>
 
-    <h1>Collection Hub</h1>
+    <main class="page-content">
 
-    <a id="github-icon"
-       href="https://github.com/BladeInferior/collectionwebsite"
-       target="_blank"
-       title="GitHub Repo">
-        🐙
-    </a>
+        <a class="back-button" href="/index.html">← Back</a>
 
-    <div id="home-container">
+        <h1>Collection Hub</h1>
 
-        <!-- POKEMON CATEGORY -->
-        <div class="home-category">
+        <div id="home-container">
 
-            <h2>Pokémon</h2>
+            <!-- POKEMON CATEGORY -->
+            <div class="home-category">
 
-            <div class="home-subgrid">
+                <h2>Pokémon</h2>
 
-                <a class="home-card" href="pokedexes.html">
-                    <div class="home-icon">📘</div>
-                    <div class="home-title">Pokédex</div>
-                </a>
+                <div class="home-subgrid">
 
-                <a class="home-card" href="sleeves.html">
-                    <div class="home-icon">🃏</div>
-                    <div class="home-title">Sleeves</div>
-                </a>
+                    <a class="home-card" href="pokedexes.html">
+                        <div class="home-icon">📘</div>
+                        <div class="home-title">Pokédex</div>
+                    </a>
+
+                    <a class="home-card" href="sleeves.html">
+                        <div class="home-icon">🃏</div>
+                        <div class="home-title">Sleeves</div>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- GAMING CATEGORY -->
+            <div class="home-category">
+
+                <h2>Gaming</h2>
+
+                <div class="home-subgrid">
+
+                    <a class="home-card" href="steelbooks.html">
+                        <div class="home-icon">💿</div>
+                        <div class="home-title">Steelbooks</div>
+                    </a>
+
+                    <a class="home-card" href="completions.html">
+                        <div class="home-icon">🏆</div>
+                        <div class="home-title">Completions</div>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- GENERAL COLLECTION CATEGORY -->
+            <div class="home-category">
+
+                <h2>General Collection</h2>
+
+                <div class="home-subgrid">
+
+                    <a class="home-card" href="popfigures.html">
+                        <div class="home-icon">🤖</div>
+                        <div class="home-title">Pop Figures</div>
+                    </a>
+
+                    <a class="home-card" href="pins.html">
+                        <div class="home-icon">📌</div>
+                        <div class="home-title">Pins</div>
+                    </a>
+
+                </div>
 
             </div>
 
         </div>
-
-        <!-- GAMING CATEGORY -->
-        <div class="home-category">
-
-            <h2>Gaming</h2>
-
-            <div class="home-subgrid">
-
-                <a class="home-card" href="steelbooks.html">
-                    <div class="home-icon">💿</div>
-                    <div class="home-title">Steelbooks</div>
-                </a>
-
-                <a class="home-card" href="completions.html">
-                    <div class="home-icon">🏆</div>
-                    <div class="home-title">Completions</div>
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- GENERAL COLLECTION CATEGORY -->
-        <div class="home-category">
-
-            <h2>General Collection</h2>
-
-            <div class="home-subgrid">
-
-                <a class="home-card" href="popfigures.html">
-                    <div class="home-icon">🤖</div>
-                    <div class="home-title">Pop Figures</div>
-                </a>
-
-                <a class="home-card" href="pins.html">
-                    <div class="home-icon">📌</div>
-                    <div class="home-title">Pins</div>
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-
+    </main>
 </body>
 </html>

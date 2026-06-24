@@ -6,7 +6,7 @@
 
     <title>Quiz Hub</title>
 
-    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="../navbar.css">
 
     <style>
         :root{
@@ -104,14 +104,26 @@
 
 <body>
 
-<nav class="site-nav">
-    <a href="index.html" class="site-logo">🏠 Home</a>
+<div id="navbar"></div>
 
-    <div class="site-nav-links">
-        <a href="collection-hub/collectionhub.html">Collection Hub</a>
-        <a href="quizzes.html">Quiz Hub</a>
-    </div>
-</nav>
+<script>
+fetch('../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+
+        const basePath =
+            window.location.hostname === "bladeinferior.github.io"
+                ? "/harryswebsite/"
+                : "/";
+
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" href="collectionhub.html">← Back</a>
 
 <section class="hero">
     <h1>🧠 Quiz Hub</h1>
