@@ -1489,77 +1489,7 @@ body::before {
     max-width: none;
 }
 
-#mobile-filter-toggle {
-    display: none;
-    position: fixed;
-    top: 90px;
-    right: 16px;
-    z-index: 3000;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: #2d2d2d;
-    border: 1px solid #555;
-    color: gold;
-    font-size: 20px;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
 
-#mobile-filter-toggle.has-active {
-    border-color: gold;
-    box-shadow: 0 0 12px rgba(255,215,0,0.4);
-}
-
-#mobile-filter-panel {
-    display: none;
-    position: fixed;
-    top: 140px;
-    right: 16px;
-    z-index: 3000;
-    width: 220px;
-    max-height: 60vh;
-    overflow-y: auto;
-    background: #1c1c1c;
-    border: 1px solid #555;
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-}
-
-#mobile-filter-panel.open {
-    display: block;
-}
-
-#mobile-filter-panel h4 {
-    margin: 0 0 8px;
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    opacity: 0.6;
-}
-
-.mobile-filter-pill {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,215,0,0.12);
-    border: 1px solid gold;
-    color: gold;
-    border-radius: 8px;
-    padding: 6px 10px;
-    font-size: 13px;
-    margin-bottom: 6px;
-    cursor: pointer;
-}
-
-.mobile-filter-empty {
-    font-size: 13px;
-    opacity: 0.5;
-}
 
 /**
 
@@ -1591,14 +1521,26 @@ body::before {
     }
 
     #box-container,
-    .pokemon-page #box-container,
-    .popfigures-page #box-container,
-    .popfigures-page.list-mode #box-container,
-    .sleeves-page.list-mode #box-container {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+    .pokemon-page #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
         max-width: 100% !important;
-        gap: 8px !important;
         padding: 12px !important;
+    }
+
+    .pokemon-card img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .sleeves-page.list-mode #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
+        max-width: 100% !important;
+    }
+
+    .popfigures-page #box-container,
+    .popfigures-page.list-mode #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+        max-width: 100% !important;
     }
 
     .completions-page #box-container {
