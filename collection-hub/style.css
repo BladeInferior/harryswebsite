@@ -1489,7 +1489,9 @@ body::before {
     max-width: none;
 }
 
-
+.modal-close-btn {
+    display: none;
+}
 
 /**
 
@@ -1562,6 +1564,70 @@ body::before {
     }
 
     #mobile-filter-toggle {
+        display: none;
+        position: fixed;
+        top: 130px;
+        right: 16px;
+        z-index: 3000;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #2d2d2d;
+        border: 1px solid #555;
+        color: gold;
+        font-size: 20px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    #pokemon-modal {
+        width: 88vw !important;
+        max-width: 380px !important;
+        max-height: 80vh !important;
+        overflow-y: auto !important;
+        padding: 16px !important;
+        gap: 16px !important;
+    }
+
+    .completions-page #pokemon-modal {
+        width: 92vw !important;
+        max-width: 420px !important;
+    }
+
+    .completions-page #modal-image {
+        height: 28vh !important;
+    }
+
+    .modal-right {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+    }
+
+    .modal-left img,
+    #modal-image {
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: 200px !important;
+    }
+
+    .modal-close-btn {
         display: flex;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        width: 36px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        background: #2d2d2d;
+        border: 1px solid #555;
+        border-radius: 50%;
+        color: white;
+        font-size: 16px;
+        z-index: 3001;
+        cursor: pointer;
     }
 }

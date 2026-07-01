@@ -18,6 +18,8 @@ const modalImage = document.getElementById("modal-image");
 const navLeft = document.getElementById("modal-nav-left");
 const navRight = document.getElementById("modal-nav-right");
 const imagesInput = document.getElementById("item-images");
+const imagePrevBtn = document.getElementById("image-prev");
+const imageNextBtn = document.getElementById("image-next");
 let useUnboxedImage = false;
 
 const dlcInput = document.getElementById("dlc-name");
@@ -1154,39 +1156,43 @@ if (document.body.classList.contains("completions-page")) {
     });
 }
 
-document.getElementById("image-prev").addEventListener("click", e => {
+if (imagePrevBtn) {
+    imagePrevBtn.addEventListener("click", e => {
 
-    e.stopPropagation();
+        e.stopPropagation();
 
-    if (currentImages.length <= 1) return;
+        if (currentImages.length <= 1) return;
 
-    currentImageIndex--;
+        currentImageIndex--;
 
-    if (currentImageIndex < 0)
-        currentImageIndex = currentImages.length - 1;
+        if (currentImageIndex < 0)
+            currentImageIndex = currentImages.length - 1;
 
-    setItemImage(modalImage, currentImages[currentImageIndex]);
+        setItemImage(modalImage, currentImages[currentImageIndex]);
 
-    modalTitle.textContent =
-        `${items[modalOverlay.dataset.index][COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
-});
+        modalTitle.textContent =
+            `${items[modalOverlay.dataset.index][COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
+    });
+}
 
-document.getElementById("image-next").addEventListener("click", e => {
+if (imageNextBtn) {
+    imageNextBtn.addEventListener("click", e => {
 
-    e.stopPropagation();
+        e.stopPropagation();
 
-    if (currentImages.length <= 1) return;
+        if (currentImages.length <= 1) return;
 
-    currentImageIndex++;
+        currentImageIndex++;
 
-    if (currentImageIndex >= currentImages.length)
-        currentImageIndex = 0;
+        if (currentImageIndex >= currentImages.length)
+            currentImageIndex = 0;
 
-    setItemImage(modalImage, currentImages[currentImageIndex]);
+        setItemImage(modalImage, currentImages[currentImageIndex]);
 
-    modalTitle.textContent =
-        `${items[modalOverlay.dataset.index][COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
-});
+        modalTitle.textContent =
+            `${items[modalOverlay.dataset.index][COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
+    });
+}
 
 const toggleBtn = document.getElementById("toggle-front-image");
 
@@ -1197,6 +1203,13 @@ if (toggleBtn) {
         toggleBtn.textContent = useUnboxedImage ? "Unboxed" : "Boxed";
 
         renderItems();
+    });
+}
+
+const modalCloseBtn = document.getElementById("modal-close");
+if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", () => {
+        modalOverlay.classList.add("hidden");
     });
 }
 
