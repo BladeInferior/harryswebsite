@@ -1514,4 +1514,52 @@ body::before {
     #progress-container {
         display: none !important;
     }
+
+
+    html, body {
+        overflow-x: hidden;
+    }
+
+    #box-container,
+    .pokemon-page #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
+        max-width: 100% !important;
+        padding: 12px !important;
+    }
+
+    .pokemon-card img {
+        width: 72px;
+        height: 72px;
+    }
+
+    .sleeves-page.page-mode.first-page #box-container,
+    .sleeves-page.page-mode:not(.first-page) #box-container,
+    .sleeves-page.list-mode #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
+        max-width: 100% !important;
+    }
+
+    .popfigures-page #box-container,
+    .popfigures-page.list-mode #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+        max-width: 100% !important;
+    }
+
+    .completions-page #box-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    }
+
+    #pokemon-modal {
+        width: 92vw !important;
+        flex-direction: column !important;
+    }
+
+    .modal-left img,
+    #modal-image {
+        max-width: 100% !important;
+    }
+
+    .modal-nav {
+        display: none; /* or reposition — current left/right px offsets will overflow on mobile too */
+    }
 }
