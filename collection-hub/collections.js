@@ -77,6 +77,19 @@ modalImage.addEventListener("click", () => {
     imageZoomOverlay.classList.remove("hidden");
 });
 
+function getExportAuthKey() {
+    return localStorage.getItem("exportAuthKey");
+}
+
+function promptForAuthKey() {
+    const key = prompt("Enter your export auth key:");
+    if (key) {
+        localStorage.setItem("exportAuthKey", key);
+        alert("Key saved. This browser will now auto-export to GitHub.");
+    }
+    return key;
+}
+
 function getItemImagePath(name) {
 
     const base = name
@@ -762,9 +775,41 @@ document.getElementById("import-items").addEventListener("change", (e) => {
     reader.readAsText(file);
 });
 
-document.getElementById("export-items").addEventListener("click", () => {
+document.getElementById("export-items").addEventListener("click", async () => {
 
     const data = JSON.stringify(items, null, 2);
+    const authKey = getExportAuthKey();
+
+    if (authKey) {
+        try {
+            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Key": authKey
+                },
+                body: JSON.stringify({
+                    filename: COLLECTION.jsonFile,
+                    content: data
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.verified && result.committed) {
+                alert(`✅ ${COLLECTION.jsonFile} committed to GitHub automatically.`);
+                return;
+            }
+
+            if (result.verified && !result.committed) {
+                console.error("GitHub commit failed:", result.error);
+                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
+            }
+
+        } catch (err) {
+            console.error("Export sync failed:", err);
+        }
+    }
 
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
