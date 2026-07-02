@@ -427,6 +427,7 @@ function openModal(index) {
     }
     else {
         setItemImage(modalImage, item[COLLECTION.fields.title]);
+        modalTitle.textContent = item[COLLECTION.fields.title];
     }
 
     if (COLLECTION.name === "popfigures") {
