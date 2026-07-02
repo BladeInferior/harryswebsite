@@ -51,6 +51,14 @@
     "nationality": "ENG",
     "tags": [
       "eevee",
+      "flareon",
+      "vaporeon",
+      "jolteon",
+      "espeon",
+      "umbreon",
+      "glaceon",
+      "leafeon",
+      "sylveon",
       "ultra pro"
     ]
   },
@@ -367,7 +375,7 @@
     "date": "2020-06-26",
     "nationality": "ENG",
     "tags": [
-      "toolkit"
+      "ultra pro"
     ]
   },
   {
@@ -433,15 +441,26 @@
   },
   {
     "name": "Shiny Star V Nessa Set",
-    "date": "20/11/2020",
+    "date": "2020-11-20",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "wishiwashi",
+      "chewtle",
+      "arrokuda",
+      "milotic",
+      "nessa"
+    ]
   },
   {
     "name": "Lapras & Pikachu 2021",
-    "date": "15/12/2020",
+    "date": "2020-12-15",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lapras",
+      "pikachu",
+      "magikarp",
+      "poliwag"
+    ]
   },
   {
     "name": "Shining Fates ETB",
@@ -449,6 +468,7 @@
     "nationality": "ENG",
     "tags": [
       "eevee",
+      "dynamax",
       "gigantamax",
       "etb"
     ]
@@ -501,39 +521,81 @@
   },
   {
     "name": "Eevee Heroes Gym Special Set",
-    "date": "28/05/2021",
+    "date": "2021-05-28",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "eevee",
+      "vaporeon",
+      "jolteon",
+      "flareon",
+      "espeon",
+      "umbreon",
+      "leafeon",
+      "glaceon",
+      "sylveon"
+    ]
   },
   {
     "name": "Chilling Reign ETB 1",
-    "date": "18/06/2021",
+    "date": "2021-06-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "glastrier",
+      "calyrex",
+      "etb"
+    ]
   },
   {
     "name": "Chilling Reign ETB 2",
-    "date": "18/06/2021",
+    "date": "2021-06-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "spectrier",
+      "calyrex",
+      "etb"
+    ]
   },
   {
     "name": "Eevee Prismatic",
-    "date": "01/07/2021",
+    "date": "2021-07-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee",
+      "flareon",
+      "vaporeon",
+      "jolteon",
+      "espeon",
+      "umbreon",
+      "glaceon",
+      "leafeon",
+      "sylveon",
+      "variant"
+    ]
   },
   {
     "name": "Eevee Prismatic Blue Border",
-    "date": "01/07/2021",
+    "date": "2021-07-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee",
+      "flareon",
+      "vaporeon",
+      "jolteon",
+      "espeon",
+      "umbreon",
+      "glaceon",
+      "leafeon",
+      "sylveon",
+      "variant"
+    ]
   },
   {
     "name": "Trainer's Toolkit 2021",
-    "date": "06/08/2021",
+    "date": "2021-08-06",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ultra pro"
+    ]
   },
   {
     "name": "Cool Friends",
@@ -554,27 +616,48 @@
   },
   {
     "name": "Evolving Skies Vaporeon ETB",
-    "date": "27/08/2021",
+    "date": "2021-08-27",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "vaporeon",
+      "espeon",
+      "glaceon",
+      "sylveon",
+      "etb"
+    ]
   },
   {
     "name": "Evolving Skies Flareon ETB",
-    "date": "27/08/2021",
+    "date": "2021-08-27",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "flareon",
+      "umbreon",
+      "jolteon",
+      "leafeon",
+      "etb"
+    ]
   },
   {
     "name": "Dynamax Mew",
-    "date": "24/09/2021",
+    "date": "2021-09-24",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "mew",
+      "dreepy",
+      "dragapult",
+      "genesect",
+      "grimmsnarl"
+    ]
   },
   {
     "name": "Deck Sleeves BALL FREAK MT (Mewtwo)",
-    "date": "24/09/2021",
+    "date": "2021-09-24",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "mewtwo",
+      "item"
+    ]
   },
   {
     "name": "Celebrations ETB",
@@ -610,39 +693,59 @@
   },
   {
     "name": "Deck Sleeves 25th ANNIVERSARY COLLECTION",
-    "date": "22/10/2021",
+    "date": "2021-10-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Deck Sleeves Flying Pikachu & Surfing Pikachu",
-    "date": "22/10/2021",
+    "date": "2021-10-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Fusion Strike ETB",
-    "date": "12/11/2021",
+    "date": "2021-11-12",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "mew",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Soft and Elegant Valerie",
-    "date": "03/12/2021",
+    "date": "2021-12-03",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "sylveon",
+      "dedenne",
+      "valerie"
+    ]
   },
   {
     "name": "Victor and Gloria Special Deck Box Gloria",
-    "date": "03/12/2021",
+    "date": "2021-12-03",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "kubfu",
+      "alcremie",
+      "gloria"
+    ]
   },
   {
     "name": "Victor and Gloria Special Deck Box Victor",
-    "date": "03/12/2021",
+    "date": "2021-12-03",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "grookey",
+      "sobble",
+      "magikarp",
+      "victor"
+    ]
   },
   {
     "name": "Acerola Sitting",
@@ -655,75 +758,123 @@
   },
   {
     "name": "Deck Sleeves Pikachu Forest Ver.2",
-    "date": "10/12/2021",
+    "date": "2021-12-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "variant"
+    ]
   },
   {
     "name": "Bidoof Pile",
-    "date": "14/01/2022",
+    "date": "2022-01-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "bidoof"
+    ]
   },
   {
     "name": "Lumineon Premium Gloss",
-    "date": "14/01/2022",
+    "date": "2022-01-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lumineon",
+      "wailmer",
+      "lugia",
+      "octillery",
+      "mantine",
+      "finneon",
+      "frillish",
+      "starmie",
+      "remoraid",
+      "kingdra",
+      "seadra",
+      "corsola",
+      "lumineon",
+      "milotic",
+      "relicanth",
+      "clawitzer",
+      "tirtouga",
+      "clamperl"
+    ]
   },
   {
     "name": "Deck Sleeves Pro Charizard",
-    "date": "14/01/2022",
+    "date": "2022-01-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "charizard",
+      "dynamax",
+      "gigantamax"
+    ]
   },
   {
     "name": "Deck Sleeves Battle Start!",
-    "date": "14/01/2022",
+    "date": "2022-01-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "charizard",
+      "pikachu",
+      "lucario"
+    ]
   },
   {
     "name": "Leafeon Forest",
-    "date": "04/02/2022",
+    "date": "2022-02-04",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "leafeon"
+    ]
   },
   {
     "name": "Glaceon Forest",
-    "date": "04/02/2022",
+    "date": "2022-02-04",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "glaceon"
+    ]
   },
   {
     "name": "Gyarados Breakaway",
-    "date": "22/02/2022",
+    "date": "2022-02-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "gyarados"
+    ]
   },
   {
     "name": "Lucario Focused Fighter",
-    "date": "23/02/2022",
+    "date": "2022-02-23",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "lucario"
+    ]
   },
   {
     "name": "Darkrai",
-    "date": "25/02/2022",
+    "date": "2022-02-25",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "darkrai"
+    ]
   },
   {
     "name": "Brilliant Stars ETB",
-    "date": "25/02/2022",
+    "date": "2022-02-25",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "arceus",
+      "etb"
+    ]
   },
   {
     "name": "Brilliant Stars PC ETB",
-    "date": "25/02/2022",
+    "date": "2022-02-25",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "arceus",
+      "etb"
+    ]
   },
   {
     "name": "Summer Misty",
@@ -738,27 +889,41 @@
   },
   {
     "name": "Hisuian Growlithes",
-    "date": "08/04/2022",
+    "date": "2022-04-08",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "hisuian growlithe"
+    ]
   },
   {
     "name": "Deck Sleeves: Pokémon Dolls",
-    "date": "08/04/2022",
+    "date": "2022-04-08",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "item"
+    ]
   },
   {
     "name": "EUIC Frankfurt 2022 Glaceon Leafeon Sylveon",
-    "date": "22/04/2022",
+    "date": "2022-04-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "leafeon",
+      "glaceon",
+      "sylveon",
+      "event"
+    ]
   },
   {
     "name": "Deck Sleeves Arezu",
-    "date": "13/05/2022",
+    "date": "2022-05-13",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "aipom",
+      "teddiursa",
+      "arezu"
+    ]
   },
   {
     "name": "Professor Juniper Premium Tournament Collection",
@@ -772,51 +937,71 @@
   },
   {
     "name": "Astral Radiance ETB",
-    "date": "27/05/2022",
+    "date": "2022-05-27",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "darkrai",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss COOL×METAL Lucario",
-    "date": "28/05/2022",
+    "date": "2022-05-28",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lucario"
+    ]
   },
   {
     "name": "Pikachu Allover",
-    "date": "01/06/2022",
+    "date": "2022-06-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Pikachu Allover Single",
-    "date": "01/06/2022",
+    "date": "2022-06-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Pikachu Comic-Style",
-    "date": "17/06/2022",
+    "date": "2022-06-17",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "item"
+    ]
   },
   {
     "name": "Pikachu Comic-Style Attack",
-    "date": "17/06/2022",
+    "date": "2022-06-17",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "item"
+    ]
   },
   {
     "name": "Vulpix and Alolan Vulpix",
-    "date": "17/06/2022",
+    "date": "2022-06-17",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "vulpix",
+      "alolan vulpix"
+    ]
   },
   {
     "name": "Mewtwo VSTAR",
-    "date": "17/06/2022",
+    "date": "2022-06-17",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "mewtwo"
+    ]
   },
   {
     "name": "Venusaur Premium Gloss Sleeves",
@@ -836,9 +1021,14 @@
   },
   {
     "name": "NAIC 2022",
-    "date": "24/06/2022",
+    "date": "2022-06-24",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "grookey",
+      "scorbunny",
+      "sobble",
+      "event"
+    ]
   },
   {
     "name": "Pokemon GO ETB",
@@ -860,81 +1050,153 @@
   },
   {
     "name": "Deck Sleeves Lost Design",
-    "date": "15/07/2022",
+    "date": "2022-07-15",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "delphox",
+      "rotom",
+      "cramorant",
+      "comfey",
+      "shiftry",
+      "giratina"
+    ]
   },
   {
     "name": "Pokemon Trainers",
-    "date": "01/08/2022",
+    "date": "2022-08-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charizard",
+      "piplup",
+      "serperior",
+      "alolan geodude",
+      "red",
+      "dawn",
+      "rosa"
+    ]
   },
   {
     "name": "World Championships London 2022",
-    "date": "18/08/2022",
+    "date": "2022-08-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "roserade",
+      "grookey",
+      "scorbunny",
+      "sobble",
+      "morpeko",
+      "yamper",
+      "rillaboom",
+      "perrserker",
+      "stonjourne",
+      "sinistea",
+      "event"
+    ]
   },
   {
     "name": "Shiny Jirachi",
-    "date": "02/09/2022",
+    "date": "2022-09-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "jirachi",
+      "minior",
+      "shiny"
+    ]
   },
   {
     "name": "Rosa Serperior",
-    "date": "02/09/2022",
+    "date": "2022-09-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "serperior",
+      "rosa"
+    ]
   },
   {
     "name": "Pikachu Celebi Furret",
-    "date": "02/09/2022",
+    "date": "2022-09-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "furret",
+      "celebi"
+    ]
   },
   {
     "name": "Deck Sleeves Altaria & Lisia",
-    "date": "02/09/2022",
+    "date": "2022-09-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "altaria",
+      "lisia",
+      "item"
+    ]
   },
   {
     "name": "Deck Sleeves Serena",
-    "date": "02/09/2022",
+    "date": "2022-09-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "vivillon",
+      "braixen",
+      "swirlix",
+      "meowstic",
+      "serena"
+    ]
   },
   {
     "name": "Lost Origin ETB",
-    "date": "09/09/2022",
+    "date": "2022-09-09",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "giratina",
+      "etb"
+    ]
   },
   {
     "name": "Lost Origin PC ETB",
-    "date": "09/09/2022",
+    "date": "2022-09-09",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "giratina",
+      "etb"
+    ]
   },
   {
     "name": "Adaman PLA",
-    "date": "10/09/2022",
+    "date": "2022-09-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "leafeon",
+      "luxio",
+      "hisuian decidueye",
+      "shinx",
+      "adaman",
+      "alpha"
+    ]
   },
   {
     "name": "Irida PLA",
-    "date": "10/09/2022",
+    "date": "2022-09-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "glaceon",
+      "hisuian samurott",
+      "akari",
+      "irida"
+    ]
   },
   {
     "name": "Deck Sleeves Keldeo",
-    "date": "01/10/2022",
+    "date": "2022-10-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "cobalion",
+      "virizion",
+      "terrakion",
+      "keldeo"
+    ]
   },
   {
     "name": "Dragonite Hyperbeam with Lance",
@@ -957,21 +1219,31 @@
   },
   {
     "name": "Deck Sleeves Pikachu & Morpeko",
-    "date": "21/10/2022",
+    "date": "2022-10-21",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "piakchu",
+      "morpeko",
+      "item"
+    ]
   },
   {
     "name": "Mystery Box Deck Sleeves Lugia Mural Version",
-    "date": "21/10/2022",
+    "date": "2022-10-21",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lugia",
+      "item"
+    ]
   },
   {
     "name": "Charizard Ultra Premium Collection",
-    "date": "28/10/2022",
+    "date": "2022-10-28",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charizard",
+      "terastal"
+    ]
   },
   {
     "name": "Gen 1, 4 & 8 Starters",
@@ -991,45 +1263,74 @@
   },
   {
     "name": "Deck Sleeves Flying Charizard",
-    "date": "04/11/2022",
+    "date": "2022-11-04",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "charizard"
+    ]
   },
   {
     "name": "Deck Sleeves Flying Rayquaza",
-    "date": "04/11/2022",
+    "date": "2022-11-04",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "rayquaza"
+    ]
   },
   {
     "name": "Deck Sleeves Pokémon and Tools STEPLADDER",
-    "date": "04/11/2022",
+    "date": "2022-11-04",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "fletchling",
+      "skwovet",
+      "item"
+    ]
   },
   {
     "name": "Silver Tempest ETB",
-    "date": "11/11/2022",
+    "date": "2022-11-11",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "alolan vulpix",
+      "etb"
+    ]
   },
   {
     "name": "Silver Tempest PC ETB",
-    "date": "11/11/2022",
+    "date": "2022-11-11",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "alolan vulpix",
+      "etb"
+    ]
   },
   {
     "name": "Sinnoh Legend",
-    "date": "02/12/2022",
+    "date": "2022-12-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "dialga",
+      "palkia",
+      "arceus",
+      "giratina"
+    ]
   },
   {
     "name": "Pearl Clan Special Set",
-    "date": "02/12/2022",
+    "date": "2022-12-02",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "glalie",
+      "hisuian sliggoo",
+      "ursaluna",
+      "irida",
+      "lian",
+      "calaba",
+      "palina",
+      "ingo",
+      "gaeric"
+    ]
   },
   {
     "name": "Eevee-GX Box Set (Espeon)",
@@ -1041,9 +1342,12 @@
   },
   {
     "name": "Crown Zenith ETB",
-    "date": "20/01/2023",
+    "date": "2023-01-20",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "lucario",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Evolution Line Gardevoir",
@@ -1057,9 +1361,13 @@
   },
   {
     "name": "Deck Sleeves Magnezone",
-    "date": "20/01/2023",
+    "date": "2023-01-20",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "magnemite",
+      "magneton",
+      "magnezone"
+    ]
   },
   {
     "name": "Deck Sleeves Sprigatito Fuecoco & Quaxly",
@@ -1073,9 +1381,24 @@
   },
   {
     "name": "Paldean Starters with Toys",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "sprigatito",
+      "fuecco",
+      "quaxly",
+      "pikachu",
+      "pachirisu",
+      "jumpluff",
+      "shroomish",
+      "houndoom",
+      "mudbray",
+      "girafarig",
+      "drifblim",
+      "wingull",
+      "applin",
+      "item"
+    ]
   },
   {
     "name": "Deck Sleeves Meowscarada Skeledirge and Quaquaval",
@@ -1089,27 +1412,38 @@
   },
   {
     "name": "Deck Sleeves Premium Gloss Terastal Arcanine",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "arcanine",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Terastal Gyarados",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "gyarados",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Terastal Dedenne",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "dedenne",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Paldean Wooper",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "paldean wooper"
+    ]
   },
   {
     "name": "Deck Sleeves Falkner",
@@ -1221,9 +1555,11 @@
   },
   {
     "name": "Trainer's Toolkit 2023",
-    "date": "09/06/2023",
+    "date": "2023-06-09",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ultra pro"
+    ]
   },
   {
     "name": "Deck Sleeves Erika's Holiday",
@@ -1760,9 +2096,11 @@
   },
   {
     "name": "Trainer's Toolkit 2024",
-    "date": "18/10/2024",
+    "date": "2024-10-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ultra pro"
+    ]
   },
   {
     "name": "Asia Championship Series Premier Ball League",
