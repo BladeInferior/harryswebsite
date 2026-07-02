@@ -12,6 +12,7 @@ const searchWrapper = document.getElementById("search-wrapper");
 const untaggedBtn = document.getElementById("untagged-filter");
 
 const modalTitle = document.getElementById("modal-title");
+const itemModalTitle = document.getElementById("item-modal-title");
 const previewBtn = document.getElementById("preview-image-btn");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalImage = document.getElementById("modal-image");
@@ -415,6 +416,7 @@ function openModal(index) {
         }
         else {
             setItemImage(modalImage, item[COLLECTION.fields.title]);
+            modalTitle.textContent = item[COLLECTION.fields.title];
         }
 
         document.getElementById("image-prev").style.display =
@@ -593,7 +595,7 @@ const tagsInput = document.getElementById("item-tags");
 document.getElementById("add-item").addEventListener("click", () => {
 
     addModal.classList.remove("hidden");
-    modalTitle.textContent = "Add Item";
+    itemModalTitle.textContent = "Add Item";
     previewBtn.style.display = "none";
 
     delete addModal.dataset.editIndex;
@@ -715,7 +717,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
     const tagsContainer = document.getElementById("modal-tags");
 
     addModal.dataset.editIndex = index;
-    modalTitle.textContent = "Edit Item";
+    itemModalTitle.textContent = "Edit Item";
     previewBtn.style.display = "inline-block";
 
     tagsContainer.innerHTML = "";
