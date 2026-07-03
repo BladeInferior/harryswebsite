@@ -1,0 +1,125 @@
+{
+    "id": "sample-quiz-1",
+    "title": "Pokémon Basics Sampler",
+    "description": "A hand-built sample quiz exercising every answer type.",
+    "version": 1,
+    "questions": [
+        {
+            "id": "q1",
+            "type": "text",
+            "prompt": "Who's that Pokémon?",
+            "media": {
+                "kind": "image",
+                "src": "../collection-hub/sprites/pokemon_sprites/snorlax.png",
+                "alt": "Silhouetted Pokémon",
+                "silhouette": true
+            },
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "acceptedAnswers": ["snorlax"]
+            },
+            "explanation": "It's Snorlax!"
+        },
+        {
+            "id": "q2",
+            "type": "text",
+            "prompt": "Charizard is Fire and which other type?",
+            "media": {
+                "kind": "image",
+                "src": "../collection-hub/sprites/pokemon_sprites/charizard.png",
+                "alt": "Charizard",
+                "silhouette": false
+            },
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "acceptedAnswers": ["flying"]
+            },
+            "explanation": "Charizard is Fire/Flying."
+        },
+        {
+            "id": "q3",
+            "type": "multiple-choice",
+            "prompt": "What type is Squirtle?",
+            "media": {
+                "kind": "image",
+                "src": "../collection-hub/sprites/pokemon_sprites/squirtle.png",
+                "alt": "Squirtle",
+                "silhouette": false
+            },
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "display": "buttons",
+                "options": [
+                    { "id": "water", "label": "Water" },
+                    { "id": "fire", "label": "Fire" },
+                    { "id": "grass", "label": "Grass" },
+                    { "id": "electric", "label": "Electric" }
+                ],
+                "correctOptionId": "water"
+            },
+            "explanation": "Squirtle is a Water-type."
+        },
+        {
+            "id": "q4",
+            "type": "multiple-choice",
+            "prompt": "Which region did Pikachu originate in?",
+            "media": {
+                "kind": "image",
+                "src": "../collection-hub/sprites/pokemon_sprites/pikachu.png",
+                "alt": "Pikachu",
+                "silhouette": false
+            },
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "display": "dropdown",
+                "options": [
+                    { "id": "kanto", "label": "Kanto" },
+                    { "id": "johto", "label": "Johto" },
+                    { "id": "hoenn", "label": "Hoenn" },
+                    { "id": "sinnoh", "label": "Sinnoh" }
+                ],
+                "correctOptionId": "kanto"
+            },
+            "explanation": "Pikachu first appeared in the Kanto region."
+        },
+        {
+            "id": "q5",
+            "type": "image-select",
+            "prompt": "Which image shows Galarian Articuno?",
+            "media": null,
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "options": [
+                    { "id": "articuno", "src": "../collection-hub/sprites/pokemon_sprites/articuno.png", "alt": "Articuno" },
+                    { "id": "galarianarticuno", "src": "../collection-hub/sprites/pokemon_sprites/galarianarticuno.png", "alt": "Galarian Articuno" },
+                    { "id": "zapdos", "src": "../collection-hub/sprites/pokemon_sprites/zapdos.png", "alt": "Zapdos" },
+                    { "id": "moltres", "src": "../collection-hub/sprites/pokemon_sprites/moltres.png", "alt": "Moltres" }
+                ],
+                "correctOptionId": "galarianarticuno"
+            },
+            "explanation": "That's Galarian Articuno, the Psychic/Flying regional form."
+        },
+        {
+            "id": "q6",
+            "type": "ordering",
+            "prompt": "Arrange this evolution line in order.",
+            "media": null,
+            "points": 100,
+            "timeLimitSeconds": null,
+            "config": {
+                "items": [
+                    { "id": "charizard", "label": "Charizard" },
+                    { "id": "charmander", "label": "Charmander" },
+                    { "id": "charmeleon", "label": "Charmeleon" }
+                ],
+                "correctOrder": ["charmander", "charmeleon", "charizard"]
+            },
+            "explanation": "Charmander → Charmeleon → Charizard."
+        }
+    ]
+}

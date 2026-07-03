@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Host</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+
+    <style>
+        :root{
+            --bg:#121212;
+            --card:#1e1e1e;
+            --gold:#d4af37;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#333;
+            --correct:#3fb950;
+            --incorrect:#e5534b;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        .hero{
+            text-align:center;
+            padding:100px 20px 10px;
+        }
+
+        .hero h1{
+            font-size:2.4rem;
+            margin-bottom:10px;
+        }
+
+        .hero p{
+            max-width:650px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+
+        .layout{
+            max-width:1000px;
+            margin:auto;
+            padding:30px 20px 60px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:24px;
+        }
+
+        @media (max-width:700px){
+            .layout{
+                grid-template-columns:1fr;
+            }
+        }
+
+        .card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+        }
+
+        .full-width{
+            grid-column:1 / -1;
+        }
+
+        .code-card{
+            text-align:center;
+        }
+
+        .code-card p{
+            color:var(--secondary);
+            margin-bottom:10px;
+        }
+
+        #code-display{
+            font-size:4rem;
+            font-weight:bold;
+            letter-spacing:8px;
+            color:var(--gold);
+            margin-bottom:20px;
+        }
+
+        .btn{
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:14px 32px;
+            font-size:1.05rem;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        .btn:disabled{
+            opacity:.5;
+            cursor:default;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover:not(:disabled){
+            border-color:var(--gold);
+            background:transparent;
+        }
+
+        .btn-small{
+            padding:6px 16px;
+            font-size:.85rem;
+        }
+
+        .card h2{
+            margin-bottom:15px;
+            font-size:1.1rem;
+            color:var(--secondary);
+        }
+
+        #player-list,
+        #message-list,
+        #results-list,
+        #scoreboard-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        #player-list li,
+        #message-list li,
+        #results-list li,
+        #scoreboard-list li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:10px 14px;
+        }
+
+        #player-list:empty::after{
+            content:"No one has joined yet.";
+            color:var(--secondary);
+        }
+
+        #message-list:empty::after{
+            content:"No messages yet.";
+            color:var(--secondary);
+        }
+
+        #results-list li.correct{
+            border-color:var(--correct);
+            background:rgba(63,185,80,.15);
+        }
+
+        #results-list li.incorrect{
+            border-color:var(--incorrect);
+            background:rgba(229,83,75,.15);
+        }
+
+        #results-list li{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        #results-list li.no-answer{
+            color:var(--secondary);
+        }
+
+        #locked-controls{
+            margin-top:16px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:14px;
+        }
+
+        #correct-answer-display{
+            color:var(--gold);
+            font-weight:bold;
+            font-size:1.1rem;
+        }
+
+        .question-card{
+            text-align:center;
+        }
+
+        #question-progress{
+            color:var(--secondary);
+            margin-bottom:10px;
+        }
+
+        #host-question-prompt{
+            font-size:1.6rem;
+            margin-bottom:20px;
+            line-height:1.4;
+        }
+
+        #host-question-media img{
+            display:block;
+            max-width:220px;
+            max-height:220px;
+            margin:0 auto 20px;
+            border-radius:8px;
+        }
+
+        #host-question-media img.silhouette{
+            filter:brightness(0);
+        }
+
+        #answer-count{
+            color:var(--secondary);
+            margin-bottom:16px;
+        }
+
+        #ended-view{
+            text-align:center;
+        }
+
+        #ended-view h2{
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script>
+fetch('../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+
+        const basePath =
+            window.location.hostname === "bladeinferior.github.io"
+                ? "/harryswebsite/"
+                : "/";
+
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" href="manage-quizzes.html">← Back</a>
+
+<section class="hero">
+    <h1 id="quiz-title">Loading quiz...</h1>
+    <p id="quiz-description"></p>
+</section>
+
+<div id="lobby-view" class="layout">
+
+    <div class="card code-card full-width">
+        <p>Join code</p>
+        <div id="code-display">----</div>
+        <button id="begin-btn" class="btn">Begin Quiz</button>
+    </div>
+
+    <div class="card">
+        <h2>Players joined</h2>
+        <ul id="player-list"></ul>
+    </div>
+
+    <div class="card">
+        <h2>Messages</h2>
+        <ul id="message-list"></ul>
+    </div>
+
+</div>
+
+<div id="quiz-view" class="layout" hidden>
+
+    <div class="card question-card full-width">
+        <p id="question-progress"></p>
+        <h2 id="host-question-prompt"></h2>
+        <div id="host-question-media"></div>
+        <p id="answer-count"></p>
+
+        <button id="lock-btn" class="btn">Lock Answers</button>
+
+        <div id="locked-controls" hidden>
+            <button id="reveal-answer-btn" class="btn btn-secondary">Reveal Correct Answer</button>
+            <p id="correct-answer-display" hidden></p>
+            <button id="next-question-btn" class="btn">Next Question</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Results</h2>
+        <ul id="results-list"></ul>
+    </div>
+
+    <div class="card">
+        <h2>Scoreboard</h2>
+        <ul id="scoreboard-list"></ul>
+    </div>
+
+</div>
+
+<div id="ended-view" class="layout" hidden>
+    <div class="card full-width">
+        <h2>Quiz Complete!</h2>
+        <ul id="final-scoreboard-list"></ul>
+    </div>
+</div>
+
+<script src="engine/answer-types.js"></script>
+<script type="module" src="host-quiz.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Play Test</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+
+    <style>
+        :root{
+            --bg:#121212;
+            --card:#1e1e1e;
+            --card-hover:#262626;
+            --gold:#d4af37;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#333;
+            --correct:#3fb950;
+            --incorrect:#e5534b;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        .hero{
+            text-align:center;
+            padding:60px 20px 30px;
+        }
+
+        .hero h1{
+            font-size:2.2rem;
+            margin-bottom:10px;
+        }
+
+        .hero p{
+            max-width:700px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+        }
+
+        .section{
+            max-width:700px;
+            margin:auto;
+            padding:20px 20px 60px;
+        }
+
+        #score-display{
+            text-align:center;
+            font-size:1.1rem;
+            color:var(--gold);
+            margin-bottom:20px;
+        }
+
+        .question-card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:30px;
+        }
+
+        .question-card h2{
+            margin-bottom:20px;
+            line-height:1.4;
+        }
+
+        .question-media{
+            display:block;
+            max-width:200px;
+            max-height:200px;
+            margin:0 auto 20px;
+            border-radius:8px;
+        }
+
+        .question-media.silhouette{
+            filter:brightness(0);
+        }
+
+        .text-answer-input,
+        .mc-dropdown{
+            width:100%;
+            padding:12px 14px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+        }
+
+        .text-answer-input:focus,
+        .mc-dropdown:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        .text-answer-input.correct,
+        .mc-dropdown.correct{
+            border-color:var(--correct);
+        }
+
+        .text-answer-input.incorrect,
+        .mc-dropdown.incorrect{
+            border-color:var(--incorrect);
+        }
+
+        .answer-option-list{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+            gap:12px;
+        }
+
+        .answer-option{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:14px;
+            color:var(--text);
+            font-size:1rem;
+            cursor:pointer;
+            transition:.15s;
+        }
+
+        .answer-option:hover:not(:disabled){
+            border-color:var(--gold);
+        }
+
+        .answer-option.selected{
+            border-color:var(--gold);
+            background:var(--card-hover);
+        }
+
+        .answer-option.correct{
+            border-color:var(--correct);
+            background:rgba(63,185,80,.15);
+        }
+
+        .answer-option.incorrect{
+            border-color:var(--incorrect);
+            background:rgba(229,83,75,.15);
+        }
+
+        .answer-option:disabled{
+            cursor:default;
+        }
+
+        .image-option-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+            gap:12px;
+        }
+
+        .image-option{
+            padding:10px;
+        }
+
+        .image-option img{
+            width:100%;
+            height:auto;
+            display:block;
+        }
+
+        .ordering-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .ordering-item{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:12px 16px;
+        }
+
+        .ordering-item.correct{
+            border-color:var(--correct);
+            background:rgba(63,185,80,.15);
+        }
+
+        .ordering-item.incorrect{
+            border-color:var(--incorrect);
+            background:rgba(229,83,75,.15);
+        }
+
+        .ordering-item-controls button{
+            background:var(--card);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:6px;
+            width:32px;
+            height:32px;
+            margin-left:6px;
+            cursor:pointer;
+        }
+
+        .ordering-item-controls button:hover:not(:disabled){
+            border-color:var(--gold);
+        }
+
+        .ordering-item-controls button:disabled{
+            opacity:.3;
+            cursor:default;
+        }
+
+        #feedback{
+            margin-top:20px;
+            padding:14px;
+            border-radius:10px;
+            text-align:center;
+            font-weight:bold;
+        }
+
+        #feedback.correct{
+            background:rgba(63,185,80,.15);
+            color:var(--correct);
+        }
+
+        #feedback.incorrect{
+            background:rgba(229,83,75,.15);
+            color:var(--incorrect);
+        }
+
+        #feedback .explanation{
+            display:block;
+            margin-top:6px;
+            font-weight:normal;
+            color:var(--secondary);
+        }
+
+        .action-row{
+            margin-top:24px;
+            text-align:center;
+        }
+
+        .btn{
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:14px 30px;
+            font-size:1rem;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .btn:disabled{
+            opacity:.4;
+            cursor:default;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        #summary .question-card{
+            text-align:center;
+        }
+
+        .summary-list{
+            list-style:none;
+            text-align:left;
+            margin:20px 0;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .summary-list li{
+            padding:10px 14px;
+            border-radius:8px;
+            background:var(--bg);
+            border:1px solid var(--border);
+        }
+
+        .summary-list li.correct{
+            border-color:var(--correct);
+        }
+
+        .summary-list li.incorrect{
+            border-color:var(--incorrect);
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script>
+fetch('../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+
+        const basePath =
+            window.location.hostname === "bladeinferior.github.io"
+                ? "/harryswebsite/"
+                : "/";
+
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" href="quizhub.html">← Back</a>
+
+<section class="hero">
+    <h1>🧠 Play Test</h1>
+    <p>Standalone single-player run-through of the sample quiz — no session, no join code, just testing the answer types.</p>
+</section>
+
+<section class="section">
+
+    <div id="score-display"></div>
+
+    <div id="quiz-area">
+        <div id="question-container" class="question-card"></div>
+
+        <div id="feedback" hidden></div>
+
+        <div class="action-row">
+            <button id="submit-btn" class="btn">Submit Answer</button>
+            <button id="next-btn" class="btn" hidden>Next Question</button>
+        </div>
+    </div>
+
+    <div id="summary" hidden>
+        <div class="question-card">
+            <h2 id="summary-score"></h2>
+            <ul id="summary-list" class="summary-list"></ul>
+            <button id="restart-btn" class="btn">Play Again</button>
+        </div>
+    </div>
+
+</section>
+
+<script src="engine/answer-types.js"></script>
+<script src="play-test.js"></script>
+
+</body>
+</html>
