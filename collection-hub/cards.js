@@ -256,6 +256,8 @@ function createCollectionFilters() {
 
     refreshFilterButtons();
     updateFilterDisabledState();
+
+    if (typeof syncMobileFilterPopout === "function") syncMobileFilterPopout();
 }
 
 function refreshFilterButtons() {
@@ -757,71 +759,18 @@ if (modalCloseBtn) {
 }
 
 // =========================
-// MOBILE FILTER SUMMARY PANEL
+// MOBILE FILTER POP-OUT
+// The filter sidebar (#game-filter-container) is fully rebuilt on every
+// deck switch (see createCollectionFilters above), so syncMobileFilterPopout()
+// is re-run there too, relocating whichever fresh container now exists.
 // =========================
-(function initMobileFilterPanel() {
-    const toggleBtn = document.createElement("div");
-    toggleBtn.id = "mobile-filter-toggle";
-    toggleBtn.textContent = "⚙";
-    document.body.appendChild(toggleBtn);
-
-    const panel = document.createElement("div");
-    panel.id = "mobile-filter-panel";
-    panel.innerHTML = `<h4>Active Filters</h4><div id="mobile-filter-list"></div>`;
-    document.body.appendChild(panel);
-
-    const listEl = panel.querySelector("#mobile-filter-list");
-
-    toggleBtn.addEventListener("click", () => {
-        panel.classList.toggle("open");
-        if (panel.classList.contains("open")) refreshMobileFilterPanel();
-    });
-
-    function getActiveFilterElements() {
-        return Array.from(document.querySelectorAll(".generation-filter-btn.game-filter-active"));
-    }
-
-    function refreshMobileFilterPanel() {
-        listEl.innerHTML = "";
-        let count = 0;
-
-        if (searchInput.value.trim()) {
-            count++;
-            const pill = document.createElement("div");
-            pill.classList.add("mobile-filter-pill");
-            pill.innerHTML = `<span>Search: "${searchInput.value.trim()}"</span><span>✕</span>`;
-            pill.addEventListener("click", () => {
-                clearBtn.click();
-                refreshMobileFilterPanel();
-            });
-            listEl.appendChild(pill);
-        }
-
-        getActiveFilterElements().forEach(el => {
-            count++;
-            const pill = document.createElement("div");
-            pill.classList.add("mobile-filter-pill");
-            pill.innerHTML = `<span>${el.textContent.trim()}</span><span>✕</span>`;
-            pill.addEventListener("click", () => {
-                el.click();
-                refreshMobileFilterPanel();
-            });
-            listEl.appendChild(pill);
-        });
-
-        if (count === 0) {
-            listEl.innerHTML = `<div class="mobile-filter-empty">No filters active</div>`;
-        }
-
-        toggleBtn.classList.toggle("has-active", count > 0);
-    }
-
-    document.addEventListener("click", () => {
-        setTimeout(refreshMobileFilterPanel, 50);
-    });
-
-    refreshMobileFilterPanel();
-})();
+const syncMobileFilterPopout = createMobilePopout({
+    toggleId: "mobile-filter-toggle",
+    icon: "⚙",
+    top: 130,
+    heading: "Filters",
+    elementIds: ["game-filter-container"]
+});
 
 // =========================
 // INIT

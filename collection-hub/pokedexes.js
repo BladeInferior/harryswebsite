@@ -1238,3 +1238,27 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
 
     reader.readAsText(file);
 });
+
+// =========================
+// MOBILE POP-OUTS
+// Filters and dex progress each get their own pop-out on mobile — both
+// #game-filter-container and #progress-container are otherwise hidden
+// entirely on narrow screens.
+// =========================
+createMobilePopout({
+    toggleId: "mobile-filter-toggle",
+    icon: "⚙",
+    top: 130,
+    right: 16,
+    heading: "Filters",
+    elementIds: ["game-filter-container"]
+});
+
+createMobilePopout({
+    toggleId: "mobile-progress-toggle",
+    icon: "📊",
+    top: 130,
+    right: 72,
+    heading: "Dex Progress",
+    elementIds: ["progress-container"]
+});
