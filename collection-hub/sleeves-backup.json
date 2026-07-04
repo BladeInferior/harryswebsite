@@ -1905,21 +1905,31 @@
   },
   {
     "name": "Deck Sleeves POKÉMON TRAINERS Brassius Sudowoodo",
-    "date": "10/11/2023",
+    "date": "2023-11-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "sudowoodo",
+      "brassius"
+    ]
   },
   {
     "name": "Deck Sleeves POKÉMON TRAINERS Grusha & Cetoddle",
-    "date": "10/11/2023",
+    "date": "2023-11-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "cetoddle",
+      "grusha"
+    ]
   },
   {
     "name": "Deck Sleeves POKÉMON TRAINERS Penny & Umbreon",
-    "date": "10/11/2023",
+    "date": "2023-11-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "eevee",
+      "umbreon",
+      "penny"
+    ]
   },
   {
     "name": "Pokemon TCG Classic Box Light Grey",
@@ -1947,63 +1957,144 @@
   },
   {
     "name": "Dondozo and Tatsugiris",
-    "date": "01/12/2023",
+    "date": "2023-12-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "dondozo",
+      "tatsugiri",
+      "shiny"
+    ]
   },
   {
     "name": "Shiny Tinka Line",
-    "date": "01/12/2023",
+    "date": "2023-12-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "corviknight",
+      "tinkatink",
+      "tinkatuff",
+      "tinkaton"
+    ]
   },
   {
     "name": "Nemona Pawmo Lycanroc",
-    "date": "01/12/2023",
+    "date": "2023-12-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lycanroc",
+      "pawmo",
+      "nemona"
+    ]
   },
   {
     "name": "Shiny Kingambit",
-    "date": "01/12/2023",
+    "date": "2023-12-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pawniard",
+      "bisharp",
+      "kingambit",
+      "shiny"
+    ]
   },
   {
     "name": "Deck Sleeves Palafin",
-    "date": "01/12/2023",
+    "date": "2023-12-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "palafin",
+      "item"
+    ]
   },
   {
     "name": "First Partner Power",
-    "date": "22/01/2024",
+    "date": "2024-01-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "bulbasaur",
+      "charmander",
+      "squirtle",
+      "chikorita",
+      "cyndaquil",
+      "squirtle",
+      "treecko",
+      "torchic",
+      "mudkip",
+      "turtwig",
+      "chimchar",
+      "piplup",
+      "snivy",
+      "tepig",
+      "oshawott",
+      "chespin",
+      "fennekin",
+      "froakie",
+      "rowlet",
+      "litten",
+      "popplio",
+      "grookey",
+      "scorbunny",
+      "sobble",
+      "sprigatito",
+      "fuecoco",
+      "quaxly"
+    ]
   },
   {
     "name": "Pokemon Pixels",
-    "date": "22/01/2024",
+    "date": "2024-01-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ninetales",
+      "charmeleon",
+      "blastoise",
+      "goldeen",
+      "flareon",
+      "mew",
+      "articuno",
+      "psyduck",
+      "ivysaur",
+      "charmander",
+      "mewtwo",
+      "vaporeon",
+      "eevee",
+      "gyarados",
+      "ditto",
+      "jolteon",
+      "bulbasaur",
+      "squirtle",
+      "moltres",
+      "dragonite",
+      "slowpoke",
+      "pikachu",
+      "venusaur"
+    ]
   },
   {
     "name": "Porygon & Polygons",
-    "date": "22/01/2024",
+    "date": "2024-01-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "porygon"
+    ]
   },
   {
     "name": "Paldean Fates ETB",
-    "date": "26/01/2024",
+    "date": "2024-01-26",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "mimikyu",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Skitty & Litten",
-    "date": "26/01/2024",
+    "date": "2024-01-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "skitty",
+      "litten"
+    ]
   },
   {
     "name": "Deck Sleeves Bianca",
@@ -2017,81 +2108,142 @@
   },
   {
     "name": "Temporal Forces Walking Wake ETB",
-    "date": "22/03/2024",
+    "date": "2024-03-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "walking wake",
+      "etb"
+    ]
   },
   {
     "name": "Premium Gloss Terastal Greninja",
-    "date": "22/03/2024",
+    "date": "2024-03-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "greninja",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Lana",
-    "date": "22/03/2024",
+    "date": "2024-03-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "wingull",
+      "wailord",
+      "lana"
+    ]
   },
   {
     "name": "Spheal Appeal",
-    "date": "04/04/2024",
+    "date": "2024-04-04",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "spheal"
+    ]
   },
   {
     "name": "Floral Flurry",
-    "date": "04/04/2024",
+    "date": "2024-04-04",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "oddish",
+      "eevee",
+      "butterfree",
+      "bellossom",
+      "shaymin"
+    ]
   },
   {
     "name": "Iono Premium Tournament Collection",
-    "date": "05/04/2024",
+    "date": "2024-04-05",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "bellibolt",
+      "iono"
+    ]
   },
   {
     "name": "Pokemon EUIC 2024",
-    "date": "05/04/2024",
+    "date": "2024-04-05",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "armarouge",
+      "ceruledge",
+      "event"
+    ]
   },
   {
     "name": "Premium Gloss Terastal Dragapult",
-    "date": "26/04/2024",
+    "date": "2024-04-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "dragapult",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Carmine & Kieran",
-    "date": "26/04/2024",
+    "date": "2024-04-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "eevee",
+      "poltchageist",
+      "dipplin",
+      "ogerpon",
+      "skwovet",
+      "item"
+    ]
   },
   {
     "name": "9 Pokemon Red Yellow",
-    "date": "17/05/2024",
+    "date": "2024-05-17",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "toucannon",
+      "gholdengo",
+      "darumaka",
+      "pikachu",
+      "budew",
+      "palafin",
+      "rotom",
+      "tinkaton",
+      "spinda"
+    ]
   },
   {
     "name": "Ghost Pokemon Purple Border",
-    "date": "17/05/2024",
+    "date": "2024-05-17",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "duskull",
+      "gastly",
+      "shedinja",
+      "phantump",
+      "misdreavus",
+      "hisuian zorua",
+      "greavard",
+      "variant"
+    ]
   },
   {
     "name": "Dragon Resurgence Pokémon Card Sleeve Gift Box: Dragonite",
-    "date": "17/05/2024",
+    "date": "2024-05-17",
     "nationality": "CHN",
-    "tags": []
+    "tags": [
+      "dragonite"
+    ]
   },
   {
     "name": "Twilight Masquerade ETB",
-    "date": "24/05/2024",
+    "date": "2024-05-24",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ogerpon",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Wings of Unity",
@@ -2107,9 +2259,11 @@
   },
   {
     "name": "Premium Gloss Kyurem",
-    "date": "07/06/2024",
+    "date": "2024-06-07",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "kyurem"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Night Wanderer",
@@ -2124,9 +2278,13 @@
   },
   {
     "name": "Deck Sleeves Cassiopeia",
-    "date": "07/06/2024",
+    "date": "2024-06-07",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "jolteon",
+      "leafeon",
+      "penny"
+    ]
   },
   {
     "name": "NAIC 2024",
@@ -2139,57 +2297,111 @@
   },
   {
     "name": "Mew Radiant Energy Gift Box",
-    "date": "12/07/2024",
+    "date": "2024-07-12",
     "nationality": "CHN",
-    "tags": []
+    "tags": [
+      "mew"
+    ]
   },
   {
     "name": "Battle Start",
-    "date": "12/07/2024",
+    "date": "2024-07-12",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charizard",
+      "pikachu",
+      "lucario"
+    ]
   },
   {
     "name": "Flowing Steel",
-    "date": "12/07/2024",
+    "date": "2024-07-12",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "steelix",
+      "mawile",
+      "klink",
+      "klefki",
+      "aggron",
+      "metagross",
+      "ferrothorn",
+      "duraludon",
+      "magnezone",
+      "magneton",
+      "alolan sandslash",
+      "skarmory",
+      "empoleon",
+      "perrserker",
+      "lucario"
+    ]
   },
   {
     "name": "Haunted Ruins",
-    "date": "12/07/2024",
+    "date": "2024-07-12",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "impidimp",
+      "sinistea",
+      "polteageist"
+    ]
   },
   {
     "name": "Ghostly Gathering",
-    "date": "12/07/2024",
+    "date": "2024-07-12",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "gastly",
+      "haunter",
+      "gengar",
+      "shuppet",
+      "sableye",
+      "drifblim",
+      "mismagius",
+      "litwich",
+      "lampent",
+      "chandelure",
+      "drifloon"
+    ]
   },
   {
     "name": "Deck Sleeves Lacey",
-    "date": "19/07/2024",
+    "date": "2024-07-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "granbull",
+      "whimsicott",
+      "primarina",
+      "lacey"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Terastal Type: Stellar Lapras",
-    "date": "19/07/2024",
+    "date": "2024-07-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lapras",
+      "terastal"
+    ]
   },
   {
     "name": "Shrouded Fable ETB",
-    "date": "02/08/2024",
+    "date": "2024-08-02",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "okidogi",
+      "fezandipiti",
+      "munkidori",
+      "etb"
+    ]
   },
   {
     "name": "World Championships Honolulu 2024",
-    "date": "16/08/2024",
+    "date": "2024-08-16",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "event"
+    ]
   },
   {
     "name": "World Championships Honolulu 2024 (2)",
@@ -2209,9 +2421,12 @@
   },
   {
     "name": "Stellar Crown ETB",
-    "date": "13/09/2024",
+    "date": "2024-09-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "terapagos",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Alolan Exeggutor and Friends",
@@ -2239,21 +2454,33 @@
   },
   {
     "name": "Moomoo Milk Medley",
-    "date": "03/10/2024",
+    "date": "2024-10-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "miltank",
+      "item"
+    ]
   },
   {
     "name": "Dreamy Dragonite",
-    "date": "03/10/2024",
+    "date": "2024-10-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "dragonite"
+    ]
   },
   {
     "name": "Powerhouse Pokemon",
-    "date": "03/10/2024",
+    "date": "2024-10-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "dragonite",
+      "tyranitar",
+      "salamence",
+      "metagross",
+      "hydreigon"
+    ]
   },
   {
     "name": "Ditto Quartet",
@@ -2281,15 +2508,22 @@
   },
   {
     "name": "Super Electric Breaker",
-    "date": "18/10/2024",
+    "date": "2024-10-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "terastal"
+    ]
   },
   {
     "name": "Deck Sleeves Slaking",
-    "date": "18/10/2024",
+    "date": "2024-10-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "slakoth",
+      "slaking",
+      "fuecoco"
+    ]
   },
   {
     "name": "Trainer's Toolkit 2024",
@@ -2301,9 +2535,19 @@
   },
   {
     "name": "Asia Championship Series Premier Ball League",
-    "date": "26/10/2024",
+    "date": "2024-10-26",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee",
+      "flareon",
+      "jolteon",
+      "vaporeon",
+      "espeon",
+      "umbreon",
+      "leafeon",
+      "glaceon",
+      "sylveon"
+    ]
   },
   {
     "name": "Surging Sparks ETB",
