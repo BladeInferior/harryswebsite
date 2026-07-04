@@ -32,6 +32,24 @@
             min-height:100vh;
         }
 
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:#2d2d2d;
+            border:1px solid #555;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(212,175,55,.15);
+        }
+
         .hero{
             text-align:center;
             padding:60px 20px 30px;
@@ -100,6 +118,74 @@
         .btn:hover{
             background:#e6c458;
         }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover{
+            background:transparent;
+            border-color:var(--gold);
+        }
+
+        .btn-danger{
+            background:transparent;
+            border:1px solid #e5534b;
+            color:#e5534b;
+        }
+
+        .btn-danger:hover{
+            background:rgba(229,83,75,.15);
+        }
+
+        .card-actions{
+            display:flex;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+
+        #delete-confirm-modal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.75);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1200;
+            padding:20px;
+        }
+
+        #delete-confirm-modal .confirm-box{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+            max-width:420px;
+            width:100%;
+            text-align:center;
+        }
+
+        #delete-confirm-modal h2{
+            margin-bottom:12px;
+        }
+
+        #delete-confirm-modal p{
+            color:var(--secondary);
+            margin-bottom:20px;
+            line-height:1.5;
+        }
+
+        #delete-confirm-modal .modal-buttons{
+            display:flex;
+            gap:10px;
+            justify-content:center;
+        }
     </style>
 </head>
 
@@ -134,6 +220,17 @@ fetch('../navbar.html')
 <section class="section">
     <div class="card-grid" id="quiz-list"></div>
 </section>
+
+<div id="delete-confirm-modal" hidden>
+    <div class="confirm-box">
+        <h2>Delete this quiz?</h2>
+        <p id="delete-confirm-text">This can't be undone.</p>
+        <div class="modal-buttons">
+            <button id="confirm-delete-btn" class="btn btn-danger" type="button">Delete</button>
+            <button id="cancel-delete-btn" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <script type="module" src="manage-quizzes.js"></script>
 

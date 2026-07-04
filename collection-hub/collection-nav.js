@@ -18,6 +18,7 @@ fetch('../navbar.html')
         const subPages = [
             { label: "Pokédex", page: "collection-hub/pokedexes.html" },
             { label: "Sleeves", page: "collection-hub/sleeves.html" },
+            { label: "Cards", page: "collection-hub/cards.html" },
             { label: "Steelbooks", page: "collection-hub/steelbooks.html" },
             { label: "Completions", page: "collection-hub/completions.html" },
             { label: "Pop Figures", page: "collection-hub/popfigures.html" },

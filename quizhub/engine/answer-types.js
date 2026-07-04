@@ -280,5 +280,54 @@ const AnswerTypeRegistry = (function () {
         }
     });
 
+    // ---------------------------------------------------------------
+    // number — config is either { mode: 'exact', correctValue } or
+    // { mode: 'range', min, max } (inclusive)
+    // ---------------------------------------------------------------
+    register('number', {
+        renderInput(question, container) {
+            container.innerHTML = '';
+
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.className = 'number-answer-input';
+            input.placeholder = 'Enter a number...';
+
+            container.appendChild(input);
+            input.focus();
+        },
+
+        getValue(container) {
+            const input = container.querySelector('.number-answer-input');
+            if (!input || input.value.trim() === '') return null;
+
+            const num = Number(input.value);
+            return Number.isNaN(num) ? null : num;
+        },
+
+        grade(value, question) {
+            const cfg = question.config;
+            const correctValue = cfg.mode === 'range' ? `${cfg.min}–${cfg.max}` : cfg.correctValue;
+
+            if (value === null || value === undefined) {
+                return { correct: false, correctValue };
+            }
+
+            const correct = cfg.mode === 'range'
+                ? (value >= cfg.min && value <= cfg.max)
+                : value === cfg.correctValue;
+
+            return { correct, correctValue };
+        },
+
+        reveal(container, question, value, gradeResult) {
+            const input = container.querySelector('.number-answer-input');
+            if (!input) return;
+
+            input.disabled = true;
+            input.classList.add(gradeResult.correct ? 'correct' : 'incorrect');
+        }
+    });
+
     return { register, get };
 })();

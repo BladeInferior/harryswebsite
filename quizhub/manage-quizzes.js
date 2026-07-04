@@ -1,16 +1,28 @@
 import { QUIZ_PATHS } from './data/quiz-registry.js';
-
-const QUIZZES = Object.entries(QUIZ_PATHS).map(([id, dataPath]) => ({ id, dataPath }));
+import { db } from './firebase/firebase-config.js';
+import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
 const quizList = document.getElementById('quiz-list');
+const deleteModal = document.getElementById('delete-confirm-modal');
+const deleteConfirmText = document.getElementById('delete-confirm-text');
+const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
-Promise.all(
-    QUIZZES.map(quizRef =>
-        fetch(quizRef.dataPath)
-            .then(res => res.json())
-            .then(data => ({ ...quizRef, ...data }))
-    )
-).then(quizzes => {
+let pendingDeleteId = null;
+
+const staticQuizzes = Object.entries(QUIZ_PATHS).map(([id, dataPath]) =>
+    fetch(dataPath)
+        .then(res => res.json())
+        .then(data => ({ ...data, id, source: 'static' }))
+);
+
+const firestoreQuizzes = getDocs(collection(db, 'quizzes')).then(snapshot =>
+    snapshot.docs.map(docSnap => ({ ...docSnap.data(), id: docSnap.id, source: 'firestore' }))
+);
+
+Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, firestoreList]) => {
+    const quizzes = [...staticList, ...firestoreList];
+
     quizList.innerHTML = '';
 
     quizzes.forEach(quiz => {
@@ -23,14 +35,68 @@ Promise.all(
         const p = document.createElement('p');
         p.textContent = quiz.description || '';
 
-        const link = document.createElement('a');
-        link.className = 'btn';
-        link.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
-        link.textContent = 'Start Quiz';
+        const actions = document.createElement('div');
+        actions.className = 'card-actions';
+
+        const startLink = document.createElement('a');
+        startLink.className = 'btn';
+        startLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+        startLink.textContent = 'Start Quiz';
+        actions.appendChild(startLink);
+
+        if (quiz.source === 'firestore') {
+            const editLink = document.createElement('a');
+            editLink.className = 'btn btn-secondary';
+            editLink.href = `builder.html?quiz=${encodeURIComponent(quiz.id)}`;
+            editLink.textContent = 'Edit';
+            actions.appendChild(editLink);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger';
+            deleteBtn.type = 'button';
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.addEventListener('click', () => openDeleteConfirm(quiz.id, quiz.title));
+            actions.appendChild(deleteBtn);
+        }
 
         card.appendChild(h3);
         card.appendChild(p);
-        card.appendChild(link);
+        card.appendChild(actions);
         quizList.appendChild(card);
     });
+});
+
+function openDeleteConfirm(quizId, title) {
+    pendingDeleteId = quizId;
+    deleteConfirmText.textContent = `"${title}" will be permanently deleted. This can't be undone.`;
+    deleteModal.hidden = false;
+}
+
+cancelDeleteBtn.addEventListener('click', () => {
+    pendingDeleteId = null;
+    deleteModal.hidden = true;
+});
+
+deleteModal.addEventListener('click', e => {
+    if (e.target === deleteModal) {
+        pendingDeleteId = null;
+        deleteModal.hidden = true;
+    }
+});
+
+confirmDeleteBtn.addEventListener('click', async () => {
+    if (!pendingDeleteId) return;
+
+    confirmDeleteBtn.disabled = true;
+    try {
+        await deleteDoc(doc(db, 'quizzes', pendingDeleteId));
+        deleteModal.hidden = true;
+        pendingDeleteId = null;
+        window.location.reload();
+    } catch (err) {
+        console.error(err);
+        alert('Failed to delete — check console.');
+    } finally {
+        confirmDeleteBtn.disabled = false;
+    }
 });

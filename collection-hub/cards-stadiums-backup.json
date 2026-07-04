@@ -1,0 +1,130 @@
+[
+  {
+    "name": "Parallel City",
+    "owned": false
+  },
+  {
+    "name": "Reverse Valley",
+    "owned": false
+  },
+  {
+    "name": "Chaos Tower",
+    "owned": false
+  },
+  {
+    "name": "Viridan Forest",
+    "owned": false
+  },
+  {
+    "name": "Aether Paradise Conservation Area",
+    "owned": false
+  },
+  {
+    "name": "Brooklet Hill",
+    "owned": false
+  },
+  {
+    "name": "Mt. Coronet",
+    "owned": true
+  },
+  {
+    "name": "Shrine of Punishment",
+    "owned": false
+  },
+  {
+    "name": "Martial Arts Dojo",
+    "owned": false
+  },
+  {
+    "name": "Power Plant",
+    "owned": false
+  },
+  {
+    "name": "Giant Hearth",
+    "owned": false
+  },
+  {
+    "name": "Crystal Cave",
+    "owned": false
+  },
+  {
+    "name": "Stormy Mountains",
+    "owned": false
+  },
+  {
+    "name": "Turffield Stadium",
+    "owned": false
+  },
+  {
+    "name": "Training Court",
+    "owned": false
+  },
+  {
+    "name": "Magma Basin",
+    "owned": true
+  },
+  {
+    "name": "Jubilife Village",
+    "owned": true
+  },
+  {
+    "name": "Path to the Peak",
+    "owned": true
+  },
+  {
+    "name": "Temple of Sinnoh",
+    "owned": true
+  },
+  {
+    "name": "Collapsed Stadium",
+    "owned": false
+  },
+  {
+    "name": "Gapejaw Bog",
+    "owned": true
+  },
+  {
+    "name": "Artazon",
+    "owned": true
+  },
+  {
+    "name": "Beach Court",
+    "owned": false
+  },
+  {
+    "name": "Area Zero Underdepths",
+    "owned": true
+  },
+  {
+    "name": "Gravity Mountain",
+    "owned": false
+  },
+  {
+    "name": "Jamming Tower",
+    "owned": false
+  },
+  {
+    "name": "Levincia",
+    "owned": false
+  },
+  {
+    "name": "Mystery Garden",
+    "owned": false
+  },
+  {
+    "name": "Battle Cage",
+    "owned": false
+  },
+  {
+    "name": "Jamming Tower",
+    "owned": false
+  },
+  {
+    "name": "Forest of Vitality",
+    "owned": false
+  },
+  {
+    "name": "Lumiose City",
+    "owned": true
+  }
+]

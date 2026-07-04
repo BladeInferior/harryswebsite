@@ -1,5 +1,5 @@
 import { db } from './firebase/firebase-config.js';
-import { QUIZ_PATHS } from './data/quiz-registry.js';
+import { loadQuiz } from './data/quiz-loader.js';
 import {
     doc,
     setDoc,
@@ -17,7 +17,6 @@ import {
 
 const params = new URLSearchParams(window.location.search);
 const quizId = params.get('quiz') || 'sample-quiz-1';
-const quizPath = QUIZ_PATHS[quizId] || QUIZ_PATHS['sample-quiz-1'];
 
 const titleEl = document.getElementById('quiz-title');
 const descEl = document.getElementById('quiz-description');
@@ -54,14 +53,12 @@ let latestAnswers = new Map();
 let unsubscribeAnswers = null;
 let watchedQuestionKey = null;
 
-fetch(quizPath)
-    .then(res => res.json())
-    .then(data => {
-        quiz = data;
-        titleEl.textContent = quiz.title;
-        descEl.textContent = quiz.description || '';
-        startSession();
-    });
+loadQuiz(quizId).then(data => {
+    quiz = data;
+    titleEl.textContent = quiz.title;
+    descEl.textContent = quiz.description || '';
+    startSession();
+});
 
 function startSession() {
     code = generateCode();
@@ -69,7 +66,7 @@ function startSession() {
     sessionRef = doc(db, 'sessions', code);
 
     setDoc(sessionRef, {
-        quizId: quiz.id,
+        quizId: quizId,
         status: 'lobby',
         currentQuestionIndex: -1,
         questionPhase: 'answering',
@@ -451,6 +448,11 @@ function getCorrectAnswerDisplay(question) {
                 })
                 .join(' → ');
 
+        case 'number':
+            return question.config.mode === 'range'
+                ? `${question.config.min}–${question.config.max}`
+                : String(question.config.correctValue);
+
         default:
             return '';
     }
@@ -479,6 +481,9 @@ function formatAnswerValue(question, value) {
                     return item ? item.label : id;
                 })
                 .join(' → ');
+
+        case 'number':
+            return (value === null || value === undefined) ? '(no answer)' : String(value);
 
         default:
             return String(value);

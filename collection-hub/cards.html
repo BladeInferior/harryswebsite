@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Cards</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        #deck-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0 20px;
+        }
+
+        .deck-tab-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .deck-tab-btn:hover {
+            border-color: #d4af37;
+        }
+
+        .deck-tab-active {
+            background: #d4af37;
+            color: #121212;
+            font-weight: bold;
+            border-color: #d4af37;
+        }
+
+        .pokemon-card.not-owned img {
+            filter: grayscale(1) brightness(0.45);
+            opacity: 0.6;
+        }
+
+        .special-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            color: #d4af37;
+            font-size: 1.1rem;
+            text-shadow: 0 0 4px rgba(0,0,0,0.8);
+        }
+
+        .pokemon-card {
+            position: relative;
+        }
+
+        .generation-filter-btn.include-btn:hover {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+        }
+
+        .generation-filter-btn.exclude-btn:hover {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid #e74c3c;
+            color: #e74c3c;
+        }
+
+        #game-filter-container.filters-disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .cards-page.page-mode #box-container {
+            display: grid;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .cards-page.page-mode.first-page #box-container {
+            grid-template-columns: repeat(4, 150px);
+            max-width: none;
+        }
+
+        .cards-page.page-mode:not(.first-page) #box-container {
+            grid-template-columns: repeat(8, 150px);
+            max-width: none;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-direction: row !important;
+        }
+
+        .checkbox-label input {
+            width: auto !important;
+        }
+    </style>
+</head>
+<body class="item-page cards-page">
+
+    <div id="navbar"></div>
+
+    <script src="collection-nav.js"></script>
+
+    <a class="back-button" href="collectionhub.html">← Back</a>
+
+    <h1>Cards</h1>
+
+    <div id="deck-tabs"></div>
+
+    <!-- =========================
+        SEARCH
+    ========================== -->
+    <div id="search-wrapper">
+        <div id="search-row">
+            <input id="search" type="text" placeholder="Search..." />
+            <span id="clear-search">✕</span>
+        </div>
+    </div>
+
+    <!-- =========================
+        MODE + PAGINATION
+    ========================== -->
+    <div id="page-controls">
+
+        <button id="list-mode">List Mode</button>
+        <button id="page-mode">Page Mode</button>
+
+        <div id="pagination-controls">
+            <button id="prev-page">◀</button>
+            <span id="page-display">1</span>
+            <button id="next-page">▶</button>
+        </div>
+
+        <button id="add-item">Add Card</button>
+        <input type="file" id="import-items" accept=".json" hidden>
+        <button id="import-button">Import</button>
+        <button id="export-items">Export</button>
+
+    </div>
+
+    <!-- =========================
+        GRID
+    ========================== -->
+    <div id="box-container"></div>
+
+    <div id="add-item-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2 id="item-modal-title">Add Card</h2>
+
+            <div id="item-error" class="hidden"></div>
+
+            <label>
+                Name
+                <input type="text" id="item-title">
+            </label>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="item-owned"> Owned
+            </label>
+
+            <label class="checkbox-label" id="item-special-row">
+                <input type="checkbox" id="item-special"> Special / Rare
+            </label>
+
+            <label id="item-position-row">
+                Insert at position (blank = end)
+                <input type="number" id="item-position" min="1">
+            </label>
+
+            <div class="modal-buttons">
+                <button id="save-item">Save</button>
+                <button id="cancel-item">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        MODAL
+    ========================== -->
+    <div id="modal-overlay" class="hidden">
+
+        <div id="modal-close" class="modal-close-btn">✕</div>
+
+        <div id="modal-nav-left" class="modal-nav">◀</div>
+
+        <div id="pokemon-modal">
+
+            <div class="modal-left">
+
+                <div id="modal-title"></div>
+
+                <div class="modal-image-wrapper">
+                    <img id="modal-image" src="">
+                </div>
+
+            </div>
+
+            <div class="modal-right">
+
+                <div class="item-field">
+                    <strong>Owned:</strong>
+                    <div id="modal-owned"></div>
+                </div>
+
+                <div class="item-field" id="modal-special-row">
+                    <strong>Special:</strong>
+                    <div id="modal-special"></div>
+                </div>
+
+                <div class="item-field" id="modal-dex-row">
+                    <strong>Dex #:</strong>
+                    <div id="modal-dex"></div>
+                </div>
+
+                <div class="item-actions">
+                    <button id="edit-item" class="item-action-btn">Edit</button>
+                    <button id="delete-item" class="item-action-btn danger">Delete</button>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="modal-nav-right" class="modal-nav">▶</div>
+
+    </div>
+
+    <div id="image-zoom-overlay" class="hidden">
+        <img id="zoom-image" />
+    </div>
+
+    <script src="cards.js"></script>
+
+</body>
+</html>

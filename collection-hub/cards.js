@@ -1,0 +1,829 @@
+const DECKS = [
+    { key: "pokemon", label: "Pokémon", jsonFile: "cards-pokemon-backup.json", storageKey: "cards-pokemon", imageFolder: "cards/pokemon", spriteFolder: "sprites/pokemon_sprites", hasSpecial: true, hasDex: true, pageBlockRows: 4 },
+    { key: "trainers", label: "Trainers", jsonFile: "cards-trainers-backup.json", storageKey: "cards-trainers", imageFolder: "cards/trainers", hasSpecial: true, hasDex: false },
+    { key: "pokeballs", label: "Poké Balls", jsonFile: "cards-pokeballs-backup.json", storageKey: "cards-pokeballs", imageFolder: "cards/pokeballs", hasSpecial: true, hasDex: false },
+    { key: "stadiums", label: "Stadiums", jsonFile: "cards-stadiums-backup.json", storageKey: "cards-stadiums", imageFolder: "cards/stadiums", hasSpecial: false, hasDex: false },
+    { key: "rampardos", label: "Rampardos", jsonFile: "cards-rampardos-backup.json", storageKey: "cards-rampardos", imageFolder: "cards/rampardos", hasSpecial: false, hasDex: false }
+];
+
+let activeDeck = DECKS[0];
+let items = [];
+
+let pageMode = false;
+let currentPage = 1;
+
+let filterOwned = null;    // null | true | false
+let filterSpecial = null;  // null | true | false
+let filterGeneration = null;
+
+let pokemonMasterList = null;
+let pokemonMasterByName = null;
+
+function normalizeCardName(name) {
+    return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+const boxContainer = document.getElementById("box-container");
+const deckTabs = document.getElementById("deck-tabs");
+
+const pageBtn = document.getElementById("page-mode");
+const listBtn = document.getElementById("list-mode");
+const pagination = document.getElementById("pagination-controls");
+const pageDisplay = document.getElementById("page-display");
+const searchWrapper = document.getElementById("search-wrapper");
+
+const modalTitle = document.getElementById("modal-title");
+const itemModalTitle = document.getElementById("item-modal-title");
+const modalOverlay = document.getElementById("modal-overlay");
+const modalImage = document.getElementById("modal-image");
+const navLeft = document.getElementById("modal-nav-left");
+const navRight = document.getElementById("modal-nav-right");
+
+const imageZoomOverlay = document.getElementById("image-zoom-overlay");
+const zoomImage = document.getElementById("zoom-image");
+
+modalImage.addEventListener("click", () => {
+    zoomImage.src = modalImage.src;
+    imageZoomOverlay.classList.remove("hidden");
+});
+
+imageZoomOverlay.addEventListener("click", (e) => {
+    if (e.target === imageZoomOverlay || e.target === zoomImage) {
+        imageZoomOverlay.classList.add("hidden");
+    }
+});
+
+function getExportAuthKey() {
+    return localStorage.getItem("exportAuthKey");
+}
+
+function getItemImagePath(name) {
+    const base = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+    return { base, tryFormats: [".jpg", ".png", ".webp"] };
+}
+
+function setItemImage(imgElement, name) {
+    const { base, tryFormats } = getItemImagePath(name);
+    let i = 0;
+
+    imgElement.onerror = () => {
+        i++;
+        if (i < tryFormats.length) {
+            imgElement.src = `${activeDeck.imageFolder}/${base}${tryFormats[i]}`;
+        } else {
+            imgElement.src = "";
+        }
+    };
+
+    imgElement.src = `${activeDeck.imageFolder}/${base}${tryFormats[i]}`;
+}
+
+// Only owned + special Pokémon use a real card scan — unowned ones, and
+// owned-but-not-special ones, show the Pokédex sprite instead. The .not-owned
+// CSS class (grayscale) is only added for actually-unowned cards, so an
+// owned non-special sprite still renders in full color.
+function resolveItemImage(imgElement, item) {
+    if (activeDeck.spriteFolder && (!item.owned || !item.special)) {
+        const base = normalizeCardName(item.name);
+        imgElement.onerror = null;
+        imgElement.src = `${activeDeck.spriteFolder}/${base}.png`;
+        return;
+    }
+    setItemImage(imgElement, item.name);
+}
+
+// =========================
+// DECK SWITCHING
+// =========================
+async function loadDeck(key) {
+    const deck = DECKS.find(d => d.key === key);
+    if (!deck) return;
+
+    activeDeck = deck;
+    currentPage = 1;
+    filterOwned = null;
+    filterSpecial = null;
+    filterGeneration = null;
+    if (searchInput) searchInput.value = "";
+
+    const itemList = await fetch(deck.jsonFile).then(res => res.json());
+    const local = localStorage.getItem(deck.storageKey);
+
+    if (local) {
+        try {
+            items = JSON.parse(local);
+        } catch {
+            items = itemList;
+        }
+    } else {
+        items = itemList;
+    }
+
+    if (deck.key === "pokemon" && !pokemonMasterList) {
+        pokemonMasterList = await fetch("fullPokemonList.json").then(res => res.json());
+        // Joined by normalized name, not dex — dex numbers collide between base
+        // and regional forms (e.g. Slowpoke / Galarian Slowpoke both use 0079).
+        pokemonMasterByName = new Map(pokemonMasterList.map(p => [normalizeCardName(p.name), p]));
+    }
+
+    renderDeckTabs();
+    pageMode = false;
+    updateModeUI();
+    renderItems();
+    createCollectionFilters();
+}
+
+function renderDeckTabs() {
+    if (!deckTabs) return;
+    deckTabs.innerHTML = "";
+
+    DECKS.forEach(deck => {
+        const btn = document.createElement("button");
+        btn.textContent = deck.label;
+        btn.classList.add("deck-tab-btn");
+        if (deck.key === activeDeck.key) btn.classList.add("deck-tab-active");
+        btn.addEventListener("click", () => {
+            if (deck.key !== activeDeck.key) loadDeck(deck.key);
+        });
+        deckTabs.appendChild(btn);
+    });
+}
+
+// =========================
+// FILTERS
+// =========================
+function createCollectionFilters() {
+    const existing = document.getElementById("game-filter-container");
+    if (existing) existing.remove();
+
+    const container = document.createElement("div");
+    container.id = "game-filter-container";
+
+    const ownedRow = document.createElement("div");
+    ownedRow.classList.add("generation-filter-row", "generation-filter-row--half");
+
+    const ownedBtn = document.createElement("button");
+    ownedBtn.textContent = "Owned";
+    ownedBtn.classList.add("generation-filter-btn", "include-btn");
+    ownedBtn.addEventListener("click", () => {
+        filterOwned = filterOwned === true ? null : true;
+        refreshFilterButtons();
+        filterItems(searchInput.value);
+    });
+    ownedRow.appendChild(ownedBtn);
+
+    const notOwnedBtn = document.createElement("button");
+    notOwnedBtn.textContent = "Not Owned";
+    notOwnedBtn.classList.add("generation-filter-btn", "exclude-btn");
+    notOwnedBtn.addEventListener("click", () => {
+        filterOwned = filterOwned === false ? null : false;
+        refreshFilterButtons();
+        filterItems(searchInput.value);
+    });
+    ownedRow.appendChild(notOwnedBtn);
+
+    container.appendChild(ownedRow);
+
+    if (activeDeck.hasSpecial) {
+        const specialRow = document.createElement("div");
+        specialRow.classList.add("generation-filter-row", "generation-filter-row--half");
+
+        const specialBtn = document.createElement("button");
+        specialBtn.textContent = "Special";
+        specialBtn.classList.add("generation-filter-btn", "include-btn");
+        specialBtn.addEventListener("click", () => {
+            filterSpecial = filterSpecial === true ? null : true;
+            refreshFilterButtons();
+            filterItems(searchInput.value);
+        });
+        specialRow.appendChild(specialBtn);
+
+        const notSpecialBtn = document.createElement("button");
+        notSpecialBtn.textContent = "Not Special";
+        notSpecialBtn.classList.add("generation-filter-btn", "exclude-btn");
+        notSpecialBtn.addEventListener("click", () => {
+            filterSpecial = filterSpecial === false ? null : false;
+            refreshFilterButtons();
+            filterItems(searchInput.value);
+        });
+        specialRow.appendChild(notSpecialBtn);
+
+        container.appendChild(specialRow);
+    }
+
+    if (activeDeck.key === "pokemon") {
+        for (let g = 1; g <= 9; g += 2) {
+            const genRow = document.createElement("div");
+            genRow.classList.add("generation-filter-row", "generation-filter-row--half");
+
+            [g, g + 1].forEach(genNum => {
+                if (genNum > 9) return;
+
+                const btn = document.createElement("button");
+                btn.textContent = "Gen " + genNum;
+                btn.classList.add("generation-filter-btn");
+                btn.dataset.gen = String(genNum);
+                btn.addEventListener("click", () => {
+                    filterGeneration = filterGeneration === genNum ? null : genNum;
+                    refreshFilterButtons();
+                    filterItems(searchInput.value);
+                });
+                genRow.appendChild(btn);
+            });
+
+            container.appendChild(genRow);
+        }
+    }
+
+    const resetBtn = document.createElement("button");
+    resetBtn.textContent = "Reset Filters";
+    resetBtn.classList.add("game-filter-btn");
+    resetBtn.addEventListener("click", () => {
+        filterOwned = null;
+        filterSpecial = null;
+        filterGeneration = null;
+        refreshFilterButtons();
+        filterItems(searchInput.value);
+    });
+    container.appendChild(resetBtn);
+
+    const box = document.getElementById("box-container");
+    if (box && box.parentNode) {
+        box.parentNode.insertBefore(container, box.nextSibling);
+    } else {
+        document.body.appendChild(container);
+    }
+
+    refreshFilterButtons();
+    updateFilterDisabledState();
+}
+
+function refreshFilterButtons() {
+    const container = document.getElementById("game-filter-container");
+    if (!container) return;
+
+    container.querySelectorAll(".generation-filter-btn").forEach(btn => {
+        btn.classList.remove("game-filter-active", "active");
+
+        if (btn.textContent === "Owned" && filterOwned === true) btn.classList.add("game-filter-active");
+        if (btn.textContent === "Not Owned" && filterOwned === false) btn.classList.add("game-filter-active");
+        if (btn.textContent === "Special" && filterSpecial === true) btn.classList.add("game-filter-active");
+        if (btn.textContent === "Not Special" && filterSpecial === false) btn.classList.add("game-filter-active");
+
+        // Generation buttons use the plain "active" (gold) highlight, matching
+        // pokedexes.js's updateGenerationButtonHighlight() convention — not
+        // the green/red "game-filter-active" used by the include/exclude pairs.
+        if (btn.dataset.gen && Number(btn.dataset.gen) === filterGeneration) btn.classList.add("active");
+    });
+}
+
+// Page mode shows a fixed binder layout — filtering which cards appear would
+// break the page numbering, so filters are reset and locked while it's active.
+function updateFilterDisabledState() {
+    const container = document.getElementById("game-filter-container");
+    if (container) container.classList.toggle("filters-disabled", pageMode);
+}
+
+// =========================
+// SAVE
+// =========================
+function saveItems() {
+    localStorage.setItem(activeDeck.storageKey, JSON.stringify(items));
+}
+
+// =========================
+// RENDER CARDS
+// =========================
+function renderItems() {
+    boxContainer.innerHTML = "";
+
+    const data = pageMode ? getPageModeOrder(items) : items;
+
+    data.forEach(item => {
+        if (item.empty) {
+            const spacer = document.createElement("div");
+            spacer.classList.add("pokemon-card", "empty-card");
+            boxContainer.appendChild(spacer);
+            return;
+        }
+
+        const card = document.createElement("div");
+        card.classList.add("pokemon-card");
+        if (!item.owned) card.classList.add("not-owned");
+        card.dataset.itemIndex = items.indexOf(item);
+
+        const img = document.createElement("img");
+        resolveItemImage(img, item);
+        card.appendChild(img);
+
+        if (activeDeck.hasSpecial && item.special) {
+            const badge = document.createElement("div");
+            badge.classList.add("special-badge");
+            badge.textContent = "★";
+            card.appendChild(badge);
+        }
+
+        const label = document.createElement("div");
+        label.classList.add("pokemon-name");
+        label.textContent = item.name;
+        card.appendChild(label);
+
+        card.addEventListener("click", () => {
+            openModal(items.indexOf(item));
+        });
+
+        boxContainer.appendChild(card);
+    });
+
+    applyPagination();
+    filterItems(searchInput.value);
+}
+
+function openModal(index) {
+    const item = items[index];
+
+    resolveItemImage(modalImage, item);
+    modalTitle.textContent = item.name;
+
+    document.getElementById("modal-owned").textContent = item.owned ? "Yes" : "No";
+
+    const specialRow = document.getElementById("modal-special-row");
+    if (activeDeck.hasSpecial) {
+        specialRow.hidden = false;
+        document.getElementById("modal-special").textContent = item.special ? "Yes" : "No";
+    } else {
+        specialRow.hidden = true;
+    }
+
+    const dexRow = document.getElementById("modal-dex-row");
+    if (activeDeck.hasDex) {
+        dexRow.hidden = false;
+        document.getElementById("modal-dex").textContent = "#" + item.dex;
+    } else {
+        dexRow.hidden = true;
+    }
+
+    modalOverlay.classList.remove("hidden");
+    modalOverlay.dataset.index = index;
+}
+
+modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) {
+        modalOverlay.classList.add("hidden");
+    }
+});
+
+// =========================
+// MODE BUTTONS
+// =========================
+pageBtn.addEventListener("click", () => {
+    pageMode = true;
+    currentPage = 1;
+    searchInput.value = "";
+    filterOwned = null;
+    filterSpecial = null;
+    filterGeneration = null;
+    refreshFilterButtons();
+    updateFilterDisabledState();
+    filterItems("");
+    renderItems();
+    applyPagination();
+    updateModeUI();
+});
+
+listBtn.addEventListener("click", () => {
+    pageMode = false;
+    currentPage = 1;
+    searchInput.value = "";
+    updateFilterDisabledState();
+    filterItems("");
+    renderItems();
+    updateModeUI();
+});
+
+// =========================
+// PAGINATION
+// =========================
+document.getElementById("next-page").addEventListener("click", () => {
+    const rows = activeDeck.pageBlockRows || 3;
+    const firstPageSize = rows * 4;
+    const laterPageSize = firstPageSize * 2;
+
+    const remaining = Math.max(0, items.length - firstPageSize);
+    const maxPage = items.length <= firstPageSize ? 1 : 1 + Math.ceil(remaining / laterPageSize);
+
+    if (currentPage < maxPage) {
+        currentPage++;
+        renderItems();
+        updateModeUI();
+    }
+});
+
+document.getElementById("prev-page").addEventListener("click", () => {
+    if (currentPage > 1) {
+        currentPage--;
+        renderItems();
+        updateModeUI();
+    }
+});
+
+function applyPagination() {
+    if (!pageMode) {
+        document.querySelectorAll(".pokemon-card").forEach(card => {
+            card.style.display = "block";
+        });
+        return;
+    }
+    pageDisplay.textContent = currentPage;
+}
+
+function updateModeUI() {
+    pageBtn.classList.toggle("active-mode", pageMode === true);
+    listBtn.classList.toggle("active-mode", pageMode === false);
+    pagination.classList.toggle("hidden", pageMode === false);
+    searchWrapper.classList.toggle("hidden", pageMode);
+    document.body.classList.toggle("page-mode", pageMode);
+    document.body.classList.toggle("list-mode", !pageMode);
+    document.body.classList.toggle("first-page", pageMode && currentPage === 1);
+}
+
+// =========================
+// ADD / EDIT ITEM
+// =========================
+const addModal = document.getElementById("add-item-modal");
+const titleInput = document.getElementById("item-title");
+const ownedInput = document.getElementById("item-owned");
+const specialInput = document.getElementById("item-special");
+const specialFieldRow = document.getElementById("item-special-row");
+const positionInput = document.getElementById("item-position");
+const positionFieldRow = document.getElementById("item-position-row");
+const errorBox = document.getElementById("item-error");
+
+document.getElementById("add-item").addEventListener("click", () => {
+    addModal.classList.remove("hidden");
+    itemModalTitle.textContent = "Add " + activeDeck.label.replace(/s$/, "");
+    delete addModal.dataset.editIndex;
+
+    titleInput.value = "";
+    ownedInput.checked = false;
+    specialInput.checked = false;
+    positionInput.value = "";
+
+    specialFieldRow.hidden = !activeDeck.hasSpecial;
+    positionFieldRow.hidden = false;
+});
+
+document.getElementById("save-item").addEventListener("click", () => {
+    const title = titleInput.value.trim();
+
+    if (!title) {
+        errorBox.textContent = "Please enter a name.";
+        errorBox.classList.remove("hidden");
+        return;
+    }
+
+    errorBox.classList.add("hidden");
+
+    const editIndex = addModal.dataset.editIndex;
+
+    const itemData = {
+        name: title,
+        owned: ownedInput.checked
+    };
+
+    if (activeDeck.hasSpecial) itemData.special = specialInput.checked;
+
+    if (activeDeck.hasDex) {
+        itemData.dex = (editIndex !== undefined && editIndex !== "") ? items[editIndex].dex : "";
+    }
+
+    if (editIndex !== undefined && editIndex !== "") {
+        items[editIndex] = itemData;
+    } else {
+        const posRaw = positionInput.value.trim();
+        const pos = posRaw ? Math.max(0, Math.min(items.length, parseInt(posRaw, 10) - 1)) : items.length;
+        items.splice(pos, 0, itemData);
+    }
+
+    delete addModal.dataset.editIndex;
+
+    saveItems();
+    renderItems();
+    addModal.classList.add("hidden");
+});
+
+document.addEventListener("keydown", (e) => {
+    if (addModal.classList.contains("hidden")) return;
+    if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("save-item").click();
+    }
+});
+
+document.getElementById("cancel-item").addEventListener("click", () => {
+    addModal.classList.add("hidden");
+    errorBox.classList.add("hidden");
+});
+
+document.getElementById("delete-item").addEventListener("click", () => {
+    const index = modalOverlay.dataset.index;
+    if (index === undefined) return;
+
+    items.splice(index, 1);
+    saveItems();
+    renderItems();
+    modalOverlay.classList.add("hidden");
+});
+
+document.getElementById("edit-item").addEventListener("click", () => {
+    const index = modalOverlay.dataset.index;
+    const item = items[index];
+
+    titleInput.value = item.name;
+    ownedInput.checked = !!item.owned;
+    specialInput.checked = !!item.special;
+
+    specialFieldRow.hidden = !activeDeck.hasSpecial;
+    positionFieldRow.hidden = true;
+
+    addModal.dataset.editIndex = index;
+    itemModalTitle.textContent = "Edit " + activeDeck.label.replace(/s$/, "");
+
+    addModal.classList.remove("hidden");
+    modalOverlay.classList.add("hidden");
+});
+
+document.getElementById("import-button").addEventListener("click", () => {
+    document.getElementById("import-items").click();
+});
+
+document.getElementById("import-items").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+        try {
+            const importedItems = JSON.parse(event.target.result);
+
+            if (!Array.isArray(importedItems)) {
+                alert("Invalid backup format");
+                return;
+            }
+
+            items = importedItems;
+            saveItems();
+            renderItems();
+
+            alert(`Imported ${items.length} items`);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to import backup");
+        }
+    };
+
+    reader.readAsText(file);
+});
+
+document.getElementById("export-items").addEventListener("click", async () => {
+    const data = JSON.stringify(items, null, 2);
+    const authKey = getExportAuthKey();
+
+    if (authKey) {
+        try {
+            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Key": authKey
+                },
+                body: JSON.stringify({
+                    filename: activeDeck.jsonFile,
+                    content: data
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.verified && result.committed) {
+                alert(`✅ ${activeDeck.jsonFile} committed to GitHub automatically.`);
+                return;
+            }
+
+            if (result.verified && !result.committed) {
+                console.error("GitHub commit failed:", result.error);
+                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
+            }
+        } catch (err) {
+            console.error("Export sync failed:", err);
+        }
+    }
+
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = activeDeck.jsonFile;
+
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+});
+
+// =========================
+// PAGE MODE LAYOUT
+// =========================
+function getPageModeOrder(items) {
+    // Most decks use a 4x3 block (12 per page / 24 for a two-page spread),
+    // matching the sleeves binder layout. Pokémon uses a 4x4 block instead
+    // (16 / 32) — set per-deck via pageBlockRows.
+    const rows = activeDeck.pageBlockRows || 3;
+    const blockSize = rows * 4;
+    const firstPageSize = blockSize;
+    const laterPageSize = blockSize * 2;
+
+    let start, end;
+
+    if (currentPage === 1) {
+        start = 0;
+        end = firstPageSize;
+    } else {
+        start = firstPageSize + ((currentPage - 2) * laterPageSize);
+        end = start + laterPageSize;
+    }
+
+    const pageItems = items.slice(start, end);
+
+    while (pageItems.length < laterPageSize) {
+        pageItems.push({ empty: true });
+    }
+
+    const output = [];
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < 4; c++) {
+            output.push(pageItems[r * 4 + c]);
+        }
+        for (let c = 0; c < 4; c++) {
+            output.push(pageItems[blockSize + (r * 4 + c)]);
+        }
+    }
+
+    return output;
+}
+
+// =========================
+// SEARCH / FILTER
+// =========================
+const searchInput = document.getElementById("search");
+const clearBtn = document.getElementById("clear-search");
+
+searchInput.addEventListener("input", (e) => {
+    filterItems(e.target.value);
+});
+
+clearBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    filterItems("");
+});
+
+function filterItems(query) {
+    const q = (query || "").toLowerCase().trim();
+
+    document.querySelectorAll(".pokemon-card").forEach((card, index) => {
+        const dataIndex = (card.dataset && card.dataset.itemIndex) ? Number(card.dataset.itemIndex) : index;
+        const item = items[dataIndex];
+
+        if (!item) {
+            card.style.display = "none";
+            return;
+        }
+
+        let match = item.name.toLowerCase().includes(q);
+
+        if (filterOwned === true && !item.owned) match = false;
+        if (filterOwned === false && item.owned) match = false;
+        if (filterSpecial === true && !item.special) match = false;
+        if (filterSpecial === false && item.special) match = false;
+
+        if (activeDeck.key === "pokemon" && filterGeneration !== null) {
+            const master = pokemonMasterByName ? pokemonMasterByName.get(normalizeCardName(item.name)) : null;
+            if (!master || Number(master.generation) !== filterGeneration) match = false;
+        }
+
+        card.style.display = match ? "block" : "none";
+    });
+}
+
+// =========================
+// MODAL NAVIGATION
+// =========================
+function openAdjacent(offset) {
+    const current = Number(modalOverlay.dataset.index);
+    if (isNaN(current)) return;
+
+    let next = current + offset;
+    if (next < 0) next = items.length - 1;
+    if (next >= items.length) next = 0;
+
+    openModal(next);
+}
+
+navLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacent(-1);
+});
+
+navRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacent(1);
+});
+
+document.addEventListener("keydown", (e) => {
+    if (modalOverlay.classList.contains("hidden")) return;
+    if (e.key === "ArrowLeft") openAdjacent(-1);
+    if (e.key === "ArrowRight") openAdjacent(1);
+    if (e.key === "Escape") modalOverlay.classList.add("hidden");
+});
+
+const modalCloseBtn = document.getElementById("modal-close");
+if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", () => {
+        modalOverlay.classList.add("hidden");
+    });
+}
+
+// =========================
+// MOBILE FILTER SUMMARY PANEL
+// =========================
+(function initMobileFilterPanel() {
+    const toggleBtn = document.createElement("div");
+    toggleBtn.id = "mobile-filter-toggle";
+    toggleBtn.textContent = "⚙";
+    document.body.appendChild(toggleBtn);
+
+    const panel = document.createElement("div");
+    panel.id = "mobile-filter-panel";
+    panel.innerHTML = `<h4>Active Filters</h4><div id="mobile-filter-list"></div>`;
+    document.body.appendChild(panel);
+
+    const listEl = panel.querySelector("#mobile-filter-list");
+
+    toggleBtn.addEventListener("click", () => {
+        panel.classList.toggle("open");
+        if (panel.classList.contains("open")) refreshMobileFilterPanel();
+    });
+
+    function getActiveFilterElements() {
+        return Array.from(document.querySelectorAll(".generation-filter-btn.game-filter-active"));
+    }
+
+    function refreshMobileFilterPanel() {
+        listEl.innerHTML = "";
+        let count = 0;
+
+        if (searchInput.value.trim()) {
+            count++;
+            const pill = document.createElement("div");
+            pill.classList.add("mobile-filter-pill");
+            pill.innerHTML = `<span>Search: "${searchInput.value.trim()}"</span><span>✕</span>`;
+            pill.addEventListener("click", () => {
+                clearBtn.click();
+                refreshMobileFilterPanel();
+            });
+            listEl.appendChild(pill);
+        }
+
+        getActiveFilterElements().forEach(el => {
+            count++;
+            const pill = document.createElement("div");
+            pill.classList.add("mobile-filter-pill");
+            pill.innerHTML = `<span>${el.textContent.trim()}</span><span>✕</span>`;
+            pill.addEventListener("click", () => {
+                el.click();
+                refreshMobileFilterPanel();
+            });
+            listEl.appendChild(pill);
+        });
+
+        if (count === 0) {
+            listEl.innerHTML = `<div class="mobile-filter-empty">No filters active</div>`;
+        }
+
+        toggleBtn.classList.toggle("has-active", count > 0);
+    }
+
+    document.addEventListener("click", () => {
+        setTimeout(refreshMobileFilterPanel, 50);
+    });
+
+    refreshMobileFilterPanel();
+})();
+
+// =========================
+// INIT
+// =========================
+loadDeck(DECKS[0].key);

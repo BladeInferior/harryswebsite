@@ -1,0 +1,1072 @@
+[
+  {
+    "name": "Oak",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Red",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Blue",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Green",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Brock",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Misty",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lt. Surge",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Erika",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Koga",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Sabrina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Blaine",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Giovanni",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Janine",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Lorelei",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Bruno",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Agatha",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lance",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Rocket Grunt",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Ariana",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Archer",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Petrel",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Proton",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Elm",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Silver",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Falkner",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Bugsy",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Whitney",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Morty",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Jasmine",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Pryce",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Clair",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Will",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Karen",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Birch",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "May",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Wally",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Brigitte",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Roxanne",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Brawly",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Flannery",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Norman",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Winona",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Tate and Liza",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Wallace",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Sidney",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Phoebe",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Glacia",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Steven",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Magma Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Tabitha&Courteney",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Maxie",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Aqua Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Matt&Shelly",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Archie",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Rowan",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lucas",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Dawn",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Barry",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Looker",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Roark",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Gardenia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Crasher Wake",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Fantina",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Candice",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Volkner",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Aaron",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Bertha",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Flint",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lucian",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Cynthia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Galactic Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Mars",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Cyrus",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Juniper",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Hilda",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Rosa",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Bianca",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Cheren",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Hugh",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Chili & Cilan & Cress",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Elesa",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Clay",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Skyla",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Brycen",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Roxie",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Shauntal",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Grimsley",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Caitlin",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Iris",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "N",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Colress",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Plasma Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Ghetsis",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Sycamore",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Serena",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Shauna",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Tierno",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Trevor",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Viola",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Grant",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Korrina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "AZ",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Clemont",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Valerie",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Olympia",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Drasna",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Siebold",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Diantha",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Flare Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Xerosic",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Lysandre",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Kukui",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Burnet",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Selene",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Hau",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Gladion",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Lillie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Ilima",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lana",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Kiawe",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Mallow",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Sophocles",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Acerola",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Mina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Hala",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Olivia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Nanu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Hapu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Molayne",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Kahili",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Skull Grunt",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Plumeria",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Guzma",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Lusamine",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Magnolia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Sonia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Victor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Gloria",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Hop",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Bede",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Marnie",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Milo",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Nessa",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Kabu",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Allister",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Bea",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Opal",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Melony",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Gordie",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Piers",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Raihan",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Leon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Yell Grunt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Rose",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Klara",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Avery",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Mustard",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Laventon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Akari",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Rei",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Cyllene",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Kamado",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Adaman",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Irida",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Volo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Florian",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Juliana",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Sada",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Turo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Nemona",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Arven",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Clavell",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Jacq",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Tyme",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Salvatore",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Raifort",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Dendra",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Saguaro",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Miriam",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Hassel",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Katy",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Brassius",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Iono",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Kofu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Larry",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Ryme",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Tulip",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Grusha",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Rika",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Poppy",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Geeta",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Star Grunt",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Giacomo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Mela",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Atticus",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Ortega",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Eri",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Penny",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Briar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Carmine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Kieran",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Perrin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Crispin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Lacey",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Amarys",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Drayton",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Urbain",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Naveen",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "emma",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "canari",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "tarragon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "philippe",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "corbeau",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "jacinthe",
+    "owned": true,
+    "special": false
+  }
+]

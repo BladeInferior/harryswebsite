@@ -1,0 +1,6482 @@
+[
+  {
+    "dex": "0001",
+    "name": "Bulbasaur",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0002",
+    "name": "Ivysaur",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0003",
+    "name": "Venusaur",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0004",
+    "name": "Charmander",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0005",
+    "name": "Charmeleon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Charizard",
+    "owned": true,
+    "special": false,
+    "dex": "0006"
+  },
+  {
+    "dex": "0007",
+    "name": "Squirtle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0008",
+    "name": "Wartortle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0009",
+    "name": "Blastoise",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0010",
+    "name": "Caterpie",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0011",
+    "name": "Metapod",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0012",
+    "name": "Butterfree",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0013",
+    "name": "Weedle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0014",
+    "name": "Kakuna",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0015",
+    "name": "Beedrill",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0016",
+    "name": "Pidgey",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0017",
+    "name": "Pidgeotto",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0018",
+    "name": "Pidgeot",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0019",
+    "name": "Rattata",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0020",
+    "name": "Raticate",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0021",
+    "name": "Spearow",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0022",
+    "name": "Fearow",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0023",
+    "name": "Ekans",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0024",
+    "name": "Arbok",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0025",
+    "name": "Pikachu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0026",
+    "name": "Raichu",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0027",
+    "name": "Sandshrew",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0028",
+    "name": "Sandslash",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0029",
+    "name": "Nidoran-f",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0030",
+    "name": "Nidorina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0031",
+    "name": "Nidoqueen",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0032",
+    "name": "Nidoran-m",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0033",
+    "name": "Nidorino",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0034",
+    "name": "Nidoking",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0035",
+    "name": "Clefairy",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0036",
+    "name": "Clefable",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0037",
+    "name": "Vulpix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0038",
+    "name": "Ninetales",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0039",
+    "name": "Jigglypuff",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0040",
+    "name": "Wigglytuff",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0041",
+    "name": "Zubat",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0042",
+    "name": "Golbat",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0043",
+    "name": "Oddish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0044",
+    "name": "Gloom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0045",
+    "name": "Vileplume",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0046",
+    "name": "Paras",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0047",
+    "name": "Parasect",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0048",
+    "name": "Venonat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0049",
+    "name": "Venomoth",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0050",
+    "name": "Diglett",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0051",
+    "name": "Dugtrio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0052",
+    "name": "Meowth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0053",
+    "name": "Persian",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0054",
+    "name": "Psyduck",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0055",
+    "name": "Golduck",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0056",
+    "name": "Mankey",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0057",
+    "name": "Primeape",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0058",
+    "name": "Growlithe",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0059",
+    "name": "Arcanine",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0060",
+    "name": "Poliwag",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0061",
+    "name": "Poliwhirl",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0062",
+    "name": "Poliwrath",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0063",
+    "name": "Abra",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0064",
+    "name": "Kadabra",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0065",
+    "name": "Alakazam",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0066",
+    "name": "Machop",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0067",
+    "name": "Machoke",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0068",
+    "name": "Machamp",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0069",
+    "name": "Bellsprout",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0070",
+    "name": "Weepinbell",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0071",
+    "name": "Victreebel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0072",
+    "name": "Tentacool",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0073",
+    "name": "Tentacruel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0074",
+    "name": "Geodude",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0075",
+    "name": "Graveler",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0076",
+    "name": "Golem",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0077",
+    "name": "Ponyta",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0078",
+    "name": "Rapidash",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0079",
+    "name": "Slowpoke",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0080",
+    "name": "Slowbro",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0081",
+    "name": "Magnemite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0082",
+    "name": "Magneton",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0083",
+    "name": "Farfetch'd",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0084",
+    "name": "Doduo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0085",
+    "name": "Dodrio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0086",
+    "name": "Seel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0087",
+    "name": "Dewgong",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0088",
+    "name": "Grimer",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0089",
+    "name": "Muk",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0090",
+    "name": "Shellder",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0091",
+    "name": "Cloyster",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0092",
+    "name": "Gastly",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0093",
+    "name": "Haunter",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0094",
+    "name": "Gengar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0095",
+    "name": "Onix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0096",
+    "name": "Drowzee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0097",
+    "name": "Hypno",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0098",
+    "name": "Krabby",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0099",
+    "name": "Kingler",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0100",
+    "name": "Voltorb",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0101",
+    "name": "Electrode",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0102",
+    "name": "Exeggcute",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0103",
+    "name": "Exeggutor",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0104",
+    "name": "Cubone",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0105",
+    "name": "Marowak",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0106",
+    "name": "Hitmonlee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0107",
+    "name": "Hitmonchan",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0108",
+    "name": "Lickitung",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0109",
+    "name": "Koffing",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0110",
+    "name": "Weezing",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0111",
+    "name": "Rhyhorn",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0112",
+    "name": "Rhydon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0113",
+    "name": "Chansey",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0114",
+    "name": "Tangela",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0115",
+    "name": "Kangaskhan",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0116",
+    "name": "Horsea",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0117",
+    "name": "Seadra",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0118",
+    "name": "Goldeen",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0119",
+    "name": "Seaking",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0120",
+    "name": "Staryu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0121",
+    "name": "Starmie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0122",
+    "name": "Mr. Mime",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0123",
+    "name": "Scyther",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0124",
+    "name": "Jynx",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0125",
+    "name": "Electabuzz",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0126",
+    "name": "Magmar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0127",
+    "name": "Pinsir",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0128",
+    "name": "Tauros",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0129",
+    "name": "Magikarp",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0130",
+    "name": "Gyarados",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0131",
+    "name": "Lapras",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0132",
+    "name": "Ditto",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0133",
+    "name": "Eevee",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0134",
+    "name": "Vaporeon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0135",
+    "name": "Jolteon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0136",
+    "name": "Flareon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0137",
+    "name": "Porygon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0138",
+    "name": "Omanyte",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0139",
+    "name": "Omastar",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0140",
+    "name": "Kabuto",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0141",
+    "name": "Kabutops",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0142",
+    "name": "Aerodactyl",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0143",
+    "name": "Snorlax",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0144",
+    "name": "Articuno",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0145",
+    "name": "Zapdos",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0146",
+    "name": "Moltres",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0147",
+    "name": "Dratini",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0148",
+    "name": "Dragonair",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0149",
+    "name": "Dragonite",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0150",
+    "name": "Mewtwo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0151",
+    "name": "Mew",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0152",
+    "name": "Chikorita",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0153",
+    "name": "Bayleef",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0154",
+    "name": "Meganium",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0155",
+    "name": "Cyndaquil",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0156",
+    "name": "Quilava",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0157",
+    "name": "Typhlosion",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0158",
+    "name": "Totodile",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0159",
+    "name": "Croconaw",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0160",
+    "name": "Feraligatr",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0161",
+    "name": "Sentret",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0162",
+    "name": "Furret",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0163",
+    "name": "Hoothoot",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0164",
+    "name": "Noctowl",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0165",
+    "name": "Ledyba",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0166",
+    "name": "Ledian",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0167",
+    "name": "Spinarak",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0168",
+    "name": "Ariados",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0169",
+    "name": "Crobat",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0170",
+    "name": "Chinchou",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0171",
+    "name": "Lanturn",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0172",
+    "name": "Pichu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0173",
+    "name": "Cleffa",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0174",
+    "name": "Igglybuff",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0175",
+    "name": "Togepi",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0176",
+    "name": "Togetic",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0177",
+    "name": "Natu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0178",
+    "name": "Xatu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0179",
+    "name": "Mareep",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0180",
+    "name": "Flaaffy",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0181",
+    "name": "Ampharos",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0182",
+    "name": "Bellossom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0183",
+    "name": "Marill",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0184",
+    "name": "Azumarill",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0185",
+    "name": "Sudowoodo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0186",
+    "name": "Politoed",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0187",
+    "name": "Hoppip",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0188",
+    "name": "Skiploom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0189",
+    "name": "Jumpluff",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0190",
+    "name": "Aipom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0191",
+    "name": "Sunkern",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0192",
+    "name": "Sunflora",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0193",
+    "name": "Yanma",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0194",
+    "name": "Wooper",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0195",
+    "name": "Quagsire",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0196",
+    "name": "Espeon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0197",
+    "name": "Umbreon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0198",
+    "name": "Murkrow",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0199",
+    "name": "Slowking",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0200",
+    "name": "Misdreavus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0201",
+    "name": "Unown",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0202",
+    "name": "Wobbuffet",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0203",
+    "name": "Girafarig",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0204",
+    "name": "Pineco",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0205",
+    "name": "Forretress",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0206",
+    "name": "Dunsparce",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0207",
+    "name": "Gligar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0208",
+    "name": "Steelix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0209",
+    "name": "Snubbull",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0210",
+    "name": "Granbull",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0211",
+    "name": "Qwilfish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0212",
+    "name": "Scizor",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0213",
+    "name": "Shuckle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0214",
+    "name": "Heracross",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0215",
+    "name": "Sneasel",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0216",
+    "name": "Teddiursa",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0217",
+    "name": "Ursaring",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0218",
+    "name": "Slugma",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0219",
+    "name": "Magcargo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0220",
+    "name": "Swinub",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0221",
+    "name": "Piloswine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0222",
+    "name": "Corsola",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0223",
+    "name": "Remoraid",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0224",
+    "name": "Octillery",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0225",
+    "name": "Delibird",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0226",
+    "name": "Mantine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0227",
+    "name": "Skarmory",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0228",
+    "name": "Houndour",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0229",
+    "name": "Houndoom",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0230",
+    "name": "Kingdra",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0231",
+    "name": "Phanpy",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0232",
+    "name": "Donphan",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0233",
+    "name": "Porygon2",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0234",
+    "name": "Stantler",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0235",
+    "name": "Smeargle",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0236",
+    "name": "Tyrogue",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0237",
+    "name": "Hitmontop",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0238",
+    "name": "Smoochum",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0239",
+    "name": "Elekid",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0240",
+    "name": "Magby",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0241",
+    "name": "Miltank",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0242",
+    "name": "Blissey",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0243",
+    "name": "Raikou",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0244",
+    "name": "Entei",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0245",
+    "name": "Suicune",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0246",
+    "name": "Larvitar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0247",
+    "name": "Pupitar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0248",
+    "name": "Tyranitar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0249",
+    "name": "Lugia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0250",
+    "name": "Ho-Oh",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0251",
+    "name": "Celebi",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0252",
+    "name": "Treecko",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0253",
+    "name": "Grovyle",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0254",
+    "name": "Sceptile",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0255",
+    "name": "Torchic",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0256",
+    "name": "Combusken",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0257",
+    "name": "Blaziken",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0258",
+    "name": "Mudkip",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0259",
+    "name": "Marshtomp",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0260",
+    "name": "Swampert",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0261",
+    "name": "Poochyena",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0262",
+    "name": "Mightyena",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0263",
+    "name": "Zigzagoon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0264",
+    "name": "Linoone",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0265",
+    "name": "Wurmple",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0266",
+    "name": "Silcoon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0267",
+    "name": "Beautifly",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0268",
+    "name": "Cascoon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0269",
+    "name": "Dustox",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0270",
+    "name": "Lotad",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0271",
+    "name": "Lombre",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0272",
+    "name": "Ludicolo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0273",
+    "name": "Seedot",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0274",
+    "name": "Nuzleaf",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0275",
+    "name": "Shiftry",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0276",
+    "name": "Taillow",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0277",
+    "name": "Swellow",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0278",
+    "name": "Wingull",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0279",
+    "name": "Pelipper",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0280",
+    "name": "Ralts",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0281",
+    "name": "Kirlia",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0282",
+    "name": "Gardevoir",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0283",
+    "name": "Surskit",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0284",
+    "name": "Masquerain",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0285",
+    "name": "Shroomish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0286",
+    "name": "Breloom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0287",
+    "name": "Slakoth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0288",
+    "name": "Vigoroth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0289",
+    "name": "Slaking",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0290",
+    "name": "Nincada",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0291",
+    "name": "Ninjask",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0292",
+    "name": "Shedinja",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0293",
+    "name": "Whismur",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0294",
+    "name": "Loudred",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0295",
+    "name": "Exploud",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0296",
+    "name": "Makuhita",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0297",
+    "name": "Hariyama",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0298",
+    "name": "Azurill",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0299",
+    "name": "Nosepass",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0300",
+    "name": "Skitty",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0301",
+    "name": "Delcatty",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0302",
+    "name": "Sableye",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0303",
+    "name": "Mawile",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0304",
+    "name": "Aron",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0305",
+    "name": "Lairon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0306",
+    "name": "Aggron",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0307",
+    "name": "Meditite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0308",
+    "name": "Medicham",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0309",
+    "name": "Electrike",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0310",
+    "name": "Manectric",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0311",
+    "name": "Plusle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0312",
+    "name": "Minun",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0313",
+    "name": "Volbeat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0314",
+    "name": "Illumise",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0315",
+    "name": "Roselia",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0316",
+    "name": "Gulpin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0317",
+    "name": "Swalot",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0318",
+    "name": "Carvanha",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0319",
+    "name": "Sharpedo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0320",
+    "name": "Wailmer",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0321",
+    "name": "Wailord",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0322",
+    "name": "Numel",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0323",
+    "name": "Camerupt",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0324",
+    "name": "Torkoal",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0325",
+    "name": "Spoink",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0326",
+    "name": "Grumpig",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0327",
+    "name": "Spinda",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0328",
+    "name": "Trapinch",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0329",
+    "name": "Vibrava",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0330",
+    "name": "Flygon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0331",
+    "name": "Cacnea",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0332",
+    "name": "Cacturne",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0333",
+    "name": "Swablu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0334",
+    "name": "Altaria",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0335",
+    "name": "Zangoose",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0336",
+    "name": "Seviper",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0337",
+    "name": "Lunatone",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0338",
+    "name": "Solrock",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0339",
+    "name": "Barboach",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0340",
+    "name": "Whiscash",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0341",
+    "name": "Corphish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0342",
+    "name": "Crawdaunt",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0343",
+    "name": "Baltoy",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0344",
+    "name": "Claydol",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0345",
+    "name": "Lileep",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0346",
+    "name": "Cradily",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0347",
+    "name": "Anorith",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0348",
+    "name": "Armaldo",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0349",
+    "name": "Feebas",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0350",
+    "name": "Milotic",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0351",
+    "name": "Castform",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0352",
+    "name": "Kecleon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0353",
+    "name": "Shuppet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0354",
+    "name": "Banette",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0355",
+    "name": "Duskull",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0356",
+    "name": "Dusclops",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0357",
+    "name": "Tropius",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0358",
+    "name": "Chimecho",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0359",
+    "name": "Absol",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0360",
+    "name": "Wynaut",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0361",
+    "name": "Snorunt",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0362",
+    "name": "Glalie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0363",
+    "name": "Spheal",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0364",
+    "name": "Sealeo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0365",
+    "name": "Walrein",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0366",
+    "name": "Clamperl",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0367",
+    "name": "Huntail",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0368",
+    "name": "Gorebyss",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0369",
+    "name": "Relicanth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0370",
+    "name": "Luvdisc",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0371",
+    "name": "Bagon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0372",
+    "name": "Shelgon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0373",
+    "name": "Salamence",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0374",
+    "name": "Beldum",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0375",
+    "name": "Metang",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0376",
+    "name": "Metagross",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0377",
+    "name": "Regirock",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0378",
+    "name": "Regice",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0379",
+    "name": "Registeel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0380",
+    "name": "Latias",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0381",
+    "name": "Latios",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0382",
+    "name": "Kyogre",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0383",
+    "name": "Groudon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0384",
+    "name": "Rayquaza",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0385",
+    "name": "Jirachi",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0386",
+    "name": "Deoxys",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0387",
+    "name": "Turtwig",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0388",
+    "name": "Grotle",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0389",
+    "name": "Torterra",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0390",
+    "name": "Chimchar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0391",
+    "name": "Monferno",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0392",
+    "name": "Infernape",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0393",
+    "name": "Piplup",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0394",
+    "name": "Prinplup",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0395",
+    "name": "Empoleon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0396",
+    "name": "Starly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0397",
+    "name": "Staravia",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0398",
+    "name": "Staraptor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0399",
+    "name": "Bidoof",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0400",
+    "name": "Bibarel",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0401",
+    "name": "Kricketot",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0402",
+    "name": "Kricketune",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0403",
+    "name": "Shinx",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0404",
+    "name": "Luxio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0405",
+    "name": "Luxray",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0406",
+    "name": "Budew",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0407",
+    "name": "Roserade",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0408",
+    "name": "Cranidos",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0409",
+    "name": "Rampardos",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0410",
+    "name": "Shieldon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0411",
+    "name": "Bastiodon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0412",
+    "name": "Burmy",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0413",
+    "name": "Wormadam",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0414",
+    "name": "Mothim",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0415",
+    "name": "Combee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0416",
+    "name": "Vespiquen",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0417",
+    "name": "Pachirisu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0418",
+    "name": "Buizel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0419",
+    "name": "Floatzel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0420",
+    "name": "Cherubi",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0421",
+    "name": "Cherrim",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0422",
+    "name": "Shellos",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0423",
+    "name": "Gastrodon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0424",
+    "name": "Ambipom",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0425",
+    "name": "Drifloon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0426",
+    "name": "Drifblim",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0427",
+    "name": "Buneary",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0428",
+    "name": "Lopunny",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0429",
+    "name": "Mismagius",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0430",
+    "name": "Honchkrow",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0431",
+    "name": "Glameow",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0432",
+    "name": "Purugly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0433",
+    "name": "Chingling",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0434",
+    "name": "Stunky",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0435",
+    "name": "Skuntank",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0436",
+    "name": "Bronzor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0437",
+    "name": "Bronzong",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0438",
+    "name": "Bonsly",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0439",
+    "name": "Mime Jr.",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0440",
+    "name": "Happiny",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0441",
+    "name": "Chatot",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0442",
+    "name": "Spiritomb",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0443",
+    "name": "Gible",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0444",
+    "name": "Gabite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0445",
+    "name": "Garchomp",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0446",
+    "name": "Munchlax",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0447",
+    "name": "Riolu",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0448",
+    "name": "Lucario",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0449",
+    "name": "Hippopotas",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0450",
+    "name": "Hippowdon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0451",
+    "name": "Skorupi",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0452",
+    "name": "Drapion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0453",
+    "name": "Croagunk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0454",
+    "name": "Toxicroak",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0455",
+    "name": "Carnivine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0456",
+    "name": "Finneon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0457",
+    "name": "Lumineon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0458",
+    "name": "Mantyke",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0459",
+    "name": "Snover",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0460",
+    "name": "Abomasnow",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0461",
+    "name": "Weavile",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0462",
+    "name": "Magnezone",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0463",
+    "name": "Lickilicky",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0464",
+    "name": "Rhyperior",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0465",
+    "name": "Tangrowth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0466",
+    "name": "Electivire",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0467",
+    "name": "Magmortar",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0468",
+    "name": "Togekiss",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0469",
+    "name": "Yanmega",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0470",
+    "name": "Leafeon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0471",
+    "name": "Glaceon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0472",
+    "name": "Gliscor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0473",
+    "name": "Mamoswine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0474",
+    "name": "Porygon-Z",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0475",
+    "name": "Gallade",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0476",
+    "name": "Probopass",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0477",
+    "name": "Dusknoir",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0478",
+    "name": "Froslass",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0479",
+    "name": "Rotom",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0480",
+    "name": "Uxie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0481",
+    "name": "Mesprit",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0482",
+    "name": "Azelf",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0483",
+    "name": "Dialga",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0484",
+    "name": "Palkia",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0485",
+    "name": "Heatran",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0486",
+    "name": "Regigigas",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0487",
+    "name": "Giratina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0488",
+    "name": "Cresselia",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0489",
+    "name": "Phione",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0490",
+    "name": "Manaphy",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0491",
+    "name": "Darkrai",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0492",
+    "name": "Shaymin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0493",
+    "name": "Arceus",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0494",
+    "name": "Victini",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0495",
+    "name": "Snivy",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0496",
+    "name": "Servine",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0497",
+    "name": "Serperior",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0498",
+    "name": "Tepig",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0499",
+    "name": "Pignite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0500",
+    "name": "Emboar",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0501",
+    "name": "Oshawott",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0502",
+    "name": "Dewott",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0503",
+    "name": "Samurott",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0504",
+    "name": "Patrat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0505",
+    "name": "Watchog",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0506",
+    "name": "Lillipup",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0507",
+    "name": "Herdier",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0508",
+    "name": "Stoutland",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0509",
+    "name": "Purrloin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0510",
+    "name": "Liepard",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0511",
+    "name": "Pansage",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0512",
+    "name": "Simisage",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0513",
+    "name": "Pansear",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0514",
+    "name": "Simisear",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0515",
+    "name": "Panpour",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0516",
+    "name": "Simipour",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0517",
+    "name": "Munna",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0518",
+    "name": "Musharna",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0519",
+    "name": "Pidove",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0520",
+    "name": "Tranquill",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0521",
+    "name": "Unfezant",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0522",
+    "name": "Blitzle",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0523",
+    "name": "Zebstrika",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0524",
+    "name": "Roggenrola",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0525",
+    "name": "Boldore",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0526",
+    "name": "Gigalith",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0527",
+    "name": "Woobat",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0528",
+    "name": "Swoobat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0529",
+    "name": "Drilbur",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0530",
+    "name": "Excadrill",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0531",
+    "name": "Audino",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0532",
+    "name": "Timburr",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0533",
+    "name": "Gurdurr",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0534",
+    "name": "Conkeldurr",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0535",
+    "name": "Tympole",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0536",
+    "name": "Palpitoad",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0537",
+    "name": "Seismitoad",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0538",
+    "name": "Throh",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0539",
+    "name": "Sawk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0540",
+    "name": "Sewaddle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0541",
+    "name": "Swadloon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0542",
+    "name": "Leavanny",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0543",
+    "name": "Venipede",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0544",
+    "name": "Whirlipede",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0545",
+    "name": "Scolipede",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0546",
+    "name": "Cottonee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0547",
+    "name": "Whimsicott",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0548",
+    "name": "Petilil",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0549",
+    "name": "Lilligant",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0550",
+    "name": "Basculin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0551",
+    "name": "Sandile",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0552",
+    "name": "Krokorok",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0553",
+    "name": "Krookodile",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0554",
+    "name": "Darumaka",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0555",
+    "name": "Darmanitan",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0556",
+    "name": "Maractus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0557",
+    "name": "Dwebble",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0558",
+    "name": "Crustle",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0559",
+    "name": "Scraggy",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0560",
+    "name": "Scrafty",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0561",
+    "name": "Sigilyph",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0562",
+    "name": "Yamask",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0563",
+    "name": "Cofagrigus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0564",
+    "name": "Tirtouga",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0565",
+    "name": "Carracosta",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0566",
+    "name": "Archen",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0567",
+    "name": "Archeops",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0568",
+    "name": "Trubbish",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0569",
+    "name": "Garbodor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0570",
+    "name": "Zorua",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0571",
+    "name": "Zoroark",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0572",
+    "name": "Minccino",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0573",
+    "name": "Cinccino",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0574",
+    "name": "Gothita",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0575",
+    "name": "Gothorita",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0576",
+    "name": "Gothitelle",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0577",
+    "name": "Solosis",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0578",
+    "name": "Duosion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0579",
+    "name": "Reuniclus",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0580",
+    "name": "Ducklett",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0581",
+    "name": "Swanna",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0582",
+    "name": "Vanillite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0583",
+    "name": "Vanillish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0584",
+    "name": "Vanilluxe",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0585",
+    "name": "Deerling",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0586",
+    "name": "Sawsbuck",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0587",
+    "name": "Emolga",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0588",
+    "name": "Karrablast",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0589",
+    "name": "Escavalier",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0590",
+    "name": "Foongus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0591",
+    "name": "Amoonguss",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0592",
+    "name": "Frillish",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0593",
+    "name": "Jellicent",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0594",
+    "name": "Alomomola",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0595",
+    "name": "Joltik",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0596",
+    "name": "Galvantula",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0597",
+    "name": "Ferroseed",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0598",
+    "name": "Ferrothorn",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0599",
+    "name": "Klink",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0600",
+    "name": "Klang",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0601",
+    "name": "Klinklang",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0602",
+    "name": "Tynamo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0603",
+    "name": "Eelektrik",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0604",
+    "name": "Eelektross",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0605",
+    "name": "Elgyem",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0606",
+    "name": "Beheeyem",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0607",
+    "name": "Litwick",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0608",
+    "name": "Lampent",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0609",
+    "name": "Chandelure",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0610",
+    "name": "Axew",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0611",
+    "name": "Fraxure",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0612",
+    "name": "Haxorus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Cubchoo",
+    "owned": true,
+    "special": true,
+    "dex": "0613"
+  },
+  {
+    "dex": "0614",
+    "name": "Beartic",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0615",
+    "name": "Cryogonal",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0616",
+    "name": "Shelmet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0617",
+    "name": "Accelgor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0618",
+    "name": "Stunfisk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0619",
+    "name": "Mienfoo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0620",
+    "name": "Mienshao",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0621",
+    "name": "Druddigon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0622",
+    "name": "Golett",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0623",
+    "name": "Golurk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0624",
+    "name": "Pawniard",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0625",
+    "name": "Bisharp",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0626",
+    "name": "Bouffalant",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0627",
+    "name": "Rufflet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0628",
+    "name": "Braviary",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0629",
+    "name": "Vullaby",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0630",
+    "name": "Mandibuzz",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0631",
+    "name": "Heatmor",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0632",
+    "name": "Durant",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0633",
+    "name": "Deino",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0634",
+    "name": "Zweilous",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0635",
+    "name": "Hydreigon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0636",
+    "name": "Larvesta",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0637",
+    "name": "Volcarona",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0638",
+    "name": "Cobalion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0639",
+    "name": "Terrakion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0640",
+    "name": "Virizion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0641",
+    "name": "Tornadus",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0642",
+    "name": "Thundurus",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0643",
+    "name": "Reshiram",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0644",
+    "name": "Zekrom",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0645",
+    "name": "Landorus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0646",
+    "name": "Kyurem",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0647",
+    "name": "Keldeo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0648",
+    "name": "Meloetta",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0649",
+    "name": "Genesect",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0650",
+    "name": "Chespin",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0651",
+    "name": "Quilladin",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0652",
+    "name": "Chesnaught",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0653",
+    "name": "Fennekin",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0654",
+    "name": "Braixen",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0655",
+    "name": "Delphox",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0656",
+    "name": "Froakie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0657",
+    "name": "Frogadier",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0658",
+    "name": "Greninja",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0659",
+    "name": "Bunnelby",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0660",
+    "name": "Diggersby",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0661",
+    "name": "Fletchling",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0662",
+    "name": "Fletchinder",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0663",
+    "name": "Talonflame",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0664",
+    "name": "Scatterbug",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0665",
+    "name": "Spewpa",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0666",
+    "name": "Vivillon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0667",
+    "name": "Litleo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0668",
+    "name": "Pyroar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0669",
+    "name": "Flabebe",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0670",
+    "name": "Floette",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0671",
+    "name": "Florges",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0672",
+    "name": "Skiddo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0673",
+    "name": "Gogoat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0674",
+    "name": "Pancham",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0675",
+    "name": "Pangoro",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0676",
+    "name": "Furfrou",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0677",
+    "name": "Espurr",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0678",
+    "name": "Meowstic",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0679",
+    "name": "Honedge",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0680",
+    "name": "Doublade",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0681",
+    "name": "Aegislash",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0682",
+    "name": "Spritzee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0683",
+    "name": "Aromatisse",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0684",
+    "name": "Swirlix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0685",
+    "name": "Slurpuff",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0686",
+    "name": "Inkay",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0687",
+    "name": "Malamar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0688",
+    "name": "Binacle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0689",
+    "name": "Barbaracle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0690",
+    "name": "Skrelp",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0691",
+    "name": "Dragalge",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0692",
+    "name": "Clauncher",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0693",
+    "name": "Clawitzer",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0694",
+    "name": "Helioptile",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0695",
+    "name": "Heliolisk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0696",
+    "name": "Tyrunt",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0697",
+    "name": "Tyrantrum",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0698",
+    "name": "Amaura",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0699",
+    "name": "Aurorus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0700",
+    "name": "Sylveon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0701",
+    "name": "Hawlucha",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0702",
+    "name": "Dedenne",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0703",
+    "name": "Carbink",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0704",
+    "name": "Goomy",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0705",
+    "name": "Sliggoo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0706",
+    "name": "Goodra",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0707",
+    "name": "Klefki",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0708",
+    "name": "Phantump",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0709",
+    "name": "Trevenant",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0710",
+    "name": "Pumpkaboo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0711",
+    "name": "Gourgeist",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0712",
+    "name": "Bergmite",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0713",
+    "name": "Avalugg",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0714",
+    "name": "Noibat",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0715",
+    "name": "Noivern",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0716",
+    "name": "Xerneas",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0717",
+    "name": "Yveltal",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0718",
+    "name": "Zygarde",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0719",
+    "name": "Diancie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0720",
+    "name": "Hoopa",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0721",
+    "name": "Volcanion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0722",
+    "name": "Rowlet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0723",
+    "name": "Dartrix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0724",
+    "name": "Decidueye",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0725",
+    "name": "Litten",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0726",
+    "name": "Torracat",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0727",
+    "name": "Incineroar",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0728",
+    "name": "Popplio",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0729",
+    "name": "Brionne",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0730",
+    "name": "Primarina",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0731",
+    "name": "Pikipek",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0732",
+    "name": "Trumbeak",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0733",
+    "name": "Toucannon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0734",
+    "name": "Yungoos",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0735",
+    "name": "Gumshoos",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0019",
+    "name": "Alolan Rattata",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0020",
+    "name": "Alolan Raticate",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0026",
+    "name": "Alolan Raichu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0736",
+    "name": "Grubbin",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0737",
+    "name": "Charjabug",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0738",
+    "name": "Vikavolt",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0052",
+    "name": "Alolan Meowth",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0053",
+    "name": "Alolan Persian",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0088",
+    "name": "Alolan Grimer",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0089",
+    "name": "Alolan Muk",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0739",
+    "name": "Crabrawler",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0740",
+    "name": "Crabominable",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0050",
+    "name": "Alolan Diglett",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0051",
+    "name": "Alolan Dugtrio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0741",
+    "name": "Oricorio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0742",
+    "name": "Cutiefly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0743",
+    "name": "Ribombee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0744",
+    "name": "Rockruff",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0745",
+    "name": "Lycanroc",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0746",
+    "name": "Wishiwashi",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0747",
+    "name": "Mareanie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0748",
+    "name": "Toxapex",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0749",
+    "name": "Mudbray",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0750",
+    "name": "Mudsdale",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0751",
+    "name": "Dewpider",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0752",
+    "name": "Araquanid",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0753",
+    "name": "Fomantis",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0754",
+    "name": "Lurantis",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0755",
+    "name": "Morelull",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0756",
+    "name": "Shiinotic",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0757",
+    "name": "Salandit",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0758",
+    "name": "Salazzle",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0105",
+    "name": "Alolan Marowak",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0759",
+    "name": "Stufful",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0760",
+    "name": "Bewear",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0761",
+    "name": "Bounsweet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0762",
+    "name": "Steenee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0763",
+    "name": "Tsareena",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0764",
+    "name": "Comfey",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0765",
+    "name": "Oranguru",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0766",
+    "name": "Passimian",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0767",
+    "name": "Wimpod",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0768",
+    "name": "Golisopod",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0769",
+    "name": "Sandygast",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0770",
+    "name": "Palossand",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0771",
+    "name": "Pyukumuku",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0772",
+    "name": "Type: Null",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0773",
+    "name": "Silvally",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0774",
+    "name": "Minior",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0775",
+    "name": "Komala",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0776",
+    "name": "Turtonator",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0777",
+    "name": "Togedemaru",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0074",
+    "name": "Alolan Geodude",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0075",
+    "name": "Alolan Graveler",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0076",
+    "name": "Alolan Golem",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0778",
+    "name": "Mimikyu",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0779",
+    "name": "Bruxish",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0780",
+    "name": "Drampa",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0027",
+    "name": "Alolan Sandshrew",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0028",
+    "name": "Alolan Sandslash",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0037",
+    "name": "Alolan Vulpix",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0038",
+    "name": "Alolan Ninetales",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0781",
+    "name": "Dhelmise",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0103",
+    "name": "Alolan Exeggutor",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0782",
+    "name": "Jangmo-o",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0783",
+    "name": "Hakamo-o",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0784",
+    "name": "Kommo-o",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0785",
+    "name": "Tapu Koko",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0786",
+    "name": "Tapu Lele",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0787",
+    "name": "Tapu Bulu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0788",
+    "name": "Tapu Fini",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0789",
+    "name": "Cosmog",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0790",
+    "name": "Cosmoem",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0791",
+    "name": "Solgaleo",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0792",
+    "name": "Lunala",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0793",
+    "name": "Nihilego",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0794",
+    "name": "Buzzwole",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0795",
+    "name": "Pheromosa",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0796",
+    "name": "Xurkitree",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0797",
+    "name": "Celesteela",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0798",
+    "name": "Kartana",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0799",
+    "name": "Guzzlord",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0800",
+    "name": "Necrozma",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0801",
+    "name": "Magearna",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0802",
+    "name": "Marshadow",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0803",
+    "name": "Poipole",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0804",
+    "name": "Naganadel",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0805",
+    "name": "Stakataka",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0806",
+    "name": "Blacephalon",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0807",
+    "name": "Zeraora",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0808",
+    "name": "Meltan",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0809",
+    "name": "Melmetal",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0810",
+    "name": "Grookey",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0811",
+    "name": "Thwackey",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0812",
+    "name": "Rillaboom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0813",
+    "name": "Scorbunny",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0814",
+    "name": "Raboot",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0815",
+    "name": "Cinderace",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0816",
+    "name": "Sobble",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0817",
+    "name": "Drizzile",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0818",
+    "name": "Inteleon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0819",
+    "name": "Skwovet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0820",
+    "name": "Greedent",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0821",
+    "name": "Rookidee",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0822",
+    "name": "Corvisquire",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0823",
+    "name": "Corviknight",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0824",
+    "name": "Blipbug",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0825",
+    "name": "Dottler",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0826",
+    "name": "Orbeetle",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0827",
+    "name": "Nickit",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0828",
+    "name": "Thievul",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0829",
+    "name": "Gossifleur",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0830",
+    "name": "Eldegoss",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0831",
+    "name": "Wooloo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0832",
+    "name": "Dubwool",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0833",
+    "name": "Chewtle",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0834",
+    "name": "Drednaw",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0835",
+    "name": "Yamper",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0836",
+    "name": "Boltund",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0837",
+    "name": "Rolycoly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0838",
+    "name": "Carkol",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0839",
+    "name": "Coalossal",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0840",
+    "name": "Applin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0841",
+    "name": "Flapple",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0842",
+    "name": "Appletun",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0618",
+    "name": "Galarian Stunfisk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0843",
+    "name": "Silicobra",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0844",
+    "name": "Sandaconda",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0845",
+    "name": "Cramorant",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0846",
+    "name": "Arrokuda",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0847",
+    "name": "Barraskewda",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0848",
+    "name": "Toxel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0849",
+    "name": "Toxtricity",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0850",
+    "name": "Sizzlipede",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0851",
+    "name": "Centiskorch",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0852",
+    "name": "Clobbopus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0853",
+    "name": "Grapploct",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0077",
+    "name": "Galarian Ponyta",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0078",
+    "name": "Galarian Rapidash",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0854",
+    "name": "Sinistea",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0855",
+    "name": "Polteageist",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0856",
+    "name": "Hatenna",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0857",
+    "name": "Hattrem",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0858",
+    "name": "Hatterene",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0859",
+    "name": "Impidimp",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0860",
+    "name": "Morgrem",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0861",
+    "name": "Grimmsnarl",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0110",
+    "name": "Galarian Weezing",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0263",
+    "name": "Galarian Zigzagoon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0264",
+    "name": "Galarian Linoone",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0862",
+    "name": "Obstagoon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0052",
+    "name": "Galarian Meowth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0863",
+    "name": "Perrserker",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0222",
+    "name": "Galarian Corsola",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0864",
+    "name": "Cursola",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0083",
+    "name": "Galarian Farfetch'd",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0865",
+    "name": "Sirfetch'd",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0122",
+    "name": "Galarian Mr. Mime",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0866",
+    "name": "Mr. Rime",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0562",
+    "name": "Galarian Yamask",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0867",
+    "name": "Runerigus",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0868",
+    "name": "Milcery",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0869",
+    "name": "Alcremie",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0870",
+    "name": "Falinks",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0871",
+    "name": "Pincurchin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0872",
+    "name": "Snom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0873",
+    "name": "Frosmoth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0874",
+    "name": "Stonjourner",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0875",
+    "name": "Eiscue",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0876",
+    "name": "Indeedee",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0877",
+    "name": "Morpeko",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0878",
+    "name": "Cufant",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0879",
+    "name": "Copperajah",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0880",
+    "name": "Dracozolt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0881",
+    "name": "Arctozolt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0882",
+    "name": "Dracovish",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0883",
+    "name": "Arctovish",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0884",
+    "name": "Duraludon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0885",
+    "name": "Dreepy",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0886",
+    "name": "Drakloak",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0887",
+    "name": "Dragapult",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0888",
+    "name": "Zacian",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0889",
+    "name": "Zamazenta",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0890",
+    "name": "Eternatus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0079",
+    "name": "Galarian Slowpoke",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0080",
+    "name": "Galarian Slowbro",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0199",
+    "name": "Galarian Slowking",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0891",
+    "name": "Kubfu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0892",
+    "name": "Urshifu",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0893",
+    "name": "Zarude",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0894",
+    "name": "Regieleki",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0895",
+    "name": "Regidrago",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0144",
+    "name": "Galarian Articuno",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0145",
+    "name": "Galarian Zapdos",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0146",
+    "name": "Galarian Moltres",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0896",
+    "name": "Glastrier",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0897",
+    "name": "Spectrier",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0898",
+    "name": "Calyrex",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0724",
+    "name": "Hisuian Decidueye",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0157",
+    "name": "Hisuian Typhlosion",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0503",
+    "name": "Hisuian Samurott",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0899",
+    "name": "Wyrdeer",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0900",
+    "name": "Kleavor",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0549",
+    "name": "Hisuian Lilligant",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0901",
+    "name": "Ursaluna",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0705",
+    "name": "Hisuian Sliggoo",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0706",
+    "name": "Hisuian Goodra",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0058",
+    "name": "Hisuian Growlithe",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0059",
+    "name": "Hisuian Arcanine",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0550",
+    "name": "Hisuian Basculin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0902",
+    "name": "Basculegion",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0100",
+    "name": "Hisuian Voltorb",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0101",
+    "name": "Hisuian Electrode",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0215",
+    "name": "Hisuian Sneasel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0903",
+    "name": "Sneasler",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0211",
+    "name": "Hisuian Qwilfish",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0904",
+    "name": "Overqwil",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0713",
+    "name": "Hisuian Avalugg",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0570",
+    "name": "Hisuian Zorua",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0571",
+    "name": "Hisuian Zoroark",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0628",
+    "name": "Hisuian Braviary",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0905",
+    "name": "Enamorus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0906",
+    "name": "Sprigatito",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0907",
+    "name": "Floragato",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0908",
+    "name": "Meowscarada",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0909",
+    "name": "Fuecoco",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0910",
+    "name": "Crocalor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0911",
+    "name": "Skeledirge",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0912",
+    "name": "Quaxly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0913",
+    "name": "Quaxwell",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0914",
+    "name": "Quaquaval",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0915",
+    "name": "Lechonk",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0916",
+    "name": "Oinkologne",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0917",
+    "name": "Tarountula",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0918",
+    "name": "Spidops",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0919",
+    "name": "Nymble",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0920",
+    "name": "Lokix",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0921",
+    "name": "Pawmi",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0922",
+    "name": "Pawmo",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0923",
+    "name": "Pawmot",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0924",
+    "name": "Tandemaus",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0925",
+    "name": "Maushold",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0926",
+    "name": "Fidough",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0927",
+    "name": "Dachsbun",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0928",
+    "name": "Smoliv",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0929",
+    "name": "Dolliv",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0930",
+    "name": "Arboliva",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0931",
+    "name": "Squawkabilly",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0932",
+    "name": "Nacli",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0933",
+    "name": "Naclstack",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0934",
+    "name": "Garganacl",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0935",
+    "name": "Charcadet",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0936",
+    "name": "Armarouge",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0937",
+    "name": "Ceruledge",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0938",
+    "name": "Tadbulb",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0939",
+    "name": "Bellibolt",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0940",
+    "name": "Wattrel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0941",
+    "name": "Kilowattrel",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0942",
+    "name": "Maschiff",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0943",
+    "name": "Mabosstiff",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0944",
+    "name": "Shroodle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0945",
+    "name": "Grafaiai",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0128",
+    "name": "Paldean Tauros",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0946",
+    "name": "Bramblin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0947",
+    "name": "Brambleghast",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0948",
+    "name": "Toedscool",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0949",
+    "name": "Toedscruel",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0950",
+    "name": "Klawf",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0951",
+    "name": "Capsakid",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0952",
+    "name": "Scovillain",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0953",
+    "name": "Rellor",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0954",
+    "name": "Rabsca",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0955",
+    "name": "Flittle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0956",
+    "name": "Espathra",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0957",
+    "name": "Tinkatink",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0958",
+    "name": "Tinkatuff",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0959",
+    "name": "Tinkaton",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0960",
+    "name": "Wiglett",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0961",
+    "name": "Wugtrio",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0962",
+    "name": "Bombirdier",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0963",
+    "name": "Finizen",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0964",
+    "name": "Palafin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0965",
+    "name": "Varoom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0966",
+    "name": "Revavroom",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0967",
+    "name": "Cyclizar",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0968",
+    "name": "Orthworm",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0969",
+    "name": "Glimmet",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0970",
+    "name": "Glimmora",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0971",
+    "name": "Greavard",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0972",
+    "name": "Houndstone",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0973",
+    "name": "Flamigo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0974",
+    "name": "Cetoddle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0975",
+    "name": "Cetitan",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0976",
+    "name": "Veluza",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0977",
+    "name": "Dondozo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0978",
+    "name": "Tatsugiri",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0979",
+    "name": "Annihilape",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0194",
+    "name": "Paldean Wooper",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0980",
+    "name": "Clodsire",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0981",
+    "name": "Farigiraf",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0982",
+    "name": "Dudunsparce",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0983",
+    "name": "Kingambit",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0984",
+    "name": "Great Tusk",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0985",
+    "name": "Scream Tail",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0986",
+    "name": "Brute Bonnet",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0987",
+    "name": "Flutter Mane",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0988",
+    "name": "Slither Wing",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0989",
+    "name": "Sandy Shocks",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0990",
+    "name": "Iron Treads",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0991",
+    "name": "Iron Bundle",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0992",
+    "name": "Iron Hands",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0993",
+    "name": "Iron Jugulis",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0994",
+    "name": "Iron Moth",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0995",
+    "name": "Iron Thorns",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0996",
+    "name": "Frigibax",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0997",
+    "name": "Arctibax",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "0998",
+    "name": "Baxcalibur",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "0999",
+    "name": "Gimmighoul",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1000",
+    "name": "Gholdengo",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1001",
+    "name": "Wo-Chien",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1002",
+    "name": "Chien-Pao",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1003",
+    "name": "Ting-Lu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1004",
+    "name": "Chi-Yu",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1005",
+    "name": "Roaring Moon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1006",
+    "name": "Iron Valiant",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1007",
+    "name": "Koraidon",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1008",
+    "name": "Miraidon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1009",
+    "name": "Walking Wake",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1010",
+    "name": "Iron Leaves",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1011",
+    "name": "Dipplin",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1012",
+    "name": "Poltchageist",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1013",
+    "name": "Sinistcha",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "0901",
+    "name": "Bloodmoon Ursaluna",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1014",
+    "name": "Okidogi",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1015",
+    "name": "Munkidori",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1016",
+    "name": "Fezandipiti",
+    "owned": true,
+    "special": false
+  },
+  {
+    "dex": "1017",
+    "name": "Ogerpon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1018",
+    "name": "Archaludon",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1019",
+    "name": "Hydrapple",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "1020",
+    "name": "Gouging Fire",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1021",
+    "name": "Raging Bolt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "dex": "1022",
+    "name": "Iron Boulder",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1023",
+    "name": "Iron Crown",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1024",
+    "name": "Terapagos",
+    "owned": true,
+    "special": true
+  },
+  {
+    "dex": "1025",
+    "name": "Pecharunt",
+    "owned": true,
+    "special": true
+  }
+]

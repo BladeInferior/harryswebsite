@@ -1,5 +1,5 @@
 import { db } from './firebase/firebase-config.js';
-import { QUIZ_PATHS } from './data/quiz-registry.js';
+import { loadQuiz } from './data/quiz-loader.js';
 import {
     doc,
     getDoc,
@@ -81,8 +81,7 @@ joinForm.addEventListener('submit', async e => {
     currentPlayerId = playerRef.id;
 
     const quizId = snapshot.data().quizId;
-    const quizPath = QUIZ_PATHS[quizId] || QUIZ_PATHS['sample-quiz-1'];
-    quiz = await fetch(quizPath).then(r => r.json());
+    quiz = await loadQuiz(quizId);
 
     joinStatus.className = 'success';
     joinStatus.textContent = 'Joined!';
@@ -300,6 +299,9 @@ function formatAnswerValue(question, value) {
                     return item ? item.label : id;
                 })
                 .join(' → ');
+
+        case 'number':
+            return (value === null || value === undefined) ? '(no answer)' : String(value);
 
         default:
             return String(value);

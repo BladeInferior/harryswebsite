@@ -1,0 +1,157 @@
+[
+  {
+    "name": "Poke Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Great Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Ultra Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Master Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Level Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Lure Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Friend Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Love Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Heavy Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Fast Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Premier Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Repeat Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Timer Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Nest Ball",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Net Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Dive Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Luxury Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Quick Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Dusk Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Cherish Ball",
+    "owned": true,
+    "special": true
+  },
+  {
+    "name": "Dream Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Beast Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Feather Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Hisuian Heavy Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Team Rocket Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Team Rocket's Great Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Team Aqua Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Team Aqua's Great Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Team Magma Ball",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Team Magma's Great Ball",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Team Plasma Ball",
+    "owned": false,
+    "special": false
+  }
+]

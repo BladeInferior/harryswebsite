@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Builder</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+
+    <style>
+        :root{
+            --bg:#121212;
+            --card:#1e1e1e;
+            --card-hover:#262626;
+            --gold:#d4af37;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#333;
+            --correct:#3fb950;
+            --incorrect:#e5534b;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:#2d2d2d;
+            border:1px solid #555;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(212,175,55,.15);
+        }
+
+        .hero{
+            text-align:center;
+            padding:100px 20px 20px;
+        }
+
+        .hero p{
+            max-width:600px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+        }
+
+        .section{
+            max-width:800px;
+            margin:auto;
+            padding:20px 20px 80px;
+        }
+
+        .card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+            margin-bottom:20px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:14px;
+            color:var(--secondary);
+            font-size:.9rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select{
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+            margin-top:6px;
+        }
+
+        input:focus, textarea:focus, select:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        .checkbox-label{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            flex-direction:row;
+        }
+
+        .checkbox-label input{
+            width:auto;
+            margin-top:0;
+        }
+
+        .btn{
+            display:inline-block;
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:12px 24px;
+            font-size:.95rem;
+            font-weight:bold;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        .btn:disabled{
+            opacity:.5;
+            cursor:default;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover:not(:disabled){
+            border-color:var(--gold);
+            background:transparent;
+        }
+
+        .btn-small{
+            padding:6px 14px;
+            font-size:.85rem;
+        }
+
+        .btn-danger{
+            background:transparent;
+            border:1px solid var(--incorrect);
+            color:var(--incorrect);
+        }
+
+        /* ---------- toolbar ---------- */
+        .toolbar{
+            display:flex;
+            justify-content:flex-end;
+            gap:10px;
+            margin-bottom:20px;
+        }
+
+        /* ---------- categories ---------- */
+        .category-section{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:20px;
+            margin-bottom:16px;
+        }
+
+        .category-header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:14px;
+        }
+
+        .category-header h2{
+            font-size:1.2rem;
+            color:var(--gold);
+        }
+
+        .question-list{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            min-height:10px;
+        }
+
+        .question-row{
+            display:flex;
+            align-items:center;
+            gap:10px;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:10px 14px;
+            cursor:grab;
+        }
+
+        .question-row.dragging{
+            opacity:.4;
+            border-color:var(--gold);
+        }
+
+        .drag-handle{
+            color:var(--secondary);
+            font-size:1.1rem;
+            flex-shrink:0;
+        }
+
+        .question-row-info{
+            flex:1;
+            min-width:0;
+        }
+
+        .type-badge{
+            display:inline-block;
+            margin-left:8px;
+            padding:2px 10px;
+            border-radius:12px;
+            background:rgba(212,175,55,.15);
+            border:1px solid var(--gold);
+            color:var(--gold);
+            font-size:.75rem;
+        }
+
+        .question-row-actions{
+            display:flex;
+            gap:6px;
+            flex-shrink:0;
+        }
+
+        .question-row-actions button{
+            background:var(--card);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:6px;
+            padding:6px 10px;
+            cursor:pointer;
+            font-size:.85rem;
+        }
+
+        .question-row-actions button:hover{
+            border-color:var(--gold);
+        }
+
+        .empty-hint{
+            color:var(--secondary);
+            text-align:center;
+            padding:14px;
+        }
+
+        #save-quiz-status{
+            margin-top:14px;
+            text-align:center;
+        }
+
+        #save-quiz-status.pending{ color:var(--secondary); }
+        #save-quiz-status.success{ color:var(--correct); }
+        #save-quiz-status.failure{ color:var(--incorrect); }
+
+        /* ---------- question modal ---------- */
+        #question-modal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.75);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1200;
+            padding:20px;
+            overflow-y:auto;
+        }
+
+        .add-item-box{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+            max-width:520px;
+            width:100%;
+            max-height:90vh;
+            overflow-y:auto;
+        }
+
+        .add-item-box h2{
+            margin-bottom:16px;
+        }
+
+        #q-error{
+            background:rgba(229,83,75,.15);
+            border:1px solid var(--incorrect);
+            color:var(--incorrect);
+            padding:10px 14px;
+            border-radius:8px;
+            margin-bottom:14px;
+        }
+
+        .type-fields{
+            border-top:1px solid var(--border);
+            padding-top:14px;
+            margin-top:6px;
+        }
+
+        .option-row{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:8px;
+        }
+
+        .option-row input[type="text"]{
+            margin-top:0;
+            flex:1;
+        }
+
+        .option-row button{
+            background:var(--bg);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:6px;
+            width:32px;
+            height:32px;
+            flex-shrink:0;
+            cursor:pointer;
+        }
+
+        .option-row button:hover{
+            border-color:var(--gold);
+        }
+
+        .modal-buttons{
+            display:flex;
+            gap:10px;
+            margin-top:18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script>
+fetch('../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+
+        const basePath =
+            window.location.hostname === "bladeinferior.github.io"
+                ? "/harryswebsite/"
+                : "/";
+
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" href="quizhub.html">← Back</a>
+
+<section class="hero">
+    <h1>🛠️ Quiz Builder</h1>
+    <p>Add categories to organise your quiz, then add questions into them — drag to reorder within a category.</p>
+</section>
+
+<section class="section">
+
+    <div class="card">
+        <label>
+            Quiz title
+            <input type="text" id="quiz-title-input" placeholder="e.g. Gen 1 Trivia">
+        </label>
+
+        <label>
+            Description (optional)
+            <textarea id="quiz-description-input" rows="2" placeholder="A short blurb shown on Manage Quizzes"></textarea>
+        </label>
+    </div>
+
+    <div class="toolbar">
+        <button id="add-category-btn" class="btn btn-secondary" type="button">+ Add Category</button>
+        <button id="add-question-btn" class="btn" type="button">+ Add Question</button>
+    </div>
+
+    <div id="categories-container"></div>
+
+    <button id="save-quiz-btn" class="btn" type="button" style="width:100%;">Save Quiz</button>
+    <div id="save-quiz-status"></div>
+
+</section>
+
+<!-- =========================
+    ADD / EDIT QUESTION MODAL
+========================== -->
+<div id="question-modal" hidden>
+    <div class="add-item-box">
+
+        <h2 id="question-modal-title">Add Question</h2>
+
+        <div id="q-error" hidden></div>
+
+        <label>
+            Category
+            <select id="q-category-select"></select>
+        </label>
+
+        <label>
+            Question prompt
+            <input type="text" id="q-prompt-input" placeholder="e.g. Who's that Pokémon?">
+        </label>
+
+        <label>
+            Points
+            <input type="number" id="q-points-input" value="100" min="0">
+        </label>
+
+        <label>
+            Image path (optional)
+            <input type="text" id="q-image-input" placeholder="../collection-hub/sprites/pokemon_sprites/snorlax.png">
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="q-silhouette-input"> Show as silhouette
+        </label>
+
+        <label>
+            Explanation shown on reveal (optional)
+            <input type="text" id="q-explanation-input" placeholder="e.g. It's Snorlax!">
+        </label>
+
+        <label>
+            Answer type
+            <select id="q-type-select">
+                <option value="text">Text</option>
+                <option value="mc-buttons">Multiple Choice (buttons)</option>
+                <option value="mc-dropdown">Multiple Choice (dropdown)</option>
+                <option value="image-select">Image Select</option>
+                <option value="ordering">Ordering</option>
+                <option value="number">Number</option>
+            </select>
+        </label>
+
+        <!-- TEXT -->
+        <div class="type-fields" id="fields-text">
+            <label>
+                Accepted answers (comma separated)
+                <input type="text" id="q-accepted-answers" placeholder="snorlax, snorlacks">
+            </label>
+        </div>
+
+        <!-- MULTIPLE CHOICE (buttons + dropdown share this) -->
+        <div class="type-fields" id="fields-mc" hidden>
+            <label>Options — select the correct one</label>
+            <div id="mc-options-list"></div>
+            <button id="mc-add-option-btn" class="btn btn-secondary btn-small" type="button">+ Add Option</button>
+        </div>
+
+        <!-- IMAGE SELECT -->
+        <div class="type-fields" id="fields-image-select" hidden>
+            <label>Image options — select the correct one</label>
+            <div id="image-options-list"></div>
+            <button id="image-add-option-btn" class="btn btn-secondary btn-small" type="button">+ Add Image Option</button>
+        </div>
+
+        <!-- ORDERING -->
+        <div class="type-fields" id="fields-ordering" hidden>
+            <label>Items, entered in their correct order</label>
+            <div id="ordering-items-list"></div>
+            <button id="ordering-add-item-btn" class="btn btn-secondary btn-small" type="button">+ Add Item</button>
+        </div>
+
+        <!-- NUMBER -->
+        <div class="type-fields" id="fields-number" hidden>
+            <label class="checkbox-label">
+                <input type="checkbox" id="q-number-range-toggle"> Accept a range instead of one exact number
+            </label>
+
+            <div id="number-exact-row">
+                <label>
+                    Correct value
+                    <input type="number" id="q-number-exact">
+                </label>
+            </div>
+
+            <div id="number-range-row" hidden style="display:flex; gap:10px;">
+                <label style="flex:1;">
+                    Min
+                    <input type="number" id="q-number-min">
+                </label>
+                <label style="flex:1;">
+                    Max
+                    <input type="number" id="q-number-max">
+                </label>
+            </div>
+        </div>
+
+        <div class="modal-buttons">
+            <button id="save-question-btn" class="btn" type="button">Save Question</button>
+            <button id="cancel-question-btn" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+
+    </div>
+</div>
+
+<script type="module" src="builder.js"></script>
+
+</body>
+</html>

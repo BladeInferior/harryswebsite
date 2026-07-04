@@ -6,8 +6,8 @@
 
     <title>Quiz Hub</title>
 
-    <link rel="apple-touch-icon" href="icons/app-icon.png">
-    <link rel="icon" type="image/png" href="icons/app-icon.png">
+    <link rel="apple-touch-icon" href="icons/harrys-quiz.png">
+    <link rel="icon" type="image/png" href="icons/harrys-quiz.png">
 
     <link rel="stylesheet" href="../navbar.css">
 
@@ -33,6 +33,24 @@
             background:var(--bg);
             color:var(--text);
             min-height:100vh;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:#2d2d2d;
+            border:1px solid #555;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(212,175,55,.15);
         }
 
         .hero{
@@ -194,7 +212,7 @@ fetch('../navbar.html')
 
     <div class="card-grid">
 
-        <a href="#" class="card coming-soon">
+        <a href="builder.html" class="card">
             <h3>Quiz Builder</h3>
             <p>
                 Create your own quizzes using Pokémon,
