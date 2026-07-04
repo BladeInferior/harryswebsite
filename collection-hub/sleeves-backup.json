@@ -1447,21 +1447,32 @@
   },
   {
     "name": "Deck Sleeves Falkner",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "swellow",
+      "pidgeotto",
+      "noctowl",
+      "honchkrow"
+    ]
   },
   {
     "name": "Deck Sleeves Pikachu's Gift",
-    "date": "10/03/2023",
+    "date": "2023-03-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Cyrus Premium Tournament Collection",
-    "date": "24/03/2023",
+    "date": "2023-03-24",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "honchkrow",
+      "gyarados",
+      "cyrus"
+    ]
   },
   {
     "name": "Scarlet Violet Koraidon ETB",
@@ -1483,21 +1494,29 @@
   },
   {
     "name": "Espeon & Umbreon Timeless Friends Espeon",
-    "date": "03/04/2023",
+    "date": "2023-04-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "espeon",
+      "celebi"
+    ]
   },
   {
     "name": "Espeon & Umbreon Timeless Friends Umbreon",
-    "date": "03/04/2023",
+    "date": "2023-04-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "murkrow",
+      "umbreon"
+    ]
   },
   {
     "name": "Pikachu Power Grid",
-    "date": "03/04/2023",
+    "date": "2023-04-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Deck Sleeves Flower Crown and Marill Friends",
@@ -1513,45 +1532,76 @@
   },
   {
     "name": "EUIC London 2023",
-    "date": "14/04/2023",
+    "date": "2023-04-14",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "iron valiant",
+      "event"
+    ]
   },
   {
     "name": "Shiny Zacian/Zamazenta",
-    "date": "05/05/2023",
+    "date": "2023-05-05",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "zacian",
+      "zamazenta",
+      "shiny"
+    ]
   },
   {
     "name": "Deck Sleeves DOWASURE",
-    "date": "19/05/2023",
+    "date": "2023-05-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "numel",
+      "drifloon",
+      "marshtomp",
+      "psyduck",
+      "quagsire",
+      "slowpoke"
+    ]
   },
   {
     "name": "Deck Sleeves Midnight Agent -the cinema- Gengar",
-    "date": "19/05/2023",
+    "date": "2023-05-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "gengar",
+      "flygon"
+    ]
   },
   {
     "name": "Deck Sleeves Midnight Agent -the cinema- Inteleon",
-    "date": "19/05/2023",
+    "date": "2023-05-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "inteleon",
+      "duraludon"
+    ]
   },
   {
     "name": "Deck Sleeves Midnight Agent -the cinema- Sylveon",
-    "date": "19/05/2023",
+    "date": "2023-05-19",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "sylveon",
+      "sliggoo",
+      "goodra",
+      "turtonator",
+      "hakamo-o"
+    ]
   },
   {
     "name": "Paldea Evolved ETB",
-    "date": "09/06/2023",
+    "date": "2023-06-09",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "sprigatito",
+      "fuecoo",
+      "quaxly",
+      "etb"
+    ]
   },
   {
     "name": "Trainer's Toolkit 2023",
@@ -1563,39 +1613,63 @@
   },
   {
     "name": "Deck Sleeves Erika's Holiday",
-    "date": "16/06/2023",
+    "date": "2023-06-16",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "tangela",
+      "vileplume",
+      "erika"
+    ]
   },
   {
     "name": "Deck Sleeves Giovanni's Directive",
-    "date": "16/06/2023",
+    "date": "2023-06-16",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "persian",
+      "diglett",
+      "rhydon",
+      "nidoqueen",
+      "giovanni",
+      "item"
+    ]
   },
   {
     "name": "Evolution Line Decidueye",
-    "date": "07/07/2023",
+    "date": "2023-07-07",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "heracross",
+      "rowlet",
+      "dartrix",
+      "decidueye"
+    ]
   },
   {
     "name": "Deck Sleeves Pikachu Large Collection",
-    "date": "07/07/2023",
+    "date": "2023-07-07",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "Obsidian Flames ETB",
-    "date": "11/08/2023",
+    "date": "2023-08-11",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charmander",
+      "etb"
+    ]
   },
   {
     "name": "World Championships Yokohama 2023",
-    "date": "11/08/2023",
+    "date": "2023-08-11",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "event"
+    ]
   },
   {
     "name": "World Championships Yokohama 2023 (2)",
@@ -1628,45 +1702,152 @@
   },
   {
     "name": "Rayquaza Among the Stars",
-    "date": "16/08/2023",
+    "date": "2023-08-16",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "rayquaza"
+    ]
   },
   {
     "name": "151 ETB",
-    "date": "22/09/2023",
+    "date": "2023-09-22",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "articuno",
+      "clefairy",
+      "vulpix",
+      "kangaskhan",
+      "vileplume",
+      "lickitung",
+      "krabby",
+      "nidoking",
+      "kakuna",
+      "slowpoke",
+      "zubat",
+      "eevee",
+      "ditto",
+      "meowth",
+      "ivysaur",
+      "golbat",
+      "hitmonchan",
+      "goldeen",
+      "jynx",
+      "koffing",
+      "machamp",
+      "graveler",
+      "jigglypuff",
+      "growlithe",
+      "gyarados",
+      "raichu",
+      "raticate",
+      "voltorb",
+      "koffing",
+      "exeggutor",
+      "rhyhorn",
+      "chansey",
+      "marowak",
+      "magneton",
+      "blastoise",
+      "charmeleon",
+      "pikachu",
+      "magikarp",
+      "moltres",
+      "golem",
+      "venusaur",
+      "zapdos",
+      "omanyte",
+      "cubone",
+      "gengar",
+      "ponyta",
+      "slowbro",
+      "onix",
+      "poliwrath",
+      "nidorina",
+      "golduck",
+      "dragonite",
+      "mankey",
+      "muk",
+      "jolteon",
+      "cloyster",
+      "rapidash",
+      "squirtle",
+      "bellsprout",
+      "dugtrio",
+      "machoke",
+      "alakazam",
+      "mew",
+      "kabuto",
+      "tentacruel",
+      "gloom",
+      "sandslash",
+      "arcanine",
+      "oddish",
+      "weedle",
+      "arbok",
+      "venonat",
+      "hypno",
+      "kingler",
+      "ninetales",
+      "machop",
+      "scyther",
+      "nidorino",
+      "sandshrew",
+      "mr. mime",
+      "haunter",
+      "ekans",
+      "seel",
+      "flareon",
+      "venomoth",
+      "exeggcute"
+    ]
   },
   {
     "name": "Corviknight Inspired by Wheatfield with Crows",
-    "date": "29/09/2023",
+    "date": "2023-09-29",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "murkrow",
+      "honchkrow",
+      "corvisquire",
+      "corviknight"
+    ]
   },
   {
     "name": "Munchlax and Snorlax Inspired by the Bedroom",
-    "date": "29/09/2023",
+    "date": "2023-09-29",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "ditto",
+      "mew",
+      "snorlax",
+      "munchlax",
+      "item"
+    ]
   },
   {
     "name": "Eevee Inspired by Self Portrait with Straw Hat",
-    "date": "29/09/2023",
+    "date": "2023-09-29",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee"
+    ]
   },
   {
     "name": "Smeargle Inspired by Self-Portrait as a Painter",
-    "date": "29/09/2023",
+    "date": "2023-09-29",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "smeargle"
+    ]
   },
   {
     "name": "Sunflora Inspired by Sunflowers",
-    "date": "29/09/2023",
+    "date": "2023-09-29",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "sunflora"
+    ]
   },
   {
     "name": "Pikachu Inspired by Self-Portrait with Grey Felt Hat",
@@ -1678,33 +1859,49 @@
   },
   {
     "name": "Charizard ex Premium Collection",
-    "date": "20/10/2023",
+    "date": "2023-10-20",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charizard",
+      "dynamax",
+      "gigantamax"
+    ]
   },
   {
     "name": "Premium Matte Slither Wing",
-    "date": "27/10/2023",
+    "date": "2023-10-27",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "slither wing"
+    ]
   },
   {
     "name": "Deck Sleeves Mela",
-    "date": "27/10/2023",
+    "date": "2023-10-27",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "houndoom",
+      "armarouge",
+      "mela"
+    ]
   },
   {
     "name": "Paradox Rift Iron Valiant ETB",
-    "date": "03/11/2023",
+    "date": "2023-11-03",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "iron valiant",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves POKÉMON TRAINERS Florian Sprigatito",
-    "date": "10/11/2023",
+    "date": "2023-11-10",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "sprigatito",
+      "florian"
+    ]
   },
   {
     "name": "Deck Sleeves POKÉMON TRAINERS Brassius Sudowoodo",
