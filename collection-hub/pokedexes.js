@@ -397,6 +397,13 @@ modalOverlay.addEventListener("click", (event) => {
     }
 });
 
+const modalCloseBtn = document.getElementById("modal-close");
+if (modalCloseBtn) {
+    modalCloseBtn.addEventListener("click", () => {
+        modalOverlay.classList.add("hidden");
+    });
+}
+
 
 // ---------------------------
 // MAIN DEX TOGGLES
@@ -626,7 +633,7 @@ function updateProgress() {
 
         const percent = Math.round((caught / total) * 100);
 
-        const bar = document.querySelector(`[data-dex="${dex.key}"]`);
+        const bar = document.querySelector(`.dex-progress[data-dex="${dex.key}"]`);
         if (!bar) return;
 
         bar.classList.toggle("active-filter", activeDexEdit === dex.key);
@@ -1251,7 +1258,7 @@ createMobilePopout({
     top: 130,
     right: 16,
     heading: "Filters",
-    elementIds: ["game-filter-container"]
+    elementIds: ["missing-dex-filter", "game-filter-container"]
 });
 
 createMobilePopout({

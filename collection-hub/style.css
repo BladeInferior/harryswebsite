@@ -106,6 +106,8 @@ h1 {
 }
 
 #pokemon-modal {
+    position: relative;
+
     background: linear-gradient(180deg, var(--surface), var(--surface-2));
 
     border: 1px solid var(--border);
@@ -119,7 +121,7 @@ h1 {
     display: flex;
 
     gap: 30px;
-    
+
 
     box-shadow: var(--shadow);
 }
@@ -1485,7 +1487,31 @@ body::before {
 }
 
 .modal-close-btn {
-    display: none;
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 32px;
+    height: 32px;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #2d2d2d;
+    border: 1px solid #555;
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+
+    z-index: 10;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.modal-close-btn:hover {
+    border-color: gold;
+    background: rgba(255, 215, 0, 0.15);
 }
 
 .mobile-popout-toggle,
@@ -1512,7 +1538,8 @@ body::before {
     #add-item,
     #untagged-filter,
     #game-filter-container,
-    #progress-container {
+    #progress-container,
+    #missing-dex-filter {
         display: none !important;
     }
 
@@ -1625,11 +1652,13 @@ body::before {
 
     .mobile-popout-list #untagged-filter,
     .mobile-popout-list #game-filter-container,
-    .mobile-popout-list #progress-container {
+    .mobile-popout-list #progress-container,
+    .mobile-popout-list #missing-dex-filter {
         display: flex !important;
         position: static !important;
         width: 100% !important;
         margin-left: 0;
+        min-width: 0;
     }
 
     .popfigures-page .mobile-popout-list #game-filter-container {
@@ -1649,13 +1678,15 @@ body::before {
         gap: 16px !important;
     }
 
-    .completions-page #pokemon-modal {
-        width: 92vw !important;
-        max-width: 420px !important;
+    .completions-page #pokemon-modal,
+    .pokemon-page #pokemon-modal {
+        width: 88vw !important;
+        max-width: 340px !important;
+        max-height: 68vh !important;
     }
 
     .completions-page #modal-image {
-        height: 28vh !important;
+        height: 20vh !important;
     }
 
     .modal-right {
@@ -1672,20 +1703,7 @@ body::before {
     }
 
     .modal-close-btn {
-        display: flex;
-        position: fixed;
-        top: 20px;
-        right: 20px;
         width: 36px;
         height: 36px;
-        align-items: center;
-        justify-content: center;
-        background: #2d2d2d;
-        border: 1px solid #555;
-        border-radius: 50%;
-        color: white;
-        font-size: 16px;
-        z-index: 3001;
-        cursor: pointer;
     }
 }
