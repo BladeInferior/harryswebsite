@@ -11,12 +11,31 @@ import {
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
+const joinHero = document.getElementById('join-hero');
+const joinHeroText = document.getElementById('join-hero-text');
 const joinForm = document.getElementById('join-form');
 const nameInput = document.getElementById('name-input');
+const codeFieldWrapper = document.getElementById('code-field-wrapper');
 const codeInput = document.getElementById('code-input');
 const joinStatus = document.getElementById('join-status');
 
+// Arriving via a host's QR code pre-fills the join code and skips straight
+// to asking for a name — see renderJoinQrCode() in host-quiz.js.
+const prefilledCode = new URLSearchParams(window.location.search).get('code');
+if (prefilledCode) {
+    codeInput.value = prefilledCode;
+    codeFieldWrapper.hidden = true;
+    joinHeroText.textContent = 'Enter your name to join the quiz.';
+    nameInput.focus();
+}
+
+const joinCard = document.getElementById('join-card');
 const waitingSection = document.getElementById('waiting-section');
+const hostScreenSection = document.getElementById('host-screen-section');
+const hostScreenMessage = document.getElementById('host-screen-message');
+const categoryIntroSection = document.getElementById('category-intro-section');
+const categoryIntroLabelEl = document.getElementById('player-category-intro-label');
+const categoryIntroTextEl = document.getElementById('player-category-intro-text');
 const messageForm = document.getElementById('message-form');
 const messageInput = document.getElementById('message-input');
 const sendStatus = document.getElementById('send-status');
@@ -81,11 +100,19 @@ joinForm.addEventListener('submit', async e => {
     currentPlayerId = playerRef.id;
 
     const quizId = snapshot.data().quizId;
-    quiz = await loadQuiz(quizId);
+    try {
+        quiz = await loadQuiz(quizId);
+    } catch (err) {
+        console.error(err);
+        joinStatus.className = 'failure';
+        joinStatus.textContent = "This session's quiz couldn't be loaded. Check with the host.";
+        return;
+    }
 
     joinStatus.className = 'success';
     joinStatus.textContent = 'Joined!';
     joinForm.hidden = true;
+    joinHero.hidden = true;
 
     onSnapshot(sessionRef, snap => {
         if (snap.exists()) renderSessionState(snap.data());
@@ -130,23 +157,45 @@ backBtn.addEventListener('click', () => {
 });
 
 function renderSessionState(session) {
+    waitingSection.hidden = true;
+    hostScreenSection.hidden = true;
+    categoryIntroSection.hidden = true;
+    quizSection.hidden = true;
+    endedSection.hidden = true;
+
     if (session.status === 'lobby') {
         waitingSection.hidden = false;
-        quizSection.hidden = true;
-        endedSection.hidden = true;
+        applyCardBackground(null);
+        return;
+    }
+
+    if (session.status === 'category-select') {
+        hostScreenSection.hidden = false;
+        hostScreenMessage.textContent = 'The host is choosing the next category to play...';
+        applyCardBackground(null);
+        return;
+    }
+
+    if (session.status === 'category-intro') {
+        categoryIntroSection.hidden = false;
+        renderCategoryIntro(session);
+        return;
+    }
+
+    if (session.status === 'results') {
+        hostScreenSection.hidden = false;
+        hostScreenMessage.textContent = 'The host is revealing the final results...';
+        applyCardBackground(null);
         return;
     }
 
     if (session.status === 'ended') {
-        waitingSection.hidden = true;
-        quizSection.hidden = true;
         endedSection.hidden = false;
+        applyCardBackground(null);
         return;
     }
 
-    waitingSection.hidden = true;
     quizSection.hidden = false;
-    endedSection.hidden = true;
 
     currentPhase = session.questionPhase;
     currentQuestionIndex = session.currentQuestionIndex;
@@ -154,6 +203,8 @@ function renderSessionState(session) {
 
     const question = quiz.questions[currentQuestionIndex];
     if (!question) return;
+
+    applyCardBackground(getCategoryMetaForIndex(currentQuestionIndex).questionBackground);
 
     if (watchedQuestionIndex !== currentQuestionIndex) {
         watchedQuestionIndex = currentQuestionIndex;
@@ -164,6 +215,31 @@ function renderSessionState(session) {
 
     renderQuestionContent(question);
     updateAnswerView(question);
+}
+
+// quiz.categoryMeta holds per-category background/titleScreen/exampleScreen,
+// matched to questions by category name (set the same way host-quiz.js does).
+function getCategoryMetaForIndex(index) {
+    const question = quiz.questions[index];
+    const name = question ? (question.category || 'General') : null;
+    return (quiz.categoryMeta || []).find(m => m.name === name) || { name };
+}
+
+function applyCardBackground(url) {
+    joinCard.classList.toggle('themed-bg', !!url);
+    joinCard.style.backgroundImage = url ? `url('${url}')` : '';
+}
+
+function renderCategoryIntro(session) {
+    const meta = getCategoryMetaForIndex(session.currentCategoryStart);
+    const screen = session.introPhase === 'example' ? meta.exampleScreen : meta.titleScreen;
+
+    applyCardBackground(null);
+
+    categoryIntroLabelEl.textContent = session.introPhase === 'example'
+        ? `${meta.name} — Example`
+        : meta.name;
+    categoryIntroTextEl.textContent = (screen && screen.text) || '';
 }
 
 function watchOwnAnswer(question) {

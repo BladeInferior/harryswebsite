@@ -18,18 +18,30 @@ import {
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
 const params = new URLSearchParams(window.location.search);
-const quizId = params.get('quiz') || 'sample-quiz-1';
+const quizId = params.get('quiz');
 
 const titleEl = document.getElementById('quiz-title');
 const descEl = document.getElementById('quiz-description');
 const codeDisplay = document.getElementById('code-display');
+const joinQrImg = document.getElementById('join-qr-img');
+const joinQrCaption = document.getElementById('join-qr-caption');
 const beginBtn = document.getElementById('begin-btn');
 
 const lobbyView = document.getElementById('lobby-view');
 const playerList = document.getElementById('player-list');
 const messageList = document.getElementById('message-list');
 
+const categorySelectView = document.getElementById('category-select-view');
+const categorySelectGrid = document.getElementById('category-select-grid');
+const goToResultsBtn = document.getElementById('go-to-results-btn');
+
+const categoryIntroView = document.getElementById('category-intro-view');
+const categoryIntroLabelEl = document.getElementById('category-intro-label');
+const categoryIntroTextEl = document.getElementById('category-intro-text');
+const categoryIntroContinueBtn = document.getElementById('category-intro-continue-btn');
+
 const quizView = document.getElementById('quiz-view');
+const questionCardEl = document.querySelector('#quiz-view .question-card');
 const questionProgressEl = document.getElementById('question-progress');
 const questionPromptEl = document.getElementById('host-question-prompt');
 const questionMediaEl = document.getElementById('host-question-media');
@@ -38,9 +50,14 @@ const lockBtn = document.getElementById('lock-btn');
 const lockedControls = document.getElementById('locked-controls');
 const revealAnswerBtn = document.getElementById('reveal-answer-btn');
 const correctAnswerDisplay = document.getElementById('correct-answer-display');
+const startReviewBtn = document.getElementById('start-review-btn');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 const resultsList = document.getElementById('results-list');
 const scoreboardList = document.getElementById('scoreboard-list');
+
+const resultsView = document.getElementById('results-view');
+const resultsRevealList = document.getElementById('results-reveal-list');
+const finishQuizBtn = document.getElementById('finish-quiz-btn');
 
 const endedView = document.getElementById('ended-view');
 const finalScoreboardList = document.getElementById('final-scoreboard-list');
@@ -55,12 +72,26 @@ let latestAnswers = new Map();
 let unsubscribeAnswers = null;
 let watchedQuestionKey = null;
 
-loadQuiz(quizId).then(data => {
-    quiz = data;
-    titleEl.textContent = quiz.title;
-    descEl.textContent = quiz.description || '';
-    startSession();
-});
+// Built once, the first time the session reaches "results" — holds the
+// score/name reveal state for each player's row. Not synced to Firestore:
+// this is a host-screen-only dramatic reveal, not resumable across refresh.
+let resultsRows = null;
+
+if (quizId) {
+    loadQuiz(quizId).then(data => {
+        quiz = data;
+        titleEl.textContent = quiz.title;
+        descEl.textContent = quiz.description || '';
+        startSession();
+    }).catch(err => {
+        console.error(err);
+        titleEl.textContent = 'Quiz not found';
+        descEl.textContent = "This quiz doesn't exist or may have been deleted.";
+    });
+} else {
+    titleEl.textContent = 'No quiz selected';
+    descEl.textContent = 'Start a quiz from Manage Quizzes instead of opening this page directly.';
+}
 
 function startSession() {
     code = generateCode();
@@ -71,8 +102,12 @@ function startSession() {
         quizId: quizId,
         status: 'lobby',
         currentQuestionIndex: -1,
+        currentCategoryStart: null,
+        completedCategories: [],
         questionPhase: 'answering',
         answerRevealed: false,
+        reviewMode: false,
+        introPhase: null,
         createdAt: serverTimestamp()
     });
 
@@ -91,16 +126,25 @@ function startSession() {
     });
 
     beginBtn.addEventListener('click', () => {
-        updateDoc(sessionRef, {
-            status: 'active',
-            currentQuestionIndex: 0,
-            questionPhase: 'answering'
-        });
+        updateDoc(sessionRef, { status: 'category-select' });
     }, { once: true });
 
     lockBtn.addEventListener('click', handleLock);
     revealAnswerBtn.addEventListener('click', handleRevealAnswer);
+    startReviewBtn.addEventListener('click', handleStartReview);
     nextQuestionBtn.addEventListener('click', handleNextQuestion);
+    categoryIntroContinueBtn.addEventListener('click', handleCategoryIntroContinue);
+    goToResultsBtn.addEventListener('click', () => updateDoc(sessionRef, { status: 'results' }));
+    finishQuizBtn.addEventListener('click', handleFinishQuiz);
+
+    // Purely cosmetic — never let a QR rendering issue take down the rest
+    // of session setup (that's what happened when this used to run first
+    // and throw before the session doc / listeners / button were wired up).
+    try {
+        renderJoinQrCode();
+    } catch (err) {
+        console.error('QR code render failed:', err);
+    }
 }
 
 function renderPlayers(snapshot) {
@@ -152,33 +196,235 @@ function renderMessages(snapshot) {
 function renderSession(session) {
     currentSession = session;
 
+    lobbyView.hidden = true;
+    categorySelectView.hidden = true;
+    categoryIntroView.hidden = true;
+    quizView.hidden = true;
+    resultsView.hidden = true;
+    endedView.hidden = true;
+
     if (session.status === 'lobby') {
         lobbyView.hidden = false;
-        quizView.hidden = true;
-        endedView.hidden = true;
+        return;
+    }
+
+    if (session.status === 'category-select') {
+        categorySelectView.hidden = false;
+        renderCategorySelectView(session);
+        return;
+    }
+
+    if (session.status === 'category-intro') {
+        categoryIntroView.hidden = false;
+        renderCategoryIntroView(session);
+        return;
+    }
+
+    if (session.status === 'results') {
+        resultsView.hidden = false;
+        ensureResultsRows();
+        renderResultsView();
         return;
     }
 
     if (session.status === 'ended') {
-        lobbyView.hidden = true;
-        quizView.hidden = true;
         endedView.hidden = false;
         return;
     }
 
-    lobbyView.hidden = true;
     quizView.hidden = false;
-    endedView.hidden = true;
-
-    renderHostQuestion(session.currentQuestionIndex, session.questionPhase, session.answerRevealed);
+    renderHostQuestion(
+        session.currentQuestionIndex,
+        session.questionPhase,
+        session.answerRevealed,
+        !!session.reviewMode,
+        session.completedCategories || []
+    );
 }
 
-function renderHostQuestion(index, phase, answerRevealed) {
+// Contiguous runs of same-category questions in quiz.questions (the builder
+// always saves categories as contiguous blocks).
+function getCategoryBounds() {
+    const bounds = [];
+    let start = 0;
+
+    for (let i = 1; i <= quiz.questions.length; i++) {
+        const prevCategory = quiz.questions[i - 1].category;
+        const currentCategory = i < quiz.questions.length ? quiz.questions[i].category : undefined;
+
+        if (currentCategory !== prevCategory) {
+            bounds.push({ start, end: i - 1 });
+            start = i;
+        }
+    }
+
+    return bounds;
+}
+
+function getCategoriesWithNames() {
+    return getCategoryBounds().map(b => {
+        const name = quiz.questions[b.start].category || 'General';
+        const meta = (quiz.categoryMeta || []).find(m => m.name === name) || {};
+
+        return {
+            start: b.start,
+            end: b.end,
+            name,
+            background: meta.background || '',
+            questionBackground: meta.questionBackground || '',
+            titleScreen: meta.titleScreen || null,
+            exampleScreen: meta.exampleScreen || null
+        };
+    });
+}
+
+function getCategoryBoundsFor(index) {
+    return getCategoryBounds().find(b => index >= b.start && index <= b.end) || { start: index, end: index };
+}
+
+function isFinalRemainingCategory(categoryStart, completedCategories) {
+    const remaining = getCategoryBounds().filter(c => !completedCategories.includes(c.start));
+    return remaining.length === 1 && remaining[0].start === categoryStart;
+}
+
+// Whether the current question's answer can be revealed right now, per the
+// quiz's answerRevealMode: always ("immediate"), only at the end of its
+// category ("category"), or only once every other category has already been
+// played through ("end").
+function shouldOfferReveal(index, completedCategories) {
+    const mode = quiz.answerRevealMode || 'immediate';
+    if (mode === 'immediate') return true;
+
+    const catBlock = getCategoryBoundsFor(index);
+    if (index !== catBlock.end) return false;
+
+    if (mode === 'category') return true;
+    if (mode === 'end') return isFinalRemainingCategory(catBlock.start, completedCategories || []);
+    return false;
+}
+
+// The range of question indexes to step through when revealing: just this
+// category, unless this is the final category of an "end"-mode quiz, in
+// which case every question across the whole quiz gets reviewed at once.
+function getReviewRange(index, completedCategories) {
+    const mode = quiz.answerRevealMode || 'immediate';
+    const catBlock = getCategoryBoundsFor(index);
+
+    if (mode === 'end' && isFinalRemainingCategory(catBlock.start, completedCategories || [])) {
+        return { start: 0, end: quiz.questions.length - 1 };
+    }
+
+    return catBlock;
+}
+
+function renderCategorySelectView(session) {
+    categorySelectGrid.innerHTML = '';
+    const categories = getCategoriesWithNames();
+    const completed = session.completedCategories || [];
+
+    categories.forEach(cat => {
+        const isDone = completed.includes(cat.start);
+
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'category-tile';
+        tile.disabled = isDone;
+        if (cat.background) tile.style.backgroundImage = `url('${cat.background}')`;
+
+        const label = document.createElement('span');
+        label.textContent = cat.name;
+        tile.appendChild(label);
+
+        if (isDone) {
+            const doneTag = document.createElement('span');
+            doneTag.className = 'done-tag';
+            doneTag.textContent = 'Completed ✓';
+            tile.appendChild(doneTag);
+        } else {
+            tile.addEventListener('click', () => startCategory(cat));
+        }
+
+        categorySelectGrid.appendChild(tile);
+    });
+
+    goToResultsBtn.hidden = categories.length === 0 || completed.length < categories.length;
+}
+
+function startCategory(cat) {
+    if (cat.titleScreen || cat.exampleScreen) {
+        updateDoc(sessionRef, {
+            status: 'category-intro',
+            currentCategoryStart: cat.start,
+            introPhase: cat.titleScreen ? 'title' : 'example',
+            questionPhase: 'answering',
+            answerRevealed: false,
+            reviewMode: false
+        });
+    } else {
+        updateDoc(sessionRef, {
+            status: 'active',
+            currentQuestionIndex: cat.start,
+            currentCategoryStart: cat.start,
+            questionPhase: 'answering',
+            answerRevealed: false,
+            reviewMode: false
+        });
+    }
+}
+
+function renderCategoryIntroView(session) {
+    const cat = getCategoriesWithNames().find(c => c.start === session.currentCategoryStart);
+    if (!cat) return;
+
+    const screen = session.introPhase === 'example' ? cat.exampleScreen : cat.titleScreen;
+
+    categoryIntroLabelEl.textContent = session.introPhase === 'example' ? `${cat.name} — Example` : cat.name;
+    categoryIntroTextEl.textContent = (screen && screen.text) || '';
+
+    const hasMoreSteps = session.introPhase === 'title' && !!cat.exampleScreen;
+    categoryIntroContinueBtn.textContent = hasMoreSteps ? 'Continue' : 'Start Category';
+}
+
+async function handleCategoryIntroContinue() {
+    if (!currentSession) return;
+    categoryIntroContinueBtn.disabled = true;
+
+    try {
+        const cat = getCategoriesWithNames().find(c => c.start === currentSession.currentCategoryStart);
+        if (!cat) return;
+
+        if (currentSession.introPhase === 'title' && cat.exampleScreen) {
+            await updateDoc(sessionRef, { introPhase: 'example' });
+        } else {
+            await updateDoc(sessionRef, {
+                status: 'active',
+                currentQuestionIndex: cat.start,
+                introPhase: null,
+                questionPhase: 'answering',
+                answerRevealed: false,
+                reviewMode: false
+            });
+        }
+    } finally {
+        categoryIntroContinueBtn.disabled = false;
+    }
+}
+
+function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedCategories) {
     const question = quiz.questions[index];
     if (!question) return;
     currentQuestion = question;
 
-    questionProgressEl.textContent = `Question ${index + 1} of ${quiz.questions.length}`;
+    const catBlock = getCategoryBoundsFor(index);
+    const categoryName = question.category || 'General';
+    const catMeta = (quiz.categoryMeta || []).find(m => m.name === categoryName);
+    const questionBg = catMeta && catMeta.questionBackground;
+
+    questionCardEl.classList.toggle('themed-bg', !!questionBg);
+    questionCardEl.style.backgroundImage = questionBg ? `url('${questionBg}')` : '';
+
+    questionProgressEl.textContent =
+        `${categoryName} — Question ${index - catBlock.start + 1} of ${catBlock.end - catBlock.start + 1}`;
     questionPromptEl.textContent = question.prompt;
 
     questionMediaEl.innerHTML = '';
@@ -200,20 +446,64 @@ function renderHostQuestion(index, phase, answerRevealed) {
     if (phase === 'answering') {
         lockBtn.hidden = false;
         lockedControls.hidden = true;
-    } else {
-        lockBtn.hidden = true;
-        lockedControls.hidden = false;
-        nextQuestionBtn.hidden = !answerRevealed;
-        nextQuestionBtn.textContent = index === quiz.questions.length - 1 ? 'Finish Quiz' : 'Next Question';
+        renderResultsList();
+        return;
     }
 
-    if (answerRevealed) {
+    lockBtn.hidden = true;
+    lockedControls.hidden = false;
+
+    const isLastInCategory = index === catBlock.end;
+    const paced = (quiz.answerRevealMode || 'immediate') !== 'immediate';
+    const offerReveal = shouldOfferReveal(index, completedCategories);
+
+    if (paced && !reviewMode && !isLastInCategory) {
+        // Mid-category: the answer isn't revealed yet, just move straight on
+        // to the next question — locked in, no reveal.
         revealAnswerBtn.hidden = true;
-        correctAnswerDisplay.hidden = false;
-        correctAnswerDisplay.textContent = `Correct answer: ${getCorrectAnswerDisplay(question)}`;
-    } else {
-        revealAnswerBtn.hidden = false;
         correctAnswerDisplay.hidden = true;
+        startReviewBtn.hidden = true;
+        nextQuestionBtn.hidden = false;
+        nextQuestionBtn.textContent = 'Next Question';
+    } else if (paced && !reviewMode && isLastInCategory && !offerReveal) {
+        // "End of quiz" reveal mode, but other categories are still unplayed
+        // — finish this category without revealing anything yet.
+        revealAnswerBtn.hidden = true;
+        correctAnswerDisplay.hidden = true;
+        startReviewBtn.hidden = true;
+        nextQuestionBtn.hidden = false;
+        nextQuestionBtn.textContent = 'Finish Category';
+    } else if (paced && !reviewMode && isLastInCategory && offerReveal) {
+        // End of category (or the final category in "end" mode) — hand off
+        // to review mode instead of revealing here.
+        revealAnswerBtn.hidden = true;
+        correctAnswerDisplay.hidden = true;
+        nextQuestionBtn.hidden = true;
+        startReviewBtn.hidden = false;
+        startReviewBtn.textContent = 'Reveal Answers';
+    } else {
+        // Either "immediate" mode, or stepping back through a block in
+        // review mode — reveal one question at a time.
+        startReviewBtn.hidden = true;
+        const reviewRange = reviewMode ? getReviewRange(index, completedCategories) : { start: index, end: index };
+        const isLastInReview = index === reviewRange.end;
+
+        if (answerRevealed) {
+            revealAnswerBtn.hidden = true;
+            correctAnswerDisplay.hidden = false;
+            correctAnswerDisplay.textContent = `Correct answer: ${getCorrectAnswerDisplay(question)}`;
+            nextQuestionBtn.hidden = false;
+
+            if (reviewMode) {
+                nextQuestionBtn.textContent = isLastInReview ? 'Finish Category' : 'Next';
+            } else {
+                nextQuestionBtn.textContent = isLastInCategory ? 'Finish Category' : 'Next Question';
+            }
+        } else {
+            revealAnswerBtn.hidden = false;
+            correctAnswerDisplay.hidden = true;
+            nextQuestionBtn.hidden = true;
+        }
     }
 
     renderResultsList();
@@ -380,26 +670,152 @@ async function handleRevealAnswer() {
     }
 }
 
+async function handleStartReview() {
+    if (!currentSession) return;
+    startReviewBtn.disabled = true;
+
+    try {
+        const reviewRange = getReviewRange(currentSession.currentQuestionIndex, currentSession.completedCategories);
+        await updateDoc(sessionRef, {
+            currentQuestionIndex: reviewRange.start,
+            questionPhase: 'locked',
+            answerRevealed: false,
+            reviewMode: true
+        });
+    } finally {
+        startReviewBtn.disabled = false;
+    }
+}
+
 async function handleNextQuestion() {
     if (!currentSession) return;
 
     const index = currentSession.currentQuestionIndex;
+    const reviewMode = !!currentSession.reviewMode;
     nextQuestionBtn.disabled = true;
 
     try {
-        if (index === quiz.questions.length - 1) {
-            renderFinalScoreboard();
-            await updateDoc(sessionRef, { status: 'ended' });
-            await finishQuizCleanup();
+        if (reviewMode) {
+            const reviewRange = getReviewRange(index, currentSession.completedCategories);
+
+            if (index === reviewRange.end) {
+                await finishCategory();
+            } else {
+                await updateDoc(sessionRef, {
+                    currentQuestionIndex: index + 1,
+                    questionPhase: 'locked',
+                    answerRevealed: false,
+                    reviewMode: true
+                });
+            }
         } else {
-            await updateDoc(sessionRef, {
-                currentQuestionIndex: index + 1,
-                questionPhase: 'answering',
-                answerRevealed: false
-            });
+            const catBlock = getCategoryBoundsFor(index);
+
+            if (index === catBlock.end) {
+                await finishCategory();
+            } else {
+                await updateDoc(sessionRef, {
+                    currentQuestionIndex: index + 1,
+                    questionPhase: 'answering',
+                    answerRevealed: false,
+                    reviewMode: false
+                });
+            }
         }
     } finally {
         nextQuestionBtn.disabled = false;
+    }
+}
+
+// Marks the category just played as complete and returns to the category
+// picker — the host chooses what to play next (or, once every category is
+// done, moves on to the results reveal).
+async function finishCategory() {
+    const categoryStart = currentSession.currentCategoryStart;
+    const completed = Array.from(new Set([...(currentSession.completedCategories || []), categoryStart]));
+
+    await updateDoc(sessionRef, {
+        status: 'category-select',
+        questionPhase: 'answering',
+        answerRevealed: false,
+        reviewMode: false,
+        introPhase: null,
+        completedCategories: completed
+    });
+}
+
+function ensureResultsRows() {
+    if (resultsRows) return;
+
+    resultsRows = [...latestPlayers]
+        .sort((a, b) => (b.score || 0) - (a.score || 0))
+        .map(player => ({
+            name: player.name,
+            score: player.score || 0,
+            scoreRevealed: false,
+            nameRevealed: false
+        }));
+}
+
+function renderResultsView() {
+    resultsRevealList.innerHTML = '';
+
+    resultsRows.forEach((row, i) => {
+        const li = document.createElement('li');
+        li.className = 'result-row';
+
+        const posEl = document.createElement('span');
+        posEl.className = 'result-pos';
+        posEl.textContent = `#${i + 1}`;
+        li.appendChild(posEl);
+
+        const nameEl = document.createElement('span');
+        nameEl.className = 'result-name';
+        if (row.nameRevealed) {
+            nameEl.textContent = row.name;
+        } else {
+            const revealNameBtn = document.createElement('button');
+            revealNameBtn.type = 'button';
+            revealNameBtn.className = 'btn btn-small btn-secondary';
+            revealNameBtn.textContent = 'Reveal Name';
+            revealNameBtn.addEventListener('click', () => {
+                row.nameRevealed = true;
+                renderResultsView();
+            });
+            nameEl.appendChild(revealNameBtn);
+        }
+        li.appendChild(nameEl);
+
+        const scoreEl = document.createElement('span');
+        scoreEl.className = 'result-score';
+        if (row.scoreRevealed) {
+            scoreEl.textContent = `${row.score} pts`;
+        } else {
+            const revealScoreBtn = document.createElement('button');
+            revealScoreBtn.type = 'button';
+            revealScoreBtn.className = 'btn btn-small btn-secondary';
+            revealScoreBtn.textContent = 'Reveal Score';
+            revealScoreBtn.addEventListener('click', () => {
+                row.scoreRevealed = true;
+                renderResultsView();
+            });
+            scoreEl.appendChild(revealScoreBtn);
+        }
+        li.appendChild(scoreEl);
+
+        resultsRevealList.appendChild(li);
+    });
+}
+
+async function handleFinishQuiz() {
+    finishQuizBtn.disabled = true;
+
+    try {
+        renderFinalScoreboard();
+        await updateDoc(sessionRef, { status: 'ended' });
+        await finishQuizCleanup();
+    } finally {
+        finishQuizBtn.disabled = false;
     }
 }
 
@@ -533,4 +949,22 @@ function formatAnswerValue(question, value) {
 
 function generateCode() {
     return Math.floor(1000 + Math.random() * 9000).toString();
+}
+
+// Encodes a join.html link (with the code pre-filled via ?code=) as a QR
+// image, so scanning it drops a player straight into the name-only join
+// form. Rendered via a public QR image API rather than a bundled library —
+// if that service is ever unreachable the <img> just fails to load (onerror
+// hides it and falls back to the caption), instead of throwing and taking
+// down the rest of the page like a failed <script> load would.
+function renderJoinQrCode() {
+    const basePath = window.location.hostname === 'bladeinferior.github.io' ? '/harryswebsite/' : '/';
+    const joinUrl = `${window.location.origin}${basePath}quizhub/join.html?code=${code}`;
+
+    joinQrImg.onload = () => { joinQrImg.hidden = false; };
+    joinQrImg.onerror = () => {
+        joinQrImg.hidden = true;
+        joinQrCaption.textContent = `Or go to join.html and enter code ${code}`;
+    };
+    joinQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(joinUrl)}`;
 }

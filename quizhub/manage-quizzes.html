@@ -186,6 +186,43 @@
             gap:10px;
             justify-content:center;
         }
+
+        #delete-password-field{
+            text-align:left;
+            margin-bottom:14px;
+        }
+
+        #delete-password-field label{
+            display:block;
+            margin-bottom:6px;
+            color:var(--secondary);
+            font-size:.9rem;
+        }
+
+        #delete-password-input{
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+        }
+
+        #delete-password-input:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        #delete-confirm-error{
+            background:rgba(229,83,75,.15);
+            border:1px solid #e5534b;
+            color:#e5534b;
+            padding:10px 14px;
+            border-radius:8px;
+            margin-bottom:14px;
+            text-align:left;
+        }
     </style>
 </head>
 
@@ -225,6 +262,14 @@ fetch('../navbar.html')
     <div class="confirm-box">
         <h2>Delete this quiz?</h2>
         <p id="delete-confirm-text">This can't be undone.</p>
+
+        <div id="delete-confirm-error" hidden></div>
+
+        <div id="delete-password-field" hidden>
+            <label for="delete-password-input">Password</label>
+            <input type="password" id="delete-password-input" autocomplete="current-password">
+        </div>
+
         <div class="modal-buttons">
             <button id="confirm-delete-btn" class="btn btn-danger" type="button">Delete</button>
             <button id="cancel-delete-btn" class="btn btn-secondary" type="button">Cancel</button>

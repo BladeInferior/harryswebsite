@@ -1,14 +1,18 @@
 import { QUIZ_PATHS } from './data/quiz-registry.js';
 import { db } from './firebase/firebase-config.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+import { hashPassword } from './password-utils.js';
 
 const quizList = document.getElementById('quiz-list');
 const deleteModal = document.getElementById('delete-confirm-modal');
 const deleteConfirmText = document.getElementById('delete-confirm-text');
+const deleteConfirmError = document.getElementById('delete-confirm-error');
+const deletePasswordField = document.getElementById('delete-password-field');
+const deletePasswordInput = document.getElementById('delete-password-input');
 const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
 const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
-let pendingDeleteId = null;
+let pendingDeleteQuiz = null;
 
 const staticQuizzes = Object.entries(QUIZ_PATHS).map(([id, dataPath]) =>
     fetch(dataPath)
@@ -55,7 +59,7 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
             deleteBtn.className = 'btn btn-danger';
             deleteBtn.type = 'button';
             deleteBtn.textContent = 'Delete';
-            deleteBtn.addEventListener('click', () => openDeleteConfirm(quiz.id, quiz.title));
+            deleteBtn.addEventListener('click', () => openDeleteConfirm(quiz));
             actions.appendChild(deleteBtn);
         }
 
@@ -66,32 +70,44 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
     });
 });
 
-function openDeleteConfirm(quizId, title) {
-    pendingDeleteId = quizId;
-    deleteConfirmText.textContent = `"${title}" will be permanently deleted. This can't be undone.`;
+function openDeleteConfirm(quiz) {
+    pendingDeleteQuiz = quiz;
+    deleteConfirmText.textContent = `"${quiz.title}" will be permanently deleted. This can't be undone.`;
+    deleteConfirmError.hidden = true;
+    deletePasswordInput.value = '';
+    deletePasswordField.hidden = !quiz.editPasswordHash;
     deleteModal.hidden = false;
 }
 
 cancelDeleteBtn.addEventListener('click', () => {
-    pendingDeleteId = null;
+    pendingDeleteQuiz = null;
     deleteModal.hidden = true;
 });
 
 deleteModal.addEventListener('click', e => {
     if (e.target === deleteModal) {
-        pendingDeleteId = null;
+        pendingDeleteQuiz = null;
         deleteModal.hidden = true;
     }
 });
 
 confirmDeleteBtn.addEventListener('click', async () => {
-    if (!pendingDeleteId) return;
+    if (!pendingDeleteQuiz) return;
+
+    if (pendingDeleteQuiz.editPasswordHash) {
+        const hash = await hashPassword(deletePasswordInput.value);
+        if (hash !== pendingDeleteQuiz.editPasswordHash) {
+            deleteConfirmError.textContent = 'Incorrect password.';
+            deleteConfirmError.hidden = false;
+            return;
+        }
+    }
 
     confirmDeleteBtn.disabled = true;
     try {
-        await deleteDoc(doc(db, 'quizzes', pendingDeleteId));
+        await deleteDoc(doc(db, 'quizzes', pendingDeleteQuiz.id));
         deleteModal.hidden = true;
-        pendingDeleteId = null;
+        pendingDeleteQuiz = null;
         window.location.reload();
     } catch (err) {
         console.error(err);

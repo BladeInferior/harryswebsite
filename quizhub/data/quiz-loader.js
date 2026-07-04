@@ -3,8 +3,8 @@ import { db } from '../firebase/firebase-config.js';
 import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
 // Resolves a quiz by id: static file first (hand-built quizzes registered in
-// quiz-registry.js), then Firestore (builder-authored quizzes), then falls
-// back to the sample quiz if neither exists.
+// quiz-registry.js), then Firestore (builder-authored quizzes). Throws if
+// neither has it, so the caller can show a "quiz not found" state.
 export async function loadQuiz(quizId) {
     const staticPath = QUIZ_PATHS[quizId];
     if (staticPath) {
@@ -14,5 +14,5 @@ export async function loadQuiz(quizId) {
     const snap = await getDoc(doc(db, 'quizzes', quizId));
     if (snap.exists()) return snap.data();
 
-    return fetch(QUIZ_PATHS['sample-quiz-1']).then(res => res.json());
+    throw new Error(`Quiz not found: ${quizId}`);
 }

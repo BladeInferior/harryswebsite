@@ -193,6 +193,12 @@
             color:var(--gold);
         }
 
+        .category-header-actions{
+            display:flex;
+            gap:8px;
+            flex-shrink:0;
+        }
+
         .question-list{
             display:flex;
             flex-direction:column;
@@ -264,6 +270,57 @@
             padding:14px;
         }
 
+        .add-question-to-category-btn{
+            margin-top:14px;
+        }
+
+        .tooltip-icon{
+            position:relative;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            box-sizing:content-box;
+            width:14px;
+            height:14px;
+            flex:0 0 14px;
+            line-height:1;
+            border-radius:50%;
+            background:var(--border);
+            color:var(--secondary);
+            font-size:.7rem;
+            margin-left:6px;
+            cursor:help;
+        }
+
+        .tooltip-icon::after{
+            content:attr(data-tooltip);
+            position:absolute;
+            top:calc(100% + 10px);
+            left:50%;
+            transform:translateX(-50%);
+            width:220px;
+            background:#000;
+            color:#fff;
+            padding:10px 12px;
+            border-radius:8px;
+            font-size:.8rem;
+            font-weight:normal;
+            line-height:1.4;
+            text-align:left;
+            white-space:normal;
+            opacity:0;
+            visibility:hidden;
+            transition:opacity .15s ease;
+            z-index:1300;
+            pointer-events:none;
+        }
+
+        .tooltip-icon:hover::after,
+        .tooltip-icon:focus::after{
+            opacity:1;
+            visibility:visible;
+        }
+
         #save-quiz-status{
             margin-top:14px;
             text-align:center;
@@ -273,8 +330,10 @@
         #save-quiz-status.success{ color:var(--correct); }
         #save-quiz-status.failure{ color:var(--incorrect); }
 
-        /* ---------- question modal ---------- */
-        #question-modal{
+        /* ---------- question / category / password modals ---------- */
+        #question-modal,
+        #category-modal,
+        #password-check-modal{
             position:fixed;
             inset:0;
             background:rgba(0,0,0,.75);
@@ -301,7 +360,9 @@
             margin-bottom:16px;
         }
 
-        #q-error{
+        #q-error,
+        #cat-error,
+        #password-check-error{
             background:rgba(229,83,75,.15);
             border:1px solid var(--incorrect);
             color:var(--incorrect);
@@ -391,11 +452,30 @@ fetch('../navbar.html')
             Description (optional)
             <textarea id="quiz-description-input" rows="2" placeholder="A short blurb shown on Manage Quizzes"></textarea>
         </label>
+
+        <label>
+            Reveal answers
+            <select id="quiz-reveal-mode-input">
+                <option value="immediate">After every question</option>
+                <option value="category">After every category</option>
+                <option value="end">At the end of the quiz</option>
+            </select>
+        </label>
+
+        <label>
+            <span id="quiz-password-label">Edit/delete password (optional)</span>
+            <span class="tooltip-icon" tabindex="0" data-tooltip="If set, anyone editing or deleting this quiz from Manage Quizzes will need to enter this password first.">ⓘ</span>
+            <input type="password" id="quiz-password-input" placeholder="Leave blank for no password" autocomplete="new-password">
+        </label>
+
+        <label class="checkbox-label" id="quiz-remove-password-row" hidden>
+            <input type="checkbox" id="quiz-remove-password-toggle">
+            Remove password protection from this quiz
+        </label>
     </div>
 
     <div class="toolbar">
         <button id="add-category-btn" class="btn btn-secondary" type="button">+ Add Category</button>
-        <button id="add-question-btn" class="btn" type="button">+ Add Question</button>
     </div>
 
     <div id="categories-container"></div>
@@ -404,6 +484,89 @@ fetch('../navbar.html')
     <div id="save-quiz-status"></div>
 
 </section>
+
+<!-- =========================
+    PASSWORD CHECK MODAL (editing a protected quiz)
+========================== -->
+<div id="password-check-modal" hidden>
+    <div class="add-item-box">
+        <h2>Password Required</h2>
+        <p style="color:var(--secondary);margin-bottom:14px;">This quiz is password protected. Enter the password to edit it.</p>
+
+        <div id="password-check-error" hidden></div>
+
+        <label>
+            Password
+            <input type="password" id="password-check-input" autocomplete="current-password">
+        </label>
+
+        <div class="modal-buttons">
+            <button id="password-check-submit-btn" class="btn" type="button">Unlock</button>
+            <a href="manage-quizzes.html" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<!-- =========================
+    ADD / EDIT CATEGORY MODAL
+========================== -->
+<div id="category-modal" hidden>
+    <div class="add-item-box">
+
+        <h2 id="category-modal-title">Add Category</h2>
+
+        <div id="cat-error" hidden></div>
+
+        <label>
+            Category name
+            <input type="text" id="cat-name-input" placeholder="e.g. Pokémon Basics">
+        </label>
+
+        <label>
+            Category tile image path (optional)
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Shown as the background of this category's tile on the category-select screen.">ⓘ</span>
+            <input type="text" id="cat-background-input" placeholder="../collection-hub/sprites/backgrounds/forest.jpg">
+        </label>
+
+        <label>
+            Question background path (optional)
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Shown as the background behind every question page in this category (not the tile, and not the title/example screens).">ⓘ</span>
+            <input type="text" id="cat-question-background-input" placeholder="../collection-hub/sprites/backgrounds/cave.jpg">
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="cat-title-toggle">
+            Add a title screen
+            <span class="tooltip-icon" tabindex="0" data-tooltip="An intro screen shown to the host and players before this category's questions start — good for explaining the theme or rules.">ⓘ</span>
+        </label>
+
+        <div id="cat-title-fields" hidden>
+            <label>
+                Title screen text
+                <textarea id="cat-title-text-input" rows="2" placeholder="e.g. Get ready for some classic Kanto trivia!"></textarea>
+            </label>
+        </div>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="cat-example-toggle">
+            Add an example screen
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Shown right after the title screen (or first, if there's no title screen) to demonstrate how a question in this category works.">ⓘ</span>
+        </label>
+
+        <div id="cat-example-fields" hidden>
+            <label>
+                Example screen text
+                <textarea id="cat-example-text-input" rows="2" placeholder="e.g. You'll see a silhouette and type the Pokémon's name."></textarea>
+            </label>
+        </div>
+
+        <div class="modal-buttons">
+            <button id="save-category-btn" class="btn" type="button">Save Category</button>
+            <button id="cancel-category-btn" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+
+    </div>
+</div>
 
 <!-- =========================
     ADD / EDIT QUESTION MODAL

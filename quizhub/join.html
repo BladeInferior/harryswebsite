@@ -162,12 +162,14 @@
         }
 
         #waiting-section h2,
-        #ended-section h2{
+        #ended-section h2,
+        #host-screen-section h2{
             text-align:center;
             margin-bottom:6px;
         }
 
-        #waiting-section p{
+        #waiting-section p,
+        #host-screen-section p{
             text-align:center;
             color:var(--secondary);
             margin-bottom:20px;
@@ -177,6 +179,40 @@
             text-align:center;
             color:var(--secondary);
             margin-bottom:20px;
+        }
+
+        /* --- category title / example screens --- */
+        .card.themed-bg{
+            position:relative;
+            background-size:cover;
+            background-position:center;
+            overflow:hidden;
+        }
+
+        .card.themed-bg::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:rgba(18,18,18,.82);
+            border-radius:16px;
+            z-index:0;
+        }
+
+        .card.themed-bg > *{
+            position:relative;
+            z-index:1;
+        }
+
+        #player-category-intro-label{
+            text-align:center;
+            font-size:1.5rem;
+            margin-bottom:16px;
+        }
+
+        #player-category-intro-text{
+            text-align:center;
+            color:var(--secondary);
+            line-height:1.6;
         }
 
         /* --- in-quiz question + answer UI --- */
@@ -378,19 +414,21 @@ fetch('../navbar.html')
 
 <a class="back-button" href="quizhub.html">← Back</a>
 
-<section class="hero">
-    <p>Enter the code shown on the host's screen to join the quiz.</p>
+<section class="hero" id="join-hero">
+    <p id="join-hero-text">Enter the code shown on the host's screen to join the quiz.</p>
 </section>
 
 <section class="section">
-    <div class="card">
+    <div class="card" id="join-card">
 
         <form id="join-form">
             <label for="name-input">Your name</label>
             <input type="text" id="name-input" autocomplete="off" required>
 
-            <label for="code-input">Join code</label>
-            <input type="text" id="code-input" inputmode="numeric" autocomplete="off" required>
+            <div id="code-field-wrapper">
+                <label for="code-input">Join code</label>
+                <input type="text" id="code-input" inputmode="numeric" autocomplete="off" required>
+            </div>
 
             <button type="submit" class="btn">Join</button>
             <div id="join-status"></div>
@@ -407,6 +445,16 @@ fetch('../navbar.html')
                 <button type="submit" class="btn">Send</button>
                 <div id="send-status"></div>
             </form>
+        </div>
+
+        <div id="host-screen-section" hidden>
+            <h2>👀 Look at the host's screen</h2>
+            <p id="host-screen-message"></p>
+        </div>
+
+        <div id="category-intro-section" hidden>
+            <h2 id="player-category-intro-label"></h2>
+            <p id="player-category-intro-text"></p>
         </div>
 
         <div id="quiz-section" hidden>

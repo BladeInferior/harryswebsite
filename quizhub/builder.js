@@ -1,13 +1,42 @@
 import { db } from './firebase/firebase-config.js';
 import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+import { hashPassword } from './password-utils.js';
 
 const titleInput = document.getElementById('quiz-title-input');
 const descInput = document.getElementById('quiz-description-input');
+const revealModeInput = document.getElementById('quiz-reveal-mode-input');
+const quizPasswordLabel = document.getElementById('quiz-password-label');
+const quizPasswordInput = document.getElementById('quiz-password-input');
+const quizRemovePasswordRow = document.getElementById('quiz-remove-password-row');
+const quizRemovePasswordToggle = document.getElementById('quiz-remove-password-toggle');
 const categoriesContainer = document.getElementById('categories-container');
 const addCategoryBtn = document.getElementById('add-category-btn');
-const addQuestionBtn = document.getElementById('add-question-btn');
 const saveQuizBtn = document.getElementById('save-quiz-btn');
 const saveQuizStatus = document.getElementById('save-quiz-status');
+
+const passwordCheckModal = document.getElementById('password-check-modal');
+const passwordCheckError = document.getElementById('password-check-error');
+const passwordCheckInput = document.getElementById('password-check-input');
+const passwordCheckSubmitBtn = document.getElementById('password-check-submit-btn');
+
+// The edit/delete password hash currently stored on the quiz being edited
+// (null for a brand-new quiz, or one with no password set).
+let existingPasswordHash = null;
+
+const categoryModal = document.getElementById('category-modal');
+const categoryModalTitle = document.getElementById('category-modal-title');
+const catError = document.getElementById('cat-error');
+const catNameInput = document.getElementById('cat-name-input');
+const catBackgroundInput = document.getElementById('cat-background-input');
+const catQuestionBackgroundInput = document.getElementById('cat-question-background-input');
+const catTitleToggle = document.getElementById('cat-title-toggle');
+const catTitleFields = document.getElementById('cat-title-fields');
+const catTitleTextInput = document.getElementById('cat-title-text-input');
+const catExampleToggle = document.getElementById('cat-example-toggle');
+const catExampleFields = document.getElementById('cat-example-fields');
+const catExampleTextInput = document.getElementById('cat-example-text-input');
+const saveCategoryBtn = document.getElementById('save-category-btn');
+const cancelCategoryBtn = document.getElementById('cancel-category-btn');
 
 const questionModal = document.getElementById('question-modal');
 const questionModalTitle = document.getElementById('question-modal-title');
@@ -51,11 +80,15 @@ const TYPE_LABELS = {
     'number': 'Number'
 };
 
-// categories = [{ id, name, questions: [questionObj, ...] }]
+// categories = [{ id, name, background, titleScreen, exampleScreen, questions: [questionObj, ...] }]
+// titleScreen / exampleScreen are either null or { text, image }
 let categories = [];
 
 // null = adding a new question; otherwise { categoryId, index } of the one being edited
 let currentEditContext = null;
+
+// null = adding a new category; otherwise the category object being edited
+let categoryEditContext = null;
 
 // If ?quiz=<id> is present, we're editing an existing Firestore-authored quiz
 // rather than creating a new one — Save Quiz updates that doc instead of
@@ -80,17 +113,74 @@ async function loadQuizForEditing(quizId) {
     }
 
     const quiz = snap.data();
+    existingPasswordHash = quiz.editPasswordHash || null;
+
+    if (existingPasswordHash) {
+        await requirePasswordUnlock(existingPasswordHash);
+    }
+
+    populateBuilderFromQuiz(quiz);
+}
+
+// Blocks (via an unresolved promise) until the correct password is entered
+// into the password-check modal — the caller awaits this before revealing
+// any of the protected quiz's content.
+function requirePasswordUnlock(expectedHash) {
+    return new Promise(resolve => {
+        passwordCheckModal.hidden = false;
+        passwordCheckError.hidden = true;
+        passwordCheckInput.value = '';
+        passwordCheckInput.focus();
+
+        async function attempt() {
+            const hash = await hashPassword(passwordCheckInput.value);
+            if (hash === expectedHash) {
+                passwordCheckModal.hidden = true;
+                passwordCheckSubmitBtn.removeEventListener('click', attempt);
+                passwordCheckInput.removeEventListener('keydown', onKeydown);
+                resolve();
+            } else {
+                passwordCheckError.textContent = 'Incorrect password.';
+                passwordCheckError.hidden = false;
+                passwordCheckInput.value = '';
+                passwordCheckInput.focus();
+            }
+        }
+
+        function onKeydown(e) {
+            if (e.key === 'Enter') attempt();
+        }
+
+        passwordCheckSubmitBtn.addEventListener('click', attempt);
+        passwordCheckInput.addEventListener('keydown', onKeydown);
+    });
+}
+
+function populateBuilderFromQuiz(quiz) {
     titleInput.value = quiz.title || '';
     descInput.value = quiz.description || '';
+    revealModeInput.value = quiz.answerRevealMode || 'immediate';
+
+    quizPasswordInput.value = '';
+    quizPasswordLabel.textContent = existingPasswordHash
+        ? 'New edit/delete password (leave blank to keep current)'
+        : 'Edit/delete password (optional)';
+    quizRemovePasswordRow.hidden = !existingPasswordHash;
+    quizRemovePasswordToggle.checked = false;
 
     const byCategory = new Map();
     (quiz.questions || []).forEach(q => {
         const categoryName = q.category || 'General';
 
         if (!byCategory.has(categoryName)) {
+            const meta = (quiz.categoryMeta || []).find(m => m.name === categoryName) || {};
             byCategory.set(categoryName, {
                 id: 'cat' + Date.now() + Math.floor(Math.random() * 1000) + byCategory.size,
                 name: categoryName,
+                background: meta.background || '',
+                questionBackground: meta.questionBackground || '',
+                titleScreen: meta.titleScreen || null,
+                exampleScreen: meta.exampleScreen || null,
                 questions: []
             });
         }
@@ -110,24 +200,90 @@ async function loadQuizForEditing(quizId) {
 // =========================
 // CATEGORIES
 // =========================
-addCategoryBtn.addEventListener('click', () => {
-    const name = prompt('Category name:');
-    if (!name || !name.trim()) return;
+addCategoryBtn.addEventListener('click', () => openCategoryModal(null));
 
-    categories.push({
-        id: 'cat' + Date.now() + Math.floor(Math.random() * 1000),
-        name: name.trim(),
-        questions: []
-    });
-    renderCategories();
+catTitleToggle.addEventListener('change', () => {
+    catTitleFields.hidden = !catTitleToggle.checked;
+});
+catExampleToggle.addEventListener('change', () => {
+    catExampleFields.hidden = !catExampleToggle.checked;
+});
+cancelCategoryBtn.addEventListener('click', () => {
+    categoryModal.hidden = true;
 });
 
-addQuestionBtn.addEventListener('click', () => {
-    if (!categories.length) {
-        alert('Add a category first — questions live inside a category.');
+function openCategoryModal(category) {
+    categoryEditContext = category;
+    catError.hidden = true;
+
+    if (category) {
+        categoryModalTitle.textContent = 'Edit Category';
+        catNameInput.value = category.name;
+        catBackgroundInput.value = category.background || '';
+        catQuestionBackgroundInput.value = category.questionBackground || '';
+
+        catTitleToggle.checked = !!category.titleScreen;
+        catTitleFields.hidden = !category.titleScreen;
+        catTitleTextInput.value = category.titleScreen ? category.titleScreen.text || '' : '';
+
+        catExampleToggle.checked = !!category.exampleScreen;
+        catExampleFields.hidden = !category.exampleScreen;
+        catExampleTextInput.value = category.exampleScreen ? category.exampleScreen.text || '' : '';
+    } else {
+        categoryModalTitle.textContent = 'Add Category';
+        catNameInput.value = '';
+        catBackgroundInput.value = '';
+        catQuestionBackgroundInput.value = '';
+
+        catTitleToggle.checked = false;
+        catTitleFields.hidden = true;
+        catTitleTextInput.value = '';
+
+        catExampleToggle.checked = false;
+        catExampleFields.hidden = true;
+        catExampleTextInput.value = '';
+    }
+
+    categoryModal.hidden = false;
+}
+
+saveCategoryBtn.addEventListener('click', () => {
+    const name = catNameInput.value.trim();
+    if (!name) {
+        catError.textContent = 'Please enter a category name.';
+        catError.hidden = false;
         return;
     }
-    openQuestionModal(null);
+
+    const background = catBackgroundInput.value.trim();
+    const questionBackground = catQuestionBackgroundInput.value.trim();
+    const titleScreen = catTitleToggle.checked
+        ? { text: catTitleTextInput.value.trim() }
+        : null;
+    const exampleScreen = catExampleToggle.checked
+        ? { text: catExampleTextInput.value.trim() }
+        : null;
+
+    if (categoryEditContext) {
+        categoryEditContext.name = name;
+        categoryEditContext.background = background;
+        categoryEditContext.questionBackground = questionBackground;
+        categoryEditContext.titleScreen = titleScreen;
+        categoryEditContext.exampleScreen = exampleScreen;
+    } else {
+        categories.push({
+            id: 'cat' + Date.now() + Math.floor(Math.random() * 1000),
+            name,
+            background,
+            questionBackground,
+            titleScreen,
+            exampleScreen,
+            questions: []
+        });
+    }
+
+    categoryModal.hidden = true;
+    renderCategories();
 });
 
 function renderCategories() {
@@ -149,6 +305,16 @@ function renderCategories() {
         h2.textContent = category.name;
         header.appendChild(h2);
 
+        const headerActions = document.createElement('div');
+        headerActions.className = 'category-header-actions';
+
+        const editCategoryBtn = document.createElement('button');
+        editCategoryBtn.type = 'button';
+        editCategoryBtn.className = 'btn btn-small btn-secondary';
+        editCategoryBtn.textContent = 'Edit';
+        editCategoryBtn.addEventListener('click', () => openCategoryModal(category));
+        headerActions.appendChild(editCategoryBtn);
+
         const removeBtn = document.createElement('button');
         removeBtn.type = 'button';
         removeBtn.className = 'btn btn-small btn-danger';
@@ -158,7 +324,9 @@ function renderCategories() {
             categories = categories.filter(c => c.id !== category.id);
             renderCategories();
         });
-        header.appendChild(removeBtn);
+        headerActions.appendChild(removeBtn);
+
+        header.appendChild(headerActions);
 
         section.appendChild(header);
 
@@ -179,6 +347,14 @@ function renderCategories() {
 
         addDragEvents(list);
         section.appendChild(list);
+
+        const addQuestionBtn = document.createElement('button');
+        addQuestionBtn.type = 'button';
+        addQuestionBtn.className = 'btn btn-secondary btn-small add-question-to-category-btn';
+        addQuestionBtn.textContent = '+ Add Question';
+        addQuestionBtn.addEventListener('click', () => openQuestionModal(null, category.id));
+        section.appendChild(addQuestionBtn);
+
         categoriesContainer.appendChild(section);
     });
 }
@@ -410,7 +586,7 @@ function addOrderingRow(labelValue) {
 // =========================
 // OPEN / CLOSE MODAL
 // =========================
-function openQuestionModal(editContext) {
+function openQuestionModal(editContext, defaultCategoryId) {
     currentEditContext = editContext;
     qError.hidden = true;
     resetOptionLists();
@@ -424,6 +600,7 @@ function openQuestionModal(editContext) {
     });
 
     if (editContext === null) {
+        if (defaultCategoryId) qCategorySelect.value = defaultCategoryId;
         questionModalTitle.textContent = 'Add Question';
         qPromptInput.value = '';
         qPointsInput.value = '1';
@@ -707,12 +884,30 @@ saveQuizBtn.addEventListener('click', async () => {
     });
     const questionsWithIds = flatQuestions.map((q, i) => ({ ...q, id: 'q' + (i + 1) }));
 
+    const categoryMeta = categories.map(c => ({
+        name: c.name,
+        background: c.background || '',
+        questionBackground: c.questionBackground || '',
+        titleScreen: c.titleScreen ? { text: c.titleScreen.text || '' } : null,
+        exampleScreen: c.exampleScreen ? { text: c.exampleScreen.text || '' } : null
+    }));
+
+    let editPasswordHash = existingPasswordHash;
+    if (quizRemovePasswordToggle.checked) {
+        editPasswordHash = null;
+    } else if (quizPasswordInput.value) {
+        editPasswordHash = await hashPassword(quizPasswordInput.value);
+    }
+
     try {
         await setDoc(quizRef, {
             id: quizId,
             title,
             description,
             version: 1,
+            answerRevealMode: revealModeInput.value,
+            categoryMeta,
+            editPasswordHash,
             questions: questionsWithIds
         });
 
