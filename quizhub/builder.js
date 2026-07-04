@@ -64,6 +64,7 @@ const params = new URLSearchParams(window.location.search);
 const editingQuizId = params.get('quiz');
 
 if (editingQuizId) {
+    document.getElementById('back-button-link').href = 'manage-quizzes.html';
     loadQuizForEditing(editingQuizId);
 } else {
     renderCategories();
@@ -425,7 +426,7 @@ function openQuestionModal(editContext) {
     if (editContext === null) {
         questionModalTitle.textContent = 'Add Question';
         qPromptInput.value = '';
-        qPointsInput.value = '100';
+        qPointsInput.value = '1';
         qImageInput.value = '';
         qSilhouetteInput.checked = false;
         qExplanationInput.value = '';
@@ -527,7 +528,7 @@ function showError(msg) {
 // =========================
 saveQuestionBtn.addEventListener('click', () => {
     const prompt = qPromptInput.value.trim();
-    const points = parseInt(qPointsInput.value, 10) || 100;
+    const points = parseInt(qPointsInput.value, 10) || 1;
     const explanation = qExplanationInput.value.trim();
     const imageSrc = qImageInput.value.trim();
     const media = imageSrc ? { kind: 'image', src: imageSrc, alt: '', silhouette: qSilhouetteInput.checked } : null;
