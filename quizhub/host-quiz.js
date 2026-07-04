@@ -11,7 +11,9 @@ import {
     where,
     orderBy,
     onSnapshot,
+    getDoc,
     getDocs,
+    addDoc,
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 
@@ -272,7 +274,11 @@ function renderResultsList() {
             overrideBtn.type = 'button';
             overrideBtn.className = 'btn btn-small btn-secondary';
             overrideBtn.textContent = 'Override';
-            overrideBtn.addEventListener('click', () => overrideAnswer(answer));
+            overrideBtn.addEventListener('click', async () => {
+                overrideBtn.disabled = true;
+                await overrideAnswer(answer);
+                overrideBtn.disabled = false;
+            });
             li.appendChild(overrideBtn);
         } else if (answer.textRevealed) {
             const label = document.createElement('span');
@@ -397,18 +403,53 @@ async function handleNextQuestion() {
     }
 }
 
-// Folds each player's score into their persistent leaderboard total, then
-// wipes the session's ephemeral data (code, players, messages, answers) —
-// only the name + running total survive past the end of the quiz.
+// Records match history + folds each player's outcome into their persistent
+// leaderboard stats, then wipes the session's ephemeral data (code, players,
+// messages, answers) — only the aggregate leaderboard totals and the
+// standalone quizResults record survive past the end of the quiz.
+//
+// Stats are only recorded for 2+ players — a solo session always has a
+// trivial "win" regardless of score, which would otherwise pollute the
+// leaderboard with the host's own content test-runs.
 async function finishQuizCleanup() {
-    await Promise.all(
-        latestPlayers.map(player =>
-            setDoc(doc(db, 'leaderboard', slugifyName(player.name)), {
-                name: player.name,
-                totalScore: increment(player.score || 0)
-            }, { merge: true })
-        )
-    );
+    if (latestPlayers.length >= 2) {
+        const scores = latestPlayers.map(p => p.score || 0);
+        const maxScore = Math.max(...scores);
+        const winnerCount = scores.filter(s => s === maxScore).length;
+
+        const resultPlayers = latestPlayers.map(player => {
+            const score = player.score || 0;
+            const outcome = score !== maxScore ? 'loss' : (winnerCount > 1 ? 'draw' : 'win');
+            return { name: player.name, score, outcome };
+        });
+
+        await addDoc(collection(db, 'quizResults'), {
+            quizId: quiz.id,
+            quizTitle: quiz.title,
+            playedAt: serverTimestamp(),
+            players: resultPlayers
+        });
+
+        await Promise.all(resultPlayers.map(async result => {
+            const leaderboardRef = doc(db, 'leaderboard', slugifyName(result.name));
+
+            await setDoc(leaderboardRef, {
+                name: result.name,
+                totalScore: increment(result.score),
+                gamesPlayed: increment(1),
+                wins: increment(result.outcome === 'win' ? 1 : 0),
+                draws: increment(result.outcome === 'draw' ? 1 : 0),
+                losses: increment(result.outcome === 'loss' ? 1 : 0)
+            }, { merge: true });
+
+            const existingSnap = await getDoc(leaderboardRef);
+            const existingBest = (existingSnap.exists() && existingSnap.data().bestScore) || 0;
+
+            if (result.score > existingBest) {
+                await setDoc(leaderboardRef, { bestScore: result.score }, { merge: true });
+            }
+        }));
+    }
 
     await deleteCollectionDocs(collection(db, 'sessions', code, 'players'));
     await deleteCollectionDocs(collection(db, 'sessions', code, 'messages'));
