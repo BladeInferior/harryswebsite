@@ -2551,39 +2551,62 @@
   },
   {
     "name": "Surging Sparks ETB",
-    "date": "08/11/2024",
+    "date": "2024-11-08",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "etb"
+    ]
   },
   {
     "name": "Ogerpon Collection",
-    "date": "08/11/2024",
+    "date": "2024-11-08",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ogerpon"
+    ]
   },
   {
     "name": "LAIC 2025",
-    "date": "15/11/2024",
+    "date": "2024-11-15",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ogerpon",
+      "event"
+    ]
   },
   {
     "name": "Deck Sleeves Kanto Adventure - Pikachu & Snorlax",
-    "date": "22/11/2024",
+    "date": "2024-11-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "rattata",
+      "pikachu",
+      "exeggcute",
+      "oddish",
+      "snorlax"
+    ]
   },
   {
     "name": "Deck Sleeves Johto Adventure - Lugia & Tyranitar",
-    "date": "22/11/2024",
+    "date": "2024-11-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "marill",
+      "houndour",
+      "tyranitar",
+      "lugia",
+      "slowking"
+    ]
   },
   {
     "name": "Deck Sleeves Alolan Adventure - Tapu Koko & Mimikyu",
-    "date": "22/11/2024",
+    "date": "2024-11-22",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "oricorio",
+      "mimukyu",
+      "tapu koko"
+    ]
   },
   {
     "name": "Deck Sleeves Tatsugiri To the usual place",
@@ -2595,9 +2618,19 @@
   },
   {
     "name": "Deck Sleeves Eevee Evolutions",
-    "date": "06/12/2024",
+    "date": "2024-12-06",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "eevee",
+      "flareon",
+      "jolteon",
+      "vaporeon",
+      "espeon",
+      "umbreon",
+      "leafeon",
+      "glaceon",
+      "sylveon"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Ace Spec",
@@ -2609,33 +2642,49 @@
   },
   {
     "name": "Charmander Dreepy Pidgey",
-    "date": "14/01/2025",
+    "date": "2025-01-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "charmander",
+      "pidgey",
+      "dreepy"
+    ]
   },
   {
     "name": "We're Goomy",
-    "date": "15/01/2025",
+    "date": "2025-01-15",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "goomy",
+      "item"
+    ]
   },
   {
     "name": "Substitute & Squirtle",
-    "date": "15/01/2025",
+    "date": "2025-01-15",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "squirtle"
+    ]
   },
   {
     "name": "Lugia & Ho-oh",
-    "date": "15/01/2025",
+    "date": "2025-01-15",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "lugia",
+      "ho-oh"
+    ]
   },
   {
     "name": "Prismatic Evolutions ETB",
-    "date": "17/01/2025",
+    "date": "2025-01-17",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee",
+      "terastal",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Pro Mew",
@@ -2648,15 +2697,21 @@
   },
   {
     "name": "Deck Sleeves Hop & Snorlax",
-    "date": "24/01/2025",
+    "date": "2025-01-24",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "snorlax",
+      "hop"
+    ]
   },
   {
     "name": "Deck Sleeves Lillie & Clefairy",
-    "date": "24/01/2025",
+    "date": "2025-01-24",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "clefairy",
+      "lillie"
+    ]
   },
   {
     "name": "Deck Sleeves Latias / Latios Night View [Red Version]",
@@ -2678,15 +2733,20 @@
   },
   {
     "name": "Deck Sleeves Premium Gloss Moonlight & Umbreon [Gray Version]",
-    "date": "07/02/2025",
+    "date": "2025-02-07",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "umbreon"
+    ]
   },
   {
     "name": "EUIC 2025",
-    "date": "21/02/2025",
+    "date": "2025-02-21",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ogerpon",
+      "event"
+    ]
   },
   {
     "name": "EUIC 2025 (2)",
@@ -2716,9 +2776,11 @@
   },
   {
     "name": "Shaymin Bouquet",
-    "date": "14/03/2025",
+    "date": "2025-03-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "shaymin"
+    ]
   },
   {
     "name": "Deck Sleeves Arven Mabosstiff",
@@ -2742,39 +2804,65 @@
   },
   {
     "name": "Deck Sleeves Kanto Festival Playing Pikachu",
-    "date": "14/03/2025",
+    "date": "2025-03-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "poliwag",
+      "pansear",
+      "machoke",
+      "victini"
+    ]
   },
   {
     "name": "Deck Sleeves Nebuta Festival Playing Pikachu",
-    "date": "14/03/2025",
+    "date": "2025-03-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "charizard",
+      "pikachu",
+      "victini",
+      "ogerpon",
+      "serperior"
+    ]
   },
   {
     "name": "Deck Sleeves Waraji Festival Playing Pikachu",
-    "date": "14/03/2025",
+    "date": "2025-03-14",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "victini",
+      "falinks",
+      "maushold"
+    ]
   },
   {
     "name": "Journey Together ETB",
-    "date": "28/03/2025",
+    "date": "2025-03-28",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "zoroark",
+      "N",
+      "etb"
+    ]
   },
   {
     "name": "Caterpie Munch Time",
-    "date": "01/04/2025",
+    "date": "2025-04-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "caterpie"
+    ]
   },
   {
     "name": "Wetland Wonders",
-    "date": "01/04/2025",
+    "date": "2025-04-01",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "paldean wooper",
+      "clodsire"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Evolution Line Crobat",
@@ -2796,9 +2884,18 @@
   },
   {
     "name": "Deck Sleeves Glory of Team Rocket",
-    "date": "18/04/2025",
+    "date": "2025-04-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "rattata",
+      "arbok",
+      "koffing",
+      "mewtwo",
+      "murkrow",
+      "giovanni",
+      "ariana",
+      "petrel"
+    ]
   },
   {
     "name": "Deck Sleeves Moltres Zapdos Articuno",
@@ -2822,9 +2919,23 @@
   },
   {
     "name": "Deck Sleeves Night Arcade",
-    "date": "18/04/2025",
+    "date": "2025-04-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "nidorino",
+      "nidorina",
+      "porygon",
+      "dratini",
+      "clefairy",
+      "pikachu",
+      "koffing",
+      "grimer",
+      "pinsir",
+      "dugtrio",
+      "abra",
+      "scyther",
+      "item"
+    ]
   },
   {
     "name": "Deck Sleeves Pro Team Rocket",
@@ -2834,21 +2945,32 @@
   },
   {
     "name": "Deck Sleeves Mimikyu & Wobbuffet",
-    "date": "18/04/2025",
+    "date": "2025-04-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "wobbuffet",
+      "mimikyu"
+    ]
   },
   {
     "name": "Deck Sleeves Dangerous Bad Poison (Moudoku kiken) [Black]",
-    "date": "25/04/2025",
+    "date": "2025-04-25",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "grafaiai",
+      "clodsire"
+    ]
   },
   {
     "name": "Deck Sleeves Pikachu and Heart [Red]",
-    "date": "25/04/2025",
+    "date": "2025-04-25",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "cherubi",
+      "cherrim",
+      "variant"
+    ]
   },
   {
     "name": "Deck Sleeves Mix Au Lait [Orange]",
@@ -2860,33 +2982,53 @@
   },
   {
     "name": "Vaporeon Advanced Gift Box",
-    "date": "26/04/2025",
+    "date": "2025-04-26",
     "nationality": "CHN",
-    "tags": []
+    "tags": [
+      "vaporeon"
+    ]
   },
   {
     "name": "Jolteon Advanced Gift Box",
-    "date": "26/04/2025",
+    "date": "2025-04-26",
     "nationality": "CHN",
-    "tags": []
+    "tags": [
+      "jolteon"
+    ]
   },
   {
     "name": "Flareon Advanced Gift Box",
-    "date": "26/04/2025",
+    "date": "2025-04-26",
     "nationality": "CHN",
-    "tags": []
+    "tags": [
+      "flareon"
+    ]
   },
   {
     "name": "Prismatic Evolutions Super-Premium Collection",
-    "date": "16/05/2025",
+    "date": "2025-05-16",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "eevee",
+      "flareon",
+      "jolteon",
+      "vaporeon",
+      "espeon",
+      "umbreon",
+      "leafeon",
+      "glaceon",
+      "sylveon"
+    ]
   },
   {
     "name": "Destined Rivals ETB",
-    "date": "30/05/2025",
+    "date": "2025-05-30",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "mewtwo",
+      "giovanni",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Black Bolt",
@@ -2949,27 +3091,46 @@
   },
   {
     "name": "Special Box Pokémon Center Fukuoka",
-    "date": "13/06/2025",
+    "date": "2025-06-13",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "mudkip",
+      "torchic",
+      "latios",
+      "latias"
+    ]
   },
   {
     "name": "Special Box Pokémon Center Hiroshima",
-    "date": "13/06/2025",
+    "date": "2025-06-13",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "magikarp",
+      "gyarados",
+      "shiny"
+    ]
   },
   {
     "name": "Special Box Pokémon Center Tohoku",
-    "date": "13/06/2025",
+    "date": "2025-06-13",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "victini",
+      "ogerpon",
+      "jirachi"
+    ]
   },
   {
     "name": "NAIC 2025",
-    "date": "13/06/2025",
+    "date": "2025-06-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "ogerpon",
+      "event"
+    ]
   },
   {
     "name": "Deck Sleeves Hanagasa Festival Playing Pikachu [Orange]",
@@ -2981,9 +3142,14 @@
   },
   {
     "name": "Deck Shield Premium Gloss PJCS2025",
-    "date": "21/06/2025",
+    "date": "2025-06-21",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "mewtwo",
+      "terastal",
+      "event"
+    ]
   },
   {
     "name": "Deck Sleeves Cynthia & Garchomp Ver 2. Blue",
@@ -2996,9 +3162,17 @@
   },
   {
     "name": "Deck Sleeves Iono [Purple]",
-    "date": "26/06/2025",
+    "date": "2025-06-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "electrode",
+      "luxray",
+      "mismagius",
+      "bellibolt",
+      "kilowattrel",
+      "iono",
+      "item"
+    ]
   },
   {
     "name": "Deck Sleeves Moonlight & Umbreon [White]",
@@ -3010,39 +3184,60 @@
   },
   {
     "name": "Terapagos (Terastal Form)",
-    "date": "13/07/2025",
+    "date": "2025-07-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "terapagos"
+    ]
   },
   {
     "name": "Sylveon",
-    "date": "13/07/2025",
+    "date": "2025-07-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "sylveon"
+    ]
   },
   {
     "name": "Charming & Ghostly",
-    "date": "13/07/2025",
+    "date": "2025-07-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "duskull",
+      "gastly",
+      "shedinja",
+      "phantump",
+      "misdreavus",
+      "hisuian zorua",
+      "greavard",
+      "variant"
+    ]
   },
   {
     "name": "Koffing & Weezing Sunset",
-    "date": "13/07/2025",
+    "date": "2025-07-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "koffing"
+    ]
   },
   {
     "name": "Black Bolt ETB",
-    "date": "18/07/2025",
+    "date": "2025-07-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "zekrom",
+      "etb"
+    ]
   },
   {
     "name": "White Flare ETB",
-    "date": "18/07/2025",
+    "date": "2025-07-18",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "reshiram",
+      "etb"
+    ]
   },
   {
     "name": "Deck Sleeves Premium Gloss Pokemon Trainers Stardust Besties",
@@ -3054,21 +3249,35 @@
   },
   {
     "name": "Two of a Kind Quagsire and Clodsire",
-    "date": "18/07/2025",
+    "date": "2025-07-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "wooper",
+      "quagsire",
+      "paldean wooper",
+      "clodsire"
+    ]
   },
   {
     "name": "Deck Sleeves OTENKI TEAM",
-    "date": "18/07/2025",
+    "date": "2025-07-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "goomy",
+      "buizel",
+      "pelipper",
+      "kyogre",
+      "raichu]"
+    ]
   },
   {
     "name": "Deck Sleeves Mega Lucario",
-    "date": "01/08/2025",
+    "date": "2025-08-01",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "lucario",
+      "mega"
+    ]
   },
   {
     "name": "Mega Symphonia Acerola & Sableye",
@@ -3117,23 +3326,30 @@
   },
   {
     "name": "Regional Championships 2026",
-    "date": "13/09/2025",
+    "date": "2025-09-13",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "event"
+    ]
   },
   {
     "name": "Regional Championships 2026 (2)",
     "date": "2025-09-13",
     "nationality": "ENG",
     "tags": [
-      "pikachu"
+      "pikachu",
+      "event"
     ]
   },
   {
     "name": "Mega Evolution ETB (Lucario)",
-    "date": "26/09/2025",
+    "date": "2025-09-26",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "lucario",
+      "mega",
+      "etb"
+    ]
   },
   {
     "name": "Mega Evolution ETB (Gardevoir)",
@@ -3165,39 +3381,64 @@
   },
   {
     "name": "Celestial Espeon and Umbreon Espeon",
-    "date": "02/10/2025",
+    "date": "2025-10-02",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "espeon"
+    ]
   },
   {
     "name": "Celestial Espeon and Umbreon Umbreon",
-    "date": "02/10/2025",
+    "date": "2025-10-02",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "umbreon"
+    ]
   },
   {
     "name": "Deck Sleeves Pokemon Center Kagawa",
-    "date": "24/10/2025",
+    "date": "2025-10-24",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "slowpoke",
+      "slowking",
+      "psyduck",
+      "smeargle",
+      "dolliv",
+      "smoliv",
+      "arboliva",
+      "sylveon",
+      "galarian slowpoke"
+    ]
   },
   {
     "name": "Phantasmal Flames ETB",
-    "date": "14/11/2025",
+    "date": "2025-11-14",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "charizard",
+      "mega",
+      "etb"
+    ]
   },
   {
     "name": "Ascended Heroes ETB",
-    "date": "30/01/2026",
+    "date": "2026-01-30",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "dragonite",
+      "mega",
+      "etb"
+    ]
   },
   {
     "name": "Pokemon 30th Celebration",
-    "date": "04/02/2026",
+    "date": "2026-02-04",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu"
+    ]
   },
   {
     "name": "EUIC 2026",
@@ -3211,15 +3452,21 @@
   },
   {
     "name": "Opening Scene",
-    "date": "27/02/2026",
+    "date": "2026-02-27",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "gengar",
+      "nidorino"
+    ]
   },
   {
     "name": "Perfect Order ETB",
-    "date": "27/03/2026",
+    "date": "2026-03-27",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "zygarde",
+      "etb"
+    ]
   },
   {
     "name": "Kanto Explore Pokémon Premium",
