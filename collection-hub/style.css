@@ -554,6 +554,17 @@ h1 {
     z-index: 1000;
 }
 
+.placeholder-filter-btn {
+    opacity: 0.45;
+    cursor: default;
+}
+
+.placeholder-filter-btn:hover {
+    opacity: 0.45;
+    background: #2d2d2d;
+    border: 1px solid #555;
+}
+
 .generation-filter-row,
 .filter-row {
     display: flex;
@@ -868,6 +879,10 @@ h1 {
     grid-template-columns: repeat(6, 1fr);
 }
 
+.sleeves-page {
+    padding-right: 320px;
+}
+
 .sleeves-page #box-container {
     display: grid;
     gap: 12px;
@@ -1158,9 +1173,7 @@ h1 {
 }
 
 .modal-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    flex-shrink: 0;
     font-size: 32px;
     background: rgba(0,0,0,0.4);
     padding: 10px 14px;
@@ -1168,30 +1181,7 @@ h1 {
     cursor: pointer;
     user-select: none;
     z-index: 10;
-}
-
-.completions-page #modal-nav-left {
-    left: 350px;
-}
-
-.completions-page #modal-nav-right {
-    right: 350px;
-}
-
-#modal-nav-left {
-    left: 530px;
-}
-
-#modal-nav-right {
-    right: 530px;
-}
-
-#modal-nav-left {
-    left: 460px;
-}
-
-#modal-nav-right {
-    right: 460px;
+    margin: 0 30px;
 }
 
 .modal-nav:hover {
@@ -1520,6 +1510,10 @@ body::before {
     #game-filter-container,
     #progress-container {
         display: none !important;
+    }
+
+    .sleeves-page {
+        padding-right: 0;
     }
 
 

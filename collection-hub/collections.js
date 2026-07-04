@@ -169,6 +169,13 @@ function createCollectionFilters() {
         });
 
         container.appendChild(generationRow);
+
+        ["Trainers", "Items", "Generations"].forEach(label => {
+            const btn = document.createElement("button");
+            btn.textContent = label;
+            btn.classList.add("game-filter-btn", "placeholder-filter-btn");
+            container.appendChild(btn);
+        });
     }
 
     if (COLLECTION.name === "completions") {
