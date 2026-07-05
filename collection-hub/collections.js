@@ -331,8 +331,12 @@ function createCollectionFilters() {
         selectedVariant = null;
         selectedFranchise = null;
 
-        // clear visuals
-        container.querySelectorAll(".game-filter-active").forEach(el => el.classList.remove("game-filter-active"));
+        // clear visuals (sort buttons are a separate concern and keep their highlight)
+        container.querySelectorAll(".game-filter-active").forEach(el => {
+            if (!el.classList.contains("sort-filter-btn")) {
+                el.classList.remove("game-filter-active");
+            }
+        });
 
         const franchiseSelect = document.getElementById("franchise-filter-select");
         if (franchiseSelect) franchiseSelect.value = "";
@@ -538,7 +542,14 @@ function sortItemsByDate() {
 }
 
 function getPopfigureNumber(item) {
-    const match = (item[COLLECTION.fields.title] || "").match(/^(\d+)/);
+    const title = item[COLLECTION.fields.title] || "";
+
+    // Multi-figure box sets (e.g. "2 Pack Bullseye/Daredevil") lead with a
+    // pack-count digit, not a real Pop number — treat them as 0 so they
+    // always sort first numerically instead of interleaving with real numbers.
+    if (/^\d+[\s-]*pack\b/i.test(title)) return 0;
+
+    const match = title.match(/^(\d+)/);
     return match ? parseInt(match[1], 10) : Infinity;
 }
 

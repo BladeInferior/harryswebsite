@@ -1504,6 +1504,18 @@ body::before {
     color: rgba(255, 255, 255, 0.5);
 }
 
+.sort-filter-btn:hover {
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid gold;
+    color: gold;
+}
+
+.sort-filter-btn.game-filter-active {
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid gold;
+    color: gold;
+}
+
 .sleeves-page.page-mode #box-container {
     display: grid;
     gap: 12px;
