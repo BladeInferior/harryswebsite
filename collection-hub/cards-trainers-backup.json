@@ -245,7 +245,12 @@
     "special": false
   },
   {
-    "name": "Tabitha&Courteney",
+    "name": "Tabitha",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Courteney",
     "owned": false,
     "special": false
   },
@@ -260,7 +265,12 @@
     "special": false
   },
   {
-    "name": "Matt&Shelly",
+    "name": "Matt",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Shelly",
     "owned": false,
     "special": false
   },
@@ -395,7 +405,17 @@
     "special": false
   },
   {
-    "name": "Chili & Cilan & Cress",
+    "name": "Chili",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Cilan",
+    "owned": false,
+    "special": false
+  },
+  {
+    "name": "Cress",
     "owned": false,
     "special": false
   },
@@ -955,7 +975,7 @@
     "special": true
   },
   {
-    "name": "Star Grunt",
+    "name": "Team Star Grunt",
     "owned": true,
     "special": false
   },
@@ -1040,32 +1060,32 @@
     "special": false
   },
   {
-    "name": "emma",
+    "name": "Emma",
     "owned": false,
     "special": false
   },
   {
-    "name": "canari",
+    "name": "Canari",
     "owned": false,
     "special": false
   },
   {
-    "name": "tarragon",
+    "name": "Tarragon",
     "owned": true,
     "special": false
   },
   {
-    "name": "philippe",
+    "name": "Philippe",
     "owned": false,
     "special": false
   },
   {
-    "name": "corbeau",
+    "name": "Corbeau",
     "owned": false,
     "special": false
   },
   {
-    "name": "jacinthe",
+    "name": "Jacinthe",
     "owned": true,
     "special": false
   }
