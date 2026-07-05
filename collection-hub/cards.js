@@ -723,15 +723,30 @@ function filterItems(query) {
 // =========================
 // MODAL NAVIGATION
 // =========================
+// Cycle through whichever cards are actually visible right now (filters,
+// search, and page mode all just toggle a card's display), not the full
+// unfiltered item list — so next/prev matches what's on screen.
+function getVisibleItemIndexes() {
+    return Array.from(document.querySelectorAll(".pokemon-card"))
+        .filter(card => !card.classList.contains("empty-card") && card.style.display !== "none")
+        .map(card => Number(card.dataset.itemIndex));
+}
+
 function openAdjacent(offset) {
     const current = Number(modalOverlay.dataset.index);
     if (isNaN(current)) return;
 
-    let next = current + offset;
-    if (next < 0) next = items.length - 1;
-    if (next >= items.length) next = 0;
+    const visible = getVisibleItemIndexes();
+    if (visible.length === 0) return;
 
-    openModal(next);
+    let pos = visible.indexOf(current);
+    if (pos === -1) pos = 0;
+
+    let nextPos = pos + offset;
+    if (nextPos < 0) nextPos = visible.length - 1;
+    if (nextPos >= visible.length) nextPos = 0;
+
+    openModal(visible[nextPos]);
 }
 
 navLeft.addEventListener("click", (e) => {

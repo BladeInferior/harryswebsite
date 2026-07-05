@@ -130,6 +130,8 @@ const modalImage = document.getElementById("modal-image");
 const shinyOverlay = document.getElementById("shiny-overlay");
 const shinyName = document.getElementById("shiny-modal-name");
 const shinyImage = document.getElementById("shiny-modal-image");
+const navLeft = document.getElementById("modal-nav-left");
+const navRight = document.getElementById("modal-nav-right");
 
 
 // ---------------------------
@@ -403,6 +405,64 @@ if (modalCloseBtn) {
         modalOverlay.classList.add("hidden");
     });
 }
+
+
+// ---------------------------
+// MODAL NAVIGATION
+// Cycles through whichever cards are actually visible right now (search,
+// game/generation/tag filters, missing-dex filter all just toggle a
+// card's display), not the full unfiltered Pokédex.
+// ---------------------------
+function getVisibleCardNames() {
+    const names = [];
+    cardMap.forEach((card, name) => {
+        if (card.style.display !== "none") names.push(name);
+    });
+    return names;
+}
+
+function openAdjacentPokemon(offset) {
+    if (!currentPokemon) return;
+
+    const visibleNames = getVisibleCardNames();
+    if (visibleNames.length === 0) return;
+
+    let pos = visibleNames.findIndex(name => normalizeName(name) === currentPokemon);
+    if (pos === -1) pos = 0;
+
+    let nextPos = pos + offset;
+    if (nextPos < 0) nextPos = visibleNames.length - 1;
+    if (nextPos >= visibleNames.length) nextPos = 0;
+
+    const name = visibleNames[nextPos];
+    currentPokemon = normalizeName(name);
+
+    document.getElementById("modal-name").textContent = name;
+    modalImage.src = getPokemonSpritePath(name, shouldShowShinyCardSprites());
+
+    renderModalState(currentPokemon);
+}
+
+if (navLeft) {
+    navLeft.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openAdjacentPokemon(-1);
+    });
+}
+
+if (navRight) {
+    navRight.addEventListener("click", (e) => {
+        e.stopPropagation();
+        openAdjacentPokemon(1);
+    });
+}
+
+document.addEventListener("keydown", (e) => {
+    if (modalOverlay.classList.contains("hidden")) return;
+    if (e.key === "ArrowLeft") openAdjacentPokemon(-1);
+    if (e.key === "ArrowRight") openAdjacentPokemon(1);
+    if (e.key === "Escape") modalOverlay.classList.add("hidden");
+});
 
 
 // ---------------------------
