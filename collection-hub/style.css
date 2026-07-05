@@ -1680,13 +1680,13 @@ body::before {
 
     .completions-page #pokemon-modal,
     .pokemon-page #pokemon-modal {
-        width: 88vw !important;
-        max-width: 340px !important;
-        max-height: 68vh !important;
+        width: 82vw !important;
+        max-width: 300px !important;
+        max-height: 58vh !important;
     }
 
     .completions-page #modal-image {
-        height: 20vh !important;
+        height: 16vh !important;
     }
 
     .modal-right {
@@ -1705,5 +1705,7 @@ body::before {
     .modal-close-btn {
         width: 36px;
         height: 36px;
+        left: 10px;
+        right: auto;
     }
 }
