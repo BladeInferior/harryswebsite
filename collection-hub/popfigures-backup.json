@@ -78,7 +78,9 @@
     "title": "1049. Khonshu GITD",
     "variant": "Glow",
     "franchise": "Marvel",
-    "tags": [],
+    "tags": [
+      "Big"
+    ],
     "images": [
       "1049khonshugitdbox",
       "1049khonshugitdout",
@@ -131,7 +133,9 @@
     "title": "126. Luke Skywalker (Hooded)",
     "variant": "Common",
     "franchise": "Star Wars",
-    "tags": [],
+    "tags": [
+      "Celebration"
+    ],
     "images": [
       "126lukeskywalkerhoodbox",
       "126lukeskywalkerhoodout"
@@ -253,9 +257,9 @@
       "144batmanout"
     ]
   },
-   {
+  {
     "title": "1509. Mr Incredible",
-    "variant": "Chase",
+    "variant": "Common",
     "franchise": "The Incredibles",
     "tags": [],
     "images": [
@@ -271,6 +275,16 @@
     "images": [
       "1509mrincrediblechasebox",
       "1509mrincrediblechaseout"
+    ]
+  },
+  {
+    "title": "1508. Elastigirl",
+    "variant": "Common",
+    "franchise": "The Incredibles",
+    "tags": [],
+    "images": [
+      "1508elastigirlbox",
+      "1508elastigirlout"
     ]
   },
   {
@@ -454,7 +468,7 @@
   {
     "title": "30. Wreck-It Ralph",
     "variant": "Common",
-    "franchise": "Disney",
+    "franchise": "Wreck-It Ralph",
     "tags": [],
     "images": [
       "30wreckitralphbox",
@@ -493,7 +507,7 @@
       "312batmanredsonout"
     ]
   },
-   {
+  {
     "title": "2 Pack Bullseye/Daredevil",
     "variant": "Common",
     "franchise": "Marvel",
@@ -565,6 +579,28 @@
       "368frozoneout"
     ]
   },
+   {
+    "title": "509. Voyd",
+    "variant": "Common",
+    "franchise": "The Incredibles",
+    "tags": [
+      "Unique"
+    ],
+    "images": [
+      "509voydbox",
+      "509voydout"
+    ]
+  },
+  {
+    "title": "370. Underminer",
+    "variant": "Common",
+    "franchise": "The Incredibles",
+    "tags": [],
+    "images": [
+      "370underminerbox",
+      "370underminerout"
+    ]
+  },
   {
     "title": "390. Negan",
     "variant": "Common",
@@ -597,9 +633,9 @@
     ]
   },
   {
-    "title": "400. WALL·E",
+    "title": "400. WALL-E",
     "variant": "Common",
-    "franchise": "Disney",
+    "franchise": "WALL-E",
     "tags": [],
     "images": [
       "400wallebox",
@@ -721,18 +757,6 @@
     ]
   },
   {
-    "title": "509. Voyd",
-    "variant": "Common",
-    "franchise": "The Incredibles",
-    "tags": [
-      "Unique"
-    ],
-    "images": [
-      "509voydbox",
-      "509voydout"
-    ]
-  },
-  {
     "title": "53. Agent Coulson",
     "variant": "Common",
     "franchise": "Marvel",
@@ -747,7 +771,7 @@
   {
     "title": "553. Gambit",
     "variant": "Common",
-    "franchise": "X-Men",
+    "franchise": "Marvel",
     "tags": [],
     "images": [
       "553gambitbox",
@@ -989,7 +1013,7 @@
   {
     "title": "58. Cyclops",
     "variant": "Common",
-    "franchise": "X-Men",
+    "franchise": "Marvel",
     "tags": [],
     "images": [
       "58cyclopsbox",
@@ -999,11 +1023,160 @@
   {
     "title": "980. Omega Red",
     "variant": "Common",
-    "franchise": "X-Men",
+    "franchise": "Marvel",
     "tags": [],
     "images": [
       "980omegaredbox",
       "980omegaredout"
+    ]
+  },
+  {
+    "title": "02. Fix-It Felix",
+    "variant": "Common",
+    "franchise": "Wreck-It Ralph",
+    "tags": [
+      "Missing Box",
+      "small"
+    ],
+    "images": [
+      "02fixitfelixbox",
+      "02fixitfelixout"
+    ]
+  },
+  {
+    "title": "20. Cedric Diggory",
+    "variant": "Common",
+    "franchise": "Harry Potter",
+    "tags": [],
+    "images": [
+      "20cedricdiggorybox",
+      "20cedricdiggoryout"
+    ]
+  },
+  {
+    "title": "168. Woody",
+    "variant": "Common",
+    "franchise": "Toy Story",
+    "tags": [],
+    "images": [
+      "168woodybox",
+      "168woodyout"
+    ]
+  },
+  {
+    "title": "219. Captain America",
+    "variant": "Common",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "219captainamericabox",
+      "219captainamericaout"
+    ]
+  },
+  {
+    "title": "248. Loki",
+    "variant": "Common",
+    "franchise": "Marvel",
+    "tags": [
+      "MCC"
+    ],
+    "images": [
+      "248lokibox",
+      "248lokiout"
+    ]
+  },
+  {
+    "title": "250. Po (Flocked)",
+    "variant": "Flocked",
+    "franchise": "Kung Fu Panda",
+    "tags": [],
+    "images": [
+      "250poflockedbox",
+      "250poflockedout"
+    ]
+  },
+  {
+    "title": "279. Erik Killmonger Glow Panther",
+    "variant": "Glow",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "279erikkillmongerglowpanthergitdbox",
+      "279erikkillmongerglowpanthergitdout",
+      "279erikkillmongerglowpanthergitdglow"
+    ]
+  },
+  {
+    "title": "632. Captain Cutler",
+    "variant": "Glow",
+    "franchise": "Scooby-Doo",
+    "tags": [],
+    "images": [
+      "632captaincutlergitdbox",
+      "632captaincutlergitdout",
+      "632captaincutlergitdglow"
+    ]
+  },
+  {
+    "title": "744. The Professor",
+    "variant": "Common",
+    "franchise": "Money Heist",
+    "tags": [],
+    "images": [
+      "744theprofessorbox",
+      "744theprofessorout"
+    ]
+  },
+  {
+    "title": "855. Wanda Maximoff",
+    "variant": "Glow",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "855wandamaximoffgitdbox",
+      "855wandamaximoffgitdout",
+      "855wandamaximoffgitdglow"
+    ]
+  },
+  {
+    "title": "1046. Mighty Thor",
+    "variant": "Glow",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "1046mightythorgitdbox",
+      "1046mightythorgitdout",
+      "1046mightythorgitdglow"
+    ]
+  },
+  {
+    "title": "1361. Daredevil Fall From Grace",
+    "variant": "Blacklight",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "1361daredevilfallfromgracebox",
+      "1361daredevilfallfromgraceout"
+    ]
+  },
+  {
+    "title": "1374. Old Man Logan",
+    "variant": "Common",
+    "franchise": "Marvel",
+    "tags": [],
+    "images": [
+      "1374oldmanloganbox",
+      "1374oldmanloganout"
+    ]
+  },
+  {
+    "title": "1500. Omni-man",
+    "variant": "Common",
+    "franchise": "Invincible",
+    "tags": [],
+    "images": [
+      "1500omnimanbox",
+      "1500omnimanout"
     ]
   }
 ]

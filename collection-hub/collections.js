@@ -36,6 +36,13 @@ let currentImages = [];
 // collection-specific filter state
 let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (mutually exclusive)
 let filterHasDlc = null; // for completions: true = only show items with DLC tag
+let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
+let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
+
+// for popfigures: primary sort key, tie-broken by the remaining keys in
+// POPFIGURE_SORT_PRIORITY order (franchise, then number, then alphabetical)
+let popfigureSortKey = "franchise";
+const POPFIGURE_SORT_PRIORITY = ["franchise", "number", "alphabetical"];
 
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
 const zoomImage = document.getElementById("zoom-image");
@@ -99,7 +106,7 @@ function getItemImagePath(name) {
 
     let tryFormats = [".jpg", ".png", ".webp"];
 
-    if (COLLECTION.name === "popfigures") {
+    if (COLLECTION.name === "popfigures" || COLLECTION.name === "cards") {
         tryFormats = [".png"];
     }
 
@@ -199,6 +206,120 @@ function createCollectionFilters() {
         container.appendChild(generationRow);
     }
 
+    if (COLLECTION.name === "popfigures") {
+
+        const variantSet = new Set();
+        const franchiseSet = new Set();
+
+        items.forEach(item => {
+            (item[COLLECTION.fields.date] || "")
+                .split(",")
+                .map(v => v.trim())
+                .filter(Boolean)
+                .forEach(v => variantSet.add(v));
+
+            const franchise = item[COLLECTION.fields.custom];
+            if (franchise) franchiseSet.add(franchise);
+        });
+
+        const variantRow = document.createElement("div");
+        variantRow.classList.add("generation-filter-row");
+
+        [...variantSet].sort().forEach(variant => {
+
+            const btn = document.createElement("button");
+            btn.textContent = variant;
+            btn.classList.add("generation-filter-btn");
+            btn.dataset.variant = variant.toLowerCase();
+
+            btn.addEventListener("click", () => {
+                const key = btn.dataset.variant;
+
+                variantRow.querySelectorAll(".generation-filter-btn").forEach(b => {
+                    b.classList.remove("game-filter-active");
+                });
+
+                if (selectedVariant === key) {
+                    selectedVariant = null;
+                } else {
+                    btn.classList.add("game-filter-active");
+                    selectedVariant = key;
+                }
+
+                filterItems(searchInput.value);
+            });
+
+            variantRow.appendChild(btn);
+        });
+
+        container.appendChild(variantRow);
+
+        const franchiseSelect = document.createElement("select");
+        franchiseSelect.id = "franchise-filter-select";
+        franchiseSelect.classList.add("game-filter-select");
+
+        const allOption = document.createElement("option");
+        allOption.value = "";
+        allOption.textContent = "All Franchises";
+        franchiseSelect.appendChild(allOption);
+
+        [...franchiseSet].sort().forEach(franchise => {
+            const opt = document.createElement("option");
+            opt.value = franchise;
+            opt.textContent = franchise;
+            franchiseSelect.appendChild(opt);
+        });
+
+        franchiseSelect.addEventListener("change", () => {
+            selectedFranchise = franchiseSelect.value || null;
+            filterItems(searchInput.value);
+        });
+
+        container.appendChild(franchiseSelect);
+
+        // Sort options are a separate concern from the filters above
+        // (they reorder everything rather than hide/show items), so they
+        // get their own visually separated section.
+        const sortDivider = document.createElement("div");
+        sortDivider.classList.add("sort-filter-divider");
+        container.appendChild(sortDivider);
+
+        const sortLabel = document.createElement("div");
+        sortLabel.classList.add("sort-filter-label");
+        sortLabel.textContent = "Sort By";
+        container.appendChild(sortLabel);
+
+        const sortOptions = [
+            { key: "franchise", label: "Franchise" },
+            { key: "number", label: "Number" },
+            { key: "alphabetical", label: "Alphabetical" }
+        ];
+
+        sortOptions.forEach(({ key, label }) => {
+
+            const btn = document.createElement("button");
+            btn.textContent = label;
+            btn.classList.add("game-filter-btn", "sort-filter-btn");
+            btn.dataset.sortKey = key;
+
+            if (key === popfigureSortKey) btn.classList.add("game-filter-active");
+
+            btn.addEventListener("click", () => {
+
+                popfigureSortKey = key;
+
+                container.querySelectorAll(".sort-filter-btn").forEach(b => {
+                    b.classList.remove("game-filter-active");
+                });
+                btn.classList.add("game-filter-active");
+
+                renderItems();
+            });
+
+            container.appendChild(btn);
+        });
+    }
+
     // RESET BUTTON
     const resetBtn = document.createElement("button");
     resetBtn.textContent = "Reset Filters";
@@ -207,9 +328,14 @@ function createCollectionFilters() {
         // clear state
         selectedNationality = null;
         filterHasDlc = null;
+        selectedVariant = null;
+        selectedFranchise = null;
 
         // clear visuals
         container.querySelectorAll(".game-filter-active").forEach(el => el.classList.remove("game-filter-active"));
+
+        const franchiseSelect = document.getElementById("franchise-filter-select");
+        if (franchiseSelect) franchiseSelect.value = "";
 
         filterItems(searchInput.value);
     });
@@ -399,9 +525,60 @@ function renderItems() {
 } **/
 
 function sortItemsByDate() {
+
+    if (COLLECTION.name === "popfigures") {
+        sortPopfigures();
+        return;
+    }
+
     items.sort((a, b) => {
         return parseDate(a[COLLECTION.fields.date]) -
        parseDate(b[COLLECTION.fields.date]);
+    });
+}
+
+function getPopfigureNumber(item) {
+    const match = (item[COLLECTION.fields.title] || "").match(/^(\d+)/);
+    return match ? parseInt(match[1], 10) : Infinity;
+}
+
+function getPopfigureName(item) {
+    return (item[COLLECTION.fields.title] || "").replace(/^\d+\.\s*/, "");
+}
+
+function comparePopfigures(key, a, b) {
+
+    if (key === "franchise") {
+        const fa = (a[COLLECTION.fields.custom] || "").toLowerCase();
+        const fb = (b[COLLECTION.fields.custom] || "").toLowerCase();
+        return fa.localeCompare(fb);
+    }
+
+    if (key === "number") {
+        return getPopfigureNumber(a) - getPopfigureNumber(b);
+    }
+
+    if (key === "alphabetical") {
+        return getPopfigureName(a).toLowerCase()
+            .localeCompare(getPopfigureName(b).toLowerCase());
+    }
+
+    return 0;
+}
+
+function sortPopfigures() {
+
+    const keyOrder = [
+        popfigureSortKey,
+        ...POPFIGURE_SORT_PRIORITY.filter(k => k !== popfigureSortKey)
+    ];
+
+    items.sort((a, b) => {
+        for (const key of keyOrder) {
+            const cmp = comparePopfigures(key, a, b);
+            if (cmp !== 0) return cmp;
+        }
+        return 0;
     });
 }
 
@@ -1013,6 +1190,19 @@ function filterItems(query) {
         if (COLLECTION.name === "sleeves" && selectedNationality !== null) {
             const nat = (realItem[COLLECTION.fields.custom] || "").toLowerCase();
             if (!nat.includes(selectedNationality)) match2 = false;
+        }
+
+        // Popfigures: variant filter (mutually exclusive)
+        if (COLLECTION.name === "popfigures" && selectedVariant !== null) {
+            const variantTokens = (realItem[COLLECTION.fields.date] || "")
+                .split(",")
+                .map(v => v.trim().toLowerCase());
+            if (!variantTokens.includes(selectedVariant)) match2 = false;
+        }
+
+        // Popfigures: franchise filter (mutually exclusive)
+        if (COLLECTION.name === "popfigures" && selectedFranchise !== null) {
+            if ((realItem[COLLECTION.fields.custom] || "") !== selectedFranchise) match2 = false;
         }
 
         // Completions: DLC tag filter

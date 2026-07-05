@@ -1467,8 +1467,41 @@ body::before {
     justify-content: center;
 }
 
-.popfigures-page #game-filter-container {
-    display: none !important;
+.game-filter-select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+    min-height: 22px;
+
+    border-radius: 8px;
+
+    background: #2d2d2d;
+    border: 1px solid #555;
+    color: white;
+
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.game-filter-select:hover,
+.game-filter-select:focus {
+    border-color: gold;
+    outline: none;
+}
+
+.sort-filter-divider {
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sort-filter-label {
+    margin-top: -8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .sleeves-page.page-mode #box-container {
@@ -1659,10 +1692,6 @@ body::before {
         width: 100% !important;
         margin-left: 0;
         min-width: 0;
-    }
-
-    .popfigures-page .mobile-popout-list #game-filter-container {
-        display: none !important;
     }
 
     .mobile-popout-list #untagged-filter.hidden {

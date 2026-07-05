@@ -59,7 +59,7 @@ function getExportAuthKey() {
 
 function getItemImagePath(name) {
     const base = name.toLowerCase().replace(/[^a-z0-9]/g, "");
-    return { base, tryFormats: [".jpg", ".png", ".webp"] };
+    return { base, tryFormats: [".png"] };
 }
 
 function setItemImage(imgElement, name) {
