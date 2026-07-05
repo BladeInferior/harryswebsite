@@ -1,0 +1,106 @@
+Date : 2026-07-05 02:11:03
+Directory : d:\Libraries\Desktop\harryswebsite
+Total : 67 files,  55116 codes, 597 comments, 2949 blanks, all 58662 lines
+
+Languages
++------------+------------+------------+------------+------------+------------+
+| language   | files      | code       | comment    | blank      | total      |
++------------+------------+------------+------------+------------+------------+
+| JSON       |         22 |     44,644 |          0 |          4 |     44,648 |
+| JavaScript |         22 |      5,140 |        476 |      1,502 |      7,118 |
+| HTML       |         17 |      3,470 |         90 |        977 |      4,537 |
+| PostCSS    |          3 |      1,823 |         30 |        443 |      2,296 |
+| Python     |          3 |         39 |          1 |         23 |         63 |
++------------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |         67 |     55,116 |        597 |      2,949 |     58,662 |
+| . (Files)                                                                                      |          8 |      1,604 |          8 |        155 |      1,767 |
+| .claude                                                                                        |          1 |          7 |          0 |          1 |          8 |
+| collection-hub                                                                                 |         39 |     48,496 |        459 |      1,761 |     50,716 |
+| collection-hub (Files)                                                                         |         30 |     46,032 |        435 |      1,722 |     48,189 |
+| collection-hub\adding valid games                                                              |          6 |      2,425 |         23 |         16 |      2,464 |
+| collection-hub\sprites                                                                         |          3 |         39 |          1 |         23 |         63 |
+| quizhub                                                                                        |         19 |      5,009 |        130 |      1,032 |      6,171 |
+| quizhub (Files)                                                                                |         14 |      4,607 |        111 |        956 |      5,674 |
+| quizhub\data                                                                                   |          3 |        138 |          3 |          6 |        147 |
+| quizhub\engine                                                                                 |          1 |        252 |         16 |         66 |        334 |
+| quizhub\firebase                                                                               |          1 |         12 |          0 |          4 |         16 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| filename                                                                                       | language   | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| d:\Libraries\Desktop\harryswebsite\.claude\settings.local.json                                 | JSON       |          7 |          0 |          1 |          8 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\addBDSP.js                                   | JavaScript |         26 |         13 |         10 |         49 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\API.js                    | JavaScript |         55 |         23 |         16 |         94 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\missingPokemonReport.json | JSON       |          6 |          0 |          0 |          6 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\pla.json                  | JSON       |        244 |          0 |          0 |        244 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\plza.json                 | JSON       |        382 |          0 |          0 |        382 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\scvi.json                 | JSON       |        847 |          0 |          0 |        847 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\adding valid games\swsh.json                 | JSON       |        891 |          0 |          0 |        891 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards-pokeballs-backup.json                  | JSON       |        157 |          0 |          0 |        157 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards-pokemon-backup.json                    | JSON       |      6,482 |          0 |          0 |      6,482 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards-rampardos-backup.json                  | JSON       |        102 |          0 |          0 |        102 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards-stadiums-backup.json                   | JSON       |        130 |          0 |          0 |        130 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards-trainers-backup.json                   | JSON       |      1,072 |          0 |          0 |      1,072 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards.html                                   | HTML       |        176 |         12 |         61 |        249 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\cards.js                                     | JavaScript |        594 |         56 |        144 |        794 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\collection-nav.js                            | JavaScript |         55 |          2 |         16 |         73 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\collectionhub.html                           | HTML       |         65 |          3 |         33 |        101 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\collections.js                               | JavaScript |        828 |        143 |        358 |      1,329 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\completions-backup.json                      | JSON       |        891 |          0 |          0 |        891 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\completions.html                             | HTML       |        145 |         12 |         72 |        229 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\fullPokemonList.json                         | JSON       |     12,235 |          0 |          0 |     12,235 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\generate-popfigures.js                       | JavaScript |         58 |          7 |         21 |         86 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\generate_pokemon.js                          | JavaScript |         26 |          3 |         17 |         46 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\mobile-popout.js                             | JavaScript |         50 |         13 |         13 |         76 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\package-lock.json                            | JSON       |        386 |          0 |          1 |        387 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\pins.html                                    | HTML       |        112 |         12 |         54 |        178 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\pokedex-backup.json                          | JSON       |     15,150 |          0 |          0 |     15,150 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\pokedexes.html                               | HTML       |         91 |          0 |         44 |        135 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\pokedexes.js                                 | JavaScript |        879 |         97 |        355 |      1,331 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\popfigures-backup.json                       | JSON       |      1,009 |          0 |          0 |      1,009 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\popfigures.html                              | HTML       |        123 |         12 |         59 |        194 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\sleeves-backup.json                          | JSON       |      3,577 |          0 |          0 |      3,577 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\sleeves.html                                 | HTML       |        112 |         12 |         54 |        178 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\sprites\check_for_sprites.py                 | Python     |          9 |          0 |          5 |         14 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\sprites\clean_sprites.py                     | Python     |         10 |          0 |          4 |         14 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\sprites\download_sprites.py                  | Python     |         20 |          1 |         14 |         35 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\steelbooks-backup.json                       | JSON       |         12 |          0 |          0 |         12 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\steelbooks.html                              | HTML       |        116 |         12 |         55 |        183 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\style.css                                    | PostCSS    |      1,340 |         24 |        347 |      1,711 |
+| d:\Libraries\Desktop\harryswebsite\collection-hub\updateList.js                                | JavaScript |         33 |          2 |          8 |         43 |
+| d:\Libraries\Desktop\harryswebsite\homepage.css                                                | PostCSS    |        386 |          6 |         80 |        472 |
+| d:\Libraries\Desktop\harryswebsite\homepage.js                                                 | JavaScript |         68 |          1 |         19 |         88 |
+| d:\Libraries\Desktop\harryswebsite\index.html                                                  | HTML       |        106 |          1 |         36 |        143 |
+| d:\Libraries\Desktop\harryswebsite\latest-film.json                                            | JSON       |          7 |          0 |          0 |          7 |
+| d:\Libraries\Desktop\harryswebsite\navbar.css                                                  | PostCSS    |         97 |          0 |         16 |        113 |
+| d:\Libraries\Desktop\harryswebsite\navbar.html                                                 | HTML       |          8 |          0 |          3 |         11 |
+| d:\Libraries\Desktop\harryswebsite\package.json                                                | JSON       |          6 |          0 |          1 |          7 |
+| d:\Libraries\Desktop\harryswebsite\popfigures-generated.json                                   | JSON       |        926 |          0 |          0 |        926 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\builder.html                                        | HTML       |        564 |         14 |        110 |        688 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\builder.js                                          | JavaScript |        743 |         33 |        151 |        927 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\data\quiz-loader.js                                 | JavaScript |         12 |          3 |          4 |         19 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\data\quiz-registry.js                               | JavaScript |          1 |          0 |          1 |          2 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\data\sample-quiz.json                               | JSON       |        125 |          0 |          1 |        126 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\engine\answer-types.js                              | JavaScript |        252 |         16 |         66 |        334 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\firebase\firebase-config.js                         | JavaScript |         12 |          0 |          4 |         16 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\host-quiz.html                                      | HTML       |        450 |          0 |         90 |        540 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\host-quiz.js                                        | JavaScript |        777 |         44 |        150 |        971 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\join.html                                           | HTML       |        411 |          0 |         84 |        495 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\join.js                                             | JavaScript |        313 |          9 |         64 |        386 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\manage-quizzes.html                                 | HTML       |        235 |          0 |         49 |        284 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\manage-quizzes.js                                   | JavaScript |         98 |          0 |         21 |        119 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\password-utils.js                                   | JavaScript |          5 |          5 |          1 |         11 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\play-test.html                                      | HTML       |        312 |          0 |         68 |        380 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\play-test.js                                        | JavaScript |        120 |          0 |         30 |        150 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\quizhub.html                                        | HTML       |        200 |          0 |         57 |        257 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\stats.html                                          | HTML       |        244 |          0 |         48 |        292 |
+| d:\Libraries\Desktop\harryswebsite\quizhub\stats.js                                            | JavaScript |        135 |          6 |         33 |        174 |
+| Total                                                                                          |            |     55,116 |        597 |      2,949 |     58,662 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
