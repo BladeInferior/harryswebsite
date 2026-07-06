@@ -1053,7 +1053,7 @@ function createFilterButtons() {
     pokemonCountLabel.style.color = "#aaa";
     pokemonCountLabel.style.fontSize = "14px";
     pokemonCountLabel.style.fontWeight = "500";
-    container.appendChild(pokemonCountLabel);
+    document.body.appendChild(pokemonCountLabel);
 }
 
 function updatePokemonCount() {

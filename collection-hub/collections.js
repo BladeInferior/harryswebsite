@@ -21,7 +21,9 @@ const navRight = document.getElementById("modal-nav-right");
 const imagesInput = document.getElementById("item-images");
 const imagePrevBtn = document.getElementById("image-prev");
 const imageNextBtn = document.getElementById("image-next");
+const toggleGlowBtn = document.getElementById("toggle-glow-image");
 let useUnboxedImage = false;
+let useGlowImage = false;
 
 const dlcInput = document.getElementById("dlc-name");
 const dlcError = document.getElementById("dlc-error");
@@ -246,6 +248,18 @@ function createCollectionFilters() {
                     selectedVariant = key;
                 }
 
+                if (toggleGlowBtn) {
+                    const showGlowToggle = selectedVariant === "glow";
+                    toggleGlowBtn.classList.toggle("hidden", !showGlowToggle);
+
+                    if (!showGlowToggle && useGlowImage) {
+                        useGlowImage = false;
+                        toggleGlowBtn.classList.remove("active");
+                        toggleGlowBtn.textContent = "Show Glowing";
+                        renderItems();
+                    }
+                }
+
                 filterItems(searchInput.value);
             });
 
@@ -442,7 +456,9 @@ function renderItems() {
         const img = document.createElement("img");
         if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
-            const imgName = item.images?.[useUnboxedImage ? 1 : 0];
+            const imgName = (useGlowImage && item.images?.[2])
+                ? item.images[2]
+                : item.images?.[useUnboxedImage ? 1 : 0];
 
             if (imgName) {
                 setItemImage(img, imgName);
@@ -1524,6 +1540,17 @@ if (toggleBtn) {
         useUnboxedImage = !useUnboxedImage;
 
         toggleBtn.textContent = useUnboxedImage ? "Unboxed" : "Boxed";
+
+        renderItems();
+    });
+}
+
+if (toggleGlowBtn) {
+    toggleGlowBtn.addEventListener("click", () => {
+        useGlowImage = !useGlowImage;
+
+        toggleGlowBtn.classList.toggle("active", useGlowImage);
+        toggleGlowBtn.textContent = useGlowImage ? "Show Normal" : "Show Glowing";
 
         renderItems();
     });
