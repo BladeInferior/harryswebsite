@@ -29,19 +29,19 @@
   },
    {
     "name": "GC Holo",
-    "owned": true
+    "owned": false
   },
   {
     "name": "GC 1st Holo",
-    "owned": false
+    "owned": true
   },
   {
     "name": "BET Holo",
-    "owned": true
+    "owned": false
   },
     {
     "name": "BET 1st Holo",
-    "owned": false
+    "owned": true
   },
   {
     "name": "Pt Holo",
