@@ -1,11 +1,11 @@
 [
+   {
+    "name": "SL Holo",
+    "owned": true
+  },
   {
     "name": "SL 1st Holo",
     "owned": false
-  },
-  {
-    "name": "SL Holo",
-    "owned": true
   },
   {
     "name": "MT Normal",
@@ -27,21 +27,21 @@
     "name": "POP Series 6",
     "owned": false
   },
+   {
+    "name": "GC Holo",
+    "owned": true
+  },
   {
     "name": "GC 1st Holo",
     "owned": false
   },
   {
-    "name": "GC Holo",
-    "owned": true
-  },
-  {
-    "name": "BET 1st Holo",
-    "owned": false
-  },
-  {
     "name": "BET Holo",
     "owned": true
+  },
+    {
+    "name": "BET 1st Holo",
+    "owned": false
   },
   {
     "name": "Pt Holo",
