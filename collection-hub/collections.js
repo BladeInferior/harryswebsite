@@ -364,6 +364,11 @@ function adjustFilterSidebarWidth() {
 
     if (window.matchMedia("(max-width: 768px)").matches) return;
 
+    // Page mode uses a narrower grid than list mode, which would otherwise
+    // make the sidebar grow/shrink between modes — always size it for list
+    // mode instead, and leave it untouched while in page mode.
+    if (pageMode) return;
+
     const container = document.getElementById("game-filter-container");
     const box = document.getElementById("box-container");
 
@@ -629,14 +634,20 @@ function openModal(index) {
     if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
         currentImages = item.images || [];
-        currentImageIndex = 0;
-        currentImageIndex = 0;
+
+        // Open on whichever image matches the grid's current boxed/unboxed
+        // toggle (image 1 = boxed, image 2 = unboxed), so it stays in sync
+        // when paging to the next/previous item too.
+        currentImageIndex =
+            (COLLECTION.name === "popfigures" && useUnboxedImage && currentImages.length > 1)
+                ? 1
+                : 0;
 
         if (currentImages.length > 0) {
-            setItemImage(modalImage, currentImages[0]);
+            setItemImage(modalImage, currentImages[currentImageIndex]);
 
             modalTitle.textContent =
-                `${item[COLLECTION.fields.title]} (1/${currentImages.length})`;
+                `${item[COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
         }
         else {
             setItemImage(modalImage, item[COLLECTION.fields.title]);
@@ -721,18 +732,25 @@ imageZoomOverlay.addEventListener("click", (e) => {
 // =========================
 pageBtn.addEventListener("click", () => {
 
+    if (pageMode) return;
+
     pageMode = true;
     currentPage = 1;
 
     searchInput.value = "";
     filterItems("");
 
+    // Toggle the mode classes before rendering/measuring, so the grid is
+    // already laid out with page-mode's CSS when adjustFilterSidebarWidth()
+    // reads its width — otherwise it measures the stale (list-mode) layout.
+    updateModeUI();
     renderItems();
     applyPagination();
-    updateModeUI();
 });
 
 listBtn.addEventListener("click", () => {
+
+    if (!pageMode) return;
 
     pageMode = false;
     currentPage = 1;
@@ -740,8 +758,8 @@ listBtn.addEventListener("click", () => {
     searchInput.value = "";
     filterItems("");
 
-    renderItems();
     updateModeUI();
+    renderItems();
 });
 
 // =========================
@@ -804,6 +822,9 @@ function updateModeUI() {
         "first-page",
         pageMode && currentPage === 1
     );
+
+    const filterContainer = document.getElementById("game-filter-container");
+    if (filterContainer) filterContainer.classList.toggle("filters-disabled", pageMode);
 }
 
 // =========================
@@ -878,7 +899,9 @@ document.getElementById("save-item").addEventListener("click", () => {
     }
 
     if (editIndex !== undefined && editIndex !== "") {
-        items[editIndex] = itemData;
+        // Merge rather than replace, so fields not covered by the edit form
+        // (e.g. completions' `dlcs`) survive an edit instead of being wiped.
+        Object.assign(items[editIndex], itemData);
     } else {
         items.push(itemData);
     }

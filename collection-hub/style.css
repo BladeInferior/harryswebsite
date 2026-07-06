@@ -300,34 +300,6 @@ h1 {
     gap: 8px;
 }
 
-#missing-filter-wrapper {
-    position: fixed;
-    top: 260px;
-    right: 20px;
-    z-index: 2000;
-    width: max-content;
-}
-
-#missing-dex-filter {
-    padding: 8px 12px;
-    border-radius: 8px;
-    border: 1px solid #555;
-    background: #2d2d2d;
-    color: white;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: 0.15s ease;
-    text-align: center;
-    min-width: 220px;
-}
-
-#missing-dex-filter.active,
-#missing-dex-filter:hover {
-    opacity: 1;
-    border: 1px solid gold;
-    background: rgba(255, 215, 0, 0.15);
-}
-
 #pokemon-count-label {
     position: fixed;
     top: 220px;
@@ -702,9 +674,7 @@ h1 {
 }
 
 #page-controls button.active-mode,
-#page-controls button:hover,
-#missing-dex-filter.active,
-#missing-dex-filter:hover {
+#page-controls button:hover {
     opacity: 1;
     border: 1px solid gold;
     background: rgba(255, 215, 0, 0.15);
@@ -722,11 +692,17 @@ h1 {
     background: #2d2d2d;
     color: white;
     cursor: pointer;
-    opacity: 0.6;
     transition: 0.15s ease;
     text-align: center;
     box-sizing: border-box;
     z-index: 2000;
+}
+
+#missing-dex-filter.active,
+#missing-dex-filter:hover {
+    border: 1px solid gold;
+    background: rgba(255, 215, 0, 0.15);
+    color: gold;
 }
 
 #page-display {
@@ -1488,6 +1464,20 @@ body::before {
 .game-filter-select:focus {
     border-color: gold;
     outline: none;
+}
+
+.filters-disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+}
+
+/* #missing-dex-filter has its own ID-scoped .active/:hover gold-highlight
+   rules elsewhere, which otherwise out-specificity the generic class above */
+#missing-dex-filter.filters-disabled,
+#missing-dex-filter.filters-disabled.active,
+#missing-dex-filter.filters-disabled:hover {
+    border: 1px solid #555 !important;
+    background: #2d2d2d !important;
 }
 
 .sort-filter-divider {

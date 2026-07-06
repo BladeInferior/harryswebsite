@@ -654,6 +654,12 @@ document.addEventListener("click", (e) => {
         if (pageMode) {
             applyPagination();
         }
+
+        // The open modal's state (active/inactive per dex-entry) is only
+        // ever rendered for the dex that was active when it was opened —
+        // switching which dex is being edited would leave it showing stale
+        // data, so just close it instead.
+        modalOverlay.classList.add("hidden");
     }
 });
 
@@ -1126,6 +1132,8 @@ function updateGenerationButtonHighlight() {
 
 document.getElementById("page-mode").addEventListener("click", () => {
 
+    if (pageMode) return;
+
     pageMode = true;
     currentPage = 1;
 
@@ -1134,6 +1142,8 @@ document.getElementById("page-mode").addEventListener("click", () => {
 });
 
 document.getElementById("list-mode").addEventListener("click", () => {
+
+    if (!pageMode) return;
 
     pageMode = false;
 
@@ -1204,6 +1214,12 @@ function updateModeUI() {
     listBtn.classList.toggle("active-mode", pageMode === false);
 
     pagination.classList.toggle("hidden", pageMode === false);
+
+    const filterContainer = document.getElementById("game-filter-container");
+    if (filterContainer) filterContainer.classList.toggle("filters-disabled", pageMode);
+
+    const missingFilterBtn = document.getElementById("missing-dex-filter");
+    if (missingFilterBtn) missingFilterBtn.classList.toggle("filters-disabled", pageMode);
 
     updateCardImages();
 }
