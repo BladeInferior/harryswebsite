@@ -1,14 +1,6 @@
 [
   {
-    "name": "MT Normal",
-    "owned": false
-  },
-  {
-    "name": "MT Rev",
-    "owned": true
-  },
-  {
-    "name": "MT Holo",
+    "name": "SL 1st Holo",
     "owned": false
   },
   {
@@ -16,11 +8,39 @@
     "owned": true
   },
   {
-    "name": "Pop Series 6",
+    "name": "MT Normal",
     "owned": false
   },
   {
+    "name": "MT Holo",
+    "owned": false
+  },
+  {
+    "name": "MT Rev",
+    "owned": true
+  },
+  {
     "name": "The Attacker",
+    "owned": true
+  },
+  {
+    "name": "POP Series 6",
+    "owned": false
+  },
+  {
+    "name": "GC 1st Holo",
+    "owned": false
+  },
+  {
+    "name": "GC Holo",
+    "owned": true
+  },
+  {
+    "name": "BET 1st Holo",
+    "owned": false
+  },
+  {
+    "name": "BET Holo",
     "owned": true
   },
   {
@@ -32,14 +52,6 @@
     "owned": true
   },
   {
-    "name": "GC Holo",
-    "owned": true
-  },
-  {
-    "name": "GC Rev",
-    "owned": false
-  },
-  {
     "name": "RR Holo",
     "owned": true
   },
@@ -48,11 +60,7 @@
     "owned": false
   },
   {
-    "name": "BET Holo",
-    "owned": true
-  },
-  {
-    "name": "BET Rev",
+    "name": "UM Holo",
     "owned": false
   },
   {
@@ -64,12 +72,8 @@
     "owned": true
   },
   {
-    "name": "UM Holo",
-    "owned": false
-  },
-  {
-    "name": "UM Rev",
-    "owned": false
+    "name": "TG Holo",
+    "owned": true
   },
   {
     "name": "AR Holo",
@@ -80,23 +84,15 @@
     "owned": true
   },
   {
-    "name": "TG Holo",
-    "owned": true
-  },
-  {
-    "name": "TG Rev",
+    "name": "Turtwig",
     "owned": false
   },
   {
-    "name": "Unidentified Fossil Ultra Prism",
-    "owned": true
+    "name": "AE RR",
+    "owned": false
   },
   {
-    "name": "Unidentified Fossil Silver Tempest",
-    "owned": true
-  },
-  {
-    "name": "Turtwig First Partner",
+    "name": "AE SR",
     "owned": false
   }
 ]
