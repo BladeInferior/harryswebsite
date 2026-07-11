@@ -450,7 +450,7 @@ footer{
 }
 
 /* Stack sidebar on top and switch to horizontal scroll on small screens */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .page-layout {
         flex-direction: column;
     }
