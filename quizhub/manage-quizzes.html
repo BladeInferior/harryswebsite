@@ -115,8 +115,13 @@
             cursor:pointer;
         }
 
-        .btn:hover{
+        .btn:hover:not(:disabled){
             background:#e6c458;
+        }
+
+        .btn:disabled{
+            opacity:.45;
+            cursor:default;
         }
 
         .btn-secondary{
@@ -125,7 +130,7 @@
             color:var(--text);
         }
 
-        .btn-secondary:hover{
+        .btn-secondary:hover:not(:disabled){
             background:transparent;
             border-color:var(--gold);
         }

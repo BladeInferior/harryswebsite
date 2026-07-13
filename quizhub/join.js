@@ -225,6 +225,11 @@ joinForm.addEventListener('submit', async e => {
     onSnapshot(doc(db, 'sessions', code, 'players', currentPlayerId), snap => {
         if (!snap.exists()) return;
         const score = snap.data().score || 0;
+
+        // A running score above the question is only shown for buzzer quizzes
+        // that specifically opt into it — otherwise it stays hidden throughout
+        // so it doesn't spoil pacing on a normal paced quiz.
+        playerScoreEl.hidden = !(quiz.isBuzzerQuiz && quiz.buzzerShowScoreThroughout);
         playerScoreEl.textContent = `Score: ${score}`;
         finalScoreEl.textContent = `Your final score: ${score}`;
     });

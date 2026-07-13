@@ -53,15 +53,22 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
         startLink.textContent = 'Start Quiz';
         actions.appendChild(startLink);
 
-        const rejoinLink = document.createElement('a');
-        rejoinLink.className = 'btn btn-secondary';
-        rejoinLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
-        rejoinLink.textContent = '↻ Rejoin Quiz';
-        rejoinLink.hidden = true;
-        actions.appendChild(rejoinLink);
+        // A plain <button> (not <a>) so it can be natively greyed out via
+        // `disabled` while we don't yet know whether a session is active —
+        // and stays disabled rather than disappearing if none is.
+        const rejoinBtn = document.createElement('button');
+        rejoinBtn.type = 'button';
+        rejoinBtn.className = 'btn btn-secondary';
+        rejoinBtn.textContent = '↻ Rejoin Quiz';
+        rejoinBtn.disabled = true;
+        actions.appendChild(rejoinBtn);
 
         findActiveSessionForQuiz(quiz.id).then(session => {
-            rejoinLink.hidden = !session;
+            if (!session) return;
+            rejoinBtn.disabled = false;
+            rejoinBtn.addEventListener('click', () => {
+                window.location.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+            });
         }).catch(err => console.error('Active session lookup failed:', err));
 
         const previewLink = document.createElement('a');

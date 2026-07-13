@@ -1,6 +1,6 @@
 import { db } from './firebase/firebase-config.js';
 import { loadQuiz } from './data/quiz-loader.js';
-import { findActiveSessionForQuiz } from './session-lookup.js';
+import { findActiveSessionForQuiz, deleteAllSessionsForQuiz } from './session-lookup.js';
 import {
     doc,
     setDoc,
@@ -127,7 +127,7 @@ endQuizModal.addEventListener('click', e => {
 confirmEndQuizBtn.addEventListener('click', async () => {
     confirmEndQuizBtn.disabled = true;
     try {
-        await handleFinishQuiz();
+        await handleEndQuizEarly();
     } finally {
         confirmEndQuizBtn.disabled = false;
         endQuizModal.hidden = true;
@@ -170,6 +170,15 @@ async function startSession() {
             }
         } catch (err) {
             console.error('Failed to look up an existing session:', err);
+        }
+    } else {
+        // Starting fresh — any session this quiz still had lying around
+        // (finished-but-not-cleaned-up, abandoned, whatever) is wiped so
+        // only the brand-new one is ever rejoinable afterward.
+        try {
+            await deleteAllSessionsForQuiz(quizId);
+        } catch (err) {
+            console.error('Failed to clean up previous sessions:', err);
         }
     }
 
@@ -1134,10 +1143,19 @@ async function handleFinishQuiz() {
     try {
         renderFinalScoreboard();
         await updateDoc(sessionRef, { status: 'ended' });
-        await finishQuizCleanup();
+        await finishQuizCleanup(true);
     } finally {
         finishQuizBtn.disabled = false;
     }
+}
+
+// Ending early (End Quiz button, or a session left abandoned by disconnects
+// and later superseded by a new one) shouldn't count as a played match — no
+// leaderboard/quizResults entry, just the ephemeral session data cleaned up.
+async function handleEndQuizEarly() {
+    renderFinalScoreboard();
+    await updateDoc(sessionRef, { status: 'ended' });
+    await finishQuizCleanup(false);
 }
 
 // Records match history + folds each player's outcome into their persistent
@@ -1145,11 +1163,11 @@ async function handleFinishQuiz() {
 // messages, answers) — only the aggregate leaderboard totals and the
 // standalone quizResults record survive past the end of the quiz.
 //
-// Stats are only recorded for 2+ players — a solo session always has a
-// trivial "win" regardless of score, which would otherwise pollute the
-// leaderboard with the host's own content test-runs.
-async function finishQuizCleanup() {
-    if (latestPlayers.length >= 2) {
+// Stats are only recorded for 2+ players (a solo session always has a
+// trivial "win" regardless of score) and only when recordStats is true —
+// false for a quiz ended early rather than played through to the finish.
+async function finishQuizCleanup(recordStats) {
+    if (recordStats && latestPlayers.length >= 2) {
         const scores = latestPlayers.map(p => p.score || 0);
         const maxScore = Math.max(...scores);
         const winnerCount = scores.filter(s => s === maxScore).length;

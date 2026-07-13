@@ -5,6 +5,8 @@ import {
     getDoc,
     doc,
     setDoc,
+    updateDoc,
+    deleteDoc,
     addDoc,
     query,
     orderBy,
@@ -17,7 +19,8 @@ const tabPanels = {
     recent: document.getElementById('tab-recent'),
     leaderboard: document.getElementById('tab-leaderboard'),
     individual: document.getElementById('tab-individual'),
-    combos: document.getElementById('tab-combos')
+    combos: document.getElementById('tab-combos'),
+    admin: document.getElementById('tab-admin')
 };
 
 const recentList = document.getElementById('recent-list');
@@ -424,4 +427,227 @@ function slugifyName(name) {
 function computeComboKey(names) {
     if (!names || names.length < 2) return null;
     return names.map(slugifyName).sort().join('|');
+}
+
+// =========================
+// ADMIN: MERGE DUPLICATE PLAYERS — hidden unless the same "exportAuthKey"
+// localStorage key used by collection-hub's export tool is present. Same
+// trust model as that feature: this only hides the tool from casual
+// visitors, it isn't real access control (there's no server-side check),
+// since it just edits Firestore data this site already writes to openly.
+// =========================
+const ADMIN_KEY_STORAGE = 'exportAuthKey';
+const isAdmin = !!localStorage.getItem(ADMIN_KEY_STORAGE);
+
+const adminTabBtn = document.getElementById('admin-tab-btn');
+const adminMergeError = document.getElementById('admin-merge-error');
+const adminMergeCanonicalSelect = document.getElementById('admin-merge-canonical-select');
+const adminMergeCanonicalNew = document.getElementById('admin-merge-canonical-new');
+const adminMergeSourceList = document.getElementById('admin-merge-source-list');
+const adminMergePreviewBtn = document.getElementById('admin-merge-preview-btn');
+const adminMergePreview = document.getElementById('admin-merge-preview');
+const adminMergePreviewList = document.getElementById('admin-merge-preview-list');
+const adminMergeConfirmBtn = document.getElementById('admin-merge-confirm-btn');
+const adminMergeCancelBtn = document.getElementById('admin-merge-cancel-btn');
+const adminMergeStatus = document.getElementById('admin-merge-status');
+
+let cachedLeaderboardPlayers = [];
+let pendingMerge = null;
+
+if (isAdmin) {
+    adminTabBtn.hidden = false;
+    loadAdminPlayerList();
+}
+
+async function loadAdminPlayerList() {
+    const snap = await getDocs(collection(db, 'leaderboard'));
+    cachedLeaderboardPlayers = snap.docs
+        .map(d => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    renderAdminPlayerControls();
+}
+
+function renderAdminPlayerControls() {
+    adminMergeCanonicalSelect.innerHTML = '<option value="">— choose an existing player —</option>';
+    cachedLeaderboardPlayers.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = `${p.name} (${p.gamesPlayed || 0} games)`;
+        adminMergeCanonicalSelect.appendChild(opt);
+    });
+
+    adminMergeSourceList.innerHTML = '';
+    cachedLeaderboardPlayers.forEach(p => {
+        const row = document.createElement('label');
+        row.className = 'checkbox-label';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = p.id;
+        checkbox.className = 'admin-merge-source-checkbox';
+
+        row.appendChild(checkbox);
+        row.appendChild(document.createTextNode(
+            `${p.name} (${p.gamesPlayed || 0} games, ${p.totalScore || 0} pts)`
+        ));
+        adminMergeSourceList.appendChild(row);
+    });
+
+    adminMergePreview.hidden = true;
+    pendingMerge = null;
+}
+
+adminMergePreviewBtn.addEventListener('click', () => {
+    adminMergeError.hidden = true;
+    adminMergeStatus.textContent = '';
+    adminMergeStatus.className = '';
+
+    const canonicalNewName = adminMergeCanonicalNew.value.trim();
+    const canonicalExistingId = adminMergeCanonicalSelect.value;
+    const canonicalExisting = cachedLeaderboardPlayers.find(p => p.id === canonicalExistingId);
+
+    const canonicalName = canonicalNewName || (canonicalExisting ? canonicalExisting.name : '');
+    if (!canonicalName) {
+        adminMergeError.textContent = 'Choose an existing player or type a new canonical name.';
+        adminMergeError.hidden = false;
+        return;
+    }
+
+    const canonicalNameKey = slugifyName(canonicalName);
+    const sourceIds = Array.from(document.querySelectorAll('.admin-merge-source-checkbox:checked'))
+        .map(cb => cb.value)
+        .filter(id => id !== canonicalNameKey);
+
+    if (!sourceIds.length) {
+        adminMergeError.textContent = 'Select at least one player to merge in.';
+        adminMergeError.hidden = false;
+        return;
+    }
+
+    const sourcePlayers = sourceIds
+        .map(id => cachedLeaderboardPlayers.find(p => p.id === id))
+        .filter(Boolean);
+
+    let totalScore = canonicalExisting ? (canonicalExisting.totalScore || 0) : 0;
+    let gamesPlayed = canonicalExisting ? (canonicalExisting.gamesPlayed || 0) : 0;
+    let bestScore = canonicalExisting ? (canonicalExisting.bestScore || 0) : 0;
+
+    sourcePlayers.forEach(p => {
+        totalScore += p.totalScore || 0;
+        gamesPlayed += p.gamesPlayed || 0;
+        bestScore = Math.max(bestScore, p.bestScore || 0);
+    });
+
+    pendingMerge = { canonicalName, canonicalNameKey, canonicalExistingId, sourcePlayers };
+
+    adminMergePreviewList.innerHTML = '';
+    const summary = [
+        `Everything merges into "${canonicalName}" — combined: ${gamesPlayed} games, ${totalScore} total points, best score ${bestScore}.`,
+        `Removed as separate leaderboard entries: ${sourcePlayers.map(p => p.name).join(', ')}.`,
+        `Past match history (Recent Quizzes / Combos) and the review hub are updated to show "${canonicalName}" instead of the merged names.`
+    ];
+    summary.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        adminMergePreviewList.appendChild(li);
+    });
+
+    adminMergePreview.hidden = false;
+});
+
+adminMergeCancelBtn.addEventListener('click', () => {
+    adminMergePreview.hidden = true;
+    pendingMerge = null;
+});
+
+adminMergeConfirmBtn.addEventListener('click', async () => {
+    if (!pendingMerge) return;
+
+    adminMergeConfirmBtn.disabled = true;
+    adminMergeStatus.className = '';
+    adminMergeStatus.textContent = 'Merging...';
+
+    try {
+        await performPlayerMerge(pendingMerge);
+
+        adminMergeStatus.className = 'success';
+        adminMergeStatus.textContent = 'Merged!';
+        adminMergePreview.hidden = true;
+        adminMergeCanonicalNew.value = '';
+        pendingMerge = null;
+
+        await Promise.all([loadAdminPlayerList(), loadLeaderboard(), loadQuizResults()]);
+    } catch (err) {
+        console.error(err);
+        adminMergeStatus.className = 'failure';
+        adminMergeStatus.textContent = 'Merge failed — check console.';
+    } finally {
+        adminMergeConfirmBtn.disabled = false;
+    }
+});
+
+async function performPlayerMerge({ canonicalName, canonicalNameKey, canonicalExistingId, sourcePlayers }) {
+    const canonicalRef = doc(db, 'leaderboard', canonicalNameKey);
+    const canonicalSnap = await getDoc(canonicalRef);
+    const canonicalExisting = canonicalSnap.exists() ? canonicalSnap.data() : null;
+
+    let totalScore = canonicalExisting ? (canonicalExisting.totalScore || 0) : 0;
+    let gamesPlayed = canonicalExisting ? (canonicalExisting.gamesPlayed || 0) : 0;
+    let wins = canonicalExisting ? (canonicalExisting.wins || 0) : 0;
+    let draws = canonicalExisting ? (canonicalExisting.draws || 0) : 0;
+    let losses = canonicalExisting ? (canonicalExisting.losses || 0) : 0;
+    let bestScore = canonicalExisting ? (canonicalExisting.bestScore || 0) : 0;
+
+    sourcePlayers.forEach(p => {
+        totalScore += p.totalScore || 0;
+        gamesPlayed += p.gamesPlayed || 0;
+        wins += p.wins || 0;
+        draws += p.draws || 0;
+        losses += p.losses || 0;
+        bestScore = Math.max(bestScore, p.bestScore || 0);
+    });
+
+    await setDoc(canonicalRef, { name: canonicalName, totalScore, gamesPlayed, wins, draws, losses, bestScore });
+
+    await Promise.all(sourcePlayers
+        .filter(p => p.id !== canonicalNameKey)
+        .map(p => deleteDoc(doc(db, 'leaderboard', p.id))));
+
+    // Also covers the case where canonicalExistingId pointed at a doc whose
+    // id doesn't match the (possibly re-typed) canonical name's slug.
+    if (canonicalExistingId && canonicalExistingId !== canonicalNameKey) {
+        await deleteDoc(doc(db, 'leaderboard', canonicalExistingId)).catch(() => {});
+    }
+
+    const sourceNameKeys = new Set(sourcePlayers.map(p => p.id));
+
+    const resultsSnap = await getDocs(collection(db, 'quizResults'));
+    await Promise.all(resultsSnap.docs.map(async docSnap => {
+        const data = docSnap.data();
+        let changed = false;
+
+        const newPlayers = (data.players || []).map(p => {
+            if (sourceNameKeys.has(slugifyName(p.name))) {
+                changed = true;
+                return { ...p, name: canonicalName };
+            }
+            return p;
+        });
+
+        if (!changed) return;
+
+        await updateDoc(docSnap.ref, {
+            players: newPlayers,
+            comboKey: computeComboKey(newPlayers.map(p => p.name))
+        });
+    }));
+
+    const reviewsSnap = await getDocs(collection(db, 'playerReviews'));
+    await Promise.all(reviewsSnap.docs.map(async docSnap => {
+        const data = docSnap.data();
+        if (sourceNameKeys.has(data.nameKey)) {
+            await updateDoc(docSnap.ref, { nameKey: canonicalNameKey, playerName: canonicalName });
+        }
+    }));
 }

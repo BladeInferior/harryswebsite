@@ -230,8 +230,10 @@
             width:100%;
         }
 
-        .tile:hover{
+        .tile:hover,
+        .tile:active{
             border-color:var(--gold);
+            background:var(--card-hover);
         }
 
         .tile-meta{
@@ -361,6 +363,64 @@
             gap:10px;
             margin-top:18px;
         }
+
+        #tab-admin label{
+            display:block;
+            margin-bottom:14px;
+            color:var(--secondary);
+            font-size:.9rem;
+        }
+
+        #tab-admin input[type="text"],
+        #tab-admin select{
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+            margin-top:6px;
+        }
+
+        #tab-admin input:focus,
+        #tab-admin select:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        .checkbox-label{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            margin-bottom:8px;
+            color:var(--text);
+            font-size:.9rem;
+        }
+
+        .checkbox-label input{
+            width:auto;
+            margin-top:0;
+        }
+
+        #admin-merge-error{
+            background:rgba(229,83,75,.15);
+            border:1px solid var(--incorrect);
+            color:var(--incorrect);
+            padding:10px 14px;
+            border-radius:8px;
+            margin-bottom:14px;
+        }
+
+        #admin-merge-status.success{
+            color:var(--correct);
+            margin-top:10px;
+        }
+
+        #admin-merge-status.failure{
+            color:var(--incorrect);
+            margin-top:10px;
+        }
     </style>
 </head>
 
@@ -399,6 +459,7 @@ fetch('../navbar.html')
         <button class="tab-btn" data-tab="leaderboard" type="button">Leaderboard</button>
         <button class="tab-btn" data-tab="individual" type="button">Individual Stats</button>
         <button class="tab-btn" data-tab="combos" type="button">Combos</button>
+        <button class="tab-btn" data-tab="admin" type="button" id="admin-tab-btn" hidden>🔒 Admin</button>
     </div>
 
     <div id="tab-recent" class="card" hidden>
@@ -469,6 +530,46 @@ fetch('../navbar.html')
             <h4 style="margin:18px 0 10px;color:var(--gold);font-size:.9rem;">Quizzes played together</h4>
             <div id="combo-detail-quizzes" class="tile-list"></div>
         </div>
+    </div>
+
+    <div id="tab-admin" class="card" hidden>
+        <h2 style="margin-bottom:14px;">🔒 Merge Duplicate Players</h2>
+        <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+            If someone registered under two different names (a typo, a nickname, joined again mid-quiz), merge
+            their stats into one canonical player here. This combines their leaderboard totals and rewrites
+            past match history/combos to the new name — it can't be undone.
+        </p>
+
+        <div id="admin-merge-error" hidden></div>
+
+        <label>
+            Canonical name — merge everything into this one
+            <select id="admin-merge-canonical-select">
+                <option value="">— choose an existing player —</option>
+            </select>
+        </label>
+        <label>
+            ...or type a brand-new canonical name instead
+            <input type="text" id="admin-merge-canonical-new" autocomplete="off" placeholder="e.g. Emily">
+        </label>
+
+        <label style="margin-bottom:8px;">Merge these players into it</label>
+        <div id="admin-merge-source-list" style="margin-bottom:16px;"></div>
+
+        <div class="modal-buttons" style="margin-top:0;margin-bottom:16px;">
+            <button id="admin-merge-preview-btn" class="btn btn-secondary" type="button">Preview Merge</button>
+        </div>
+
+        <div id="admin-merge-preview" hidden>
+            <h3 style="color:var(--gold);margin-bottom:8px;font-size:1rem;">This will happen:</h3>
+            <ul id="admin-merge-preview-list" style="margin-bottom:16px;padding-left:18px;line-height:1.7;"></ul>
+            <div class="modal-buttons">
+                <button id="admin-merge-confirm-btn" class="btn" type="button">Confirm Merge</button>
+                <button id="admin-merge-cancel-btn" class="btn btn-secondary" type="button">Cancel</button>
+            </div>
+        </div>
+
+        <div id="admin-merge-status"></div>
     </div>
 
 </section>

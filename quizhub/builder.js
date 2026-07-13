@@ -8,6 +8,8 @@ const descInput = document.getElementById('quiz-description-input');
 const revealModeInput = document.getElementById('quiz-reveal-mode-input');
 const buzzerQuizRevealNote = document.getElementById('buzzer-quiz-reveal-note');
 const quizBuzzerToggle = document.getElementById('quiz-buzzer-toggle');
+const quizBuzzerScoreThroughoutRow = document.getElementById('quiz-buzzer-score-throughout-row');
+const quizBuzzerScoreThroughoutToggle = document.getElementById('quiz-buzzer-score-throughout-toggle');
 const quizDefaultExplanationsToggle = document.getElementById('quiz-default-explanations-toggle');
 const reviewEnabledToggle = document.getElementById('quiz-review-enabled-toggle');
 const quizPasswordLabel = document.getElementById('quiz-password-label');
@@ -197,6 +199,7 @@ function populateBuilderFromQuiz(quiz) {
     descInput.value = quiz.description || '';
     revealModeInput.value = quiz.answerRevealMode || 'immediate';
     quizBuzzerToggle.checked = !!quiz.isBuzzerQuiz;
+    quizBuzzerScoreThroughoutToggle.checked = !!quiz.buzzerShowScoreThroughout;
     quizDefaultExplanationsToggle.checked = !!quiz.defaultExplanationsOn;
     updateBuzzerQuizFields();
     reviewEnabledToggle.checked = !!quiz.reviewEnabled;
@@ -247,6 +250,9 @@ function updateBuzzerQuizFields() {
     buzzerQuizRevealNote.hidden = !isBuzzerQuiz;
     revealModeInput.disabled = isBuzzerQuiz;
     if (isBuzzerQuiz) revealModeInput.value = 'immediate';
+
+    quizBuzzerScoreThroughoutRow.hidden = !isBuzzerQuiz;
+    if (!isBuzzerQuiz) quizBuzzerScoreThroughoutToggle.checked = false;
 }
 
 // =========================
@@ -1070,6 +1076,7 @@ saveQuizBtn.addEventListener('click', async () => {
             version: 1,
             answerRevealMode: quizBuzzerToggle.checked ? 'immediate' : revealModeInput.value,
             isBuzzerQuiz: quizBuzzerToggle.checked,
+            buzzerShowScoreThroughout: quizBuzzerToggle.checked && quizBuzzerScoreThroughoutToggle.checked,
             defaultExplanationsOn: quizDefaultExplanationsToggle.checked,
             reviewEnabled: reviewEnabledToggle.checked,
             categoryMeta,

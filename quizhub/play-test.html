@@ -123,7 +123,8 @@
             transition:.15s ease;
         }
 
-        .preview-category-tile:hover{
+        .preview-category-tile:hover,
+        .preview-category-tile:active{
             border-color:var(--gold);
             transform:translateY(-2px);
         }
@@ -182,8 +183,10 @@
             width:100%;
         }
 
-        .tile:hover{
+        .tile:hover,
+        .tile:active{
             border-color:var(--gold);
+            background:var(--card-hover);
         }
 
         .tile-meta{

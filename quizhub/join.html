@@ -120,7 +120,8 @@
             cursor:pointer;
         }
 
-        .btn:hover:not(:disabled){
+        .btn:hover:not(:disabled),
+        .btn:active:not(:disabled){
             background:#e6c458;
         }
 
@@ -136,8 +137,10 @@
             margin-top:10px;
         }
 
-        .btn-secondary:hover{
+        .btn-secondary:hover,
+        .btn-secondary:active{
             border-color:var(--gold);
+            background:rgba(212,175,55,.12);
         }
 
         #join-status,
@@ -490,8 +493,10 @@
             width:100%;
         }
 
-        .tile:hover{
+        .tile:hover,
+        .tile:active{
             border-color:var(--gold);
+            background:var(--card-hover);
         }
 
         .tile.correct{
@@ -632,7 +637,7 @@ fetch('../navbar.html')
         </div>
 
         <div id="quiz-section" hidden>
-            <div id="player-score"></div>
+            <div id="player-score" hidden></div>
             <p id="player-question-progress"></p>
             <h2 id="player-question-prompt"></h2>
             <div id="player-question-media"></div>

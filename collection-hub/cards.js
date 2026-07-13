@@ -15,6 +15,7 @@ let currentPage = 1;
 let filterOwned = null;    // null | true | false
 let filterSpecial = null;  // null | true | false
 let filterGeneration = null;
+let filterRecentSet = false;
 
 let pokemonMasterList = null;
 let pokemonMasterByName = null;
@@ -104,6 +105,7 @@ async function loadDeck(key) {
     filterOwned = null;
     filterSpecial = null;
     filterGeneration = null;
+    filterRecentSet = false;
     if (searchInput) searchInput.value = "";
 
     const itemList = await fetch(deck.jsonFile).then(res => res.json());
@@ -235,6 +237,20 @@ function createCollectionFilters() {
         }
     }
 
+    if (activeDeck.key === "pokemon" && typeof RECENT_SETS !== "undefined" && RECENT_SETS.length) {
+        const recentSet = RECENT_SETS[0];
+
+        const recentSetBtn = document.createElement("button");
+        recentSetBtn.textContent = `Recent Set (${recentSet.name})`;
+        recentSetBtn.classList.add("game-filter-btn", "include-btn", "recent-set-filter-btn");
+        recentSetBtn.addEventListener("click", () => {
+            filterRecentSet = !filterRecentSet;
+            refreshFilterButtons();
+            filterItems(searchInput.value);
+        });
+        container.appendChild(recentSetBtn);
+    }
+
     const resetBtn = document.createElement("button");
     resetBtn.textContent = "Reset Filters";
     resetBtn.classList.add("game-filter-btn");
@@ -242,6 +258,7 @@ function createCollectionFilters() {
         filterOwned = null;
         filterSpecial = null;
         filterGeneration = null;
+        filterRecentSet = false;
         refreshFilterButtons();
         filterItems(searchInput.value);
     });
@@ -277,6 +294,9 @@ function refreshFilterButtons() {
         // the green/red "game-filter-active" used by the include/exclude pairs.
         if (btn.dataset.gen && Number(btn.dataset.gen) === filterGeneration) btn.classList.add("active");
     });
+
+    const recentSetBtn = container.querySelector(".recent-set-filter-btn");
+    if (recentSetBtn) recentSetBtn.classList.toggle("game-filter-active", filterRecentSet);
 }
 
 // Page mode shows a fixed binder layout — filtering which cards appear would
@@ -385,6 +405,7 @@ pageBtn.addEventListener("click", () => {
     filterOwned = null;
     filterSpecial = null;
     filterGeneration = null;
+    filterRecentSet = false;
     refreshFilterButtons();
     updateFilterDisabledState();
     filterItems("");
@@ -695,6 +716,10 @@ clearBtn.addEventListener("click", () => {
 function filterItems(query) {
     const q = (query || "").toLowerCase().trim();
 
+    const recentSetNames = (filterRecentSet && typeof RECENT_SETS !== "undefined" && RECENT_SETS.length)
+        ? new Set(RECENT_SETS[0].pokemon.map(normalizeCardName))
+        : null;
+
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
         const dataIndex = (card.dataset && card.dataset.itemIndex) ? Number(card.dataset.itemIndex) : index;
         const item = items[dataIndex];
@@ -715,6 +740,8 @@ function filterItems(query) {
             const master = pokemonMasterByName ? pokemonMasterByName.get(normalizeCardName(item.name)) : null;
             if (!master || Number(master.generation) !== filterGeneration) match = false;
         }
+
+        if (recentSetNames && !recentSetNames.has(normalizeCardName(item.name))) match = false;
 
         card.style.display = match ? "block" : "none";
     });
