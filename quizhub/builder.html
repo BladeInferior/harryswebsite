@@ -264,6 +264,36 @@
             border-color:var(--gold);
         }
 
+        /* Explicit reorder buttons — the main way to reorder on touch
+           devices, where the drag handle isn't reliable (8.2). */
+        .question-row-reorder{
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+            flex-shrink:0;
+        }
+
+        .reorder-btn{
+            background:var(--card);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:6px;
+            width:28px;
+            height:22px;
+            cursor:pointer;
+            font-size:.7rem;
+            line-height:1;
+        }
+
+        .reorder-btn:hover:not(:disabled){
+            border-color:var(--gold);
+        }
+
+        .reorder-btn:disabled{
+            opacity:.3;
+            cursor:default;
+        }
+
         .empty-hint{
             color:var(--secondary);
             text-align:center;
@@ -404,6 +434,32 @@
             border-color:var(--gold);
         }
 
+        #q-media-preview{
+            margin-bottom:14px;
+        }
+
+        #q-media-preview img,
+        #q-media-preview video,
+        #q-media-preview iframe{
+            display:block;
+            max-width:100%;
+            max-height:220px;
+            margin:0 auto;
+            border-radius:8px;
+        }
+
+        #q-media-preview iframe{
+            width:100%;
+            aspect-ratio:16/9;
+            max-height:none;
+            border:none;
+        }
+
+        #q-media-preview audio{
+            display:block;
+            width:100%;
+        }
+
         .modal-buttons{
             display:flex;
             gap:10px;
@@ -462,6 +518,28 @@ fetch('../navbar.html')
             </select>
         </label>
 
+        <p id="buzzer-quiz-reveal-note" style="color:var(--secondary);font-size:.85rem;margin:-8px 0 14px;" hidden>
+            🔔 Buzzer quizzes always reveal after every question — the reveal setting above is ignored while "This is a buzzer quiz" is checked.
+        </p>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="quiz-buzzer-toggle">
+            🔔 This is a buzzer quiz
+            <span class="tooltip-icon" tabindex="0" data-tooltip="New questions default to the Buzzer type, and answers always reveal immediately after each question (live host judging), regardless of the reveal setting above.">ⓘ</span>
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="quiz-default-explanations-toggle">
+            Add an explanation field by default on new questions
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Just a builder convenience — pre-ticks \"Add an explanation\" whenever you add a new question to this quiz, so you don't have to tick it every time.">ⓘ</span>
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="quiz-review-enabled-toggle">
+            Let players review their questions/answers after the quiz
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Adds this quiz to each player's Review Past Quizzes hub afterward, showing their answers alongside the correct ones by category.">ⓘ</span>
+        </label>
+
         <label>
             <span id="quiz-password-label">Edit/delete password (optional)</span>
             <span class="tooltip-icon" tabindex="0" data-tooltip="If set, anyone editing or deleting this quiz from Manage Quizzes will need to enter this password first.">ⓘ</span>
@@ -475,6 +553,7 @@ fetch('../navbar.html')
     </div>
 
     <div class="toolbar">
+        <button id="import-spreadsheet-btn" class="btn btn-secondary" type="button">📄 Import from Spreadsheet</button>
         <button id="add-category-btn" class="btn btn-secondary" type="button">+ Add Category</button>
     </div>
 
@@ -504,6 +583,51 @@ fetch('../navbar.html')
             <button id="password-check-submit-btn" class="btn" type="button">Unlock</button>
             <a href="manage-quizzes.html" class="btn btn-secondary">Cancel</a>
         </div>
+    </div>
+</div>
+
+<!-- =========================
+    IMPORT FROM SPREADSHEET MODAL
+========================== -->
+<div id="import-modal" hidden>
+    <div class="add-item-box" style="max-width:680px;">
+
+        <h2>Import from Spreadsheet</h2>
+
+        <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+            Upload a <code>.csv</code> or <code>.xlsx</code> file with columns
+            <code>question, type, answer(s), points, media_url, category</code>.
+            <code>type</code> is one of <code>text, number, multiple-choice, multi-answer, buzzer</code>.
+            For <code>multiple-choice</code>, separate options with <code>;</code> and mark the correct one with a leading <code>*</code>
+            (e.g. <code>Water*; Fire; Grass</code>). For <code>text</code>/<code>multi-answer</code>, separate accepted answers with <code>;</code>.
+        </p>
+
+        <button id="download-template-btn" class="btn btn-secondary btn-small" type="button">⬇ Download Template</button>
+
+        <label style="margin-top:16px;">
+            Spreadsheet file
+            <input type="file" id="import-file-input" accept=".csv,.xlsx">
+        </label>
+
+        <div id="import-status" hidden></div>
+
+        <div id="import-preview" hidden>
+            <h3 style="margin:14px 0 8px;color:var(--gold);font-size:1rem;">
+                Ready to import: <span id="import-valid-count"></span>
+            </h3>
+            <div id="import-preview-list" class="question-list" style="max-height:220px;overflow-y:auto;"></div>
+
+            <div id="import-errors" hidden>
+                <h3 style="margin:14px 0 8px;color:var(--incorrect);font-size:1rem;">Skipped — these rows have errors</h3>
+                <ul id="import-error-list" style="color:var(--incorrect);padding-left:18px;line-height:1.7;"></ul>
+            </div>
+        </div>
+
+        <div class="modal-buttons">
+            <button id="confirm-import-btn" class="btn" type="button" disabled>Import 0 Questions</button>
+            <button id="cancel-import-btn" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+
     </div>
 </div>
 
@@ -589,25 +713,6 @@ fetch('../navbar.html')
         </label>
 
         <label>
-            Points
-            <input type="number" id="q-points-input" value="1" min="0">
-        </label>
-
-        <label>
-            Image path (optional)
-            <input type="text" id="q-image-input" placeholder="../collection-hub/sprites/pokemon_sprites/snorlax.png">
-        </label>
-
-        <label class="checkbox-label">
-            <input type="checkbox" id="q-silhouette-input"> Show as silhouette
-        </label>
-
-        <label>
-            Explanation shown on reveal (optional)
-            <input type="text" id="q-explanation-input" placeholder="e.g. It's Snorlax!">
-        </label>
-
-        <label>
             Answer type
             <select id="q-type-select">
                 <option value="text">Text</option>
@@ -616,7 +721,14 @@ fetch('../navbar.html')
                 <option value="image-select">Image Select</option>
                 <option value="ordering">Ordering</option>
                 <option value="number">Number</option>
+                <option value="multi-answer">Multi-Answer</option>
+                <option value="buzzer">Buzzer</option>
             </select>
+        </label>
+
+        <label>
+            Points
+            <input type="number" id="q-points-input" value="1" min="0">
         </label>
 
         <!-- TEXT -->
@@ -648,6 +760,23 @@ fetch('../navbar.html')
             <button id="ordering-add-item-btn" class="btn btn-secondary btn-small" type="button">+ Add Item</button>
         </div>
 
+        <!-- MULTI-ANSWER -->
+        <div class="type-fields" id="fields-multi-answer" hidden>
+            <label>
+                Accepted answers (comma separated) — each correct one earns the points above
+                <input type="text" id="q-multi-answer-accepted" placeholder="mercury, venus, earth, mars">
+            </label>
+            <label>
+                Max answers a player can submit (optional — defaults to the number of accepted answers)
+                <input type="number" id="q-multi-answer-max" min="1">
+            </label>
+        </div>
+
+        <!-- BUZZER -->
+        <div class="type-fields" id="fields-buzzer" hidden>
+            <p style="color:var(--secondary);">No extra setup — players just see a "Buzz In" button. You judge each buzz correct/incorrect live on the host screen.</p>
+        </div>
+
         <!-- NUMBER -->
         <div class="type-fields" id="fields-number" hidden>
             <label class="checkbox-label">
@@ -673,6 +802,48 @@ fetch('../navbar.html')
             </div>
         </div>
 
+        <!-- OPTIONAL EXTRAS — collapsed behind tickboxes so the common path
+             (category/prompt/type/points/answer) stays short. -->
+        <div class="type-fields">
+            <label class="checkbox-label">
+                <input type="checkbox" id="q-media-toggle"> Add media (image, video, or audio)
+            </label>
+
+            <div id="q-media-fields" hidden>
+                <label>
+                    Media URL — image, video (YouTube/Vimeo/direct link), or audio
+                    <input type="text" id="q-image-input" placeholder="../collection-hub/sprites/pokemon_sprites/snorlax.png or https://youtube.com/watch?v=...">
+                </label>
+
+                <label>
+                    Media type
+                    <select id="q-media-type-select">
+                        <option value="auto">Auto-detect from URL</option>
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                        <option value="audio">Audio</option>
+                    </select>
+                </label>
+
+                <label class="checkbox-label" id="q-silhouette-row">
+                    <input type="checkbox" id="q-silhouette-input"> Show as silhouette (image only)
+                </label>
+
+                <div id="q-media-preview"></div>
+            </div>
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="q-explanation-toggle"> Add an explanation (shown on reveal)
+            </label>
+
+            <div id="q-explanation-fields" hidden>
+                <label>
+                    Explanation
+                    <input type="text" id="q-explanation-input" placeholder="e.g. It's Snorlax!">
+                </label>
+            </div>
+        </div>
+
         <div class="modal-buttons">
             <button id="save-question-btn" class="btn" type="button">Save Question</button>
             <button id="cancel-question-btn" class="btn btn-secondary" type="button">Cancel</button>
@@ -681,6 +852,7 @@ fetch('../navbar.html')
     </div>
 </div>
 
+<script src="engine/media-utils.js"></script>
 <script type="module" src="builder.js"></script>
 
 </body>

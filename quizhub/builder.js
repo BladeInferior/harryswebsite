@@ -1,10 +1,15 @@
 import { db } from './firebase/firebase-config.js';
 import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 import { hashPassword } from './password-utils.js';
+import { downloadTemplate, parseFile, validateRows } from './import-questions.js';
 
 const titleInput = document.getElementById('quiz-title-input');
 const descInput = document.getElementById('quiz-description-input');
 const revealModeInput = document.getElementById('quiz-reveal-mode-input');
+const buzzerQuizRevealNote = document.getElementById('buzzer-quiz-reveal-note');
+const quizBuzzerToggle = document.getElementById('quiz-buzzer-toggle');
+const quizDefaultExplanationsToggle = document.getElementById('quiz-default-explanations-toggle');
+const reviewEnabledToggle = document.getElementById('quiz-review-enabled-toggle');
 const quizPasswordLabel = document.getElementById('quiz-password-label');
 const quizPasswordInput = document.getElementById('quiz-password-input');
 const quizRemovePasswordRow = document.getElementById('quiz-remove-password-row');
@@ -13,6 +18,19 @@ const categoriesContainer = document.getElementById('categories-container');
 const addCategoryBtn = document.getElementById('add-category-btn');
 const saveQuizBtn = document.getElementById('save-quiz-btn');
 const saveQuizStatus = document.getElementById('save-quiz-status');
+
+const importSpreadsheetBtn = document.getElementById('import-spreadsheet-btn');
+const importModal = document.getElementById('import-modal');
+const downloadTemplateBtn = document.getElementById('download-template-btn');
+const importFileInput = document.getElementById('import-file-input');
+const importStatus = document.getElementById('import-status');
+const importPreview = document.getElementById('import-preview');
+const importValidCount = document.getElementById('import-valid-count');
+const importPreviewList = document.getElementById('import-preview-list');
+const importErrors = document.getElementById('import-errors');
+const importErrorList = document.getElementById('import-error-list');
+const confirmImportBtn = document.getElementById('confirm-import-btn');
+const cancelImportBtn = document.getElementById('cancel-import-btn');
 
 const passwordCheckModal = document.getElementById('password-check-modal');
 const passwordCheckError = document.getElementById('password-check-error');
@@ -43,8 +61,15 @@ const questionModalTitle = document.getElementById('question-modal-title');
 const qCategorySelect = document.getElementById('q-category-select');
 const qPromptInput = document.getElementById('q-prompt-input');
 const qPointsInput = document.getElementById('q-points-input');
+const qMediaToggle = document.getElementById('q-media-toggle');
+const qMediaFields = document.getElementById('q-media-fields');
 const qImageInput = document.getElementById('q-image-input');
+const qMediaTypeSelect = document.getElementById('q-media-type-select');
+const qSilhouetteRow = document.getElementById('q-silhouette-row');
 const qSilhouetteInput = document.getElementById('q-silhouette-input');
+const qMediaPreview = document.getElementById('q-media-preview');
+const qExplanationToggle = document.getElementById('q-explanation-toggle');
+const qExplanationFields = document.getElementById('q-explanation-fields');
 const qExplanationInput = document.getElementById('q-explanation-input');
 const qTypeSelect = document.getElementById('q-type-select');
 const qError = document.getElementById('q-error');
@@ -55,6 +80,9 @@ const acceptedAnswersInput = document.getElementById('q-accepted-answers');
 const mcOptionsList = document.getElementById('mc-options-list');
 const imageOptionsList = document.getElementById('image-options-list');
 const orderingItemsList = document.getElementById('ordering-items-list');
+
+const multiAnswerAcceptedInput = document.getElementById('q-multi-answer-accepted');
+const multiAnswerMaxInput = document.getElementById('q-multi-answer-max');
 
 const numberRangeToggle = document.getElementById('q-number-range-toggle');
 const numberExactRow = document.getElementById('number-exact-row');
@@ -69,7 +97,9 @@ const fieldSections = {
     'mc-dropdown': document.getElementById('fields-mc'),
     'image-select': document.getElementById('fields-image-select'),
     'ordering': document.getElementById('fields-ordering'),
-    'number': document.getElementById('fields-number')
+    'number': document.getElementById('fields-number'),
+    'multi-answer': document.getElementById('fields-multi-answer'),
+    'buzzer': document.getElementById('fields-buzzer')
 };
 
 const TYPE_LABELS = {
@@ -77,7 +107,9 @@ const TYPE_LABELS = {
     'multiple-choice': 'Multiple Choice',
     'image-select': 'Image Select',
     'ordering': 'Ordering',
-    'number': 'Number'
+    'number': 'Number',
+    'multi-answer': 'Multi-Answer',
+    'buzzer': 'Buzzer'
 };
 
 // categories = [{ id, name, background, titleScreen, exampleScreen, questions: [questionObj, ...] }]
@@ -92,9 +124,13 @@ let categoryEditContext = null;
 
 // If ?quiz=<id> is present, we're editing an existing Firestore-authored quiz
 // rather than creating a new one — Save Quiz updates that doc instead of
-// creating a new one.
+// creating a new one. activeQuizId starts the same but, for a brand-new
+// quiz, gets set to the freshly-created doc id after the first save so
+// later saves in the same session update that doc instead of creating
+// duplicates (see 8.1 — Save no longer navigates away).
 const params = new URLSearchParams(window.location.search);
 const editingQuizId = params.get('quiz');
+let activeQuizId = editingQuizId;
 
 if (editingQuizId) {
     document.getElementById('back-button-link').href = 'manage-quizzes.html';
@@ -160,6 +196,10 @@ function populateBuilderFromQuiz(quiz) {
     titleInput.value = quiz.title || '';
     descInput.value = quiz.description || '';
     revealModeInput.value = quiz.answerRevealMode || 'immediate';
+    quizBuzzerToggle.checked = !!quiz.isBuzzerQuiz;
+    quizDefaultExplanationsToggle.checked = !!quiz.defaultExplanationsOn;
+    updateBuzzerQuizFields();
+    reviewEnabledToggle.checked = !!quiz.reviewEnabled;
 
     quizPasswordInput.value = '';
     quizPasswordLabel.textContent = existingPasswordHash
@@ -195,6 +235,18 @@ function populateBuilderFromQuiz(quiz) {
     saveQuizBtn.textContent = 'Save Changes';
 
     renderCategories();
+}
+
+// =========================
+// QUIZ-LEVEL SETTINGS
+// =========================
+quizBuzzerToggle.addEventListener('change', updateBuzzerQuizFields);
+
+function updateBuzzerQuizFields() {
+    const isBuzzerQuiz = quizBuzzerToggle.checked;
+    buzzerQuizRevealNote.hidden = !isBuzzerQuiz;
+    revealModeInput.disabled = isBuzzerQuiz;
+    if (isBuzzerQuiz) revealModeInput.value = 'immediate';
 }
 
 // =========================
@@ -384,6 +436,39 @@ function createQuestionRow(category, question, index) {
 
     row.appendChild(info);
 
+    const reorderControls = document.createElement('div');
+    reorderControls.className = 'question-row-reorder';
+
+    const upBtn = document.createElement('button');
+    upBtn.type = 'button';
+    upBtn.className = 'reorder-btn';
+    upBtn.textContent = '▲';
+    upBtn.disabled = index === 0;
+    upBtn.setAttribute('aria-label', 'Move question up');
+    upBtn.addEventListener('click', () => {
+        if (index === 0) return;
+        [category.questions[index - 1], category.questions[index]] =
+            [category.questions[index], category.questions[index - 1]];
+        renderCategories();
+    });
+
+    const downBtn = document.createElement('button');
+    downBtn.type = 'button';
+    downBtn.className = 'reorder-btn';
+    downBtn.textContent = '▼';
+    downBtn.disabled = index === category.questions.length - 1;
+    downBtn.setAttribute('aria-label', 'Move question down');
+    downBtn.addEventListener('click', () => {
+        if (index === category.questions.length - 1) return;
+        [category.questions[index + 1], category.questions[index]] =
+            [category.questions[index], category.questions[index + 1]];
+        renderCategories();
+    });
+
+    reorderControls.appendChild(upBtn);
+    reorderControls.appendChild(downBtn);
+    row.appendChild(reorderControls);
+
     const actions = document.createElement('div');
     actions.className = 'question-row-actions';
 
@@ -461,6 +546,30 @@ function syncCategoryOrderFromDOM(category) {
 cancelQuestionBtn.addEventListener('click', closeQuestionModal);
 qTypeSelect.addEventListener('change', updateVisibleFields);
 numberRangeToggle.addEventListener('change', updateNumberModeFields);
+qImageInput.addEventListener('input', updateMediaPreview);
+qMediaTypeSelect.addEventListener('change', updateMediaPreview);
+qMediaToggle.addEventListener('change', () => {
+    qMediaFields.hidden = !qMediaToggle.checked;
+    if (qMediaToggle.checked) updateMediaPreview();
+});
+qExplanationToggle.addEventListener('change', () => {
+    qExplanationFields.hidden = !qExplanationToggle.checked;
+});
+
+function updateMediaPreview() {
+    const src = qImageInput.value.trim();
+    const selectedType = qMediaTypeSelect.value;
+    const kind = selectedType === 'auto' ? (src ? MediaUtils.guessKind(src) : 'image') : selectedType;
+
+    qSilhouetteRow.hidden = kind !== 'image';
+
+    if (!src) {
+        qMediaPreview.innerHTML = '';
+        return;
+    }
+
+    MediaUtils.render({ kind, src, alt: '', silhouette: false }, qMediaPreview, false);
+}
 document.getElementById('mc-add-option-btn').addEventListener('click', () => addOptionRow(mcOptionsList, false, ''));
 document.getElementById('image-add-option-btn').addEventListener('click', () => addImageOptionRow(false, '', ''));
 document.getElementById('ordering-add-item-btn').addEventListener('click', () => addOrderingRow(''));
@@ -605,14 +714,21 @@ function openQuestionModal(editContext, defaultCategoryId) {
         qPromptInput.value = '';
         qPointsInput.value = '1';
         qImageInput.value = '';
+        qMediaTypeSelect.value = 'auto';
         qSilhouetteInput.checked = false;
+        qMediaToggle.checked = false;
+        qMediaFields.hidden = true;
         qExplanationInput.value = '';
-        qTypeSelect.value = 'text';
+        qExplanationToggle.checked = quizDefaultExplanationsToggle.checked;
+        qExplanationFields.hidden = !qExplanationToggle.checked;
+        qTypeSelect.value = quizBuzzerToggle.checked ? 'buzzer' : 'text';
         acceptedAnswersInput.value = '';
         numberRangeToggle.checked = false;
         numberExactInput.value = '';
         numberMinInput.value = '';
         numberMaxInput.value = '';
+        multiAnswerAcceptedInput.value = '';
+        multiAnswerMaxInput.value = '';
         addOptionRow(mcOptionsList, true, '');
         addOptionRow(mcOptionsList, false, '');
         addImageOptionRow(true, '', '');
@@ -629,8 +745,13 @@ function openQuestionModal(editContext, defaultCategoryId) {
         qPromptInput.value = q.prompt;
         qPointsInput.value = q.points;
         qImageInput.value = q.media ? q.media.src : '';
+        qMediaTypeSelect.value = q.media ? (q.media.kind || 'auto') : 'auto';
         qSilhouetteInput.checked = !!(q.media && q.media.silhouette);
+        qMediaToggle.checked = !!q.media;
+        qMediaFields.hidden = !q.media;
         qExplanationInput.value = q.explanation || '';
+        qExplanationToggle.checked = !!q.explanation;
+        qExplanationFields.hidden = !q.explanation;
 
         if (q.type === 'text') {
             qTypeSelect.value = 'text';
@@ -683,11 +804,30 @@ function openQuestionModal(editContext, defaultCategoryId) {
             addImageOptionRow(false, '', '');
             addOrderingRow('');
             addOrderingRow('');
+        } else if (q.type === 'multi-answer') {
+            qTypeSelect.value = 'multi-answer';
+            multiAnswerAcceptedInput.value = q.config.acceptedAnswers.join(', ');
+            multiAnswerMaxInput.value = q.config.maxAnswers || '';
+            addOptionRow(mcOptionsList, true, '');
+            addOptionRow(mcOptionsList, false, '');
+            addImageOptionRow(true, '', '');
+            addImageOptionRow(false, '', '');
+            addOrderingRow('');
+            addOrderingRow('');
+        } else if (q.type === 'buzzer') {
+            qTypeSelect.value = 'buzzer';
+            addOptionRow(mcOptionsList, true, '');
+            addOptionRow(mcOptionsList, false, '');
+            addImageOptionRow(true, '', '');
+            addImageOptionRow(false, '', '');
+            addOrderingRow('');
+            addOrderingRow('');
         }
     }
 
     updateNumberModeFields();
     updateVisibleFields();
+    updateMediaPreview();
     questionModal.hidden = false;
 }
 
@@ -708,7 +848,12 @@ saveQuestionBtn.addEventListener('click', () => {
     const points = parseInt(qPointsInput.value, 10) || 1;
     const explanation = qExplanationInput.value.trim();
     const imageSrc = qImageInput.value.trim();
-    const media = imageSrc ? { kind: 'image', src: imageSrc, alt: '', silhouette: qSilhouetteInput.checked } : null;
+    const mediaKind = qMediaTypeSelect.value === 'auto'
+        ? (imageSrc ? MediaUtils.guessKind(imageSrc) : 'image')
+        : qMediaTypeSelect.value;
+    const media = imageSrc
+        ? { kind: mediaKind, src: imageSrc, alt: '', silhouette: mediaKind === 'image' && qSilhouetteInput.checked }
+        : null;
     const typeValue = qTypeSelect.value;
     const targetCategoryId = qCategorySelect.value;
 
@@ -819,6 +964,24 @@ saveQuestionBtn.addEventListener('click', () => {
             type = 'number';
             config = { mode: 'exact', correctValue };
         }
+
+    } else if (typeValue === 'multi-answer') {
+        const accepted = multiAnswerAcceptedInput.value.split(',').map(s => s.trim()).filter(Boolean);
+        if (!accepted.length) { showError('Enter at least one accepted answer.'); return; }
+
+        const maxRaw = multiAnswerMaxInput.value.trim();
+        const maxAnswers = maxRaw ? parseInt(maxRaw, 10) : accepted.length;
+        if (maxRaw && (!Number.isFinite(maxAnswers) || maxAnswers < 1)) {
+            showError('Max answers must be a positive number.');
+            return;
+        }
+
+        type = 'multi-answer';
+        config = { acceptedAnswers: accepted, maxAnswers };
+
+    } else if (typeValue === 'buzzer') {
+        type = 'buzzer';
+        config = {};
     }
 
     const questionData = { type, prompt, media, points, timeLimitSeconds: null, config, explanation };
@@ -873,7 +1036,7 @@ saveQuizBtn.addEventListener('click', async () => {
     saveQuizStatus.className = 'pending';
     saveQuizStatus.textContent = 'Saving...';
 
-    const quizRef = editingQuizId ? doc(db, 'quizzes', editingQuizId) : doc(collection(db, 'quizzes'));
+    const quizRef = activeQuizId ? doc(db, 'quizzes', activeQuizId) : doc(collection(db, 'quizzes'));
     const quizId = quizRef.id;
 
     const flatQuestions = [];
@@ -905,22 +1068,160 @@ saveQuizBtn.addEventListener('click', async () => {
             title,
             description,
             version: 1,
-            answerRevealMode: revealModeInput.value,
+            answerRevealMode: quizBuzzerToggle.checked ? 'immediate' : revealModeInput.value,
+            isBuzzerQuiz: quizBuzzerToggle.checked,
+            defaultExplanationsOn: quizDefaultExplanationsToggle.checked,
+            reviewEnabled: reviewEnabledToggle.checked,
             categoryMeta,
             editPasswordHash,
             questions: questionsWithIds
         });
 
-        saveQuizStatus.className = 'success';
-        saveQuizStatus.textContent = 'Quiz saved! Redirecting...';
+        // Stay on this screen (8.1) — but if this was a brand-new quiz's
+        // first save, switch into "editing" mode so later saves update the
+        // same doc instead of creating a new one each time.
+        if (!activeQuizId) {
+            activeQuizId = quizId;
+            existingPasswordHash = editPasswordHash;
+            document.getElementById('back-button-link').href = 'manage-quizzes.html';
+            document.querySelector('.hero h1').textContent = '🛠️ Edit Quiz';
+            saveQuizBtn.textContent = 'Save Changes';
+            history.replaceState(null, '', `builder.html?quiz=${encodeURIComponent(quizId)}`);
+        }
 
-        setTimeout(() => {
-            window.location.href = 'manage-quizzes.html';
-        }, 800);
+        saveQuizStatus.className = 'success';
+        saveQuizStatus.textContent = 'Quiz saved!';
+        saveQuizBtn.disabled = false;
     } catch (err) {
         console.error(err);
         saveQuizStatus.className = 'failure';
         saveQuizStatus.textContent = 'Failed to save — check console.';
         saveQuizBtn.disabled = false;
     }
+});
+
+// =========================
+// IMPORT FROM SPREADSHEET
+// =========================
+// Rows validated by the last-parsed file, kept until Import/Cancel/re-parse
+// so the confirm button doesn't need to re-parse the file.
+let pendingImportRows = [];
+
+importSpreadsheetBtn.addEventListener('click', () => {
+    resetImportModal();
+    importModal.hidden = false;
+});
+
+cancelImportBtn.addEventListener('click', () => {
+    importModal.hidden = true;
+});
+
+downloadTemplateBtn.addEventListener('click', downloadTemplate);
+
+function resetImportModal() {
+    importFileInput.value = '';
+    importStatus.hidden = true;
+    importPreview.hidden = true;
+    importErrors.hidden = true;
+    importPreviewList.innerHTML = '';
+    importErrorList.innerHTML = '';
+    pendingImportRows = [];
+    confirmImportBtn.disabled = true;
+    confirmImportBtn.textContent = 'Import 0 Questions';
+}
+
+importFileInput.addEventListener('change', async () => {
+    const file = importFileInput.files[0];
+    if (!file) return;
+
+    pendingImportRows = [];
+    importPreview.hidden = true;
+    importStatus.hidden = false;
+    importStatus.className = 'pending';
+    importStatus.textContent = 'Parsing file...';
+    confirmImportBtn.disabled = true;
+    confirmImportBtn.textContent = 'Import 0 Questions';
+
+    try {
+        const rawRows = await parseFile(file);
+        const { valid, errors } = validateRows(rawRows);
+
+        importStatus.hidden = true;
+        importPreview.hidden = false;
+        pendingImportRows = valid;
+
+        importValidCount.textContent = `${valid.length} question(s)`;
+        importPreviewList.innerHTML = '';
+
+        if (!valid.length) {
+            const hint = document.createElement('p');
+            hint.className = 'empty-hint';
+            hint.textContent = 'No valid rows found.';
+            importPreviewList.appendChild(hint);
+        }
+
+        valid.forEach(q => {
+            const row = document.createElement('div');
+            row.className = 'question-row';
+            row.draggable = false;
+
+            const info = document.createElement('div');
+            info.className = 'question-row-info';
+
+            const promptSpan = document.createElement('span');
+            promptSpan.textContent = `[${q.category}] ${q.prompt} (${q.points} pts)`;
+            info.appendChild(promptSpan);
+
+            const badge = document.createElement('span');
+            badge.className = 'type-badge';
+            badge.textContent = TYPE_LABELS[q.type] || q.type;
+            info.appendChild(badge);
+
+            row.appendChild(info);
+            importPreviewList.appendChild(row);
+        });
+
+        importErrors.hidden = errors.length === 0;
+        importErrorList.innerHTML = '';
+        errors.forEach(err => {
+            const li = document.createElement('li');
+            li.textContent = err;
+            importErrorList.appendChild(li);
+        });
+
+        confirmImportBtn.disabled = valid.length === 0;
+        confirmImportBtn.textContent = `Import ${valid.length} Question${valid.length === 1 ? '' : 's'}`;
+    } catch (err) {
+        console.error(err);
+        importStatus.hidden = false;
+        importStatus.className = 'failure';
+        importStatus.textContent = err.message || 'Failed to parse file — check console.';
+    }
+});
+
+confirmImportBtn.addEventListener('click', () => {
+    if (!pendingImportRows.length) return;
+
+    pendingImportRows.forEach(q => {
+        const { category: categoryName, ...questionData } = q;
+
+        let category = categories.find(c => c.name.trim().toLowerCase() === categoryName.trim().toLowerCase());
+        if (!category) {
+            category = {
+                id: 'cat' + Date.now() + Math.floor(Math.random() * 1000) + categories.length,
+                name: categoryName,
+                background: '',
+                questionBackground: '',
+                titleScreen: null,
+                exampleScreen: null,
+                questions: []
+            };
+            categories.push(category);
+        }
+
+        category.questions.push(questionData);
+    });
+
+    importModal.hidden = true;
+    renderCategories();
 });

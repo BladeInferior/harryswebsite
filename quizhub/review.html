@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Review Past Quizzes</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+
+    <style>
+        :root{
+            --bg:#121212;
+            --card:#1e1e1e;
+            --card-hover:#262626;
+            --gold:#d4af37;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#333;
+            --correct:#3fb950;
+            --incorrect:#e5534b;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:#2d2d2d;
+            border:1px solid #555;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(212,175,55,.15);
+        }
+
+        .hero{
+            text-align:center;
+            padding:60px 20px 20px;
+        }
+
+        .hero p{
+            max-width:600px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+        }
+
+        .section{
+            max-width:700px;
+            margin:auto;
+            padding:20px 20px 80px;
+        }
+
+        .card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:6px;
+            color:var(--secondary);
+            font-size:.9rem;
+        }
+
+        input[type="text"]{
+            width:100%;
+            padding:12px 14px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+            margin-bottom:16px;
+        }
+
+        input[type="text"]:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        .btn{
+            display:inline-block;
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:12px 24px;
+            font-size:.95rem;
+            font-weight:bold;
+            cursor:pointer;
+            text-decoration:none;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover{
+            border-color:var(--gold);
+        }
+
+        #breadcrumb{
+            color:var(--secondary);
+            margin-bottom:16px;
+            font-size:.9rem;
+        }
+
+        #breadcrumb button{
+            background:none;
+            border:none;
+            color:var(--gold);
+            cursor:pointer;
+            font-size:.9rem;
+            text-decoration:underline;
+            padding:0;
+        }
+
+        .tile-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .tile{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:14px 18px;
+            cursor:pointer;
+            text-align:left;
+            color:var(--text);
+            font-size:1rem;
+            width:100%;
+        }
+
+        .tile:hover{
+            border-color:var(--gold);
+        }
+
+        .tile-meta{
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
+        .tile.correct{
+            border-left:4px solid var(--correct);
+        }
+
+        .tile.incorrect{
+            border-left:4px solid var(--incorrect);
+        }
+
+        .empty-hint{
+            color:var(--secondary);
+            text-align:center;
+            padding:20px;
+        }
+
+        #question-detail p{
+            margin-bottom:12px;
+            line-height:1.5;
+        }
+
+        #question-detail .label{
+            color:var(--secondary);
+            font-size:.85rem;
+            display:block;
+            margin-bottom:2px;
+        }
+
+        #detail-your-answer.correct{
+            color:var(--correct);
+        }
+
+        #detail-your-answer.incorrect{
+            color:var(--incorrect);
+        }
+
+        #status-message{
+            margin-top:14px;
+            text-align:center;
+        }
+
+        #status-message.failure{
+            color:var(--incorrect);
+        }
+
+        #status-message.pending{
+            color:var(--secondary);
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script>
+fetch('../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+
+        const basePath =
+            window.location.hostname === "bladeinferior.github.io"
+                ? "/harryswebsite/"
+                : "/";
+
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" href="quizhub.html">← Back</a>
+
+<section class="hero">
+    <h1>📖 Review Past Quizzes</h1>
+    <p>Look back at quizzes you've played (where the host allowed it) — see your answers next to the correct ones, organised by category.</p>
+</section>
+
+<section class="section">
+
+    <div id="name-entry-view" class="card">
+        <form id="name-form">
+            <label for="review-name-input">Your name (as you entered it when joining)</label>
+            <input type="text" id="review-name-input" autocomplete="off" required>
+            <button type="submit" class="btn">Find My Quizzes</button>
+        </form>
+        <div id="status-message"></div>
+    </div>
+
+    <div id="quiz-list-view" class="card" hidden>
+        <div id="breadcrumb"></div>
+        <h2 style="margin-bottom:14px;">Your Completed Quizzes</h2>
+        <div id="quiz-list" class="tile-list"></div>
+    </div>
+
+    <div id="category-list-view" class="card" hidden>
+        <div id="breadcrumb-categories"></div>
+        <h2 id="category-list-title" style="margin-bottom:14px;"></h2>
+        <div id="category-list" class="tile-list"></div>
+    </div>
+
+    <div id="question-list-view" class="card" hidden>
+        <div id="breadcrumb-questions"></div>
+        <h2 id="question-list-title" style="margin-bottom:14px;"></h2>
+        <div id="question-list" class="tile-list"></div>
+    </div>
+
+    <div id="question-detail-view" class="card" hidden>
+        <div id="breadcrumb-detail"></div>
+        <div id="question-detail">
+            <p><span class="label">Category</span><span id="detail-category"></span></p>
+            <p><span class="label">Question</span><span id="detail-prompt"></span></p>
+            <p><span class="label">Your answer</span><span id="detail-your-answer"></span></p>
+            <p><span class="label">Correct answer</span><span id="detail-correct-answer"></span></p>
+            <p><span class="label">Points earned</span><span id="detail-points"></span></p>
+            <p id="detail-explanation-row"><span class="label">Explanation</span><span id="detail-explanation"></span></p>
+        </div>
+    </div>
+
+</section>
+
+<script type="module" src="review.js"></script>
+
+</body>
+</html>

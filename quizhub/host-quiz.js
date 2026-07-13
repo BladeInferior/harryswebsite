@@ -1,5 +1,6 @@
 import { db } from './firebase/firebase-config.js';
 import { loadQuiz } from './data/quiz-loader.js';
+import { findActiveSessionForQuiz } from './session-lookup.js';
 import {
     doc,
     setDoc,
@@ -31,9 +32,22 @@ const lobbyView = document.getElementById('lobby-view');
 const playerList = document.getElementById('player-list');
 const messageList = document.getElementById('message-list');
 
+const persistentPanel = document.getElementById('persistent-panel');
+const cornerCodeDisplay = document.getElementById('corner-code-display');
+const cornerJoinQrImg = document.getElementById('corner-join-qr-img');
+const cornerPlayerList = document.getElementById('corner-player-list');
+const toastContainer = document.getElementById('toast-container');
+const scoreboardVisibilityBtn = document.getElementById('scoreboard-visibility-btn');
+
 const categorySelectView = document.getElementById('category-select-view');
+const categorySelectGridCard = document.getElementById('category-select-grid-card');
 const categorySelectGrid = document.getElementById('category-select-grid');
 const goToResultsBtn = document.getElementById('go-to-results-btn');
+const reviewAllowedToggleBtn = document.getElementById('review-allowed-toggle-btn');
+const categoryReviewCard = document.getElementById('category-review-card');
+const categoryReviewBackBtn = document.getElementById('category-review-back-btn');
+const categoryReviewTitle = document.getElementById('category-review-title');
+const categoryReviewList = document.getElementById('category-review-list');
 
 const categoryIntroView = document.getElementById('category-intro-view');
 const categoryIntroLabelEl = document.getElementById('category-intro-label');
@@ -50,14 +64,30 @@ const lockBtn = document.getElementById('lock-btn');
 const lockedControls = document.getElementById('locked-controls');
 const revealAnswerBtn = document.getElementById('reveal-answer-btn');
 const correctAnswerDisplay = document.getElementById('correct-answer-display');
+const explanationDisplay = document.getElementById('explanation-display');
 const startReviewBtn = document.getElementById('start-review-btn');
 const nextQuestionBtn = document.getElementById('next-question-btn');
 const resultsList = document.getElementById('results-list');
 const scoreboardList = document.getElementById('scoreboard-list');
+const scoreboardHiddenHint = document.getElementById('scoreboard-hidden-hint');
+
+const buzzerControls = document.getElementById('buzzer-controls');
+const buzzerQueueEl = document.getElementById('buzzer-queue');
+const buzzerActiveControls = document.getElementById('buzzer-active-controls');
+const buzzerActiveNameEl = document.getElementById('buzzer-active-name');
+const buzzerCorrectBtn = document.getElementById('buzzer-correct-btn');
+const buzzerIncorrectBtn = document.getElementById('buzzer-incorrect-btn');
+const buzzerResetBtn = document.getElementById('buzzer-reset-btn');
+const buzzerNextQuestionBtn = document.getElementById('buzzer-next-question-btn');
 
 const resultsView = document.getElementById('results-view');
 const resultsRevealList = document.getElementById('results-reveal-list');
 const finishQuizBtn = document.getElementById('finish-quiz-btn');
+
+const endQuizBtn = document.getElementById('end-quiz-btn');
+const endQuizModal = document.getElementById('end-quiz-modal');
+const confirmEndQuizBtn = document.getElementById('confirm-end-quiz-btn');
+const cancelEndQuizBtn = document.getElementById('cancel-end-quiz-btn');
 
 const endedView = document.getElementById('ended-view');
 const finalScoreboardList = document.getElementById('final-scoreboard-list');
@@ -71,11 +101,38 @@ let latestPlayers = [];
 let latestAnswers = new Map();
 let unsubscribeAnswers = null;
 let watchedQuestionKey = null;
+let latestBuzzes = [];
+let unsubscribeBuzzes = null;
+let firstEventsSnapshot = true;
+let reviewingCategory = null;
 
 // Built once, the first time the session reaches "results" — holds the
 // score/name reveal state for each player's row. Not synced to Firestore:
 // this is a host-screen-only dramatic reveal, not resumable across refresh.
 let resultsRows = null;
+
+endQuizBtn.addEventListener('click', () => {
+    if (!sessionRef) return;
+    endQuizModal.hidden = false;
+});
+
+cancelEndQuizBtn.addEventListener('click', () => {
+    endQuizModal.hidden = true;
+});
+
+endQuizModal.addEventListener('click', e => {
+    if (e.target === endQuizModal) endQuizModal.hidden = true;
+});
+
+confirmEndQuizBtn.addEventListener('click', async () => {
+    confirmEndQuizBtn.disabled = true;
+    try {
+        await handleFinishQuiz();
+    } finally {
+        confirmEndQuizBtn.disabled = false;
+        endQuizModal.hidden = true;
+    }
+});
 
 if (quizId) {
     loadQuiz(quizId).then(data => {
@@ -93,7 +150,29 @@ if (quizId) {
     descEl.textContent = 'Start a quiz from Manage Quizzes instead of opening this page directly.';
 }
 
-function startSession() {
+// "Start Quiz" on Manage Quizzes always lands here with ?new=1, forcing a
+// fresh session even if one's already active. Without it (bookmarked link,
+// or the "Rejoin Quiz" button), an existing non-closed session for this quiz
+// is resumed instead of minting a new one and stranding every joined player.
+const forceNewSession = params.get('new') === '1';
+
+async function startSession() {
+    if (!forceNewSession) {
+        try {
+            const existing = await findActiveSessionForQuiz(quizId);
+            if (existing) {
+                code = existing.id;
+                sessionRef = doc(db, 'sessions', code);
+                codeDisplay.textContent = code;
+                await updateDoc(sessionRef, { hostConnected: true });
+                attachSessionListenersAndControls();
+                return;
+            }
+        } catch (err) {
+            console.error('Failed to look up an existing session:', err);
+        }
+    }
+
     code = generateCode();
     codeDisplay.textContent = code;
     sessionRef = doc(db, 'sessions', code);
@@ -108,7 +187,21 @@ function startSession() {
         answerRevealed: false,
         reviewMode: false,
         introPhase: null,
+        scoreboardVisible: false,
+        reviewAllowed: false,
+        hostConnected: true,
         createdAt: serverTimestamp()
+    });
+
+    attachSessionListenersAndControls();
+}
+
+function attachSessionListenersAndControls() {
+    // Best-effort — lets findActiveSessionForQuiz() tell a genuinely
+    // abandoned session (host tab closed, no one left) from one still being
+    // actively hosted, same caveats as the player-side pagehide detection.
+    window.addEventListener('pagehide', () => {
+        updateDoc(sessionRef, { hostConnected: false }).catch(() => {});
     });
 
     onSnapshot(
@@ -119,6 +212,21 @@ function startSession() {
     onSnapshot(
         query(collection(db, 'sessions', code, 'messages'), orderBy('sentAt', 'asc')),
         renderMessages
+    );
+
+    // The very first snapshot reports every existing doc as "added" — skip it
+    // so re-loading the host screen doesn't replay old join/reconnect toasts.
+    onSnapshot(
+        query(collection(db, 'sessions', code, 'events'), orderBy('at', 'asc')),
+        snapshot => {
+            if (firstEventsSnapshot) {
+                firstEventsSnapshot = false;
+                return;
+            }
+            snapshot.docChanges().forEach(change => {
+                if (change.type === 'added') showEventToast(change.doc.data());
+            });
+        }
     );
 
     onSnapshot(sessionRef, snap => {
@@ -133,9 +241,23 @@ function startSession() {
     revealAnswerBtn.addEventListener('click', handleRevealAnswer);
     startReviewBtn.addEventListener('click', handleStartReview);
     nextQuestionBtn.addEventListener('click', handleNextQuestion);
+    buzzerCorrectBtn.addEventListener('click', handleBuzzerCorrect);
+    buzzerIncorrectBtn.addEventListener('click', handleBuzzerIncorrect);
+    buzzerResetBtn.addEventListener('click', handleBuzzerReset);
+    buzzerNextQuestionBtn.addEventListener('click', handleNextQuestion);
     categoryIntroContinueBtn.addEventListener('click', handleCategoryIntroContinue);
+    categoryReviewBackBtn.addEventListener('click', () => {
+        reviewingCategory = null;
+        renderCategorySelectView(currentSession);
+    });
+    reviewAllowedToggleBtn.addEventListener('click', () => {
+        updateDoc(sessionRef, { reviewAllowed: !(currentSession && currentSession.reviewAllowed) });
+    });
     goToResultsBtn.addEventListener('click', () => updateDoc(sessionRef, { status: 'results' }));
     finishQuizBtn.addEventListener('click', handleFinishQuiz);
+    scoreboardVisibilityBtn.addEventListener('click', () => {
+        updateDoc(sessionRef, { scoreboardVisible: !(currentSession && currentSession.scoreboardVisible) });
+    });
 
     // Purely cosmetic — never let a QR rendering issue take down the rest
     // of session setup (that's what happened when this used to run first
@@ -151,6 +273,7 @@ function renderPlayers(snapshot) {
     latestPlayers = [];
     playerList.innerHTML = '';
     scoreboardList.innerHTML = '';
+    cornerPlayerList.innerHTML = '';
 
     snapshot.forEach(docSnap => {
         const data = docSnap.data();
@@ -163,9 +286,27 @@ function renderPlayers(snapshot) {
         const scoreLi = document.createElement('li');
         scoreLi.textContent = `${data.name} — ${data.score || 0} pts`;
         scoreboardList.appendChild(scoreLi);
+
+        // Disconnected players stay in the list (greyed out) rather than
+        // disappearing, so the host can see who might come back (2.5).
+        const cornerLi = document.createElement('li');
+        cornerLi.textContent = data.name;
+        cornerLi.className = data.connected === false ? 'disconnected' : '';
+        cornerPlayerList.appendChild(cornerLi);
     });
 
     renderResultsList();
+}
+
+function showEventToast(event) {
+    const toast = document.createElement('div');
+    toast.className = 'toast' + (event.type === 'reconnected' ? ' reconnected' : '');
+    toast.textContent = event.type === 'reconnected'
+        ? `${event.name} has reconnected`
+        : `${event.name} has joined`;
+
+    toastContainer.appendChild(toast);
+    setTimeout(() => toast.remove(), 5000);
 }
 
 // Captured once, at the moment the quiz finishes — the live players listener
@@ -195,6 +336,11 @@ function renderMessages(snapshot) {
 
 function renderSession(session) {
     currentSession = session;
+
+    persistentPanel.hidden = session.status === 'lobby';
+    scoreboardVisibilityBtn.textContent = session.scoreboardVisible ? '🙈 Hide' : '👁 Show';
+    scoreboardList.hidden = !session.scoreboardVisible;
+    scoreboardHiddenHint.hidden = !!session.scoreboardVisible;
 
     lobbyView.hidden = true;
     categorySelectView.hidden = true;
@@ -303,21 +449,65 @@ function shouldOfferReveal(index, completedCategories) {
     return false;
 }
 
-// The range of question indexes to step through when revealing: just this
-// category, unless this is the final category of an "end"-mode quiz, in
-// which case every question across the whole quiz gets reviewed at once.
-function getReviewRange(index, completedCategories) {
+// The ordered list of question indexes to step through when revealing: just
+// this category's own questions, unless this is the final category of an
+// "end"-mode quiz — then every played question, grouped by category in the
+// order those categories were actually PLAYED (completedCategories), not
+// quiz-authoring order. So if category 5 was played first, its questions
+// are marked first, even though it appears later in the quiz doc.
+//
+// IMPORTANT: takes the category that TRIGGERED the review
+// (session.currentCategoryStart), not whatever question index the
+// walkthrough currently happens to be on — recomputing this from the
+// current index broke the "whole quiz" case, since once the walkthrough
+// stepped back into an earlier category's own questions, that category
+// isn't itself "the final remaining one" and the sequence would wrongly
+// collapse back down to just that one category, cutting the review short.
+function getReviewSequence(triggeringCategoryStart, completedCategories) {
     const mode = quiz.answerRevealMode || 'immediate';
-    const catBlock = getCategoryBoundsFor(index);
 
-    if (mode === 'end' && isFinalRemainingCategory(catBlock.start, completedCategories || [])) {
-        return { start: 0, end: quiz.questions.length - 1 };
+    if (mode === 'end' && isFinalRemainingCategory(triggeringCategoryStart, completedCategories || [])) {
+        const playOrder = [...(completedCategories || [])];
+        if (!playOrder.includes(triggeringCategoryStart)) playOrder.push(triggeringCategoryStart);
+
+        const sequence = [];
+        playOrder.forEach(catStart => {
+            const bounds = getCategoryBoundsFor(catStart);
+            for (let i = bounds.start; i <= bounds.end; i++) {
+                if (quiz.questions[i].type !== 'buzzer') sequence.push(i);
+            }
+        });
+        return sequence;
     }
 
-    return catBlock;
+    const catBlock = getCategoryBoundsFor(triggeringCategoryStart);
+    const sequence = [];
+    for (let i = catBlock.start; i <= catBlock.end; i++) {
+        if (quiz.questions[i].type !== 'buzzer') sequence.push(i);
+    }
+    return sequence;
 }
 
 function renderCategorySelectView(session) {
+    // Review-and-edit only makes sense for "reveal at the end" quizzes —
+    // it's meant to let players fix an answer before the single final
+    // reveal, not to reopen something already revealed immediately/per-category.
+    const reviewEligible = (quiz.answerRevealMode || 'immediate') === 'end';
+    reviewAllowedToggleBtn.hidden = !reviewEligible;
+    reviewAllowedToggleBtn.textContent = session.reviewAllowed
+        ? '📖 Players Can Review (click to stop)'
+        : '📖 Allow Players to Review Answers';
+
+    if (reviewingCategory) {
+        categorySelectGridCard.hidden = true;
+        categoryReviewCard.hidden = false;
+        renderCategoryReviewList();
+        return;
+    }
+
+    categorySelectGridCard.hidden = false;
+    categoryReviewCard.hidden = true;
+
     categorySelectGrid.innerHTML = '';
     const categories = getCategoriesWithNames();
     const completed = session.completedCategories || [];
@@ -328,7 +518,6 @@ function renderCategorySelectView(session) {
         const tile = document.createElement('button');
         tile.type = 'button';
         tile.className = 'category-tile';
-        tile.disabled = isDone;
         if (cat.background) tile.style.backgroundImage = `url('${cat.background}')`;
 
         const label = document.createElement('span');
@@ -340,6 +529,11 @@ function renderCategorySelectView(session) {
             doneTag.className = 'done-tag';
             doneTag.textContent = 'Completed ✓';
             tile.appendChild(doneTag);
+
+            tile.addEventListener('click', () => {
+                reviewingCategory = cat;
+                renderCategorySelectView(session);
+            });
         } else {
             tile.addEventListener('click', () => startCategory(cat));
         }
@@ -348,6 +542,26 @@ function renderCategorySelectView(session) {
     });
 
     goToResultsBtn.hidden = categories.length === 0 || completed.length < categories.length;
+}
+
+// Questions only, deliberately no answers here — this is meant for a quick
+// "what was in this category" glance, not a spoiler-showing recap.
+function renderCategoryReviewList() {
+    categoryReviewTitle.textContent = reviewingCategory.name;
+    categoryReviewList.innerHTML = '';
+
+    for (let i = reviewingCategory.start; i <= reviewingCategory.end; i++) {
+        const question = quiz.questions[i];
+
+        const row = document.createElement('div');
+        row.className = 'review-question-row';
+
+        const promptEl = document.createElement('span');
+        promptEl.textContent = question.prompt;
+        row.appendChild(promptEl);
+
+        categoryReviewList.appendChild(row);
+    }
 }
 
 function startCategory(cat) {
@@ -427,21 +641,31 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         `${categoryName} — Question ${index - catBlock.start + 1} of ${catBlock.end - catBlock.start + 1}`;
     questionPromptEl.textContent = question.prompt;
 
-    questionMediaEl.innerHTML = '';
-    if (question.media) {
-        const img = document.createElement('img');
-        img.src = question.media.src;
-        img.alt = question.media.alt || '';
-        img.className = 'question-media' + (question.media.silhouette && phase === 'answering' ? ' silhouette' : '');
-        questionMediaEl.appendChild(img);
-    }
+    MediaUtils.render(question.media, questionMediaEl, phase === 'answering');
 
     const questionKey = `${index}:${question.id}`;
     if (watchedQuestionKey !== questionKey) {
         watchedQuestionKey = questionKey;
         latestAnswers = new Map();
-        watchAnswers(question);
+        latestBuzzes = [];
+        if (question.type === 'buzzer') watchBuzzes(question); else watchAnswers(question);
     }
+
+    // Buzzer questions are resolved live by the host and always advance
+    // immediately — they never enter the paced reveal/review pipeline that
+    // the other answer types use (see shouldOfferReveal/getReviewRange).
+    if (question.type === 'buzzer') {
+        answerCountEl.hidden = true;
+        lockBtn.hidden = true;
+        lockedControls.hidden = true;
+        buzzerControls.hidden = false;
+        renderBuzzerQueue();
+        renderResultsList();
+        return;
+    }
+
+    buzzerControls.hidden = true;
+    answerCountEl.hidden = false;
 
     if (phase === 'answering') {
         lockBtn.hidden = false;
@@ -462,6 +686,7 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         // to the next question — locked in, no reveal.
         revealAnswerBtn.hidden = true;
         correctAnswerDisplay.hidden = true;
+        explanationDisplay.hidden = true;
         startReviewBtn.hidden = true;
         nextQuestionBtn.hidden = false;
         nextQuestionBtn.textContent = 'Next Question';
@@ -470,6 +695,7 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         // — finish this category without revealing anything yet.
         revealAnswerBtn.hidden = true;
         correctAnswerDisplay.hidden = true;
+        explanationDisplay.hidden = true;
         startReviewBtn.hidden = true;
         nextQuestionBtn.hidden = false;
         nextQuestionBtn.textContent = 'Finish Category';
@@ -478,6 +704,7 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         // to review mode instead of revealing here.
         revealAnswerBtn.hidden = true;
         correctAnswerDisplay.hidden = true;
+        explanationDisplay.hidden = true;
         nextQuestionBtn.hidden = true;
         startReviewBtn.hidden = false;
         startReviewBtn.textContent = 'Reveal Answers';
@@ -485,13 +712,17 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         // Either "immediate" mode, or stepping back through a block in
         // review mode — reveal one question at a time.
         startReviewBtn.hidden = true;
-        const reviewRange = reviewMode ? getReviewRange(index, completedCategories) : { start: index, end: index };
-        const isLastInReview = index === reviewRange.end;
+        const reviewSequence = reviewMode ? getReviewSequence(currentSession.currentCategoryStart, completedCategories) : [index];
+        const isLastInReview = reviewSequence[reviewSequence.length - 1] === index;
 
         if (answerRevealed) {
             revealAnswerBtn.hidden = true;
             correctAnswerDisplay.hidden = false;
             correctAnswerDisplay.textContent = `Correct answer: ${getCorrectAnswerDisplay(question)}`;
+
+            explanationDisplay.hidden = !question.explanation;
+            explanationDisplay.textContent = question.explanation || '';
+
             nextQuestionBtn.hidden = false;
 
             if (reviewMode) {
@@ -502,6 +733,7 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         } else {
             revealAnswerBtn.hidden = false;
             correctAnswerDisplay.hidden = true;
+            explanationDisplay.hidden = true;
             nextQuestionBtn.hidden = true;
         }
     }
@@ -528,8 +760,89 @@ function watchAnswers(question) {
     });
 }
 
+// Sorted client-side (rather than via an orderBy in the query) so this
+// doesn't need a composite Firestore index alongside the questionId filter.
+function watchBuzzes(question) {
+    if (unsubscribeBuzzes) unsubscribeBuzzes();
+
+    const buzzesQuery = query(
+        collection(db, 'sessions', code, 'buzzes'),
+        where('questionId', '==', question.id)
+    );
+
+    unsubscribeBuzzes = onSnapshot(buzzesQuery, snapshot => {
+        latestBuzzes = snapshot.docs
+            .map(docSnap => ({ ref: docSnap.ref, ...docSnap.data() }))
+            .sort((a, b) => (a.buzzedAt?.toMillis?.() || 0) - (b.buzzedAt?.toMillis?.() || 0));
+        renderBuzzerQueue();
+    });
+}
+
+function renderBuzzerQueue() {
+    buzzerQueueEl.innerHTML = '';
+
+    latestBuzzes.forEach((buzz, i) => {
+        const li = document.createElement('li');
+        li.className = buzz.status;
+        const suffix = buzz.status === 'correct' ? ' — Correct ✓'
+            : buzz.status === 'incorrect' ? ' — Incorrect ✕'
+            : ' — buzzed in';
+        li.textContent = `${i + 1}. ${buzz.playerName}${suffix}`;
+        buzzerQueueEl.appendChild(li);
+    });
+
+    const active = latestBuzzes.find(b => b.status === 'pending');
+    buzzerActiveControls.hidden = !active;
+    buzzerNextQuestionBtn.hidden = !!active;
+    if (active) buzzerActiveNameEl.textContent = `${active.playerName} buzzed in!`;
+}
+
+async function handleBuzzerCorrect() {
+    const active = latestBuzzes.find(b => b.status === 'pending');
+    if (!active) return;
+
+    buzzerCorrectBtn.disabled = true;
+    try {
+        await updateDoc(active.ref, { status: 'correct' });
+        await updateDoc(doc(db, 'sessions', code, 'players', active.playerId), {
+            score: increment(currentQuestion.points)
+        });
+    } finally {
+        buzzerCorrectBtn.disabled = false;
+    }
+}
+
+async function handleBuzzerIncorrect() {
+    const active = latestBuzzes.find(b => b.status === 'pending');
+    if (!active) return;
+
+    buzzerIncorrectBtn.disabled = true;
+    try {
+        await updateDoc(active.ref, { status: 'incorrect' });
+    } finally {
+        buzzerIncorrectBtn.disabled = false;
+    }
+}
+
+async function handleBuzzerReset() {
+    buzzerResetBtn.disabled = true;
+    try {
+        await Promise.all(latestBuzzes.map(b => deleteDoc(b.ref)));
+    } finally {
+        buzzerResetBtn.disabled = false;
+    }
+}
+
 function renderResultsList() {
     resultsList.innerHTML = '';
+
+    if (currentQuestion && currentQuestion.type === 'buzzer') {
+        const li = document.createElement('li');
+        li.className = 'no-answer';
+        li.textContent = 'Buzzer question — see buzz order above.';
+        resultsList.appendChild(li);
+        return;
+    }
 
     const phase = currentSession ? currentSession.questionPhase : 'answering';
     const bigRevealDone = !!(currentSession && currentSession.answerRevealed);
@@ -607,10 +920,13 @@ async function handleLock() {
         for (const docSnap of answersSnap.docs) {
             const data = docSnap.data();
             const gradeResult = typeImpl.grade(data.value, question);
+            const pointsAwarded = gradeResult.pointsAwarded !== undefined
+                ? gradeResult.pointsAwarded
+                : (gradeResult.correct ? question.points : 0);
 
             await updateDoc(docSnap.ref, {
                 correct: gradeResult.correct,
-                pointsAwarded: gradeResult.correct ? question.points : 0,
+                pointsAwarded,
                 textRevealed: false,
                 manualOverride: false
             });
@@ -675,9 +991,9 @@ async function handleStartReview() {
     startReviewBtn.disabled = true;
 
     try {
-        const reviewRange = getReviewRange(currentSession.currentQuestionIndex, currentSession.completedCategories);
+        const reviewSequence = getReviewSequence(currentSession.currentCategoryStart, currentSession.completedCategories);
         await updateDoc(sessionRef, {
-            currentQuestionIndex: reviewRange.start,
+            currentQuestionIndex: reviewSequence[0],
             questionPhase: 'locked',
             answerRevealed: false,
             reviewMode: true
@@ -696,13 +1012,14 @@ async function handleNextQuestion() {
 
     try {
         if (reviewMode) {
-            const reviewRange = getReviewRange(index, currentSession.completedCategories);
+            const reviewSequence = getReviewSequence(currentSession.currentCategoryStart, currentSession.completedCategories);
+            const pos = reviewSequence.indexOf(index);
 
-            if (index === reviewRange.end) {
+            if (pos === reviewSequence.length - 1) {
                 await finishCategory();
             } else {
                 await updateDoc(sessionRef, {
-                    currentQuestionIndex: index + 1,
+                    currentQuestionIndex: reviewSequence[pos + 1],
                     questionPhase: 'locked',
                     answerRevealed: false,
                     reviewMode: true
@@ -747,13 +1064,17 @@ async function finishCategory() {
 function ensureResultsRows() {
     if (resultsRows) return;
 
+    // If the scoreboard was already visible to players throughout, there's
+    // nothing left to dramatically reveal — show everything immediately (2.6).
+    const alreadyRevealed = !!(currentSession && currentSession.scoreboardVisible);
+
     resultsRows = [...latestPlayers]
         .sort((a, b) => (b.score || 0) - (a.score || 0))
         .map(player => ({
             name: player.name,
             score: player.score || 0,
-            scoreRevealed: false,
-            nameRevealed: false
+            scoreRevealed: alreadyRevealed,
+            nameRevealed: alreadyRevealed
         }));
 }
 
@@ -843,7 +1164,8 @@ async function finishQuizCleanup() {
             quizId: quiz.id,
             quizTitle: quiz.title,
             playedAt: serverTimestamp(),
-            players: resultPlayers
+            players: resultPlayers,
+            comboKey: computeComboKey(resultPlayers.map(p => p.name))
         });
 
         await Promise.all(resultPlayers.map(async result => {
@@ -867,10 +1189,84 @@ async function finishQuizCleanup() {
         }));
     }
 
+    if (quiz.reviewEnabled) {
+        await saveReviewRecords();
+    }
+
     await deleteCollectionDocs(collection(db, 'sessions', code, 'players'));
     await deleteCollectionDocs(collection(db, 'sessions', code, 'messages'));
     await deleteCollectionDocs(collection(db, 'sessions', code, 'answers'));
+    await deleteCollectionDocs(collection(db, 'sessions', code, 'events'));
+    await deleteCollectionDocs(collection(db, 'sessions', code, 'buzzes'));
     await deleteDoc(sessionRef);
+}
+
+// Snapshots every player's answers (and buzzer resolutions) into one review
+// doc per player before the session's ephemeral data gets wiped, so the
+// player-facing review hub (6.1) has something to show afterward. Opt-in via
+// quiz.reviewEnabled since most quizzes don't need this stored long-term.
+async function saveReviewRecords() {
+    const [answersSnap, buzzesSnap] = await Promise.all([
+        getDocs(collection(db, 'sessions', code, 'answers')),
+        getDocs(collection(db, 'sessions', code, 'buzzes'))
+    ]);
+
+    const answersByPlayer = new Map();
+    answersSnap.forEach(docSnap => {
+        const data = docSnap.data();
+        if (!answersByPlayer.has(data.playerId)) answersByPlayer.set(data.playerId, []);
+        answersByPlayer.get(data.playerId).push(data);
+    });
+
+    const buzzesByPlayer = new Map();
+    buzzesSnap.forEach(docSnap => {
+        const data = docSnap.data();
+        if (!buzzesByPlayer.has(data.playerId)) buzzesByPlayer.set(data.playerId, []);
+        buzzesByPlayer.get(data.playerId).push(data);
+    });
+
+    await Promise.all(latestPlayers.map(player => {
+        const playerAnswers = answersByPlayer.get(player.id) || [];
+        const playerBuzzes = buzzesByPlayer.get(player.id) || [];
+
+        const entries = quiz.questions.map(question => {
+            if (question.type === 'buzzer') {
+                const buzz = playerBuzzes.find(b => b.questionId === question.id);
+                const correct = !!buzz && buzz.status === 'correct';
+                return {
+                    questionId: question.id,
+                    category: question.category || 'General',
+                    prompt: question.prompt,
+                    yourAnswer: buzz ? `Buzzed in — marked ${buzz.status}` : "Didn't buzz in",
+                    correctAnswer: '(host-judged live)',
+                    correct,
+                    pointsAwarded: correct ? question.points : 0,
+                    explanation: question.explanation || ''
+                };
+            }
+
+            const answer = playerAnswers.find(a => a.questionId === question.id);
+            return {
+                questionId: question.id,
+                category: question.category || 'General',
+                prompt: question.prompt,
+                yourAnswer: answer ? formatAnswerValue(question, answer.value) : '(no answer)',
+                correctAnswer: getCorrectAnswerDisplay(question),
+                correct: answer ? !!answer.correct : false,
+                pointsAwarded: answer ? (answer.pointsAwarded || 0) : 0,
+                explanation: question.explanation || ''
+            };
+        });
+
+        return addDoc(collection(db, 'playerReviews'), {
+            nameKey: slugifyName(player.name),
+            playerName: player.name,
+            quizId: quiz.id,
+            quizTitle: quiz.title,
+            playedAt: serverTimestamp(),
+            entries
+        });
+    }));
 }
 
 async function deleteCollectionDocs(colRef) {
@@ -880,6 +1276,14 @@ async function deleteCollectionDocs(colRef) {
 
 function slugifyName(name) {
     return name.trim().toLowerCase().replace(/\s+/g, ' ');
+}
+
+// Identifies a specific group of players regardless of turn order (so "Mum,
+// Emily, Dad" and "Dad, Mum, Emily" land in the same combo) — used by the
+// Stats page's Combos tab to show this exact group's history.
+function computeComboKey(names) {
+    if (!names || names.length < 2) return null;
+    return names.map(slugifyName).sort().join('|');
 }
 
 function getCorrectAnswerDisplay(question) {
@@ -909,6 +1313,9 @@ function getCorrectAnswerDisplay(question) {
             return question.config.mode === 'range'
                 ? `${question.config.min}–${question.config.max}`
                 : String(question.config.correctValue);
+
+        case 'multi-answer':
+            return question.config.acceptedAnswers.join(', ');
 
         default:
             return '';
@@ -942,6 +1349,9 @@ function formatAnswerValue(question, value) {
         case 'number':
             return (value === null || value === undefined) ? '(no answer)' : String(value);
 
+        case 'multi-answer':
+            return (Array.isArray(value) && value.length) ? value.join(', ') : '(no answer)';
+
         default:
             return String(value);
     }
@@ -967,4 +1377,9 @@ function renderJoinQrCode() {
         joinQrCaption.textContent = `Or go to join.html and enter code ${code}`;
     };
     joinQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(joinUrl)}`;
+
+    cornerCodeDisplay.textContent = code;
+    cornerJoinQrImg.onload = () => { cornerJoinQrImg.hidden = false; };
+    cornerJoinQrImg.onerror = () => { cornerJoinQrImg.hidden = true; };
+    cornerJoinQrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=${encodeURIComponent(joinUrl)}`;
 }

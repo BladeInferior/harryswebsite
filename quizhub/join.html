@@ -168,6 +168,40 @@
             margin-bottom:6px;
         }
 
+        #waiting-player-list-wrap{
+            margin-bottom:20px;
+        }
+
+        #waiting-player-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+        }
+
+        #waiting-player-list li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:8px 12px;
+            font-size:.9rem;
+        }
+
+        #waiting-player-list li.disconnected{
+            opacity:.45;
+            font-style:italic;
+        }
+
+        #waiting-player-list li.self{
+            border-color:var(--gold);
+        }
+
+        #waiting-player-list:empty::after{
+            content:"No one has joined yet.";
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
         #waiting-section p,
         #host-screen-section p{
             text-align:center;
@@ -242,6 +276,24 @@
             filter:brightness(0);
         }
 
+        #player-question-media video,
+        #player-question-media iframe.question-video-embed{
+            display:block;
+            width:100%;
+            max-width:320px;
+            aspect-ratio:16/9;
+            margin:0 auto 16px;
+            border-radius:8px;
+            border:none;
+        }
+
+        #player-question-media audio.question-audio{
+            display:block;
+            width:100%;
+            max-width:300px;
+            margin:0 auto 16px;
+        }
+
         .text-answer-input,
         .mc-dropdown{
             width:100%;
@@ -258,6 +310,19 @@
         .mc-dropdown:focus{
             outline:none;
             border-color:var(--gold);
+        }
+
+        /* Number answer input reuses .text-answer-input's box styling for
+           visual consistency — this just strips the native spinner arrows
+           so it doesn't look different from the other answer inputs. */
+        .number-answer-input::-webkit-outer-spin-button,
+        .number-answer-input::-webkit-inner-spin-button{
+            -webkit-appearance:none;
+            margin:0;
+        }
+
+        .number-answer-input{
+            -moz-appearance:textfield;
         }
 
         .answer-option-list{
@@ -375,11 +440,89 @@
             font-weight:bold;
         }
 
-        #reveal-view .explanation{
+        #reveal-view .explanation,
+        #reveal-view .your-answer-line{
             display:block;
             margin-top:8px;
             font-weight:normal;
             color:var(--secondary);
+        }
+
+        #buzzer-view{
+            text-align:center;
+        }
+
+        #buzz-in-btn{
+            width:100%;
+            font-size:1.3rem;
+            padding:26px;
+        }
+
+        #buzz-in-btn:disabled{
+            opacity:.4;
+            cursor:default;
+        }
+
+        #buzzer-status-text{
+            margin-top:14px;
+            color:var(--secondary);
+        }
+
+        .tile-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .tile{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:12px 16px;
+            cursor:pointer;
+            text-align:left;
+            color:var(--text);
+            font-size:.95rem;
+            width:100%;
+        }
+
+        .tile:hover{
+            border-color:var(--gold);
+        }
+
+        .tile.correct{
+            border-left:4px solid var(--correct);
+        }
+
+        .tile.incorrect{
+            border-left:4px solid var(--incorrect);
+        }
+
+        .tile-meta{
+            color:var(--secondary);
+            font-size:.85rem;
+            flex-shrink:0;
+        }
+
+        #player-review-detail-previous.correct{
+            color:var(--correct);
+        }
+
+        #player-review-detail-previous.incorrect{
+            color:var(--incorrect);
+        }
+
+        #player-review-save-status.success{
+            color:var(--correct);
+        }
+
+        #waiting-on-players{
+            color:var(--secondary);
+            margin-top:8px;
         }
 
         #player-score{
@@ -438,6 +581,11 @@ fetch('../navbar.html')
             <h2>You're in!</h2>
             <p>Waiting for the host to begin the quiz...</p>
 
+            <div id="waiting-player-list-wrap">
+                <label style="margin-bottom:8px;">Players joined</label>
+                <ul id="waiting-player-list"></ul>
+            </div>
+
             <form id="message-form">
                 <label for="message-input">Send a message to the host</label>
                 <input type="text" id="message-input" autocomplete="off" required>
@@ -450,6 +598,32 @@ fetch('../navbar.html')
         <div id="host-screen-section" hidden>
             <h2>👀 Look at the host's screen</h2>
             <p id="host-screen-message"></p>
+            <button id="open-review-btn" class="btn btn-secondary" type="button" hidden style="margin-top:14px;">📖 Review Your Answers</button>
+        </div>
+
+        <div id="player-review-section" hidden>
+            <div id="player-review-categories-view">
+                <button id="player-review-categories-back-btn" class="btn btn-secondary btn-small" type="button">← Back</button>
+                <h2 style="margin-top:14px;">📖 Review Your Answers</h2>
+                <p style="color:var(--secondary);margin-bottom:14px;">Pick a completed category to look back at your answers.</p>
+                <div id="player-review-category-list" class="tile-list"></div>
+            </div>
+
+            <div id="player-review-questions-view" hidden>
+                <button id="player-review-questions-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Categories</button>
+                <h2 id="player-review-questions-title" style="margin:14px 0;"></h2>
+                <div id="player-review-question-list" class="tile-list"></div>
+            </div>
+
+            <div id="player-review-detail-view" hidden>
+                <button id="player-review-detail-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Questions</button>
+                <h2 id="player-review-detail-prompt" style="margin:14px 0 10px;"></h2>
+                <div id="player-review-detail-media"></div>
+                <p id="player-review-detail-previous" style="color:var(--secondary);margin-bottom:14px;"></p>
+                <div id="player-review-detail-answer-mount"></div>
+                <button id="player-review-save-btn" class="btn" type="button" style="margin-top:14px;">Save Answer</button>
+                <p id="player-review-save-status"></p>
+            </div>
         </div>
 
         <div id="category-intro-section" hidden>
@@ -469,9 +643,15 @@ fetch('../navbar.html')
                 <button id="send-answer-btn" class="btn" type="button">Send Answer</button>
             </div>
 
+            <div id="buzzer-view" hidden>
+                <button id="buzz-in-btn" class="btn" type="button">🔔 Buzz In!</button>
+                <p id="buzzer-status-text"></p>
+            </div>
+
             <div id="locked-view" hidden>
                 <p id="locked-your-answer" hidden></p>
                 <p id="locked-status"></p>
+                <p id="waiting-on-players" hidden></p>
                 <button id="back-btn" class="btn btn-secondary" type="button" hidden>Back / Edit Answer</button>
             </div>
 
@@ -481,13 +661,16 @@ fetch('../navbar.html')
         <div id="ended-section" hidden>
             <h2>Quiz Complete!</h2>
             <p id="final-score"></p>
+            <a id="review-answers-link" href="review.html" class="btn btn-secondary" hidden style="display:block;margin-bottom:10px;">📖 Review My Answers</a>
             <a href="join.html" class="btn">Play Another Quiz</a>
         </div>
 
     </div>
 </section>
 
+<script src="engine/answer-matching.js"></script>
 <script src="engine/answer-types.js"></script>
+<script src="engine/media-utils.js"></script>
 <script type="module" src="join.js"></script>
 
 </body>

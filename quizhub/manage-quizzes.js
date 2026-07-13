@@ -2,6 +2,7 @@ import { QUIZ_PATHS } from './data/quiz-registry.js';
 import { db } from './firebase/firebase-config.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 import { hashPassword } from './password-utils.js';
+import { findActiveSessionForQuiz } from './session-lookup.js';
 
 const quizList = document.getElementById('quiz-list');
 const deleteModal = document.getElementById('delete-confirm-modal');
@@ -44,9 +45,30 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
 
         const startLink = document.createElement('a');
         startLink.className = 'btn';
-        startLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+        // Always forces a brand-new session (?new=1) — even if one's already
+        // active, per the ask that Start Quiz never silently resumes.
+        // "Rejoin Quiz" (below, added once we know a session exists) is the
+        // only way back into an in-progress one.
+        startLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}&new=1`;
         startLink.textContent = 'Start Quiz';
         actions.appendChild(startLink);
+
+        const rejoinLink = document.createElement('a');
+        rejoinLink.className = 'btn btn-secondary';
+        rejoinLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+        rejoinLink.textContent = '↻ Rejoin Quiz';
+        rejoinLink.hidden = true;
+        actions.appendChild(rejoinLink);
+
+        findActiveSessionForQuiz(quiz.id).then(session => {
+            rejoinLink.hidden = !session;
+        }).catch(err => console.error('Active session lookup failed:', err));
+
+        const previewLink = document.createElement('a');
+        previewLink.className = 'btn btn-secondary';
+        previewLink.href = `play-test.html?quiz=${encodeURIComponent(quiz.id)}`;
+        previewLink.textContent = 'Preview';
+        actions.appendChild(previewLink);
 
         if (quiz.source === 'firestore') {
             const editLink = document.createElement('a');

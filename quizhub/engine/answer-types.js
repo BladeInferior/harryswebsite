@@ -41,11 +41,8 @@ const AnswerTypeRegistry = (function () {
         },
 
         grade(value, question) {
-            const normalized = (value || '').trim().toLowerCase();
-            const accepted = question.config.acceptedAnswers.map(a => a.trim().toLowerCase());
-
             return {
-                correct: accepted.includes(normalized),
+                correct: !!AnswerMatching.findMatch(value, question.config.acceptedAnswers),
                 correctValue: question.config.acceptedAnswers[0]
             };
         },
@@ -290,7 +287,8 @@ const AnswerTypeRegistry = (function () {
 
             const input = document.createElement('input');
             input.type = 'number';
-            input.className = 'number-answer-input';
+            input.inputMode = 'decimal';
+            input.className = 'number-answer-input text-answer-input';
             input.placeholder = 'Enter a number...';
 
             container.appendChild(input);
@@ -326,6 +324,122 @@ const AnswerTypeRegistry = (function () {
 
             input.disabled = true;
             input.classList.add(gradeResult.correct ? 'correct' : 'incorrect');
+        }
+    });
+
+    // ---------------------------------------------------------------
+    // multi-answer — config: { acceptedAnswers: [...], maxAnswers }. Each
+    // submitted answer is graded independently; points are awarded per
+    // correct, distinct answer rather than all-or-nothing (partial credit).
+    // ---------------------------------------------------------------
+    register('multi-answer', {
+        renderInput(question, container) {
+            container.innerHTML = '';
+
+            const max = question.config.maxAnswers || question.config.acceptedAnswers.length;
+
+            for (let i = 0; i < max; i++) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.className = 'multi-answer-input text-answer-input';
+                input.placeholder = `Answer ${i + 1}`;
+                input.autocomplete = 'off';
+                container.appendChild(input);
+            }
+
+            const first = container.querySelector('.multi-answer-input');
+            if (first) first.focus();
+        },
+
+        getValue(container) {
+            return Array.from(container.querySelectorAll('.multi-answer-input'))
+                .map(input => input.value.trim())
+                .filter(Boolean);
+        },
+
+        // Dedupes repeated submissions (by normalized text) before matching,
+        // and each accepted answer can only be claimed once — so submitting
+        // two different phrasings of the same correct answer only scores once.
+        grade(value, question) {
+            const accepted = question.config.acceptedAnswers;
+            const submitted = Array.isArray(value) ? value : [];
+
+            const seenNormalized = new Set();
+            const claimedAcceptedIndexes = new Set();
+            const perAnswerResults = [];
+            let correctCount = 0;
+
+            submitted.forEach(raw => {
+                const trimmed = (raw || '').trim();
+                if (!trimmed) return;
+
+                const norm = AnswerMatching.normalize(trimmed);
+                if (seenNormalized.has(norm)) {
+                    perAnswerResults.push({ value: trimmed, correct: false });
+                    return;
+                }
+                seenNormalized.add(norm);
+
+                const acceptedIndex = accepted.findIndex((a, i) =>
+                    !claimedAcceptedIndexes.has(i) && AnswerMatching.matches(trimmed, a));
+
+                if (acceptedIndex !== -1) {
+                    claimedAcceptedIndexes.add(acceptedIndex);
+                    correctCount++;
+                    perAnswerResults.push({ value: trimmed, correct: true });
+                } else {
+                    perAnswerResults.push({ value: trimmed, correct: false });
+                }
+            });
+
+            return {
+                correct: correctCount > 0,
+                correctCount,
+                pointsAwarded: correctCount * question.points,
+                perAnswerResults,
+                correctValue: accepted.join(', ')
+            };
+        },
+
+        reveal(container, question, value, gradeResult) {
+            const inputs = container.querySelectorAll('.multi-answer-input');
+            const results = (gradeResult && gradeResult.perAnswerResults) || [];
+
+            inputs.forEach(input => { input.disabled = true; });
+            results.forEach((r, i) => {
+                if (inputs[i]) inputs[i].classList.add(r.correct ? 'correct' : 'incorrect');
+            });
+        }
+    });
+
+    // ---------------------------------------------------------------
+    // buzzer — no player-submitted value to grade; the host resolves each
+    // buzz live (see host-quiz.js). This registration only covers generic
+    // contexts (like play-test.js) that drive every type the same way.
+    // ---------------------------------------------------------------
+    register('buzzer', {
+        renderInput(question, container) {
+            container.innerHTML = '';
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'buzz-in-btn';
+            btn.textContent = '🔔 Buzz In!';
+
+            container.appendChild(btn);
+        },
+
+        getValue() {
+            return null;
+        },
+
+        grade() {
+            return { correct: false, correctValue: '(host-judged)' };
+        },
+
+        reveal(container) {
+            const btn = container.querySelector('.buzz-in-btn');
+            if (btn) btn.disabled = true;
         }
     });
 

@@ -82,6 +82,141 @@
             margin-bottom:20px;
         }
 
+        #preview-mode-toggle{
+            display:flex;
+            justify-content:center;
+            gap:10px;
+            margin-bottom:24px;
+        }
+
+        .mode-btn.active{
+            background:var(--gold);
+            color:#121212;
+            border-color:var(--gold);
+        }
+
+        #category-select-area h2{
+            text-align:center;
+        }
+
+        #category-select-area > p{
+            text-align:center;
+        }
+
+        #preview-category-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+            gap:16px;
+        }
+
+        .preview-category-tile{
+            position:relative;
+            background:var(--card);
+            border:2px solid var(--border);
+            border-radius:14px;
+            padding:20px;
+            color:#fff;
+            font-size:1.1rem;
+            font-weight:bold;
+            cursor:pointer;
+            text-align:center;
+            transition:.15s ease;
+        }
+
+        .preview-category-tile:hover{
+            border-color:var(--gold);
+            transform:translateY(-2px);
+        }
+
+        .preview-category-tile .previewed-tag{
+            display:block;
+            margin-top:6px;
+            color:var(--correct);
+            font-size:.8rem;
+            font-weight:normal;
+        }
+
+        .preview-category-tile.done{
+            cursor:pointer;
+            filter:grayscale(.6);
+            opacity:.75;
+        }
+
+        #back-to-categories-link{
+            display:inline-block;
+            margin-bottom:16px;
+        }
+
+        #category-readonly-list{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .readonly-question-row{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:12px 16px;
+        }
+
+        .tile-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .tile{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:10px;
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:12px 16px;
+            cursor:pointer;
+            text-align:left;
+            color:var(--text);
+            font-size:.95rem;
+            width:100%;
+        }
+
+        .tile:hover{
+            border-color:var(--gold);
+        }
+
+        .tile-meta{
+            color:var(--secondary);
+            font-size:.85rem;
+            flex-shrink:0;
+        }
+
+        #locked-preview-view{
+            text-align:center;
+            padding:20px;
+            border-radius:10px;
+            background:var(--bg);
+            border:1px solid var(--border);
+            margin-top:20px;
+        }
+
+        #locked-preview-answer{
+            color:var(--gold);
+            font-weight:bold;
+            margin-bottom:8px;
+        }
+
+        #locked-preview-status{
+            color:var(--secondary);
+        }
+
+        .host-action-tag{
+            font-weight:normal;
+            font-size:.8rem;
+            opacity:.75;
+        }
+
         .question-card{
             background:var(--card);
             border:1px solid var(--border);
@@ -104,6 +239,22 @@
 
         .question-media.silhouette{
             filter:brightness(0);
+        }
+
+        video.question-media,
+        iframe.question-video-embed{
+            width:100%;
+            max-width:480px;
+            max-height:none;
+            aspect-ratio:16/9;
+            border:none;
+        }
+
+        .question-audio{
+            display:block;
+            width:100%;
+            max-width:420px;
+            margin:0 auto 20px;
         }
 
         .text-answer-input,
@@ -131,6 +282,16 @@
         .text-answer-input.incorrect,
         .mc-dropdown.incorrect{
             border-color:var(--incorrect);
+        }
+
+        .number-answer-input::-webkit-outer-spin-button,
+        .number-answer-input::-webkit-inner-spin-button{
+            -webkit-appearance:none;
+            margin:0;
+        }
+
+        .number-answer-input{
+            -moz-appearance:textfield;
         }
 
         .answer-option-list{
@@ -260,6 +421,12 @@
             color:var(--secondary);
         }
 
+        #feedback .correct-answer-line{
+            display:block;
+            margin-top:6px;
+            font-weight:normal;
+        }
+
         .action-row{
             margin-top:24px;
             text-align:center;
@@ -283,6 +450,22 @@
 
         .btn:hover:not(:disabled){
             background:#e6c458;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover:not(:disabled){
+            background:transparent;
+            border-color:var(--gold);
+        }
+
+        .btn-small{
+            padding:8px 16px;
+            font-size:.85rem;
         }
 
         #summary .question-card{
@@ -340,40 +523,87 @@ fetch('../navbar.html')
     });
 </script>
 
-<a class="back-button" href="quizhub.html">← Back</a>
+<a class="back-button" id="back-button-link" href="quizhub.html">← Back</a>
 
 <section class="hero">
-    <h1>🧠 Play Test</h1>
-    <p>Standalone single-player run-through of the sample quiz — no session, no join code, just testing the answer types.</p>
+    <h1 id="play-test-title">🧠 Play Test</h1>
+    <p id="play-test-subtitle">Standalone single-player run-through of the sample quiz — no session, no join code, just testing the answer types.</p>
 </section>
 
 <section class="section">
 
-    <div id="score-display"></div>
+    <div id="preview-mode-toggle">
+        <button id="host-view-btn" class="btn btn-small mode-btn" type="button">🖥️ Host View</button>
+        <button id="player-view-btn" class="btn btn-small btn-secondary mode-btn" type="button">📱 Player View</button>
+    </div>
 
-    <div id="quiz-area">
+    <div id="category-select-area">
+        <h2 style="margin-bottom:6px;">Choose a category to preview</h2>
+        <p style="color:var(--secondary);margin-bottom:16px;">Click any category to play through its questions, in any order — exactly as it'll work live. Once a category's done it becomes read-only, same as a real quiz.</p>
+
+        <div id="review-toggle-row" hidden style="display:flex;gap:10px;margin-bottom:16px;">
+            <button id="review-allowed-toggle-btn" class="btn btn-small btn-secondary" type="button"></button>
+            <button id="open-preview-review-btn" class="btn btn-small btn-secondary" type="button" hidden>📖 Review Your Answers</button>
+        </div>
+
+        <div id="preview-category-grid"></div>
+    </div>
+
+    <div id="category-readonly-view" hidden>
+        <button id="category-readonly-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Categories</button>
+        <h2 id="category-readonly-title" style="margin:14px 0;"></h2>
+        <div id="category-readonly-list"></div>
+    </div>
+
+    <div id="preview-review-categories-view" hidden>
+        <button id="preview-review-categories-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Categories</button>
+        <h2 style="margin:14px 0 6px;">📖 Review Your Answers</h2>
+        <p style="color:var(--secondary);margin-bottom:14px;">Pick a completed category to look back at your answers.</p>
+        <div id="preview-review-category-list" class="tile-list"></div>
+    </div>
+
+    <div id="preview-review-questions-view" hidden>
+        <button id="preview-review-questions-back-btn" class="btn btn-secondary btn-small" type="button">← Back</button>
+        <h2 id="preview-review-questions-title" style="margin:14px 0;"></h2>
+        <div id="preview-review-question-list" class="tile-list"></div>
+    </div>
+
+    <div id="preview-review-detail-view" hidden>
+        <button id="preview-review-detail-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Questions</button>
+        <h2 id="preview-review-detail-prompt" style="margin:14px 0 10px;"></h2>
+        <div id="preview-review-detail-media"></div>
+        <p id="preview-review-detail-previous" style="color:var(--secondary);margin-bottom:14px;"></p>
+        <div id="preview-review-detail-answer-mount"></div>
+        <button id="preview-review-save-btn" class="btn" type="button" style="margin-top:14px;">Save Answer</button>
+        <p id="preview-review-save-status"></p>
+    </div>
+
+    <div id="score-display" hidden></div>
+
+    <div id="quiz-area" hidden>
+        <button id="back-to-categories-link" class="btn btn-secondary btn-small" type="button">← Back to Categories</button>
         <div id="question-container" class="question-card"></div>
+
+        <div id="locked-preview-view" hidden>
+            <p id="locked-preview-answer"></p>
+            <p id="locked-preview-status">Your answer is locked in.</p>
+        </div>
 
         <div id="feedback" hidden></div>
 
         <div class="action-row">
             <button id="submit-btn" class="btn">Submit Answer</button>
-            <button id="next-btn" class="btn" hidden>Next Question</button>
-        </div>
-    </div>
-
-    <div id="summary" hidden>
-        <div class="question-card">
-            <h2 id="summary-score"></h2>
-            <ul id="summary-list" class="summary-list"></ul>
-            <button id="restart-btn" class="btn">Play Again</button>
+            <button id="reveal-preview-btn" class="btn" hidden>▶ Reveal Answer <span class="host-action-tag">(host action)</span></button>
+            <button id="next-btn" class="btn" hidden>Next <span class="host-action-tag">(host action)</span></button>
         </div>
     </div>
 
 </section>
 
+<script src="engine/answer-matching.js"></script>
 <script src="engine/answer-types.js"></script>
-<script src="play-test.js"></script>
+<script src="engine/media-utils.js"></script>
+<script type="module" src="play-test.js"></script>
 
 </body>
 </html>

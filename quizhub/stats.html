@@ -208,6 +208,159 @@
             border:1px solid var(--incorrect);
             color:var(--incorrect);
         }
+
+        .tile-list{
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+        }
+
+        .tile{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:14px 18px;
+            cursor:pointer;
+            text-align:left;
+            color:var(--text);
+            font-size:1rem;
+            width:100%;
+        }
+
+        .tile:hover{
+            border-color:var(--gold);
+        }
+
+        .tile-meta{
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
+        .leaderboard-toolbar{
+            display:flex;
+            justify-content:flex-end;
+            margin-bottom:14px;
+        }
+
+        .btn{
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:10px 18px;
+            font-size:.9rem;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover{
+            border-color:var(--gold);
+        }
+
+        #manual-entry-modal{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.75);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1200;
+            padding:20px;
+        }
+
+        #manual-entry-modal .add-item-box{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+            max-width:420px;
+            width:100%;
+        }
+
+        #manual-entry-modal label{
+            display:block;
+            margin-bottom:14px;
+            color:var(--secondary);
+            font-size:.9rem;
+        }
+
+        #manual-entry-modal input,
+        #manual-entry-modal select{
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--bg);
+            color:var(--text);
+            font-size:1rem;
+            margin-top:6px;
+        }
+
+        #manual-entry-modal input:focus,
+        #manual-entry-modal select:focus{
+            outline:none;
+            border-color:var(--gold);
+        }
+
+        .manual-entry-player-row{
+            display:flex;
+            gap:8px;
+            align-items:center;
+            margin-bottom:10px;
+        }
+
+        .manual-entry-player-row input[type="text"]{
+            flex:2;
+            margin-top:0;
+        }
+
+        .manual-entry-player-row input[type="number"]{
+            flex:1;
+            margin-top:0;
+        }
+
+        .manual-entry-player-row button{
+            background:var(--bg);
+            border:1px solid var(--border);
+            color:var(--text);
+            border-radius:6px;
+            width:32px;
+            height:38px;
+            flex-shrink:0;
+            cursor:pointer;
+        }
+
+        .manual-entry-player-row button:hover{
+            border-color:var(--gold);
+        }
+
+        #manual-entry-error{
+            background:rgba(229,83,75,.15);
+            border:1px solid var(--incorrect);
+            color:var(--incorrect);
+            padding:10px 14px;
+            border-radius:8px;
+            margin-bottom:14px;
+        }
+
+        .modal-buttons{
+            display:flex;
+            gap:10px;
+            margin-top:18px;
+        }
     </style>
 </head>
 
@@ -245,6 +398,7 @@ fetch('../navbar.html')
         <button class="tab-btn" data-tab="recent" type="button">Recent Quizzes</button>
         <button class="tab-btn" data-tab="leaderboard" type="button">Leaderboard</button>
         <button class="tab-btn" data-tab="individual" type="button">Individual Stats</button>
+        <button class="tab-btn" data-tab="combos" type="button">Combos</button>
     </div>
 
     <div id="tab-recent" class="card" hidden>
@@ -252,6 +406,9 @@ fetch('../navbar.html')
     </div>
 
     <div id="tab-leaderboard" class="card" hidden>
+        <div class="leaderboard-toolbar">
+            <button id="add-manual-entry-btn" class="btn btn-secondary" type="button">+ Add Manual Entry</button>
+        </div>
         <table>
             <thead>
                 <tr>
@@ -283,7 +440,69 @@ fetch('../navbar.html')
         <div id="individual-empty" class="empty-hint" hidden>No games played yet.</div>
     </div>
 
+    <div id="tab-combos" class="card" hidden>
+        <p style="color:var(--secondary);margin-bottom:14px;">
+            Stats scoped to specific groups of players (e.g. "Mum, Emily &amp; Dad") — separate from the
+            all-quizzes leaderboard above. A combo appears once that exact group has played together at least once.
+        </p>
+
+        <div id="combo-list-view">
+            <div id="combo-list" class="tile-list"></div>
+            <div id="combo-empty" class="empty-hint" hidden>No multi-player quizzes recorded yet.</div>
+        </div>
+
+        <div id="combo-detail-view" hidden>
+            <button id="combo-back-btn" class="btn btn-secondary btn-small" type="button">← Back to Combos</button>
+            <h3 id="combo-detail-title" style="margin:14px 0;"></h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Wins</th>
+                        <th>Draws</th>
+                        <th>Losses</th>
+                        <th>Total Points</th>
+                    </tr>
+                </thead>
+                <tbody id="combo-detail-body"></tbody>
+            </table>
+            <h4 style="margin:18px 0 10px;color:var(--gold);font-size:.9rem;">Quizzes played together</h4>
+            <div id="combo-detail-quizzes" class="tile-list"></div>
+        </div>
+    </div>
+
 </section>
+
+<!-- =========================
+    MANUAL LEADERBOARD ENTRY MODAL (9.1) — for quizzes run offline/in-person
+    without the app tracking answers live.
+========================== -->
+<div id="manual-entry-modal" hidden>
+    <div class="add-item-box" style="max-width:480px;">
+        <h2 style="margin-bottom:16px;">Add Manual Entry</h2>
+        <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+            Record a quiz played offline/in-person — enter everyone who played and their
+            score, and it's added to the leaderboard, Recent Quizzes, and (if 2+ people)
+            that group's Combo stats. Win/draw/loss is worked out automatically from the scores.
+        </p>
+
+        <div id="manual-entry-error" hidden></div>
+
+        <label>
+            Quiz name (optional)
+            <input type="text" id="manual-entry-quiz-name" autocomplete="off" placeholder="e.g. Family Trivia Night">
+        </label>
+
+        <label style="margin-bottom:8px;">Players</label>
+        <div id="manual-entry-players"></div>
+        <button id="manual-entry-add-player-btn" class="btn btn-secondary" type="button" style="margin-bottom:14px;">+ Add Player</button>
+
+        <div class="modal-buttons">
+            <button id="save-manual-entry-btn" class="btn" type="button">Add to Leaderboard</button>
+            <button id="cancel-manual-entry-btn" class="btn btn-secondary" type="button">Cancel</button>
+        </div>
+    </div>
+</div>
 
 <script type="module" src="stats.js"></script>
 
