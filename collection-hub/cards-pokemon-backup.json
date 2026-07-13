@@ -32,7 +32,7 @@
   {
     "name": "Charizard",
     "owned": true,
-    "special": false,
+    "special": true,
     "dex": "0006"
   },
   {
@@ -78,16 +78,16 @@
     "special": false
   },
   {
-    "dex": "0014",
     "name": "Kakuna",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0014"
   },
   {
-    "dex": "0015",
     "name": "Beedrill",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0015"
   },
   {
     "dex": "0016",
@@ -144,10 +144,10 @@
     "special": false
   },
   {
-    "dex": "0025",
     "name": "Pikachu",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0025"
   },
   {
     "dex": "0026",
@@ -240,16 +240,16 @@
     "special": false
   },
   {
-    "dex": "0041",
     "name": "Zubat",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0041"
   },
   {
-    "dex": "0042",
     "name": "Golbat",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0042"
   },
   {
     "dex": "0043",
@@ -1008,10 +1008,10 @@
     "special": false
   },
   {
-    "dex": "0169",
     "name": "Crobat",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0169"
   },
   {
     "dex": "0170",
@@ -2592,16 +2592,16 @@
     "special": false
   },
   {
-    "dex": "0433",
     "name": "Chingling",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0433"
   },
   {
-    "dex": "0434",
     "name": "Stunky",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0434"
   },
   {
     "dex": "0435",
@@ -3024,10 +3024,10 @@
     "special": false
   },
   {
-    "dex": "0505",
     "name": "Watchog",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0505"
   },
   {
     "dex": "0506",
@@ -3822,10 +3822,10 @@
     "special": false
   },
   {
-    "dex": "0638",
     "name": "Cobalion",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0638"
   },
   {
     "dex": "0639",
@@ -3894,46 +3894,46 @@
     "special": true
   },
   {
-    "dex": "0650",
     "name": "Chespin",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0650"
   },
   {
-    "dex": "0651",
     "name": "Quilladin",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0651"
   },
   {
-    "dex": "0652",
     "name": "Chesnaught",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0652"
   },
   {
-    "dex": "0653",
     "name": "Fennekin",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0653"
   },
   {
-    "dex": "0654",
     "name": "Braixen",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0654"
   },
   {
-    "dex": "0655",
     "name": "Delphox",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0655"
   },
   {
-    "dex": "0656",
     "name": "Froakie",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0656"
   },
   {
     "dex": "0657",
@@ -4002,10 +4002,10 @@
     "special": false
   },
   {
-    "dex": "0668",
     "name": "Pyroar",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0668"
   },
   {
     "dex": "0669",
@@ -4014,10 +4014,10 @@
     "special": false
   },
   {
-    "dex": "0670",
     "name": "Floette",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0670"
   },
   {
     "dex": "0671",
@@ -4074,10 +4074,10 @@
     "special": false
   },
   {
-    "dex": "0680",
     "name": "Doublade",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0680"
   },
   {
     "dex": "0681",
@@ -4140,10 +4140,10 @@
     "special": false
   },
   {
-    "dex": "0691",
     "name": "Dragalge",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0691"
   },
   {
     "dex": "0692",
@@ -4218,10 +4218,10 @@
     "special": false
   },
   {
-    "dex": "0704",
     "name": "Goomy",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0704"
   },
   {
     "dex": "0705",
@@ -4260,10 +4260,10 @@
     "special": false
   },
   {
-    "dex": "0711",
     "name": "Gourgeist",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0711"
   },
   {
     "dex": "0712",
@@ -4338,10 +4338,10 @@
     "special": false
   },
   {
-    "dex": "0724",
     "name": "Decidueye",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0724"
   },
   {
     "dex": "0725",
@@ -6252,10 +6252,10 @@
     "special": false
   },
   {
-    "dex": "0989",
     "name": "Sandy Shocks",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0989"
   },
   {
     "dex": "0990",
