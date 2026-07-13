@@ -1,6 +1,6 @@
 [
   {
-    "name": "Oak",
+    "name": "Professor Oak",
     "owned": false,
     "special": false
   },
@@ -85,7 +85,7 @@
     "special": true
   },
   {
-    "name": "Rocket Grunt",
+    "name": "Team Rocket Grunt",
     "owned": true,
     "special": true
   },
@@ -110,7 +110,7 @@
     "special": false
   },
   {
-    "name": "Elm",
+    "name": "Professor Elm",
     "owned": true,
     "special": false
   },
@@ -165,7 +165,7 @@
     "special": false
   },
   {
-    "name": "Birch",
+    "name": "Professor Birch",
     "owned": true,
     "special": true
   },
@@ -280,7 +280,7 @@
     "special": true
   },
   {
-    "name": "Rowan",
+    "name": "Professor Rowan",
     "owned": false,
     "special": false
   },
@@ -375,7 +375,7 @@
     "special": true
   },
   {
-    "name": "Juniper",
+    "name": "Professor Juniper",
     "owned": true,
     "special": false
   },
@@ -485,7 +485,7 @@
     "special": false
   },
   {
-    "name": "Sycamore",
+    "name": "Professor Sycamore",
     "owned": true,
     "special": true
   },
@@ -575,12 +575,12 @@
     "special": true
   },
   {
-    "name": "Kukui",
+    "name": "Professor Kukui",
     "owned": true,
     "special": true
   },
   {
-    "name": "Burnet",
+    "name": "Professor Burnet",
     "owned": true,
     "special": true
   },
@@ -690,7 +690,7 @@
     "special": false
   },
   {
-    "name": "Magnolia",
+    "name": "Professor Magnolia",
     "owned": false,
     "special": false
   },
@@ -805,7 +805,7 @@
     "special": true
   },
   {
-    "name": "Laventon",
+    "name": "Professor Laventon",
     "owned": true,
     "special": false
   },
