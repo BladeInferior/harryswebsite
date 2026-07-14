@@ -240,7 +240,7 @@
     "special": false
   },
   {
-    "name": "Magma Grunt",
+    "name": "Team Magma Grunt",
     "owned": false,
     "special": false
   },
@@ -260,7 +260,7 @@
     "special": true
   },
   {
-    "name": "Aqua Grunt",
+    "name": "Team Aqua Grunt",
     "owned": false,
     "special": false
   },
@@ -360,7 +360,7 @@
     "special": false
   },
   {
-    "name": "Galactic Grunt",
+    "name": "Team Galactic Grunt",
     "owned": false,
     "special": false
   },
@@ -475,7 +475,7 @@
     "special": true
   },
   {
-    "name": "Plasma Grunt",
+    "name": "Team Plasma Grunt",
     "owned": false,
     "special": false
   },
@@ -560,7 +560,7 @@
     "special": true
   },
   {
-    "name": "Flare Grunt",
+    "name": "Team Flare Grunt",
     "owned": false,
     "special": false
   },
@@ -670,7 +670,7 @@
     "special": false
   },
   {
-    "name": "Skull Grunt",
+    "name": "Team Skull Grunt",
     "owned": true,
     "special": true
   },
@@ -780,7 +780,7 @@
     "special": false
   },
   {
-    "name": "Yell Grunt",
+    "name": "Team Yell Grunt",
     "owned": false,
     "special": false
   },
