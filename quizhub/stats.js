@@ -576,18 +576,33 @@ adminMergeConfirmBtn.addEventListener('click', async () => {
         adminMergePreview.hidden = true;
         adminMergeCanonicalNew.value = '';
         pendingMerge = null;
-
-        await Promise.all([loadAdminPlayerList(), loadLeaderboard(), loadQuizResults()]);
     } catch (err) {
         console.error(err);
         adminMergeStatus.className = 'failure';
-        adminMergeStatus.textContent = 'Merge failed — check console.';
+        adminMergeStatus.textContent = err.message || 'Merge failed — check console.';
     } finally {
+        await Promise.all([loadAdminPlayerList(), loadLeaderboard(), loadQuizResults()]);
         adminMergeConfirmBtn.disabled = false;
     }
 });
 
+// Runs every write as its own settled attempt instead of one big Promise.all:
+// a single write denied by Firestore rules used to abort the whole merge
+// mid-flight (Promise.all rejects on the first failure but doesn't cancel
+// the writes already in flight), so it looked like the merge half-failed
+// with no indication of what actually didn't go through. Now every stage
+// runs to completion and failures are collected into one clear error.
 async function performPlayerMerge({ canonicalName, canonicalNameKey, canonicalExistingId, sourcePlayers }) {
+    const failures = [];
+
+    async function attempt(label, fn) {
+        try {
+            await fn();
+        } catch (err) {
+            failures.push(`${label}: ${err.message || err}`);
+        }
+    }
+
     const canonicalRef = doc(db, 'leaderboard', canonicalNameKey);
     const canonicalSnap = await getDoc(canonicalRef);
     const canonicalExisting = canonicalSnap.exists() ? canonicalSnap.data() : null;
@@ -608,11 +623,13 @@ async function performPlayerMerge({ canonicalName, canonicalNameKey, canonicalEx
         bestScore = Math.max(bestScore, p.bestScore || 0);
     });
 
-    await setDoc(canonicalRef, { name: canonicalName, totalScore, gamesPlayed, wins, draws, losses, bestScore });
+    await attempt(`Save merged totals for "${canonicalName}"`, () =>
+        setDoc(canonicalRef, { name: canonicalName, totalScore, gamesPlayed, wins, draws, losses, bestScore }));
 
     await Promise.all(sourcePlayers
         .filter(p => p.id !== canonicalNameKey)
-        .map(p => deleteDoc(doc(db, 'leaderboard', p.id))));
+        .map(p => attempt(`Delete old leaderboard entry "${p.name}"`, () =>
+            deleteDoc(doc(db, 'leaderboard', p.id)))));
 
     // Also covers the case where canonicalExistingId pointed at a doc whose
     // id doesn't match the (possibly re-typed) canonical name's slug.
@@ -637,17 +654,29 @@ async function performPlayerMerge({ canonicalName, canonicalNameKey, canonicalEx
 
         if (!changed) return;
 
-        await updateDoc(docSnap.ref, {
-            players: newPlayers,
-            comboKey: computeComboKey(newPlayers.map(p => p.name))
-        });
+        // Merging can collapse two distinct teammates in the same quiz into
+        // the same canonical person — that quiz is no longer a multi-person
+        // combo, so the key must come from the deduplicated name set (falls
+        // back to null, i.e. "not a combo", once only one name is left).
+        const distinctNames = [...new Set(newPlayers.map(p => p.name))];
+
+        await attempt(`Update quiz result "${data.quizTitle || docSnap.id}"`, () =>
+            updateDoc(docSnap.ref, {
+                players: newPlayers,
+                comboKey: computeComboKey(distinctNames)
+            }));
     }));
 
     const reviewsSnap = await getDocs(collection(db, 'playerReviews'));
     await Promise.all(reviewsSnap.docs.map(async docSnap => {
         const data = docSnap.data();
         if (sourceNameKeys.has(data.nameKey)) {
-            await updateDoc(docSnap.ref, { nameKey: canonicalNameKey, playerName: canonicalName });
+            await attempt(`Update review for "${data.playerName || data.nameKey}"`, () =>
+                updateDoc(docSnap.ref, { nameKey: canonicalNameKey, playerName: canonicalName }));
         }
     }));
+
+    if (failures.length) {
+        throw new Error(`${failures.length} write(s) failed:\n${failures.join('\n')}`);
+    }
 }

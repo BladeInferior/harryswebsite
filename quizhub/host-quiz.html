@@ -619,6 +619,10 @@
             border-color:var(--correct);
         }
 
+        .toast.error{
+            border-color:var(--incorrect);
+        }
+
         @keyframes toast-in{
             from{ opacity:0; transform:translateY(8px); }
             to{ opacity:1; transform:translateY(0); }
@@ -783,6 +787,8 @@ fetch('../navbar.html')
         </div>
 
         <div id="buzzer-controls" hidden>
+            <button id="buzzer-toggle-open-btn" class="btn btn-secondary" type="button"></button>
+
             <ol id="buzzer-queue"></ol>
 
             <div id="buzzer-active-controls" hidden>

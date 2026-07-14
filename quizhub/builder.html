@@ -363,7 +363,8 @@
         /* ---------- question / category / password modals ---------- */
         #question-modal,
         #category-modal,
-        #password-check-modal{
+        #password-check-modal,
+        #import-modal{
             position:fixed;
             inset:0;
             background:rgba(0,0,0,.75);
@@ -532,6 +533,12 @@ fetch('../navbar.html')
             <input type="checkbox" id="quiz-buzzer-score-throughout-toggle">
             Show players their running score throughout the quiz
             <span class="tooltip-icon" tabindex="0" data-tooltip="Buzzer/game-show style quizzes often want the score visible live above the question. For every other quiz type, a player's own score is always hidden until the end.">ⓘ</span>
+        </label>
+
+        <label class="checkbox-label">
+            <input type="checkbox" id="quiz-buzzers-default-open-toggle" checked>
+            Buzzers are open by default on Buzzer questions
+            <span class="tooltip-icon" tabindex="0" data-tooltip="Whether players can buzz in as soon as a Buzzer question loads, or have to wait for the host to open buzzing (e.g. while reading the question aloud). The host can also open/close buzzing live from the buzzer controls, regardless of this default.">ⓘ</span>
         </label>
 
         <label class="checkbox-label">

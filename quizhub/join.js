@@ -94,6 +94,7 @@ let quiz = null;
 let currentPhase = 'answering';
 let currentQuestionIndex = null;
 let sessionAnswerRevealed = false;
+let buzzersOpen = true;
 let watchedQuestionIndex = null;
 let editing = false;
 let unsubscribeOwnAnswer = null;
@@ -108,6 +109,8 @@ let reviewQuestionContext = null;
 let latestSessionSnapshot = null;
 let playerReviewModeActive = false;
 
+const joinSubmitBtn = joinForm.querySelector('button[type="submit"]');
+
 joinForm.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -115,132 +118,145 @@ joinForm.addEventListener('submit', async e => {
     const name = nameInput.value.trim();
     if (!code || !name) return;
 
+    joinSubmitBtn.disabled = true;
     joinStatus.className = 'pending';
     joinStatus.textContent = 'Checking code...';
 
-    const sessionRef = doc(db, 'sessions', code);
-    const snapshot = await getDoc(sessionRef);
+    try {
+        const sessionRef = doc(db, 'sessions', code);
+        const snapshot = await getDoc(sessionRef);
 
-    if (!snapshot.exists()) {
-        joinStatus.className = 'failure';
-        joinStatus.textContent = 'That code was not found. Check with the host and try again.';
-        return;
-    }
-
-    currentCode = code;
-
-    const nameKey = AnswerMatching.normalize(name);
-    const playersRef = collection(db, 'sessions', code, 'players');
-    const existingSnap = await getDocs(query(playersRef, where('nameKey', '==', nameKey)));
-    const existingDoc = existingSnap.docs[0] || null;
-
-    const deviceTokenKey = `quizhub_device_${code}_${nameKey}`;
-
-    if (existingDoc) {
-        const data = existingDoc.data();
-        const storedToken = localStorage.getItem(deviceTokenKey);
-
-        // Someone else appears to be actively using this name right now —
-        // ask before taking over rather than silently merging two players.
-        if (data.connected && data.deviceToken !== storedToken) {
-            const proceed = confirm(
-                `"${data.name}" is already active in this quiz. If that's you on another device, reconnecting will take over that session. Continue?`
-            );
-            if (!proceed) {
-                joinStatus.className = 'failure';
-                joinStatus.textContent = 'Please choose a different name.';
-                return;
-            }
+        if (!snapshot.exists()) {
+            joinStatus.className = 'failure';
+            joinStatus.textContent = 'That code was not found. Check with the host and try again.';
+            return;
         }
 
-        currentPlayerId = existingDoc.id;
-        currentName = data.name;
+        currentCode = code;
 
-        const deviceToken = generateDeviceToken();
-        localStorage.setItem(deviceTokenKey, deviceToken);
+        const nameKey = AnswerMatching.normalize(name);
+        const playersRef = collection(db, 'sessions', code, 'players');
+        const existingSnap = await getDocs(query(playersRef, where('nameKey', '==', nameKey)));
+        const existingDoc = existingSnap.docs[0] || null;
 
-        await updateDoc(doc(db, 'sessions', code, 'players', currentPlayerId), {
-            connected: true,
-            deviceToken
+        const deviceTokenKey = `quizhub_device_${code}_${nameKey}`;
+
+        if (existingDoc) {
+            const data = existingDoc.data();
+            const storedToken = localStorage.getItem(deviceTokenKey);
+
+            // Someone else appears to be actively using this name right now —
+            // ask before taking over rather than silently merging two players.
+            if (data.connected && data.deviceToken !== storedToken) {
+                const proceed = confirm(
+                    `"${data.name}" is already active in this quiz. If that's you on another device, reconnecting will take over that session. Continue?`
+                );
+                if (!proceed) {
+                    joinStatus.className = 'failure';
+                    joinStatus.textContent = 'Please choose a different name.';
+                    return;
+                }
+            }
+
+            currentPlayerId = existingDoc.id;
+            currentName = data.name;
+
+            const deviceToken = generateDeviceToken();
+            localStorage.setItem(deviceTokenKey, deviceToken);
+
+            await updateDoc(doc(db, 'sessions', code, 'players', currentPlayerId), {
+                connected: true,
+                deviceToken
+            });
+
+            // Fire-and-forget — this is just the host's toast notification, and
+            // must never block the player actually getting into the quiz (a
+            // rules/permission hiccup here used to leave the join stuck on
+            // "Checking code..." forever even though the player doc above had
+            // already gone through).
+            addDoc(collection(db, 'sessions', code, 'events'), {
+                type: 'reconnected',
+                name: currentName,
+                at: serverTimestamp()
+            }).catch(err => console.error('Reconnect event log failed:', err));
+        } else {
+            currentName = name;
+            const deviceToken = generateDeviceToken();
+            localStorage.setItem(deviceTokenKey, deviceToken);
+
+            const playerRef = await addDoc(playersRef, {
+                name,
+                nameKey,
+                joinedAt: serverTimestamp(),
+                score: 0,
+                connected: true,
+                deviceToken
+            });
+            currentPlayerId = playerRef.id;
+
+            addDoc(collection(db, 'sessions', code, 'events'), {
+                type: 'joined',
+                name,
+                at: serverTimestamp()
+            }).catch(err => console.error('Join event log failed:', err));
+        }
+
+        const quizId = snapshot.data().quizId;
+        try {
+            quiz = await loadQuiz(quizId);
+        } catch (err) {
+            console.error(err);
+            joinStatus.className = 'failure';
+            joinStatus.textContent = "This session's quiz couldn't be loaded. Check with the host.";
+            return;
+        }
+
+        joinStatus.className = 'success';
+        joinStatus.textContent = 'Joined!';
+        joinForm.hidden = true;
+        joinHero.hidden = true;
+
+        // Best-effort disconnect detection — Firestore has no built-in presence,
+        // so a hard crash/force-close won't mark this player disconnected until
+        // they try to reconnect under the same name (handled above via deviceToken).
+        window.addEventListener('pagehide', () => {
+            updateDoc(doc(db, 'sessions', currentCode, 'players', currentPlayerId), { connected: false }).catch(() => {});
         });
 
-        // Fire-and-forget — this is just the host's toast notification, and
-        // must never block the player actually getting into the quiz (a
-        // rules/permission hiccup here used to leave the join stuck on
-        // "Checking code..." forever even though the player doc above had
-        // already gone through).
-        addDoc(collection(db, 'sessions', code, 'events'), {
-            type: 'reconnected',
-            name: currentName,
-            at: serverTimestamp()
-        }).catch(err => console.error('Reconnect event log failed:', err));
-    } else {
-        currentName = name;
-        const deviceToken = generateDeviceToken();
-        localStorage.setItem(deviceTokenKey, deviceToken);
-
-        const playerRef = await addDoc(playersRef, {
-            name,
-            nameKey,
-            joinedAt: serverTimestamp(),
-            score: 0,
-            connected: true,
-            deviceToken
+        onSnapshot(sessionRef, snap => {
+            if (snap.exists()) renderSessionState(snap.data());
         });
-        currentPlayerId = playerRef.id;
 
-        addDoc(collection(db, 'sessions', code, 'events'), {
-            type: 'joined',
-            name,
-            at: serverTimestamp()
-        }).catch(err => console.error('Join event log failed:', err));
-    }
+        onSnapshot(doc(db, 'sessions', code, 'players', currentPlayerId), snap => {
+            if (!snap.exists()) return;
+            const score = snap.data().score || 0;
 
-    const quizId = snapshot.data().quizId;
-    try {
-        quiz = await loadQuiz(quizId);
+            // A running score above the question is only shown for buzzer quizzes
+            // that specifically opt into it — otherwise it stays hidden throughout
+            // so it doesn't spoil pacing on a normal paced quiz.
+            playerScoreEl.hidden = !(quiz.isBuzzerQuiz && quiz.buzzerShowScoreThroughout);
+            playerScoreEl.textContent = `Score: ${score}`;
+            finalScoreEl.textContent = `Your final score: ${score}`;
+        });
+
+        onSnapshot(playersRef, snap => {
+            latestPlayersForJoin = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderWaitingPlayerList();
+
+            const question = currentQuestionIndex !== null ? quiz.questions[currentQuestionIndex] : null;
+            if (question) updateAnswerView(question);
+        });
     } catch (err) {
-        console.error(err);
+        // Previously an error here (rules hiccup, dropped connection) left the
+        // form stuck on "Checking code..." with the button still clickable —
+        // the fix looked like "click Join twice" when really the first click's
+        // request had silently failed.
+        console.error('Join failed:', err);
         joinStatus.className = 'failure';
-        joinStatus.textContent = "This session's quiz couldn't be loaded. Check with the host.";
-        return;
+        joinStatus.textContent = 'Something went wrong joining — check your connection and try again.';
+    } finally {
+        joinSubmitBtn.disabled = false;
     }
-
-    joinStatus.className = 'success';
-    joinStatus.textContent = 'Joined!';
-    joinForm.hidden = true;
-    joinHero.hidden = true;
-
-    // Best-effort disconnect detection — Firestore has no built-in presence,
-    // so a hard crash/force-close won't mark this player disconnected until
-    // they try to reconnect under the same name (handled above via deviceToken).
-    window.addEventListener('pagehide', () => {
-        updateDoc(doc(db, 'sessions', currentCode, 'players', currentPlayerId), { connected: false }).catch(() => {});
-    });
-
-    onSnapshot(sessionRef, snap => {
-        if (snap.exists()) renderSessionState(snap.data());
-    });
-
-    onSnapshot(doc(db, 'sessions', code, 'players', currentPlayerId), snap => {
-        if (!snap.exists()) return;
-        const score = snap.data().score || 0;
-
-        // A running score above the question is only shown for buzzer quizzes
-        // that specifically opt into it — otherwise it stays hidden throughout
-        // so it doesn't spoil pacing on a normal paced quiz.
-        playerScoreEl.hidden = !(quiz.isBuzzerQuiz && quiz.buzzerShowScoreThroughout);
-        playerScoreEl.textContent = `Score: ${score}`;
-        finalScoreEl.textContent = `Your final score: ${score}`;
-    });
-
-    onSnapshot(playersRef, snap => {
-        latestPlayersForJoin = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        renderWaitingPlayerList();
-
-        const question = currentQuestionIndex !== null ? quiz.questions[currentQuestionIndex] : null;
-        if (question) updateAnswerView(question);
-    });
 });
 
 function renderWaitingPlayerList() {
@@ -295,6 +311,7 @@ buzzInBtn.addEventListener('click', async () => {
     if (!currentCode || currentQuestionIndex === null) return;
     const question = quiz.questions[currentQuestionIndex];
     if (!question || question.type !== 'buzzer') return;
+    if (!buzzersOpen) return;
 
     buzzInBtn.disabled = true;
     try {
@@ -371,6 +388,7 @@ function renderSessionState(session) {
     currentPhase = session.questionPhase;
     currentQuestionIndex = session.currentQuestionIndex;
     sessionAnswerRevealed = !!session.answerRevealed;
+    buzzersOpen = session.buzzersOpen !== false;
 
     const question = quiz.questions[currentQuestionIndex];
     if (!question) return;
@@ -732,6 +750,13 @@ function updateBuzzerView(question) {
     if (own && own.status === 'pending') {
         buzzInBtn.hidden = true;
         buzzerStatusText.textContent = "You buzzed in! Waiting for the host...";
+        return;
+    }
+
+    if (!buzzersOpen) {
+        buzzInBtn.hidden = false;
+        buzzInBtn.disabled = true;
+        buzzerStatusText.textContent = 'Buzzers are closed — wait for the host to open them.';
         return;
     }
 

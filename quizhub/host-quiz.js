@@ -72,6 +72,7 @@ const scoreboardList = document.getElementById('scoreboard-list');
 const scoreboardHiddenHint = document.getElementById('scoreboard-hidden-hint');
 
 const buzzerControls = document.getElementById('buzzer-controls');
+const buzzerToggleOpenBtn = document.getElementById('buzzer-toggle-open-btn');
 const buzzerQueueEl = document.getElementById('buzzer-queue');
 const buzzerActiveControls = document.getElementById('buzzer-active-controls');
 const buzzerActiveNameEl = document.getElementById('buzzer-active-name');
@@ -198,6 +199,7 @@ async function startSession() {
         introPhase: null,
         scoreboardVisible: false,
         reviewAllowed: false,
+        buzzersOpen: quiz.buzzersDefaultOpen !== false,
         hostConnected: true,
         createdAt: serverTimestamp()
     });
@@ -254,6 +256,7 @@ function attachSessionListenersAndControls() {
     buzzerIncorrectBtn.addEventListener('click', handleBuzzerIncorrect);
     buzzerResetBtn.addEventListener('click', handleBuzzerReset);
     buzzerNextQuestionBtn.addEventListener('click', handleNextQuestion);
+    buzzerToggleOpenBtn.addEventListener('click', handleToggleBuzzersOpen);
     categoryIntroContinueBtn.addEventListener('click', handleCategoryIntroContinue);
     categoryReviewBackBtn.addEventListener('click', () => {
         reviewingCategory = null;
@@ -316,6 +319,20 @@ function showEventToast(event) {
 
     toastContainer.appendChild(toast);
     setTimeout(() => toast.remove(), 5000);
+}
+
+// Actions that move the session forward (next question, lock, reveal, ...)
+// used to swallow write failures silently — a denied/dropped Firestore write
+// left the button re-enabled with no indication anything went wrong, so
+// players stayed stuck on "waiting for host" with no obvious cause. Now any
+// failure surfaces here so the host knows to retry instead of guessing.
+function showErrorToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast error';
+    toast.textContent = message;
+
+    toastContainer.appendChild(toast);
+    setTimeout(() => toast.remove(), 8000);
 }
 
 // Captured once, at the moment the quiz finishes — the live players listener
@@ -574,17 +591,16 @@ function renderCategoryReviewList() {
 }
 
 function startCategory(cat) {
-    if (cat.titleScreen || cat.exampleScreen) {
-        updateDoc(sessionRef, {
+    const update = (cat.titleScreen || cat.exampleScreen)
+        ? updateDoc(sessionRef, {
             status: 'category-intro',
             currentCategoryStart: cat.start,
             introPhase: cat.titleScreen ? 'title' : 'example',
             questionPhase: 'answering',
             answerRevealed: false,
             reviewMode: false
-        });
-    } else {
-        updateDoc(sessionRef, {
+        })
+        : updateDoc(sessionRef, {
             status: 'active',
             currentQuestionIndex: cat.start,
             currentCategoryStart: cat.start,
@@ -592,7 +608,11 @@ function startCategory(cat) {
             answerRevealed: false,
             reviewMode: false
         });
-    }
+
+    update.catch(err => {
+        console.error('Failed to start category:', err);
+        showErrorToast('⚠ Failed to start the category — try again.');
+    });
 }
 
 function renderCategoryIntroView(session) {
@@ -628,6 +648,9 @@ async function handleCategoryIntroContinue() {
                 reviewMode: false
             });
         }
+    } catch (err) {
+        console.error('Failed to continue category intro:', err);
+        showErrorToast('⚠ Failed to continue — try again.');
     } finally {
         categoryIntroContinueBtn.disabled = false;
     }
@@ -657,7 +680,17 @@ function renderHostQuestion(index, phase, answerRevealed, reviewMode, completedC
         watchedQuestionKey = questionKey;
         latestAnswers = new Map();
         latestBuzzes = [];
-        if (question.type === 'buzzer') watchBuzzes(question); else watchAnswers(question);
+        if (question.type === 'buzzer') {
+            watchBuzzes(question);
+            // Resets buzzing to the quiz's configured default every time a
+            // fresh buzzer question loads, so a host closing buzzers on one
+            // question doesn't leave them closed on the next by accident.
+            updateDoc(sessionRef, { buzzersOpen: quiz.buzzersDefaultOpen !== false }).catch(err => {
+                console.error('Failed to reset default buzzer state:', err);
+            });
+        } else {
+            watchAnswers(question);
+        }
     }
 
     // Buzzer questions are resolved live by the host and always advance
@@ -804,6 +837,24 @@ function renderBuzzerQueue() {
     buzzerActiveControls.hidden = !active;
     buzzerNextQuestionBtn.hidden = !!active;
     if (active) buzzerActiveNameEl.textContent = `${active.playerName} buzzed in!`;
+
+    const buzzersOpen = currentSession ? currentSession.buzzersOpen !== false : true;
+    buzzerToggleOpenBtn.textContent = buzzersOpen ? '🔒 Close Buzzers' : '🔓 Open Buzzers';
+}
+
+async function handleToggleBuzzersOpen() {
+    if (!currentSession) return;
+    const buzzersOpen = currentSession.buzzersOpen !== false;
+
+    buzzerToggleOpenBtn.disabled = true;
+    try {
+        await updateDoc(sessionRef, { buzzersOpen: !buzzersOpen });
+    } catch (err) {
+        console.error('Failed to toggle buzzers open/closed:', err);
+        showErrorToast('⚠ Failed to change buzzer state — try again.');
+    } finally {
+        buzzerToggleOpenBtn.disabled = false;
+    }
 }
 
 async function handleBuzzerCorrect() {
@@ -942,6 +993,9 @@ async function handleLock() {
         }
 
         await updateDoc(sessionRef, { questionPhase: 'locked' });
+    } catch (err) {
+        console.error('Failed to lock answers:', err);
+        showErrorToast('⚠ Failed to lock answers — try again.');
     } finally {
         lockBtn.disabled = false;
     }
@@ -990,6 +1044,9 @@ async function handleRevealAnswer() {
 
         await Promise.all(updates);
         await updateDoc(sessionRef, { answerRevealed: true });
+    } catch (err) {
+        console.error('Failed to reveal answer:', err);
+        showErrorToast('⚠ Failed to reveal the answer — try again.');
     } finally {
         revealAnswerBtn.disabled = false;
     }
@@ -1007,6 +1064,9 @@ async function handleStartReview() {
             answerRevealed: false,
             reviewMode: true
         });
+    } catch (err) {
+        console.error('Failed to start review:', err);
+        showErrorToast('⚠ Failed to start the answer review — try again.');
     } finally {
         startReviewBtn.disabled = false;
     }
@@ -1018,6 +1078,7 @@ async function handleNextQuestion() {
     const index = currentSession.currentQuestionIndex;
     const reviewMode = !!currentSession.reviewMode;
     nextQuestionBtn.disabled = true;
+    buzzerNextQuestionBtn.disabled = true;
 
     try {
         if (reviewMode) {
@@ -1048,8 +1109,12 @@ async function handleNextQuestion() {
                 });
             }
         }
+    } catch (err) {
+        console.error('Failed to advance question:', err);
+        showErrorToast('⚠ Failed to advance to the next question — try again.');
     } finally {
         nextQuestionBtn.disabled = false;
+        buzzerNextQuestionBtn.disabled = false;
     }
 }
 

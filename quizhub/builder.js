@@ -10,6 +10,7 @@ const buzzerQuizRevealNote = document.getElementById('buzzer-quiz-reveal-note');
 const quizBuzzerToggle = document.getElementById('quiz-buzzer-toggle');
 const quizBuzzerScoreThroughoutRow = document.getElementById('quiz-buzzer-score-throughout-row');
 const quizBuzzerScoreThroughoutToggle = document.getElementById('quiz-buzzer-score-throughout-toggle');
+const quizBuzzersDefaultOpenToggle = document.getElementById('quiz-buzzers-default-open-toggle');
 const quizDefaultExplanationsToggle = document.getElementById('quiz-default-explanations-toggle');
 const reviewEnabledToggle = document.getElementById('quiz-review-enabled-toggle');
 const quizPasswordLabel = document.getElementById('quiz-password-label');
@@ -200,6 +201,7 @@ function populateBuilderFromQuiz(quiz) {
     revealModeInput.value = quiz.answerRevealMode || 'immediate';
     quizBuzzerToggle.checked = !!quiz.isBuzzerQuiz;
     quizBuzzerScoreThroughoutToggle.checked = !!quiz.buzzerShowScoreThroughout;
+    quizBuzzersDefaultOpenToggle.checked = quiz.buzzersDefaultOpen !== false;
     quizDefaultExplanationsToggle.checked = !!quiz.defaultExplanationsOn;
     updateBuzzerQuizFields();
     reviewEnabledToggle.checked = !!quiz.reviewEnabled;
@@ -1077,6 +1079,7 @@ saveQuizBtn.addEventListener('click', async () => {
             answerRevealMode: quizBuzzerToggle.checked ? 'immediate' : revealModeInput.value,
             isBuzzerQuiz: quizBuzzerToggle.checked,
             buzzerShowScoreThroughout: quizBuzzerToggle.checked && quizBuzzerScoreThroughoutToggle.checked,
+            buzzersDefaultOpen: quizBuzzersDefaultOpenToggle.checked,
             defaultExplanationsOn: quizDefaultExplanationsToggle.checked,
             reviewEnabled: reviewEnabledToggle.checked,
             categoryMeta,
