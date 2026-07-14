@@ -81,34 +81,46 @@ self.addEventListener('fetch', event => {
     const url = new URL(request.url);
     if (url.origin !== self.location.origin) return;
 
-    // Images are effectively immutable once uploaded, so cache-first keeps
-    // repeat views instant and offline-capable. Everything else (HTML/JS/
-    // CSS/JSON) is network-first, so an online visit always reflects the
-    // latest exported data — the cached copy is only a fallback for when
-    // the network request actually fails.
+    // Images are usually permanent once uploaded, but occasionally an
+    // existing filename gets swapped for a corrected/special-print scan —
+    // stale-while-revalidate serves the cached image instantly (repeat
+    // views stay fast and offline-capable) while checking the network in
+    // the background for next time. Everything else (HTML/JS/CSS/JSON) is
+    // network-first, so an online visit always reflects the latest exported
+    // data — the cached copy is only a fallback for when the network
+    // request actually fails.
     event.respondWith(
-        request.destination === 'image' ? cacheFirst(request) : networkFirst(request)
+        request.destination === 'image' ? staleWhileRevalidate(request) : networkFirst(request)
     );
 });
 
-async function cacheFirst(request) {
-    const cached = await caches.match(request);
-    if (cached) return cached;
+async function staleWhileRevalidate(request) {
+    const cache = await caches.open(RUNTIME_CACHE);
+    const cached = await cache.match(request);
 
-    try {
-        const response = await fetch(request);
-        if (response.ok) {
-            const cache = await caches.open(RUNTIME_CACHE);
-            cache.put(request, response.clone());
-        }
-        return response;
-    } catch (err) {
-        // Every extension in an item's fallback chain (.png/.jpg/.webp)
-        // passes through here — Response.error() reproduces a real network
-        // failure so the <img>'s onerror handler advances to the next
-        // extension exactly like it would online, instead of hanging.
-        return Response.error();
+    // 'no-cache' forces a real conditional request (ETag/Last-Modified)
+    // instead of trusting the browser's own HTTP cache freshness window —
+    // cheap (a 304, no image bytes) for the vast majority that haven't
+    // changed, full download only for the handful that actually have.
+    const revalidate = fetch(request, { cache: 'no-cache' })
+        .then(response => {
+            if (response.ok) cache.put(request, response.clone());
+            return response;
+        })
+        .catch(() => null);
+
+    if (cached) {
+        // Deliberately not awaited — updates the cache in the background
+        // for the next load rather than delaying this one.
+        revalidate;
+        return cached;
     }
+
+    // Every extension in an item's fallback chain (.png/.jpg/.webp) passes
+    // through here — Response.error() reproduces a real network failure so
+    // the <img>'s onerror handler advances to the next extension exactly
+    // like it would online, instead of hanging.
+    return (await revalidate) || Response.error();
 }
 
 async function networkFirst(request) {
