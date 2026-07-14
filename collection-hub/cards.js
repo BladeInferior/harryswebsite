@@ -1,9 +1,9 @@
 const DECKS = [
-    { key: "pokemon", label: "Pokémon", jsonFile: "cards-pokemon-backup.json", storageKey: "cards-pokemon", imageFolder: "cards/pokemon", spriteFolder: "sprites/pokemon_sprites", hasSpecial: true, hasDex: true, pageBlockRows: 4 },
-    { key: "trainers", label: "Trainers", jsonFile: "cards-trainers-backup.json", storageKey: "cards-trainers", imageFolder: "cards/trainers", hasSpecial: true, hasDex: false },
-    { key: "pokeballs", label: "Poké Balls", jsonFile: "cards-pokeballs-backup.json", storageKey: "cards-pokeballs", imageFolder: "cards/pokeballs", hasSpecial: true, hasDex: false },
-    { key: "stadiums", label: "Stadiums", jsonFile: "cards-stadiums-backup.json", storageKey: "cards-stadiums", imageFolder: "cards/stadiums", hasSpecial: false, hasDex: false },
-    { key: "rampardos", label: "Rampardos", jsonFile: "cards-rampardos-backup.json", storageKey: "cards-rampardos", imageFolder: "cards/rampardos", hasSpecial: false, hasDex: false }
+    { key: "pokemon", label: "Pokémon", jsonFile: "cards-pokemon-backup.json", imageFolder: "cards/pokemon", spriteFolder: "sprites/pokemon_sprites", hasSpecial: true, hasDex: true, pageBlockRows: 4 },
+    { key: "trainers", label: "Trainers", jsonFile: "cards-trainers-backup.json", imageFolder: "cards/trainers", hasSpecial: true, hasDex: false },
+    { key: "pokeballs", label: "Poké Balls", jsonFile: "cards-pokeballs-backup.json", imageFolder: "cards/pokeballs", hasSpecial: true, hasDex: false },
+    { key: "stadiums", label: "Stadiums", jsonFile: "cards-stadiums-backup.json", imageFolder: "cards/stadiums", hasSpecial: false, hasDex: false },
+    { key: "rampardos", label: "Rampardos", jsonFile: "cards-rampardos-backup.json", imageFolder: "cards/rampardos", hasSpecial: false, hasDex: false }
 ];
 
 let activeDeck = DECKS[0];
@@ -108,18 +108,7 @@ async function loadDeck(key) {
     filterRecentSet = false;
     if (searchInput) searchInput.value = "";
 
-    const itemList = await fetch(deck.jsonFile).then(res => res.json());
-    const local = localStorage.getItem(deck.storageKey);
-
-    if (local) {
-        try {
-            items = JSON.parse(local);
-        } catch {
-            items = itemList;
-        }
-    } else {
-        items = itemList;
-    }
+    items = await fetch(deck.jsonFile).then(res => res.json());
 
     if (deck.key === "pokemon" && !pokemonMasterList) {
         pokemonMasterList = await fetch("fullPokemonList.json").then(res => res.json());
@@ -304,13 +293,6 @@ function refreshFilterButtons() {
 function updateFilterDisabledState() {
     const container = document.getElementById("game-filter-container");
     if (container) container.classList.toggle("filters-disabled", pageMode);
-}
-
-// =========================
-// SAVE
-// =========================
-function saveItems() {
-    localStorage.setItem(activeDeck.storageKey, JSON.stringify(items));
 }
 
 // =========================
@@ -530,7 +512,6 @@ document.getElementById("save-item").addEventListener("click", () => {
 
     delete addModal.dataset.editIndex;
 
-    saveItems();
     renderItems();
     addModal.classList.add("hidden");
 });
@@ -553,7 +534,6 @@ document.getElementById("delete-item").addEventListener("click", () => {
     if (index === undefined) return;
 
     items.splice(index, 1);
-    saveItems();
     renderItems();
     modalOverlay.classList.add("hidden");
 });
@@ -596,7 +576,6 @@ document.getElementById("import-items").addEventListener("change", (e) => {
             }
 
             items = importedItems;
-            saveItems();
             renderItems();
 
             alert(`Imported ${items.length} items`);
