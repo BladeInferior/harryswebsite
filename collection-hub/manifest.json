@@ -1,0 +1,18 @@
+{
+  "name": "Collection Hub",
+  "short_name": "Collection Hub",
+  "description": "Pokémon card, Pokédex, Pop Figure, sleeve, steelbook, pin, and completion collection tracker.",
+  "start_url": "collectionhub.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#14161a",
+  "theme_color": "#14161a",
+  "icons": [
+    {
+      "src": "icons/app-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

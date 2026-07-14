@@ -64,7 +64,10 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
         actions.appendChild(rejoinBtn);
 
         findActiveSessionForQuiz(quiz.id).then(session => {
-            if (!session) return;
+            // A session still sitting in the lobby (Begin Quiz not pressed
+            // yet) has nothing in progress worth rejoining — only offer
+            // Rejoin once the quiz has actually started.
+            if (!session || session.status === 'lobby') return;
             rejoinBtn.disabled = false;
             rejoinBtn.addEventListener('click', () => {
                 window.location.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;

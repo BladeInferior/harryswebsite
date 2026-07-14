@@ -7,6 +7,15 @@ import { collection, getDocs, deleteDoc, doc, query, where } from 'https://www.g
 // are deleted entirely by finishQuizCleanup(), so any doc that still exists
 // is either in progress or abandoned (host tab closed without finishing).
 //
+// Deliberately still includes sessions sitting in "lobby" (created, but
+// Begin Quiz not pressed yet) — this function doubles as host-quiz.js's own
+// resume-on-refresh check, and a lobby reload needs to find its own
+// still-open lobby session rather than minting a duplicate and orphaning it
+// (and anyone who'd already joined). Callers that only want to treat a
+// session as rejoinable-from-elsewhere once it's actually started (e.g. the
+// "Rejoin Quiz" button on Manage Quizzes) should additionally check
+// `status !== 'lobby'` themselves.
+//
 // Sorted newest-first so that if more than one non-ended session somehow
 // exists for a quiz (shouldn't happen once startSession() always calls
 // deleteAllSessionsForQuiz() before minting a new one, but is a safe

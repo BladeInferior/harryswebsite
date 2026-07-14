@@ -1,3 +1,11 @@
+// Registered here (not per-page) since every collection-hub page loads this
+// file — one registration covers offline support for all of them. Scope
+// defaults to this script's own directory, i.e. everything under
+// collection-hub/, which is exactly what sw.js needs to intercept.
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(err => console.error('Service worker registration failed:', err));
+}
+
 fetch('../navbar.html')
     .then(res => res.text())
     .then(data => {
