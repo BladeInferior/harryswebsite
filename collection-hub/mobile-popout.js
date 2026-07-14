@@ -18,24 +18,14 @@ const _allMobilePopoutPanels = [];
 // scroll the page underneath it, which felt broken on mobile.
 //
 // Plain `overflow: hidden` on <body> doesn't reliably block touch-scroll on
-// iOS Safari (it still rubber-bands through). Pinning the body in place with
-// position:fixed does — record the current scroll offset, hold the body
-// there via a negative top, and restore the real scroll position on unlock.
-let _lockedScrollY = 0;
-
+// iOS Safari (it still rubber-bands through). Repositioning <body> with
+// position:fixed does block it, but pulls body out of layout — since <html>
+// has no background of its own, that flashed white and the reflow on every
+// toggle was slow. touch-action:none blocks touch-driven scrolling directly
+// at the input level instead, with no layout/position change at all.
 function _updateBodyScrollLock() {
     const anyOpen = _allMobilePopoutPanels.some(p => p.classList.contains("open"));
-    const isLocked = document.body.classList.contains("popout-scroll-lock");
-
-    if (anyOpen && !isLocked) {
-        _lockedScrollY = window.scrollY;
-        document.body.style.top = `-${_lockedScrollY}px`;
-        document.body.classList.add("popout-scroll-lock");
-    } else if (!anyOpen && isLocked) {
-        document.body.classList.remove("popout-scroll-lock");
-        document.body.style.top = "";
-        window.scrollTo(0, _lockedScrollY);
-    }
+    document.body.classList.toggle("popout-scroll-lock", anyOpen);
 }
 
 function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementIds }) {

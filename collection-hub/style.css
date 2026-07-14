@@ -1604,11 +1604,8 @@ body::before {
     }
 
     body.popout-scroll-lock {
-        position: fixed;
-        left: 0;
-        right: 0;
         overflow: hidden;
-        /* top is set inline by mobile-popout.js to -[scrollY]px */
+        touch-action: none;
     }
 
     #box-container,
