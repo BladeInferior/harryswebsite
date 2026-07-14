@@ -202,7 +202,7 @@
   {
     "name": "Norman",
     "owned": true,
-    "special": true
+    "special": false
   },
   {
     "name": "Winona",
@@ -441,7 +441,7 @@
   },
   {
     "name": "Roxie",
-    "owned": false,
+    "owned": true,
     "special": false
   },
   {
@@ -751,8 +751,8 @@
   },
   {
     "name": "Opal",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true
   },
   {
     "name": "Melony",
@@ -827,7 +827,7 @@
   {
     "name": "Kamado",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "name": "Adaman",
@@ -1061,7 +1061,7 @@
   },
   {
     "name": "Emma",
-    "owned": false,
+    "owned": true,
     "special": false
   },
   {
@@ -1076,7 +1076,7 @@
   },
   {
     "name": "Philippe",
-    "owned": false,
+    "owned": true,
     "special": false
   },
   {
