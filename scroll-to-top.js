@@ -24,9 +24,15 @@
             transition: border-color .15s ease, background .15s ease;
         }
 
-        #scroll-to-top-btn:hover {
-            border-color: gold;
-            background: rgba(212,175,55,.15);
+        /* Scoped to devices with a real hover-capable pointer (a mouse) —
+           without this, tapping the button on a touchscreen leaves it stuck
+           looking "hovered" until something else is tapped, since there's
+           no pointer to actually leave the element afterward. */
+        @media (hover: hover) and (pointer: fine) {
+            #scroll-to-top-btn:hover {
+                border-color: gold;
+                background: rgba(212,175,55,.15);
+            }
         }
 
         #scroll-to-top-btn.visible {

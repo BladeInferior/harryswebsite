@@ -16,9 +16,26 @@ const _allMobilePopoutPanels = [];
 // Keeps the page behind a panel from scrolling while it's open — without
 // this, a touch-drag on the (fixed-position, translucent) panel could also
 // scroll the page underneath it, which felt broken on mobile.
+//
+// Plain `overflow: hidden` on <body> doesn't reliably block touch-scroll on
+// iOS Safari (it still rubber-bands through). Pinning the body in place with
+// position:fixed does — record the current scroll offset, hold the body
+// there via a negative top, and restore the real scroll position on unlock.
+let _lockedScrollY = 0;
+
 function _updateBodyScrollLock() {
     const anyOpen = _allMobilePopoutPanels.some(p => p.classList.contains("open"));
-    document.body.classList.toggle("popout-scroll-lock", anyOpen);
+    const isLocked = document.body.classList.contains("popout-scroll-lock");
+
+    if (anyOpen && !isLocked) {
+        _lockedScrollY = window.scrollY;
+        document.body.style.top = `-${_lockedScrollY}px`;
+        document.body.classList.add("popout-scroll-lock");
+    } else if (!anyOpen && isLocked) {
+        document.body.classList.remove("popout-scroll-lock");
+        document.body.style.top = "";
+        window.scrollTo(0, _lockedScrollY);
+    }
 }
 
 function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementIds }) {
