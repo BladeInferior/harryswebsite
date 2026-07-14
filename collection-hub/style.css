@@ -1821,29 +1821,58 @@ body::before {
         height: 16vh !important;
     }
 
+    /* Was forced to a single column, putting every dex entry (MasterDex,
+       ShinyDex, TradeDex, ...) on its own row — pack them 3-per-row like
+       desktop instead, just with a tighter gap and smaller icons/labels so
+       they still fit a phone width. */
     .modal-right {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 8px !important;
     }
 
-    /* The 85px desktop gap between shiny constraints (Correct Stage / Home
-       Region / Luxury Ball) is far wider than a phone screen, forcing the
-       modal to scroll just to see them all — tighten the spacing and shrink
-       the icons so all three fit in view at once. */
-    .shiny-edit-layout .shiny-variants {
+    .dex-icon {
+        font-size: 28px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .dex-name {
+        font-size: 11px !important;
+    }
+
+    /* The shiny-variant labels (Correct Stage / Home Region / Luxury Ball)
+       are too wide to share a 1/3-width column with the other dex icons —
+       give this one the full row instead, and reorder it to the end so it
+       doesn't leave a gap where it would've displaced a dex icon mid-grid. */
+    .modal-right .shiny-variants {
+        grid-column: 1 / -1 !important;
+        order: 99;
+    }
+
+    /* The 3 shiny constraints (Correct Stage / Home Region / Luxury Ball)
+       stack vertically by default (desktop fits that fine in a narrow grid
+       column) and spread 85px apart when actively editing — neither fits a
+       phone row. Put all three side by side with a stacked icon/label each,
+       in one compact row, the same way in both states. */
+    .shiny-variants {
+        flex-direction: row !important;
+        justify-content: center !important;
+        width: 100% !important;
         gap: 18px !important;
     }
 
-    .shiny-edit-layout .variant {
+    .variant {
+        flex-direction: column !important;
+        align-items: center;
+        text-align: center;
         gap: 4px !important;
     }
 
-    .shiny-edit-layout .variant .dot {
+    .variant .dot {
         width: 34px !important;
         height: 34px !important;
     }
 
-    .shiny-edit-layout .variant .label {
+    .variant .label {
         font-size: 11px !important;
     }
 
