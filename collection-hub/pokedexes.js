@@ -575,6 +575,13 @@ missingFilterBtn.addEventListener("click", () => {
 
 function updateMissingButtonHighlight() {
     missingFilterBtn.classList.toggle("active", missingDexFilter);
+
+    // Mobile Safari occasionally doesn't repaint a class-driven style change
+    // on an element sitting inside the filters popout's transformed/animated
+    // container until something else forces a reflow — reading offsetHeight
+    // forces one immediately, so the highlight updates the instant it's tapped
+    // instead of only catching up once the popout itself repaints (e.g. on close).
+    void missingFilterBtn.offsetHeight;
 }
 
 

@@ -34,6 +34,7 @@ const SHELL_URLS = [
     'style.css',
     '../navbar.css',
     '../navbar.html',
+    '../scroll-to-top.js',
     'icons/app-icon.png',
     'cards-pokeballs-backup.json',
     'cards-pokemon-backup.json',

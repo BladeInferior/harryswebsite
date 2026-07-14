@@ -1603,6 +1603,10 @@ body::before {
         overflow-x: hidden;
     }
 
+    body.popout-scroll-lock {
+        overflow: hidden;
+    }
+
     #box-container,
     .pokemon-page #box-container {
         grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
@@ -1744,6 +1748,41 @@ body::before {
         display: none !important;
     }
 
+    /* On desktop this button sits flush against #game-filter-container
+       (no bottom border, square bottom corners) so the two look joined —
+       inside the popout it's just a normal standalone row with a gap
+       after it, so that squared-off, border-less bottom edge just looked
+       like it was cut off. Give it back a complete border here. */
+    .mobile-popout-list #missing-dex-filter {
+        border-radius: 8px !important;
+        border-bottom: 1px solid #555 !important;
+    }
+
+    .mobile-popout-list #missing-dex-filter.active {
+        border-bottom-color: gold !important;
+    }
+
+    /* The pokedex filter list (6 games + 3 tag pairs + 10 generations +
+       reset, each its own row) is tall enough on desktop-sized spacing to
+       need scrolling inside the popout — tighten padding/gaps and shrink
+       text so the whole set fits on screen at once. */
+    .mobile-popout-list #game-filter-container {
+        gap: 5px !important;
+    }
+
+    .mobile-popout-list #game-filter-container .filter-row,
+    .mobile-popout-list #game-filter-container .generation-filter-row {
+        gap: 5px !important;
+    }
+
+    .mobile-popout-list #game-filter-container .game-filter-btn,
+    .mobile-popout-list #game-filter-container .tag-filter-btn,
+    .mobile-popout-list #game-filter-container .generation-filter-btn {
+        padding: 6px 8px !important;
+        min-height: 0 !important;
+        font-size: 12px !important;
+    }
+
     #pokemon-count-label {
         top: auto !important;
         bottom: 14px !important;
@@ -1783,6 +1822,27 @@ body::before {
     .modal-right {
         grid-template-columns: 1fr !important;
         gap: 10px !important;
+    }
+
+    /* The 85px desktop gap between shiny constraints (Correct Stage / Home
+       Region / Luxury Ball) is far wider than a phone screen, forcing the
+       modal to scroll just to see them all — tighten the spacing and shrink
+       the icons so all three fit in view at once. */
+    .shiny-edit-layout .shiny-variants {
+        gap: 18px !important;
+    }
+
+    .shiny-edit-layout .variant {
+        gap: 4px !important;
+    }
+
+    .shiny-edit-layout .variant .dot {
+        width: 34px !important;
+        height: 34px !important;
+    }
+
+    .shiny-edit-layout .variant .label {
+        font-size: 11px !important;
     }
 
     .modal-left img {

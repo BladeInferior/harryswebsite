@@ -107,6 +107,7 @@
 
     .site-nav.collection-theme .site-nav-links a {
         width: 100%;
+        box-sizing: border-box;
         text-align: left;
         padding: 10px 14px;
     }

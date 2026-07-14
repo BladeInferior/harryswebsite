@@ -13,6 +13,14 @@
 // each other.
 const _allMobilePopoutPanels = [];
 
+// Keeps the page behind a panel from scrolling while it's open — without
+// this, a touch-drag on the (fixed-position, translucent) panel could also
+// scroll the page underneath it, which felt broken on mobile.
+function _updateBodyScrollLock() {
+    const anyOpen = _allMobilePopoutPanels.some(p => p.classList.contains("open"));
+    document.body.classList.toggle("popout-scroll-lock", anyOpen);
+}
+
 function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementIds }) {
 
     const toggleBtn = document.createElement("div");
@@ -39,12 +47,14 @@ function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementI
             if (p !== panel) p.classList.remove("open");
         });
         panel.classList.toggle("open", opening);
+        _updateBodyScrollLock();
     });
 
     document.addEventListener("click", (e) => {
         if (!panel.classList.contains("open")) return;
         if (panel.contains(e.target) || toggleBtn.contains(e.target)) return;
         panel.classList.remove("open");
+        _updateBodyScrollLock();
     });
 
     const mobileQuery = window.matchMedia("(max-width: 768px)");
@@ -66,6 +76,14 @@ function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementI
                 if (home) home.parent.insertBefore(el, home.nextSibling);
             }
         });
+
+        // Growing back past the mobile breakpoint hides the panel via CSS
+        // regardless of its .open state — without this, the scroll lock
+        // it left behind would strand the desktop page unscrollable.
+        if (!mobileQuery.matches && panel.classList.contains("open")) {
+            panel.classList.remove("open");
+            _updateBodyScrollLock();
+        }
     }
 
     mobileQuery.addEventListener("change", sync);
