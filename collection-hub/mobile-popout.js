@@ -17,16 +17,29 @@ const _allMobilePopoutPanels = [];
 // this, a touch-drag on the (fixed-position, translucent) panel could also
 // scroll the page underneath it, which felt broken on mobile.
 //
-// Plain `overflow: hidden` on <body> doesn't reliably block touch-scroll on
-// iOS Safari (it still rubber-bands through). Repositioning <body> with
-// position:fixed does block it, but pulls body out of layout — since <html>
-// has no background of its own, that flashed white and the reflow on every
-// toggle was slow. touch-action:none blocks touch-driven scrolling directly
-// at the input level instead, with no layout/position change at all.
+// CSS overflow/touch-action toggling turned out not to be reliable enough
+// on its own (depends on the browser correctly treating <html>/<body> as
+// the actual scroll root, which varies). This intercepts touchmove directly
+// instead: any touch that didn't start inside the open panel gets its
+// default scroll behavior cancelled outright, regardless of what element
+// the browser thinks owns the scroll. Touches starting inside the panel are
+// left alone so its own internal overflow-y:auto scrolling still works.
 function _updateBodyScrollLock() {
     const anyOpen = _allMobilePopoutPanels.some(p => p.classList.contains("open"));
-    document.body.classList.toggle("popout-scroll-lock", anyOpen);
+    document.documentElement.classList.toggle("popout-scroll-lock", anyOpen);
 }
+
+function _handleTouchMove(e) {
+    const openPanel = _allMobilePopoutPanels.find(p => p.classList.contains("open"));
+    if (openPanel && !openPanel.contains(e.target)) {
+        e.preventDefault();
+    }
+}
+
+// { passive: false } is required — browsers default touch listeners to
+// passive (for scroll-performance reasons), which silently ignores
+// preventDefault() unless explicitly opted out of.
+document.addEventListener("touchmove", _handleTouchMove, { passive: false });
 
 function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementIds }) {
 

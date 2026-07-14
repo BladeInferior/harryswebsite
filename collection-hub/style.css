@@ -1603,7 +1603,8 @@ body::before {
         overflow-x: hidden;
     }
 
-    body.popout-scroll-lock {
+    html.popout-scroll-lock,
+    html.popout-scroll-lock body {
         overflow: hidden;
         touch-action: none;
     }
