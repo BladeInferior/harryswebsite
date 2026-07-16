@@ -317,6 +317,7 @@ function renderItems() {
         card.dataset.itemIndex = items.indexOf(item);
 
         const img = document.createElement("img");
+        img.loading = "lazy";
         resolveItemImage(img, item);
         card.appendChild(img);
 

@@ -329,16 +329,18 @@ h1 {
     transition: 0.15s ease;
 }
 
-.include-btn.game-filter-btn:hover {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
-}
+@media (hover: hover) and (pointer: fine) {
+    .include-btn.game-filter-btn:hover {
+        background: rgba(46, 204, 113, 0.2);
+        border: 1px solid #2ecc71;
+        color: #2ecc71;
+    }
 
-.exclude-btn.game-filter-btn:hover{
-    background: rgba(231, 76, 60, 0.2);
-    border: 1px solid #e74c3c;
-    color: #e74c3c;
+    .exclude-btn.game-filter-btn:hover{
+        background: rgba(231, 76, 60, 0.2);
+        border: 1px solid #e74c3c;
+        color: #e74c3c;
+    }
 }
 
 #search {
@@ -611,10 +613,12 @@ h1 {
     z-index: 1000;
 }
 
-.generation-filter-btn:hover {
-    background: rgba(255, 215, 0, 0.15);
-    border: 1px solid gold;
-    color: gold;
+@media (hover: hover) and (pointer: fine) {
+    .generation-filter-btn:hover {
+        background: rgba(255, 215, 0, 0.15);
+        border: 1px solid gold;
+        color: gold;
+    }
 }
 
 .generation-filter-btn.active,
@@ -698,11 +702,18 @@ h1 {
     z-index: 2000;
 }
 
-#missing-dex-filter.active,
-#missing-dex-filter:hover {
+#missing-dex-filter.active {
     border: 1px solid gold;
     background: rgba(255, 215, 0, 0.15);
     color: gold;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #missing-dex-filter:hover {
+        border: 1px solid gold;
+        background: rgba(255, 215, 0, 0.15);
+        color: gold;
+    }
 }
 
 #page-display {
@@ -1514,10 +1525,12 @@ body::before {
     color: rgba(255, 255, 255, 0.5);
 }
 
-.sort-filter-btn:hover {
-    background: rgba(255, 215, 0, 0.15);
-    border: 1px solid gold;
-    color: gold;
+@media (hover: hover) and (pointer: fine) {
+    .sort-filter-btn:hover {
+        background: rgba(255, 215, 0, 0.15);
+        border: 1px solid gold;
+        color: gold;
+    }
 }
 
 .sort-filter-btn.game-filter-active {

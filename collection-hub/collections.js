@@ -454,6 +454,7 @@ function renderItems() {
         card.dataset.itemIndex = items.indexOf(item);
 
         const img = document.createElement("img");
+        img.loading = "lazy";
         if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
             const imgName = (useGlowImage && item.images?.[2])
@@ -491,6 +492,7 @@ function renderItems() {
             if (!dlcItem) return;
 
             const dlcImg = document.createElement("img");
+            dlcImg.loading = "lazy";
 
             setItemImage(dlcImg, dlcItem[COLLECTION.fields.title]);
 
