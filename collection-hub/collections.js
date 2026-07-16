@@ -40,21 +40,31 @@ let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (
 let filterHasDlc = null; // for completions: true = only show items with DLC tag
 let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
 let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
-let filterSigned = false; // for popfigures: true = only show items with a signed photo
+let filterSigned = false; // for popfigures: true = only show items tagged "signed"
 
 // for popfigures: primary sort key, tie-broken by the remaining keys in
 // POPFIGURE_SORT_PRIORITY order (franchise, then number, then alphabetical)
 let popfigureSortKey = "franchise";
 const POPFIGURE_SORT_PRIORITY = ["franchise", "number", "alphabetical"];
 
-// for popfigures: a signed photo is stored in the next images[] slot after
-// the box/unboxed/glow shots — index 2 normally, or index 3 for the Glow
-// variant since its glow shot already occupies index 2.
+// for popfigures: the "signed" tag is the source of truth for the filter —
+// the photo itself is optional (a tagged item just falls back to its normal
+// box/unboxed image until the signed photo is actually added). When present,
+// it's stored in the next images[] slot after the box/unboxed/glow shots —
+// index 2 normally, or index 3 for the Glow variant since its glow shot
+// already occupies index 2.
 function isPopfigureGlow(item) {
     return (item[COLLECTION.fields.date] || "")
         .split(",")
         .map(v => v.trim().toLowerCase())
         .includes("glow");
+}
+
+function isSignedPop(item) {
+    const tags = item[COLLECTION.fields.tags] || [];
+    return Array.isArray(tags)
+        ? tags.some(t => t.toLowerCase().trim() === "signed")
+        : String(tags).toLowerCase().includes("signed");
 }
 
 function getSignedImageIndex(item) {
@@ -511,7 +521,7 @@ function renderItems() {
         if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
             let imgName;
-            if (COLLECTION.name === "popfigures" && filterSigned && hasSignedImage(item)) {
+            if (COLLECTION.name === "popfigures" && filterSigned && isSignedPop(item) && hasSignedImage(item)) {
                 imgName = item.images[getSignedImageIndex(item)];
             } else {
                 imgName = (useGlowImage && item.images?.[2])
@@ -717,7 +727,7 @@ function openModal(index) {
         // priority so the modal opens on the same signed photo the card
         // itself was showing.
         currentImageIndex =
-            (COLLECTION.name === "popfigures" && filterSigned && hasSignedImage(item))
+            (COLLECTION.name === "popfigures" && filterSigned && isSignedPop(item) && hasSignedImage(item))
                 ? getSignedImageIndex(item)
                 : (COLLECTION.name === "popfigures" && useUnboxedImage && currentImages.length > 1)
                     ? 1
@@ -1319,9 +1329,9 @@ function filterItems(query) {
             if ((realItem[COLLECTION.fields.custom] || "") !== selectedFranchise) match2 = false;
         }
 
-        // Popfigures: signed filter
+        // Popfigures: signed filter (based on the "signed" tag)
         if (COLLECTION.name === "popfigures" && filterSigned) {
-            if (!hasSignedImage(realItem)) match2 = false;
+            if (!isSignedPop(realItem)) match2 = false;
         }
 
         // Completions: DLC tag filter
