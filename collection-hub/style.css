@@ -685,21 +685,15 @@ h1 {
 }
 
 #missing-dex-filter {
-    position: fixed;
-    top: 260px;
-    right: 20px;
-    width: 280px;
     padding: 10px 12px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 8px;
     border: 1px solid #555;
-    border-bottom: none;
     background: #2d2d2d;
     color: white;
     cursor: pointer;
     transition: 0.15s ease;
     text-align: center;
     box-sizing: border-box;
-    z-index: 2000;
 }
 
 #missing-dex-filter.active {
@@ -1521,15 +1515,6 @@ body::before {
     pointer-events: none !important;
 }
 
-/* #missing-dex-filter has its own ID-scoped .active/:hover gold-highlight
-   rules elsewhere, which otherwise out-specificity the generic class above */
-#missing-dex-filter.filters-disabled,
-#missing-dex-filter.filters-disabled.active,
-#missing-dex-filter.filters-disabled:hover {
-    border: 1px solid #555 !important;
-    background: #2d2d2d !important;
-}
-
 .sort-filter-divider {
     margin-top: 6px;
     padding-top: 14px;
@@ -1626,8 +1611,7 @@ body::before {
     #add-item,
     #untagged-filter,
     #game-filter-container,
-    #progress-container,
-    #missing-dex-filter {
+    #progress-container {
         display: none !important;
     }
 
@@ -1768,8 +1752,7 @@ body::before {
 
     .mobile-popout-list #untagged-filter,
     .mobile-popout-list #game-filter-container,
-    .mobile-popout-list #progress-container,
-    .mobile-popout-list #missing-dex-filter {
+    .mobile-popout-list #progress-container {
         display: flex !important;
         justify-content: center;
         position: static !important;
@@ -1780,20 +1763,6 @@ body::before {
 
     .mobile-popout-list #untagged-filter.hidden {
         display: none !important;
-    }
-
-    /* On desktop this button sits flush against #game-filter-container
-       (no bottom border, square bottom corners) so the two look joined —
-       inside the popout it's just a normal standalone row with a gap
-       after it, so that squared-off, border-less bottom edge just looked
-       like it was cut off. Give it back a complete border here. */
-    .mobile-popout-list #missing-dex-filter {
-        border-radius: 8px !important;
-        border-bottom: 1px solid #555 !important;
-    }
-
-    .mobile-popout-list #missing-dex-filter.active {
-        border-bottom-color: gold !important;
     }
 
     /* The pokedex filter list (6 games + 3 tag pairs + 10 generations +

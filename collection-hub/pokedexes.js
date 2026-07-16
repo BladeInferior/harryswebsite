@@ -558,7 +558,7 @@ searchInput.addEventListener("input", (e) => {
 });
 
 const clearBtn = document.getElementById("clear-search");
-const missingFilterBtn = document.getElementById("missing-dex-filter");
+let missingFilterBtn = null;
 
 clearBtn.addEventListener("click", () => {
 
@@ -566,14 +566,9 @@ clearBtn.addEventListener("click", () => {
     applyFilters("");
 });
 
-missingFilterBtn.addEventListener("click", () => {
-
-    missingDexFilter = !missingDexFilter;
-    applyFilters();
-    updateMissingButtonHighlight();
-});
-
 function updateMissingButtonHighlight() {
+    if (!missingFilterBtn) return;
+
     missingFilterBtn.classList.toggle("active", missingDexFilter);
 
     // Mobile Safari occasionally doesn't repaint a class-driven style change
@@ -855,6 +850,22 @@ function renderModalState(pokemonKey) {
 function createFilterButtons() {
 
     const container = document.getElementById("game-filter-container");
+
+    // -----------------------------
+    // MISSING IN SELECTED DEX
+    // -----------------------------
+    missingFilterBtn = document.createElement("button");
+    missingFilterBtn.id = "missing-dex-filter";
+    missingFilterBtn.textContent = "Missing in Selected Dex";
+    missingFilterBtn.classList.add("game-filter-btn");
+
+    missingFilterBtn.addEventListener("click", () => {
+        missingDexFilter = !missingDexFilter;
+        applyFilters();
+        updateMissingButtonHighlight();
+    });
+
+    container.appendChild(missingFilterBtn);
 
     const games = [
         { key: "swsh", label: "Sword & Shield" },
@@ -1225,9 +1236,6 @@ function updateModeUI() {
     const filterContainer = document.getElementById("game-filter-container");
     if (filterContainer) filterContainer.classList.toggle("filters-disabled", pageMode);
 
-    const missingFilterBtn = document.getElementById("missing-dex-filter");
-    if (missingFilterBtn) missingFilterBtn.classList.toggle("filters-disabled", pageMode);
-
     updateCardImages();
 }
 
@@ -1425,7 +1433,7 @@ createMobilePopout({
     top: 130,
     right: 16,
     heading: "Filters",
-    elementIds: ["missing-dex-filter", "game-filter-container"]
+    elementIds: ["game-filter-container"]
 });
 
 createMobilePopout({
