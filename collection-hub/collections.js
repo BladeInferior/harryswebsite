@@ -1656,6 +1656,217 @@ if (modalCloseBtn) {
 }
 
 // =========================
+// STATS MODAL
+// Page-specific stats gated on COLLECTION.name — the trigger/modal elements
+// only exist in the HTML of the pages that need them (sleeves, completions,
+// popfigures), so everything here is guarded with `if` checks.
+// =========================
+const statsBtn = document.getElementById("stats-btn");
+const statsModal = document.getElementById("stats-modal");
+const statsModalBody = document.getElementById("stats-modal-body");
+const statsModalClose = document.getElementById("stats-modal-close");
+
+const statsDetailModal = document.getElementById("stats-detail-modal");
+const statsDetailModalBody = document.getElementById("stats-detail-modal-body");
+const statsDetailModalTitle = document.getElementById("stats-detail-modal-title");
+const statsDetailModalClose = document.getElementById("stats-detail-modal-close");
+
+let fullPokemonNameList = null;
+
+async function getFullPokemonNameList() {
+    if (!fullPokemonNameList) {
+        fullPokemonNameList = await fetch("fullPokemonList.json").then(res => res.json());
+    }
+    return fullPokemonNameList;
+}
+
+function normalizeStatsTag(name) {
+    return (name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+function renderStatsRows(rows) {
+    return rows.map(([label, value]) =>
+        `<div class="stats-row"><span>${label}</span><span class="stats-value">${value}</span></div>`
+    ).join("");
+}
+
+function renderStats() {
+
+    if (COLLECTION.name === "sleeves") {
+
+        const total = items.length;
+        const counts = { eng: 0, jpn: 0, chn: 0 };
+
+        items.forEach(item => {
+            const nat = (item[COLLECTION.fields.custom] || "").toLowerCase();
+            ["eng", "jpn", "chn"].forEach(key => {
+                if (nat.includes(key)) counts[key]++;
+            });
+        });
+
+        statsModalBody.innerHTML = `
+            <div class="stats-section">
+                <h3>By Nationality (of ${total})</h3>
+                ${renderStatsRows([
+                    ["English", counts.eng],
+                    ["Japanese", counts.jpn],
+                    ["Chinese", counts.chn]
+                ])}
+            </div>
+            <button id="stats-featured-pokemon-btn" class="item-action-btn stats-detail-btn">View Featured Pokémon</button>
+        `;
+
+        const featuredBtn = document.getElementById("stats-featured-pokemon-btn");
+        if (featuredBtn) featuredBtn.addEventListener("click", renderFeaturedPokemonDetail);
+
+    } else if (COLLECTION.name === "completions") {
+
+        const total = items.length;
+
+        const dlcDone = items.filter(item =>
+            (item[COLLECTION.fields.tags] || []).some(t => t.toLowerCase().trim() === "dlc")
+        ).length;
+
+        const dlcToDo = items.filter(item =>
+            (item[COLLECTION.fields.tags] || []).some(t => t.toLowerCase().trim() === "dlc available")
+        ).length;
+
+        const totalDlcs = items.reduce((sum, item) => sum + (item.dlcs || []).length, 0);
+
+        statsModalBody.innerHTML = `
+            <div class="stats-section">
+                <h3>Overview</h3>
+                ${renderStatsRows([["Total Completions", total]])}
+            </div>
+            <div class="stats-section">
+                <h3>DLC</h3>
+                ${renderStatsRows([
+                    ["DLC Games Done", dlcDone],
+                    ["DLC Still To Do", dlcToDo],
+                    ["Total DLCs Completed", totalDlcs]
+                ])}
+            </div>
+            <button id="stats-franchise-btn" class="item-action-btn stats-detail-btn">View Franchise Breakdown</button>
+        `;
+
+        const franchiseBtn = document.getElementById("stats-franchise-btn");
+        if (franchiseBtn) franchiseBtn.addEventListener("click", renderFranchiseDetail);
+
+    } else if (COLLECTION.name === "popfigures") {
+
+        const total = items.length;
+        const variantCounts = {};
+
+        items.forEach(item => {
+            (item[COLLECTION.fields.date] || "")
+                .split(",")
+                .map(v => v.trim())
+                .filter(Boolean)
+                .forEach(v => {
+                    variantCounts[v] = (variantCounts[v] || 0) + 1;
+                });
+        });
+
+        const signedCount = items.filter(isSignedPop).length;
+
+        const rows = Object.keys(variantCounts)
+            .sort((a, b) => variantCounts[b] - variantCounts[a])
+            .map(v => [v, variantCounts[v]]);
+
+        rows.push(["Signed", signedCount]);
+
+        statsModalBody.innerHTML = `
+            <div class="stats-section">
+                <h3>By Type (of ${total})</h3>
+                ${renderStatsRows(rows)}
+            </div>
+        `;
+    }
+}
+
+// Sleeves: cross-references each sleeve's tags against the master Pokémon
+// name list (normalized the same way card/sprite filenames are) so only
+// tags that are actually Pokémon names get counted, not descriptor tags
+// like "etb" or "ultra pro".
+async function renderFeaturedPokemonDetail() {
+
+    statsDetailModalTitle.textContent = "Featured Pokémon";
+    statsDetailModalBody.innerHTML = "<p>Loading…</p>";
+    statsDetailModal.classList.remove("hidden");
+
+    const pokemonList = await getFullPokemonNameList();
+    const pokemonByNormalizedName = new Map(pokemonList.map(p => [normalizeStatsTag(p.name), p.name]));
+
+    const counts = new Map();
+
+    items.forEach(item => {
+        (item[COLLECTION.fields.tags] || []).forEach(tag => {
+            const canonicalName = pokemonByNormalizedName.get(normalizeStatsTag(tag));
+            if (!canonicalName) return;
+            counts.set(canonicalName, (counts.get(canonicalName) || 0) + 1);
+        });
+    });
+
+    const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+    statsDetailModalBody.innerHTML = rows.length
+        ? renderStatsRows(rows)
+        : "<p>No Pokémon found in sleeve tags.</p>";
+}
+
+function renderFranchiseDetail() {
+
+    statsDetailModalTitle.textContent = "Franchise Breakdown";
+
+    const counts = new Map();
+
+    items.forEach(item => {
+        const franchise = item[COLLECTION.fields.custom];
+        if (!franchise) return;
+        counts.set(franchise, (counts.get(franchise) || 0) + 1);
+    });
+
+    const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+    statsDetailModalBody.innerHTML = rows.length
+        ? renderStatsRows(rows)
+        : "<p>No franchises found.</p>";
+
+    statsDetailModal.classList.remove("hidden");
+}
+
+if (statsBtn) {
+    statsBtn.addEventListener("click", () => {
+        renderStats();
+        statsModal.classList.remove("hidden");
+    });
+}
+
+if (statsModalClose) {
+    statsModalClose.addEventListener("click", () => {
+        statsModal.classList.add("hidden");
+    });
+}
+
+if (statsModal) {
+    statsModal.addEventListener("click", (e) => {
+        if (e.target === statsModal) statsModal.classList.add("hidden");
+    });
+}
+
+if (statsDetailModalClose) {
+    statsDetailModalClose.addEventListener("click", () => {
+        statsDetailModal.classList.add("hidden");
+    });
+}
+
+if (statsDetailModal) {
+    statsDetailModal.addEventListener("click", (e) => {
+        if (e.target === statsDetailModal) statsDetailModal.classList.add("hidden");
+    });
+}
+
+// =========================
 // MOBILE FILTER POP-OUT
 // On mobile, the real filter controls (Untagged, the sleeves/
 // completions filter sidebar) are relocated into a pop-out panel

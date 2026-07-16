@@ -267,7 +267,7 @@ h1 {
     object-fit: contain;
 }
 
-.dot[data-variant="red"] {
+.dot[data-variant="correctStage"] {
     width: 90px;
     height: 90px;
 }
@@ -1928,4 +1928,75 @@ body::before {
         left: 10px;
         right: auto;
     }
+}
+
+/* =========================
+   STATS MODAL (shared across collection pages)
+========================= */
+.stats-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 4000;
+}
+
+.stats-modal-box {
+    position: relative;
+    background: #2d2d2d;
+    border: 1px solid #555;
+    border-radius: 12px;
+    padding: 24px;
+
+    width: 420px;
+    max-width: calc(100vw - 32px);
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.stats-modal-box h2 {
+    margin: 0 0 16px;
+    text-align: center;
+}
+
+.stats-section {
+    margin-bottom: 20px;
+}
+
+.stats-section:last-child {
+    margin-bottom: 0;
+}
+
+.stats-section h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stats-row:last-child {
+    border-bottom: none;
+}
+
+.stats-row .stats-value {
+    color: gold;
+    font-weight: 600;
+}
+
+.stats-detail-btn {
+    margin-top: 10px;
+    width: 100%;
 }

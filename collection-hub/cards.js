@@ -795,6 +795,60 @@ const syncMobileFilterPopout = createMobilePopout({
 });
 
 // =========================
+// STATS MODAL
+// Fetches every deck's JSON fresh (not just the currently active deck) so
+// the modal always covers all 5 decks regardless of which one is open.
+// =========================
+const statsBtn = document.getElementById("stats-btn");
+const statsModal = document.getElementById("stats-modal");
+const statsModalBody = document.getElementById("stats-modal-body");
+const statsModalClose = document.getElementById("stats-modal-close");
+
+async function renderStats() {
+
+    const deckStats = await Promise.all(DECKS.map(async deck => {
+
+        const deckItems = (await fetch(deck.jsonFile).then(res => res.json()))
+            .filter(item => !item.empty);
+
+        const total = deckItems.length;
+        const owned = deckItems.filter(item => item.owned).length;
+        const specialTotal = deckItems.filter(item => item.special).length;
+        const specialOwned = deckItems.filter(item => item.special && item.owned).length;
+
+        return { ...deck, total, owned, specialTotal, specialOwned };
+    }));
+
+    statsModalBody.innerHTML = deckStats.map(deck => `
+        <div class="stats-section">
+            <h3>${deck.label}</h3>
+            <div class="stats-row"><span>Owned</span><span class="stats-value">${deck.owned} / ${deck.total}</span></div>
+            ${deck.hasSpecial ? `<div class="stats-row"><span>Special Owned</span><span class="stats-value">${deck.specialOwned} / ${deck.specialTotal}</span></div>` : ""}
+        </div>
+    `).join("");
+}
+
+if (statsBtn) {
+    statsBtn.addEventListener("click", () => {
+        statsModalBody.innerHTML = "<p>Loading…</p>";
+        statsModal.classList.remove("hidden");
+        renderStats();
+    });
+}
+
+if (statsModalClose) {
+    statsModalClose.addEventListener("click", () => {
+        statsModal.classList.add("hidden");
+    });
+}
+
+if (statsModal) {
+    statsModal.addEventListener("click", (e) => {
+        if (e.target === statsModal) statsModal.classList.add("hidden");
+    });
+}
+
+// =========================
 // INIT
 // =========================
 loadDeck(DECKS[0].key);

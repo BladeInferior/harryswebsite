@@ -52,9 +52,9 @@ Promise.all([
             shinyDex: !!entry.shinyDex,
 
             shinyDexData: {
-                red: !!entry.shinyDexData?.red,
-                blue: !!entry.shinyDexData?.blue,
-                yellow: !!entry.shinyDexData?.yellow
+                correctStage: !!entry.shinyDexData?.correctStage,
+                originalRegion: !!entry.shinyDexData?.originalRegion,
+                luxuryBall: !!entry.shinyDexData?.luxuryBall
             }
         };
     });
@@ -98,17 +98,17 @@ function toggleShinyDex(pokemonKey) {
     // if turning OFF shiny, wipe variants
     if (!newState) {
         data.shinyDexData = {
-            red: false,
-            blue: false,
-            yellow: false
+            correctStage: false,
+            originalRegion: false,
+            luxuryBall: false
         };
     } else {
         // ensure structure exists when turning ON
         if (!data.shinyDexData) {
             data.shinyDexData = {
-                red: false,
-                blue: false,
-                yellow: false
+                correctStage: false,
+                originalRegion: false,
+                luxuryBall: false
             };
         }
     }
@@ -531,9 +531,9 @@ modalOverlay.addEventListener("click", (e) => {
 
     if (!pokemonData.shinyDexData) {
         pokemonData.shinyDexData = {
-            red: false,
-            blue: false,
-            yellow: false
+            correctStage: false,
+            originalRegion: false,
+            luxuryBall: false
         };
     }
 
@@ -739,14 +739,14 @@ function updateCardHighlights() {
         }
 
         const shiny = {
-            red: !!data.shinyDexData?.red,
-            blue: !!data.shinyDexData?.blue,
-            yellow: !!data.shinyDexData?.yellow
+            correctStage: !!data.shinyDexData?.correctStage,
+            originalRegion: !!data.shinyDexData?.originalRegion,
+            luxuryBall: !!data.shinyDexData?.luxuryBall
         };
 
-        const red = shiny.red;
-        const blue = shiny.blue;
-        const yellow = shiny.yellow;
+        const correctStage = shiny.correctStage;
+        const originalRegion = shiny.originalRegion;
+        const luxuryBall = shiny.luxuryBall;
 
         // -----------------------------
         // CHECK STATES
@@ -761,9 +761,9 @@ function updateCardHighlights() {
 
         const fullComplete =
             mainComplete &&
-            red &&
-            blue &&
-            yellow;
+            correctStage &&
+            originalRegion &&
+            luxuryBall;
 
         // -----------------------------
         // RESET CLASSES
@@ -1245,9 +1245,9 @@ document.getElementById("export-pokedex").addEventListener("click", () => {
 
             shinyDex: !!data.shinyDex,
             shinyDexData: {
-                red: !!data.shinyDexData?.red,
-                blue: !!data.shinyDexData?.blue,
-                yellow: !!data.shinyDexData?.yellow
+                correctStage: !!data.shinyDexData?.correctStage,
+                originalRegion: !!data.shinyDexData?.originalRegion,
+                luxuryBall: !!data.shinyDexData?.luxuryBall
             }
         };
     });
@@ -1306,9 +1306,9 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
                     shinyDex: !!entry.shinyDex,
 
                     shinyDexData: {
-                        red: !!entry.shinyDexData?.red,
-                        blue: !!entry.shinyDexData?.blue,
-                        yellow: !!entry.shinyDexData?.yellow
+                        correctStage: !!entry.shinyDexData?.correctStage,
+                        originalRegion: !!entry.shinyDexData?.originalRegion,
+                        luxuryBall: !!entry.shinyDexData?.luxuryBall
                     }
                 };
             });
@@ -1328,6 +1328,90 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
 
     reader.readAsText(file);
 });
+
+// =========================
+// STATS MODAL
+// =========================
+const statsBtn = document.getElementById("stats-btn");
+const statsModal = document.getElementById("stats-modal");
+const statsModalBody = document.getElementById("stats-modal-body");
+const statsModalClose = document.getElementById("stats-modal-close");
+
+function renderStats() {
+
+    const total = allPokemon.length;
+
+    let dexRows = "";
+    dexTypes.forEach(dex => {
+
+        let caught = 0;
+
+        allPokemon.forEach(pokemon => {
+            const data = savedDexData[normalizeName(pokemon.name)];
+            if (data && data[dex.key]) caught++;
+        });
+
+        dexRows += `<div class="stats-row"><span>${dex.label}</span><span class="stats-value">${caught} / ${total}</span></div>`;
+    });
+
+    let shinyTotal = 0;
+    let correctStage = 0;
+    let originalRegion = 0;
+    let luxuryBall = 0;
+    let perfect = 0;
+
+    allPokemon.forEach(pokemon => {
+
+        const data = savedDexData[normalizeName(pokemon.name)];
+        if (!data || !data.shinyDex) return;
+
+        shinyTotal++;
+
+        const s = data.shinyDexData || {};
+        if (s.correctStage) correctStage++;
+        if (s.originalRegion) originalRegion++;
+        if (s.luxuryBall) luxuryBall++;
+        if (s.correctStage && s.originalRegion && s.luxuryBall) perfect++;
+    });
+
+    statsModalBody.innerHTML = `
+        <div class="stats-section">
+            <h3>Dex Progress</h3>
+            ${dexRows}
+        </div>
+
+        <div class="stats-section">
+            <h3>Shiny Sub-Constraints (of ${shinyTotal} Shiny)</h3>
+            <div class="stats-row"><span>Correct Stage</span><span class="stats-value">${correctStage} / ${shinyTotal}</span></div>
+            <div class="stats-row"><span>Original Region</span><span class="stats-value">${originalRegion} / ${shinyTotal}</span></div>
+            <div class="stats-row"><span>Luxury Ball</span><span class="stats-value">${luxuryBall} / ${shinyTotal}</span></div>
+        </div>
+
+        <div class="stats-section">
+            <h3>Perfect Shinies</h3>
+            <div class="stats-row"><span>All 3 Constraints</span><span class="stats-value">${perfect} / ${shinyTotal}</span></div>
+        </div>
+    `;
+}
+
+if (statsBtn) {
+    statsBtn.addEventListener("click", () => {
+        renderStats();
+        statsModal.classList.remove("hidden");
+    });
+}
+
+if (statsModalClose) {
+    statsModalClose.addEventListener("click", () => {
+        statsModal.classList.add("hidden");
+    });
+}
+
+if (statsModal) {
+    statsModal.addEventListener("click", (e) => {
+        if (e.target === statsModal) statsModal.classList.add("hidden");
+    });
+}
 
 // =========================
 // MOBILE POP-OUTS

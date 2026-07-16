@@ -44,6 +44,7 @@
         <button id="import-button">Import</button>
         <button id="export-pokedex">Export Pokémon</button>
         <button id="missing-dex-filter">Missing in Selected Dex</button>
+        <button id="stats-btn">Stats</button>
 
         <div id="pagination-controls">
 
@@ -91,17 +92,17 @@
 
                 <div class="shiny-variants">
 
-                    <div class="variant" data-variant="red">
+                    <div class="variant" data-variant="correctStage">
                         <img class="dot"src="icons/rampardos.png">
                         <span class="label">Correct Stage</span>
                     </div>
 
-                    <div class="variant" data-variant="blue">
+                    <div class="variant" data-variant="originalRegion">
                         <img class="dot"src="icons/Arceus_mark_HOME.png">
-                        <span class="label">Home Region</span>
+                        <span class="label">Original Region</span>
                     </div>
 
-                    <div class="variant" data-variant="yellow">
+                    <div class="variant" data-variant="luxuryBall">
                         <img class="dot"src="icons/luxuryball.png">
                         <span class="label">Luxury Ball</span>
                     </div>
@@ -134,6 +135,14 @@
 
         <div id="modal-nav-right" class="modal-nav">▶</div>
 
+    </div>
+
+    <div id="stats-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="stats-modal-close" class="modal-close-btn">✕</div>
+            <h2>Pokédex Stats</h2>
+            <div id="stats-modal-body"></div>
+        </div>
     </div>
 
     <script src="mobile-popout.js"></script>

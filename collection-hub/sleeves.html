@@ -61,6 +61,7 @@
         <input type="file" id="import-items" accept=".json" hidden>
         <button id="import-button">Import</button>
         <button id="export-items">Export</button>
+        <button id="stats-btn">Stats</button>
 
     </div>
 
@@ -161,6 +162,22 @@
 
     <div id="image-zoom-overlay" class="hidden">
         <img id="zoom-image" />
+    </div>
+
+    <div id="stats-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="stats-modal-close" class="modal-close-btn">✕</div>
+            <h2>Sleeve Stats</h2>
+            <div id="stats-modal-body"></div>
+        </div>
+    </div>
+
+    <div id="stats-detail-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="stats-detail-modal-close" class="modal-close-btn">✕</div>
+            <h2 id="stats-detail-modal-title"></h2>
+            <div id="stats-detail-modal-body"></div>
+        </div>
     </div>
 
     <script>
