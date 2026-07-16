@@ -60,6 +60,33 @@ Promise.all([
     if (local) {
         try {
             items = JSON.parse(local);
+
+            // Fields added to the source JSON after this browser's copy was
+            // cached (e.g. "franchise") won't exist on the cached items —
+            // backfill any such gaps from the source so they don't stay
+            // permanently blank just because localStorage predates them.
+            const titleKey = COLLECTION.fields.title;
+            const sourceByTitle = new Map(itemList.map(i => [i[titleKey], i]));
+            const localTitles = new Set(items.map(i => i[titleKey]));
+
+            items.forEach(item => {
+                const source = sourceByTitle.get(item[titleKey]);
+                if (!source) return;
+
+                Object.keys(source).forEach(key => {
+                    if (item[key] === undefined || item[key] === "") {
+                        item[key] = source[key];
+                    }
+                });
+            });
+
+            // Items exported from another device/session exist in the source
+            // JSON but were never added to this browser's local copy — pull
+            // those in too, without touching any locally-added item that
+            // hasn't been exported yet (those simply won't be in itemList).
+            itemList.forEach(source => {
+                if (!localTitles.has(source[titleKey])) items.push(source);
+            });
         } catch {
             items = itemList;
         }
