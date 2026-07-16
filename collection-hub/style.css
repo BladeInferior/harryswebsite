@@ -1089,6 +1089,25 @@ h1 {
     text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
 }
 
+#signed-filter {
+    padding: 6px 12px;
+    background: #2d2d2d;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+
+    margin-left: 18px;
+}
+
+#signed-filter.active {
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid gold;
+    color: gold;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
+}
+
 #popfigure-controls {
     display: inline-flex;
     flex-direction: column;

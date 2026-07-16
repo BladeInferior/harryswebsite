@@ -40,11 +40,30 @@ let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (
 let filterHasDlc = null; // for completions: true = only show items with DLC tag
 let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
 let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
+let filterSigned = false; // for popfigures: true = only show items with a signed photo
 
 // for popfigures: primary sort key, tie-broken by the remaining keys in
 // POPFIGURE_SORT_PRIORITY order (franchise, then number, then alphabetical)
 let popfigureSortKey = "franchise";
 const POPFIGURE_SORT_PRIORITY = ["franchise", "number", "alphabetical"];
+
+// for popfigures: a signed photo is stored in the next images[] slot after
+// the box/unboxed/glow shots — index 2 normally, or index 3 for the Glow
+// variant since its glow shot already occupies index 2.
+function isPopfigureGlow(item) {
+    return (item[COLLECTION.fields.date] || "")
+        .split(",")
+        .map(v => v.trim().toLowerCase())
+        .includes("glow");
+}
+
+function getSignedImageIndex(item) {
+    return isPopfigureGlow(item) ? 3 : 2;
+}
+
+function hasSignedImage(item) {
+    return !!(item.images && item.images[getSignedImageIndex(item)]);
+}
 
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
 const zoomImage = document.getElementById("zoom-image");
@@ -371,6 +390,7 @@ function createCollectionFilters() {
         filterHasDlc = null;
         selectedVariant = null;
         selectedFranchise = null;
+        filterSigned = false;
 
         // clear visuals (sort buttons are a separate concern and keep their highlight)
         container.querySelectorAll(".game-filter-active").forEach(el => {
@@ -382,7 +402,13 @@ function createCollectionFilters() {
         const franchiseSelect = document.getElementById("franchise-filter-select");
         if (franchiseSelect) franchiseSelect.value = "";
 
-        filterItems(searchInput.value);
+        const signedBtn = document.getElementById("signed-filter");
+        if (signedBtn) {
+            signedBtn.classList.remove("active");
+            signedBtn.textContent = "Signed";
+        }
+
+        renderItems();
     });
 
     // attach reset button to container
@@ -484,9 +510,14 @@ function renderItems() {
         img.loading = "lazy";
         if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
-            const imgName = (useGlowImage && item.images?.[2])
-                ? item.images[2]
-                : item.images?.[useUnboxedImage ? 1 : 0];
+            let imgName;
+            if (COLLECTION.name === "popfigures" && filterSigned && hasSignedImage(item)) {
+                imgName = item.images[getSignedImageIndex(item)];
+            } else {
+                imgName = (useGlowImage && item.images?.[2])
+                    ? item.images[2]
+                    : item.images?.[useUnboxedImage ? 1 : 0];
+            }
 
             if (imgName) {
                 setItemImage(img, imgName);
@@ -682,11 +713,15 @@ function openModal(index) {
 
         // Open on whichever image matches the grid's current boxed/unboxed
         // toggle (image 1 = boxed, image 2 = unboxed), so it stays in sync
-        // when paging to the next/previous item too.
+        // when paging to the next/previous item too. The signed filter takes
+        // priority so the modal opens on the same signed photo the card
+        // itself was showing.
         currentImageIndex =
-            (COLLECTION.name === "popfigures" && useUnboxedImage && currentImages.length > 1)
-                ? 1
-                : 0;
+            (COLLECTION.name === "popfigures" && filterSigned && hasSignedImage(item))
+                ? getSignedImageIndex(item)
+                : (COLLECTION.name === "popfigures" && useUnboxedImage && currentImages.length > 1)
+                    ? 1
+                    : 0;
 
         if (currentImages.length > 0) {
             setItemImage(modalImage, currentImages[currentImageIndex]);
@@ -1284,6 +1319,11 @@ function filterItems(query) {
             if ((realItem[COLLECTION.fields.custom] || "") !== selectedFranchise) match2 = false;
         }
 
+        // Popfigures: signed filter
+        if (COLLECTION.name === "popfigures" && filterSigned) {
+            if (!hasSignedImage(realItem)) match2 = false;
+        }
+
         // Completions: DLC tag filter
         if (COLLECTION.name === "completions" && filterHasDlc === true) {
             const tags = realItem[COLLECTION.fields.tags] || [];
@@ -1580,6 +1620,19 @@ if (toggleGlowBtn) {
 
         toggleGlowBtn.classList.toggle("active", useGlowImage);
         toggleGlowBtn.textContent = useGlowImage ? "Show Normal" : "Show Glowing";
+
+        renderItems();
+    });
+}
+
+const signedFilterBtn = document.getElementById("signed-filter");
+
+if (signedFilterBtn) {
+    signedFilterBtn.addEventListener("click", () => {
+        filterSigned = !filterSigned;
+
+        signedFilterBtn.classList.toggle("active", filterSigned);
+        signedFilterBtn.textContent = filterSigned ? "Show All" : "Signed";
 
         renderItems();
     });
