@@ -1346,6 +1346,49 @@ function filterItems(query) {
 
         card.style.display = match2 ? "block" : "none";
     });
+
+    updateItemCount();
+}
+
+// =========================
+// ITEM COUNT LABEL
+// Mirrors the Pokédex page's "displayed" indicator — shown only while a
+// search/filter is actually narrowing the grid, on both desktop (fixed
+// top-right) and mobile (CSS repositions it into a bottom pill). Covers
+// every collection page since the filter state variables it checks simply
+// stay at their default on pages that don't use a given one.
+// =========================
+const itemCountLabel = document.createElement("div");
+itemCountLabel.id = "item-count-label";
+itemCountLabel.style.display = "none";
+document.body.appendChild(itemCountLabel);
+
+function hasActiveFilters() {
+    return (
+        searchInput.value.trim() !== "" ||
+        selectedNationality !== null ||
+        filterHasDlc !== null ||
+        selectedVariant !== null ||
+        selectedFranchise !== null ||
+        filterSigned
+    );
+}
+
+function updateItemCount() {
+
+    if (!hasActiveFilters()) {
+        itemCountLabel.style.display = "none";
+        return;
+    }
+
+    let count = 0;
+    document.querySelectorAll(".pokemon-card").forEach(card => {
+        if (card.style.display !== "none") count++;
+    });
+
+    const label = COLLECTION.name.charAt(0).toUpperCase() + COLLECTION.name.slice(1);
+    itemCountLabel.textContent = `${label} displayed: ${count}`;
+    itemCountLabel.style.display = "block";
 }
 
 previewBtn.addEventListener("click", () => {
@@ -1706,11 +1749,11 @@ function renderStats() {
 
         statsModalBody.innerHTML = `
             <div class="stats-section">
-                <h3>By Nationality (of ${total})</h3>
+                <h3>By Nationality</h3>
                 ${renderStatsRows([
-                    ["English", counts.eng],
-                    ["Japanese", counts.jpn],
-                    ["Chinese", counts.chn]
+                    ["English", `${counts.eng} / ${total}`],
+                    ["Japanese", `${counts.jpn} / ${total}`],
+                    ["Chinese", `${counts.chn} / ${total}`]
                 ])}
             </div>
             <button id="stats-featured-pokemon-btn" class="item-action-btn stats-detail-btn">View Featured Pokémon</button>
@@ -1741,9 +1784,9 @@ function renderStats() {
             <div class="stats-section">
                 <h3>DLC</h3>
                 ${renderStatsRows([
-                    ["DLC Games Done", dlcDone],
-                    ["DLC Still To Do", dlcToDo],
-                    ["Total DLCs Completed", totalDlcs]
+                    ["DLC Games Done", `${dlcDone} / ${total}`],
+                    ["DLC Still To Do", `${dlcToDo} / ${total}`],
+                    ["Total DLCs Completed", `${totalDlcs} / ${total}`]
                 ])}
             </div>
             <button id="stats-franchise-btn" class="item-action-btn stats-detail-btn">View Franchise Breakdown</button>
@@ -1771,13 +1814,13 @@ function renderStats() {
 
         const rows = Object.keys(variantCounts)
             .sort((a, b) => variantCounts[b] - variantCounts[a])
-            .map(v => [v, variantCounts[v]]);
+            .map(v => [v, `${variantCounts[v]} / ${total}`]);
 
-        rows.push(["Signed", signedCount]);
+        rows.push(["Signed", `${signedCount} / ${total}`]);
 
         statsModalBody.innerHTML = `
             <div class="stats-section">
-                <h3>By Type (of ${total})</h3>
+                <h3>By Type</h3>
                 ${renderStatsRows(rows)}
             </div>
         `;
@@ -1807,7 +1850,11 @@ async function renderFeaturedPokemonDetail() {
         });
     });
 
-    const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    const total = items.length;
+
+    const rows = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([name, count]) => [name, `${count} / ${total}`]);
 
     statsDetailModalBody.innerHTML = rows.length
         ? renderStatsRows(rows)
@@ -1826,7 +1873,11 @@ function renderFranchiseDetail() {
         counts.set(franchise, (counts.get(franchise) || 0) + 1);
     });
 
-    const rows = [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+    const total = items.length;
+
+    const rows = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([name, count]) => [name, `${count} / ${total}`]);
 
     statsDetailModalBody.innerHTML = rows.length
         ? renderStatsRows(rows)

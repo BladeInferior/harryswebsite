@@ -300,13 +300,13 @@ h1 {
     gap: 8px;
 }
 
-#pokemon-count-label {
+#item-count-label {
     position: fixed;
     top: 220px;
     right: 20px;
     width: 280px;
     padding: 10px 12px;
-    
+
     color: #aaa;
     font-size: 14px;
     font-weight: 500;
@@ -1817,7 +1817,7 @@ body::before {
         font-size: 12px !important;
     }
 
-    #pokemon-count-label {
+    #item-count-label {
         top: auto !important;
         bottom: 14px !important;
         left: 50% !important;

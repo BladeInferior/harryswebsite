@@ -725,6 +725,43 @@ function filterItems(query) {
 
         card.style.display = match ? "block" : "none";
     });
+
+    updateItemCount();
+}
+
+// =========================
+// ITEM COUNT LABEL
+// Mirrors the Pokédex page's "displayed" indicator — shown only while a
+// search/filter is actually narrowing the grid, on both desktop (fixed
+// top-right) and mobile (CSS repositions it into a bottom pill).
+// =========================
+const itemCountLabel = document.createElement("div");
+itemCountLabel.id = "item-count-label";
+itemCountLabel.style.display = "none";
+document.body.appendChild(itemCountLabel);
+
+function updateItemCount() {
+
+    const hasActiveFilters = (
+        filterOwned !== null ||
+        filterSpecial !== null ||
+        filterGeneration !== null ||
+        filterRecentSet ||
+        searchInput.value.trim() !== ""
+    );
+
+    if (!hasActiveFilters) {
+        itemCountLabel.style.display = "none";
+        return;
+    }
+
+    let count = 0;
+    document.querySelectorAll(".pokemon-card").forEach(card => {
+        if (!card.classList.contains("empty-card") && card.style.display !== "none") count++;
+    });
+
+    itemCountLabel.textContent = `${activeDeck.label} displayed: ${count}`;
+    itemCountLabel.style.display = "block";
 }
 
 // =========================
@@ -813,17 +850,16 @@ async function renderStats() {
 
         const total = deckItems.length;
         const owned = deckItems.filter(item => item.owned).length;
-        const specialTotal = deckItems.filter(item => item.special).length;
         const specialOwned = deckItems.filter(item => item.special && item.owned).length;
 
-        return { ...deck, total, owned, specialTotal, specialOwned };
+        return { ...deck, total, owned, specialOwned };
     }));
 
     statsModalBody.innerHTML = deckStats.map(deck => `
         <div class="stats-section">
             <h3>${deck.label}</h3>
             <div class="stats-row"><span>Owned</span><span class="stats-value">${deck.owned} / ${deck.total}</span></div>
-            ${deck.hasSpecial ? `<div class="stats-row"><span>Special Owned</span><span class="stats-value">${deck.specialOwned} / ${deck.specialTotal}</span></div>` : ""}
+            ${deck.hasSpecial ? `<div class="stats-row"><span>Special Owned</span><span class="stats-value">${deck.specialOwned} / ${deck.total}</span></div>` : ""}
         </div>
     `).join("");
 }

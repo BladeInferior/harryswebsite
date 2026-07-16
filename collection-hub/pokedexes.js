@@ -1053,7 +1053,7 @@ function createFilterButtons() {
 
     // Create Pokemon count label
     pokemonCountLabel = document.createElement("div");
-    pokemonCountLabel.id = "pokemon-count-label";
+    pokemonCountLabel.id = "item-count-label";
     pokemonCountLabel.style.display = "none";
     pokemonCountLabel.style.padding = "10px 0";
     pokemonCountLabel.style.textAlign = "center";
@@ -1381,7 +1381,7 @@ function renderStats() {
         </div>
 
         <div class="stats-section">
-            <h3>Shiny Sub-Constraints (of ${shinyTotal} Shiny)</h3>
+            <h3>Shiny Sub-Constraints</h3>
             <div class="stats-row"><span>Correct Stage</span><span class="stats-value">${correctStage} / ${shinyTotal}</span></div>
             <div class="stats-row"><span>Original Region</span><span class="stats-value">${originalRegion} / ${shinyTotal}</span></div>
             <div class="stats-row"><span>Luxury Ball</span><span class="stats-value">${luxuryBall} / ${shinyTotal}</span></div>
