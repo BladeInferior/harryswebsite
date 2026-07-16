@@ -10,13 +10,14 @@
 
     <style>
         :root{
-            --bg:#121212;
-            --card:#1e1e1e;
-            --card-hover:#262626;
-            --gold:#d4af37;
+            --bg:#170f1c;
+            --card:#2e1a3d;
+            --card-2:#3d2450;
+            --card-hover:#4a2d5e;
+            --gold:#a855f7;
             --text:#ffffff;
             --secondary:#bdbdbd;
-            --border:#333;
+            --border:#3a2c40;
             --correct:#3fb950;
             --incorrect:#e5534b;
         }
@@ -29,7 +30,9 @@
         }
 
         body{
-            background:var(--bg);
+            background-image:radial-gradient(circle at top, #7a2a5c, #3a1d5c 45%, var(--bg));
+            background-attachment:fixed;
+            background-color:var(--bg);
             color:var(--text);
             min-height:100vh;
         }
@@ -43,8 +46,8 @@
             margin:90px 0 0 20px;
             padding:6px 10px;
             border-radius:8px;
-            background:#2d2d2d;
-            border:1px solid #555;
+            background:var(--card);
+            border:1px solid var(--gold);
             color:white;
             text-decoration:none;
             font-size:14px;
@@ -53,7 +56,15 @@
 
         .back-button:hover{
             border-color:var(--gold);
-            background:rgba(212,175,55,.15);
+            background:rgba(168,85,247,.15);
+        }
+
+        @media (min-width:769px){
+            .back-button{
+                position:sticky;
+                top:90px;
+                z-index:1000;
+            }
         }
 
         .hero{
@@ -75,10 +86,10 @@
         }
 
         .card{
-            background:var(--card);
+            background:linear-gradient(180deg, var(--card-2), var(--card));
             border:1px solid var(--border);
-            border-radius:16px;
-            padding:25px;
+            border-radius:12px;
+            padding:20px;
             margin-bottom:20px;
         }
 
@@ -86,7 +97,7 @@
             display:block;
             margin-bottom:14px;
             color:var(--secondary);
-            font-size:.9rem;
+            font-size:13px;
         }
 
         input[type="text"],
@@ -99,7 +110,7 @@
             border:1px solid var(--border);
             background:var(--bg);
             color:var(--text);
-            font-size:1rem;
+            font-size:14px;
             margin-top:6px;
         }
 
@@ -122,19 +133,21 @@
 
         .btn{
             display:inline-block;
-            background:var(--gold);
-            color:#121212;
+            background:linear-gradient(135deg, #d0a3fc, #b565f5);
+            box-shadow:0 0 14px rgba(181,101,245,.5);
+            color:white;
             border:none;
-            border-radius:10px;
-            padding:12px 24px;
-            font-size:.95rem;
+            border-radius:8px;
+            padding:10px 18px;
+            font-size:14px;
             font-weight:bold;
             cursor:pointer;
             text-decoration:none;
         }
 
         .btn:hover:not(:disabled){
-            background:#e6c458;
+            background:linear-gradient(135deg, #e0c3ff, #d0a3fc);
+            box-shadow:0 0 18px rgba(181,101,245,.65);
         }
 
         .btn:disabled{
@@ -143,14 +156,14 @@
         }
 
         .btn-secondary{
-            background:transparent;
-            border:1px solid var(--border);
+            background:rgba(168,85,247,.3);
+            border:1px solid var(--gold);
             color:var(--text);
         }
 
         .btn-secondary:hover:not(:disabled){
-            border-color:var(--gold);
-            background:transparent;
+            border-color:#c084fc;
+            background:rgba(168,85,247,.45);
         }
 
         .btn-small{
@@ -174,9 +187,9 @@
 
         /* ---------- categories ---------- */
         .category-section{
-            background:var(--card);
+            background:linear-gradient(180deg, var(--card-2), var(--card));
             border:1px solid var(--border);
-            border-radius:16px;
+            border-radius:12px;
             padding:20px;
             margin-bottom:16px;
         }
@@ -189,7 +202,7 @@
         }
 
         .category-header h2{
-            font-size:1.2rem;
+            font-size:1.1rem;
             color:var(--gold);
         }
 
@@ -212,7 +225,7 @@
             gap:10px;
             background:var(--bg);
             border:1px solid var(--border);
-            border-radius:10px;
+            border-radius:8px;
             padding:10px 14px;
             cursor:grab;
         }
@@ -238,7 +251,7 @@
             margin-left:8px;
             padding:2px 10px;
             border-radius:12px;
-            background:rgba(212,175,55,.15);
+            background:rgba(168,85,247,.15);
             border:1px solid var(--gold);
             color:var(--gold);
             font-size:.75rem;
@@ -379,8 +392,8 @@
         .add-item-box{
             background:var(--card);
             border:1px solid var(--border);
-            border-radius:16px;
-            padding:25px;
+            border-radius:12px;
+            padding:20px;
             max-width:520px;
             width:100%;
             max-height:90vh;
@@ -473,22 +486,7 @@
 
 <div id="navbar"></div>
 
-<script>
-fetch('../navbar.html')
-    .then(res => res.text())
-    .then(data => {
-        document.getElementById('navbar').innerHTML = data;
-
-        const basePath =
-            window.location.hostname === "bladeinferior.github.io"
-                ? "/harryswebsite/"
-                : "/";
-
-        document.querySelectorAll('#navbar [data-page]').forEach(link => {
-            link.href = basePath + link.dataset.page;
-        });
-    });
-</script>
+<script src="quiz-nav.js"></script>
 
 <a class="back-button" id="back-button-link" href="quizhub.html">← Back</a>
 

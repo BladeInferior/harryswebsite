@@ -13,13 +13,14 @@
 
     <style>
         :root{
-            --bg:#121212;
-            --card:#1e1e1e;
-            --card-hover:#262626;
-            --gold:#d4af37;
+            --bg:#170f1c;
+            --card:#2e1a3d;
+            --card-2:#3d2450;
+            --card-hover:#4a2d5e;
+            --gold:#a855f7;
             --text:#ffffff;
             --secondary:#bdbdbd;
-            --border:#333;
+            --border:#3a2c40;
         }
 
         *{
@@ -30,7 +31,9 @@
         }
 
         body{
-            background:var(--bg);
+            background-image:radial-gradient(circle at top, #7a2a5c, #3a1d5c 45%, var(--bg));
+            background-attachment:fixed;
+            background-color:var(--bg);
             color:var(--text);
             min-height:100vh;
         }
@@ -40,8 +43,8 @@
             margin:90px 0 0 20px;
             padding:6px 10px;
             border-radius:8px;
-            background:#2d2d2d;
-            border:1px solid #555;
+            background:var(--card);
+            border:1px solid var(--gold);
             color:white;
             text-decoration:none;
             font-size:14px;
@@ -50,17 +53,25 @@
 
         .back-button:hover{
             border-color:var(--gold);
-            background:rgba(212,175,55,.15);
+            background:rgba(168,85,247,.15);
+        }
+
+        @media (min-width:769px){
+            .back-button{
+                position:sticky;
+                top:90px;
+                z-index:1000;
+            }
         }
 
         .hero{
             text-align:center;
-            padding:80px 20px 50px;
+            padding:40px 20px 30px;
         }
 
         .hero h1{
-            font-size:3rem;
-            margin-bottom:15px;
+            font-size:2rem;
+            margin-bottom:10px;
         }
 
         .hero p{
@@ -68,47 +79,53 @@
             margin:auto;
             color:var(--secondary);
             line-height:1.6;
+            font-size:14px;
         }
 
         .section{
             max-width:1200px;
             margin:auto;
-            padding:40px 20px;
+            padding:30px 20px;
         }
 
         .section h2{
-            margin-bottom:20px;
+            margin-bottom:16px;
+            font-size:1.3rem;
         }
 
         .card-grid{
             display:grid;
             grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-            gap:20px;
+            gap:16px;
         }
 
         .card{
-            background:var(--card);
+            background:linear-gradient(180deg, var(--card-2), var(--card));
             border:1px solid var(--border);
-            border-radius:16px;
-            padding:25px;
+            border-radius:12px;
+            padding:20px;
             text-decoration:none;
             color:white;
             transition:.2s;
         }
 
-        .card:hover{
-            transform:translateY(-4px);
-            background:var(--card-hover);
-            border-color:var(--gold);
+        @media (hover:hover) and (pointer:fine){
+            .card:hover{
+                transform:translateY(-4px);
+                background:var(--card-hover);
+                border-color:var(--gold);
+            }
         }
 
         .card h3{
-            margin-bottom:10px;
+            margin-bottom:8px;
+            font-size:1.1rem;
         }
 
         .card p{
             color:var(--secondary);
             line-height:1.5;
+            font-size:14px;
         }
 
         .coming-soon{
@@ -127,22 +144,7 @@
 
 <div id="navbar"></div>
 
-<script>
-fetch('../navbar.html')
-    .then(res => res.text())
-    .then(data => {
-        document.getElementById('navbar').innerHTML = data;
-
-        const basePath =
-            window.location.hostname === "bladeinferior.github.io"
-                ? "/harryswebsite/"
-                : "/";
-
-        document.querySelectorAll('#navbar [data-page]').forEach(link => {
-            link.href = basePath + link.dataset.page;
-        });
-    });
-</script>
+<script src="quiz-nav.js"></script>
 
 <a class="back-button" href="../index.html">← Back</a>
 

@@ -1,18 +1,15 @@
-// Registered here (not per-page) since every collection-hub page loads this
-// file — one registration covers offline support for all of them. Scope
-// defaults to this script's own directory, i.e. everything under
-// collection-hub/, which is exactly what sw.js needs to intercept.
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => console.error('Service worker registration failed:', err));
-}
-
+// Loaded by every quiz-hub page — mirrors collection-hub/collection-nav.js's
+// approach: fetch the shared navbar, then inject this section's sub-links
+// before the site-level link group (Collection Hub / Quiz Hub / Github Repo)
+// so every page shares one nav instead of each page duplicating its own copy
+// of this script.
 fetch('../navbar.html')
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
 
         const nav = document.querySelector('.site-nav');
-        nav.classList.add('collection-theme');
+        nav.classList.add('quiz-theme');
 
         const basePath =
             window.location.hostname === "bladeinferior.github.io"
@@ -24,13 +21,10 @@ fetch('../navbar.html')
         });
 
         const subPages = [
-            { label: "Pokédex", page: "collection-hub/pokedexes.html" },
-            { label: "Sleeves", page: "collection-hub/sleeves.html" },
-            { label: "Cards", page: "collection-hub/cards.html" },
-            { label: "Steelbooks", page: "collection-hub/steelbooks.html" },
-            { label: "Completions", page: "collection-hub/completions.html" },
-            { label: "Pop Figures", page: "collection-hub/popfigures.html" },
-            { label: "Pins", page: "collection-hub/pins.html" },
+            { label: "Join Quiz", page: "quizhub/join.html" },
+            { label: "Quiz Builder", page: "quizhub/builder.html" },
+            { label: "Manage Quiz", page: "quizhub/manage-quizzes.html" },
+            { label: "Stats", page: "quizhub/stats.html" },
         ];
 
         const linksContainer = nav.querySelector('.site-nav-links');
@@ -58,8 +52,11 @@ fetch('../navbar.html')
         divider.className = 'nav-divider';
         groupStart.insertAdjacentElement('beforebegin', divider);
 
-        if (window.location.pathname.endsWith('collectionhub.html')) {
-            groupStart.classList.add('active-link');
+        const hubLink = Array.from(linksContainer.querySelectorAll('a'))
+            .find(a => a.dataset.page === "quizhub/quizhub.html");
+
+        if (window.location.pathname.endsWith('quizhub.html')) {
+            hubLink.classList.add('active-link');
         }
 
         // Mobile dropdown toggle
@@ -83,4 +80,3 @@ fetch('../navbar.html')
             });
         });
     });
-
