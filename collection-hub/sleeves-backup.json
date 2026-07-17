@@ -2939,7 +2939,7 @@
   },
   {
     "name": "Deck Sleeves Pro Team Rocket",
-    "date": "18/04/2025",
+    "date": "2025-04-18",
     "nationality": "JPN",
     "tags": []
   },
@@ -3571,6 +3571,15 @@
     "nationality": "ENG",
     "tags": [
       "greninja",
+      "etb"
+    ]
+  },
+  {
+    "name": "Pitch Black ETB",
+    "date": "2026-07-17",
+    "nationality": "ENG",
+    "tags": [
+      "darkrai",
       "etb"
     ]
   }
