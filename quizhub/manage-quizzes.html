@@ -154,10 +154,16 @@
             background:transparent;
             border:1px solid #e5534b;
             color:#e5534b;
+            box-shadow:none;
+            transition:.15s ease;
         }
 
-        .btn-danger:hover{
-            background:rgba(229,83,75,.15);
+        .btn.btn-danger:hover:not(:disabled){
+            background:rgba(229,83,75,.25);
+            border-color:#e5534b;
+            color:#fff;
+            box-shadow:0 0 14px rgba(229,83,75,.5);
+            transform:translateY(-2px);
         }
 
         .card-actions{

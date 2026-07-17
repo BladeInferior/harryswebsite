@@ -175,6 +175,16 @@
             background:transparent;
             border:1px solid var(--incorrect);
             color:var(--incorrect);
+            box-shadow:none;
+            transition:.15s ease;
+        }
+
+        .btn.btn-danger:hover:not(:disabled){
+            background:rgba(229,83,75,.25);
+            border-color:var(--incorrect);
+            color:#fff;
+            box-shadow:0 0 14px rgba(229,83,75,.5);
+            transform:translateY(-2px);
         }
 
         /* ---------- toolbar ---------- */
