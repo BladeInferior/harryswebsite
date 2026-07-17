@@ -702,10 +702,10 @@
     "special": true
   },
   {
-    "dex": "0118",
     "name": "Goldeen",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0118"
   },
   {
     "dex": "0119",
@@ -1068,16 +1068,16 @@
     "special": false
   },
   {
-    "dex": "0179",
     "name": "Mareep",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0179"
   },
   {
-    "dex": "0180",
     "name": "Flaaffy",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0180"
   },
   {
     "dex": "0181",
@@ -1386,10 +1386,10 @@
     "special": false
   },
   {
-    "dex": "0232",
     "name": "Donphan",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0232"
   },
   {
     "dex": "0233",
@@ -1854,10 +1854,10 @@
     "special": false
   },
   {
-    "dex": "0310",
     "name": "Manectric",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0310"
   },
   {
     "dex": "0311",
@@ -1920,10 +1920,10 @@
     "special": false
   },
   {
-    "dex": "0321",
     "name": "Wailord",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0321"
   },
   {
     "dex": "0322",
@@ -2310,10 +2310,10 @@
     "special": false
   },
   {
-    "dex": "0386",
     "name": "Deoxys",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0386"
   },
   {
     "dex": "0387",
@@ -2442,16 +2442,16 @@
     "special": false
   },
   {
-    "dex": "0408",
     "name": "Cranidos",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0408"
   },
   {
-    "dex": "0409",
     "name": "Rampardos",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0409"
   },
   {
     "dex": "0410",
@@ -2460,10 +2460,10 @@
     "special": false
   },
   {
-    "dex": "0411",
     "name": "Bastiodon",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0411"
   },
   {
     "dex": "0412",
@@ -3648,10 +3648,10 @@
     "special": false
   },
   {
-    "dex": "0609",
     "name": "Chandelure",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0609"
   },
   {
     "dex": "0610",
@@ -3774,10 +3774,10 @@
     "special": false
   },
   {
-    "dex": "0630",
     "name": "Mandibuzz",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0630"
   },
   {
     "dex": "0631",
@@ -3926,7 +3926,7 @@
   {
     "name": "Delphox",
     "owned": true,
-    "special": false,
+    "special": true,
     "dex": "0655"
   },
   {
@@ -4362,22 +4362,22 @@
     "special": true
   },
   {
-    "dex": "0728",
     "name": "Popplio",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0728"
   },
   {
-    "dex": "0729",
     "name": "Brionne",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0729"
   },
   {
-    "dex": "0730",
     "name": "Primarina",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0730"
   },
   {
     "dex": "0731",
@@ -4386,16 +4386,16 @@
     "special": false
   },
   {
-    "dex": "0732",
     "name": "Trumbeak",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0732"
   },
   {
-    "dex": "0733",
     "name": "Toucannon",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0733"
   },
   {
     "dex": "0734",
@@ -4566,16 +4566,16 @@
     "special": false
   },
   {
-    "dex": "0753",
     "name": "Fomantis",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0753"
   },
   {
-    "dex": "0754",
     "name": "Lurantis",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0754"
   },
   {
     "dex": "0755",
@@ -4692,10 +4692,10 @@
     "special": false
   },
   {
-    "dex": "0773",
     "name": "Silvally",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": true,
+    "dex": "0773"
   },
   {
     "dex": "0774",
@@ -4914,10 +4914,10 @@
     "special": false
   },
   {
-    "dex": "0802",
     "name": "Marshadow",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0802"
   },
   {
     "dex": "0803",
@@ -5070,10 +5070,10 @@
     "special": false
   },
   {
-    "dex": "0828",
     "name": "Thievul",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0828"
   },
   {
     "dex": "0829",
@@ -5430,10 +5430,10 @@
     "special": false
   },
   {
-    "dex": "0877",
     "name": "Morpeko",
     "owned": true,
-    "special": false
+    "special": true,
+    "dex": "0877"
   },
   {
     "dex": "0878",
@@ -5958,10 +5958,10 @@
     "special": true
   },
   {
-    "dex": "0942",
     "name": "Maschiff",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0942"
   },
   {
     "dex": "0943",
@@ -6396,10 +6396,10 @@
     "special": false
   },
   {
-    "dex": "1013",
     "name": "Sinistcha",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "1013"
   },
   {
     "dex": "0901",
