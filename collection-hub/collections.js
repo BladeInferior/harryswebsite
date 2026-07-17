@@ -197,6 +197,18 @@ function createCollectionFilters() {
     const container = document.createElement("div");
     container.id = "game-filter-container";
 
+    // The tag-toggle controls (untagged-filter, or the popfigure-controls
+    // group) live as their own section at the very top of the sidebar,
+    // ahead of the collection-specific filter rows below.
+    const tagControls = document.getElementById("popfigure-controls") || document.getElementById("untagged-filter");
+    if (tagControls) {
+        container.appendChild(tagControls);
+
+        const tagControlsDivider = document.createElement("div");
+        tagControlsDivider.classList.add("sort-filter-divider");
+        container.appendChild(tagControlsDivider);
+    }
+
     // Only show filters per-collection/page
     if (COLLECTION.name === "sleeves") {
 
@@ -425,6 +437,15 @@ function createCollectionFilters() {
     container.appendChild(resetBtn);
 
     const box = document.getElementById("box-container");
+
+    // Size the sidebar before it ever enters the DOM so the first paint
+    // already shows the narrow width — setting it only after insertion
+    // (via adjustFilterSidebarWidth() below) would let the element briefly
+    // render at its default 280px and then visibly transition down.
+    if (box && !window.matchMedia("(max-width: 768px)").matches && !pageMode) {
+        container.style.width = `${computeFilterSidebarWidth(box)}px`;
+    }
+
     if (box && box.parentNode) {
         box.parentNode.insertBefore(container, box.nextSibling);
     } else {
@@ -433,6 +454,18 @@ function createCollectionFilters() {
 
     if (typeof syncMobileFilterPopout === "function") syncMobileFilterPopout();
     adjustFilterSidebarWidth();
+}
+
+function computeFilterSidebarWidth(box) {
+    const maxWidth = 280;
+    const minWidth = 130;
+    const sidebarRightOffset = 20;
+    const gapFromGrid = 16;
+
+    const boxRight = box.getBoundingClientRect().right;
+    const available = window.innerWidth - sidebarRightOffset - gapFromGrid - boxRight;
+
+    return Math.max(minWidth, Math.min(maxWidth, available));
 }
 
 // Keep the item grid centered on the page; shrink the filter sidebar
@@ -451,16 +484,7 @@ function adjustFilterSidebarWidth() {
 
     if (!container || !box) return;
 
-    const maxWidth = 280;
-    const minWidth = 130;
-    const sidebarRightOffset = 20;
-    const gapFromGrid = 16;
-
-    const boxRight = box.getBoundingClientRect().right;
-    const available = window.innerWidth - sidebarRightOffset - gapFromGrid - boxRight;
-
-    const width = Math.max(minWidth, Math.min(maxWidth, available));
-    container.style.width = `${width}px`;
+    container.style.width = `${computeFilterSidebarWidth(box)}px`;
 }
 
 window.addEventListener("resize", adjustFilterSidebarWidth);

@@ -30,11 +30,12 @@ body{
 
 .hero{
     text-align:center;
-    padding:40px 20px 30px;
+    padding:61.4375px 20px 30px;
 }
 
 .hero h1{
     font-size:2rem;
+    padding-top:20px;
     margin-bottom:10px;
     background: linear-gradient(90deg, var(--gold), #f4e5a1);
     -webkit-background-clip: text;

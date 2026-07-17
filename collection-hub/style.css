@@ -1158,8 +1158,6 @@ h1 {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s ease;
-
-    margin-left: 18px;
 }
 
 #untagged-filter.active {
@@ -1176,8 +1174,6 @@ h1 {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s ease;
-
-    margin-left: 18px;
 }
 
 #toggle-front-image.active {
@@ -1194,8 +1190,6 @@ h1 {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s ease;
-
-    margin-left: 18px;
 }
 
 #toggle-glow-image.active {
@@ -1213,8 +1207,6 @@ h1 {
     border-radius: 6px;
     cursor: pointer;
     transition: 0.2s ease;
-
-    margin-left: 18px;
 }
 
 #signed-filter.active {
@@ -1225,7 +1217,7 @@ h1 {
 }
 
 #popfigure-controls {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: 8px;
 }
