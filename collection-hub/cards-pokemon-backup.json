@@ -816,10 +816,10 @@
     "special": false
   },
   {
-    "dex": "0137",
     "name": "Porygon",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0137"
   },
   {
     "dex": "0138",
@@ -1752,10 +1752,10 @@
     "special": true
   },
   {
-    "dex": "0293",
     "name": "Whismur",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0293"
   },
   {
     "dex": "0294",
@@ -1866,10 +1866,10 @@
     "special": false
   },
   {
-    "dex": "0312",
     "name": "Minun",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0312"
   },
   {
     "dex": "0313",
@@ -2538,10 +2538,10 @@
     "special": false
   },
   {
-    "dex": "0424",
     "name": "Ambipom",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0424"
   },
   {
     "dex": "0425",
@@ -4080,10 +4080,10 @@
     "dex": "0680"
   },
   {
-    "dex": "0681",
     "name": "Aegislash",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0681"
   },
   {
     "dex": "0682",
@@ -5058,10 +5058,10 @@
     "special": false
   },
   {
-    "dex": "0826",
     "name": "Orbeetle",
-    "owned": false,
-    "special": false
+    "owned": true,
+    "special": false,
+    "dex": "0826"
   },
   {
     "dex": "0827",
