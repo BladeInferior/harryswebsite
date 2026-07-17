@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v1';
+const CACHE_VERSION = 'collection-hub-v2';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -126,7 +126,13 @@ async function staleWhileRevalidate(request) {
 
 async function networkFirst(request) {
     try {
-        const response = await fetch(request);
+        // 'no-cache' forces a real conditional request instead of letting the
+        // browser's own HTTP cache silently satisfy this fetch — otherwise a
+        // cached style.css/JS file can keep being served through this "network
+        // first" path indefinitely, surviving even a manual hard refresh,
+        // since a page reload doesn't force cache-bypass on requests a service
+        // worker's fetch handler makes internally.
+        const response = await fetch(request, { cache: 'no-cache' });
         if (response.ok) {
             const cache = await caches.open(RUNTIME_CACHE);
             cache.put(request, response.clone());

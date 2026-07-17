@@ -5,7 +5,7 @@ let allPokemon = [];
 let cardMap = new Map();
 let currentPokemon = null;
 let activeDexEdit = null;
-let missingDexFilter = false;
+let missingDexFilter = null; // null | true (Missing) | false (Not Missing)
 let pageSize = 30;
 let currentPage = 1;
 let pageMode = false; 
@@ -65,6 +65,7 @@ Promise.all([
 
     updateProgress();
     updateCardHighlights();
+    updateMissingButtonHighlight();
 
     updateModeUI();
 });
@@ -370,13 +371,13 @@ function applyFilters() {
 
         const matchesMissing = (() => {
 
-            if (!missingDexFilter) return true;
+            if (missingDexFilter === null) return true;
             if (!activeDexEdit) return true;
 
             const data = savedDexData[key] || {};
-            const dexValue = !!data[activeDexEdit];
+            const hasIt = !!data[activeDexEdit];
 
-            return !dexValue;
+            return missingDexFilter === true ? !hasIt : hasIt;
         })();
 
         if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing) {
@@ -559,6 +560,7 @@ searchInput.addEventListener("input", (e) => {
 
 const clearBtn = document.getElementById("clear-search");
 let missingFilterBtn = null;
+let notMissingFilterBtn = null;
 
 clearBtn.addEventListener("click", () => {
 
@@ -567,9 +569,17 @@ clearBtn.addEventListener("click", () => {
 });
 
 function updateMissingButtonHighlight() {
-    if (!missingFilterBtn) return;
+    if (!missingFilterBtn || !notMissingFilterBtn) return;
 
-    missingFilterBtn.classList.toggle("active", missingDexFilter);
+    missingFilterBtn.classList.toggle("game-filter-active", missingDexFilter === true);
+    notMissingFilterBtn.classList.toggle("game-filter-active", missingDexFilter === false);
+
+    // Both sides of the pair are meaningless without a dex actively being
+    // edited (the filter is a no-op per matchesMissing), so grey them out
+    // and block clicks until one is selected.
+    const disabled = !activeDexEdit;
+    missingFilterBtn.classList.toggle("filters-disabled", disabled);
+    notMissingFilterBtn.classList.toggle("filters-disabled", disabled);
 
     // Mobile Safari occasionally doesn't repaint a class-driven style change
     // on an element sitting inside the filters popout's transformed/animated
@@ -638,10 +648,10 @@ document.addEventListener("click", (e) => {
         }
     }
 
-    if (dexChanged && missingDexFilter) {
-        missingDexFilter = false;
-        updateMissingButtonHighlight();
+    if (dexChanged && missingDexFilter !== null) {
+        missingDexFilter = null;
     }
+    updateMissingButtonHighlight();
 
     boxContainer.classList.toggle(
         "shiny-edit-layout",
@@ -852,20 +862,38 @@ function createFilterButtons() {
     const container = document.getElementById("game-filter-container");
 
     // -----------------------------
-    // MISSING IN SELECTED DEX
+    // MISSING / NOT MISSING (half-width with/without pair)
     // -----------------------------
+    const missingRow = document.createElement("div");
+    missingRow.classList.add("generation-filter-row", "generation-filter-row--half");
+
     missingFilterBtn = document.createElement("button");
     missingFilterBtn.id = "missing-dex-filter";
-    missingFilterBtn.textContent = "Missing in Selected Dex";
-    missingFilterBtn.classList.add("game-filter-btn");
+    missingFilterBtn.textContent = "Missing ✔";
+    missingFilterBtn.classList.add("generation-filter-btn", "include-btn");
 
     missingFilterBtn.addEventListener("click", () => {
-        missingDexFilter = !missingDexFilter;
+        missingDexFilter = missingDexFilter === true ? null : true;
         applyFilters();
         updateMissingButtonHighlight();
     });
 
-    container.appendChild(missingFilterBtn);
+    missingRow.appendChild(missingFilterBtn);
+
+    notMissingFilterBtn = document.createElement("button");
+    notMissingFilterBtn.id = "not-missing-dex-filter";
+    notMissingFilterBtn.textContent = "Not Missing ✖";
+    notMissingFilterBtn.classList.add("generation-filter-btn", "exclude-btn");
+
+    notMissingFilterBtn.addEventListener("click", () => {
+        missingDexFilter = missingDexFilter === false ? null : false;
+        applyFilters();
+        updateMissingButtonHighlight();
+    });
+
+    missingRow.appendChild(notMissingFilterBtn);
+
+    container.appendChild(missingRow);
 
     const games = [
         { key: "swsh", label: "Sword & Shield" },
@@ -1040,7 +1068,7 @@ function createFilterButtons() {
         selectedGeneration = null;
         tagFilters = {};
         searchInput.value = "";
-        missingDexFilter = false;
+        missingDexFilter = null;
 
         activeDexEdit = null;
         shinyEditModeFlag = false;
@@ -1082,7 +1110,7 @@ function updatePokemonCount() {
         Object.keys(gameFilterState).length > 0 ||
         selectedGeneration !== null ||
         Object.keys(tagFilters).length > 0 ||
-        missingDexFilter ||
+        missingDexFilter !== null ||
         searchInput.value.trim() !== ""
     );
 
@@ -1442,5 +1470,5 @@ createMobilePopout({
     top: 130,
     right: 72,
     heading: "Dex Progress",
-    elementIds: ["progress-container"]
+    elementIds: ["dex-key", "progress-container"]
 });

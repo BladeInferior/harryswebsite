@@ -231,7 +231,7 @@ function createCollectionFilters() {
 
         const recentSetBtn = document.createElement("button");
         recentSetBtn.textContent = `Recent Set (${recentSet.name})`;
-        recentSetBtn.classList.add("game-filter-btn", "include-btn", "recent-set-filter-btn");
+        recentSetBtn.classList.add("game-filter-btn", "recent-set-filter-btn");
         recentSetBtn.addEventListener("click", () => {
             filterRecentSet = !filterRecentSet;
             refreshFilterButtons();

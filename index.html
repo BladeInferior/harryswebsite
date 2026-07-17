@@ -21,6 +21,8 @@
         .then(data => {
             document.getElementById('navbar').innerHTML = data;
 
+            document.querySelector('.site-nav').classList.add('home-theme');
+
             const basePath =
                 window.location.hostname === "bladeinferior.github.io"
                     ? "/harryswebsite/"
@@ -90,7 +92,7 @@
                     </p>
                 </a>
 
-                <a href="collection-hub/collectionhub/pokedexes.html" class="card">
+                <a href="collection-hub/pokedexes.html" class="card">
                     <h3>📖 Pokédexes</h3>
                     <p>
                         Browse regional dexes and track
@@ -98,7 +100,7 @@
                     </p>
                 </a>
 
-                <a href="collection-hub/collectionhub/sleeves.html" class="card">
+                <a href="collection-hub/sleeves.html" class="card">
                     <h3>🃏 Sleeves</h3>
                     <p>
                         Organise and track your sleeve collection.
@@ -120,9 +122,9 @@
                 <h2>Latest Updates</h2>
 
                 <ul>
-                    <li>Added new collection tracking features.</li>
-                    <li>Pokédex progress improvements.</li>
-                    <li>Quiz system in development.</li>
+                    <li>Collections for Pokémon Home, Sleeves, Cards, Completions and Pop Figures all live.</li>
+                    <li>Full Quiz Builder and Play system now live.</li>
+                    <li>Lots of QoL improvements.</li>
                 </ul>
 
             </div>

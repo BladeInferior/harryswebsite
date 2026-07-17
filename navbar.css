@@ -109,6 +109,28 @@
     color: #c084fc;
 }
 
+.site-nav.home-theme {
+    background: linear-gradient(90deg, #000000, #8a6d1f, #000000);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 24px rgba(212, 175, 55, 0.15);
+}
+
+.site-nav.home-theme .site-logo {
+    color: #d4af37;
+}
+
+.site-nav.home-theme .site-nav-links a:hover {
+    background: #d4af37;
+    border-color: #d4af37;
+    color: black;
+}
+
+.site-nav.home-theme .site-nav-links a.active-link {
+    background: rgba(212, 175, 55, 0.18);
+    border: 1px solid #d4af37;
+    color: #d4af37;
+}
+
 .nav-toggle {
     display: none;
     background: transparent;

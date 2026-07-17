@@ -10,9 +10,10 @@
     --text-dim: rgba(255,255,255,0.7);
 
     /* accents (pick ONE primary direction) */
-    --accent: #4ade80;   /* bright green highlight, matching the blue/green background */
-    --accent-rgb: 74, 222, 128;
+    --accent: #86efac;   /* light mint green highlight, matching the blue/green background */
+    --accent-rgb: 134, 239, 172;
     --accent-2: #60a5fa; /* soft blue fallback */
+    --accent-2-rgb: 96, 165, 250;
 
     /* semantic colours */
     --success: #2ecc71;
@@ -54,7 +55,9 @@ h1 {
 }
 
 .pokemon-card {
-    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 12px;
@@ -331,9 +334,9 @@ h1 {
 
 @media (hover: hover) and (pointer: fine) {
     .include-btn.game-filter-btn:hover {
-        background: rgba(46, 204, 113, 0.2);
-        border: 1px solid #2ecc71;
-        color: #2ecc71;
+        background: rgba(34, 197, 94, 0.2);
+        border: 1px solid #22c55e;
+        color: #22c55e;
     }
 
     .exclude-btn.game-filter-btn:hover{
@@ -374,6 +377,58 @@ h1 {
     gap: 10px;
 
     z-index: 2000;
+}
+
+#dex-key {
+    position: fixed;
+    top: 150px;
+    left: 20px;
+
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    padding: 10px 12px;
+    background: #2d2d2d;
+    border: 1px solid #555;
+    border-radius: 8px;
+
+    font-size: 12px;
+    color: #ddd;
+
+    z-index: 2000;
+}
+
+.dex-key-title {
+    font-weight: bold;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 2px;
+}
+
+.dex-key-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dex-key-swatch {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+.dex-key-swatch--blue {
+    background: linear-gradient(180deg, rgba(var(--accent-2-rgb), 0.55), rgba(var(--accent-2-rgb), 0.35));
+    border: 1px solid var(--accent-2);
+}
+
+.dex-key-swatch--green {
+    background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.55), rgba(var(--accent-rgb), 0.35));
+    border: 1px solid var(--accent);
 }
 
 .dex-progress {
@@ -433,11 +488,8 @@ h1 {
 
 .pokemon-card.active-dex {
     background:
-        linear-gradient(
-            145deg,
-            rgba(var(--accent-rgb), 0.35),
-            rgba(var(--accent-rgb), 0.15)
-        );
+        linear-gradient(180deg, rgba(var(--accent-rgb), 0.55), rgba(var(--accent-rgb), 0.35)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
 
     border: 1px solid var(--accent);
 }
@@ -448,13 +500,17 @@ h1 {
 }
 
 .complete-blue {
-    background: rgba(52, 152, 219, 0.15);
-    border: 1px solid #3498db;
+    background:
+        linear-gradient(180deg, rgba(var(--accent-2-rgb), 0.55), rgba(var(--accent-2-rgb), 0.35)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--accent-2);
 }
 
 .complete-green {
-    background: rgba(46, 204, 113, 0.15);
-    border: 1px solid #2ecc71;
+    background:
+        linear-gradient(180deg, rgba(var(--accent-rgb), 0.55), rgba(var(--accent-rgb), 0.35)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--accent);
 }
 
 .shiny-plus {
@@ -489,9 +545,9 @@ h1 {
 }
 
 .include-btn.game-filter-active {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid #22c55e;
+    color: #22c55e;
 }
 
 .exclude-btn.game-filter-active {
@@ -530,6 +586,24 @@ h1 {
     z-index: 1000;
 
     transition: width 0.15s ease;
+}
+
+.pokemon-page #game-filter-container {
+    width: 240px;
+    gap: 5px;
+}
+
+.pokemon-page #game-filter-container .filter-row,
+.pokemon-page #game-filter-container .generation-filter-row {
+    gap: 5px;
+}
+
+.pokemon-page #game-filter-container .game-filter-btn,
+.pokemon-page #game-filter-container .tag-filter-btn,
+.pokemon-page #game-filter-container .generation-filter-btn {
+    padding: 10px 6px;
+    min-height: 30px;
+    font-size: 12px;
 }
 
 .placeholder-filter-btn {
@@ -614,26 +688,52 @@ h1 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-    .generation-filter-btn:hover {
+    .generation-filter-btn:hover,
+    .recent-set-filter-btn:hover {
         background: rgba(var(--accent-rgb), 0.15);
         border: 1px solid var(--accent);
         color: var(--accent);
     }
+
+    .generation-filter-btn.include-btn:hover {
+        background: rgba(34, 197, 94, 0.2);
+        border: 1px solid #22c55e;
+        color: #22c55e;
+    }
+
+    .generation-filter-btn.exclude-btn:hover {
+        background: rgba(231, 76, 60, 0.2);
+        border: 1px solid #e74c3c;
+        color: #e74c3c;
+    }
 }
 
 .generation-filter-btn.active,
-.generation-filter-btn.game-filter-active {
+.generation-filter-btn.game-filter-active,
+.recent-set-filter-btn.game-filter-active {
     background: rgba(var(--accent-rgb), 0.15);
     border: 1px solid var(--accent);
     color: var(--accent);
 }
 
+.generation-filter-btn.include-btn.game-filter-active {
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid #22c55e;
+    color: #22c55e;
+}
+
+.generation-filter-btn.exclude-btn.game-filter-active {
+    background: rgba(231, 76, 60, 0.2);
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
 .include-btn.game-filter-active,
 .game-filter-btn.include-btn.game-filter-active,
 .tag-filter-btn.include-btn.game-filter-active {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
+    background: rgba(34, 197, 94, 0.2);
+    border: 1px solid #22c55e;
+    color: #22c55e;
 }
 
 .exclude-btn.game-filter-active,
@@ -740,9 +840,9 @@ h1 {
 }
 
 .bulk-active {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
+    background: rgba(var(--accent-rgb), 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 #add-item-modal {
@@ -926,6 +1026,7 @@ h1 {
 
 /* clickable cards */
 .home-card {
+    position: relative;
     background: linear-gradient(180deg, var(--surface), var(--surface-2));
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -936,14 +1037,31 @@ h1 {
     text-decoration: none;
     color: white;
 
-    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
+    overflow: hidden;
+}
+
+.home-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    background: rgba(var(--accent-rgb), 0.12);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
     .home-card:hover {
-        transform: translateY(-2px);
+        transform: translateY(-4px);
         border: 1px solid var(--accent);
+        box-shadow: var(--shadow);
+    }
+
+    .home-card:hover::before {
+        opacity: 1;
     }
 }
 
@@ -1045,9 +1163,9 @@ h1 {
 }
 
 #untagged-filter.active {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
+    background: rgba(var(--accent-rgb), 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 #toggle-front-image {
@@ -1063,9 +1181,9 @@ h1 {
 }
 
 #toggle-front-image.active {
-    background: rgba(46, 204, 113, 0.2);
-    border: 1px solid #2ecc71;
-    color: #2ecc71;
+    background: rgba(var(--accent-rgb), 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 #toggle-glow-image {
@@ -1606,7 +1724,8 @@ body::before {
     #add-item,
     #untagged-filter,
     #game-filter-container,
-    #progress-container {
+    #progress-container,
+    #dex-key {
         display: none !important;
     }
 
@@ -1747,7 +1866,8 @@ body::before {
 
     .mobile-popout-list #untagged-filter,
     .mobile-popout-list #game-filter-container,
-    .mobile-popout-list #progress-container {
+    .mobile-popout-list #progress-container,
+    .mobile-popout-list #dex-key {
         display: flex !important;
         justify-content: center;
         position: static !important;

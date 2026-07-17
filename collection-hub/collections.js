@@ -479,6 +479,14 @@ function getCurrentPageSize() {
 // =========================
 function saveItems() {
     localStorage.setItem(COLLECTION.storageKey, JSON.stringify(items));
+    updateModeUI();
+}
+
+function hasAnyUntaggedItems() {
+    return items.some(item => {
+        const tags = item[COLLECTION.fields.tags];
+        return !tags || (Array.isArray(tags) && tags.length === 0);
+    });
 }
 
 // =========================
@@ -904,7 +912,7 @@ function updateModeUI() {
     pagination.classList.toggle("hidden", pageMode === false);
 
     searchWrapper.classList.toggle("hidden", pageMode);
-    untaggedBtn.classList.toggle("hidden", pageMode);
+    untaggedBtn.classList.toggle("hidden", pageMode || !hasAnyUntaggedItems());
 
     document.body.classList.toggle("page-mode", pageMode);
     document.body.classList.toggle("list-mode", !pageMode);

@@ -28,7 +28,7 @@
 
         .deck-tab-btn {
             background: transparent;
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            border: 1px solid rgba(var(--accent-rgb), 0.4);
             color: #fff;
             padding: 8px 20px;
             border-radius: 20px;
@@ -37,15 +37,17 @@
             transition: .2s;
         }
 
-        .deck-tab-btn:hover {
-            border-color: #d4af37;
+        @media (hover: hover) and (pointer: fine) {
+            .deck-tab-btn:hover {
+                border-color: var(--accent);
+            }
         }
 
         .deck-tab-active {
-            background: #d4af37;
+            background: var(--accent);
             color: #121212;
             font-weight: bold;
-            border-color: #d4af37;
+            border-color: var(--accent);
         }
 
         .pokemon-card.not-owned img {
@@ -57,7 +59,7 @@
             position: absolute;
             top: 6px;
             right: 6px;
-            color: #d4af37;
+            color: var(--accent);
             font-size: 1.1rem;
             text-shadow: 0 0 4px rgba(0,0,0,0.8);
         }
@@ -67,9 +69,9 @@
         }
 
         .generation-filter-btn.include-btn:hover {
-            background: rgba(46, 204, 113, 0.2);
-            border: 1px solid #2ecc71;
-            color: #2ecc71;
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid #22c55e;
+            color: #22c55e;
         }
 
         .generation-filter-btn.exclude-btn:hover {
