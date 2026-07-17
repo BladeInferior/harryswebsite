@@ -1075,6 +1075,16 @@
     "special": false
   },
   {
+    "name": "Gwynn",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Rust Syndicate Grunt",
+    "owned": true,
+    "special": false
+  },
+  {
     "name": "Philippe",
     "owned": true,
     "special": false
@@ -1086,6 +1096,11 @@
   },
   {
     "name": "Jacinthe",
+    "owned": true,
+    "special": false
+  },
+  {
+    "name": "Jett",
     "owned": true,
     "special": false
   }
