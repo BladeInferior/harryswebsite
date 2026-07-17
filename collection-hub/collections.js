@@ -41,6 +41,14 @@ let filterHasDlc = null; // for completions: true = only show items with DLC tag
 let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
 let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
 let filterSigned = false; // for popfigures: true = only show items tagged "signed"
+let filterMissingImage = false; // true = only show items whose image failed to load
+
+// items (by reference) whose primary image failed to load under every
+// extension in getItemImagePath()'s tryFormats list — populated by
+// detectMissingImages() before the filter sidebar is built, so the
+// "Missing Photos" button only ever appears when it would actually do
+// something.
+let missingImageItems = new Set();
 
 // for popfigures: primary sort key, tie-broken by the remaining keys in
 // POPFIGURE_SORT_PRIORITY order (franchise, then number, then alphabetical)
@@ -133,6 +141,15 @@ Promise.all([
     // create page-specific visual filters (sleeves / completions)
     createCollectionFilters();
 
+    // Runs in the background rather than being awaited above — the
+    // untagged-filter/popfigure-controls relocation above needs to happen
+    // immediately (otherwise they sit visible in their default in-flow
+    // position, full page width, until this resolves). Once the scan is
+    // done, add the Missing Photos button into the already-built sidebar.
+    detectMissingImages().then(() => {
+        if (missingImageItems.size > 0) addMissingPhotosButton();
+    });
+
     document.querySelectorAll(".pokemon-card").forEach(card => {
         card.style.display = "block";
     });
@@ -189,6 +206,81 @@ function setItemImage(imgElement, name) {
     imgElement.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
 }
 
+// Every image name tied to an item, not just the default thumbnail — for
+// popfigures/steelbooks that's box + unboxed (+ glow/signed variants where
+// present), so an item still flags as "missing" even if only an alternate
+// view's file is absent, not just the one shown by default.
+function getItemImageNames(item) {
+    if ((COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") && item.images?.length) {
+        return item.images;
+    }
+    return [item[COLLECTION.fields.title]];
+}
+
+// Off-DOM existence check — tries the same extension fallback chain as
+// setItemImage(), but independently of any rendered <img> so it isn't at
+// the mercy of lazy-loading only checking cards currently on screen.
+function imageExists(name) {
+    return new Promise(resolve => {
+        const { base, tryFormats } = getItemImagePath(name);
+        let i = 0;
+        const testImg = new Image();
+
+        testImg.onload = () => resolve(true);
+        testImg.onerror = () => {
+            i++;
+            if (i < tryFormats.length) {
+                testImg.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
+            } else {
+                resolve(false);
+            }
+        };
+
+        testImg.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
+    });
+}
+
+async function detectMissingImages() {
+    const flagged = await Promise.all(items.map(async item => {
+        const results = await Promise.all(getItemImageNames(item).map(imageExists));
+        return results.some(ok => !ok) ? item : null;
+    }));
+
+    missingImageItems = new Set(flagged.filter(Boolean));
+}
+
+// Added once detectMissingImages() resolves (after createCollectionFilters()
+// has already built the sidebar) and only when something is actually
+// missing — joins the same top section as untagged-filter/popfigure-controls.
+function addMissingPhotosButton() {
+
+    if (document.getElementById("missing-photos-filter")) return;
+
+    const missingPhotosBtn = document.createElement("button");
+    missingPhotosBtn.id = "missing-photos-filter";
+    missingPhotosBtn.textContent = "Missing Photos";
+
+    missingPhotosBtn.addEventListener("click", () => {
+        filterMissingImage = missingPhotosBtn.classList.toggle("active");
+        filterItems(searchInput.value);
+    });
+
+    const popfigureControls = document.getElementById("popfigure-controls");
+    if (popfigureControls) {
+        popfigureControls.appendChild(missingPhotosBtn);
+        return;
+    }
+
+    const untaggedFilter = document.getElementById("untagged-filter");
+    if (untaggedFilter) {
+        untaggedFilter.insertAdjacentElement("afterend", missingPhotosBtn);
+        return;
+    }
+
+    const container = document.getElementById("game-filter-container");
+    if (container) container.insertBefore(missingPhotosBtn, container.firstChild);
+}
+
 function createCollectionFilters() {
 
     // avoid creating twice
@@ -199,9 +291,14 @@ function createCollectionFilters() {
 
     // The tag-toggle controls (untagged-filter, or the popfigure-controls
     // group) live as their own section at the very top of the sidebar,
-    // ahead of the collection-specific filter rows below.
+    // ahead of the collection-specific filter rows below. This has to
+    // happen synchronously, right here — the missing-photos scan below
+    // takes a moment, and delaying this relocation until it resolves would
+    // leave these controls sitting in their default in-flow position
+    // (full page width) until then.
     const tagControls = document.getElementById("popfigure-controls") || document.getElementById("untagged-filter");
     if (tagControls) {
+        tagControls.classList.remove("filter-relocating");
         container.appendChild(tagControls);
 
         const tagControlsDivider = document.createElement("div");
@@ -413,6 +510,7 @@ function createCollectionFilters() {
         selectedVariant = null;
         selectedFranchise = null;
         filterSigned = false;
+        filterMissingImage = false;
 
         // clear visuals (sort buttons are a separate concern and keep their highlight)
         container.querySelectorAll(".game-filter-active").forEach(el => {
@@ -429,6 +527,9 @@ function createCollectionFilters() {
             signedBtn.classList.remove("active");
             signedBtn.textContent = "Signed";
         }
+
+        const missingPhotosBtn = document.getElementById("missing-photos-filter");
+        if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
 
         renderItems();
     });
@@ -1311,6 +1412,21 @@ clearBtn.addEventListener("click", () => {
     untaggedBtn.classList.remove("active");
 });
 
+// Dates are stored as ISO "YYYY-MM-DD", but that's not how anyone searches
+// for one — reformats to "DD/MM/YYYY" so a query like "27/10" matches, in
+// addition to the raw ISO string. Returns "" for anything that isn't a
+// plain ISO date (e.g. popfigures' "date" field is actually the variant
+// name), so it never introduces a false match there.
+function isoDateToSlashFormat(dateStr) {
+    const parts = String(dateStr).split("-");
+    if (parts.length !== 3) return "";
+
+    const [y, m, d] = parts;
+    if (!/^\d{4}$/.test(y) || !/^\d{2}$/.test(m) || !/^\d{2}$/.test(d)) return "";
+
+    return `${d}/${m}/${y}`;
+}
+
 function filterItems(query) {
 
     const q = query.toLowerCase().trim();
@@ -1340,7 +1456,21 @@ function filterItems(query) {
             (q === "untagged" || q === "no tags") &&
             (!realItem[COLLECTION.fields.tags] || realItem[COLLECTION.fields.tags].length === 0);
 
-        let match2 = titleMatch2 || tagMatch2 || untaggedMatch2;
+        // Search box also matches each collection's "date" field (variant
+        // for popfigures, date acquired/completed/released elsewhere — as
+        // both the raw ISO string and "DD/MM/YYYY") and "custom" field
+        // (franchise, or nationality for sleeves) — not just title/tags.
+        // Every collection maps both fields to something meaningful, so
+        // this applies universally rather than per-name.
+        const rawDateField = (realItem[COLLECTION.fields.date] || "").toString().toLowerCase();
+
+        const dateFieldMatch2 =
+            rawDateField.includes(q) || isoDateToSlashFormat(rawDateField).includes(q);
+
+        const customFieldMatch2 =
+            (realItem[COLLECTION.fields.custom] || "").toString().toLowerCase().includes(q);
+
+        let match2 = titleMatch2 || tagMatch2 || untaggedMatch2 || dateFieldMatch2 || customFieldMatch2;
 
         // Sleeves: nationality filter (mutually exclusive)
         if (COLLECTION.name === "sleeves" && selectedNationality !== null) {
@@ -1376,6 +1506,9 @@ function filterItems(query) {
             if (!hasDlc) match2 = false;
         }
 
+        // Missing Photos: only show items whose image failed to load
+        if (filterMissingImage && !missingImageItems.has(realItem)) match2 = false;
+
         card.style.display = match2 ? "block" : "none";
     });
 
@@ -1402,7 +1535,8 @@ function hasActiveFilters() {
         filterHasDlc !== null ||
         selectedVariant !== null ||
         selectedFranchise !== null ||
-        filterSigned
+        filterSigned ||
+        filterMissingImage
     );
 }
 
@@ -1717,7 +1851,6 @@ if (signedFilterBtn) {
         filterSigned = !filterSigned;
 
         signedFilterBtn.classList.toggle("active", filterSigned);
-        signedFilterBtn.textContent = filterSigned ? "Show All" : "Signed";
 
         renderItems();
     });

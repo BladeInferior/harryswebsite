@@ -16,6 +16,11 @@ let filterOwned = null;    // null | true | false
 let filterSpecial = null;  // null | true | false
 let filterGeneration = null;
 let filterRecentSet = false;
+let filterMissingImage = false; // true = only show items whose card scan failed to load
+
+// Items (by reference, scoped to the currently active deck) whose real card
+// scan is missing — repopulated on every deck switch by detectMissingImages().
+let missingImageItems = new Set();
 
 let pokemonMasterList = null;
 let pokemonMasterByName = null;
@@ -93,6 +98,68 @@ function resolveItemImage(imgElement, item) {
     setItemImage(imgElement, item.name);
 }
 
+// Only cards that actually attempt a real scanned photo are worth checking —
+// mirrors resolveItemImage()'s branching, so unowned/non-special Pokémon
+// (which intentionally fall back to a bundled Pokédex sprite, not a photo
+// you'd scan in) never get flagged as "missing".
+function usesRealPhoto(deck, item) {
+    return !(deck.spriteFolder && (!item.owned || !item.special));
+}
+
+function imageExistsForDeck(deck, name) {
+    return new Promise(resolve => {
+        const { base, tryFormats } = getItemImagePath(name);
+        let i = 0;
+        const testImg = new Image();
+
+        testImg.onload = () => resolve(true);
+        testImg.onerror = () => {
+            i++;
+            if (i < tryFormats.length) {
+                testImg.src = `${deck.imageFolder}/${base}${tryFormats[i]}`;
+            } else {
+                resolve(false);
+            }
+        };
+
+        testImg.src = `${deck.imageFolder}/${base}${tryFormats[i]}`;
+    });
+}
+
+async function detectMissingImages(deck, deckItems) {
+    const flagged = await Promise.all(deckItems.map(async item => {
+        if (item.empty || !usesRealPhoto(deck, item)) return null;
+        const has = await imageExistsForDeck(deck, item.name);
+        return has ? null : item;
+    }));
+
+    return new Set(flagged.filter(Boolean));
+}
+
+// Added once detectMissingImages() resolves (after createCollectionFilters()
+// has already rebuilt the sidebar for this deck) and only when this deck
+// actually has something missing.
+function addMissingPhotosButton() {
+    const container = document.getElementById("game-filter-container");
+    if (!container || document.getElementById("missing-photos-filter")) return;
+
+    const missingPhotosBtn = document.createElement("button");
+    missingPhotosBtn.id = "missing-photos-filter";
+    missingPhotosBtn.textContent = "Missing Photos";
+
+    missingPhotosBtn.addEventListener("click", () => {
+        filterMissingImage = missingPhotosBtn.classList.toggle("active");
+        filterItems(searchInput.value);
+    });
+
+    const divider = document.createElement("div");
+    divider.classList.add("sort-filter-divider");
+
+    const firstChild = container.firstChild;
+    container.insertBefore(missingPhotosBtn, firstChild);
+    container.insertBefore(divider, firstChild);
+}
+
 // =========================
 // DECK SWITCHING
 // =========================
@@ -106,12 +173,24 @@ async function loadDeck(key) {
     filterSpecial = null;
     filterGeneration = null;
     filterRecentSet = false;
+    filterMissingImage = false;
+    missingImageItems = new Set();
     if (searchInput) searchInput.value = "";
 
-    items = await fetch(deck.jsonFile).then(res => res.json());
+    // Both fetches are independent files — run them in parallel rather than
+    // waiting for the (bigger) master list only after the deck's own items
+    // have already finished loading.
+    const needsMasterList = deck.key === "pokemon" && !pokemonMasterList;
 
-    if (deck.key === "pokemon" && !pokemonMasterList) {
-        pokemonMasterList = await fetch("fullPokemonList.json").then(res => res.json());
+    const [deckItems, masterList] = await Promise.all([
+        fetch(deck.jsonFile).then(res => res.json()),
+        needsMasterList ? fetch("fullPokemonList.json").then(res => res.json()) : Promise.resolve(null)
+    ]);
+
+    items = deckItems;
+
+    if (needsMasterList) {
+        pokemonMasterList = masterList;
         // Joined by normalized name, not dex — dex numbers collide between base
         // and regional forms (e.g. Slowpoke / Galarian Slowpoke both use 0079).
         pokemonMasterByName = new Map(pokemonMasterList.map(p => [normalizeCardName(p.name), p]));
@@ -122,6 +201,18 @@ async function loadDeck(key) {
     updateModeUI();
     renderItems();
     createCollectionFilters();
+
+    // Runs in the background — createCollectionFilters() above already
+    // finished building this deck's sidebar synchronously, so there's
+    // nothing sitting in an unrelocated/wrong-sized state while this scan
+    // is in flight. Bail if the user has already switched decks again by
+    // the time it resolves, so a slow scan for a previous deck can't add
+    // its button to whatever deck is now showing.
+    detectMissingImages(deck, items).then(missing => {
+        if (activeDeck !== deck) return;
+        missingImageItems = missing;
+        if (missingImageItems.size > 0) addMissingPhotosButton();
+    });
 }
 
 function renderDeckTabs() {
@@ -248,6 +339,11 @@ function createCollectionFilters() {
         filterSpecial = null;
         filterGeneration = null;
         filterRecentSet = false;
+        filterMissingImage = false;
+
+        const missingPhotosBtn = document.getElementById("missing-photos-filter");
+        if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+
         refreshFilterButtons();
         filterItems(searchInput.value);
     });
@@ -389,6 +485,11 @@ pageBtn.addEventListener("click", () => {
     filterSpecial = null;
     filterGeneration = null;
     filterRecentSet = false;
+    filterMissingImage = false;
+
+    const missingPhotosBtn = document.getElementById("missing-photos-filter");
+    if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+
     refreshFilterButtons();
     updateFilterDisabledState();
     filterItems("");
@@ -711,6 +812,14 @@ function filterItems(query) {
 
         let match = item.name.toLowerCase().includes(q);
 
+        // Dex number search — plain digits, no "#" required (a leading one
+        // is stripped if typed anyway), matched against the zero-padded
+        // dex string so "25" finds "0025".
+        if (activeDeck.hasDex && item.dex && q !== "") {
+            const dexQuery = q.replace(/^#/, "");
+            if (dexQuery !== "" && String(item.dex).includes(dexQuery)) match = true;
+        }
+
         if (filterOwned === true && !item.owned) match = false;
         if (filterOwned === false && item.owned) match = false;
         if (filterSpecial === true && !item.special) match = false;
@@ -722,6 +831,8 @@ function filterItems(query) {
         }
 
         if (recentSetNames && !recentSetNames.has(normalizeCardName(item.name))) match = false;
+
+        if (filterMissingImage && !missingImageItems.has(item)) match = false;
 
         card.style.display = match ? "block" : "none";
     });
@@ -747,6 +858,7 @@ function updateItemCount() {
         filterSpecial !== null ||
         filterGeneration !== null ||
         filterRecentSet ||
+        filterMissingImage ||
         searchInput.value.trim() !== ""
     );
 

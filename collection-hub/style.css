@@ -26,6 +26,15 @@
     --shadow: 0 10px 25px rgba(0,0,0,0.35);
 }
 
+/* Reserves the scrollbar's width up front instead of letting it appear once
+   the item grid finishes populating — without this, everything anchored to
+   the viewport (centered title/page-controls, the right:20px search panel)
+   visibly shifts left the moment a page that started short becomes tall
+   enough to scroll. */
+html {
+    scrollbar-gutter: stable;
+}
+
 body {
     background-image: radial-gradient(ellipse at top, #2a5a9a, #1f4a38 45%, var(--bg));
     background-attachment: fixed;
@@ -1150,6 +1159,15 @@ h1 {
     cursor: zoom-out;
 }
 
+/* Present in the static HTML right after the title (so it still works if JS
+   is slow), but it belongs in the filters sidebar — this keeps it invisible
+   in that default in-flow spot until createCollectionFilters() relocates it
+   and strips the class, instead of flashing there on every load. */
+#untagged-filter.filter-relocating,
+#popfigure-controls.filter-relocating {
+    display: none;
+}
+
 #untagged-filter {
     padding: 6px 12px;
     background: #2d2d2d;
@@ -1161,6 +1179,22 @@ h1 {
 }
 
 #untagged-filter.active {
+    background: rgba(var(--accent-rgb), 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+#missing-photos-filter {
+    padding: 6px 12px;
+    background: #2d2d2d;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#missing-photos-filter.active {
     background: rgba(var(--accent-rgb), 0.2);
     border: 1px solid var(--accent);
     color: var(--accent);
@@ -1217,7 +1251,7 @@ h1 {
 }
 
 #popfigure-controls {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 8px;
 }
