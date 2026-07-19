@@ -98,6 +98,25 @@ h1 {
     display: none !important;
 }
 
+/* Stands in for an <img> that failed to load while offline (see
+   markImageNotDownloaded() in collections.js) — sized to match via inline
+   width/height set from the image it replaces, so this only needs to
+   handle the look. */
+.image-not-downloaded {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4px;
+    box-sizing: border-box;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    color: #999;
+    background: #1e1e1e;
+    border: 1px dashed #555;
+    border-radius: 6px;
+}
+
 #modal-overlay {
     position: fixed;
 

@@ -68,14 +68,50 @@ function getItemImagePath(name) {
     return { base, tryFormats: [".png"] };
 }
 
+// See collections.js's markImageNotDownloaded()/clearImageNotDownloaded() —
+// same idea, duplicated here since cards.js keeps its own independent image
+// pipeline (per-deck imageFolder, sprite fallback, etc).
+function markImageNotDownloaded(imgElement) {
+
+    imgElement.removeAttribute("src");
+    imgElement.classList.add("hidden");
+
+    let label = imgElement.nextElementSibling;
+    if (!label || !label.classList.contains("image-not-downloaded")) {
+        label = document.createElement("div");
+        label.classList.add("image-not-downloaded");
+        label.textContent = "Image not downloaded";
+        imgElement.insertAdjacentElement("afterend", label);
+    }
+
+    const computed = getComputedStyle(imgElement);
+    label.style.width = computed.width;
+    label.style.height = computed.height;
+    label.classList.remove("hidden");
+}
+
+function clearImageNotDownloaded(imgElement) {
+
+    imgElement.classList.remove("hidden");
+
+    const label = imgElement.nextElementSibling;
+    if (label && label.classList.contains("image-not-downloaded")) {
+        label.remove();
+    }
+}
+
 function setItemImage(imgElement, name) {
     const { base, tryFormats } = getItemImagePath(name);
     let i = 0;
+
+    clearImageNotDownloaded(imgElement);
 
     imgElement.onerror = () => {
         i++;
         if (i < tryFormats.length) {
             imgElement.src = `${activeDeck.imageFolder}/${base}${tryFormats[i]}`;
+        } else if (!navigator.onLine) {
+            markImageNotDownloaded(imgElement);
         } else {
             imgElement.src = "";
         }
@@ -91,6 +127,7 @@ function setItemImage(imgElement, name) {
 function resolveItemImage(imgElement, item) {
     if (activeDeck.spriteFolder && (!item.owned || !item.special)) {
         const base = normalizeCardName(item.name);
+        clearImageNotDownloaded(imgElement);
         imgElement.onerror = null;
         imgElement.src = `${activeDeck.spriteFolder}/${base}.png`;
         return;
@@ -127,6 +164,11 @@ function imageExistsForDeck(deck, name) {
 }
 
 async function detectMissingImages(deck, deckItems) {
+
+    // Can't tell "genuinely missing" apart from "just not cached yet" while
+    // offline — see the matching guard in collections.js.
+    if (!navigator.onLine) return new Set();
+
     const flagged = await Promise.all(deckItems.map(async item => {
         if (item.empty || !usesRealPhoto(deck, item)) return null;
         const has = await imageExistsForDeck(deck, item.name);

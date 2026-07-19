@@ -83,6 +83,38 @@ function hasSignedImage(item) {
     return !!(item.images && item.images[getSignedImageIndex(item)]);
 }
 
+// Untagged / Boxed / Signed / Missing Photos share one button row at the
+// top of the sidebar. They're presented as a single group, so activating
+// any one of them clears whichever of the others was active rather than
+// stacking — only one is ever highlighted at a time. (toggleBtn and
+// signedFilterBtn are declared further down the file, but this is only
+// ever called from click handlers, by which point the whole script has
+// already run and both consts are initialized.)
+function deactivateOtherTopButtons(exceptBtn) {
+
+    if (untaggedBtn && untaggedBtn !== exceptBtn && untaggedBtn.classList.contains("active")) {
+        untaggedBtn.classList.remove("active");
+        searchInput.value = "";
+    }
+
+    if (toggleBtn && toggleBtn !== exceptBtn && useUnboxedImage) {
+        useUnboxedImage = false;
+        toggleBtn.classList.remove("active");
+        toggleBtn.textContent = "Boxed";
+    }
+
+    if (signedFilterBtn && signedFilterBtn !== exceptBtn && filterSigned) {
+        filterSigned = false;
+        signedFilterBtn.classList.remove("active");
+    }
+
+    const missingPhotosBtn = document.getElementById("missing-photos-filter");
+    if (missingPhotosBtn && missingPhotosBtn !== exceptBtn && filterMissingImage) {
+        filterMissingImage = false;
+        missingPhotosBtn.classList.remove("active");
+    }
+}
+
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
 const zoomImage = document.getElementById("zoom-image");
 
@@ -188,16 +220,59 @@ function getItemImagePath(name) {
     return { base, tryFormats };
 }
 
+// Swaps a broken <img> for a text label reading "Image not downloaded" —
+// used when every extension has failed AND the browser is offline, since in
+// that case the file most likely just hasn't been cached for offline use
+// yet (see sw.js's runtime image cache), rather than being genuinely
+// missing. Sized to match the img it replaces via getComputedStyle rather
+// than per-context CSS, since setItemImage() is shared by card thumbnails,
+// DLC thumbs, and the full-size modal/zoom images alike.
+function markImageNotDownloaded(imgElement) {
+
+    imgElement.removeAttribute("src");
+    imgElement.classList.add("hidden");
+
+    let label = imgElement.nextElementSibling;
+    if (!label || !label.classList.contains("image-not-downloaded")) {
+        label = document.createElement("div");
+        label.classList.add("image-not-downloaded");
+        label.textContent = "Image not downloaded";
+        imgElement.insertAdjacentElement("afterend", label);
+    }
+
+    const computed = getComputedStyle(imgElement);
+    label.style.width = computed.width;
+    label.style.height = computed.height;
+    label.classList.remove("hidden");
+}
+
+// Undoes markImageNotDownloaded() so a reused <img> element (e.g. toggling
+// Boxed/Unboxed, or re-rendering the grid) doesn't leave a stale label
+// behind once the image loads successfully.
+function clearImageNotDownloaded(imgElement) {
+
+    imgElement.classList.remove("hidden");
+
+    const label = imgElement.nextElementSibling;
+    if (label && label.classList.contains("image-not-downloaded")) {
+        label.remove();
+    }
+}
+
 function setItemImage(imgElement, name) {
 
     const { base, tryFormats } = getItemImagePath(name);
 
     let i = 0;
 
+    clearImageNotDownloaded(imgElement);
+
     imgElement.onerror = () => {
         i++;
         if (i < tryFormats.length) {
             imgElement.src = `${COLLECTION.imageFolder}/${base}${tryFormats[i]}`;
+        } else if (!navigator.onLine) {
+            markImageNotDownloaded(imgElement);
         } else {
             imgElement.src = "";
         }
@@ -241,6 +316,13 @@ function imageExists(name) {
 }
 
 async function detectMissingImages() {
+
+    // Can't tell "genuinely missing" apart from "just not cached yet" while
+    // offline (imageExists()'s probes would fail for both), so skip the
+    // scan entirely rather than risk flagging half the collection as
+    // missing just because it was never viewed on this device.
+    if (!navigator.onLine) return;
+
     const flagged = await Promise.all(items.map(async item => {
         const results = await Promise.all(getItemImageNames(item).map(imageExists));
         return results.some(ok => !ok) ? item : null;
@@ -261,6 +343,9 @@ function addMissingPhotosButton() {
     missingPhotosBtn.textContent = "Missing Photos";
 
     missingPhotosBtn.addEventListener("click", () => {
+
+        if (!missingPhotosBtn.classList.contains("active")) deactivateOtherTopButtons(missingPhotosBtn);
+
         filterMissingImage = missingPhotosBtn.classList.toggle("active");
         filterItems(searchInput.value);
     });
@@ -511,6 +596,10 @@ function createCollectionFilters() {
         selectedFranchise = null;
         filterSigned = false;
         filterMissingImage = false;
+        useUnboxedImage = false;
+
+        untaggedBtn.classList.remove("active");
+        searchInput.value = "";
 
         // clear visuals (sort buttons are a separate concern and keep their highlight)
         container.querySelectorAll(".game-filter-active").forEach(el => {
@@ -530,6 +619,12 @@ function createCollectionFilters() {
 
         const missingPhotosBtn = document.getElementById("missing-photos-filter");
         if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+
+        const toggleBtn = document.getElementById("toggle-front-image");
+        if (toggleBtn) {
+            toggleBtn.classList.remove("active");
+            toggleBtn.textContent = "Boxed";
+        }
 
         renderItems();
     });
@@ -1578,6 +1673,8 @@ previewBtn.addEventListener("click", () => {
 
 untaggedBtn.addEventListener("click", () => {
 
+    if (!untaggedBtn.classList.contains("active")) deactivateOtherTopButtons(untaggedBtn);
+
     const isActive = untaggedBtn.classList.toggle("active");
 
     if (isActive) {
@@ -1825,8 +1922,12 @@ const toggleBtn = document.getElementById("toggle-front-image");
 
 if (toggleBtn) {
     toggleBtn.addEventListener("click", () => {
+
+        if (!useUnboxedImage) deactivateOtherTopButtons(toggleBtn);
+
         useUnboxedImage = !useUnboxedImage;
 
+        toggleBtn.classList.toggle("active", useUnboxedImage);
         toggleBtn.textContent = useUnboxedImage ? "Unboxed" : "Boxed";
 
         renderItems();
@@ -1848,6 +1949,9 @@ const signedFilterBtn = document.getElementById("signed-filter");
 
 if (signedFilterBtn) {
     signedFilterBtn.addEventListener("click", () => {
+
+        if (!filterSigned) deactivateOtherTopButtons(signedFilterBtn);
+
         filterSigned = !filterSigned;
 
         signedFilterBtn.classList.toggle("active", filterSigned);
