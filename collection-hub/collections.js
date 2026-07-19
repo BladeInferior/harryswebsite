@@ -43,6 +43,24 @@ let selectedFranchise = null; // for popfigures: franchise name (mutually exclus
 let filterSigned = false; // for popfigures: true = only show items tagged "signed"
 let filterMissingImage = false; // true = only show items whose image failed to load
 
+// for steelbooks: "owned" | "wishlist" — which of the two views is showing.
+// Both behave identically (same search/filters/paging/add/edit/delete);
+// this just decides which slice of `items` renderItems() draws from.
+let activeSteelbookTab = "owned";
+
+// Returns the slice of `items` the current view should actually render.
+// A no-op passthrough on every collection except steelbooks, where wishlist
+// items (item.wishlist === true) and owned items (falsy/absent) are split
+// into two full-featured tabs sharing one storage array/backup file rather
+// than being tracked as separate collections.
+function getVisibleTabItems() {
+    if (COLLECTION.name !== "steelbooks") return items;
+
+    return items.filter(item =>
+        !!item.wishlist === (activeSteelbookTab === "wishlist")
+    );
+}
+
 // items (by reference) whose primary image failed to load under every
 // extension in getItemImagePath()'s tryFormats list — populated by
 // detectMissingImages() before the filter sidebar is built, so the
@@ -703,7 +721,7 @@ function saveItems() {
 }
 
 function hasAnyUntaggedItems() {
-    return items.some(item => {
+    return getVisibleTabItems().some(item => {
         const tags = item[COLLECTION.fields.tags];
         return !tags || (Array.isArray(tags) && tags.length === 0);
     });
@@ -718,9 +736,11 @@ function renderItems() {
 
     sortItemsByDate();
 
+    const visibleItems = getVisibleTabItems();
+
     const data = pageMode
-        ? getPageModeOrder(items)
-        : items;
+        ? getPageModeOrder(visibleItems)
+        : visibleItems;
 
     data.forEach((item, index) => {
 
@@ -1081,14 +1101,57 @@ listBtn.addEventListener("click", () => {
 });
 
 // =========================
+// STEELBOOKS: OWNED / WISHLIST TABS
+// Both tabs share the same items array/backup file (see
+// getVisibleTabItems()) — switching tabs just changes which slice
+// renderItems() draws from, so search/filters/paging/add/edit/delete all
+// keep working exactly as they do for the regular collection.
+// =========================
+const ownedTabBtn = document.getElementById("owned-tab");
+const wishlistTabBtn = document.getElementById("wishlist-tab");
+const addItemBtn = document.getElementById("add-item");
+
+function setActiveSteelbookTab(tab) {
+
+    activeSteelbookTab = tab;
+
+    if (ownedTabBtn) ownedTabBtn.classList.toggle("active-mode", tab === "owned");
+    if (wishlistTabBtn) wishlistTabBtn.classList.toggle("active-mode", tab === "wishlist");
+
+    if (addItemBtn && COLLECTION.name === "steelbooks") {
+        addItemBtn.textContent = tab === "wishlist" ? "Add to Wishlist" : "Add Steelbook";
+    }
+
+    // Page numbers reset since the two tabs have different item counts —
+    // whichever mode (list/page) was active stays active.
+    currentPage = 1;
+
+    searchInput.value = "";
+    untaggedBtn.classList.remove("active");
+    filterMissingImage = false;
+
+    const missingPhotosBtn = document.getElementById("missing-photos-filter");
+    if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+
+    updateModeUI();
+    renderItems();
+}
+
+if (ownedTabBtn && wishlistTabBtn) {
+    ownedTabBtn.addEventListener("click", () => setActiveSteelbookTab("owned"));
+    wishlistTabBtn.addEventListener("click", () => setActiveSteelbookTab("wishlist"));
+}
+
+// =========================
 // PAGINATION
 // =========================
 document.getElementById("next-page").addEventListener("click", () => {
 
-    const remaining = Math.max(0, items.length - 12);
+    const visibleCount = getVisibleTabItems().length;
+    const remaining = Math.max(0, visibleCount - 12);
 
     const maxPage =
-        items.length <= 12
+        visibleCount <= 12
             ? 1
             : 1 + Math.ceil(remaining / 24);
 
@@ -1149,6 +1212,7 @@ function updateModeUI() {
 // ADD ITEM
 // =========================
 const addModal = document.getElementById("add-item-modal");
+const moveToOwnedBtn = document.getElementById("move-to-owned-btn");
 
 const titleInput = document.getElementById("item-title");
 const dateInput = document.getElementById("item-date");
@@ -1159,8 +1223,13 @@ const tagsInput = document.getElementById("item-tags");
 document.getElementById("add-item").addEventListener("click", () => {
 
     addModal.classList.remove("hidden");
-    itemModalTitle.textContent = "Add Item";
+    itemModalTitle.textContent =
+        COLLECTION.name === "steelbooks" && activeSteelbookTab === "wishlist"
+            ? "Add Wishlist Item"
+            : "Add Item";
     previewBtn.style.display = "none";
+
+    if (moveToOwnedBtn) moveToOwnedBtn.classList.add("hidden");
 
     delete addModal.dataset.editIndex;
 
@@ -1216,6 +1285,14 @@ document.getElementById("save-item").addEventListener("click", () => {
             : [];
     }
 
+    // Only stamped on brand-new steelbooks — an edit's Object.assign merge
+    // (below) otherwise leaves an existing item's wishlist flag untouched,
+    // which is what lets "Move to Owned" flip it without this overwriting
+    // it back on the next unrelated edit.
+    if (COLLECTION.name === "steelbooks" && (editIndex === undefined || editIndex === "")) {
+        itemData.wishlist = activeSteelbookTab === "wishlist";
+    }
+
     if (editIndex !== undefined && editIndex !== "") {
         // Merge rather than replace, so fields not covered by the edit form
         // (e.g. completions' `dlcs`) survive an edit instead of being wiped.
@@ -1247,6 +1324,29 @@ document.getElementById("cancel-item").addEventListener("click", () => {
     addModal.classList.add("hidden");
     errorBox.classList.add("hidden");
 });
+
+// MOVE TO OWNED (steelbooks wishlist items only — see edit-item's handler
+// below for where this button gets shown/hidden)
+if (moveToOwnedBtn) {
+    moveToOwnedBtn.addEventListener("click", () => {
+
+        const editIndex = addModal.dataset.editIndex;
+        if (editIndex === undefined || editIndex === "") return;
+
+        items[editIndex].wishlist = false;
+
+        saveItems();
+        sortItemsByDate();
+
+        delete addModal.dataset.editIndex;
+        addModal.classList.add("hidden");
+        errorBox.classList.add("hidden");
+
+        // Land on the Owned tab so the moved item is immediately visible
+        // instead of just disappearing from the Wishlist view.
+        setActiveSteelbookTab("owned");
+    });
+}
 
 // DELETE
 document.getElementById("delete-item").addEventListener("click", () => {
@@ -1285,6 +1385,13 @@ document.getElementById("edit-item").addEventListener("click", () => {
     addModal.dataset.editIndex = index;
     itemModalTitle.textContent = "Edit Item";
     previewBtn.style.display = "inline-block";
+
+    if (moveToOwnedBtn) {
+        moveToOwnedBtn.classList.toggle(
+            "hidden",
+            !(COLLECTION.name === "steelbooks" && item.wishlist)
+        );
+    }
 
     tagsContainer.innerHTML = "";
 

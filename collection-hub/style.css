@@ -812,6 +812,40 @@ h1 {
     background: rgba(var(--accent-rgb), 0.15);
 }
 
+#steelbook-tabs {
+    position: relative;
+    width: min(1000px, calc(100% - 40px));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    margin: 20px auto 0;
+}
+
+#steelbook-tabs button {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #2d2d2d;
+    color: white;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: 0.15s ease;
+}
+
+#steelbook-tabs button.active-mode,
+#steelbook-tabs button:hover {
+    opacity: 1;
+    border: 1px solid var(--accent);
+    background: rgba(var(--accent-rgb), 0.15);
+}
+
+#move-to-owned-btn {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
 #missing-dex-filter {
     padding: 10px 12px;
     border-radius: 8px;
