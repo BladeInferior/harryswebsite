@@ -1,5 +1,5 @@
 :root{
-    --bg:#121212;
+    --bg:#0a0a0a;
     --card:#1e1e1e;
     --card-hover:#262626;
     --gold:#d4af37;
@@ -15,7 +15,8 @@
 }
 
 body{
-    background-image: radial-gradient(circle 500px at top, #8a6d1f, var(--bg));
+    background-image: radial-gradient(circle at top, #8a6d1f, #1c160c 45%, var(--bg));
+    background-attachment: fixed;
     background-color: var(--bg);
     color:var(--text);
     min-height:100vh;
