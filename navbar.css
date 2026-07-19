@@ -109,6 +109,33 @@
     color: #c084fc;
 }
 
+.site-nav.admin-theme {
+    background: linear-gradient(90deg, #5c1a1a, #7a2323, #5c1a1a);
+    border-bottom: 1px solid rgba(248, 113, 113, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 24px rgba(248, 113, 113, 0.18);
+}
+
+.site-nav.admin-theme .site-logo {
+    color: #f87171;
+}
+
+.site-nav.admin-theme .site-nav-links a:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: white;
+}
+
+.site-nav.admin-theme .site-nav-links a.active-link {
+    background: rgba(248, 113, 113, 0.18);
+    border: 1px solid #f87171;
+    color: #f87171;
+}
+
+.site-nav.admin-theme .nav-toggle {
+    border: 1px solid rgba(248, 113, 113, 0.4);
+    color: #f87171;
+}
+
 .site-nav.home-theme {
     background: linear-gradient(90deg, #000000, #8a6d1f, #000000);
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
@@ -198,6 +225,36 @@
     }
 
     .site-nav.quiz-theme .site-nav-links a {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: 10px 14px;
+    }
+
+    .site-nav.admin-theme {
+        flex-wrap: wrap;
+        padding: 12px 20px;
+    }
+
+    .site-nav.admin-theme .nav-toggle {
+        display: block;
+    }
+
+    .site-nav.admin-theme .site-nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 4px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    .site-nav.admin-theme .site-nav-links.open {
+        display: flex;
+    }
+
+    .site-nav.admin-theme .site-nav-links a {
         width: 100%;
         box-sizing: border-box;
         text-align: left;

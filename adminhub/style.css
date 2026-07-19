@@ -1,0 +1,445 @@
+:root {
+    --bg: #1a1414;
+    --card: #2a1c1c;
+    --card-2: #351f1f;
+    --card-hover: #402525;
+    --accent: #ef4444;
+    --accent-light: #f87171;
+    --text: #ffffff;
+    --secondary: #bdbdbd;
+    --border: #4a2c2c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-image: radial-gradient(circle at top, #5c1a1a, #2a1414 45%, var(--bg));
+    background-attachment: fixed;
+    background-color: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.back-button {
+    display: inline-block;
+    margin: 90px 0 0 20px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: var(--card);
+    border: 1px solid var(--accent);
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: .15s ease;
+}
+
+.back-button:hover {
+    border-color: var(--accent-light);
+    background: rgba(239, 68, 68, .15);
+}
+
+@media (min-width: 769px) {
+    .back-button {
+        position: sticky;
+        top: 90px;
+        z-index: 1000;
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 21.4375px 20px 30px;
+}
+
+.hero h1 {
+    font-size: 2rem;
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    max-width: 700px;
+    margin: auto;
+    color: var(--secondary);
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.section {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+.section h2 {
+    margin-bottom: 16px;
+    font-size: 1.3rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-decoration: none;
+    color: white;
+    transition: .2s;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .card:hover {
+        transform: translateY(-4px);
+        background: var(--card-hover);
+        border-color: var(--accent);
+    }
+}
+
+.card h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.card p {
+    color: var(--secondary);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
+
+/* =========================
+   AUTH GATE
+   ========================= */
+#admin-auth-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 6, 6, .92);
+    backdrop-filter: blur(4px);
+    padding: 20px;
+}
+
+.admin-auth-box {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+}
+
+.admin-auth-box h2 {
+    margin-bottom: 10px;
+}
+
+.admin-auth-box p {
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+#admin-google-signin {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+#admin-google-signin:hover {
+    background: var(--accent-light);
+}
+
+#admin-google-signin:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+.admin-auth-error {
+    margin-top: 16px;
+    margin-bottom: 0;
+    color: #fca5a5;
+    font-size: 13px;
+}
+
+#admin-session-pill {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 8px 6px 14px;
+    font-size: 12px;
+    color: var(--secondary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .4);
+}
+
+#admin-session-pill button {
+    background: rgba(239, 68, 68, .15);
+    border: 1px solid var(--accent);
+    color: var(--accent-light);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+#admin-session-pill button:hover {
+    background: var(--accent);
+    color: white;
+}
+
+@media (max-width: 600px) {
+    #admin-session-pill {
+        left: 16px;
+        right: 16px;
+        justify-content: space-between;
+    }
+}
+
+/* =========================
+   NOTES APP
+   ========================= */
+.notes-app {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    height: calc(100vh - 220px);
+    min-height: 420px;
+}
+
+.notes-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 0;
+}
+
+#new-note-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+#new-note-btn:hover {
+    background: var(--accent-light);
+}
+
+.notes-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.notes-empty {
+    color: var(--secondary);
+    font-size: 13px;
+    padding: 10px 4px;
+}
+
+.note-list-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: .15s ease;
+    color: white;
+}
+
+.note-list-item:hover {
+    border-color: var(--accent);
+}
+
+.note-list-item.active {
+    background: rgba(239, 68, 68, .15);
+    border-color: var(--accent);
+}
+
+.note-list-title {
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.note-list-snippet {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.editor-pane, .editor-empty-state {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    min-height: 0;
+}
+
+.editor-pane {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 10px;
+}
+
+.back-to-list-btn {
+    display: none;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.note-title-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 6px 2px;
+}
+
+.note-title-input:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+}
+
+.note-content-input {
+    flex: 1;
+    resize: none;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 6px 2px;
+    font-family: Arial, sans-serif;
+}
+
+.note-content-input:focus {
+    outline: none;
+}
+
+.editor-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.save-status {
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.btn-danger {
+    background: transparent;
+    border: 1px solid #dc2626;
+    color: #fca5a5;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    color: white;
+}
+
+.editor-empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--secondary);
+    font-size: 14px;
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .notes-app {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .notes-sidebar {
+        display: flex;
+    }
+
+    .editor-pane, .editor-empty-state {
+        display: none;
+    }
+
+    body.note-open .notes-sidebar {
+        display: none;
+    }
+
+    body.note-open .editor-pane {
+        display: flex;
+    }
+
+    body.note-open .editor-empty-state {
+        display: none;
+    }
+
+    .back-to-list-btn {
+        display: inline-block;
+    }
+}

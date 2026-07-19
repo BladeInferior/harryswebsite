@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notes — Admin Hub</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="admin-nav.js"></script>
+
+<a class="back-button" href="adminhub.html">← Back</a>
+
+<section class="hero">
+    <h1>📝 Notes</h1>
+
+    <p>
+        Quick notes, just for me. Type, save automatically,
+        and delete whenever.
+    </p>
+</section>
+
+<main id="admin-content" class="hidden">
+
+    <section class="notes-app">
+
+        <aside class="notes-sidebar">
+            <button type="button" id="new-note-btn">+ New Note</button>
+            <div id="notes-list" class="notes-list"></div>
+        </aside>
+
+        <section id="editor-pane" class="editor-pane hidden">
+            <button type="button" id="back-to-list-btn" class="back-to-list-btn">← Notes</button>
+
+            <input type="text" id="note-title-input" class="note-title-input" placeholder="Untitled">
+
+            <textarea id="note-content-input" class="note-content-input" placeholder="Start typing…"></textarea>
+
+            <div class="editor-footer">
+                <span id="save-status" class="save-status"></span>
+                <button type="button" id="delete-note-btn" class="btn-danger">Delete</button>
+            </div>
+        </section>
+
+        <section id="editor-empty-state" class="editor-empty-state">
+            <p>Select a note, or create a new one to get started.</p>
+        </section>
+
+    </section>
+
+</main>
+
+<script type="module" src="notes.js"></script>
+<script src="../scroll-to-top.js"></script>
+</body>
+</html>
