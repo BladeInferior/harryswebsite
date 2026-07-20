@@ -3,6 +3,7 @@ import { db } from './firebase/firebase-config.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 import { hashPassword } from './password-utils.js';
 import { findActiveSessionForQuiz } from './session-lookup.js';
+import { ensureAdminSignedIn } from './admin-gate.js';
 
 const quizList = document.getElementById('quiz-list');
 const deleteModal = document.getElementById('delete-confirm-modal');
@@ -91,7 +92,9 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
             deleteBtn.className = 'btn btn-danger';
             deleteBtn.type = 'button';
             deleteBtn.textContent = 'Delete';
-            deleteBtn.addEventListener('click', () => openDeleteConfirm(quiz));
+            deleteBtn.addEventListener('click', async () => {
+                if (await ensureAdminSignedIn('Deleting a quiz')) openDeleteConfirm(quiz);
+            });
             actions.appendChild(deleteBtn);
         }
 

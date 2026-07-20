@@ -440,6 +440,48 @@
             color:var(--incorrect);
             margin-top:10px;
         }
+
+        .admin-gate-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.75);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1300;
+            padding:20px;
+        }
+
+        .admin-gate-box{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:24px;
+            max-width:380px;
+            width:100%;
+            text-align:center;
+        }
+
+        .admin-gate-box h2{
+            margin-bottom:10px;
+        }
+
+        .admin-gate-box p{
+            color:var(--secondary);
+            font-size:14px;
+            line-height:1.5;
+            margin-bottom:16px;
+        }
+
+        .admin-gate-error{
+            color:var(--incorrect) !important;
+        }
+
+        .admin-gate-buttons{
+            display:flex;
+            gap:10px;
+            justify-content:center;
+        }
     </style>
 </head>
 

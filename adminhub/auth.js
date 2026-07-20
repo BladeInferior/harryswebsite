@@ -35,6 +35,7 @@ export function requireAdminAuth() {
                 <p>This area is just for me — sign in with Google to continue.</p>
                 <button type="button" id="admin-google-signin">Sign in with Google</button>
                 <p id="admin-auth-error" class="admin-auth-error hidden"></p>
+                <a href="../index.html" class="admin-auth-back">← Back to site</a>
             </div>
         `;
         document.body.appendChild(gate);
@@ -94,7 +95,7 @@ function showSessionPill(user) {
     const pill = document.createElement('div');
     pill.id = 'admin-session-pill';
     pill.innerHTML = `
-        <span>${user.email}</span>
+        <span>Harry</span>
         <button type="button">Sign out</button>
     `;
     pill.querySelector('button').addEventListener('click', () => signOut(auth));

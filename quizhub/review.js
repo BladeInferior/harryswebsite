@@ -2,6 +2,8 @@ import { db } from './firebase/firebase-config.js';
 import {
     collection,
     getDocs,
+    getDoc,
+    doc,
     query,
     where
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
@@ -12,6 +14,7 @@ const statusMessage = document.getElementById('status-message');
 
 const nameEntryView = document.getElementById('name-entry-view');
 const quizListView = document.getElementById('quiz-list-view');
+const statsSummary = document.getElementById('stats-summary');
 const quizList = document.getElementById('quiz-list');
 
 const categoryListView = document.getElementById('category-list-view');
@@ -32,8 +35,14 @@ const detailExplanationRow = document.getElementById('detail-explanation-row');
 const detailExplanation = document.getElementById('detail-explanation');
 
 let reviews = [];
+let history = [];
+let leaderboardData = null;
 let currentReview = null;
 let currentCategory = null;
+
+function normalizeName(name) {
+    return (name || '').trim().toLowerCase().replace(/\s+/g, ' ');
+}
 
 // Pre-fill from ?name= (linked from join.js's "Review My Answers" button)
 // and jump straight to the quiz list.
@@ -53,16 +62,31 @@ async function lookupReviews(name) {
     statusMessage.className = 'pending';
     statusMessage.textContent = 'Looking up your quizzes...';
 
-    const nameKey = name.trim().toLowerCase().replace(/\s+/g, ' ');
+    const nameKey = normalizeName(name);
 
     try {
-        const snap = await getDocs(query(collection(db, 'playerReviews'), where('nameKey', '==', nameKey)));
-        reviews = snap.docs.map(d => ({ id: d.id, ...d.data() }))
+        const [leaderboardSnap, resultsSnap, reviewsSnap] = await Promise.all([
+            getDoc(doc(db, 'leaderboard', nameKey)),
+            getDocs(collection(db, 'quizResults')),
+            getDocs(query(collection(db, 'playerReviews'), where('nameKey', '==', nameKey)))
+        ]);
+
+        leaderboardData = leaderboardSnap.exists() ? leaderboardSnap.data() : null;
+
+        reviews = reviewsSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        history = resultsSnap.docs
+            .map(d => d.data())
+            .map(result => {
+                const mine = (result.players || []).find(p => normalizeName(p.name) === nameKey);
+                return mine ? { ...result, mine } : null;
+            })
+            .filter(Boolean)
             .sort((a, b) => (b.playedAt?.toMillis?.() || 0) - (a.playedAt?.toMillis?.() || 0));
 
-        if (!reviews.length) {
+        if (!leaderboardData && !history.length) {
             statusMessage.className = 'failure';
-            statusMessage.textContent = "No reviewable quizzes found for that name — either you haven't played one with review enabled, or the name doesn't match exactly.";
+            statusMessage.textContent = "No quizzes found for that name — either you haven't played one yet, or the name doesn't match exactly.";
             return;
         }
 
@@ -74,6 +98,22 @@ async function lookupReviews(name) {
         statusMessage.className = 'failure';
         statusMessage.textContent = 'Something went wrong looking that up — check the console.';
     }
+}
+
+// Picks the playerReviews doc (question-level detail, opt-in per quiz) that
+// corresponds to this quizResults entry. Both matching by quizId, and — for
+// the rare case of replaying the same quiz — by whichever is closest in time.
+function findMatchingReview(result) {
+    const candidates = reviews.filter(r => r.quizId && r.quizId === result.quizId);
+    if (!candidates.length) return null;
+    if (candidates.length === 1) return candidates[0];
+
+    const resultMillis = result.playedAt?.toMillis?.() || 0;
+    return candidates.reduce((best, r) => {
+        const bestDiff = Math.abs((best.playedAt?.toMillis?.() || 0) - resultMillis);
+        const rDiff = Math.abs((r.playedAt?.toMillis?.() || 0) - resultMillis);
+        return rDiff < bestDiff ? r : best;
+    });
 }
 
 function hideAllViews() {
@@ -98,22 +138,71 @@ function showQuizList() {
     });
     document.getElementById('breadcrumb').appendChild(backBtn);
 
+    renderStatsSummary();
+
     quizList.innerHTML = '';
-    reviews.forEach(review => {
-        const tile = document.createElement('button');
-        tile.type = 'button';
-        tile.className = 'tile';
 
-        const totalPoints = review.entries.reduce((sum, e) => sum + (e.pointsAwarded || 0), 0);
-        const correctCount = review.entries.filter(e => e.correct).length;
+    if (!history.length) {
+        quizList.innerHTML = '<p class="empty-hint">No quiz history found — just aggregate stats above.</p>';
+        return;
+    }
 
-        tile.innerHTML = `
-            <span>${escapeHtml(review.quizTitle)}</span>
-            <span class="tile-meta">${formatDate(review.playedAt)} — ${correctCount}/${review.entries.length} correct, ${totalPoints} pts</span>
+    history.forEach(result => {
+        const tile = document.createElement('div');
+        tile.className = 'tile history-tile ' + result.mine.outcome;
+
+        const main = document.createElement('div');
+        main.className = 'tile-main';
+        main.innerHTML = `
+            <span>${escapeHtml(result.quizTitle)}</span>
+            <span class="tile-meta">${formatDate(result.playedAt)} — ${result.mine.score} pts, ${capitalize(result.mine.outcome)}</span>
         `;
-        tile.addEventListener('click', () => showCategoryList(review));
+        tile.appendChild(main);
+
+        const matchedReview = findMatchingReview(result);
+        if (matchedReview) {
+            const viewBtn = document.createElement('button');
+            viewBtn.type = 'button';
+            viewBtn.className = 'view-answers-btn';
+            viewBtn.textContent = 'View Answers';
+            viewBtn.addEventListener('click', () => showCategoryList(matchedReview));
+            tile.appendChild(viewBtn);
+        } else {
+            const note = document.createElement('span');
+            note.className = 'no-review-note';
+            note.textContent = 'No answer review saved';
+            tile.appendChild(note);
+        }
+
         quizList.appendChild(tile);
     });
+}
+
+function renderStatsSummary() {
+    if (!leaderboardData) {
+        statsSummary.innerHTML = '<p class="empty-hint">No aggregate stats yet.</p>';
+        return;
+    }
+
+    const stats = [
+        { label: 'Total Score', value: leaderboardData.totalScore || 0 },
+        { label: 'Best Score', value: leaderboardData.bestScore || 0 },
+        { label: 'Games Played', value: leaderboardData.gamesPlayed || 0 },
+        { label: 'Wins', value: leaderboardData.wins || 0 },
+        { label: 'Draws', value: leaderboardData.draws || 0 },
+        { label: 'Losses', value: leaderboardData.losses || 0 }
+    ];
+
+    statsSummary.innerHTML = stats.map(s => `
+        <div class="stat-tile">
+            <div class="stat-value">${s.value}</div>
+            <div class="stat-label">${s.label}</div>
+        </div>
+    `).join('');
+}
+
+function capitalize(str) {
+    return str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
 }
 
 function showCategoryList(review) {

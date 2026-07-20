@@ -205,6 +205,77 @@
             border-left:4px solid var(--incorrect);
         }
 
+        .tile.win{
+            border-left:4px solid var(--correct);
+        }
+
+        .tile.loss{
+            border-left:4px solid var(--incorrect);
+        }
+
+        .tile.draw{
+            border-left:4px solid var(--gold);
+        }
+
+        .history-tile{
+            cursor:default;
+        }
+
+        .history-tile .tile-main{
+            display:flex;
+            flex-direction:column;
+            gap:2px;
+        }
+
+        .history-tile .view-answers-btn{
+            background:rgba(168,85,247,.3);
+            border:1px solid var(--gold);
+            color:var(--text);
+            border-radius:8px;
+            padding:6px 12px;
+            font-size:.8rem;
+            cursor:pointer;
+            white-space:nowrap;
+        }
+
+        .history-tile .view-answers-btn:hover{
+            background:rgba(168,85,247,.45);
+            border-color:#c084fc;
+        }
+
+        .history-tile .no-review-note{
+            color:var(--secondary);
+            font-size:.8rem;
+            white-space:nowrap;
+        }
+
+        .stats-summary{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(110px, 1fr));
+            gap:10px;
+            margin-bottom:20px;
+        }
+
+        .stat-tile{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:12px;
+            text-align:center;
+        }
+
+        .stat-tile .stat-value{
+            font-size:1.4rem;
+            font-weight:bold;
+            color:var(--gold);
+        }
+
+        .stat-tile .stat-label{
+            color:var(--secondary);
+            font-size:.75rem;
+            margin-top:2px;
+        }
+
         .empty-hint{
             color:var(--secondary);
             text-align:center;
@@ -256,7 +327,7 @@
 
 <section class="hero">
     <h1>📖 Review Past Quizzes</h1>
-    <p>Look back at quizzes you've played (where the host allowed it) — see your answers next to the correct ones, organised by category.</p>
+    <p>Type your name to see all your stats and quiz history in one place — and, for quizzes where the host allowed it, your answers next to the correct ones, organised by category.</p>
 </section>
 
 <section class="section">
@@ -272,7 +343,9 @@
 
     <div id="quiz-list-view" class="card" hidden>
         <div id="breadcrumb"></div>
-        <h2 style="margin-bottom:14px;">Your Completed Quizzes</h2>
+        <h2 style="margin-bottom:14px;">Your Stats</h2>
+        <div id="stats-summary" class="stats-summary"></div>
+        <h2 style="margin-bottom:14px;">Your Quiz History</h2>
         <div id="quiz-list" class="tile-list"></div>
     </div>
 

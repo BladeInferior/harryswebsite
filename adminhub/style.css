@@ -189,6 +189,19 @@ footer {
     font-size: 13px;
 }
 
+.admin-auth-back {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--secondary);
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.admin-auth-back:hover {
+    color: white;
+    text-decoration: underline;
+}
+
 #admin-session-pill {
     position: fixed;
     bottom: 16px;

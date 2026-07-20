@@ -13,6 +13,7 @@ import {
     increment,
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+import { ensureAdminSignedIn } from './admin-gate.js';
 
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabPanels = {
@@ -299,7 +300,9 @@ const manualEntryAddPlayerBtn = document.getElementById('manual-entry-add-player
 const saveManualEntryBtn = document.getElementById('save-manual-entry-btn');
 const cancelManualEntryBtn = document.getElementById('cancel-manual-entry-btn');
 
-addManualEntryBtn.addEventListener('click', () => {
+addManualEntryBtn.addEventListener('click', async () => {
+    if (!(await ensureAdminSignedIn('Adding a manual leaderboard entry'))) return;
+
     manualEntryError.hidden = true;
     manualEntryQuizNameInput.value = '';
     manualEntryPlayers.innerHTML = '';
