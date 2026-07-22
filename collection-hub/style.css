@@ -846,32 +846,6 @@ h1 {
     color: var(--accent);
 }
 
-#missing-dex-filter {
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #555;
-    background: #2d2d2d;
-    color: white;
-    cursor: pointer;
-    transition: 0.15s ease;
-    text-align: center;
-    box-sizing: border-box;
-}
-
-#missing-dex-filter.active {
-    border: 1px solid var(--accent);
-    background: rgba(var(--accent-rgb), 0.15);
-    color: var(--accent);
-}
-
-@media (hover: hover) and (pointer: fine) {
-    #missing-dex-filter:hover {
-        border: 1px solid var(--accent);
-        background: rgba(var(--accent-rgb), 0.15);
-        color: var(--accent);
-    }
-}
-
 #page-display {
     min-width: 40px;
     text-align: center;
