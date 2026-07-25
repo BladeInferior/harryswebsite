@@ -231,6 +231,13 @@ async function loadDeck(key) {
 
     items = deckItems;
 
+    // Each deck switch freshly (re)loads its items straight from
+    // deck.jsonFile, so that's the right moment to (re)establish the "nothing
+    // to save yet" baseline for whichever deck is now active.
+    if (typeof initUnsavedChangesSnapshot === "function") {
+        initUnsavedChangesSnapshot(JSON.stringify(items));
+    }
+
     if (needsMasterList) {
         pokemonMasterList = masterList;
         // Joined by normalized name, not dex — dex numbers collide between base
@@ -656,7 +663,7 @@ document.getElementById("save-item").addEventListener("click", () => {
 
     delete addModal.dataset.editIndex;
 
-    if (typeof markDirty === "function") markDirty();
+    if (typeof markDirty === "function") markDirty(JSON.stringify(items));
 
     renderItems();
     addModal.classList.add("hidden");
@@ -680,7 +687,7 @@ document.getElementById("delete-item").addEventListener("click", () => {
     if (index === undefined) return;
 
     items.splice(index, 1);
-    if (typeof markDirty === "function") markDirty();
+    if (typeof markDirty === "function") markDirty(JSON.stringify(items));
     renderItems();
     modalOverlay.classList.add("hidden");
 });
@@ -723,7 +730,7 @@ document.getElementById("import-items").addEventListener("change", (e) => {
             }
 
             items = importedItems;
-            if (typeof markDirty === "function") markDirty();
+            if (typeof markDirty === "function") markDirty(JSON.stringify(items));
             renderItems();
 
             alert(`Imported ${items.length} items`);
@@ -738,6 +745,7 @@ document.getElementById("import-items").addEventListener("change", (e) => {
 
 document.getElementById("export-items").addEventListener("click", async () => {
     const data = JSON.stringify(items, null, 2);
+    const snapshotData = JSON.stringify(items);
     const authKey = getExportAuthKey();
 
     if (authKey) {
@@ -757,7 +765,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
             const result = await res.json();
 
             if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved();
+                if (typeof markSaved === "function") markSaved(snapshotData);
                 alert(`✅ ${activeDeck.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -783,7 +791,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof markSaved === "function") markSaved();
+    if (typeof markSaved === "function") markSaved(snapshotData);
 });
 
 // =========================

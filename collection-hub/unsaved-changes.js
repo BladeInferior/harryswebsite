@@ -1,7 +1,16 @@
 // Shared "you have unsaved changes" guard, loaded on every collection-hub
-// page. Each page's own script (collections.js / cards.js / pokedexes.js)
-// calls markDirty() wherever it mutates local data and markSaved() once an
-// Export completes — this file only owns the actual warning UI:
+// page. Each page's own script (collections.js / cards.js / pokedexes.js):
+//   - calls initUnsavedChangesSnapshot(JSON.stringify(<its data>)) once,
+//     right after its initial data load finishes, to record the baseline.
+//   - calls markDirty(JSON.stringify(<its data>)) wherever it mutates that
+//     data. This is a real diff against the last saved/loaded snapshot, not
+//     just a "something happened" flag — so e.g. toggling a checkbox on and
+//     then back off again correctly leaves hasUnsavedChanges false, since
+//     the serialized state matches the snapshot again.
+//   - calls markSaved(JSON.stringify(<its data>)) once an Export completes,
+//     which also becomes the new baseline for future markDirty() calls.
+//
+// This file only owns the actual warning UI:
 //   - tab close / refresh / typing a new URL: the browser's own native
 //     dialog via beforeunload. Browsers hard-block custom text/styling here
 //     on purpose (otherwise a site could hold the tab hostage), so this one
@@ -10,13 +19,31 @@
 //     the "← Back" button): we're the ones triggering the navigation, so we
 //     can show our own styled confirm modal instead.
 let hasUnsavedChanges = false;
+let lastSavedSnapshot = null;
 
-function markDirty() {
-    hasUnsavedChanges = true;
+// Establishes the "nothing to save yet" baseline. Deliberately taken after
+// localStorage has already been merged into the page's in-memory data (not
+// against the raw fetched backup JSON) — edits from a previous, unexported
+// session are treated as the normal starting point for this session, not as
+// changes that need re-flagging the moment the page loads.
+function initUnsavedChangesSnapshot(stateJSON) {
+    lastSavedSnapshot = stateJSON;
+    hasUnsavedChanges = false;
 }
 
-function markSaved() {
+function markDirty(stateJSON) {
+    if (lastSavedSnapshot === null || stateJSON === undefined) {
+        // No baseline (or caller didn't pass one) to diff against — fall
+        // back to the conservative "assume dirty" behavior.
+        hasUnsavedChanges = true;
+        return;
+    }
+    hasUnsavedChanges = stateJSON !== lastSavedSnapshot;
+}
+
+function markSaved(stateJSON) {
     hasUnsavedChanges = false;
+    if (stateJSON !== undefined) lastSavedSnapshot = stateJSON;
 }
 
 window.addEventListener("beforeunload", (e) => {

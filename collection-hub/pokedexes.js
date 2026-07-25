@@ -31,8 +31,9 @@ const dexTypes = [
 
 
 function saveData() {
-    localStorage.setItem("dexData", JSON.stringify(savedDexData));
-    if (typeof markDirty === "function") markDirty();
+    const serialized = JSON.stringify(savedDexData);
+    localStorage.setItem("dexData", serialized);
+    if (typeof markDirty === "function") markDirty(serialized);
     updateProgress();
     updateCardHighlights();
 }
@@ -46,11 +47,13 @@ Promise.all([
     allPokemon = pokemonList;
 
     // convert exported array into your existing format
+    const sourceDexData = {};
+
     dexList.forEach(entry => {
 
         const key = normalizeName(entry.name);
 
-        savedDexData[key] = {
+        sourceDexData[key] = {
             masterDex: !!entry.masterDex,
             tradeDex: !!entry.tradeDex,
             wonderTradeDex: !!entry.wonderTradeDex,
@@ -66,6 +69,33 @@ Promise.all([
             }
         };
     });
+
+    // saveData() has always written every toggle to localStorage, but
+    // nothing ever read it back on load — a refresh before exporting was
+    // silently reverting to whatever pokedex-backup.json last had. Local
+    // wins per-pokemon (it's always a full snapshot of the whole dex, so
+    // it's at least as current as the backup for anything it covers);
+    // entries only present in the backup (new pokemon, or synced from
+    // another device) get pulled in without touching anything saved locally.
+    const localRaw = localStorage.getItem("dexData");
+
+    if (localRaw) {
+        try {
+            savedDexData = JSON.parse(localRaw);
+
+            Object.keys(sourceDexData).forEach(key => {
+                if (!(key in savedDexData)) savedDexData[key] = sourceDexData[key];
+            });
+        } catch {
+            savedDexData = sourceDexData;
+        }
+    } else {
+        savedDexData = sourceDexData;
+    }
+
+    if (typeof initUnsavedChangesSnapshot === "function") {
+        initUnsavedChangesSnapshot(JSON.stringify(savedDexData));
+    }
 
     createPokemonCards(allPokemon);
     createProgressUI();
@@ -322,6 +352,18 @@ function applyListFilter() {
         }
 
     });
+}
+
+// Called after a discrete filter toggle (tag/generation/game/missing/
+// completion-color buttons, entering or leaving dex-edit mode) so the newly
+// filtered results are visible immediately instead of leaving the page
+// wherever it happened to be scrolled — e.g. clicking Legendary while
+// scrolled halfway down, then unclicking it, used to strand the view there.
+// Deliberately not used for the live search box: that's continuous
+// refinement rather than a discrete on/off change, and the box already sits
+// near the top of the page.
+function scrollResultsToTop() {
+    window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function applyFilters() {
@@ -678,7 +720,7 @@ document.addEventListener("click", (e) => {
     const dexBox = btn.closest(".dex-progress");
     const dexType = dexBox.dataset.dex;
 
-    const dexChanged = activeDexEdit !== dexType;
+    const previousDexEdit = activeDexEdit;
 
     if (activeDexEdit === dexType) {
         activeDexEdit = null;
@@ -691,6 +733,14 @@ document.addEventListener("click", (e) => {
             shinyEditModeFlag = true;
         }
     }
+
+    // Comparing against the resulting activeDexEdit (not just dexType)
+    // matters for turning editing OFF: clicking the same dex again sets
+    // activeDexEdit back to null, which is still a real change (e.g. it's
+    // what flips the Regional filter on PoGo Dex back to its normal
+    // definition) — comparing the old value against dexType alone missed
+    // that case, since they're equal precisely when you're toggling off.
+    const dexChanged = previousDexEdit !== activeDexEdit;
 
     if (dexChanged && missingDexFilter !== null) {
         missingDexFilter = null;
@@ -707,6 +757,7 @@ document.addEventListener("click", (e) => {
     updateCardHighlights();
     if (dexChanged) {
         applyFilters();
+        scrollResultsToTop();
         if (pageMode) {
             applyPagination();
         }
@@ -894,6 +945,7 @@ function createFilterButtons() {
     missingFilterBtn.addEventListener("click", () => {
         missingDexFilter = missingDexFilter === true ? null : true;
         applyFilters();
+        scrollResultsToTop();
         updateMissingButtonHighlight();
     });
 
@@ -907,6 +959,7 @@ function createFilterButtons() {
     notMissingFilterBtn.addEventListener("click", () => {
         missingDexFilter = missingDexFilter === false ? null : false;
         applyFilters();
+        scrollResultsToTop();
         updateMissingButtonHighlight();
     });
 
@@ -943,6 +996,7 @@ function createFilterButtons() {
             }
 
             applyFilters();
+            scrollResultsToTop();
             updateGameButtonHighlight();
         });
 
@@ -964,6 +1018,7 @@ function createFilterButtons() {
             }
 
             applyFilters();
+            scrollResultsToTop();
             updateGameButtonHighlight();
         });
 
@@ -1023,6 +1078,7 @@ function createFilterButtons() {
                 }
 
                 applyFilters();
+                scrollResultsToTop();
                 updateTagButtonHighlight();
             });
 
@@ -1063,6 +1119,7 @@ function createFilterButtons() {
 
                 currentPage = Math.floor(index / pageSize) + 1;
                 applyPagination();
+                scrollResultsToTop();
                 return;
             }
 
@@ -1073,6 +1130,7 @@ function createFilterButtons() {
             }
 
             applyFilters();
+            scrollResultsToTop();
             updateGenerationButtonHighlight();
         });
 
@@ -1118,6 +1176,7 @@ function createFilterButtons() {
         });
 
         applyFilters();
+        scrollResultsToTop();
         updateGameButtonHighlight();
         updateGenerationButtonHighlight();
         updateTagButtonHighlight();
@@ -1232,6 +1291,7 @@ document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(item
         });
 
         applyFilters();
+        scrollResultsToTop();
         if (pageMode) applyPagination();
     });
 });
@@ -1371,6 +1431,10 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     });
 
     const json = JSON.stringify(exportData, null, 2);
+    // Matches saveData()'s format (JSON.stringify(savedDexData), not the
+    // reshaped exportData array) — the snapshot markDirty() diffs against
+    // has to be serialized the same way every time it's set.
+    const snapshotData = JSON.stringify(savedDexData);
     const authKey = getExportAuthKey();
 
     if (authKey) {
@@ -1390,7 +1454,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             const result = await res.json();
 
             if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved();
+                if (typeof markSaved === "function") markSaved(snapshotData);
                 alert("✅ pokedex-backup.json committed to GitHub automatically.");
                 return;
             }
@@ -1418,7 +1482,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof markSaved === "function") markSaved();
+    if (typeof markSaved === "function") markSaved(snapshotData);
 });
 
 document.getElementById("import-button").addEventListener("click", () => {

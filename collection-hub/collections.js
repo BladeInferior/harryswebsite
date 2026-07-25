@@ -193,6 +193,10 @@ Promise.all([
         items = itemList;
     }
 
+    if (typeof initUnsavedChangesSnapshot === "function") {
+        initUnsavedChangesSnapshot(JSON.stringify(items));
+    }
+
     renderItems();
 
     pageMode = false;
@@ -891,8 +895,9 @@ function getCurrentPageSize() {
 // SAVE
 // =========================
 function saveItems() {
-    localStorage.setItem(COLLECTION.storageKey, JSON.stringify(items));
-    if (typeof markDirty === "function") markDirty();
+    const serialized = JSON.stringify(items);
+    localStorage.setItem(COLLECTION.storageKey, serialized);
+    if (typeof markDirty === "function") markDirty(serialized);
     updateModeUI();
 }
 
@@ -970,25 +975,9 @@ function renderItems() {
         label.textContent = item[COLLECTION.fields.title];
         card.appendChild(label);
 
-        const dlcContainer = document.createElement("div");
-        dlcContainer.classList.add("dlc-container");
-
-        const dlcs = item.dlcs || [];
-
-        dlcs.forEach(entry => {
-
-            const dlcImg = document.createElement("img");
-            dlcImg.loading = "lazy";
-
-            setItemImage(dlcImg, dlcImageKey(entry));
-
-            dlcImg.classList.add("dlc-thumb");
-            if (isDlcUnnamed(entry)) dlcImg.classList.add("dlc-thumb-unnamed");
-
-            dlcContainer.appendChild(dlcImg);
-        });
-
-        card.appendChild(dlcContainer);
+        // DLCs are only ever shown inside the item's modal (by design, not
+        // shown here on the grid card) — see openModal()'s #modal-dlcs
+        // rendering.
 
         card.addEventListener("click", () => {
             openModal(items.indexOf(item));
@@ -1232,8 +1221,17 @@ function openModal(index) {
 
                     e.stopPropagation();
 
+                    // prompt() blocks JS execution but not rendering, so the
+                    // zoomed image is already on screen behind it by the
+                    // time the dialog actually appears — easier to make out
+                    // than the 140px thumbnail when picking a name for it.
+                    zoomImage.src = img.src;
+                    imageZoomOverlay.classList.remove("hidden");
+
                     const currentGuess = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
                     const newName = prompt("Enter a proper name for this DLC:", currentGuess);
+
+                    imageZoomOverlay.classList.add("hidden");
 
                     if (!newName || !newName.trim()) return;
 
@@ -1400,6 +1398,17 @@ function updateModeUI() {
     pagination.classList.toggle("hidden", pageMode === false);
 
     searchWrapper.classList.toggle("hidden", pageMode);
+
+    // If the Untagged button is about to disappear (the last untagged item
+    // just got tagged) while it's still the active filter, clear the filter
+    // too — otherwise the grid is left stuck showing zero results with no
+    // way back, since the button that would undo it just vanished.
+    if (!pageMode && !hasAnyUntaggedItems() && untaggedBtn.classList.contains("active")) {
+        untaggedBtn.classList.remove("active");
+        searchInput.value = "";
+        filterItems("");
+    }
+
     untaggedBtn.classList.toggle("hidden", pageMode || !hasAnyUntaggedItems());
 
     document.body.classList.toggle("page-mode", pageMode);
@@ -1564,6 +1573,8 @@ document.getElementById("delete-item").addEventListener("click", () => {
     saveItems();
     renderItems();
 
+    if (COLLECTION.name === "completions") refreshUnnamedDlcFilter();
+
     modalOverlay.classList.add("hidden");
 });
 
@@ -1643,6 +1654,8 @@ document.getElementById("import-items").addEventListener("change", (e) => {
             saveItems();
             renderItems();
 
+            if (COLLECTION.name === "completions") refreshUnnamedDlcFilter();
+
             alert(`Imported ${items.length} items`);
 
         } catch (err) {
@@ -1658,6 +1671,10 @@ document.getElementById("import-items").addEventListener("change", (e) => {
 document.getElementById("export-items").addEventListener("click", async () => {
 
     const data = JSON.stringify(items, null, 2);
+    // Matches saveItems()'s compact (non-pretty-printed) format — markDirty()
+    // diffs against whatever string initUnsavedChangesSnapshot()/markSaved()
+    // last stored, so they all have to serialize the same way.
+    const snapshotData = JSON.stringify(items);
     const authKey = getExportAuthKey();
 
     if (authKey) {
@@ -1677,7 +1694,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
             const result = await res.json();
 
             if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved();
+                if (typeof markSaved === "function") markSaved(snapshotData);
                 alert(`✅ ${COLLECTION.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -1705,7 +1722,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof markSaved === "function") markSaved();
+    if (typeof markSaved === "function") markSaved(snapshotData);
 });
 
 /* earlier filterItems placeholder — implementation below */
