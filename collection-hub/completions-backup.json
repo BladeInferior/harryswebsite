@@ -119,7 +119,33 @@
       "DLC",
       "One"
     ],
-    "dlcs": [],
+    "dlcs": [
+      {
+        "name": "12. Update 1.21.50: The Garden Awakens",
+        "image": "12update12150thegardenawakens",
+        "verified": true
+      },
+      {
+        "name": "12. update12190chasetheskies",
+        "image": "12update12190chasetheskies",
+        "verified": false
+      },
+      {
+        "name": "12. update2630chaoscubed",
+        "image": "12update2630chaoscubed",
+        "verified": false
+      },
+      {
+        "name": "12. update1210trickytrials",
+        "image": "12update1210trickytrials",
+        "verified": false
+      },
+      {
+        "name": "12. update121130mountsofmayhem",
+        "image": "12update121130mountsofmayhem",
+        "verified": false
+      }
+    ],
     "franchise": "Minecraft"
   },
   {
@@ -249,9 +275,17 @@
       "One"
     ],
     "dlcs": [
-      "25. Local Co-op Update",
-      "25. Abyssal Terrors",
-      "25. Paws & Claws Update"
+      "25. Paws & Claws Update",
+      {
+        "name": "25. Abyssal Terrors",
+        "image": "25abyssalterrors",
+        "verified": true
+      },
+      {
+        "name": "25. Local Co-op Update",
+        "image": "25localcoopupdate",
+        "verified": true
+      }
     ],
     "franchise": "Brotato"
   },
@@ -293,8 +327,16 @@
       "Series X"
     ],
     "dlcs": [
-      "29. Wild Card & A Pirate's Fortune",
-      "29. Pirate's Fortune"
+      {
+        "name": "29. apiratesfortune",
+        "image": "29apiratesfortune",
+        "verified": false
+      },
+      {
+        "name": "29. wildcard",
+        "image": "29wildcard",
+        "verified": false
+      }
     ],
     "franchise": "Star Wars"
   },
@@ -516,6 +558,7 @@
     "dateCompleted": "2025-03-13",
     "undefined": "Dragon Quest",
     "tags": [
+      "Remake",
       "Series X"
     ],
     "franchise": "Dragon Quest"
@@ -559,7 +602,27 @@
       "Series X"
     ],
     "dlcs": [
-      "54. A Critical Encounter"
+      "54. A Critical Encounter",
+      {
+        "name": "54. clawsofawaji",
+        "image": "54clawsofawaji",
+        "verified": false
+      },
+      {
+        "name": "54. progressionupdate",
+        "image": "54progressionupdate",
+        "verified": false
+      },
+      {
+        "name": "54. titleupdate1111",
+        "image": "54titleupdate1111",
+        "verified": false
+      },
+      {
+        "name": "54. titleupdate116",
+        "image": "54titleupdate116",
+        "verified": false
+      }
     ],
     "franchise": "Assassin's Creed"
   },
@@ -813,7 +876,14 @@
       "DLC available",
       "Series X"
     ],
-    "franchise": "PowerWash Simulator"
+    "franchise": "PowerWash Simulator",
+    "dlcs": [
+      {
+        "name": "78. starwarspack",
+        "image": "78starwarspack",
+        "verified": false
+      }
+    ]
   },
   {
     "title": "79. Flintlock: The Siege of Dawn",
@@ -860,6 +930,7 @@
     "dateCompleted": "2026-01-23",
     "undefined": "Dragon Quest",
     "tags": [
+      "Remake",
       "Series X"
     ],
     "franchise": "Dragon Quest"
@@ -869,6 +940,7 @@
     "dateCompleted": "2026-02-15",
     "undefined": "Dragon Quest",
     "tags": [
+      "Remake",
       "Series X"
     ],
     "franchise": "Dragon Quest"
@@ -921,6 +993,7 @@
     "undefined": "Goat Simulator",
     "tags": [
       "Simulator",
+      "Remake",
       "Gamepass",
       "Series X"
     ],
@@ -962,6 +1035,7 @@
     "dateCompleted": "2026-05-12",
     "undefined": "Assassin's Creed",
     "tags": [
+      "Remake",
       "Series X"
     ],
     "franchise": "Assassin's Creed"
@@ -989,6 +1063,25 @@
     "title": "96. Dungeons of Hinterberg",
     "dateCompleted": "2026-07-13",
     "franchise": "Dungeons of Hinterberg",
-    "tags": []
+    "tags": [
+      "Gamepass",
+      "Series X"
+    ],
+    "dlcs": [
+      {
+        "name": "96. newgame+",
+        "image": "96newgame+",
+        "verified": false
+      }
+    ]
+  },
+  {
+    "title": "97. Assassin's Creed Black Flag Resynced",
+    "dateCompleted": "2026-07-25",
+    "franchise": "Assassin's Creed",
+    "tags": [
+      "Remake",
+      "Series X"
+    ]
   }
 ]
