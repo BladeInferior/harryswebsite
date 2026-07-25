@@ -14,11 +14,12 @@ let tagFilters = {};
 let pokemonCountLabel = null;
 let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #dex-key swatch
 
-// Same key as collections.js/cards.js — localStorage is shared across the
-// whole site's origin, so a key set on any of those pages is already here.
-function getExportAuthKey() {
-    return localStorage.getItem("exportAuthKey");
-}
+// Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
+// since this file is a plain <script>, not a module. Replaces the old
+// "paste a secret into localStorage via devtools" (exportAuthKey) approach
+// with just being signed in as the owner's Google account (bottom-right
+// widget from admin-auth.js), which works the same on any device.
+const adminAuthReady = import('../admin-auth-core.js');
 
 const dexTypes = [
     { key: "masterDex", label: "MasterDex" },
@@ -1435,15 +1436,16 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     // reshaped exportData array) — the snapshot markDirty() diffs against
     // has to be serialized the same way every time it's set.
     const snapshotData = JSON.stringify(savedDexData);
-    const authKey = getExportAuthKey();
+    const { getAdminIdToken } = await adminAuthReady;
+    const idToken = await getAdminIdToken();
 
-    if (authKey) {
+    if (idToken) {
         try {
             const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-Auth-Key": authKey
+                    "Authorization": `Bearer ${idToken}`
                 },
                 body: JSON.stringify({
                     filename: "pokedex-backup.json",

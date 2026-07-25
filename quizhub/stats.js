@@ -14,6 +14,7 @@ import {
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 import { ensureAdminSignedIn } from './admin-gate.js';
+import { onAdminStateChange } from '../admin-auth-core.js';
 
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabPanels = {
@@ -433,15 +434,14 @@ function computeComboKey(names) {
 }
 
 // =========================
-// ADMIN: MERGE DUPLICATE PLAYERS — hidden unless the same "exportAuthKey"
-// localStorage key used by collection-hub's export tool is present. Same
-// trust model as that feature: this only hides the tool from casual
-// visitors, it isn't real access control (there's no server-side check),
-// since it just edits Firestore data this site already writes to openly.
+// ADMIN: MERGE DUPLICATE PLAYERS / DELETE PLAYERS / DELETE QUIZ RESULTS —
+// tab visibility follows the site-wide Google Sign-In (../admin-auth-core.js,
+// the same bottom-right widget every other page uses) instead of the old
+// "exportAuthKey in localStorage" flag. This only hides the tab from casual
+// visitors — it isn't real access control on its own (no server-side check
+// happens here), but every actual write action underneath it is separately
+// confirmed via ensureAdminSignedIn() (admin-gate.js) before it runs.
 // =========================
-const ADMIN_KEY_STORAGE = 'exportAuthKey';
-const isAdmin = !!localStorage.getItem(ADMIN_KEY_STORAGE);
-
 const adminTabBtn = document.getElementById('admin-tab-btn');
 const adminMergeError = document.getElementById('admin-merge-error');
 const adminMergeCanonicalSelect = document.getElementById('admin-merge-canonical-select');
@@ -457,11 +457,19 @@ const adminMergeStatus = document.getElementById('admin-merge-status');
 let cachedLeaderboardPlayers = [];
 let pendingMerge = null;
 
-if (isAdmin) {
-    adminTabBtn.hidden = false;
-    loadAdminPlayerList();
-    loadAdminQuizResultsList();
-}
+onAdminStateChange(isAdmin => {
+    adminTabBtn.hidden = !isAdmin;
+
+    if (isAdmin) {
+        loadAdminPlayerList();
+        loadAdminQuizResultsList();
+    } else if (!tabPanels.admin.hidden) {
+        // Lost admin (e.g. signed out from the widget) while looking at the
+        // now-hidden tab — don't leave its content showing with no tab
+        // button left to navigate away from it.
+        switchTab('recent');
+    }
+});
 
 // Three tools sharing the one Admin tab (Merge / Delete Players / Delete
 // Quiz Results) — same sub-tab pattern as the page's top-level tabs, just

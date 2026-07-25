@@ -1,31 +1,17 @@
-// Gates specific admin-only actions (Delete Quiz, Add Manual Entry) behind
-// Google Sign-In, without putting the whole page behind a login wall like
-// the Admin Hub does — hosts still need Manage Quizzes/Stats wide open.
-// Shares the same Firebase project as adminhub/auth.js, so signing in there
-// also authorizes these actions in the same browser.
-import { auth, googleProvider } from './firebase/firebase-config.js';
-import {
-    onAuthStateChanged,
-    signInWithPopup
-} from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
-
-const OWNER_EMAIL = "bladeinferior.hc@gmail.com";
-
-// Firebase's persisted-session check is async — wait for the first
-// onAuthStateChanged callback so auth.currentUser is reliable before we
-// decide whether a sign-in prompt is even needed.
-const firstAuthState = new Promise(resolve => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-        unsubscribe();
-        resolve(user);
-    });
-});
+// Gates specific admin-only actions (Delete Quiz, Add Manual Entry, the
+// Delete Players/Delete Quiz Results admin tools) behind Google Sign-In,
+// without putting the whole page behind a login wall like the Admin Hub
+// does — hosts still need Manage Quizzes/Stats wide open. Built on top of
+// the site-wide ../admin-auth-core.js (same module the bottom-right widget
+// on every other page uses), so signing in there also satisfies this gate
+// in the same browser, and vice versa.
+import { OWNER_EMAIL, isSignedInAsAdmin, signInAdmin, adminReady } from '../admin-auth-core.js';
 
 // Resolves true once signed in as the owner (immediately if already signed
 // in), or false if the user cancels the prompt.
 export async function ensureAdminSignedIn(actionLabel) {
-    await firstAuthState;
-    if (auth.currentUser && auth.currentUser.email === OWNER_EMAIL) return true;
+    await adminReady;
+    if (isSignedInAsAdmin()) return true;
 
     return new Promise(resolve => {
         const overlay = document.createElement('div');
@@ -60,7 +46,7 @@ export async function ensureAdminSignedIn(actionLabel) {
             errorEl.hidden = true;
             signInBtn.disabled = true;
             try {
-                const result = await signInWithPopup(auth, googleProvider);
+                const result = await signInAdmin();
                 if (result.user.email === OWNER_EMAIL) {
                     close(true);
                 } else {

@@ -4,16 +4,15 @@
 // must require request.auth.token.email == OWNER_EMAIL too. Without that
 // rule, this overlay is just a UI nicety, not actual privacy — anyone could
 // still read/write notes directly via the Firestore SDK.
-import { auth, googleProvider } from './firebase/firebase-config.js';
-import {
-    onAuthStateChanged,
-    signInWithPopup,
-    signOut
-} from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
-
-// Change this (and the matching Firestore rule) if you ever want to sign in
-// with a different Google account.
-const OWNER_EMAIL = "bladeinferior.hc@gmail.com";
+//
+// Built on top of the site-wide ../admin-auth-core.js (same module the
+// bottom-right widget on every other page uses) rather than its own
+// Firebase wiring, so signing in here also satisfies that widget (and
+// admin-gate.js's per-action prompts in quizhub) in the same browser, and
+// vice versa. Keeps its own richer page-level gate + session pill UI here
+// instead of the generic widget, since a whole-page lockout needs more than
+// a small sign-in button.
+import { signInAdmin, signOutAdmin, onAdminStateChange, getCurrentUser } from '../admin-auth-core.js';
 
 // Resolves once with the signed-in user, the first time the account
 // actually matches OWNER_EMAIL. Keeps listening after that so the gate
@@ -27,7 +26,7 @@ export function requireAdminAuth() {
         // Starts hidden — Firebase's persisted-session check is async, so
         // without this the gate would flash visible for a moment on every
         // load even when already signed in, before the first
-        // onAuthStateChanged callback below has a chance to hide it again.
+        // onAdminStateChange callback below has a chance to hide it again.
         gate.classList.add('hidden');
         gate.innerHTML = `
             <div class="admin-auth-box">
@@ -47,10 +46,10 @@ export function requireAdminAuth() {
             errorEl.classList.add('hidden');
             signInBtn.disabled = true;
             try {
-                if (auth.currentUser) {
-                    await signOut(auth);
+                if (getCurrentUser()) {
+                    await signOutAdmin();
                 } else {
-                    await signInWithPopup(auth, googleProvider);
+                    await signInAdmin();
                 }
             } catch (err) {
                 console.error(err);
@@ -61,9 +60,7 @@ export function requireAdminAuth() {
             }
         });
 
-        onAuthStateChanged(auth, user => {
-            const authorized = !!(user && user.email === OWNER_EMAIL);
-
+        onAdminStateChange((authorized, user) => {
             gate.classList.toggle('hidden', authorized);
 
             if (user && !authorized) {
@@ -98,7 +95,7 @@ function showSessionPill(user) {
         <span>Harry</span>
         <button type="button">Sign out</button>
     `;
-    pill.querySelector('button').addEventListener('click', () => signOut(auth));
+    pill.querySelector('button').addEventListener('click', () => signOutAdmin());
 
     document.body.appendChild(pill);
 }

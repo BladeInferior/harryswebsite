@@ -59,9 +59,12 @@ imageZoomOverlay.addEventListener("click", (e) => {
     }
 });
 
-function getExportAuthKey() {
-    return localStorage.getItem("exportAuthKey");
-}
+// Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
+// since this file is a plain <script>, not a module. Replaces the old
+// "paste a secret into localStorage via devtools" (exportAuthKey) approach
+// with just being signed in as the owner's Google account (bottom-right
+// widget from admin-auth.js), which works the same on any device.
+const adminAuthReady = import('../admin-auth-core.js');
 
 function getItemImagePath(name) {
     const base = name.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -746,15 +749,16 @@ document.getElementById("import-items").addEventListener("change", (e) => {
 document.getElementById("export-items").addEventListener("click", async () => {
     const data = JSON.stringify(items, null, 2);
     const snapshotData = JSON.stringify(items);
-    const authKey = getExportAuthKey();
+    const { getAdminIdToken } = await adminAuthReady;
+    const idToken = await getAdminIdToken();
 
-    if (authKey) {
+    if (idToken) {
         try {
             const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-Auth-Key": authKey
+                    "Authorization": `Bearer ${idToken}`
                 },
                 body: JSON.stringify({
                     filename: activeDeck.jsonFile,

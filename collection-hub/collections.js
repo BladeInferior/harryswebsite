@@ -239,18 +239,14 @@ modalImage.addEventListener("click", () => {
     imageZoomOverlay.classList.remove("hidden");
 });
 
-function getExportAuthKey() {
-    return localStorage.getItem("exportAuthKey");
-}
-
-function promptForAuthKey() {
-    const key = prompt("Enter your export auth key:");
-    if (key) {
-        localStorage.setItem("exportAuthKey", key);
-        alert("Key saved. This browser will now auto-export to GitHub.");
-    }
-    return key;
-}
+// Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
+// since this file is a plain <script>, not a module, so a top-level `import`
+// statement isn't available here. Replaces the old "paste a secret into
+// localStorage via devtools" (exportAuthKey) approach: admin status now
+// just follows whether you're signed in as the owner's Google account
+// (via the bottom-right widget from admin-auth.js), which works the same
+// on any device without copying a key around.
+const adminAuthReady = import('../admin-auth-core.js');
 
 function getItemImagePath(name) {
 
@@ -1681,15 +1677,16 @@ document.getElementById("export-items").addEventListener("click", async () => {
     // diffs against whatever string initUnsavedChangesSnapshot()/markSaved()
     // last stored, so they all have to serialize the same way.
     const snapshotData = JSON.stringify(items);
-    const authKey = getExportAuthKey();
+    const { getAdminIdToken } = await adminAuthReady;
+    const idToken = await getAdminIdToken();
 
-    if (authKey) {
+    if (idToken) {
         try {
             const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "X-Auth-Key": authKey
+                    "Authorization": `Bearer ${idToken}`
                 },
                 body: JSON.stringify({
                     filename: COLLECTION.jsonFile,
@@ -2081,11 +2078,16 @@ document.addEventListener("keydown", (e) => {
 if (document.body.classList.contains("completions-page")) {
 
     // Admin-only — same gate as the GitHub auto-export on the Export button,
-    // since only the site owner (the only one with an export auth key set)
-    // should be triggering GitHub API calls / rewriting item data.
+    // since only the site owner should be triggering GitHub API calls /
+    // rewriting item data. Reacts live (not just once at load) since the
+    // bottom-right widget can sign in/out without a page reload.
     const scanDlcBtn = document.getElementById("scan-dlc-btn");
-    if (scanDlcBtn && getExportAuthKey()) {
-        scanDlcBtn.classList.remove("hidden");
+    if (scanDlcBtn) {
+        adminAuthReady.then(({ onAdminStateChange }) => {
+            onAdminStateChange(isAdmin => {
+                scanDlcBtn.classList.toggle("hidden", !isAdmin);
+            });
+        });
     }
 
     scanDlcBtn?.addEventListener("click", async () => {
