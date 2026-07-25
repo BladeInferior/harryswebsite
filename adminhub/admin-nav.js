@@ -2,6 +2,13 @@
 // the shared navbar, then inject this section's sub-links before the
 // site-level link group (Collection Hub / Quiz Hub / Admin Hub / Github
 // Repo) so every page shares one nav instead of each page duplicating it.
+
+// Forces every page load to always reflect what's actually deployed rather
+// than a stale browser-cached copy — see ../sw-nocache.js.
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw-nocache.js').catch(err => console.error('Service worker registration failed:', err));
+}
+
 fetch('../navbar.html')
     .then(res => res.text())
     .then(data => {

@@ -3,6 +3,13 @@
 // before the site-level link group (Collection Hub / Quiz Hub / Github Repo)
 // so every page shares one nav instead of each page duplicating its own copy
 // of this script.
+
+// Forces every page load to always reflect what's actually deployed rather
+// than a stale browser-cached copy — see ../sw-nocache.js.
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('../sw-nocache.js').catch(err => console.error('Service worker registration failed:', err));
+}
+
 fetch('../navbar.html')
     .then(res => res.text())
     .then(data => {
