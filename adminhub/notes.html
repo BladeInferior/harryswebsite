@@ -61,6 +61,17 @@
 
 </main>
 
+<div id="delete-note-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h2>Delete note?</h2>
+        <p>This can't be undone.</p>
+        <div class="modal-buttons">
+            <button type="button" id="cancel-delete-note-btn" class="editor-toolbar-btn">Cancel</button>
+            <button type="button" id="confirm-delete-note-btn" class="btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
 <script type="module" src="notes.js"></script>
 <script src="../scroll-to-top.js"></script>
 </body>

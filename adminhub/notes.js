@@ -19,6 +19,9 @@ const titleInput = document.getElementById('note-title-input');
 const contentInput = document.getElementById('note-content-input');
 const addCheckboxBtn = document.getElementById('add-checkbox-btn');
 const deleteBtn = document.getElementById('delete-note-btn');
+const deleteNoteModal = document.getElementById('delete-note-modal');
+const cancelDeleteNoteBtn = document.getElementById('cancel-delete-note-btn');
+const confirmDeleteNoteBtn = document.getElementById('confirm-delete-note-btn');
 const saveStatusEl = document.getElementById('save-status');
 const editorPane = document.getElementById('editor-pane');
 const editorEmptyState = document.getElementById('editor-empty-state');
@@ -313,9 +316,23 @@ titleInput.addEventListener('input', scheduleSave);
 // contentInput's own children (each line) handle their own 'input' via
 // attachLineEvents() — there's no single editable region to listen on here.
 
-deleteBtn.addEventListener('click', async () => {
+deleteBtn.addEventListener('click', () => {
     if (!activeNoteId) return;
-    if (!confirm("Delete this note? This can't be undone.")) return;
+    deleteNoteModal.classList.remove('hidden');
+});
+
+cancelDeleteNoteBtn.addEventListener('click', () => {
+    deleteNoteModal.classList.add('hidden');
+});
+
+deleteNoteModal.addEventListener('click', e => {
+    if (e.target === deleteNoteModal) deleteNoteModal.classList.add('hidden');
+});
+
+confirmDeleteNoteBtn.addEventListener('click', async () => {
+    if (!activeNoteId) return;
+
+    deleteNoteModal.classList.add('hidden');
 
     clearTimeout(saveTimer);
     saveTimer = null;

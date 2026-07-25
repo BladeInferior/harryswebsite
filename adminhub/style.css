@@ -472,6 +472,45 @@ footer {
     color: white;
 }
 
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 6, 6, .75);
+    backdrop-filter: blur(4px);
+    padding: 20px;
+}
+
+.modal-box {
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    max-width: 340px;
+    width: 100%;
+}
+
+.modal-box h2 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.modal-box p {
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
 .editor-empty-state {
     display: flex;
     align-items: center;
