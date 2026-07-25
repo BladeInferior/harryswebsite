@@ -6,6 +6,19 @@
 export * from './admin-auth-core.js';
 import { onAdminStateChange, signInAdmin, signOutAdmin } from './admin-auth-core.js';
 
+// Matches each hub's existing navbar theme accent (see .site-nav.*-theme in
+// ../navbar.css) so the widget doesn't look like a foreign element bolted
+// onto the page — determined from the URL rather than waiting on the
+// navbar's own async fetch()-and-inject, which may not have finished (or
+// even started) by the time this widget first renders.
+function getPageAccent() {
+    const path = window.location.pathname;
+    if (path.includes('/collection-hub/')) return '#4ade80'; // collection-theme
+    if (path.includes('/quizhub/')) return '#c084fc';        // quiz-theme
+    if (path.includes('/adminhub/')) return '#f87171';       // admin-theme
+    return '#d4af37';                                        // home-theme
+}
+
 function mountWidget() {
 
     if (document.getElementById('admin-auth-widget')) return;
@@ -21,14 +34,14 @@ function mountWidget() {
             align-items: center;
             gap: 8px;
             font-family: Arial, sans-serif;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         #admin-auth-widget button {
             font-family: inherit;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 999px;
             padding: 8px 16px;
             border: 1px solid rgba(255, 255, 255, 0.25);
             background: rgba(20, 20, 20, 0.85);
@@ -39,7 +52,7 @@ function mountWidget() {
         }
 
         #admin-auth-widget button:hover:not(:disabled) {
-            border-color: #86efac;
+            border-color: var(--gaa-accent, #86efac);
             background: rgba(30, 30, 30, 0.9);
         }
 
@@ -51,36 +64,51 @@ function mountWidget() {
         #admin-auth-widget .gaa-pill {
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-radius: 20px;
+            gap: 10px;
+            border-radius: 999px;
             padding: 6px 8px 6px 14px;
             background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(134, 239, 172, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(6px);
-            color: #fff;
+            color: #bdbdbd;
         }
 
         #admin-auth-widget .gaa-pill.gaa-wrong-account {
-            border-color: rgba(248, 113, 113, 0.6);
-        }
-
-        #admin-auth-widget .gaa-pill span {
-            color: #86efac;
-            font-weight: bold;
+            border-color: rgba(248, 113, 113, 0.5);
         }
 
         #admin-auth-widget .gaa-pill.gaa-wrong-account span {
             color: #f87171;
-            font-weight: normal;
             max-width: 160px;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         #admin-auth-widget .gaa-pill button {
-            padding: 4px 10px;
+            padding: 5px 12px;
             font-size: 12px;
-            border-radius: 14px;
+            border-radius: 999px;
+            border-color: var(--gaa-accent, #86efac);
+            background: transparent;
+            color: var(--gaa-accent, #86efac);
+        }
+
+        #admin-auth-widget .gaa-pill button:hover:not(:disabled) {
+            background: var(--gaa-accent, #86efac);
+            color: #14161a;
+        }
+
+        /* Wrong-account state stays a universal warning red regardless of
+           page theme — unlike the signed-in-correctly state, this shouldn't
+           blend in, it should stand out as "something's wrong here". */
+        #admin-auth-widget .gaa-pill.gaa-wrong-account button {
+            border-color: #f87171;
+            color: #f87171;
+        }
+
+        #admin-auth-widget .gaa-pill.gaa-wrong-account button:hover:not(:disabled) {
+            background: #f87171;
+            color: #14161a;
         }
 
         #admin-auth-widget .gaa-error {
@@ -110,6 +138,7 @@ function mountWidget() {
     const widget = document.createElement('div');
     widget.id = 'admin-auth-widget';
     widget.style.position = 'fixed';
+    widget.style.setProperty('--gaa-accent', getPageAccent());
     document.body.appendChild(widget);
 
     function render(isAdmin, user) {
@@ -121,7 +150,7 @@ function mountWidget() {
             pill.className = 'gaa-pill';
 
             const label = document.createElement('span');
-            label.textContent = '✓ Harry';
+            label.textContent = 'Harry';
 
             const signOutBtn = document.createElement('button');
             signOutBtn.type = 'button';

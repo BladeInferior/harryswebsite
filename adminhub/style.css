@@ -373,11 +373,31 @@ footer {
     border-bottom-color: var(--accent);
 }
 
+.editor-toolbar {
+    display: flex;
+    gap: 8px;
+}
+
+.editor-toolbar-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.editor-toolbar-btn:hover {
+    border-color: var(--accent);
+    color: white;
+}
+
 .note-content-input {
     flex: 1;
-    resize: none;
+    overflow-y: auto;
     background: transparent;
-    border: none;
     color: white;
     font-size: 14px;
     line-height: 1.6;
@@ -385,8 +405,44 @@ footer {
     font-family: Arial, sans-serif;
 }
 
-.note-content-input:focus {
+.note-line {
+    padding: 2px 0;
     outline: none;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.note-line-text:only-child:empty:before {
+    content: 'Start typing…';
+    color: var(--secondary);
+    pointer-events: none;
+}
+
+.note-line-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.note-line-checkbox input[type="checkbox"] {
+    margin-top: 5px;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    accent-color: var(--accent);
+    cursor: pointer;
+}
+
+.note-line-checkbox span.note-line-text {
+    flex: 1;
+    outline: none;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.note-line-checkbox.checked span.note-line-text {
+    color: var(--secondary);
+    text-decoration: line-through;
 }
 
 .editor-footer {

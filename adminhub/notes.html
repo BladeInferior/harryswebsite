@@ -41,7 +41,11 @@
 
             <input type="text" id="note-title-input" class="note-title-input" placeholder="Untitled">
 
-            <textarea id="note-content-input" class="note-content-input" placeholder="Start typing…"></textarea>
+            <div class="editor-toolbar">
+                <button type="button" id="add-checkbox-btn" class="editor-toolbar-btn">☑ Add Checkbox</button>
+            </div>
+
+            <div id="note-content-input" class="note-content-input"></div>
 
             <div class="editor-footer">
                 <span id="save-status" class="save-status"></span>
