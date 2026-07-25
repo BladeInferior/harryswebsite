@@ -1227,6 +1227,22 @@ h1 {
     color: var(--accent);
 }
 
+#unnamed-dlc-filter {
+    padding: 6px 12px;
+    background: #2d2d2d;
+    border: 1px solid #555;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#unnamed-dlc-filter.active {
+    background: rgba(var(--accent-rgb), 0.2);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
 #toggle-front-image {
     padding: 6px 12px;
     background: #2d2d2d;
@@ -1469,6 +1485,39 @@ h1 {
 
 .dlc-thumb:hover {
     transform: scale(1.05);
+}
+
+/* auto-linked DLC image not yet given a proper name — flags it on the card
+   grid so it's visible without opening the modal */
+.dlc-thumb-unnamed {
+    outline: 2px dashed #e0a530;
+    outline-offset: 2px;
+}
+
+.dlc-thumb-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.dlc-thumb-wrap.dlc-unnamed img {
+    outline: 2px dashed #e0a530;
+    outline-offset: 2px;
+}
+
+.dlc-name-btn {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid #e0a530;
+    background: rgba(224, 165, 48, 0.15);
+    color: #e0a530;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.dlc-name-btn:hover {
+    background: rgba(224, 165, 48, 0.3);
 }
 
 #modal-dlcs img {

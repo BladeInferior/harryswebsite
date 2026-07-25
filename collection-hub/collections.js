@@ -38,6 +38,7 @@ let currentImages = [];
 // collection-specific filter state
 let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (mutually exclusive)
 let filterHasDlc = null; // for completions: true = only show items with DLC tag
+let filterUnnamedDlc = false; // for completions: true = only show items with an auto-linked, not-yet-named DLC
 let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
 let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
 let filterSigned = false; // for popfigures: true = only show items tagged "signed"
@@ -67,6 +68,11 @@ function getVisibleTabItems() {
 // "Missing Photos" button only ever appears when it would actually do
 // something.
 let missingImageItems = new Set();
+
+// completions: items with at least one auto-linked DLC (see scanForNewDlcImages)
+// that hasn't been given a proper display name yet — backs the "Unnamed DLC"
+// filter button, which only appears while this set is non-empty.
+let unnamedDlcItems = new Set();
 
 // for popfigures: primary sort key, tie-broken by the remaining keys in
 // POPFIGURE_SORT_PRIORITY order (franchise, then number, then alphabetical)
@@ -131,6 +137,12 @@ function deactivateOtherTopButtons(exceptBtn) {
         filterMissingImage = false;
         missingPhotosBtn.classList.remove("active");
     }
+
+    const unnamedDlcBtn = document.getElementById("unnamed-dlc-filter");
+    if (unnamedDlcBtn && unnamedDlcBtn !== exceptBtn && filterUnnamedDlc) {
+        filterUnnamedDlc = false;
+        unnamedDlcBtn.classList.remove("active");
+    }
 }
 
 const imageZoomOverlay = document.getElementById("image-zoom-overlay");
@@ -191,6 +203,11 @@ Promise.all([
     // create page-specific visual filters (sleeves / completions)
     createCollectionFilters();
 
+    // Synchronous — only reads local item state, unlike detectMissingImages
+    // below — so the button can join the sidebar in this same pass.
+    detectUnnamedDlcs();
+    if (unnamedDlcItems.size > 0) addUnnamedDlcButton();
+
     // Runs in the background rather than being awaited above — the
     // untagged-filter/popfigure-controls relocation above needs to happen
     // immediately (otherwise they sit visible in their default in-flow
@@ -236,6 +253,24 @@ function getItemImagePath(name) {
     }
 
     return { base, tryFormats };
+}
+
+// A completions item's `dlcs` entries are either a plain string (the
+// original, manually-added format — the string doubles as both the display
+// name and the image lookup key) or an object (added by
+// scanForNewDlcImages(): {name, image, verified}), where `image` is the
+// actual normalized filename so a later display-name rename can't break the
+// image lookup, and `verified` is false until the user gives it a real name.
+function dlcDisplayName(entry) {
+    return typeof entry === "string" ? entry : entry.name;
+}
+
+function dlcImageKey(entry) {
+    return typeof entry === "string" ? entry : (entry.image || entry.name);
+}
+
+function isDlcUnnamed(entry) {
+    return typeof entry === "object" && entry !== null && entry.verified === false;
 }
 
 // Swaps a broken <img> for a text label reading "Image not downloaded" —
@@ -382,6 +417,142 @@ function addMissingPhotosButton() {
 
     const container = document.getElementById("game-filter-container");
     if (container) container.insertBefore(missingPhotosBtn, container.firstChild);
+}
+
+// completions only — recomputes which items have an unnamed DLC. Synchronous
+// (unlike detectMissingImages) since it only reads local item state.
+function detectUnnamedDlcs() {
+    if (COLLECTION.name !== "completions") return;
+
+    unnamedDlcItems = new Set(
+        items.filter(item => (item.dlcs || []).some(isDlcUnnamed))
+    );
+}
+
+// Mirrors addMissingPhotosButton()'s join-the-top-row/only-show-if-nonempty
+// pattern, but is also called after a scan or a rename (not just at page
+// load) since unnamedDlcItems can change during the session.
+function addUnnamedDlcButton() {
+
+    if (document.getElementById("unnamed-dlc-filter")) return;
+    if (unnamedDlcItems.size === 0) return;
+
+    const unnamedDlcBtn = document.createElement("button");
+    unnamedDlcBtn.id = "unnamed-dlc-filter";
+    unnamedDlcBtn.textContent = "Unnamed DLC";
+
+    unnamedDlcBtn.addEventListener("click", () => {
+
+        if (!unnamedDlcBtn.classList.contains("active")) deactivateOtherTopButtons(unnamedDlcBtn);
+
+        filterUnnamedDlc = unnamedDlcBtn.classList.toggle("active");
+        filterItems(searchInput.value);
+    });
+
+    const missingPhotosBtn = document.getElementById("missing-photos-filter");
+    if (missingPhotosBtn) {
+        missingPhotosBtn.insertAdjacentElement("afterend", unnamedDlcBtn);
+        return;
+    }
+
+    const untaggedFilter = document.getElementById("untagged-filter");
+    if (untaggedFilter) {
+        untaggedFilter.insertAdjacentElement("afterend", unnamedDlcBtn);
+        return;
+    }
+
+    const container = document.getElementById("game-filter-container");
+    if (container) container.insertBefore(unnamedDlcBtn, container.firstChild);
+}
+
+function removeUnnamedDlcButton() {
+    const btn = document.getElementById("unnamed-dlc-filter");
+    if (btn) btn.remove();
+    filterUnnamedDlc = false;
+}
+
+// Re-syncs the Unnamed DLC filter button (adds/removes it as needed) after
+// something changed which items have an unnamed DLC — a scan finding new
+// ones, or the user naming one via the modal.
+function refreshUnnamedDlcFilter() {
+
+    detectUnnamedDlcs();
+
+    if (unnamedDlcItems.size > 0) {
+        addUnnamedDlcButton();
+    } else {
+        removeUnnamedDlcButton();
+        filterItems(searchInput.value);
+    }
+}
+
+// completions only — checks the public GitHub listing of the completions
+// image folder for files not yet linked as a base game image or DLC on any
+// item, and auto-links any it finds. Files are matched to a game purely by
+// their leading number (the same "NN. Title" numbering already used
+// site-wide), so a new DLC image just needs to be dropped in the repo folder
+// with that game's number prefix — no manual "Add DLC" step required. Since
+// a filename can't be reliably turned back into a proper display name
+// (capitalization/spacing/apostrophes are lost), newly-linked entries start
+// out flagged unnamed/unverified until the user renames them in the modal.
+async function scanForNewDlcImages() {
+
+    const res = await fetch("https://api.github.com/repos/BladeInferior/harryswebsite/contents/collection-hub/completions");
+
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+
+    const files = await res.json();
+
+    const imageExtRe = /\.(jpe?g|png|webp)$/i;
+
+    const itemsByNumber = new Map();
+    items.forEach(item => {
+        const match = String(item[COLLECTION.fields.title] || "").match(/^(\d+)\./);
+        if (match) itemsByNumber.set(match[1], item);
+    });
+
+    let addedCount = 0;
+
+    files.forEach(file => {
+
+        if (file.type !== "file" || !imageExtRe.test(file.name)) return;
+
+        const base = file.name.replace(imageExtRe, "").toLowerCase();
+        const numberMatch = base.match(/^(\d+)/);
+        if (!numberMatch) return;
+
+        const item = itemsByNumber.get(numberMatch[1]);
+        if (!item) return;
+
+        // Skip the item's own base-game image.
+        const ownBase = getItemImagePath(item[COLLECTION.fields.title]).base;
+        if (base === ownBase) return;
+
+        item.dlcs = item.dlcs || [];
+
+        const alreadyLinked = item.dlcs.some(entry =>
+            getItemImagePath(dlcImageKey(entry)).base === base
+        );
+        if (alreadyLinked) return;
+
+        const remainder = base.slice(numberMatch[1].length);
+
+        item.dlcs.push({
+            name: `${numberMatch[1]}. ${remainder}`,
+            image: base,
+            verified: false
+        });
+
+        addedCount++;
+    });
+
+    if (addedCount > 0) {
+        saveItems();
+        renderItems();
+        refreshUnnamedDlcFilter();
+    }
+
+    return addedCount;
 }
 
 function createCollectionFilters() {
@@ -614,6 +785,7 @@ function createCollectionFilters() {
         selectedFranchise = null;
         filterSigned = false;
         filterMissingImage = false;
+        filterUnnamedDlc = false;
         useUnboxedImage = false;
 
         untaggedBtn.classList.remove("active");
@@ -637,6 +809,9 @@ function createCollectionFilters() {
 
         const missingPhotosBtn = document.getElementById("missing-photos-filter");
         if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+
+        const unnamedDlcBtn = document.getElementById("unnamed-dlc-filter");
+        if (unnamedDlcBtn) unnamedDlcBtn.classList.remove("active");
 
         const toggleBtn = document.getElementById("toggle-front-image");
         if (toggleBtn) {
@@ -799,20 +974,15 @@ function renderItems() {
 
         const dlcs = item.dlcs || [];
 
-        dlcs.forEach(dlcName => {
-
-            const dlcItem = items.find(i =>
-                i[COLLECTION.fields.title] === dlcName
-            );
-
-            if (!dlcItem) return;
+        dlcs.forEach(entry => {
 
             const dlcImg = document.createElement("img");
             dlcImg.loading = "lazy";
 
-            setItemImage(dlcImg, dlcItem[COLLECTION.fields.title]);
+            setItemImage(dlcImg, dlcImageKey(entry));
 
             dlcImg.classList.add("dlc-thumb");
+            if (isDlcUnnamed(entry)) dlcImg.classList.add("dlc-thumb-unnamed");
 
             dlcContainer.appendChild(dlcImg);
         });
@@ -1032,11 +1202,14 @@ function openModal(index) {
 
         dlcContainer.innerHTML = "";
 
-        (item.dlcs || []).forEach(name => {
+        (item.dlcs || []).forEach(entry => {
+
+            const wrap = document.createElement("div");
+            wrap.classList.add("dlc-thumb-wrap");
 
             const img = document.createElement("img");
 
-            setItemImage(img, name);
+            setItemImage(img, dlcImageKey(entry));
 
             img.addEventListener("click", () => {
 
@@ -1044,7 +1217,38 @@ function openModal(index) {
                 imageZoomOverlay.classList.remove("hidden");
             });
 
-            dlcContainer.appendChild(img);
+            wrap.appendChild(img);
+
+            if (isDlcUnnamed(entry)) {
+
+                wrap.classList.add("dlc-unnamed");
+
+                const nameBtn = document.createElement("button");
+                nameBtn.classList.add("dlc-name-btn");
+                nameBtn.textContent = "Name this DLC";
+
+                nameBtn.addEventListener("click", (e) => {
+
+                    e.stopPropagation();
+
+                    const currentGuess = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
+                    const newName = prompt("Enter a proper name for this DLC:", currentGuess);
+
+                    if (!newName || !newName.trim()) return;
+
+                    const numberPrefix = (item[COLLECTION.fields.title].match(/^(\d+)\./) || [])[1];
+                    entry.name = numberPrefix ? `${numberPrefix}. ${newName.trim()}` : newName.trim();
+                    entry.verified = true;
+
+                    saveItems();
+                    refreshUnnamedDlcFilter();
+                    openModal(index);
+                });
+
+                wrap.appendChild(nameBtn);
+            }
+
+            dlcContainer.appendChild(wrap);
         });
     }
 
@@ -1711,6 +1915,9 @@ function filterItems(query) {
         // Missing Photos: only show items whose image failed to load
         if (filterMissingImage && !missingImageItems.has(realItem)) match2 = false;
 
+        // Unnamed DLC: only show items with an auto-linked DLC still needing a name
+        if (filterUnnamedDlc && !unnamedDlcItems.has(realItem)) match2 = false;
+
         card.style.display = match2 ? "block" : "none";
     });
 
@@ -1738,7 +1945,8 @@ function hasActiveFilters() {
         selectedVariant !== null ||
         selectedFranchise !== null ||
         filterSigned ||
-        filterMissingImage
+        filterMissingImage ||
+        filterUnnamedDlc
     );
 }
 
@@ -1845,6 +2053,35 @@ document.addEventListener("keydown", (e) => {
 
 if (document.body.classList.contains("completions-page")) {
 
+    // Admin-only — same gate as the GitHub auto-export on the Export button,
+    // since only the site owner (the only one with an export auth key set)
+    // should be triggering GitHub API calls / rewriting item data.
+    const scanDlcBtn = document.getElementById("scan-dlc-btn");
+    if (scanDlcBtn && getExportAuthKey()) {
+        scanDlcBtn.classList.remove("hidden");
+    }
+
+    scanDlcBtn?.addEventListener("click", async () => {
+
+        scanDlcBtn.disabled = true;
+        scanDlcBtn.textContent = "Scanning...";
+
+        try {
+            const added = await scanForNewDlcImages();
+
+            alert(added > 0
+                ? `Linked ${added} new DLC image(s). Hit Export to push the update to GitHub.`
+                : "No new DLC images found.");
+
+        } catch (err) {
+            console.error("DLC scan failed:", err);
+            alert("Scan failed — GitHub may be unreachable or rate-limited. Check console for details.");
+        } finally {
+            scanDlcBtn.disabled = false;
+            scanDlcBtn.textContent = "Scan for DLCs";
+        }
+    });
+
     const addDlcBtn = document.getElementById("add-dlc-btn");
     const dlcModal = document.getElementById("add-dlc-modal");
 
@@ -1938,7 +2175,9 @@ if (document.body.classList.contains("completions-page")) {
         deleteDlcList.innerHTML = "";
         selectedDlcIndex = null;
 
-        (currentDeleteItem.dlcs || []).forEach((name, i) => {
+        (currentDeleteItem.dlcs || []).forEach((entry, i) => {
+
+            const name = dlcDisplayName(entry);
 
             const btn = document.createElement("div");
             btn.textContent = name;
@@ -1980,6 +2219,7 @@ if (document.body.classList.contains("completions-page")) {
         item.dlcs.splice(selectedDlcIndex, 1);
 
         saveItems();
+        refreshUnnamedDlcFilter();
 
         deleteDlcModal.classList.add("hidden");
 

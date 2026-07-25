@@ -510,11 +510,11 @@
     "wonderTradeDex": true,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -2008,11 +2008,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -5083,7 +5083,7 @@
   },
   {
     "name": "vespiquen",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
     "pogoDex": true,
@@ -5184,7 +5184,7 @@
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
@@ -5447,7 +5447,7 @@
   },
   {
     "name": "spiritomb",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
     "pogoDex": true,
@@ -5839,7 +5839,7 @@
   },
   {
     "name": "leafeon",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
     "pogoDex": true,
@@ -5898,7 +5898,7 @@
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
@@ -5998,11 +5998,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -6012,11 +6012,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -6026,11 +6026,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -8191,7 +8191,7 @@
   },
   {
     "name": "cobalion",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
     "pogoDex": true,
@@ -8205,7 +8205,7 @@
   },
   {
     "name": "terrakion",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
     "pogoDex": true,
@@ -8219,7 +8219,7 @@
   },
   {
     "name": "virizion",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
     "pogoDex": true,
@@ -8294,11 +8294,11 @@
     "wonderTradeDex": false,
     "pogoDex": true,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -10506,11 +10506,11 @@
     "wonderTradeDex": false,
     "pogoDex": false,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -10980,7 +10980,7 @@
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
@@ -10994,7 +10994,7 @@
     "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
@@ -11363,7 +11363,7 @@
     "shinyDex": true,
     "shinyDexData": {
       "correctStage": true,
-      "originalRegion": false,
+      "originalRegion": true,
       "luxuryBall": true
     }
   },
@@ -12021,7 +12021,7 @@
     "shinyDex": true,
     "shinyDexData": {
       "correctStage": true,
-      "originalRegion": false,
+      "originalRegion": true,
       "luxuryBall": true
     }
   },
@@ -12097,7 +12097,7 @@
   },
   {
     "name": "galarianzapdos",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
     "pogoDex": false,
@@ -12111,7 +12111,7 @@
   },
   {
     "name": "galarianmoltres",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
     "pogoDex": false,
@@ -12125,7 +12125,7 @@
   },
   {
     "name": "glastrier",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
     "pogoDex": false,
@@ -14872,7 +14872,7 @@
     "masterDex": false,
     "tradeDex": true,
     "wonderTradeDex": false,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
@@ -15135,7 +15135,7 @@
   },
   {
     "name": "galarianarticuno",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
     "pogoDex": false,
