@@ -30,6 +30,14 @@ const dlcError = document.getElementById("dlc-error");
 const deleteDlcModal = document.getElementById("delete-dlc-modal");
 const deleteDlcList = document.getElementById("delete-dlc-list");
 
+// Populated by openModal()'s "Name this DLC" button, read by the
+// save-rename-dlc handler set up down in the completions-page block — has
+// to live up here at top level (not inside that block) so both can reach it.
+const renameDlcModal = document.getElementById("rename-dlc-modal");
+const renameDlcImage = document.getElementById("rename-dlc-image");
+const renameDlcInput = document.getElementById("rename-dlc-input");
+let renameDlcContext = null; // { entry, item, index }
+
 let selectedDlcIndex = null;
 let currentDeleteItem = null;
 
@@ -1232,27 +1240,14 @@ function openModal(index) {
 
                     e.stopPropagation();
 
-                    // prompt() blocks JS execution but not rendering, so the
-                    // zoomed image is already on screen behind it by the
-                    // time the dialog actually appears — easier to make out
-                    // than the 140px thumbnail when picking a name for it.
-                    zoomImage.src = img.src;
-                    imageZoomOverlay.classList.remove("hidden");
+                    renameDlcContext = { entry, item, index };
 
-                    const currentGuess = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
-                    const newName = prompt("Enter a proper name for this DLC:", currentGuess);
+                    renameDlcImage.src = img.src;
+                    renameDlcInput.value = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
 
-                    imageZoomOverlay.classList.add("hidden");
-
-                    if (!newName || !newName.trim()) return;
-
-                    const numberPrefix = (item[COLLECTION.fields.title].match(/^(\d+)\./) || [])[1];
-                    entry.name = numberPrefix ? `${numberPrefix}. ${newName.trim()}` : newName.trim();
-                    entry.verified = true;
-
-                    saveItems();
-                    refreshUnnamedDlcFilter();
-                    openModal(index);
+                    renameDlcModal.classList.remove("hidden");
+                    renameDlcInput.focus();
+                    renameDlcInput.select();
                 });
 
                 wrap.appendChild(nameBtn);
@@ -2111,6 +2106,54 @@ if (document.body.classList.contains("completions-page")) {
         } finally {
             scanDlcBtn.disabled = false;
             scanDlcBtn.textContent = "Scan for DLCs";
+        }
+    });
+
+    // Renaming an unnamed (scanned) DLC — a custom modal rather than
+    // prompt(), since a native prompt() blocks before the browser is
+    // guaranteed to have painted the zoomed image behind it (Chrome/Firefox
+    // don't promise a repaint just because the mutation happened first in
+    // the same tick), so the "enlarge, then let me type the name" sequence
+    // wasn't actually reliable. Everything here is normal DOM, so the image
+    // is already visible by the time the input is usable.
+    // (renameDlcModal/Image/Input/Context are declared at top-of-file scope
+    // — openModal()'s "Name this DLC" button, defined earlier in this file,
+    // needs to reach them too.)
+    function closeRenameDlcModal() {
+        renameDlcModal.classList.add("hidden");
+        renameDlcContext = null;
+    }
+
+    document.getElementById("save-rename-dlc").addEventListener("click", () => {
+
+        if (!renameDlcContext) return;
+
+        const newName = renameDlcInput.value.trim();
+        if (!newName) return;
+
+        const { entry, item, index } = renameDlcContext;
+
+        const numberPrefix = (item[COLLECTION.fields.title].match(/^(\d+)\./) || [])[1];
+        entry.name = numberPrefix ? `${numberPrefix}. ${newName}` : newName;
+        entry.verified = true;
+
+        saveItems();
+        refreshUnnamedDlcFilter();
+
+        closeRenameDlcModal();
+        openModal(index);
+    });
+
+    document.getElementById("cancel-rename-dlc").addEventListener("click", closeRenameDlcModal);
+
+    renameDlcModal.addEventListener("click", (e) => {
+        if (e.target === renameDlcModal) closeRenameDlcModal();
+    });
+
+    renameDlcInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            document.getElementById("save-rename-dlc").click();
         }
     });
 

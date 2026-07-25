@@ -1612,7 +1612,30 @@ body.page-mode #page-controls {
 
     background: rgba(0, 0, 0, 0.7);
 
-    z-index: 9999; 
+    z-index: 9999;
+}
+
+#rename-dlc-modal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.7);
+
+    z-index: 9999;
+}
+
+#rename-dlc-image {
+    width: 100%;
+    max-width: 320px;
+    max-height: 50vh;
+    object-fit: contain;
+
+    align-self: center;
+    border-radius: 8px;
 }
 
 #dlc-error {
@@ -1631,22 +1654,14 @@ body.page-mode #page-controls {
 .completions-page #modal-dlcs {
     grid-column: 1 / -1;
 
-    /* flex-wrap rather than a fixed 2-column grid — a grid leaves a visible
-       empty cell on the last row whenever the DLC count is odd, since each
-       item still claims a column slot even with nothing beside it. Wrapping
-       flex items just center whatever's left on the last row instead. */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
 
     margin-top: 6px;
 
     width: 100%;
-}
-
-.completions-page #modal-dlcs .dlc-thumb-wrap {
-    width: 140px;
+    justify-items: center;
 }
 
 .dlc-delete-btn {
