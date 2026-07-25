@@ -656,6 +656,8 @@ document.getElementById("save-item").addEventListener("click", () => {
 
     delete addModal.dataset.editIndex;
 
+    if (typeof markDirty === "function") markDirty();
+
     renderItems();
     addModal.classList.add("hidden");
 });
@@ -678,6 +680,7 @@ document.getElementById("delete-item").addEventListener("click", () => {
     if (index === undefined) return;
 
     items.splice(index, 1);
+    if (typeof markDirty === "function") markDirty();
     renderItems();
     modalOverlay.classList.add("hidden");
 });
@@ -720,6 +723,7 @@ document.getElementById("import-items").addEventListener("change", (e) => {
             }
 
             items = importedItems;
+            if (typeof markDirty === "function") markDirty();
             renderItems();
 
             alert(`Imported ${items.length} items`);
@@ -753,6 +757,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
             const result = await res.json();
 
             if (result.verified && result.committed) {
+                if (typeof markSaved === "function") markSaved();
                 alert(`✅ ${activeDeck.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -777,6 +782,8 @@ document.getElementById("export-items").addEventListener("click", async () => {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    if (typeof markSaved === "function") markSaved();
 });
 
 // =========================

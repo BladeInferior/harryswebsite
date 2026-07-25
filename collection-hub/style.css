@@ -439,6 +439,26 @@ h1 {
     display: flex;
     align-items: center;
     gap: 8px;
+
+    cursor: pointer;
+    padding: 4px 6px;
+    margin: -4px -6px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+}
+
+.dex-key-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.dex-key-item[data-key-color="blue"].active {
+    background: rgba(var(--accent-2-rgb), 0.18);
+    box-shadow: inset 0 0 0 1px var(--accent-2);
+}
+
+.dex-key-item[data-key-color="green"].active {
+    background: rgba(var(--accent-rgb), 0.18);
+    box-shadow: inset 0 0 0 1px var(--accent);
 }
 
 .dex-key-swatch {
@@ -913,6 +933,50 @@ body.page-mode #page-controls {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+#unsaved-changes-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    z-index: 5000;
+}
+
+#unsaved-changes-overlay .unsaved-changes-box {
+    background: #2d2d2d;
+    padding: 20px;
+    border-radius: 12px;
+
+    width: 320px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#unsaved-changes-overlay h3 {
+    margin: 0;
+    color: white;
+}
+
+#unsaved-changes-overlay p {
+    margin: 0;
+    color: #ccc;
+    font-size: 14px;
+}
+
+#unsaved-changes-overlay .modal-buttons button.danger {
+    border: 1px solid #e74c3c;
+    color: #e74c3c;
+}
+
+#unsaved-changes-overlay .modal-buttons button.danger:hover {
+    background: rgba(231, 76, 60, 0.15);
 }
 
 .add-item-box input {

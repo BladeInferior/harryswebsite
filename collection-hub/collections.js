@@ -892,6 +892,7 @@ function getCurrentPageSize() {
 // =========================
 function saveItems() {
     localStorage.setItem(COLLECTION.storageKey, JSON.stringify(items));
+    if (typeof markDirty === "function") markDirty();
     updateModeUI();
 }
 
@@ -1676,6 +1677,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
             const result = await res.json();
 
             if (result.verified && result.committed) {
+                if (typeof markSaved === "function") markSaved();
                 alert(`✅ ${COLLECTION.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -1702,6 +1704,8 @@ document.getElementById("export-items").addEventListener("click", async () => {
 
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    if (typeof markSaved === "function") markSaved();
 });
 
 /* earlier filterItems placeholder — implementation below */

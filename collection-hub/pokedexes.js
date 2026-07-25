@@ -12,6 +12,7 @@ let pageMode = false;
 let selectedGeneration = null;
 let tagFilters = {};
 let pokemonCountLabel = null;
+let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #dex-key swatch
 
 // Same key as collections.js/cards.js — localStorage is shared across the
 // whole site's origin, so a key set on any of those pages is already here.
@@ -31,6 +32,7 @@ const dexTypes = [
 
 function saveData() {
     localStorage.setItem("dexData", JSON.stringify(savedDexData));
+    if (typeof markDirty === "function") markDirty();
     updateProgress();
     updateCardHighlights();
 }
@@ -414,7 +416,15 @@ function applyFilters() {
             return missingDexFilter === true ? !hasIt : hasIt;
         })();
 
-        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing) {
+        // #dex-key swatch filter: only pokemon at that exact completion tier
+        const matchesCompletion = (() => {
+
+            if (selectedCompletionFilter === null) return true;
+
+            return getCompletionColor(name) === selectedCompletionFilter;
+        })();
+
+        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
@@ -757,52 +767,39 @@ function updateProgress() {
     });
 }
 
+// null | "blue" (all 5 dexes) | "green" (all 5 dexes + all shiny variants) —
+// shared by updateCardHighlights() (drives the card border colour) and
+// applyFilters()'s completion filter (driven by clicking a #dex-key swatch),
+// so the two can never drift out of sync with each other.
+function getCompletionColor(name) {
+
+    const key = normalizeName(name);
+    const data = savedDexData[key] || {};
+
+    const master = !!data.masterDex;
+    const trade = !!data.tradeDex;
+    const wonder = !!data.wonderTradeDex;
+    const pogo = !!data.pogoDex;
+    const shinyEnabled = data.shinyDex === true;
+
+    const correctStage = !!data.shinyDexData?.correctStage;
+    const originalRegion = !!data.shinyDexData?.originalRegion;
+    const luxuryBall = !!data.shinyDexData?.luxuryBall;
+
+    const mainComplete = master && trade && wonder && pogo && shinyEnabled;
+    const fullComplete = mainComplete && correctStage && originalRegion && luxuryBall;
+
+    if (fullComplete) return "green";
+    if (mainComplete) return "blue";
+    return null;
+}
+
 function updateCardHighlights() {
 
     cardMap.forEach((card, name) => {
 
         const key = normalizeName(name);
         const data = savedDexData[key] || {};
-
-        // -----------------------------
-        // MAIN DEXES
-        // -----------------------------
-        const master = !!data.masterDex;
-        const trade = !!data.tradeDex;
-        const wonder = !!data.wonderTradeDex;
-        const pogo = !!data.pogoDex;
-        const shinyEnabled = data.shinyDex === true;
-
-        if (!shinyEnabled) {
-            // treat all variants as false automatically
-        }
-
-        const shiny = {
-            correctStage: !!data.shinyDexData?.correctStage,
-            originalRegion: !!data.shinyDexData?.originalRegion,
-            luxuryBall: !!data.shinyDexData?.luxuryBall
-        };
-
-        const correctStage = shiny.correctStage;
-        const originalRegion = shiny.originalRegion;
-        const luxuryBall = shiny.luxuryBall;
-
-        // -----------------------------
-        // CHECK STATES
-        // -----------------------------
-
-        const mainComplete =
-            master &&
-            trade &&
-            wonder &&
-            pogo &&
-            shinyEnabled;
-
-        const fullComplete =
-            mainComplete &&
-            correctStage &&
-            originalRegion &&
-            luxuryBall;
 
         // -----------------------------
         // RESET CLASSES
@@ -830,20 +827,8 @@ function updateCardHighlights() {
             return;
         }
 
-        // -----------------------------
-        // GREEN (ALL COMPLETE INCLUDING VARIANTS)
-        // -----------------------------
-        if (fullComplete) {
-            card.classList.add("complete-green");
-            return;
-        }
-
-        // -----------------------------
-        // BLUE (MAIN COMPLETE ONLY)
-        // -----------------------------
-        if (mainComplete) {
-            card.classList.add("complete-blue");
-        }
+        const color = getCompletionColor(name);
+        if (color) card.classList.add(`complete-${color}`);
     });
 }
 
@@ -1118,6 +1103,7 @@ function createFilterButtons() {
         tagFilters = {};
         searchInput.value = "";
         missingDexFilter = null;
+        selectedCompletionFilter = null;
 
         activeDexEdit = null;
         shinyEditModeFlag = false;
@@ -1127,6 +1113,10 @@ function createFilterButtons() {
 
         boxContainer.classList.remove("shiny-edit-layout");
 
+        document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
+            el.classList.remove("active");
+        });
+
         applyFilters();
         updateGameButtonHighlight();
         updateGenerationButtonHighlight();
@@ -1134,7 +1124,7 @@ function createFilterButtons() {
         updateMissingButtonHighlight();
         updateCardHighlights();
         updateProgress();
-        updateModeUI(); 
+        updateModeUI();
     });
 
     container.appendChild(resetBtn);
@@ -1160,6 +1150,7 @@ function updatePokemonCount() {
         selectedGeneration !== null ||
         Object.keys(tagFilters).length > 0 ||
         missingDexFilter !== null ||
+        selectedCompletionFilter !== null ||
         searchInput.value.trim() !== ""
     );
 
@@ -1224,6 +1215,26 @@ function updateGenerationButtonHighlight() {
             );
         });
 }
+
+// #dex-key swatches double as filter toggles — click blue/green to show only
+// pokemon at that completion tier (see getCompletionColor()). Mutually
+// exclusive: a pokemon can only ever be one or the other, so clicking the
+// other swap swaps rather than stacking, and clicking the active one clears it.
+document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(item => {
+
+    item.addEventListener("click", () => {
+
+        const color = item.dataset.keyColor;
+        selectedCompletionFilter = selectedCompletionFilter === color ? null : color;
+
+        document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
+            el.classList.toggle("active", el.dataset.keyColor === selectedCompletionFilter);
+        });
+
+        applyFilters();
+        if (pageMode) applyPagination();
+    });
+});
 
 document.getElementById("page-mode").addEventListener("click", () => {
 
@@ -1379,6 +1390,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             const result = await res.json();
 
             if (result.verified && result.committed) {
+                if (typeof markSaved === "function") markSaved();
                 alert("✅ pokedex-backup.json committed to GitHub automatically.");
                 return;
             }
@@ -1405,6 +1417,8 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
 
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+    if (typeof markSaved === "function") markSaved();
 });
 
 document.getElementById("import-button").addEventListener("click", () => {
