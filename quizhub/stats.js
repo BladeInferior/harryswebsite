@@ -460,6 +460,30 @@ let pendingMerge = null;
 if (isAdmin) {
     adminTabBtn.hidden = false;
     loadAdminPlayerList();
+    loadAdminQuizResultsList();
+}
+
+// Three tools sharing the one Admin tab (Merge / Delete Players / Delete
+// Quiz Results) — same sub-tab pattern as the page's top-level tabs, just
+// scoped to '.admin-subtab-btn'/'.admin-subpanel' instead of '.tab-btn'.
+const adminSubtabButtons = document.querySelectorAll('.admin-subtab-btn');
+const adminSubpanels = {
+    merge: document.getElementById('admin-sub-merge'),
+    'delete-players': document.getElementById('admin-sub-delete-players'),
+    'delete-results': document.getElementById('admin-sub-delete-results')
+};
+
+adminSubtabButtons.forEach(btn => {
+    btn.addEventListener('click', () => switchAdminSubtab(btn.dataset.subtab));
+});
+
+switchAdminSubtab('merge');
+
+function switchAdminSubtab(subtab) {
+    adminSubtabButtons.forEach(btn => btn.classList.toggle('admin-subtab-active', btn.dataset.subtab === subtab));
+    Object.entries(adminSubpanels).forEach(([key, panel]) => {
+        panel.hidden = key !== subtab;
+    });
 }
 
 async function loadAdminPlayerList() {
@@ -469,6 +493,7 @@ async function loadAdminPlayerList() {
         .sort((a, b) => a.name.localeCompare(b.name));
 
     renderAdminPlayerControls();
+    renderDeletePlayersList();
 }
 
 function renderAdminPlayerControls() {
@@ -678,6 +703,325 @@ async function performPlayerMerge({ canonicalName, canonicalNameKey, canonicalEx
                 updateDoc(docSnap.ref, { nameKey: canonicalNameKey, playerName: canonicalName }));
         }
     }));
+
+    if (failures.length) {
+        throw new Error(`${failures.length} write(s) failed:\n${failures.join('\n')}`);
+    }
+}
+
+// =========================
+// ADMIN: DELETE PLAYERS — removes a leaderboard entry outright. Doesn't
+// touch quizResults history (see Delete Quiz Results for that) — this is
+// just clearing the aggregated row, e.g. someone who registered once by
+// mistake, or a name that shouldn't be on the board going forward.
+// =========================
+const adminDeletePlayersError = document.getElementById('admin-delete-players-error');
+const adminDeletePlayersList = document.getElementById('admin-delete-players-list');
+const adminDeletePlayersPreviewBtn = document.getElementById('admin-delete-players-preview-btn');
+const adminDeletePlayersPreview = document.getElementById('admin-delete-players-preview');
+const adminDeletePlayersPreviewList = document.getElementById('admin-delete-players-preview-list');
+const adminDeletePlayersConfirmBtn = document.getElementById('admin-delete-players-confirm-btn');
+const adminDeletePlayersCancelBtn = document.getElementById('admin-delete-players-cancel-btn');
+const adminDeletePlayersStatus = document.getElementById('admin-delete-players-status');
+
+let pendingPlayerDeletion = null;
+
+function renderDeletePlayersList() {
+    adminDeletePlayersList.innerHTML = '';
+    cachedLeaderboardPlayers.forEach(p => {
+        const row = document.createElement('label');
+        row.className = 'checkbox-label';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = p.id;
+        checkbox.className = 'admin-delete-player-checkbox';
+
+        row.appendChild(checkbox);
+        row.appendChild(document.createTextNode(
+            `${p.name} (${p.gamesPlayed || 0} games, ${p.totalScore || 0} pts)`
+        ));
+        adminDeletePlayersList.appendChild(row);
+    });
+
+    adminDeletePlayersPreview.hidden = true;
+    pendingPlayerDeletion = null;
+}
+
+adminDeletePlayersPreviewBtn.addEventListener('click', () => {
+    adminDeletePlayersError.hidden = true;
+    adminDeletePlayersStatus.textContent = '';
+    adminDeletePlayersStatus.className = '';
+
+    const ids = Array.from(document.querySelectorAll('.admin-delete-player-checkbox:checked')).map(cb => cb.value);
+    if (!ids.length) {
+        adminDeletePlayersError.textContent = 'Select at least one player to delete.';
+        adminDeletePlayersError.hidden = false;
+        return;
+    }
+
+    const players = ids.map(id => cachedLeaderboardPlayers.find(p => p.id === id)).filter(Boolean);
+    pendingPlayerDeletion = players;
+
+    adminDeletePlayersPreviewList.innerHTML = '';
+    const summary = [
+        `Removed from the leaderboard: ${players.map(p => p.name).join(', ')}.`,
+        `Their past Recent Quizzes / Combo history is untouched — this only clears the leaderboard row.`
+    ];
+    summary.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        adminDeletePlayersPreviewList.appendChild(li);
+    });
+
+    adminDeletePlayersPreview.hidden = false;
+});
+
+adminDeletePlayersCancelBtn.addEventListener('click', () => {
+    adminDeletePlayersPreview.hidden = true;
+    pendingPlayerDeletion = null;
+});
+
+adminDeletePlayersConfirmBtn.addEventListener('click', async () => {
+    if (!pendingPlayerDeletion) return;
+    if (!(await ensureAdminSignedIn('Deleting leaderboard players'))) return;
+
+    adminDeletePlayersConfirmBtn.disabled = true;
+    adminDeletePlayersStatus.className = '';
+    adminDeletePlayersStatus.textContent = 'Deleting...';
+
+    const failures = [];
+    await Promise.all(pendingPlayerDeletion.map(async p => {
+        try {
+            await deleteDoc(doc(db, 'leaderboard', p.id));
+        } catch (err) {
+            failures.push(`${p.name}: ${err.message || err}`);
+        }
+    }));
+
+    if (failures.length) {
+        adminDeletePlayersStatus.className = 'failure';
+        adminDeletePlayersStatus.textContent = `${failures.length} deletion(s) failed:\n${failures.join('\n')}`;
+    } else {
+        adminDeletePlayersStatus.className = 'success';
+        adminDeletePlayersStatus.textContent = 'Deleted!';
+        adminDeletePlayersPreview.hidden = true;
+        pendingPlayerDeletion = null;
+    }
+
+    await loadAdminPlayerList();
+    await loadLeaderboard();
+    adminDeletePlayersConfirmBtn.disabled = false;
+});
+
+// =========================
+// ADMIN: DELETE QUIZ RESULTS — removes specific played-quiz records (a
+// duplicate, a test run, whatever). Every affected player's leaderboard
+// totals are adjusted to match exactly what's being removed, and bestScore
+// is recalculated from whatever quizzes that player has left rather than
+// just leaving the old cached value in place.
+// =========================
+const adminDeleteResultsSearch = document.getElementById('admin-delete-results-search');
+const adminDeleteResultsError = document.getElementById('admin-delete-results-error');
+const adminDeleteResultsList = document.getElementById('admin-delete-results-list');
+const adminDeleteResultsEmpty = document.getElementById('admin-delete-results-empty');
+const adminDeleteResultsPreviewBtn = document.getElementById('admin-delete-results-preview-btn');
+const adminDeleteResultsPreview = document.getElementById('admin-delete-results-preview');
+const adminDeleteResultsPreviewList = document.getElementById('admin-delete-results-preview-list');
+const adminDeleteResultsConfirmBtn = document.getElementById('admin-delete-results-confirm-btn');
+const adminDeleteResultsCancelBtn = document.getElementById('admin-delete-results-cancel-btn');
+const adminDeleteResultsStatus = document.getElementById('admin-delete-results-status');
+
+let cachedAdminQuizResults = []; // { id, ref, data }
+let pendingResultsDeletion = null;
+
+async function loadAdminQuizResultsList() {
+    const snap = await getDocs(query(collection(db, 'quizResults'), orderBy('playedAt', 'desc')));
+    cachedAdminQuizResults = snap.docs.map(d => ({ id: d.id, ref: d.ref, data: d.data() }));
+    renderDeleteResultsList();
+}
+
+adminDeleteResultsSearch.addEventListener('input', renderDeleteResultsList);
+
+function renderDeleteResultsList() {
+    const q = adminDeleteResultsSearch.value.trim().toLowerCase();
+
+    const matches = cachedAdminQuizResults.filter(({ data }) => {
+        if (!q) return true;
+        const titleMatch = (data.quizTitle || '').toLowerCase().includes(q);
+        const playerMatch = (data.players || []).some(p => (p.name || '').toLowerCase().includes(q));
+        return titleMatch || playerMatch;
+    });
+
+    adminDeleteResultsList.innerHTML = '';
+    adminDeleteResultsEmpty.hidden = matches.length > 0;
+
+    matches.forEach(({ id, data }) => {
+        const row = document.createElement('label');
+        row.className = 'admin-result-row';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = id;
+        checkbox.className = 'admin-delete-result-checkbox';
+
+        const body = document.createElement('div');
+
+        const title = document.createElement('div');
+        title.className = 'admin-result-row-title';
+        title.textContent = data.quizTitle || 'Untitled Quiz';
+
+        const meta = document.createElement('div');
+        meta.className = 'admin-result-row-meta';
+        const playersSummary = (data.players || [])
+            .map(p => `${p.name} (${p.score} pts, ${p.outcome})`)
+            .join(', ');
+        meta.textContent = `${formatDate(data.playedAt)} — ${playersSummary}`;
+
+        body.appendChild(title);
+        body.appendChild(meta);
+
+        row.appendChild(checkbox);
+        row.appendChild(body);
+        adminDeleteResultsList.appendChild(row);
+    });
+
+    adminDeleteResultsPreview.hidden = true;
+    pendingResultsDeletion = null;
+}
+
+adminDeleteResultsPreviewBtn.addEventListener('click', () => {
+    adminDeleteResultsError.hidden = true;
+    adminDeleteResultsStatus.textContent = '';
+    adminDeleteResultsStatus.className = '';
+
+    const ids = Array.from(document.querySelectorAll('.admin-delete-result-checkbox:checked')).map(cb => cb.value);
+    if (!ids.length) {
+        adminDeleteResultsError.textContent = 'Select at least one quiz result to delete.';
+        adminDeleteResultsError.hidden = false;
+        return;
+    }
+
+    const toDelete = cachedAdminQuizResults.filter(r => ids.includes(r.id));
+
+    // Aggregate the leaderboard adjustment per affected player (slugified
+    // name -> deltas), since one player can appear in more than one
+    // selected result.
+    const deltas = new Map(); // nameKey -> { name, scoreDelta, gamesDelta, winsDelta, drawsDelta, lossesDelta }
+
+    toDelete.forEach(({ data }) => {
+        (data.players || []).forEach(p => {
+            const key = slugifyName(p.name);
+            if (!deltas.has(key)) {
+                deltas.set(key, { name: p.name, scoreDelta: 0, gamesDelta: 0, winsDelta: 0, drawsDelta: 0, lossesDelta: 0 });
+            }
+            const d = deltas.get(key);
+            d.scoreDelta += p.score || 0;
+            d.gamesDelta += 1;
+            if (p.outcome === 'win') d.winsDelta += 1;
+            else if (p.outcome === 'draw') d.drawsDelta += 1;
+            else d.lossesDelta += 1;
+        });
+    });
+
+    pendingResultsDeletion = { toDelete, deltas };
+
+    adminDeleteResultsPreviewList.innerHTML = '';
+    const summary = [
+        `Delete ${toDelete.length} quiz result(s): ${toDelete.map(r => r.data.quizTitle || 'Untitled Quiz').join(', ')}.`,
+        ...[...deltas.values()].map(d =>
+            `${d.name}: -${d.scoreDelta} pts, -${d.gamesDelta} game${d.gamesDelta === 1 ? '' : 's'} (best score recalculated from what's left).`
+        )
+    ];
+    summary.forEach(text => {
+        const li = document.createElement('li');
+        li.textContent = text;
+        adminDeleteResultsPreviewList.appendChild(li);
+    });
+
+    adminDeleteResultsPreview.hidden = false;
+});
+
+adminDeleteResultsCancelBtn.addEventListener('click', () => {
+    adminDeleteResultsPreview.hidden = true;
+    pendingResultsDeletion = null;
+});
+
+adminDeleteResultsConfirmBtn.addEventListener('click', async () => {
+    if (!pendingResultsDeletion) return;
+    if (!(await ensureAdminSignedIn('Deleting quiz results'))) return;
+
+    adminDeleteResultsConfirmBtn.disabled = true;
+    adminDeleteResultsStatus.className = '';
+    adminDeleteResultsStatus.textContent = 'Deleting...';
+
+    try {
+        await performResultsDeletion(pendingResultsDeletion);
+
+        adminDeleteResultsStatus.className = 'success';
+        adminDeleteResultsStatus.textContent = 'Deleted!';
+        adminDeleteResultsPreview.hidden = true;
+        pendingResultsDeletion = null;
+    } catch (err) {
+        console.error(err);
+        adminDeleteResultsStatus.className = 'failure';
+        adminDeleteResultsStatus.textContent = err.message || 'Delete failed — check console.';
+    } finally {
+        await loadAdminQuizResultsList();
+        await Promise.all([loadAdminPlayerList(), loadLeaderboard(), loadQuizResults()]);
+        adminDeleteResultsConfirmBtn.disabled = false;
+    }
+});
+
+// Same settle-and-collect pattern as performPlayerMerge() — every write runs
+// to completion even if another one fails, so a partial failure is reported
+// clearly instead of leaving it unclear what did or didn't go through.
+async function performResultsDeletion({ toDelete, deltas }) {
+    const failures = [];
+
+    async function attempt(label, fn) {
+        try {
+            await fn();
+        } catch (err) {
+            failures.push(`${label}: ${err.message || err}`);
+        }
+    }
+
+    // Subtract deltas and delete the quizResults docs first — bestScore
+    // recalculation below reads cachedAdminQuizResults minus the deleted
+    // ids, so it doesn't need the writes to have landed yet, just the ids.
+    await Promise.all([...deltas.entries()].map(([nameKey, d]) =>
+        attempt(`Adjust leaderboard for "${d.name}"`, () =>
+            updateDoc(doc(db, 'leaderboard', nameKey), {
+                totalScore: increment(-d.scoreDelta),
+                gamesPlayed: increment(-d.gamesDelta),
+                wins: increment(-d.winsDelta),
+                draws: increment(-d.drawsDelta),
+                losses: increment(-d.lossesDelta)
+            }))));
+
+    await Promise.all(toDelete.map(r =>
+        attempt(`Delete quiz result "${r.data.quizTitle || r.id}"`, () => deleteDoc(r.ref))));
+
+    const deletedIds = new Set(toDelete.map(r => r.id));
+
+    // bestScore is a cached max, not derived live — recompute it from
+    // whatever's left for each affected player rather than leaving a stale
+    // value that might no longer correspond to any remaining result.
+    await Promise.all([...deltas.entries()].map(([nameKey, d]) => attempt(
+        `Recalculate best score for "${d.name}"`,
+        () => {
+            const remainingScores = cachedAdminQuizResults
+                .filter(r => !deletedIds.has(r.id))
+                .flatMap(r => (r.data.players || [])
+                    .filter(p => slugifyName(p.name) === nameKey)
+                    .map(p => p.score || 0));
+
+            const newBest = remainingScores.length ? Math.max(...remainingScores) : 0;
+
+            return updateDoc(doc(db, 'leaderboard', nameKey), { bestScore: newBest });
+        }
+    )));
 
     if (failures.length) {
         throw new Error(`${failures.length} write(s) failed:\n${failures.join('\n')}`);

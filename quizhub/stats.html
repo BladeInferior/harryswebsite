@@ -422,6 +422,64 @@
             margin-top:0;
         }
 
+        #admin-subtabs{
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+            margin-bottom:18px;
+            padding-bottom:18px;
+            border-bottom:1px solid var(--border);
+        }
+
+        .admin-subtab-btn{
+            background:transparent;
+            border:1px solid rgba(168,85,247,.4);
+            color:#fff;
+            padding:6px 14px;
+            border-radius:8px;
+            font-size:13px;
+            cursor:pointer;
+            transition:.2s;
+        }
+
+        .admin-subtab-btn:hover{
+            border-color:var(--gold);
+        }
+
+        .admin-subtab-active{
+            background:linear-gradient(135deg, #d0a3fc, #b565f5);
+            box-shadow:0 0 14px rgba(181,101,245,.5);
+            color:white;
+            font-weight:bold;
+            border-color:var(--gold);
+        }
+
+        .admin-result-row{
+            display:flex;
+            align-items:flex-start;
+            gap:10px;
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:12px 14px;
+            margin-bottom:8px;
+        }
+
+        .admin-result-row input[type="checkbox"]{
+            width:auto;
+            margin-top:3px;
+            flex-shrink:0;
+        }
+
+        .admin-result-row-title{
+            font-weight:bold;
+            margin-bottom:4px;
+        }
+
+        .admin-result-row-meta{
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
         #admin-merge-error{
             background:rgba(229,83,75,.15);
             border:1px solid var(--incorrect);
@@ -579,43 +637,116 @@
     </div>
 
     <div id="tab-admin" class="card" hidden>
-        <h2 style="margin-bottom:14px;">🔒 Merge Duplicate Players</h2>
-        <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
-            If someone registered under two different names (a typo, a nickname, joined again mid-quiz), merge
-            their stats into one canonical player here. This combines their leaderboard totals and rewrites
-            past match history/combos to the new name — it can't be undone.
-        </p>
 
-        <div id="admin-merge-error" hidden></div>
-
-        <label>
-            Canonical name — merge everything into this one
-            <select id="admin-merge-canonical-select">
-                <option value="">— choose an existing player —</option>
-            </select>
-        </label>
-        <label>
-            ...or type a brand-new canonical name instead
-            <input type="text" id="admin-merge-canonical-new" autocomplete="off" placeholder="e.g. Emily">
-        </label>
-
-        <label style="margin-bottom:8px;">Merge these players into it</label>
-        <div id="admin-merge-source-list" style="margin-bottom:16px;"></div>
-
-        <div class="modal-buttons" style="margin-top:0;margin-bottom:16px;">
-            <button id="admin-merge-preview-btn" class="btn btn-secondary" type="button">Preview Merge</button>
+        <div id="admin-subtabs">
+            <button class="admin-subtab-btn" data-subtab="merge" type="button">Merge Duplicate Players</button>
+            <button class="admin-subtab-btn" data-subtab="delete-players" type="button">Delete Players</button>
+            <button class="admin-subtab-btn" data-subtab="delete-results" type="button">Delete Quiz Results</button>
         </div>
 
-        <div id="admin-merge-preview" hidden>
-            <h3 style="color:var(--gold);margin-bottom:8px;font-size:1rem;">This will happen:</h3>
-            <ul id="admin-merge-preview-list" style="margin-bottom:16px;padding-left:18px;line-height:1.7;"></ul>
-            <div class="modal-buttons">
-                <button id="admin-merge-confirm-btn" class="btn" type="button">Confirm Merge</button>
-                <button id="admin-merge-cancel-btn" class="btn btn-secondary" type="button">Cancel</button>
+        <div id="admin-sub-merge" class="admin-subpanel">
+            <h2 style="margin-bottom:14px;">🔒 Merge Duplicate Players</h2>
+            <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+                If someone registered under two different names (a typo, a nickname, joined again mid-quiz), merge
+                their stats into one canonical player here. This combines their leaderboard totals and rewrites
+                past match history/combos to the new name — it can't be undone.
+            </p>
+
+            <div id="admin-merge-error" hidden></div>
+
+            <label>
+                Canonical name — merge everything into this one
+                <select id="admin-merge-canonical-select">
+                    <option value="">— choose an existing player —</option>
+                </select>
+            </label>
+            <label>
+                ...or type a brand-new canonical name instead
+                <input type="text" id="admin-merge-canonical-new" autocomplete="off" placeholder="e.g. Emily">
+            </label>
+
+            <label style="margin-bottom:8px;">Merge these players into it</label>
+            <div id="admin-merge-source-list" style="margin-bottom:16px;"></div>
+
+            <div class="modal-buttons" style="margin-top:0;margin-bottom:16px;">
+                <button id="admin-merge-preview-btn" class="btn btn-secondary" type="button">Preview Merge</button>
             </div>
+
+            <div id="admin-merge-preview" hidden>
+                <h3 style="color:var(--gold);margin-bottom:8px;font-size:1rem;">This will happen:</h3>
+                <ul id="admin-merge-preview-list" style="margin-bottom:16px;padding-left:18px;line-height:1.7;"></ul>
+                <div class="modal-buttons">
+                    <button id="admin-merge-confirm-btn" class="btn" type="button">Confirm Merge</button>
+                    <button id="admin-merge-cancel-btn" class="btn btn-secondary" type="button">Cancel</button>
+                </div>
+            </div>
+
+            <div id="admin-merge-status"></div>
         </div>
 
-        <div id="admin-merge-status"></div>
+        <div id="admin-sub-delete-players" class="admin-subpanel" hidden>
+            <h2 style="margin-bottom:14px;">🔒 Delete Players</h2>
+            <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+                Removes a player's leaderboard entry entirely (total score, games played, wins/draws/losses,
+                best score). Their name stays visible in past Recent Quizzes / Combo history — this only clears
+                the aggregated leaderboard row, it doesn't rewrite history. Use Delete Quiz Results if you want
+                to remove specific played quizzes too.
+            </p>
+
+            <div id="admin-delete-players-error" hidden></div>
+
+            <div id="admin-delete-players-list" style="margin-bottom:16px;"></div>
+
+            <div class="modal-buttons" style="margin-top:0;margin-bottom:16px;">
+                <button id="admin-delete-players-preview-btn" class="btn btn-secondary" type="button">Preview Delete</button>
+            </div>
+
+            <div id="admin-delete-players-preview" hidden>
+                <h3 style="color:var(--gold);margin-bottom:8px;font-size:1rem;">This will happen:</h3>
+                <ul id="admin-delete-players-preview-list" style="margin-bottom:16px;padding-left:18px;line-height:1.7;"></ul>
+                <div class="modal-buttons">
+                    <button id="admin-delete-players-confirm-btn" class="btn" type="button">Confirm Delete</button>
+                    <button id="admin-delete-players-cancel-btn" class="btn btn-secondary" type="button">Cancel</button>
+                </div>
+            </div>
+
+            <div id="admin-delete-players-status"></div>
+        </div>
+
+        <div id="admin-sub-delete-results" class="admin-subpanel" hidden>
+            <h2 style="margin-bottom:14px;">🔒 Delete Quiz Results</h2>
+            <p style="color:var(--secondary);margin-bottom:14px;line-height:1.5;">
+                Removes specific played-quiz records (e.g. a duplicate entry, a test run). Every affected
+                player's leaderboard totals are adjusted to match — scores/games/wins/draws/losses subtracted
+                and best score recalculated from what's left. It can't be undone.
+            </p>
+
+            <label>
+                Search by quiz name or player name
+                <input type="text" id="admin-delete-results-search" autocomplete="off" placeholder="e.g. durweston or jhfvh">
+            </label>
+
+            <div id="admin-delete-results-error" hidden></div>
+
+            <div id="admin-delete-results-list" style="margin-bottom:16px;"></div>
+            <div id="admin-delete-results-empty" class="empty-hint" hidden>No matching quiz results.</div>
+
+            <div class="modal-buttons" style="margin-top:0;margin-bottom:16px;">
+                <button id="admin-delete-results-preview-btn" class="btn btn-secondary" type="button">Preview Delete</button>
+            </div>
+
+            <div id="admin-delete-results-preview" hidden>
+                <h3 style="color:var(--gold);margin-bottom:8px;font-size:1rem;">This will happen:</h3>
+                <ul id="admin-delete-results-preview-list" style="margin-bottom:16px;padding-left:18px;line-height:1.7;"></ul>
+                <div class="modal-buttons">
+                    <button id="admin-delete-results-confirm-btn" class="btn" type="button">Confirm Delete</button>
+                    <button id="admin-delete-results-cancel-btn" class="btn btn-secondary" type="button">Cancel</button>
+                </div>
+            </div>
+
+            <div id="admin-delete-results-status"></div>
+        </div>
+
     </div>
 
 </section>
