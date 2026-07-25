@@ -794,6 +794,16 @@ h1 {
     margin: 20px auto;
 }
 
+/* Keeps mode/pagination controls reachable while paging through a long grid
+   instead of having to scroll back to the top every time — pinned just below
+   the fixed site nav. Only while paginating: in list mode there's no paging
+   to do, so it stays in normal flow. */
+body.page-mode #page-controls {
+    position: sticky;
+    top: 80px;
+    z-index: 900;
+}
+
 #page-controls button {
     padding: 8px 12px;
     border-radius: 8px;

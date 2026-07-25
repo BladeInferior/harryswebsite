@@ -1038,6 +1038,21 @@ function createFilterButtons() {
 
         btn.addEventListener("click", () => {
 
+            // Page mode already shows a full mixed page rather than a
+            // filtered subset, so filtering down to one generation there
+            // would fight with pagination. Jump to that generation's first
+            // page instead — e.g. Gen 4 lands on the page where Turtwig
+            // (the first Gen 4 entry in dex order) appears.
+            if (pageMode) {
+
+                const index = allPokemon.findIndex(p => p.generation === gen);
+                if (index === -1) return;
+
+                currentPage = Math.floor(index / pageSize) + 1;
+                applyPagination();
+                return;
+            }
+
             if (selectedGeneration === gen) {
                 selectedGeneration = null;
             } else {
@@ -1267,8 +1282,23 @@ function updateModeUI() {
 
     pagination.classList.toggle("hidden", pageMode === false);
 
+    document.body.classList.toggle("page-mode", pageMode);
+    document.body.classList.toggle("list-mode", !pageMode);
+
+    // Disabling is applied per row rather than on the whole container —
+    // opacity on a parent bleeds through to children regardless of their own
+    // opacity, so the only way to keep the generation rows visually active
+    // while everything else greys out is to never put the class on their
+    // shared ancestor in the first place. Generation rows are identified by
+    // containing a Gen N button (the "Missing"/"Not Missing" pair shares the
+    // same .generation-filter-row layout class but has no [data-gen] button).
     const filterContainer = document.getElementById("game-filter-container");
-    if (filterContainer) filterContainer.classList.toggle("filters-disabled", pageMode);
+    if (filterContainer) {
+        Array.from(filterContainer.children).forEach(child => {
+            const isGenerationRow = !!child.querySelector("[data-gen]");
+            child.classList.toggle("filters-disabled", pageMode && !isGenerationRow);
+        });
+    }
 
     updateCardImages();
 }
