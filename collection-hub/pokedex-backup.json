@@ -5832,7 +5832,7 @@
     "cherishDex": false,
     "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false
     }
@@ -6164,7 +6164,7 @@
     "masterDex": false,
     "tradeDex": false,
     "wonderTradeDex": false,
-    "pogoDex": false,
+    "pogoDex": true,
     "cherishDex": false,
     "shinyDex": false,
     "shinyDexData": {
@@ -12237,7 +12237,7 @@
   },
   {
     "name": "ursaluna",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": false,
     "pogoDex": true,
@@ -12452,10 +12452,10 @@
     "wonderTradeDex": true,
     "pogoDex": false,
     "cherishDex": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": false,
+      "correctStage": true,
+      "originalRegion": true,
       "luxuryBall": false
     }
   },
@@ -14085,7 +14085,7 @@
   },
   {
     "name": "ogerpon",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": false,
     "wonderTradeDex": false,
     "pogoDex": false,
