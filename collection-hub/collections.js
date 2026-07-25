@@ -521,7 +521,18 @@ async function scanForNewDlcImages() {
 
         if (file.type !== "file" || !imageExtRe.test(file.name)) return;
 
-        const base = file.name.replace(imageExtRe, "").toLowerCase();
+        // Stripped the same way getItemImagePath() strips any name it's
+        // given — without this, a filename with a stray non-alphanumeric
+        // character (e.g. "96newgame+.jpg") would get stored as `image`
+        // verbatim, but setItemImage()/getItemImagePath() always re-strip
+        // before requesting the actual URL, so the "+" would silently get
+        // dropped there and the request would 404 against a name that never
+        // matches what's actually on disk.
+        const base = file.name
+            .replace(imageExtRe, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "");
+
         const numberMatch = base.match(/^(\d+)/);
         if (!numberMatch) return;
 
