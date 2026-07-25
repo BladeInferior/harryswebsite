@@ -13,6 +13,12 @@ let selectedGeneration = null;
 let tagFilters = {};
 let pokemonCountLabel = null;
 
+// Same key as collections.js/cards.js — localStorage is shared across the
+// whole site's origin, so a key set on any of those pages is already here.
+function getExportAuthKey() {
+    return localStorage.getItem("exportAuthKey");
+}
+
 const dexTypes = [
     { key: "masterDex", label: "MasterDex" },
     { key: "shinyDex", label: "Shiny Dex" },
@@ -1267,7 +1273,7 @@ function updateModeUI() {
     updateCardImages();
 }
 
-document.getElementById("export-pokedex").addEventListener("click", () => {
+document.getElementById("export-pokedex").addEventListener("click", async () => {
 
     const exportData = Object.entries(savedDexData).map(([name, data]) => {
 
@@ -1289,6 +1295,38 @@ document.getElementById("export-pokedex").addEventListener("click", () => {
     });
 
     const json = JSON.stringify(exportData, null, 2);
+    const authKey = getExportAuthKey();
+
+    if (authKey) {
+        try {
+            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Auth-Key": authKey
+                },
+                body: JSON.stringify({
+                    filename: "pokedex-backup.json",
+                    content: json
+                })
+            });
+
+            const result = await res.json();
+
+            if (result.verified && result.committed) {
+                alert("✅ pokedex-backup.json committed to GitHub automatically.");
+                return;
+            }
+
+            if (result.verified && !result.committed) {
+                console.error("GitHub commit failed:", result.error);
+                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
+            }
+
+        } catch (err) {
+            console.error("Export sync failed:", err);
+        }
+    }
 
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
