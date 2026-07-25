@@ -157,7 +157,7 @@
     <div id="delete-dlc-modal" class="hidden">
 
         <div class="add-item-box">
-            
+
             <h3>Delete DLC</h3>
 
             <div id="delete-dlc-list"></div>
@@ -168,6 +168,21 @@
             </div>
 
             <div id="delete-dlc-error"></div>
+        </div>
+    </div>
+
+    <div id="reorder-dlc-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h3>Reorder DLCs</h3>
+
+            <div id="reorder-dlc-list"></div>
+
+            <div class="modal-buttons">
+                <button id="close-reorder-dlc">Done</button>
+            </div>
+
         </div>
     </div>
 
@@ -216,7 +231,10 @@
                         <div class="dlc-header">
                             <button id="delete-dlcs-btn" class="dlc-delete-btn">Delete DLC</button>
                             <h3>DLCs</h3>
-                            <button id="add-dlc-btn">Add DLC</button>
+                            <div class="dlc-header-right">
+                                <button id="reorder-dlcs-btn">Edit Order</button>
+                                <button id="add-dlc-btn">Add DLC</button>
+                            </div>
                         </div>
 
                         <div id="modal-dlc-list"></div>

@@ -2302,6 +2302,94 @@ if (document.body.classList.contains("completions-page")) {
 
         openModal(items.indexOf(item));
     });
+
+    // Reordering — dlcs display in array order, so this just needs to move
+    // an entry earlier/later in that same array. Applies immediately on
+    // each arrow click (rather than a staged preview/confirm like Delete)
+    // since it's trivially reversible by just clicking the other arrow.
+    const reorderDlcModal = document.getElementById("reorder-dlc-modal");
+    const reorderDlcList = document.getElementById("reorder-dlc-list");
+
+    let reorderDlcItemIndex = null;
+
+    function renderReorderDlcList() {
+
+        reorderDlcList.innerHTML = "";
+
+        const item = items[reorderDlcItemIndex];
+        const dlcs = item.dlcs || [];
+
+        if (dlcs.length === 0) {
+            const empty = document.createElement("div");
+            empty.id = "reorder-dlc-empty";
+            empty.textContent = "No DLCs yet.";
+            reorderDlcList.appendChild(empty);
+            return;
+        }
+
+        dlcs.forEach((entry, i) => {
+
+            const row = document.createElement("div");
+            row.classList.add("reorder-dlc-row");
+
+            const img = document.createElement("img");
+            img.loading = "lazy";
+            setItemImage(img, dlcImageKey(entry));
+            img.classList.add("reorder-dlc-thumb");
+
+            const name = document.createElement("span");
+            name.classList.add("reorder-dlc-name");
+            name.textContent = dlcDisplayName(entry);
+
+            const upBtn = document.createElement("button");
+            upBtn.classList.add("reorder-dlc-move-btn");
+            upBtn.textContent = "▲";
+            upBtn.disabled = i === 0;
+            upBtn.addEventListener("click", () => moveDlc(i, i - 1));
+
+            const downBtn = document.createElement("button");
+            downBtn.classList.add("reorder-dlc-move-btn");
+            downBtn.textContent = "▼";
+            downBtn.disabled = i === dlcs.length - 1;
+            downBtn.addEventListener("click", () => moveDlc(i, i + 1));
+
+            row.appendChild(img);
+            row.appendChild(name);
+            row.appendChild(upBtn);
+            row.appendChild(downBtn);
+            reorderDlcList.appendChild(row);
+        });
+    }
+
+    function moveDlc(from, to) {
+
+        const item = items[reorderDlcItemIndex];
+        const [entry] = item.dlcs.splice(from, 1);
+        item.dlcs.splice(to, 0, entry);
+
+        saveItems();
+        renderReorderDlcList();
+        openModal(reorderDlcItemIndex);
+    }
+
+    document.getElementById("reorder-dlcs-btn").addEventListener("click", () => {
+
+        const index = modalOverlay.dataset.index;
+        if (index === undefined) return;
+
+        reorderDlcItemIndex = index;
+        renderReorderDlcList();
+
+        reorderDlcModal.classList.remove("hidden");
+    });
+
+    document.getElementById("close-reorder-dlc").addEventListener("click", () => {
+        reorderDlcModal.classList.add("hidden");
+    });
+
+    reorderDlcModal.addEventListener("click", (e) => {
+        if (e.target === reorderDlcModal) reorderDlcModal.classList.add("hidden");
+    });
 }
 
 if (imagePrevBtn) {
