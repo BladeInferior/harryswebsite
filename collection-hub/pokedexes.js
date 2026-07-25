@@ -84,6 +84,26 @@ function imageName(name) {
         .replace(/[^a-z0-9]/g, "");
 }
 
+// Pokémon GO's region-locked pokemon — a completely different list from the
+// core-games "Regional" tag in fullPokemonList.json (which flags Alolan/
+// Galarian/etc. form variants). Only relevant while editing the PoGo Dex
+// (see matchesTags() in applyFilters()), so the Regional/Not Regional filter
+// checks this instead of the normal tag there.
+const POGO_REGIONAL_NAMES = new Set([
+    "farfetchd", "kangaskhan", "mrmime", "tauros", "heracross", "corsola",
+    "volbeat", "illumise", "torkoal", "zangoose", "seviper", "lunatone",
+    "solrock", "tropius", "relicanth", "pachirisu", "mimejr", "chatot",
+    "carnivine", "uxie", "mesprit", "azelf", "pansage", "panpour", "pansear",
+    "simipour", "simisage", "simisear", "throh", "sawk", "maractus",
+    "sigilyph", "bouffalant", "heatmor", "durant", "hawlucha", "klefki",
+    "comfey", "buzzwole", "pheromosa", "xurkitree", "kartana", "stakataka",
+    "blacephalon", "stonjourner"
+]);
+
+function isPogoRegional(name) {
+    return POGO_REGIONAL_NAMES.has(normalizeName(name));
+}
+
 function getPokemonSpritePath(name, useShiny = false) {
     const fileName = `${imageName(name)}.png`;
     return useShiny
@@ -368,8 +388,16 @@ function applyFilters() {
                 if (filterTag === "notLegendary") return !pokemonTags.includes("Legendary");
                 if (filterTag === "mythical") return pokemonTags.includes("Mythical");
                 if (filterTag === "notMythical") return !pokemonTags.includes("Mythical");
-                if (filterTag === "regional") return pokemonTags.includes("Regional");
-                if (filterTag === "notRegional") return !pokemonTags.includes("Regional");
+                if (filterTag === "regional") {
+                    return activeDexEdit === "pogoDex"
+                        ? isPogoRegional(name)
+                        : pokemonTags.includes("Regional");
+                }
+                if (filterTag === "notRegional") {
+                    return activeDexEdit === "pogoDex"
+                        ? !isPogoRegional(name)
+                        : !pokemonTags.includes("Regional");
+                }
                 return true;
             });
 
@@ -1203,6 +1231,13 @@ document.getElementById("page-mode").addEventListener("click", () => {
 
     pageMode = true;
     currentPage = 1;
+
+    // Generation buttons repurpose themselves into page-jump shortcuts in
+    // page mode (see their click handler above) instead of acting as a
+    // filter, so a highlight left over from list mode would look like an
+    // active filter that isn't actually filtering anything.
+    selectedGeneration = null;
+    updateGenerationButtonHighlight();
 
     applyPagination();
     updateModeUI();
