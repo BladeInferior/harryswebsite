@@ -36,17 +36,6 @@ requireAdminAuth().then(() => {
     subscribeToNotes();
 });
 
-// =========================
-// CHECKLIST LINES — the note body used to be one plain <textarea>; it's now
-// a stack of per-line elements (contentInput's children) so a line can be
-// either free text or a real interactive checkbox. Stored/serialized as
-// plain text either way (content stays a single string in Firestore,
-// backward-compatible with existing notes): a checkbox line round-trips as
-// "[ ] text" / "[x] text", GitHub-task-list style, everything else is just
-// the line's own text. Deliberately not one big contenteditable region —
-// each line owns its own contenteditable so Enter/Backspace can be handled
-// precisely (create/remove a whole line) instead of fighting the browser's
-// own, inconsistent-across-browsers contenteditable line-splitting.
 const CHECKBOX_LINE_RE = /^\[( |x|X)\] (.*)$/;
 
 function createTextLine(text = '') {
@@ -98,6 +87,20 @@ function focusLineEnd(el) {
     sel.addRange(range);
 }
 
+function focusLineStart(el) {
+    el.focus();
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(true);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+}
+
+function getEditablePart(lineEl) {
+    return lineEl.dataset.type === 'checkbox' ? lineEl.querySelector('.note-line-text') : lineEl;
+}
+
 // `editableEl` is what actually receives keystrokes (the line itself for
 // text lines, the inner span for checkbox lines); `lineEl` is the whole row
 // that gets inserted/removed as a unit.
@@ -109,9 +112,34 @@ function attachLineEvents(editableEl, lineEl) {
 
         if (e.key === 'Enter') {
             e.preventDefault();
-            const newLine = lineOfType(lineEl.dataset.type, '', false);
+
+            // Split at the cursor, like a normal text editor — text before
+            // it stays on this line, text after it moves to the new one,
+            // rather than always inserting a blank line and leaving this
+            // one's text untouched regardless of where the cursor was.
+            const selection = window.getSelection();
+            const range = selection.rangeCount ? selection.getRangeAt(0) : null;
+
+            let beforeText = editableEl.textContent;
+            let afterText = '';
+
+            if (range) {
+                const beforeRange = document.createRange();
+                beforeRange.selectNodeContents(editableEl);
+                beforeRange.setEnd(range.startContainer, range.startOffset);
+                beforeText = beforeRange.toString();
+
+                const afterRange = document.createRange();
+                afterRange.selectNodeContents(editableEl);
+                afterRange.setStart(range.endContainer, range.endOffset);
+                afterText = afterRange.toString();
+            }
+
+            editableEl.textContent = beforeText;
+
+            const newLine = lineOfType(lineEl.dataset.type, afterText, false);
             lineEl.insertAdjacentElement('afterend', newLine);
-            focusLineEnd(newLine.dataset.type === 'checkbox' ? newLine.querySelector('.note-line-text') : newLine);
+            focusLineStart(getEditablePart(newLine));
             scheduleSave();
             return;
         }
@@ -121,7 +149,7 @@ function attachLineEvents(editableEl, lineEl) {
             const prev = lineEl.previousElementSibling;
             lineEl.remove();
             if (prev) {
-                focusLineEnd(prev.dataset.type === 'checkbox' ? prev.querySelector('.note-line-text') : prev);
+                focusLineEnd(getEditablePart(prev));
             }
             scheduleSave();
         }
@@ -190,6 +218,21 @@ addCheckboxBtn.addEventListener('click', () => {
 
     focusLineEnd(newLine.querySelector('.note-line-text'));
     scheduleSave();
+});
+
+// Clicking a line (or its text) already places the cursor there natively —
+// this only fires for clicks that land on the container itself: the empty
+// space below the last line (contentInput is flex:1, so there's usually a
+// lot of it) or in the padding around the lines. Matches a normal textarea,
+// where clicking anywhere below the text still starts you typing at the end
+// of it instead of doing nothing.
+contentInput.addEventListener('click', e => {
+    if (e.target !== contentInput) return;
+
+    const lastLine = contentInput.lastElementChild;
+    if (!lastLine) return;
+
+    focusLineEnd(getEditablePart(lastLine));
 });
 
 function subscribeToNotes() {
