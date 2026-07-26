@@ -121,29 +121,29 @@
     ],
     "dlcs": [
       {
+        "name": "12. Update 1.21.0: Tricky Trials",
+        "image": "12update1210trickytrials",
+        "verified": true
+      },
+      {
         "name": "12. Update 1.21.50: The Garden Awakens",
         "image": "12update12150thegardenawakens",
         "verified": true
       },
       {
-        "name": "12. update12190chasetheskies",
+        "name": "12. Update 1.21.90: Chase the Skies",
         "image": "12update12190chasetheskies",
-        "verified": false
+        "verified": true
       },
       {
-        "name": "12. update2630chaoscubed",
-        "image": "12update2630chaoscubed",
-        "verified": false
-      },
-      {
-        "name": "12. update1210trickytrials",
-        "image": "12update1210trickytrials",
-        "verified": false
-      },
-      {
-        "name": "12. update121130mountsofmayhem",
+        "name": "12. Update 1.21.130: Mounts of Mayhem",
         "image": "12update121130mountsofmayhem",
-        "verified": false
+        "verified": true
+      },
+      {
+        "name": "12. Update 26.30: Chaos Cubed",
+        "image": "12update2630chaoscubed",
+        "verified": true
       }
     ],
     "franchise": "Minecraft"
@@ -328,14 +328,14 @@
     ],
     "dlcs": [
       {
-        "name": "29. apiratesfortune",
-        "image": "29apiratesfortune",
-        "verified": false
+        "name": "29. Wild Card",
+        "image": "29wildcard",
+        "verified": true
       },
       {
-        "name": "29. wildcard",
-        "image": "29wildcard",
-        "verified": false
+        "name": "29. A Pirate's Fortune",
+        "image": "29apiratesfortune",
+        "verified": true
       }
     ],
     "franchise": "Star Wars"
@@ -604,24 +604,24 @@
     "dlcs": [
       "54. A Critical Encounter",
       {
-        "name": "54. clawsofawaji",
-        "image": "54clawsofawaji",
-        "verified": false
-      },
-      {
-        "name": "54. progressionupdate",
+        "name": "54. Progression Update",
         "image": "54progressionupdate",
-        "verified": false
+        "verified": true
       },
       {
-        "name": "54. titleupdate1111",
-        "image": "54titleupdate1111",
-        "verified": false
+        "name": "54. Claws of Awaji",
+        "image": "54clawsofawaji",
+        "verified": true
       },
       {
-        "name": "54. titleupdate116",
+        "name": "54. Title Update 1.1.6",
         "image": "54titleupdate116",
-        "verified": false
+        "verified": true
+      },
+      {
+        "name": "54. Title Update 1.1.11",
+        "image": "54titleupdate1111",
+        "verified": true
       }
     ],
     "franchise": "Assassin's Creed"
@@ -879,9 +879,9 @@
     "franchise": "PowerWash Simulator",
     "dlcs": [
       {
-        "name": "78. starwarspack",
+        "name": "78. Star Wars Pack",
         "image": "78starwarspack",
-        "verified": false
+        "verified": true
       }
     ]
   },
@@ -1069,9 +1069,9 @@
     ],
     "dlcs": [
       {
-        "name": "96. newgame+",
+        "name": "96. New Game +",
         "image": "96newgame+",
-        "verified": false
+        "verified": true
       }
     ]
   },
@@ -1081,6 +1081,14 @@
     "franchise": "Assassin's Creed",
     "tags": [
       "Remake",
+      "Series X"
+    ]
+  },
+  {
+    "title": "98. Celeste",
+    "dateCompleted": "2026-07-26",
+    "franchise": "Celeste",
+    "tags": [
       "Series X"
     ]
   }
