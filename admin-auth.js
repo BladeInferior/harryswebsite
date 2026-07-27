@@ -4,7 +4,7 @@
 // own richer page-gate + pill on top of admin-auth-core.js directly, so it
 // doesn't end up with two competing sign-in UIs).
 export * from './admin-auth-core.js';
-import { onAdminStateChange, signInAdmin, signOutAdmin } from './admin-auth-core.js';
+import { onAdminStateChange, signInAdmin, signOutAdmin, redirectResultReady } from './admin-auth-core.js';
 
 // Matches each hub's existing navbar theme accent (see .site-nav.*-theme in
 // ../navbar.css) so the widget doesn't look like a foreign element bolted
@@ -215,6 +215,12 @@ function mountWidget() {
         const existing = widget.querySelector('.gaa-error');
         if (existing) existing.remove();
     }
+
+    // Surfaces a failed signInWithRedirect() (mobile) the same way a failed
+    // signInWithPopup() (desktop) already is — the widget doesn't render
+    // this itself, so the error only shows if render() has already put a
+    // sign-in button (or anything else) on screen for it to attach to.
+    redirectResultReady.catch(err => showError(`Sign-in failed (${err.code || err.message}) — try again.`));
 
     onAdminStateChange((isAdmin, user) => render(isAdmin, user));
 }

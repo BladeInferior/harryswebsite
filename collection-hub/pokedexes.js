@@ -34,7 +34,7 @@ const dexTypes = [
 function saveData() {
     const serialized = JSON.stringify(savedDexData);
     localStorage.setItem("dexData", serialized);
-    if (typeof markDirty === "function") markDirty(serialized);
+    if (typeof markDirty === "function") markDirty(serialized, "dexData");
     updateProgress();
     updateCardHighlights();
 }
@@ -95,7 +95,7 @@ Promise.all([
     }
 
     if (typeof initUnsavedChangesSnapshot === "function") {
-        initUnsavedChangesSnapshot(JSON.stringify(savedDexData));
+        initUnsavedChangesSnapshot(JSON.stringify(savedDexData), "dexData");
     }
 
     createPokemonCards(allPokemon);
@@ -1456,7 +1456,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             const result = await res.json();
 
             if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved(snapshotData);
+                if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
                 alert("✅ pokedex-backup.json committed to GitHub automatically.");
                 return;
             }
@@ -1484,7 +1484,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof markSaved === "function") markSaved(snapshotData);
+    if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
 });
 
 document.getElementById("import-button").addEventListener("click", () => {

@@ -4,6 +4,13 @@
 (function () {
     const style = document.createElement("style");
     style.textContent = `
+        /* Uses --surface/--border/--accent where the current page defines
+           them (collection-hub's mint green, adminhub's red border/accent —
+           see their respective style.css :root blocks) so this one shared
+           script picks up the page's own theme instead of looking bolted
+           on. Falls back to the original flat grey/gold on pages that don't
+           define those variables at all (quizhub uses different variable
+           names entirely, and the homepage doesn't theme this at all). */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -13,9 +20,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #2d2d2d;
-            border: 1px solid #555;
-            color: gold;
+            background: var(--surface, #2d2d2d);
+            border: 1px solid var(--border, #555);
+            color: var(--accent, gold);
             font-size: 18px;
             align-items: center;
             justify-content: center;
@@ -30,8 +37,8 @@
            no pointer to actually leave the element afterward. */
         @media (hover: hover) and (pointer: fine) {
             #scroll-to-top-btn:hover {
-                border-color: gold;
-                background: rgba(212,175,55,.15);
+                border-color: var(--accent, gold);
+                background: rgba(255,255,255,.08);
             }
         }
 

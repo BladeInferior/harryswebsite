@@ -14,6 +14,8 @@ import { auth, googleProvider } from './firebase-config.js';
 import {
     onAuthStateChanged,
     signInWithPopup,
+    signInWithRedirect,
+    getRedirectResult,
     signOut
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
 
@@ -64,13 +66,35 @@ export async function getAdminIdToken() {
     return currentUser.getIdToken();
 }
 
+// signInWithPopup's window.open()-based flow is unreliable on mobile
+// browsers and installed PWAs — it's often blocked outright or gets treated
+// as a top-level navigation away from the page, which can strand the user
+// back on the calling page before they ever finish picking an account.
+// Redirect the whole page to Google instead on those, and pick the result
+// back up via getRedirectResult() below once the browser returns here.
+function isMobileBrowser() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
+        || window.matchMedia('(display-mode: standalone)').matches;
+}
+
 export function signInAdmin() {
-    return signInWithPopup(auth, googleProvider);
+    return isMobileBrowser()
+        ? signInWithRedirect(auth, googleProvider)
+        : signInWithPopup(auth, googleProvider);
 }
 
 export function signOutAdmin() {
     return signOut(auth);
 }
+
+// Surfaces a signInWithRedirect() error (e.g. the user backed out of the
+// Google account chooser) once the browser navigates back here — resolved
+// once at module load, mirroring adminReady's one-shot pattern. Consumed by
+// admin-auth.js's widget to show the same error UI a failed popup would.
+export const redirectResultReady = getRedirectResult(auth).catch(err => {
+    console.error('Redirect sign-in failed:', err);
+    throw err;
+});
 
 onAuthStateChanged(auth, user => {
     currentUser = user;

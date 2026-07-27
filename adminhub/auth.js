@@ -12,7 +12,7 @@
 // vice versa. Keeps its own richer page-level gate + session pill UI here
 // instead of the generic widget, since a whole-page lockout needs more than
 // a small sign-in button.
-import { signInAdmin, signOutAdmin, onAdminStateChange, getCurrentUser } from '../admin-auth-core.js';
+import { signInAdmin, signOutAdmin, onAdminStateChange, getCurrentUser, redirectResultReady } from '../admin-auth-core.js';
 
 // Resolves once with the signed-in user, the first time the account
 // actually matches OWNER_EMAIL. Keeps listening after that so the gate
@@ -41,6 +41,15 @@ export function requireAdminAuth() {
 
         const signInBtn = gate.querySelector('#admin-google-signin');
         const errorEl = gate.querySelector('#admin-auth-error');
+
+        // Surfaces a failed signInWithRedirect() (mobile) the same way a
+        // failed signInWithPopup() (desktop) already is via the catch block
+        // below.
+        redirectResultReady.catch(err => {
+            console.error(err);
+            errorEl.textContent = `Something went wrong (${err.code || err.message}) — try again.`;
+            errorEl.classList.remove('hidden');
+        });
 
         signInBtn.addEventListener('click', async () => {
             errorEl.classList.add('hidden');

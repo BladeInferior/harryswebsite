@@ -47,6 +47,12 @@ export async function ensureAdminSignedIn(actionLabel) {
             signInBtn.disabled = true;
             try {
                 const result = await signInAdmin();
+                // On mobile, signInAdmin() uses signInWithRedirect() instead
+                // of a popup — its promise resolves with no result as the
+                // page navigates away to Google, rather than with a
+                // UserCredential, so there's nothing to check here; the page
+                // is already on its way out.
+                if (!result) return;
                 if (result.user.email === OWNER_EMAIL) {
                     close(true);
                 } else {

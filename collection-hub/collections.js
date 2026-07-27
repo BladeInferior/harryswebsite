@@ -202,7 +202,7 @@ Promise.all([
     }
 
     if (typeof initUnsavedChangesSnapshot === "function") {
-        initUnsavedChangesSnapshot(JSON.stringify(items));
+        initUnsavedChangesSnapshot(JSON.stringify(items), COLLECTION.storageKey);
     }
 
     renderItems();
@@ -490,8 +490,14 @@ function refreshUnnamedDlcFilter() {
         addUnnamedDlcButton();
     } else {
         removeUnnamedDlcButton();
-        filterItems(searchInput.value);
     }
+
+    // Always re-filter, not just when the count drops to zero — otherwise a
+    // scan or a rename that changes *which* items have an unnamed DLC
+    // (without the total count hitting zero) leaves the "Unnamed DLC"
+    // filtered grid showing a stale set until some unrelated action forces
+    // a re-render.
+    filterItems(searchInput.value);
 }
 
 // completions only — checks the public GitHub listing of the completions
@@ -912,7 +918,7 @@ function getCurrentPageSize() {
 function saveItems() {
     const serialized = JSON.stringify(items);
     localStorage.setItem(COLLECTION.storageKey, serialized);
-    if (typeof markDirty === "function") markDirty(serialized);
+    if (typeof markDirty === "function") markDirty(serialized, COLLECTION.storageKey);
     updateModeUI();
 }
 
@@ -1435,6 +1441,15 @@ const dateInput = document.getElementById("item-date");
 const customInput = document.getElementById("item-custom");
 const tagsInput = document.getElementById("item-tags");
 
+// Quick-fill button next to the date field (not present on popfigures,
+// whose #item-date is a repurposed free-text variant field, not a real
+// date) — sets it to today's local calendar date, not UTC, so it doesn't
+// go off by one near midnight.
+document.getElementById("item-date-today")?.addEventListener("click", () => {
+    const d = new Date();
+    dateInput.value = new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+});
+
 // OPEN MODAL
 document.getElementById("add-item").addEventListener("click", () => {
 
@@ -1697,7 +1712,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
             const result = await res.json();
 
             if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved(snapshotData);
+                if (typeof markSaved === "function") markSaved(snapshotData, COLLECTION.storageKey);
                 alert(`✅ ${COLLECTION.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -1725,7 +1740,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    if (typeof markSaved === "function") markSaved(snapshotData);
+    if (typeof markSaved === "function") markSaved(snapshotData, COLLECTION.storageKey);
 });
 
 /* earlier filterItems placeholder — implementation below */

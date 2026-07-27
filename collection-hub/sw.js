@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v2';
+const CACHE_VERSION = 'collection-hub-v3';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -31,6 +31,7 @@ const SHELL_URLS = [
     'cards.js',
     'pokedexes.js',
     'collections.js',
+    'milestones.js',
     'style.css',
     '../navbar.css',
     '../navbar.html',
@@ -42,6 +43,7 @@ const SHELL_URLS = [
     'cards-stadiums-backup.json',
     'cards-trainers-backup.json',
     'completions-backup.json',
+    'milestones-backup.json',
     'fullPokemonList.json',
     'pokedex-backup.json',
     'popfigures-backup.json',
@@ -139,8 +141,19 @@ async function networkFirst(request) {
         }
         return response;
     } catch (err) {
-        const cached = await caches.match(request);
-        if (cached) return cached;
+        // Check RUNTIME_CACHE (whatever was actually fetched live, most
+        // recently) before falling back to SHELL_CACHE's install-time
+        // snapshot — an unscoped caches.match() here would silently prefer
+        // whichever cache happened to be opened first (SHELL_CACHE, at
+        // install), serving stale *-backup.json data offline even when a
+        // newer copy was already fetched and cached during this same
+        // browsing session.
+        const runtimeCached = await caches.open(RUNTIME_CACHE).then(c => c.match(request));
+        if (runtimeCached) return runtimeCached;
+
+        const shellCached = await caches.open(SHELL_CACHE).then(c => c.match(request));
+        if (shellCached) return shellCached;
+
         throw err;
     }
 }

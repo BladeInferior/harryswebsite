@@ -27,6 +27,13 @@
 
     <h1>Completions</h1>
 
+    <div id="deck-tabs">
+        <button id="tab-completions-btn" type="button" class="deck-tab-btn deck-tab-active">Completions</button>
+        <button id="tab-milestones-btn" type="button" class="deck-tab-btn">Milestones</button>
+    </div>
+
+    <div id="completions-view">
+
     <!-- =========================
         SEARCH
     ========================== -->
@@ -40,10 +47,10 @@
     <button id="untagged-filter" class="filter-relocating">Untagged</button>
 
     <!-- =========================
-        MODE + PAGINATION 
+        MODE + PAGINATION
     ========================== -->
 
-    
+
     <div id="page-controls">
 
         <button id="list-mode">List Mode</button>
@@ -71,6 +78,85 @@
     ========================== -->
     <div id="box-container"></div>
 
+    </div>
+
+    <!-- =========================
+        MILESTONES (separate, self-contained tab — just a name + image per
+        card, no owned/special/DLC. See milestones.js.)
+    ========================== -->
+    <div id="milestones-view" class="hidden">
+
+        <div id="milestones-controls">
+            <button id="add-milestone">Add Milestone</button>
+            <input type="file" id="import-milestones" accept=".json" hidden>
+            <button id="import-milestones-button">Import</button>
+            <button id="export-milestones">Export</button>
+        </div>
+
+        <div id="milestones-container"></div>
+
+    </div>
+
+    <div id="add-milestone-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2 id="milestone-modal-title-text">Add Milestone</h2>
+
+            <div id="milestone-item-error" class="hidden"></div>
+
+            <label>
+                Name
+                <input type="text" id="milestone-title">
+            </label>
+
+            <label id="milestone-position-row">
+                Insert at position (blank = end)
+                <input type="number" id="milestone-position" min="1">
+            </label>
+
+            <div class="modal-buttons">
+                <button id="save-milestone">Save</button>
+                <button id="cancel-milestone">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="milestone-modal-overlay" class="hidden">
+
+        <div id="milestone-modal-nav-left" class="modal-nav">◀</div>
+
+        <div id="milestone-modal">
+
+            <div id="milestone-modal-close" class="modal-close-btn">✕</div>
+
+            <div class="modal-left">
+
+                <div id="milestone-modal-name"></div>
+
+                <img id="milestone-modal-image" src="">
+
+            </div>
+
+            <div class="modal-right">
+
+                <div class="item-actions">
+
+                    <button id="edit-milestone" class="item-action-btn">Edit Milestone</button>
+                    <button id="delete-milestone" class="item-action-btn danger">Delete Milestone</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="milestone-modal-nav-right" class="modal-nav">▶</div>
+
+    </div>
+
     <div id="add-item-modal" class="hidden">
 
         <div class="add-item-box">
@@ -87,6 +173,7 @@
             <label>
                 Completion Date
                 <input type="date" id="item-date">
+                <button type="button" id="item-date-today" class="today-btn">Today</button>
             </label>
 
             <label>
@@ -291,6 +378,7 @@
     <script src="mobile-popout.js"></script>
     <script src="unsaved-changes.js"></script>
     <script src="collections.js"></script>
+    <script src="milestones.js"></script>
 
 <script src="../scroll-to-top.js"></script>
 <script type="module" src="../admin-auth.js"></script>
