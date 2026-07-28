@@ -27,7 +27,8 @@
         .then(data => {
             document.getElementById('navbar').innerHTML = data;
 
-            document.querySelector('.site-nav').classList.add('home-theme');
+            const nav = document.querySelector('.site-nav');
+            nav.classList.add('home-theme');
 
             const basePath =
                 window.location.hostname === "bladeinferior.github.io"
@@ -36,6 +37,30 @@
 
             document.querySelectorAll('#navbar [data-page]').forEach(link => {
                 link.href = basePath + link.dataset.page;
+            });
+
+            // Mobile dropdown toggle — mirrors collection-nav.js/quiz-nav.js/
+            // admin-nav.js's identical pattern, since the homepage builds its
+            // own navbar wiring inline instead of a shared per-hub nav script.
+            const linksContainer = nav.querySelector('.site-nav-links');
+
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'nav-toggle';
+            toggleBtn.textContent = '☰';
+            toggleBtn.setAttribute('aria-label', 'Toggle navigation menu');
+
+            nav.insertBefore(toggleBtn, linksContainer);
+
+            toggleBtn.addEventListener('click', () => {
+                linksContainer.classList.toggle('open');
+                toggleBtn.textContent = linksContainer.classList.contains('open') ? '✕' : '☰';
+            });
+
+            linksContainer.querySelectorAll('a').forEach(a => {
+                a.addEventListener('click', () => {
+                    linksContainer.classList.remove('open');
+                    toggleBtn.textContent = '☰';
+                });
             });
         });
     </script>

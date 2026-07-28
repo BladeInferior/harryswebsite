@@ -1897,8 +1897,8 @@ body::before {
     padding: 6px 10px;
     border-radius: 8px;
 
-    background: #2d2d2d;
-    border: 1px solid #555;
+    background: var(--surface);
+    border: 1px solid var(--accent);
     color: white;
     text-decoration: none;
 
@@ -2108,6 +2108,16 @@ body::before {
         grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
         max-width: 100% !important;
         padding: 12px !important;
+        /* A heavily-filtered result set can be just one short row — without
+           a floor, the grid (and the page under it) collapses to fit that,
+           and the fixed #item-count-label pill at the bottom of the
+           viewport ends up sitting over the last row of cards instead of
+           floating clear beneath them like it does when there are enough
+           results to fill the screen. Reserve the same vertical room a full
+           results view would have regardless of how few cards are actually
+           showing. */
+        min-height: calc(100dvh - 250px) !important;
+        padding-bottom: 70px !important;
     }
 
     .pokemon-card img {
@@ -2193,7 +2203,11 @@ body::before {
         /* top set inline per-instance by mobile-popout.js */
         right: 16px;
         left: 16px;
-        max-height: calc(100vh - 200px);
+        /* dvh, not vh — vh is the browser's nominal (toolbar-collapsed)
+           viewport, which overshoots the actually-visible area on a short
+           page where the toolbar never collapses, letting the panel's
+           bottom edge run under the browser's own chrome. */
+        max-height: calc(100dvh - 200px);
         overflow-y: auto;
 
         background: #1c1f26;

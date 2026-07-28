@@ -485,4 +485,30 @@ footer{
     .card-grid {
         grid-template-columns: 1fr;
     }
+
+    /* "Latest" (.feed-sidebar) is first in the DOM so it can be a sticky
+       side column on wider screens, but on a phone it should read as a
+       section directly under Explore instead of above it — order alone
+       reshuffles the visual position without touching the markup. */
+    .feed-sidebar {
+        order: 2;
+    }
+
+    .page-main {
+        order: 1;
+    }
+
+    .feed-heading {
+        text-align: center;
+    }
+
+    /* Only one feed item exists right now, so the horizontal-scroll row it
+       sits in (see the 1024px block above) would otherwise leave it
+       flush-left in the available width instead of centered like the rest
+       of the mobile layout. Still correct once more items are added: a row
+       narrower than the viewport stays centered, and a row that overflows
+       still scrolls normally from its natural left edge. */
+    .feed-scroll {
+        justify-content: center;
+    }
 }

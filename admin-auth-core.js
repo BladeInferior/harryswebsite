@@ -16,6 +16,8 @@ import {
     signInWithPopup,
     signInWithRedirect,
     getRedirectResult,
+    setPersistence,
+    indexedDBLocalPersistence,
     signOut
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js';
 
@@ -77,10 +79,24 @@ function isMobileBrowser() {
         || window.matchMedia('(display-mode: standalone)').matches;
 }
 
+// signInWithRedirect() has to survive a full navigation away to Google and
+// back, so the "we're in the middle of a redirect" state it relies on needs
+// to be written somewhere durable across that navigation — but getAuth()
+// can silently fall back to in-memory persistence in some mobile contexts
+// (private browsing, certain WebViews, storage-partitioned browsers), which
+// doesn't survive leaving the page at all. That produces exactly "the
+// auth handler flashes and bounces straight back before the account picker
+// ever shows" (Google's chooser is never reached, because Firebase's own
+// handler page found no pending redirect to resume). Pin it to indexedDB
+// explicitly before the redirect starts so the round trip has something to
+// come back to.
 export function signInAdmin() {
-    return isMobileBrowser()
-        ? signInWithRedirect(auth, googleProvider)
-        : signInWithPopup(auth, googleProvider);
+    if (isMobileBrowser()) {
+        return setPersistence(auth, indexedDBLocalPersistence)
+            .catch(() => {}) // fall through to the redirect attempt either way
+            .then(() => signInWithRedirect(auth, googleProvider));
+    }
+    return signInWithPopup(auth, googleProvider);
 }
 
 export function signOutAdmin() {

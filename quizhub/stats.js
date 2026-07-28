@@ -11,7 +11,8 @@ import {
     query,
     orderBy,
     increment,
-    serverTimestamp
+    serverTimestamp,
+    Timestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
 import { ensureAdminSignedIn } from './admin-gate.js';
 import { onAdminStateChange } from '../admin-auth-core.js';
@@ -296,6 +297,7 @@ const addManualEntryBtn = document.getElementById('add-manual-entry-btn');
 const manualEntryModal = document.getElementById('manual-entry-modal');
 const manualEntryError = document.getElementById('manual-entry-error');
 const manualEntryQuizNameInput = document.getElementById('manual-entry-quiz-name');
+const manualEntryDateInput = document.getElementById('manual-entry-date');
 const manualEntryPlayers = document.getElementById('manual-entry-players');
 const manualEntryAddPlayerBtn = document.getElementById('manual-entry-add-player-btn');
 const saveManualEntryBtn = document.getElementById('save-manual-entry-btn');
@@ -306,12 +308,37 @@ addManualEntryBtn.addEventListener('click', async () => {
 
     manualEntryError.hidden = true;
     manualEntryQuizNameInput.value = '';
+    manualEntryDateInput.value = todayAsDateInputValue();
     manualEntryPlayers.innerHTML = '';
     addManualEntryPlayerRow();
     addManualEntryPlayerRow();
     manualEntryModal.hidden = false;
     manualEntryQuizNameInput.focus();
 });
+
+// Defaults the date picker to today (same as the old serverTimestamp()-only
+// behavior) while still landing on a real <input type="date"> value the
+// admin can wind back to whenever the quiz actually happened.
+function todayAsDateInputValue() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// <input type="date"> values ("YYYY-MM-DD") parse as UTC midnight if handed
+// straight to `new Date(...)`, which can land on the wrong day once
+// formatDate() re-renders it in the viewer's own local timezone. Building
+// the Date from its own local year/month/day components (at noon, clear of
+// any DST transition) keeps it pinned to the calendar day the admin actually
+// picked, regardless of timezone.
+function parseManualEntryDate(value) {
+    if (!value) return null;
+    const [year, month, day] = value.split('-').map(Number);
+    if (!year || !month || !day) return null;
+    return new Date(year, month - 1, day, 12, 0, 0);
+}
 
 manualEntryAddPlayerBtn.addEventListener('click', () => addManualEntryPlayerRow());
 
@@ -372,6 +399,9 @@ saveManualEntryBtn.addEventListener('click', async () => {
         return;
     }
 
+    const parsedDate = parseManualEntryDate(manualEntryDateInput.value);
+    const playedAt = parsedDate ? Timestamp.fromDate(parsedDate) : serverTimestamp();
+
     saveManualEntryBtn.disabled = true;
 
     try {
@@ -387,7 +417,7 @@ saveManualEntryBtn.addEventListener('click', async () => {
         await addDoc(collection(db, 'quizResults'), {
             quizId: null,
             quizTitle,
-            playedAt: serverTimestamp(),
+            playedAt,
             players: resultPlayers,
             comboKey: computeComboKey(resultPlayers.map(p => p.name)),
             manualEntry: true

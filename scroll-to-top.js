@@ -6,11 +6,13 @@
     style.textContent = `
         /* Uses --surface/--border/--accent where the current page defines
            them (collection-hub's mint green, adminhub's red border/accent —
-           see their respective style.css :root blocks) so this one shared
-           script picks up the page's own theme instead of looking bolted
-           on. Falls back to the original flat grey/gold on pages that don't
-           define those variables at all (quizhub uses different variable
-           names entirely, and the homepage doesn't theme this at all). */
+           see their respective style.css :root blocks), falling through to
+           each other hub's differently-named equivalents (homepage and
+           quizhub both use --card/--gold instead of --surface/--accent, and
+           never define --border at all) before finally landing on the flat
+           grey/gold literals as a last resort — so this one shared script
+           always picks up whichever page it's on actually calls its theme
+           colors, instead of only working on collection-hub/adminhub. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -20,9 +22,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--surface, #2d2d2d);
-            border: 1px solid var(--border, #555);
-            color: var(--accent, gold);
+            background: var(--surface, var(--card, #2d2d2d));
+            border: 1px solid var(--border, #333);
+            color: var(--accent, var(--gold, gold));
             font-size: 18px;
             align-items: center;
             justify-content: center;
@@ -37,7 +39,7 @@
            no pointer to actually leave the element afterward. */
         @media (hover: hover) and (pointer: fine) {
             #scroll-to-top-btn:hover {
-                border-color: var(--accent, gold);
+                border-color: var(--accent, var(--gold, gold));
                 background: rgba(255,255,255,.08);
             }
         }

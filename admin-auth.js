@@ -10,13 +10,23 @@ import { onAdminStateChange, signInAdmin, signOutAdmin, redirectResultReady } fr
 // ../navbar.css) so the widget doesn't look like a foreign element bolted
 // onto the page — determined from the URL rather than waiting on the
 // navbar's own async fetch()-and-inject, which may not have finished (or
-// even started) by the time this widget first renders.
+// even started) by the time this widget first renders. The rgb triplet
+// alongside each hex is for the pill button's tinted background (see
+// --gaa-accent-rgb below) — same rgba()-from-hex pattern collection-hub's
+// own style.css already uses for --accent/--accent-rgb.
+// Each hub's *strong* navbar shade, not its paler one (e.g. quiz-theme's
+// logo is the paler #c084fc, but its actual interactive/hover fill is the
+// more saturated #a855f7; same split for admin-theme's #f87171 logo vs
+// #ef4444 hover) — collection-theme and home-theme only ever had one shade
+// to begin with. Using the strong tier here is what makes this widget's
+// pill match adminhub's own #admin-session-pill in color strength, which
+// also always uses its strong --accent (#ef4444), not --accent-light.
 function getPageAccent() {
     const path = window.location.pathname;
-    if (path.includes('/collection-hub/')) return '#4ade80'; // collection-theme
-    if (path.includes('/quizhub/')) return '#c084fc';        // quiz-theme
-    if (path.includes('/adminhub/')) return '#f87171';       // admin-theme
-    return '#d4af37';                                        // home-theme
+    if (path.includes('/collection-hub/')) return { hex: '#4ade80', rgb: '74, 222, 128' };   // collection-theme
+    if (path.includes('/quizhub/')) return { hex: '#a855f7', rgb: '168, 85, 247' };           // quiz-theme
+    if (path.includes('/adminhub/')) return { hex: '#ef4444', rgb: '239, 68, 68' };           // admin-theme
+    return { hex: '#d4af37', rgb: '212, 175, 55' };                                           // home-theme
 }
 
 function mountWidget() {
@@ -69,7 +79,11 @@ function mountWidget() {
             padding: 6px 8px 6px 14px;
             background: rgba(20, 20, 20, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(6px);
+            /* Matches adminhub's own #admin-session-pill exactly (same
+               padding/gap/radius/shadow, no blur) so the signed-in pill is
+               identical in size, shape and position everywhere — only the
+               accent color varies per page. */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .4);
             color: #bdbdbd;
         }
 
@@ -89,7 +103,10 @@ function mountWidget() {
             font-size: 12px;
             border-radius: 999px;
             border-color: var(--gaa-accent, #86efac);
-            background: transparent;
+            /* Tinted by default (not just on hover) — matches adminhub's own
+               #admin-session-pill button (adminhub/style.css), which always
+               has a faint tinted fill even before hovering. */
+            background: rgba(var(--gaa-accent-rgb, 134, 239, 172), 0.15);
             color: var(--gaa-accent, #86efac);
         }
 
@@ -103,6 +120,7 @@ function mountWidget() {
            blend in, it should stand out as "something's wrong here". */
         #admin-auth-widget .gaa-pill.gaa-wrong-account button {
             border-color: #f87171;
+            background: rgba(248, 113, 113, 0.15);
             color: #f87171;
         }
 
@@ -131,6 +149,19 @@ function mountWidget() {
                 bottom: 10px;
                 right: 10px;
             }
+
+            /* The full "🔒 Admin Sign-In" label eats a big chunk of a phone
+               screen's width sitting bottom-right — collapse it down to just
+               the lock icon there; the label still reads fine as a title
+               attribute (tooltip) and returns once the screen is wide enough. */
+            #admin-auth-widget .gaa-signin-label {
+                display: none;
+            }
+
+            #admin-auth-widget .gaa-signin-btn {
+                padding: 8px 10px;
+                font-size: 16px;
+            }
         }
     `;
     document.head.appendChild(style);
@@ -138,7 +169,9 @@ function mountWidget() {
     const widget = document.createElement('div');
     widget.id = 'admin-auth-widget';
     widget.style.position = 'fixed';
-    widget.style.setProperty('--gaa-accent', getPageAccent());
+    const pageAccent = getPageAccent();
+    widget.style.setProperty('--gaa-accent', pageAccent.hex);
+    widget.style.setProperty('--gaa-accent-rgb', pageAccent.rgb);
     document.body.appendChild(widget);
 
     function render(isAdmin, user) {
@@ -185,7 +218,9 @@ function mountWidget() {
 
         const signInBtn = document.createElement('button');
         signInBtn.type = 'button';
-        signInBtn.textContent = '🔒 Admin Sign-In';
+        signInBtn.className = 'gaa-signin-btn';
+        signInBtn.title = 'Admin Sign-In';
+        signInBtn.innerHTML = '🔒<span class="gaa-signin-label"> Admin Sign-In</span>';
 
         signInBtn.addEventListener('click', async () => {
             signInBtn.disabled = true;
