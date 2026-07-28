@@ -1558,15 +1558,18 @@ body.page-mode #page-controls {
     align-items: center;
 }
 
+/* Title stacked above all three DLC action buttons (Delete DLC / Edit Order
+   / Add DLC), rather than the title being sandwiched between them — every
+   button below shares one look (.dlc-action-btn) instead of "Delete DLC"
+   having its own style separate from the other two. */
 .dlc-header {
-    position: relative;
-
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 10px;
 
     width: 100%;
-    margin-bottom: 0px;
+    margin-bottom: 8px;
 }
 
 .dlc-header h3 {
@@ -1579,51 +1582,32 @@ body.page-mode #page-controls {
     text-align: center;
 }
 
-
-.completions-page .dlc-header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 8px;
-}
-
-.completions-page .dlc-header h3 {
-    margin: 0;
-    text-align: center;
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.dlc-header-right {
-    /* A normal grid item (not absolutely positioned) so its width is
-       actually reserved by the header's 1fr/auto/1fr grid — with two
-       buttons in here now instead of one, absolute positioning let it
-       overlap the centered "DLCs" title instead of pushing the grid's
-       column widths out to make room. */
-    justify-self: end;
-
+.dlc-header-buttons {
     display: flex;
+    justify-content: center;
     gap: 8px;
+
+    /* Explicit full width (matching .dlc-header's own) rather than relying
+       on shrink-to-fit sizing here — makes the title's centered line up
+       with the actual midpoint of this row instead of two independently
+       auto-sized flex children that only coincidentally share a center. */
+    width: 100%;
 }
 
-#add-dlc-btn,
-#reorder-dlcs-btn {
+.dlc-action-btn {
     padding: 6px 10px;
     border-radius: 6px;
-    border: 1px solid #555;
+    border: 1px solid var(--border);
 
-    background: #2d2d2d;
+    background: var(--surface-2);
     color: white;
 
     cursor: pointer;
-
-    width: auto;
 }
 
-#add-dlc-btn:hover,
-#reorder-dlcs-btn:hover {
-    background: #3a3a3a;
+.dlc-action-btn:hover {
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.15);
 }
 
 .dlc-thumb {
@@ -1746,21 +1730,6 @@ body.page-mode #page-controls {
 
     width: 100%;
     justify-items: center;
-}
-
-.dlc-delete-btn {
-    justify-self: start;
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--surface-2);
-    color: white;
-    cursor: pointer;
-}
-
-.dlc-delete-btn:hover {
-    border-color: var(--accent);
-    background: rgba(var(--accent-rgb), 0.15);
 }
 
 #delete-dlc-modal {
@@ -1888,6 +1857,20 @@ body::before {
 
 .page-content {
     padding-top: 60px;
+}
+
+/* Matches the homepage's footer (the fullest version of this site-wide
+   convention — quizhub/adminhub use the same base three properties but
+   without the separator) — collection-hub's own stylesheet never had a
+   `footer` rule at all, so <footer>Collection Hub</footer> (added straight
+   into the HTML with no matching CSS) was rendering with the browser's
+   unstyled default: full-width, no padding, default black text. */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    margin-top: 20px;
 }
 
 .back-button {
