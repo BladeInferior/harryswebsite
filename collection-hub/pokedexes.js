@@ -1,5 +1,7 @@
 let savedDexData = {};
 let shinyEditModeFlag = false;
+let pogoShinyModeFlag = false;
+let pogoShinyFilter = null; // null | true (Shiny) | false (Not Shiny) — PoGo Dex only, replaces the S&S game filter row
 let gameFilterState = {};
 let allPokemon = [];
 let cardMap = new Map();
@@ -59,6 +61,7 @@ Promise.all([
             tradeDex: !!entry.tradeDex,
             wonderTradeDex: !!entry.wonderTradeDex,
             pogoDex: !!entry.pogoDex,
+            pogoShiny: !!entry.pogoShiny,
             cherishDex: !!entry.cherishDex,
 
             shinyDex: !!entry.shinyDex,
@@ -85,7 +88,16 @@ Promise.all([
             savedDexData = JSON.parse(localRaw);
 
             Object.keys(sourceDexData).forEach(key => {
-                if (!(key in savedDexData)) savedDexData[key] = sourceDexData[key];
+                if (!(key in savedDexData)) {
+                    savedDexData[key] = sourceDexData[key];
+                } else if (!("pogoShiny" in savedDexData[key])) {
+                    // pogoShiny was added after this pokemon's local record
+                    // was first saved — default it in place so the
+                    // unsaved-changes snapshot already includes it, instead
+                    // of the first shiny toggle silently adding the key and
+                    // still reading as "unsaved" even after toggling it back off.
+                    savedDexData[key].pogoShiny = false;
+                }
             });
         } catch {
             savedDexData = sourceDexData;
@@ -105,6 +117,9 @@ Promise.all([
     updateProgress();
     updateCardHighlights();
     updateMissingButtonHighlight();
+    updatePogoShinyModeButtonUI();
+    updatePogoFilterRowVisibility();
+    updatePogoShinyFilterHighlight();
 
     updateModeUI();
 });
@@ -146,6 +161,15 @@ function getPokemonSpritePath(name, useShiny = false) {
 
 function shouldShowShinyCardSprites() {
     return activeDexEdit === "shinyDex";
+}
+
+// A card renders with its shiny sprite either while Shiny Dex edit mode
+// forces every card shiny (shouldShowShinyCardSprites), or permanently once
+// that individual pokemon has been marked shiny in the PoGo Dex — the shiny
+// sprite itself is the "this one's shiny" indicator, so it has to persist
+// outside of PoGo Shiny Mode too, not just while actively toggling it.
+function useShinySpriteFor(key) {
+    return shouldShowShinyCardSprites() || !!savedDexData[key]?.pogoShiny;
 }
 
 function toggleShinyDex(pokemonKey) {
@@ -205,12 +229,13 @@ function createPokemonCards(pokemonList) {
     pokemonList.forEach((pokemon) => {
 
         const name = pokemon.name;
+        const cardKey = normalizeName(name);
 
         const card = document.createElement("div");
         card.classList.add("pokemon-card");
 
         card.innerHTML = `
-            <img loading="lazy" src="${getPokemonSpritePath(name, shouldShowShinyCardSprites())}">
+            <img loading="lazy" src="${getPokemonSpritePath(name, useShinySpriteFor(cardKey))}">
             <div class="pokemon-name">${name}</div>
             <div class="shiny-plus">➕</div>
         `;
@@ -246,6 +271,25 @@ function createPokemonCards(pokemonList) {
             // EDIT MODE → SPECIAL SHINYDEX BEHAVIOUR
             // =====================================================
             if (activeDexEdit) {
+
+                // -----------------------------
+                // POGO DEX SHINY MODE → TOGGLE SHINY, FLIP THE SPRITE
+                // Clicking a pokemon already in the PoGo Dex flips its shiny
+                // flag and swaps the card's sprite to match — that's the only
+                // feedback needed, no modal. Clicking one that isn't caught
+                // yet does nothing (turn Shiny Mode off to get back to
+                // normal add/remove).
+                // -----------------------------
+                if (activeDexEdit === "pogoDex" && pogoShinyModeFlag) {
+
+                    if (!pokemonData.pogoDex) return;
+
+                    pokemonData.pogoShiny = !pokemonData.pogoShiny;
+                    savedDexData[key] = pokemonData;
+                    saveData();
+
+                    return;
+                }
 
                 // -----------------------------
                 // NORMAL DEX TOGGLES (master/trade/etc)
@@ -311,6 +355,30 @@ function createPokemonCards(pokemonList) {
         });
     });
 }
+
+
+// ---------------------------
+// POGO DEX SHINY MODE BUTTON (lives in #page-controls, PoGo Dex only)
+// ---------------------------
+function updatePogoShinyModeButtonUI() {
+
+    const btn = document.getElementById("pogo-shiny-mode-btn");
+    if (!btn) return;
+
+    const isPogoEdit = activeDexEdit === "pogoDex";
+
+    btn.classList.toggle("hidden", !isPogoEdit);
+    btn.classList.toggle("active-mode", pogoShinyModeFlag);
+}
+
+document.getElementById("pogo-shiny-mode-btn").addEventListener("click", () => {
+
+    if (activeDexEdit !== "pogoDex") return;
+
+    pogoShinyModeFlag = !pogoShinyModeFlag;
+
+    updatePogoShinyModeButtonUI();
+});
 
 
 // ---------------------------
@@ -467,7 +535,19 @@ function applyFilters() {
             return getCompletionColor(name) === selectedCompletionFilter;
         })();
 
-        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion) {
+        // PoGo Dex only — replaces the S&S game filter there (see
+        // updatePogoFilterRowVisibility). A no-op outside PoGo Dex edit mode.
+        const matchesPogoShiny = (() => {
+
+            if (activeDexEdit !== "pogoDex") return true;
+            if (pogoShinyFilter === null) return true;
+
+            const isShiny = !!(savedDexData[key] || {}).pogoShiny;
+
+            return pogoShinyFilter === true ? isShiny : !isShiny;
+        })();
+
+        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
@@ -648,6 +728,8 @@ searchInput.addEventListener("input", (e) => {
 const clearBtn = document.getElementById("clear-search");
 let missingFilterBtn = null;
 let notMissingFilterBtn = null;
+let pogoShinyFilterYesBtn = null;
+let pogoShinyFilterNoBtn = null;
 
 clearBtn.addEventListener("click", () => {
 
@@ -674,6 +756,26 @@ function updateMissingButtonHighlight() {
     // forces one immediately, so the highlight updates the instant it's tapped
     // instead of only catching up once the popout itself repaints (e.g. on close).
     void missingFilterBtn.offsetHeight;
+}
+
+function updatePogoShinyFilterHighlight() {
+    if (!pogoShinyFilterYesBtn || !pogoShinyFilterNoBtn) return;
+
+    pogoShinyFilterYesBtn.classList.toggle("game-filter-active", pogoShinyFilter === true);
+    pogoShinyFilterNoBtn.classList.toggle("game-filter-active", pogoShinyFilter === false);
+}
+
+// Swaps the Shiny/Not Shiny row in for Sword & Shield's while PoGo Dex is
+// being edited, and back when it isn't — see createFilterButtons() for why
+// they share a DOM slot instead of each having their own.
+function updatePogoFilterRowVisibility() {
+    const swshRow = document.getElementById("swsh-filter-row");
+    const pogoShinyRow = document.getElementById("pogo-shiny-filter-row");
+    if (!swshRow || !pogoShinyRow) return;
+
+    const isPogoEdit = activeDexEdit === "pogoDex";
+    swshRow.classList.toggle("hidden", isPogoEdit);
+    pogoShinyRow.classList.toggle("hidden", !isPogoEdit);
 }
 
 
@@ -734,6 +836,26 @@ document.addEventListener("click", (e) => {
             shinyEditModeFlag = true;
         }
     }
+
+    // Shiny Mode only makes sense while PoGo Dex itself is being edited —
+    // leaving it (switching to another dex, or turning edit mode off
+    // entirely) resets the flag so re-entering PoGo Dex edit always starts
+    // in normal add/remove mode.
+    if (activeDexEdit !== "pogoDex") {
+        pogoShinyModeFlag = false;
+
+        if (pogoShinyFilter !== null) {
+            pogoShinyFilter = null;
+        }
+    } else {
+        // The Shiny/Not Shiny filter row replaces Sword & Shield's while
+        // editing PoGo Dex — clear any leftover S&S filter so it doesn't
+        // keep silently narrowing results once its row is no longer shown.
+        delete gameFilterState.swsh;
+    }
+    updatePogoShinyModeButtonUI();
+    updatePogoFilterRowVisibility();
+    updatePogoShinyFilterHighlight();
 
     // Comparing against the resulting activeDexEdit (not just dexType)
     // matters for turning editing OFF: clicking the same dex again sets
@@ -852,6 +974,12 @@ function updateCardHighlights() {
 
         const key = normalizeName(name);
         const data = savedDexData[key] || {};
+
+        // -----------------------------
+        // SPRITE (shiny once flagged, regardless of current mode)
+        // -----------------------------
+        const img = card.querySelector("img");
+        if (img) img.src = getPokemonSpritePath(name, useShinySpriteFor(key));
 
         // -----------------------------
         // RESET CLASSES
@@ -1025,11 +1153,53 @@ function createFilterButtons() {
 
         const row = document.createElement("div");
         row.classList.add("filter-row");
+        if (game.key === "swsh") row.id = "swsh-filter-row";
 
         row.appendChild(includeBtn);
         row.appendChild(excludeBtn);
 
         container.appendChild(row);
+
+        // The Shiny/Not Shiny filter sits directly after Sword & Shield's
+        // row in the DOM and swaps visibility with it while PoGo Dex is
+        // being edited (see updatePogoFilterRowVisibility) — S&S is
+        // meaningless there, and PoGo doesn't have per-game filters of its
+        // own, so this reuses that slot instead of adding a new one.
+        if (game.key === "swsh") {
+
+            const pogoShinyRow = document.createElement("div");
+            pogoShinyRow.id = "pogo-shiny-filter-row";
+            pogoShinyRow.classList.add("filter-row", "hidden");
+
+            pogoShinyFilterYesBtn = document.createElement("button");
+            pogoShinyFilterYesBtn.textContent = "Shiny ✔";
+            pogoShinyFilterYesBtn.classList.add("game-filter-btn", "include-btn");
+
+            pogoShinyFilterYesBtn.addEventListener("click", () => {
+                pogoShinyFilter = pogoShinyFilter === true ? null : true;
+                applyFilters();
+                scrollResultsToTop();
+                updatePogoShinyFilterHighlight();
+                if (pageMode) applyPagination();
+            });
+
+            pogoShinyFilterNoBtn = document.createElement("button");
+            pogoShinyFilterNoBtn.textContent = "Not Shiny ✖";
+            pogoShinyFilterNoBtn.classList.add("game-filter-btn", "exclude-btn");
+
+            pogoShinyFilterNoBtn.addEventListener("click", () => {
+                pogoShinyFilter = pogoShinyFilter === false ? null : false;
+                applyFilters();
+                scrollResultsToTop();
+                updatePogoShinyFilterHighlight();
+                if (pageMode) applyPagination();
+            });
+
+            pogoShinyRow.appendChild(pogoShinyFilterYesBtn);
+            pogoShinyRow.appendChild(pogoShinyFilterNoBtn);
+
+            container.appendChild(pogoShinyRow);
+        }
     });
 
     // -----------------------------
@@ -1166,6 +1336,8 @@ function createFilterButtons() {
 
         activeDexEdit = null;
         shinyEditModeFlag = false;
+        pogoShinyModeFlag = false;
+        pogoShinyFilter = null;
 
         pageMode = false;
         currentPage = 1;
@@ -1185,6 +1357,9 @@ function createFilterButtons() {
         updateCardHighlights();
         updateProgress();
         updateModeUI();
+        updatePogoShinyModeButtonUI();
+        updatePogoFilterRowVisibility();
+        updatePogoShinyFilterHighlight();
     });
 
     container.appendChild(resetBtn);
@@ -1369,12 +1544,10 @@ function applyPagination() {
 }
 
 function updateCardImages() {
-    const useShinySprites = shouldShowShinyCardSprites();
-
     cardMap.forEach((card, name) => {
         const img = card.querySelector("img");
         if (!img) return;
-        img.src = getPokemonSpritePath(name, useShinySprites);
+        img.src = getPokemonSpritePath(name, useShinySpriteFor(normalizeName(name)));
     });
 }
 
@@ -1420,6 +1593,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             tradeDex: !!data.tradeDex,
             wonderTradeDex: !!data.wonderTradeDex,
             pogoDex: !!data.pogoDex,
+            pogoShiny: !!data.pogoShiny,
             cherishDex: !!data.cherishDex,
 
             shinyDex: !!data.shinyDex,
@@ -1520,6 +1694,7 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
                     tradeDex: !!entry.tradeDex,
                     wonderTradeDex: !!entry.wonderTradeDex,
                     pogoDex: !!entry.pogoDex,
+                    pogoShiny: !!entry.pogoShiny,
                     cherishDex: !!entry.cherishDex,
 
                     shinyDex: !!entry.shinyDex,

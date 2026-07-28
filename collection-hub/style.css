@@ -1000,7 +1000,9 @@ body.page-mode #page-controls {
 }
 
 #unsaved-changes-overlay .unsaved-changes-box {
-    background: #2d2d2d;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
     padding: 20px;
     border-radius: 12px;
 
@@ -2447,3 +2449,4 @@ body::before {
     margin-top: 10px;
     width: 100%;
 }
+
