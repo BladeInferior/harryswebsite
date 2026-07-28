@@ -2091,15 +2091,12 @@ footer {
         grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)) !important;
         max-width: 100% !important;
         padding: 12px !important;
-        /* A heavily-filtered result set can be just one short row — without
-           a floor, the grid (and the page under it) collapses to fit that,
-           and the fixed #item-count-label pill at the bottom of the
-           viewport ends up sitting over the last row of cards instead of
-           floating clear beneath them like it does when there are enough
-           results to fill the screen. Reserve the same vertical room a full
-           results view would have regardless of how few cards are actually
-           showing. */
-        min-height: calc(100dvh - 250px) !important;
+        /* Just enough bottom buffer to clear the fixed #item-count-label
+           pill sitting at the bottom of the viewport — not a min-height,
+           which would stretch the grid to fill the screen even for a
+           heavily-filtered result set of two or three cards, leaving a
+           large dead gap under them instead of the pill simply floating
+           clear beneath a normally-sized short grid. */
         padding-bottom: 70px !important;
     }
 

@@ -4,15 +4,12 @@
 (function () {
     const style = document.createElement("style");
     style.textContent = `
-        /* Uses --surface/--border/--accent where the current page defines
-           them (collection-hub's mint green, adminhub's red border/accent —
-           see their respective style.css :root blocks), falling through to
-           each other hub's differently-named equivalents (homepage and
-           quizhub both use --card/--gold instead of --surface/--accent, and
-           never define --border at all) before finally landing on the flat
-           grey/gold literals as a last resort — so this one shared script
-           always picks up whichever page it's on actually calls its theme
-           colors, instead of only working on collection-hub/adminhub. */
+        /* One fixed look everywhere — this is a utility control, not a
+           themed page element, so it deliberately does NOT pick up each
+           page's own accent color (that was tried before and looked
+           inconsistent site-to-site). Hardcoded to collection-hub's palette
+           (its style.css :root: --surface/--border/--accent) so every page
+           renders byte-identical to how it already looks there. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -22,9 +19,9 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: var(--surface, var(--card, #2d2d2d));
-            border: 1px solid var(--border, #333);
-            color: var(--accent, var(--gold, gold));
+            background: #1c1f26;
+            border: 1px solid #2f3542;
+            color: #86efac;
             font-size: 18px;
             align-items: center;
             justify-content: center;
@@ -39,7 +36,7 @@
            no pointer to actually leave the element afterward. */
         @media (hover: hover) and (pointer: fine) {
             #scroll-to-top-btn:hover {
-                border-color: var(--accent, var(--gold, gold));
+                border-color: #86efac;
                 background: rgba(255,255,255,.08);
             }
         }
