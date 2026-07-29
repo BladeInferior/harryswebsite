@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v3';
+const CACHE_VERSION = 'collection-hub-v4';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -17,21 +17,21 @@ const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 // renders them, via the runtime cache-first handler below.
 const SHELL_URLS = [
     'manifest.json',
-    'cards.html',
+    'cards/cards.html',
     'collectionhub.html',
-    'pokedexes.html',
-    'popfigures.html',
-    'sleeves.html',
-    'steelbooks.html',
-    'pins.html',
-    'completions.html',
+    'pokedexes/pokedexes.html',
+    'popfigures/popfigures.html',
+    'sleeves/sleeves.html',
+    'steelbooks/steelbooks.html',
+    'pins/pins.html',
+    'completions/completions.html',
     'collection-nav.js',
     'mobile-popout.js',
-    'recent-set.js',
-    'cards.js',
-    'pokedexes.js',
+    'cards/recent-set.js',
+    'cards/cards.js',
+    'pokedexes/pokedexes.js',
     'collections.js',
-    'milestones.js',
+    'completions/milestones.js',
     'style.css',
     '../navbar.css',
     '../navbar.html',

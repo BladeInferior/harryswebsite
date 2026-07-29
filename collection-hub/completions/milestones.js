@@ -5,8 +5,13 @@
 // toggle, no DLC, no filters/search/pagination. A milestone is just a name
 // and an image.
 const MILESTONES_JSON_FILE = "milestones-backup.json";
+// Local fetch path — MILESTONES_JSON_FILE itself stays a bare filename since
+// it's also used as the GitHub export commit name and download attribute
+// further down. milestones-backup.json stays in collection-hub/ while this
+// page now lives one level down in collection-hub/completions/.
+const MILESTONES_JSON_PATH = "../milestones-backup.json";
 const MILESTONES_STORAGE_KEY = "milestones";
-const MILESTONES_IMAGE_FOLDER = "milestones";
+const MILESTONES_IMAGE_FOLDER = "../milestones";
 
 let milestoneItems = [];
 
@@ -35,7 +40,7 @@ const milestoneZoomImage = document.getElementById("zoom-image");
 // own localStorage, exactly like cards.js. Named uniquely for the same
 // redeclaration reason as above — collections.js already has its own
 // top-level adminAuthReady.
-const milestoneAdminAuthReady = import('../admin-auth-core.js');
+const milestoneAdminAuthReady = import('../../admin-auth-core.js');
 
 function normalizeMilestoneName(name) {
     return name.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -98,7 +103,7 @@ function setMilestoneImage(imgElement, name) {
 // LOAD
 // =========================
 function loadMilestones() {
-    return fetch(MILESTONES_JSON_FILE).then(res => res.json()).then(sourceList => {
+    return fetch(MILESTONES_JSON_PATH).then(res => res.json()).then(sourceList => {
 
         const local = localStorage.getItem(MILESTONES_STORAGE_KEY);
 

@@ -26,7 +26,7 @@ let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #
 // "paste a secret into localStorage via devtools" (exportAuthKey) approach
 // with just being signed in as the owner's Google account (bottom-right
 // widget from admin-auth.js), which works the same on any device.
-const adminAuthReady = import('../admin-auth-core.js');
+const adminAuthReady = import('../../admin-auth-core.js');
 
 const dexTypes = [
     { key: "masterDex", label: "MasterDex" },
@@ -72,8 +72,8 @@ function updateExportGlow() {
 }
 
 Promise.all([
-    fetch("fullPokemonList.json").then(res => res.json()),
-    fetch("pokedex-backup.json").then(res => res.json())
+    fetch("../fullPokemonList.json").then(res => res.json()),
+    fetch("../pokedex-backup.json").then(res => res.json())
 ])
 .then(([pokemonList, dexList]) => {
 
@@ -193,8 +193,8 @@ function isPogoRegional(name) {
 function getPokemonSpritePath(name, useShiny = false) {
     const fileName = `${imageName(name)}.png`;
     return useShiny
-        ? `sprites/pokemon_shiny_sprites/${fileName}`
-        : `sprites/pokemon_sprites/${fileName}`;
+        ? `../sprites/pokemon_shiny_sprites/${fileName}`
+        : `../sprites/pokemon_sprites/${fileName}`;
 }
 
 function shouldShowShinyCardSprites() {

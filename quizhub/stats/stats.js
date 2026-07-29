@@ -1,4 +1,4 @@
-import { db } from './firebase/firebase-config.js';
+import { db } from '../firebase/firebase-config.js';
 import {
     collection,
     getDocs,
@@ -14,8 +14,8 @@ import {
     serverTimestamp,
     Timestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
-import { ensureAdminSignedIn } from './admin-gate.js';
-import { onAdminStateChange } from '../admin-auth-core.js';
+import { ensureAdminSignedIn } from '../admin-gate.js';
+import { onAdminStateChange } from '../../admin-auth-core.js';
 
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabPanels = {

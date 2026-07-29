@@ -1,7 +1,7 @@
-import { db } from './firebase/firebase-config.js';
+import { db } from '../firebase/firebase-config.js';
 import { collection, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
-import { hashPassword } from './password-utils.js';
-import { downloadTemplate, parseFile, validateRows } from './import-questions.js';
+import { hashPassword } from '../password-utils.js';
+import { downloadTemplate, parseFile, validateRows } from '../import-questions.js';
 
 const titleInput = document.getElementById('quiz-title-input');
 const descInput = document.getElementById('quiz-description-input');
@@ -136,7 +136,7 @@ const editingQuizId = params.get('quiz');
 let activeQuizId = editingQuizId;
 
 if (editingQuizId) {
-    document.getElementById('back-button-link').href = 'manage-quizzes.html';
+    document.getElementById('back-button-link').href = '../manage-quizzes/manage-quizzes.html';
     loadQuizForEditing(editingQuizId);
 } else {
     renderCategories();
@@ -1093,7 +1093,7 @@ saveQuizBtn.addEventListener('click', async () => {
         if (!activeQuizId) {
             activeQuizId = quizId;
             existingPasswordHash = editPasswordHash;
-            document.getElementById('back-button-link').href = 'manage-quizzes.html';
+            document.getElementById('back-button-link').href = '../manage-quizzes/manage-quizzes.html';
             document.querySelector('.hero h1').textContent = '🛠️ Edit Quiz';
             saveQuizBtn.textContent = 'Save Changes';
             history.replaceState(null, '', `builder.html?quiz=${encodeURIComponent(quizId)}`);

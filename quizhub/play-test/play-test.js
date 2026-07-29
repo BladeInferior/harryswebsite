@@ -1,4 +1,4 @@
-import { loadQuiz } from './data/quiz-loader.js';
+import { loadQuiz } from '../data/quiz-loader.js';
 
 // Preview mirrors the real host-quiz.js/join.js state machine as closely as
 // possible — same lock/reveal pacing per answerRevealMode, same play-order
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadPromise = quizId
         ? loadQuiz(quizId)
-        : fetch('data/sample-quiz.json').then(res => res.json());
+        : fetch('../data/sample-quiz.json').then(res => res.json());
 
     loadPromise.then(data => {
         quiz = data;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (quizId) {
             playTestTitle.textContent = `🧠 Preview: ${quiz.title}`;
             playTestSubtitle.textContent = 'Click through this quiz exactly as it will play live — host or player view, any category order.';
-            backButtonLink.href = 'manage-quizzes.html';
+            backButtonLink.href = '../manage-quizzes/manage-quizzes.html';
         }
 
         categories = buildCategories(quiz);

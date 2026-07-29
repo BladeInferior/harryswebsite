@@ -4,13 +4,25 @@
 // so every page shares one nav instead of each page duplicating its own copy
 // of this script.
 
+// This file itself always lives at quizhub/quiz-nav.js, but the pages loading
+// it don't all sit at the same depth — quizhub.html is still directly in
+// quizhub/, while every other page now lives one folder deeper (e.g.
+// quizhub/join/join.html). fetch() and serviceWorker.register() both resolve
+// a relative URL against the CALLING PAGE, not this script's own location, so
+// a plain relative path here would only be correct for whichever depth
+// happened to be tested first. Anchoring explicitly to this script's own URL
+// (document.currentScript.src) keeps it correct regardless of which page —
+// or which depth — loaded it.
+const QUIZ_NAV_SCRIPT_URL = document.currentScript.src;
+
 // Forces every page load to always reflect what's actually deployed rather
 // than a stale browser-cached copy — see ../sw-nocache.js.
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../sw-nocache.js').catch(err => console.error('Service worker registration failed:', err));
+    navigator.serviceWorker.register(new URL('../sw-nocache.js', QUIZ_NAV_SCRIPT_URL))
+        .catch(err => console.error('Service worker registration failed:', err));
 }
 
-fetch('../navbar.html')
+fetch(new URL('../navbar.html', QUIZ_NAV_SCRIPT_URL))
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
@@ -28,10 +40,10 @@ fetch('../navbar.html')
         });
 
         const subPages = [
-            { label: "Join Quiz", page: "quizhub/join.html" },
-            { label: "Quiz Builder", page: "quizhub/builder.html" },
-            { label: "Manage Quiz", page: "quizhub/manage-quizzes.html" },
-            { label: "Stats", page: "quizhub/stats.html" },
+            { label: "Join Quiz", page: "quizhub/join/join.html" },
+            { label: "Quiz Builder", page: "quizhub/builder/builder.html" },
+            { label: "Manage Quiz", page: "quizhub/manage-quizzes/manage-quizzes.html" },
+            { label: "Stats", page: "quizhub/stats/stats.html" },
         ];
 
         const linksContainer = nav.querySelector('.site-nav-links');

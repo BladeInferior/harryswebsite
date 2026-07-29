@@ -6,7 +6,7 @@
 
     <title>Quiz Hub — Play Test</title>
 
-    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="../../navbar.css">
 
     <style>
         :root{
@@ -511,7 +511,7 @@
 <div id="navbar"></div>
 
 <script>
-fetch('../navbar.html')
+fetch('../../navbar.html')
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
@@ -527,7 +527,7 @@ fetch('../navbar.html')
     });
 </script>
 
-<a class="back-button" id="back-button-link" href="quizhub.html">← Back</a>
+<a class="back-button" id="back-button-link" href="../quizhub.html">← Back</a>
 
 <section class="hero">
     <h1 id="play-test-title">🧠 Play Test</h1>
@@ -604,12 +604,12 @@ fetch('../navbar.html')
 
 </section>
 
-<script src="engine/answer-matching.js"></script>
-<script src="engine/answer-types.js"></script>
-<script src="engine/media-utils.js"></script>
+<script src="../engine/answer-matching.js"></script>
+<script src="../engine/answer-types.js"></script>
+<script src="../engine/media-utils.js"></script>
 <script type="module" src="play-test.js"></script>
 
-<script src="../scroll-to-top.js"></script>
-<script type="module" src="../admin-auth.js"></script>
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
 </body>
 </html>

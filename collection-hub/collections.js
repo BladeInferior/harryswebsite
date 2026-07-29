@@ -189,7 +189,12 @@ const zoomImage = document.getElementById("zoom-image");
 
 
 Promise.all([
-    fetch(COLLECTION.jsonFile).then(res => res.json())
+    // jsonPath is the local fetch location (each page now lives one folder
+    // below collection-hub/, while the *-backup.json files stay there) —
+    // COLLECTION.jsonFile itself stays a bare filename, since that's also
+    // used as the GitHub export commit name and download attribute further
+    // down, both of which need the plain filename rather than a relative path.
+    fetch(COLLECTION.jsonPath || COLLECTION.jsonFile).then(res => res.json())
 ])
 .then(([itemList]) => {
 
@@ -2653,7 +2658,7 @@ let fullPokemonNameList = null;
 
 async function getFullPokemonNameList() {
     if (!fullPokemonNameList) {
-        fullPokemonNameList = await fetch("fullPokemonList.json").then(res => res.json());
+        fullPokemonNameList = await fetch("../fullPokemonList.json").then(res => res.json());
     }
     return fullPokemonNameList;
 }

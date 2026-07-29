@@ -1,12 +1,24 @@
+// This file itself always lives at collection-hub/collection-nav.js, but the
+// pages loading it don't all sit at the same depth any more — collectionhub.html
+// is still directly in collection-hub/, while every other page now lives one
+// folder deeper (e.g. collection-hub/cards/cards.html). fetch() and
+// serviceWorker.register() both resolve a relative URL against the CALLING
+// PAGE, not this script's own location, so a plain relative path here would
+// only be correct for whichever depth happened to be tested first. Anchoring
+// explicitly to this script's own URL (document.currentScript.src) keeps it
+// correct regardless of which page — or which depth — loaded it.
+const COLLECTION_NAV_SCRIPT_URL = document.currentScript.src;
+
 // Registered here (not per-page) since every collection-hub page loads this
 // file — one registration covers offline support for all of them. Scope
-// defaults to this script's own directory, i.e. everything under
-// collection-hub/, which is exactly what sw.js needs to intercept.
+// defaults to sw.js's own directory, i.e. everything under collection-hub/,
+// which is exactly what sw.js needs to intercept.
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(err => console.error('Service worker registration failed:', err));
+    navigator.serviceWorker.register(new URL('sw.js', COLLECTION_NAV_SCRIPT_URL))
+        .catch(err => console.error('Service worker registration failed:', err));
 }
 
-fetch('../navbar.html')
+fetch(new URL('../navbar.html', COLLECTION_NAV_SCRIPT_URL))
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
@@ -24,13 +36,13 @@ fetch('../navbar.html')
         });
 
         const subPages = [
-            { label: "Pokédex", page: "collection-hub/pokedexes.html" },
-            { label: "Sleeves", page: "collection-hub/sleeves.html" },
-            { label: "Cards", page: "collection-hub/cards.html" },
-            { label: "Steelbooks", page: "collection-hub/steelbooks.html" },
-            { label: "Completions", page: "collection-hub/completions.html" },
-            { label: "Pop Figures", page: "collection-hub/popfigures.html" },
-            { label: "Pins", page: "collection-hub/pins.html" },
+            { label: "Pokédex", page: "collection-hub/pokedexes/pokedexes.html" },
+            { label: "Sleeves", page: "collection-hub/sleeves/sleeves.html" },
+            { label: "Cards", page: "collection-hub/cards/cards.html" },
+            { label: "Steelbooks", page: "collection-hub/steelbooks/steelbooks.html" },
+            { label: "Completions", page: "collection-hub/completions/completions.html" },
+            { label: "Pop Figures", page: "collection-hub/popfigures/popfigures.html" },
+            { label: "Pins", page: "collection-hub/pins/pins.html" },
         ];
 
         const linksContainer = nav.querySelector('.site-nav-links');

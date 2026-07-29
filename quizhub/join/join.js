@@ -1,5 +1,5 @@
-import { db } from './firebase/firebase-config.js';
-import { loadQuiz } from './data/quiz-loader.js';
+import { db } from '../firebase/firebase-config.js';
+import { loadQuiz } from '../data/quiz-loader.js';
 import {
     doc,
     getDoc,
@@ -378,7 +378,7 @@ function renderSessionState(session) {
 
         reviewAnswersLink.hidden = !quiz.reviewEnabled;
         if (quiz.reviewEnabled) {
-            reviewAnswersLink.href = `review.html?name=${encodeURIComponent(currentName)}`;
+            reviewAnswersLink.href = `../review/review.html?name=${encodeURIComponent(currentName)}`;
         }
         return;
     }

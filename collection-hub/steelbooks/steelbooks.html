@@ -6,24 +6,24 @@
 
     <title>Steelbooks</title>
 
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="icons/app-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../icons/app-icon.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Collection Hub">
     <meta name="theme-color" content="#14161a">
 
-    <link rel="stylesheet" href="../navbar.css">
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="../style.css" />
 </head>
 <body class="item-page steelbooks-page">
 
     <div id="navbar"></div>
 
-    <script src="collection-nav.js"></script>
+    <script src="../collection-nav.js"></script>
 
-    <a class="back-button" href="collectionhub.html">← Back</a>
+    <a class="back-button" href="../collectionhub.html">← Back</a>
 
     <h1>Steelbooks</h1>
 
@@ -183,7 +183,8 @@
     name: "steelbooks",
     storageKey: "steelbooks",
     jsonFile: "steelbooks-backup.json",
-    imageFolder: "steelbooks",
+    jsonPath: "../steelbooks-backup.json",
+    imageFolder: ".",
 
         fields: {
             title: "title",
@@ -194,11 +195,11 @@
     };
     </script>
 
-    <script src="mobile-popout.js"></script>
-    <script src="unsaved-changes.js"></script>
-    <script src="collections.js"></script>
+    <script src="../mobile-popout.js"></script>
+    <script src="../unsaved-changes.js"></script>
+    <script src="../collections.js"></script>
 
-<script src="../scroll-to-top.js"></script>
-<script type="module" src="../admin-auth.js"></script>
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
 </body>
 </html>

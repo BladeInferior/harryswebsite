@@ -1,9 +1,13 @@
+// jsonFile stays a bare filename (used for the GitHub export commit and the
+// download attribute — see the export handler below); jsonPath is the local
+// fetch path, since cards-*.json still live in collection-hub/ while this
+// page and its imageFolder both live one level down in collection-hub/cards/.
 const DECKS = [
-    { key: "pokemon", label: "Pokémon", jsonFile: "cards-pokemon-backup.json", imageFolder: "cards/pokemon", spriteFolder: "sprites/pokemon_sprites", hasSpecial: true, hasDex: true, pageBlockRows: 4 },
-    { key: "trainers", label: "Trainers", jsonFile: "cards-trainers-backup.json", imageFolder: "cards/trainers", hasSpecial: true, hasDex: false },
-    { key: "pokeballs", label: "Poké Balls", jsonFile: "cards-pokeballs-backup.json", imageFolder: "cards/pokeballs", hasSpecial: true, hasDex: false },
-    { key: "stadiums", label: "Stadiums", jsonFile: "cards-stadiums-backup.json", imageFolder: "cards/stadiums", hasSpecial: false, hasDex: false },
-    { key: "rampardos", label: "Rampardos", jsonFile: "cards-rampardos-backup.json", imageFolder: "cards/rampardos", hasSpecial: false, hasDex: false }
+    { key: "pokemon", label: "Pokémon", jsonFile: "cards-pokemon-backup.json", jsonPath: "../cards-pokemon-backup.json", imageFolder: "pokemon", spriteFolder: "../sprites/pokemon_sprites", hasSpecial: true, hasDex: true, pageBlockRows: 4 },
+    { key: "trainers", label: "Trainers", jsonFile: "cards-trainers-backup.json", jsonPath: "../cards-trainers-backup.json", imageFolder: "trainers", hasSpecial: true, hasDex: false },
+    { key: "pokeballs", label: "Poké Balls", jsonFile: "cards-pokeballs-backup.json", jsonPath: "../cards-pokeballs-backup.json", imageFolder: "pokeballs", hasSpecial: true, hasDex: false },
+    { key: "stadiums", label: "Stadiums", jsonFile: "cards-stadiums-backup.json", jsonPath: "../cards-stadiums-backup.json", imageFolder: "stadiums", hasSpecial: false, hasDex: false },
+    { key: "rampardos", label: "Rampardos", jsonFile: "cards-rampardos-backup.json", jsonPath: "../cards-rampardos-backup.json", imageFolder: "rampardos", hasSpecial: false, hasDex: false }
 ];
 
 let activeDeck = DECKS[0];
@@ -64,7 +68,7 @@ imageZoomOverlay.addEventListener("click", (e) => {
 // "paste a secret into localStorage via devtools" (exportAuthKey) approach
 // with just being signed in as the owner's Google account (bottom-right
 // widget from admin-auth.js), which works the same on any device.
-const adminAuthReady = import('../admin-auth-core.js');
+const adminAuthReady = import('../../admin-auth-core.js');
 
 function getItemImagePath(name) {
     const base = name.toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -228,8 +232,8 @@ async function loadDeck(key) {
     const needsMasterList = deck.key === "pokemon" && !pokemonMasterList;
 
     const [deckItems, masterList] = await Promise.all([
-        fetch(deck.jsonFile).then(res => res.json()),
-        needsMasterList ? fetch("fullPokemonList.json").then(res => res.json()) : Promise.resolve(null)
+        fetch(deck.jsonPath).then(res => res.json()),
+        needsMasterList ? fetch("../fullPokemonList.json").then(res => res.json()) : Promise.resolve(null)
     ]);
 
     items = deckItems;
@@ -1018,7 +1022,7 @@ async function renderStats() {
 
     const deckStats = await Promise.all(DECKS.map(async deck => {
 
-        const deckItems = (await fetch(deck.jsonFile).then(res => res.json()))
+        const deckItems = (await fetch(deck.jsonPath).then(res => res.json()))
             .filter(item => !item.empty);
 
         const total = deckItems.length;

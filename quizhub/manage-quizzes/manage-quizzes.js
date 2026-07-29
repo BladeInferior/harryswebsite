@@ -1,9 +1,9 @@
-import { QUIZ_PATHS } from './data/quiz-registry.js';
-import { db } from './firebase/firebase-config.js';
+import { QUIZ_PATHS } from '../data/quiz-registry.js';
+import { db } from '../firebase/firebase-config.js';
 import { collection, getDocs, doc, deleteDoc } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
-import { hashPassword } from './password-utils.js';
-import { findActiveSessionForQuiz } from './session-lookup.js';
-import { ensureAdminSignedIn } from './admin-gate.js';
+import { hashPassword } from '../password-utils.js';
+import { findActiveSessionForQuiz } from '../session-lookup.js';
+import { ensureAdminSignedIn } from '../admin-gate.js';
 
 const quizList = document.getElementById('quiz-list');
 const deleteModal = document.getElementById('delete-confirm-modal');
@@ -50,7 +50,7 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
         // active, per the ask that Start Quiz never silently resumes.
         // "Rejoin Quiz" (below, added once we know a session exists) is the
         // only way back into an in-progress one.
-        startLink.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}&new=1`;
+        startLink.href = `../host-quiz/host-quiz.html?quiz=${encodeURIComponent(quiz.id)}&new=1`;
         startLink.textContent = 'Start Quiz';
         actions.appendChild(startLink);
 
@@ -71,20 +71,20 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
             if (!session || session.status === 'lobby') return;
             rejoinBtn.disabled = false;
             rejoinBtn.addEventListener('click', () => {
-                window.location.href = `host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+                window.location.href = `../host-quiz/host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
             });
         }).catch(err => console.error('Active session lookup failed:', err));
 
         const previewLink = document.createElement('a');
         previewLink.className = 'btn btn-secondary';
-        previewLink.href = `play-test.html?quiz=${encodeURIComponent(quiz.id)}`;
+        previewLink.href = `../play-test/play-test.html?quiz=${encodeURIComponent(quiz.id)}`;
         previewLink.textContent = 'Preview';
         actions.appendChild(previewLink);
 
         if (quiz.source === 'firestore') {
             const editLink = document.createElement('a');
             editLink.className = 'btn btn-secondary';
-            editLink.href = `builder.html?quiz=${encodeURIComponent(quiz.id)}`;
+            editLink.href = `../builder/builder.html?quiz=${encodeURIComponent(quiz.id)}`;
             editLink.textContent = 'Edit';
             actions.appendChild(editLink);
 

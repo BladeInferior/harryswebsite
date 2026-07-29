@@ -6,7 +6,7 @@
 
     <title>Quiz Hub — Host</title>
 
-    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="../../navbar.css">
 
     <style>
         :root{
@@ -666,7 +666,7 @@
 <div id="navbar"></div>
 
 <script>
-fetch('../navbar.html')
+fetch('../../navbar.html')
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
@@ -682,7 +682,7 @@ fetch('../navbar.html')
     });
 </script>
 
-<a class="back-button" href="manage-quizzes.html">← Back</a>
+<a class="back-button" href="../manage-quizzes/manage-quizzes.html">← Back</a>
 <button id="end-quiz-btn" class="back-button" type="button" style="background:rgba(229,83,75,.15);border-color:var(--incorrect);color:var(--incorrect);margin-left:10px;">🛑 End Quiz</button>
 
 <section class="hero">
@@ -834,12 +834,12 @@ fetch('../navbar.html')
     </div>
 </div>
 
-<script src="engine/answer-matching.js"></script>
-<script src="engine/answer-types.js"></script>
-<script src="engine/media-utils.js"></script>
+<script src="../engine/answer-matching.js"></script>
+<script src="../engine/answer-types.js"></script>
+<script src="../engine/media-utils.js"></script>
 <script type="module" src="host-quiz.js"></script>
 
-<script src="../scroll-to-top.js"></script>
-<script type="module" src="../admin-auth.js"></script>
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
 </body>
 </html>

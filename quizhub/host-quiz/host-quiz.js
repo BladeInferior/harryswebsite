@@ -1,6 +1,6 @@
-import { db } from './firebase/firebase-config.js';
-import { loadQuiz } from './data/quiz-loader.js';
-import { findActiveSessionForQuiz, deleteAllSessionsForQuiz } from './session-lookup.js';
+import { db } from '../firebase/firebase-config.js';
+import { loadQuiz } from '../data/quiz-loader.js';
+import { findActiveSessionForQuiz, deleteAllSessionsForQuiz } from '../session-lookup.js';
 import {
     doc,
     setDoc,
@@ -1452,7 +1452,7 @@ function generateCode() {
 // down the rest of the page like a failed <script> load would.
 function renderJoinQrCode() {
     const basePath = window.location.hostname === 'bladeinferior.github.io' ? '/harryswebsite/' : '/';
-    const joinUrl = `${window.location.origin}${basePath}quizhub/join.html?code=${code}`;
+    const joinUrl = `${window.location.origin}${basePath}quizhub/join/join.html?code=${code}`;
 
     joinQrImg.onload = () => { joinQrImg.hidden = false; };
     joinQrImg.onerror = () => {
