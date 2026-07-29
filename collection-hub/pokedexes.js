@@ -2,6 +2,7 @@ let savedDexData = {};
 let shinyEditModeFlag = false;
 let pogoShinyModeFlag = false;
 let pogoShinyFilter = null; // null | true (Shiny) | false (Not Shiny) — PoGo Dex only, replaces the S&S game filter row
+let todoFilterActive = false; // Trade Dex / Wonder Trade Dex only — show only pokemon on that dex's to-do list
 let gameFilterState = {};
 let allPokemon = [];
 let cardMap = new Map();
@@ -31,6 +32,14 @@ const dexTypes = [
     { key: "pogoDex", label: "PoGo Dex" },
     { key: "cherishDex", label: "Cherish Dex" }
 ];
+
+// Trade Dex and Wonder Trade Dex each get their own to-do list — no other
+// dex has a matching persisted field, so this returns null for the rest.
+function todoFieldFor(dexKey) {
+    if (dexKey === "tradeDex") return "tradeDexTodo";
+    if (dexKey === "wonderTradeDex") return "wonderTradeDexTodo";
+    return null;
+}
 
 
 function saveData() {
@@ -64,6 +73,9 @@ Promise.all([
             pogoShiny: !!entry.pogoShiny,
             cherishDex: !!entry.cherishDex,
 
+            tradeDexTodo: !!entry.tradeDexTodo,
+            wonderTradeDexTodo: !!entry.wonderTradeDexTodo,
+
             shinyDex: !!entry.shinyDex,
 
             shinyDexData: {
@@ -90,14 +102,17 @@ Promise.all([
             Object.keys(sourceDexData).forEach(key => {
                 if (!(key in savedDexData)) {
                     savedDexData[key] = sourceDexData[key];
-                } else if (!("pogoShiny" in savedDexData[key])) {
-                    // pogoShiny was added after this pokemon's local record
-                    // was first saved — default it in place so the
-                    // unsaved-changes snapshot already includes it, instead
-                    // of the first shiny toggle silently adding the key and
-                    // still reading as "unsaved" even after toggling it back off.
-                    savedDexData[key].pogoShiny = false;
+                    return;
                 }
+
+                // pogoShiny/tradeDexTodo/wonderTradeDexTodo were added after
+                // this pokemon's local record was first saved — default them
+                // in place so the unsaved-changes snapshot already includes
+                // them, instead of the first toggle silently adding the key
+                // and still reading as "unsaved" even after toggling it back off.
+                if (!("pogoShiny" in savedDexData[key])) savedDexData[key].pogoShiny = false;
+                if (!("tradeDexTodo" in savedDexData[key])) savedDexData[key].tradeDexTodo = false;
+                if (!("wonderTradeDexTodo" in savedDexData[key])) savedDexData[key].wonderTradeDexTodo = false;
             });
         } catch {
             savedDexData = sourceDexData;
@@ -120,6 +135,7 @@ Promise.all([
     updatePogoShinyModeButtonUI();
     updatePogoFilterRowVisibility();
     updatePogoShinyFilterHighlight();
+    updateTodoButtonUI();
 
     updateModeUI();
 });
@@ -164,12 +180,13 @@ function shouldShowShinyCardSprites() {
 }
 
 // A card renders with its shiny sprite either while Shiny Dex edit mode
-// forces every card shiny (shouldShowShinyCardSprites), or permanently once
-// that individual pokemon has been marked shiny in the PoGo Dex — the shiny
-// sprite itself is the "this one's shiny" indicator, so it has to persist
-// outside of PoGo Shiny Mode too, not just while actively toggling it.
+// forces every card shiny (shouldShowShinyCardSprites), or while viewing the
+// PoGo Dex specifically, for pokemon individually marked shiny there
+// (pogoShiny). That flag is PoGo-Dex-only — it must NOT make the sprite
+// shiny while viewing any other dex (or no dex selected at all).
 function useShinySpriteFor(key) {
-    return shouldShowShinyCardSprites() || !!savedDexData[key]?.pogoShiny;
+    if (shouldShowShinyCardSprites()) return true;
+    return activeDexEdit === "pogoDex" && !!savedDexData[key]?.pogoShiny;
 }
 
 function toggleShinyDex(pokemonKey) {
@@ -271,6 +288,26 @@ function createPokemonCards(pokemonList) {
             // EDIT MODE → SPECIAL SHINYDEX BEHAVIOUR
             // =====================================================
             if (activeDexEdit) {
+
+                // -----------------------------
+                // TRADE/WONDER TRADE TO-DO FILTER ACTIVE → CLICK REMOVES
+                // Once the To Do filter is narrowing the grid down to just
+                // that dex's list, clicking an item there means "done with
+                // this one" — take it off the list instead of the normal
+                // add/remove-from-dex click.
+                // -----------------------------
+                const todoField = todoFieldFor(activeDexEdit);
+                if (todoField && todoFilterActive) {
+
+                    pokemonData[todoField] = false;
+                    savedDexData[key] = pokemonData;
+                    saveData();
+
+                    applyFilters();
+                    if (pageMode) applyPagination();
+
+                    return;
+                }
 
                 // -----------------------------
                 // POGO DEX SHINY MODE → TOGGLE SHINY, FLIP THE SPRITE
@@ -378,6 +415,83 @@ document.getElementById("pogo-shiny-mode-btn").addEventListener("click", () => {
     pogoShinyModeFlag = !pogoShinyModeFlag;
 
     updatePogoShinyModeButtonUI();
+});
+
+
+// ---------------------------
+// TO DO LIST (lives in #page-controls, Trade Dex / Wonder Trade Dex only)
+// ---------------------------
+function updateTodoButtonUI() {
+
+    const filterBtn = document.getElementById("todo-filter-btn");
+    const addBtn = document.getElementById("todo-add-btn");
+    if (!filterBtn || !addBtn) return;
+
+    const isTodoDex = !!todoFieldFor(activeDexEdit);
+
+    filterBtn.classList.toggle("hidden", !isTodoDex);
+    addBtn.classList.toggle("hidden", !isTodoDex);
+    filterBtn.classList.toggle("active-mode", todoFilterActive);
+}
+
+document.getElementById("todo-filter-btn").addEventListener("click", () => {
+
+    if (!todoFieldFor(activeDexEdit)) return;
+
+    todoFilterActive = !todoFilterActive;
+
+    applyFilters();
+    scrollResultsToTop();
+    updateTodoButtonUI();
+    if (pageMode) applyPagination();
+});
+
+const todoModal = document.getElementById("todo-modal");
+const todoModalTitle = document.getElementById("todo-modal-title");
+const todoModalInput = document.getElementById("todo-modal-input");
+const todoModalSubmit = document.getElementById("todo-modal-submit");
+const todoModalClose = document.getElementById("todo-modal-close");
+
+document.getElementById("todo-add-btn").addEventListener("click", () => {
+
+    const dex = dexTypes.find(d => d.key === activeDexEdit);
+    if (!dex || !todoFieldFor(activeDexEdit)) return;
+
+    todoModalTitle.textContent = `Add To ${dex.label} To Do List`;
+    todoModalInput.value = "";
+    todoModal.classList.remove("hidden");
+    todoModalInput.focus();
+});
+
+todoModalSubmit.addEventListener("click", () => {
+
+    const field = todoFieldFor(activeDexEdit);
+    if (!field) return;
+
+    const keys = todoModalInput.value
+        .split(",")
+        .map(n => normalizeName(n))
+        .filter(n => n.length > 0);
+
+    keys.forEach(key => {
+        const data = savedDexData[key] || {};
+        data[field] = true;
+        savedDexData[key] = data;
+    });
+
+    saveData();
+    applyFilters();
+    if (pageMode) applyPagination();
+
+    todoModal.classList.add("hidden");
+});
+
+todoModalClose.addEventListener("click", () => {
+    todoModal.classList.add("hidden");
+});
+
+todoModal.addEventListener("click", (e) => {
+    if (e.target === todoModal) todoModal.classList.add("hidden");
 });
 
 
@@ -547,7 +661,17 @@ function applyFilters() {
             return pogoShinyFilter === true ? isShiny : !isShiny;
         })();
 
-        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny) {
+        // Trade Dex / Wonder Trade Dex only, and only while their To Do
+        // filter is toggled on — narrows the grid to just that dex's list.
+        const matchesTodo = (() => {
+
+            const field = todoFieldFor(activeDexEdit);
+            if (!field || !todoFilterActive) return true;
+
+            return !!(savedDexData[key] || {})[field];
+        })();
+
+        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
@@ -857,6 +981,14 @@ document.addEventListener("click", (e) => {
     updatePogoFilterRowVisibility();
     updatePogoShinyFilterHighlight();
 
+    // The To Do list is per-dex (Trade Dex vs Wonder Trade Dex) — leaving
+    // either one, same as Shiny Mode above, resets the filter so re-entering
+    // starts unfiltered rather than silently carrying over.
+    if (!todoFieldFor(activeDexEdit)) {
+        todoFilterActive = false;
+    }
+    updateTodoButtonUI();
+
     // Comparing against the resulting activeDexEdit (not just dexType)
     // matters for turning editing OFF: clicking the same dex again sets
     // activeDexEdit back to null, which is still a real change (e.g. it's
@@ -976,7 +1108,7 @@ function updateCardHighlights() {
         const data = savedDexData[key] || {};
 
         // -----------------------------
-        // SPRITE (shiny once flagged, regardless of current mode)
+        // SPRITE (shiny only while viewing the PoGo Dex, or in Shiny Dex edit mode)
         // -----------------------------
         const img = card.querySelector("img");
         if (img) img.src = getPokemonSpritePath(name, useShinySpriteFor(key));
@@ -1338,6 +1470,7 @@ function createFilterButtons() {
         shinyEditModeFlag = false;
         pogoShinyModeFlag = false;
         pogoShinyFilter = null;
+        todoFilterActive = false;
 
         pageMode = false;
         currentPage = 1;
@@ -1360,6 +1493,7 @@ function createFilterButtons() {
         updatePogoShinyModeButtonUI();
         updatePogoFilterRowVisibility();
         updatePogoShinyFilterHighlight();
+        updateTodoButtonUI();
     });
 
     container.appendChild(resetBtn);
@@ -1596,6 +1730,9 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             pogoShiny: !!data.pogoShiny,
             cherishDex: !!data.cherishDex,
 
+            tradeDexTodo: !!data.tradeDexTodo,
+            wonderTradeDexTodo: !!data.wonderTradeDexTodo,
+
             shinyDex: !!data.shinyDex,
             shinyDexData: {
                 correctStage: !!data.shinyDexData?.correctStage,
@@ -1696,6 +1833,9 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
                     pogoDex: !!entry.pogoDex,
                     pogoShiny: !!entry.pogoShiny,
                     cherishDex: !!entry.cherishDex,
+
+                    tradeDexTodo: !!entry.tradeDexTodo,
+                    wonderTradeDexTodo: !!entry.wonderTradeDexTodo,
 
                     shinyDex: !!entry.shinyDex,
 

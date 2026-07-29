@@ -2509,3 +2509,16 @@ footer {
     width: 100%;
 }
 
+#todo-modal-input {
+    width: 100%;
+    min-height: 90px;
+    resize: vertical;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    background: #2d2d2d;
+    color: white;
+    font: inherit;
+    box-sizing: border-box;
+}
+

@@ -56,6 +56,8 @@
         <button id="import-button">Import</button>
         <button id="export-pokedex">Export Pokémon</button>
         <button id="stats-btn">Stats</button>
+        <button id="todo-filter-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: show only pokemon on the to-do list">📝 To Do</button>
+        <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite">✨ Shiny Mode</button>
 
         <div id="pagination-controls" class="hidden">
@@ -154,6 +156,15 @@
             <div id="stats-modal-close" class="modal-close-btn">✕</div>
             <h2>Pokédex Stats</h2>
             <div id="stats-modal-body"></div>
+        </div>
+    </div>
+
+    <div id="todo-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="todo-modal-close" class="modal-close-btn">✕</div>
+            <h2 id="todo-modal-title">Add To Do</h2>
+            <textarea id="todo-modal-input" placeholder="Pikachu, Charizard, Bulbasaur..."></textarea>
+            <button id="todo-modal-submit" class="stats-detail-btn">Add</button>
         </div>
     </div>
 
