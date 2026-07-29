@@ -9867,7 +9867,7 @@
     "pogoDex": true,
     "pogoShiny": true,
     "cherishDex": false,
-    "tradeDexTodo": false,
+    "tradeDexTodo": true,
     "wonderTradeDexTodo": false,
     "shinyDex": true,
     "shinyDexData": {
