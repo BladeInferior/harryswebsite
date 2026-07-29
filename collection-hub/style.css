@@ -1630,13 +1630,23 @@ body.page-mode #page-controls {
 /* One DLC shown at a time (name above it, prev/next either side) instead of
    a thumbnail grid that only ever grew as more DLCs got added — keeps the
    modal a fixed height regardless of how many DLCs an item has. */
+.dlc-carousel-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    width: 100%;
+}
+
+/* Contains ONLY the arrows + image (the name sits outside, above this row)
+   so align-items: center lines the arrows up with the image itself, not
+   with the taller name+image+button stack as a whole. */
 #modal-dlc-carousel {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-
-    width: 100%;
 }
 
 .dlc-carousel-nav {
@@ -1691,13 +1701,6 @@ body.page-mode #page-controls {
 .dlc-carousel-nav:disabled {
     opacity: 0.3;
     cursor: default;
-}
-
-.dlc-carousel-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
 }
 
 #modal-dlc-name {
