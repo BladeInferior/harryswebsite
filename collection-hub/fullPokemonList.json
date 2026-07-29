@@ -11798,7 +11798,7 @@
     "tags": []
   },
   {
-    "name": "Great-tusk",
+    "name": "Great Tusk",
     "generation": 9,
     "dex": "0984",
     "type": "Ground, Fighting",
@@ -11808,7 +11808,7 @@
     "tags": []
   },
   {
-    "name": "Scream-tail",
+    "name": "Scream Tail",
     "generation": 9,
     "dex": "0985",
     "type": "Fairy, Psychic",
@@ -11818,7 +11818,7 @@
     "tags": []
   },
   {
-    "name": "Brute-bonnet",
+    "name": "Brute Bonnet",
     "generation": 9,
     "dex": "0986",
     "type": "Grass, Dark",
@@ -11828,7 +11828,7 @@
     "tags": []
   },
   {
-    "name": "Flutter-mane",
+    "name": "Flutter Mane",
     "generation": 9,
     "dex": "0987",
     "type": "Ghost, Fairy",
@@ -11838,7 +11838,7 @@
     "tags": []
   },
   {
-    "name": "Slither-wing",
+    "name": "Slither Wing",
     "generation": 9,
     "dex": "0988",
     "type": "Bug, Fighting",
@@ -11848,7 +11848,7 @@
     "tags": []
   },
   {
-    "name": "Sandy-shocks",
+    "name": "Sandy Shocks",
     "generation": 9,
     "dex": "0989",
     "type": "Electric, Ground",
@@ -11858,7 +11858,7 @@
     "tags": []
   },
   {
-    "name": "Iron-treads",
+    "name": "Iron Treads",
     "generation": 9,
     "dex": "0990",
     "type": "Ground, Steel",
@@ -11868,7 +11868,7 @@
     "tags": []
   },
   {
-    "name": "Iron-bundle",
+    "name": "Iron Bundle",
     "generation": 9,
     "dex": "0991",
     "type": "Ice, Water",
@@ -11878,7 +11878,7 @@
     "tags": []
   },
   {
-    "name": "Iron-hands",
+    "name": "Iron Hands",
     "generation": 9,
     "dex": "0992",
     "type": "Fighting, Electric",
@@ -11888,7 +11888,7 @@
     "tags": []
   },
   {
-    "name": "Iron-jugulis",
+    "name": "Iron Jugulis",
     "generation": 9,
     "dex": "0993",
     "type": "Dark, Flying",
@@ -11898,7 +11898,7 @@
     "tags": []
   },
   {
-    "name": "Iron-moth",
+    "name": "Iron Moth",
     "generation": 9,
     "dex": "0994",
     "type": "Fire, Poison",
@@ -11908,7 +11908,7 @@
     "tags": []
   },
   {
-    "name": "Iron-thorns",
+    "name": "Iron Thorns",
     "generation": 9,
     "dex": "0995",
     "type": "Rock, Electric",
@@ -12013,7 +12013,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Roaring-moon",
+    "name": "Roaring Moon",
     "generation": 9,
     "dex": "1005",
     "type": "Dragon, Dark",
@@ -12023,7 +12023,7 @@
     "tags": []
   },
   {
-    "name": "Iron-valiant",
+    "name": "Iron Valiant",
     "generation": 9,
     "dex": "1006",
     "type": "Fairy, Fighting",
@@ -12053,7 +12053,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Walking-wake",
+    "name": "Walking Wake",
     "generation": 9,
     "dex": "1009",
     "type": "Water, Dragon",
@@ -12063,7 +12063,7 @@
     "tags": []
   },
   {
-    "name": "Iron-leaves",
+    "name": "Iron Leaves",
     "generation": 9,
     "dex": "1010",
     "type": "Grass, Psychic",
@@ -12173,7 +12173,7 @@
     "tags": []
   },
   {
-    "name": "Gouging-fire",
+    "name": "Gouging Fire",
     "generation": 9,
     "dex": "1020",
     "type": "Fire, Dragon",
@@ -12183,7 +12183,7 @@
     "tags": []
   },
   {
-    "name": "Raging-bolt",
+    "name": "Raging Bolt",
     "generation": 9,
     "dex": "1021",
     "type": "Electric, Dragon",
@@ -12193,7 +12193,7 @@
     "tags": []
   },
   {
-    "name": "Iron-boulder",
+    "name": "Iron Boulder",
     "generation": 9,
     "dex": "1022",
     "type": "Rock, Psychic",
@@ -12203,7 +12203,7 @@
     "tags": []
   },
   {
-    "name": "Iron-crown",
+    "name": "Iron Crown",
     "generation": 9,
     "dex": "1023",
     "type": "Steel, Psychic",

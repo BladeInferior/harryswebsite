@@ -84,6 +84,19 @@ function markSaved(stateJSON, storageKey) {
     recomputeGlobalDirty();
 }
 
+// Read-only lookups for pages that want to reflect a tracker's state in
+// their own UI (e.g. an export button glow, or a "what changed" list) —
+// exposed instead of reaching into the trackers Map's internals directly.
+function isTrackerDirty(storageKey) {
+    const tracker = trackers.get(storageKey || "default");
+    return tracker ? tracker.dirty : false;
+}
+
+function getTrackerSnapshot(storageKey) {
+    const tracker = trackers.get(storageKey || "default");
+    return tracker ? tracker.snapshot : null;
+}
+
 // Clears every tracker at once — used by "Leave anyway" below, since
 // abandoning the page means abandoning every dataset it was tracking, not
 // just whichever one happened to be passed to the last markDirty() call.

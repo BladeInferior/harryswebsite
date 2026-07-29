@@ -52,6 +52,23 @@ function saveData() {
     if (typeof markDirty === "function") markDirty(serialized, "dexData");
     updateProgress();
     updateCardHighlights();
+    updateExportGlow();
+}
+
+// Lights up Export Pokémon, and reveals the Changes button next to it,
+// whenever there's something not yet exported — both cleared the moment
+// markSaved() runs (GitHub commit or manual download, see the
+// export-pokedex handler below). Changes has nothing useful to show once
+// everything's exported, so it disappears rather than opening onto an
+// empty "No unsaved changes" modal.
+function updateExportGlow() {
+    const btn = document.getElementById("export-pokedex");
+    const changesBtn = document.getElementById("pokedex-changes-btn");
+
+    const dirty = typeof isTrackerDirty === "function" ? isTrackerDirty("dexData") : false;
+
+    if (btn) btn.classList.toggle("has-unsaved-changes", dirty);
+    if (changesBtn) changesBtn.classList.toggle("hidden", !dirty);
 }
 
 Promise.all([
@@ -140,6 +157,7 @@ Promise.all([
     updatePogoFilterRowVisibility();
     updatePogoShinyFilterHighlight();
     updateTodoButtonUI();
+    updateExportGlow();
 
     updateModeUI();
 });
@@ -1978,6 +1996,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
 
             if (result.verified && result.committed) {
                 if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
+                updateExportGlow();
                 alert("✅ pokedex-backup.json committed to GitHub automatically.");
                 return;
             }
@@ -2006,6 +2025,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     URL.revokeObjectURL(url);
 
     if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
+    updateExportGlow();
 });
 
 document.getElementById("import-button").addEventListener("click", () => {
@@ -2071,6 +2091,110 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
     };
 
     reader.readAsText(file);
+});
+
+// =========================
+// UNSAVED CHANGES LIST
+// =========================
+const POKEDEX_CHANGE_FIELD_LABELS = {
+    masterDex: "MasterDex",
+    tradeDex: "Trade Dex",
+    wonderTradeDex: "Wonder Trade Dex",
+    pogoDex: "PoGo Dex",
+    pogoShiny: "PoGo Shiny",
+    cherishDex: "Cherish Dex",
+    shinyDex: "Shiny Dex",
+    tradeDexTodo: "Trade Dex To Do",
+    wonderTradeDexTodo: "Wonder Trade Dex To Do"
+};
+
+const POKEDEX_CHANGE_VARIANT_LABELS = {
+    correctStage: "Correct Stage",
+    originalRegion: "Original Region",
+    luxuryBall: "Luxury Ball"
+};
+
+// Diffs one pokemon's before/after records into a list of "+Field"/"-Field"
+// strings — either side can be missing entirely (treated as all-false).
+function describePokemonChanges(before, after) {
+
+    const parts = [];
+
+    Object.keys(POKEDEX_CHANGE_FIELD_LABELS).forEach(field => {
+        const was = !!before?.[field];
+        const is = !!after?.[field];
+        if (was === is) return;
+        parts.push(`${is ? "+" : "-"}${POKEDEX_CHANGE_FIELD_LABELS[field]}`);
+    });
+
+    Object.keys(POKEDEX_CHANGE_VARIANT_LABELS).forEach(variant => {
+        const was = !!before?.shinyDexData?.[variant];
+        const is = !!after?.shinyDexData?.[variant];
+        if (was === is) return;
+        parts.push(`${is ? "+" : "-"}${POKEDEX_CHANGE_VARIANT_LABELS[variant]}`);
+    });
+
+    return parts;
+}
+
+// Everything that's changed since the last markSaved() (export) — diffs the
+// tracker's snapshot baseline against the live in-memory savedDexData.
+function getPokedexChanges() {
+
+    const snapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("dexData") : null;
+    const before = snapshotRaw ? JSON.parse(snapshotRaw) : {};
+    const after = savedDexData;
+
+    const nameByKey = new Map(allPokemon.map(p => [normalizeName(p.name), p.name]));
+    const keys = new Set([...Object.keys(before), ...Object.keys(after)]);
+
+    const changes = [];
+
+    keys.forEach(key => {
+        const parts = describePokemonChanges(before[key], after[key]);
+        if (parts.length === 0) return;
+
+        changes.push({ name: nameByKey.get(key) || key, parts });
+    });
+
+    changes.sort((a, b) => a.name.localeCompare(b.name));
+
+    return changes;
+}
+
+const pokedexChangesBtn = document.getElementById("pokedex-changes-btn");
+const pokedexChangesModal = document.getElementById("pokedex-changes-modal");
+const pokedexChangesModalBody = document.getElementById("pokedex-changes-modal-body");
+const pokedexChangesModalClose = document.getElementById("pokedex-changes-modal-close");
+
+function renderPokedexChanges() {
+
+    const changes = getPokedexChanges();
+
+    if (changes.length === 0) {
+        pokedexChangesModalBody.innerHTML = `<div class="stats-row"><span>No unsaved changes.</span></div>`;
+        return;
+    }
+
+    pokedexChangesModalBody.innerHTML = changes.map(change => `
+        <div class="stats-row">
+            <span>${change.name}</span>
+            <span class="stats-value">${change.parts.join(", ")}</span>
+        </div>
+    `).join("");
+}
+
+pokedexChangesBtn.addEventListener("click", () => {
+    renderPokedexChanges();
+    pokedexChangesModal.classList.remove("hidden");
+});
+
+pokedexChangesModalClose.addEventListener("click", () => {
+    pokedexChangesModal.classList.add("hidden");
+});
+
+pokedexChangesModal.addEventListener("click", (e) => {
+    if (e.target === pokedexChangesModal) pokedexChangesModal.classList.add("hidden");
 });
 
 // =========================
@@ -2178,5 +2302,5 @@ createMobilePopout({
     top: 130,
     right: 72,
     heading: "Dex Progress",
-    elementIds: ["dex-key", "progress-container"]
+    elementIds: ["dex-key", "stats-btn", "progress-container"]
 });

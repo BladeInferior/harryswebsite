@@ -37,6 +37,8 @@
         </div>
     </div>
 
+    <button id="stats-btn">Stats</button>
+
     <h1>Pokemon HOME Tracker</h1>
 
     <div id="search-wrapper">
@@ -55,7 +57,7 @@
         <input type="file" id="import-pokedex" accept=".json" hidden>
         <button id="import-button">Import</button>
         <button id="export-pokedex">Export Pokémon</button>
-        <button id="stats-btn">Stats</button>
+        <button id="pokedex-changes-btn" class="hidden" title="Show what's changed since the last export">📋 Changes</button>
         <button id="todo-filter-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: show only pokemon on the to-do list">📝 To Do</button>
         <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one page at a time">🔍 Find</button>
@@ -175,6 +177,14 @@
             <h2>To Do List Empty</h2>
             <p>There are no pokémon on this dex's to-do list yet.</p>
             <button id="todo-empty-modal-ok" class="item-action-btn stats-detail-btn">OK</button>
+        </div>
+    </div>
+
+    <div id="pokedex-changes-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="pokedex-changes-modal-close" class="modal-close-btn">✕</div>
+            <h2>Unsaved Changes</h2>
+            <div id="pokedex-changes-modal-body"></div>
         </div>
     </div>
 
