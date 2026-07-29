@@ -610,6 +610,36 @@ h1 {
     border: 1px solid var(--accent);
 }
 
+.pokemon-card.todo-find-highlight {
+    outline: 3px solid var(--accent-2);
+    outline-offset: 3px;
+    animation: todo-find-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes todo-find-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(var(--accent-2-rgb), 0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(var(--accent-2-rgb), 0); }
+}
+
+/* Marked done while Find is running — not saved yet, just queued up until
+   Find finishes (see commitTodoPending in pokedexes.js). */
+.pokemon-card.todo-pending-done {
+    opacity: 0.45;
+}
+
+.pokemon-card.todo-pending-done::after {
+    content: "✔ Done";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: var(--accent);
+    color: #14161a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
 .shiny-plus {
     position: absolute;
     top: 6px;
@@ -2511,8 +2541,6 @@ footer {
 
 #todo-modal-input {
     width: 100%;
-    min-height: 90px;
-    resize: vertical;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #555;
@@ -2520,5 +2548,11 @@ footer {
     color: white;
     font: inherit;
     box-sizing: border-box;
+    outline: none;
+    transition: 0.15s ease;
+}
+
+#todo-modal-input:focus {
+    border-color: var(--accent);
 }
 

@@ -3,6 +3,10 @@ let shinyEditModeFlag = false;
 let pogoShinyModeFlag = false;
 let pogoShinyFilter = null; // null | true (Shiny) | false (Not Shiny) — PoGo Dex only, replaces the S&S game filter row
 let todoFilterActive = false; // Trade Dex / Wonder Trade Dex only — show only pokemon on that dex's to-do list
+let todoFindActive = false; // stepping through todoQueue one page at a time
+let todoQueue = []; // pokemon (from allPokemon) currently on the to-do list, in dex order
+let todoQueuePos = 0;
+let todoPendingDone = new Set(); // keys clicked while Find is active — not committed until Find ends
 let gameFilterState = {};
 let allPokemon = [];
 let cardMap = new Map();
@@ -293,12 +297,29 @@ function createPokemonCards(pokemonList) {
                 // TRADE/WONDER TRADE TO-DO FILTER ACTIVE → CLICK REMOVES
                 // Once the To Do filter is narrowing the grid down to just
                 // that dex's list, clicking an item there means "done with
-                // this one" — take it off the list instead of the normal
-                // add/remove-from-dex click.
+                // this one" — take it off the list AND mark it caught on the
+                // dex itself, instead of the normal add/remove-from-dex click.
+                //
+                // While Find is running, the whole page is shown unfiltered
+                // (not just the queued pokemon), so a click here only marks
+                // it pending — the actual update waits until Find finishes
+                // (see commitTodoPending, called from resetTodoFind) so the
+                // in-progress queue doesn't shift out from under you mid-cycle.
                 // -----------------------------
                 const todoField = todoFieldFor(activeDexEdit);
                 if (todoField && todoFilterActive) {
 
+                    if (todoFindActive) {
+                        if (todoPendingDone.has(key)) {
+                            todoPendingDone.delete(key);
+                        } else {
+                            todoPendingDone.add(key);
+                        }
+                        card.classList.toggle("todo-pending-done", todoPendingDone.has(key));
+                        return;
+                    }
+
+                    pokemonData[activeDexEdit] = true;
                     pokemonData[todoField] = false;
                     savedDexData[key] = pokemonData;
                     saveData();
@@ -425,13 +446,118 @@ function updateTodoButtonUI() {
 
     const filterBtn = document.getElementById("todo-filter-btn");
     const addBtn = document.getElementById("todo-add-btn");
-    if (!filterBtn || !addBtn) return;
+    const findBtn = document.getElementById("todo-find-btn");
+    if (!filterBtn || !addBtn || !findBtn) return;
 
     const isTodoDex = !!todoFieldFor(activeDexEdit);
 
     filterBtn.classList.toggle("hidden", !isTodoDex);
-    addBtn.classList.toggle("hidden", !isTodoDex);
     filterBtn.classList.toggle("active-mode", todoFilterActive);
+
+    // Add and Find only show up once To Do itself has been clicked — no
+    // point offering either before the list is actually in view.
+    addBtn.classList.toggle("hidden", !isTodoDex || !todoFilterActive);
+    findBtn.classList.toggle("hidden", !isTodoDex || !todoFilterActive);
+    findBtn.classList.toggle("active-mode", todoFindActive);
+}
+
+function clearTodoFindHighlight() {
+    document.querySelectorAll(".pokemon-card.todo-find-highlight").forEach(card => {
+        card.classList.remove("todo-find-highlight");
+    });
+}
+
+function clearTodoPendingMarks() {
+    document.querySelectorAll(".pokemon-card.todo-pending-done").forEach(card => {
+        card.classList.remove("todo-pending-done");
+    });
+}
+
+// Applies every pokemon clicked during this Find session — marks each
+// caught on the dex and off the to-do list — in one go, then saves once.
+function commitTodoPending() {
+
+    if (todoPendingDone.size === 0) return;
+
+    const field = todoFieldFor(activeDexEdit);
+
+    if (field) {
+        todoPendingDone.forEach(key => {
+            const data = savedDexData[key] || {};
+            data[activeDexEdit] = true;
+            data[field] = false;
+            savedDexData[key] = data;
+        });
+        saveData();
+    }
+
+    todoPendingDone.clear();
+}
+
+// Drops out of Find navigation, committing any pending picks first. Doesn't
+// touch todoFilterActive/pageMode itself — callers decide what view to land
+// on afterwards.
+function resetTodoFind() {
+    commitTodoPending();
+    todoFindActive = false;
+    todoQueue = [];
+    todoQueuePos = 0;
+    clearTodoFindHighlight();
+    clearTodoPendingMarks();
+}
+
+// Jumps to whichever page holds the pokemon currently at todoQueuePos, and
+// highlights its card so it's easy to spot among the rest of that page.
+function showTodoQueuePage() {
+
+    const pokemon = todoQueue[todoQueuePos];
+    if (!pokemon) return;
+
+    const index = allPokemon.indexOf(pokemon);
+    currentPage = Math.floor(index / pageSize) + 1;
+
+    applyPagination();
+    clearTodoFindHighlight();
+
+    const card = cardMap.get(pokemon.name);
+    if (card) card.classList.add("todo-find-highlight");
+
+    document.getElementById("page-display").textContent =
+        `${todoQueuePos + 1} / ${todoQueue.length}`;
+}
+
+function enterTodoFind() {
+
+    const field = todoFieldFor(activeDexEdit);
+    if (!field) return;
+
+    const queue = allPokemon.filter(p => !!savedDexData[normalizeName(p.name)]?.[field]);
+
+    if (queue.length === 0) {
+        document.getElementById("todo-empty-modal").classList.remove("hidden");
+        return;
+    }
+
+    todoQueue = queue;
+    todoQueuePos = 0;
+    todoFindActive = true;
+    pageMode = true;
+
+    showTodoQueuePage();
+    updateModeUI();
+    updateTodoButtonUI();
+}
+
+// Back to the filtered to-do list itself (list mode, todoFilterActive stays
+// on) — reached either by wrapping past the last queue item, or manually.
+function exitTodoFind() {
+
+    resetTodoFind();
+    pageMode = false;
+
+    applyFilters();
+    updateModeUI();
+    updateTodoButtonUI();
 }
 
 document.getElementById("todo-filter-btn").addEventListener("click", () => {
@@ -440,10 +566,30 @@ document.getElementById("todo-filter-btn").addEventListener("click", () => {
 
     todoFilterActive = !todoFilterActive;
 
+    if (todoFilterActive) {
+        // Page Mode ignores filters entirely (see applyPagination) — hopping
+        // into the to-do list only makes sense from List Mode.
+        pageMode = false;
+    } else if (todoFindActive) {
+        resetTodoFind();
+        pageMode = false;
+    }
+
     applyFilters();
     scrollResultsToTop();
+    updateModeUI();
     updateTodoButtonUI();
-    if (pageMode) applyPagination();
+});
+
+document.getElementById("todo-find-btn").addEventListener("click", () => {
+
+    if (!todoFieldFor(activeDexEdit) || !todoFilterActive) return;
+
+    if (todoFindActive) {
+        exitTodoFind();
+    } else {
+        enterTodoFind();
+    }
 });
 
 const todoModal = document.getElementById("todo-modal");
@@ -486,12 +632,32 @@ todoModalSubmit.addEventListener("click", () => {
     todoModal.classList.add("hidden");
 });
 
+todoModalInput.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    todoModalSubmit.click();
+});
+
 todoModalClose.addEventListener("click", () => {
     todoModal.classList.add("hidden");
 });
 
 todoModal.addEventListener("click", (e) => {
     if (e.target === todoModal) todoModal.classList.add("hidden");
+});
+
+const todoEmptyModal = document.getElementById("todo-empty-modal");
+
+document.getElementById("todo-empty-modal-close").addEventListener("click", () => {
+    todoEmptyModal.classList.add("hidden");
+});
+
+document.getElementById("todo-empty-modal-ok").addEventListener("click", () => {
+    todoEmptyModal.classList.add("hidden");
+});
+
+todoEmptyModal.addEventListener("click", (e) => {
+    if (e.target === todoEmptyModal) todoEmptyModal.classList.add("hidden");
 });
 
 
@@ -982,10 +1148,15 @@ document.addEventListener("click", (e) => {
     updatePogoShinyFilterHighlight();
 
     // The To Do list is per-dex (Trade Dex vs Wonder Trade Dex) — leaving
-    // either one, same as Shiny Mode above, resets the filter so re-entering
-    // starts unfiltered rather than silently carrying over.
+    // either one, same as Shiny Mode above, resets the filter (and any
+    // in-progress Find) so re-entering starts unfiltered rather than
+    // silently carrying over.
     if (!todoFieldFor(activeDexEdit)) {
         todoFilterActive = false;
+        if (todoFindActive) {
+            resetTodoFind();
+            pageMode = false;
+        }
     }
     updateTodoButtonUI();
 
@@ -1471,6 +1642,7 @@ function createFilterButtons() {
         pogoShinyModeFlag = false;
         pogoShinyFilter = null;
         todoFilterActive = false;
+        resetTodoFind();
 
         pageMode = false;
         currentPage = 1;
@@ -1608,7 +1780,24 @@ document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(item
 
 document.getElementById("page-mode").addEventListener("click", () => {
 
-    if (pageMode) return;
+    if (pageMode) {
+        // Already paginated — the only way this button does anything is to
+        // drop out of Find navigation back into a plain, unfiltered page.
+        if (todoFindActive) {
+            resetTodoFind();
+            updateTodoButtonUI();
+        }
+        return;
+    }
+
+    // Page Mode always shows a plain unfiltered slice (see applyPagination),
+    // so the to-do filter can't do anything useful there — leaving it on
+    // would just look broken once every filter button greys out.
+    if (todoFilterActive) {
+        todoFilterActive = false;
+        resetTodoFind();
+        updateTodoButtonUI();
+    }
 
     pageMode = true;
     currentPage = 1;
@@ -1629,6 +1818,8 @@ document.getElementById("list-mode").addEventListener("click", () => {
     if (!pageMode) return;
 
     pageMode = false;
+    resetTodoFind();
+    updateTodoButtonUI();
 
     // show everything
     document.querySelectorAll(".pokemon-card").forEach(card => {
@@ -1640,6 +1831,17 @@ document.getElementById("list-mode").addEventListener("click", () => {
 
 document.getElementById("next-page").addEventListener("click", () => {
 
+    if (todoFindActive) {
+        if (todoQueuePos < todoQueue.length - 1) {
+            todoQueuePos++;
+            showTodoQueuePage();
+        } else {
+            // Wrapped past the last queued pokemon — back to the to-do list.
+            exitTodoFind();
+        }
+        return;
+    }
+
     const cards = document.querySelectorAll(".pokemon-card");
     const maxPage = Math.ceil(cards.length / pageSize);
 
@@ -1650,6 +1852,14 @@ document.getElementById("next-page").addEventListener("click", () => {
 });
 
 document.getElementById("prev-page").addEventListener("click", () => {
+
+    if (todoFindActive) {
+        if (todoQueuePos > 0) {
+            todoQueuePos--;
+            showTodoQueuePage();
+        }
+        return;
+    }
 
     if (currentPage > 1) {
         currentPage--;
