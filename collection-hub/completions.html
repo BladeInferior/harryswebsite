@@ -324,7 +324,19 @@
                             </div>
                         </div>
 
-                        <div id="modal-dlc-list"></div>
+                        <div id="modal-dlc-carousel">
+                            <button id="dlc-prev-btn" class="dlc-carousel-nav" type="button" aria-label="Previous DLC">◀</button>
+
+                            <div class="dlc-carousel-content">
+                                <div id="modal-dlc-name"></div>
+                                <img id="modal-dlc-image">
+                                <button id="modal-dlc-name-btn" class="dlc-name-btn hidden" type="button">Name this DLC</button>
+                            </div>
+
+                            <button id="dlc-next-btn" class="dlc-carousel-nav" type="button" aria-label="Next DLC">▶</button>
+                        </div>
+
+                        <div id="modal-dlc-empty" class="hidden">No DLCs yet.</div>
 
                     </div>
 
@@ -339,7 +351,9 @@
     </div>
 
     <div id="image-zoom-overlay" class="hidden">
+        <button id="zoom-dlc-prev-btn" class="modal-nav hidden" type="button" aria-label="Previous DLC">◀</button>
         <img id="zoom-image" />
+        <button id="zoom-dlc-next-btn" class="modal-nav hidden" type="button" aria-label="Next DLC">▶</button>
     </div>
 
     <div id="stats-modal" class="stats-modal-overlay hidden">

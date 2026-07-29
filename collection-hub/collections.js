@@ -38,6 +38,37 @@ const renameDlcImage = document.getElementById("rename-dlc-image");
 const renameDlcInput = document.getElementById("rename-dlc-input");
 let renameDlcContext = null; // { entry, item, index }
 
+// DLC carousel (completions only) — one DLC shown at a time instead of a
+// thumbnail grid, so the modal stays a fixed height regardless of how many
+// DLCs an item has. currentDlcIndex only resets to 0 when openModal() is
+// called for a *different* item (dlcCarouselItemIndex tracks which one it's
+// currently showing) — Add/Delete/Rename/Reorder DLC all re-call
+// openModal(index) with the same index afterward, and without that guard
+// every one of those would otherwise bounce the view back to DLC #1.
+const dlcCarousel = document.getElementById("modal-dlc-carousel");
+const dlcPrevBtn = document.getElementById("dlc-prev-btn");
+const dlcNextBtn = document.getElementById("dlc-next-btn");
+const dlcNameEl = document.getElementById("modal-dlc-name");
+const dlcImageEl = document.getElementById("modal-dlc-image");
+const dlcNameBtn = document.getElementById("modal-dlc-name-btn");
+const dlcEmptyEl = document.getElementById("modal-dlc-empty");
+let currentDlcIndex = 0;
+let dlcCarouselItemIndex = null;
+
+// image-zoom-overlay is shared by the main item image, the add/edit preview,
+// and (completions only) a zoomed DLC image — these nav arrows only make
+// sense for the last of those, so they're shown/hidden per zoom rather than
+// living on the carousel's own always-visible ◀/▶.
+const zoomDlcPrevBtn = document.getElementById("zoom-dlc-prev-btn");
+const zoomDlcNextBtn = document.getElementById("zoom-dlc-next-btn");
+let zoomedFromDlc = false;
+
+function hideDlcZoomNav() {
+    zoomedFromDlc = false;
+    if (zoomDlcPrevBtn) zoomDlcPrevBtn.classList.add("hidden");
+    if (zoomDlcNextBtn) zoomDlcNextBtn.classList.add("hidden");
+}
+
 let selectedDlcIndex = null;
 let currentDeleteItem = null;
 
@@ -235,6 +266,7 @@ Promise.all([
 });
 
 modalImage.addEventListener("click", () => {
+    hideDlcZoomNav();
     zoomImage.src = modalImage.src;
     imageZoomOverlay.classList.remove("hidden");
 });
@@ -279,6 +311,60 @@ function dlcImageKey(entry) {
 
 function isDlcUnnamed(entry) {
     return typeof entry === "object" && entry !== null && entry.verified === false;
+}
+
+// Renders whichever single DLC currentDlcIndex points to into the modal's
+// carousel — called from openModal() (see its completions-page branch) and
+// from the prev/next button handlers below.
+function renderDlcCarousel(item, index) {
+
+    if (!dlcCarousel) return;
+
+    const dlcs = item.dlcs || [];
+
+    if (dlcs.length === 0) {
+        dlcCarousel.classList.add("hidden");
+        dlcEmptyEl.classList.remove("hidden");
+        return;
+    }
+
+    dlcCarousel.classList.remove("hidden");
+    dlcEmptyEl.classList.add("hidden");
+
+    if (currentDlcIndex >= dlcs.length) currentDlcIndex = dlcs.length - 1;
+    if (currentDlcIndex < 0) currentDlcIndex = 0;
+
+    const entry = dlcs[currentDlcIndex];
+
+    dlcNameEl.textContent = `${dlcDisplayName(entry)} (${currentDlcIndex + 1}/${dlcs.length})`;
+    setItemImage(dlcImageEl, dlcImageKey(entry));
+    dlcImageEl.classList.toggle("dlc-unnamed-image", isDlcUnnamed(entry));
+
+    dlcPrevBtn.disabled = dlcs.length <= 1;
+    dlcNextBtn.disabled = dlcs.length <= 1;
+
+    if (isDlcUnnamed(entry)) {
+
+        dlcNameBtn.classList.remove("hidden");
+
+        dlcNameBtn.onclick = (e) => {
+
+            e.stopPropagation();
+
+            renameDlcContext = { entry, item, index };
+
+            renameDlcImage.src = dlcImageEl.src;
+            renameDlcInput.value = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
+
+            renameDlcModal.classList.remove("hidden");
+            renameDlcInput.focus();
+            renameDlcInput.select();
+        };
+
+    } else {
+        dlcNameBtn.classList.add("hidden");
+        dlcNameBtn.onclick = null;
+    }
 }
 
 // Swaps a broken <img> for a text label reading "Image not downloaded" —
@@ -997,8 +1083,7 @@ function renderItems() {
         card.appendChild(label);
 
         // DLCs are only ever shown inside the item's modal (by design, not
-        // shown here on the grid card) — see openModal()'s #modal-dlcs
-        // rendering.
+        // shown here on the grid card) — see renderDlcCarousel().
 
         card.addEventListener("click", () => {
             openModal(items.indexOf(item));
@@ -1200,63 +1285,12 @@ function openModal(index) {
 
     if (document.body.classList.contains("completions-page")) {
 
-        let dlcContainer = document.getElementById("modal-dlcs");
-
-        if (!dlcContainer) {
-
-            dlcContainer = document.createElement("div");
-            dlcContainer.id = "modal-dlcs";
-
-            document.querySelector(".modal-right")
-                .appendChild(dlcContainer);
+        if (dlcCarouselItemIndex !== index) {
+            currentDlcIndex = 0;
         }
+        dlcCarouselItemIndex = index;
 
-        dlcContainer.innerHTML = "";
-
-        (item.dlcs || []).forEach(entry => {
-
-            const wrap = document.createElement("div");
-            wrap.classList.add("dlc-thumb-wrap");
-
-            const img = document.createElement("img");
-
-            setItemImage(img, dlcImageKey(entry));
-
-            img.addEventListener("click", () => {
-
-                zoomImage.src = img.src;
-                imageZoomOverlay.classList.remove("hidden");
-            });
-
-            wrap.appendChild(img);
-
-            if (isDlcUnnamed(entry)) {
-
-                wrap.classList.add("dlc-unnamed");
-
-                const nameBtn = document.createElement("button");
-                nameBtn.classList.add("dlc-name-btn");
-                nameBtn.textContent = "Name this DLC";
-
-                nameBtn.addEventListener("click", (e) => {
-
-                    e.stopPropagation();
-
-                    renameDlcContext = { entry, item, index };
-
-                    renameDlcImage.src = img.src;
-                    renameDlcInput.value = dlcDisplayName(entry).replace(/^\d+\.\s*/, "");
-
-                    renameDlcModal.classList.remove("hidden");
-                    renameDlcInput.focus();
-                    renameDlcInput.select();
-                });
-
-                wrap.appendChild(nameBtn);
-            }
-
-            dlcContainer.appendChild(wrap);
-        });
+        renderDlcCarousel(item, index);
     }
 
     modalOverlay.classList.remove("hidden");
@@ -2013,6 +2047,8 @@ previewBtn.addEventListener("click", () => {
 
     const item = items[index];
 
+    hideDlcZoomNav();
+
     if (
         (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks")
         && item.images?.length
@@ -2442,6 +2478,109 @@ if (imageNextBtn) {
 
         modalTitle.textContent =
             `${items[modalOverlay.dataset.index][COLLECTION.fields.title]} (${currentImageIndex + 1}/${currentImages.length})`;
+    });
+}
+
+if (dlcImageEl) {
+    dlcImageEl.addEventListener("click", () => {
+
+        const index = modalOverlay.dataset.index;
+        const item = items[index];
+        const dlcs = item.dlcs || [];
+        if (dlcs.length === 0) return;
+
+        zoomedFromDlc = true;
+        if (zoomDlcPrevBtn) {
+            zoomDlcPrevBtn.classList.remove("hidden");
+            zoomDlcPrevBtn.disabled = dlcs.length <= 1;
+        }
+        if (zoomDlcNextBtn) {
+            zoomDlcNextBtn.classList.remove("hidden");
+            zoomDlcNextBtn.disabled = dlcs.length <= 1;
+        }
+
+        setItemImage(zoomImage, dlcImageKey(dlcs[currentDlcIndex]));
+        imageZoomOverlay.classList.remove("hidden");
+    });
+}
+
+if (zoomDlcPrevBtn) {
+    zoomDlcPrevBtn.addEventListener("click", e => {
+
+        e.stopPropagation();
+
+        if (!zoomedFromDlc) return;
+
+        const index = modalOverlay.dataset.index;
+        const item = items[index];
+        const dlcs = item.dlcs || [];
+        if (dlcs.length <= 1) return;
+
+        currentDlcIndex--;
+        if (currentDlcIndex < 0) currentDlcIndex = dlcs.length - 1;
+
+        renderDlcCarousel(item, index);
+        // Resolved independently via setItemImage() (same fallback-through-
+        // extensions chain as the small carousel image) rather than copying
+        // dlcImageEl.src straight after renderDlcCarousel() sets it — that
+        // copy would grab whichever extension gets tried first, even if
+        // it's about to fail and get swapped for the right one a moment
+        // later by dlcImageEl's own onerror handler.
+        setItemImage(zoomImage, dlcImageKey(dlcs[currentDlcIndex]));
+    });
+}
+
+if (zoomDlcNextBtn) {
+    zoomDlcNextBtn.addEventListener("click", e => {
+
+        e.stopPropagation();
+
+        if (!zoomedFromDlc) return;
+
+        const index = modalOverlay.dataset.index;
+        const item = items[index];
+        const dlcs = item.dlcs || [];
+        if (dlcs.length <= 1) return;
+
+        currentDlcIndex++;
+        if (currentDlcIndex >= dlcs.length) currentDlcIndex = 0;
+
+        renderDlcCarousel(item, index);
+        setItemImage(zoomImage, dlcImageKey(dlcs[currentDlcIndex]));
+    });
+}
+
+if (dlcPrevBtn) {
+    dlcPrevBtn.addEventListener("click", e => {
+
+        e.stopPropagation();
+
+        const index = modalOverlay.dataset.index;
+        const item = items[index];
+        const dlcs = item.dlcs || [];
+        if (dlcs.length <= 1) return;
+
+        currentDlcIndex--;
+        if (currentDlcIndex < 0) currentDlcIndex = dlcs.length - 1;
+
+        renderDlcCarousel(item, index);
+    });
+}
+
+if (dlcNextBtn) {
+    dlcNextBtn.addEventListener("click", e => {
+
+        e.stopPropagation();
+
+        const index = modalOverlay.dataset.index;
+        const item = items[index];
+        const dlcs = item.dlcs || [];
+        if (dlcs.length <= 1) return;
+
+        currentDlcIndex++;
+        if (currentDlcIndex >= dlcs.length) currentDlcIndex = 0;
+
+        renderDlcCarousel(item, index);
     });
 }
 
