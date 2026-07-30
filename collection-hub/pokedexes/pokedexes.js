@@ -71,6 +71,27 @@ function updateExportGlow() {
     if (changesBtn) changesBtn.classList.toggle("hidden", !dirty);
 }
 
+// #import-export-controls sits fixed directly under #search-wrapper and is
+// meant to span exactly as wide as it — but #search-wrapper has no fixed
+// width of its own (it shrinks to fit the search input/clear icon), so
+// there's no CSS value to just copy. Measuring and copying it here keeps
+// the two in sync even if the search row's content ever changes.
+function syncImportExportWidth() {
+    const searchWrapper = document.getElementById("search-wrapper");
+    const importExport = document.getElementById("import-export-controls");
+    if (!searchWrapper || !importExport) return;
+
+    importExport.style.width = `${searchWrapper.offsetWidth}px`;
+}
+
+syncImportExportWidth();
+
+let syncImportExportWidthResizeTimer = null;
+window.addEventListener("resize", () => {
+    clearTimeout(syncImportExportWidthResizeTimer);
+    syncImportExportWidthResizeTimer = setTimeout(syncImportExportWidth, 150);
+});
+
 Promise.all([
     fetch("../fullPokemonList.json").then(res => res.json()),
     fetch("../pokedex-backup.json").then(res => res.json())

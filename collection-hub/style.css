@@ -933,6 +933,24 @@ h1 {
     margin: 20px auto;
 }
 
+/* Its own fixed card directly under #search-wrapper (search sits at
+   top: 80px, ~44px tall including its own padding) rather than a normal
+   flow element — #search-wrapper is position: fixed, so a flow element
+   placed after it in the DOM lands wherever the next in-flow element is,
+   nowhere near the search box on screen. width is set from JS
+   (syncImportExportWidth in pokedexes.js) to match #search-wrapper's own
+   rendered width exactly, since #search-wrapper has no fixed width of its
+   own to copy a number from. .filter-row (buttons: .game-filter-btn) gives
+   it the same look/equal-width-button layout as the actual game filters —
+   it isn't part of #page-controls anymore, so it shouldn't look like it. */
+#import-export-controls {
+    position: fixed;
+    top: 130px;
+    right: 20px;
+
+    z-index: 2000;
+}
+
 /* Keeps mode/pagination controls reachable while paging through a long grid
    instead of having to scroll back to the top every time — pinned just below
    the fixed site nav. Only while paginating: in list mode there's no paging
@@ -960,6 +978,14 @@ body.page-mode #page-controls {
     opacity: 1;
     border: 1px solid var(--accent);
     background: rgba(var(--accent-rgb), 0.15);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #import-export-controls .game-filter-btn:hover {
+        background: rgba(var(--accent-rgb), 0.15);
+        border: 1px solid var(--accent);
+        color: var(--accent);
+    }
 }
 
 /* Matches the blue-toned surface used by modals/cards elsewhere (item
