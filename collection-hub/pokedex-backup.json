@@ -3436,12 +3436,12 @@
   {
     "name": "sceptile",
     "masterDex": true,
-    "tradeDex": false,
+    "tradeDex": true,
     "wonderTradeDex": true,
     "pogoDex": true,
     "pogoShiny": true,
     "cherishDex": false,
-    "tradeDexTodo": true,
+    "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "shinyDex": true,
     "shinyDexData": {
