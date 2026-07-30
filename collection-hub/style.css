@@ -751,6 +751,14 @@ h1 {
     gap: 5px;
 }
 
+/* Matches #game-filter-container's own width override above — both are
+   right-anchored at right: 20px, so if this stayed at the base 280px it'd
+   extend further left than the (narrower, on this page) filters panel,
+   throwing its centered text off from the filters' actual horizontal center. */
+.pokemon-page #item-count-label {
+    width: 240px;
+}
+
 .pokemon-page #game-filter-container .filter-row,
 .pokemon-page #game-filter-container .generation-filter-row {
     gap: 5px;
@@ -916,6 +924,7 @@ h1 {
     position: relative;
     width: min(1000px, calc(100% - 40px));
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     gap: 10px;

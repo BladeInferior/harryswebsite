@@ -149,6 +149,7 @@ Promise.all([
     createPokemonCards(allPokemon);
     createProgressUI();
     createFilterButtons();
+    equalizePokemonNameSizes();
 
     updateProgress();
     updateCardHighlights();
@@ -160,6 +161,107 @@ Promise.all([
     updateExportGlow();
 
     updateModeUI();
+});
+
+// Some names (mostly Hisuian/Galarian/Alolan compounds — "Hisuian Sneasel"
+// vs "Hisuian Voltorb") are just long enough to wrap onto a second line at
+// the card's normal font-size while most names fit on one, making that
+// card's row taller than its neighbours (grid rows auto-size to their
+// tallest item) and throwing off the otherwise-even card grid. Every name
+// that doesn't fit at the base size gets shrunk just enough to fit on one
+// line — each one individually as large as it can be, rather than every
+// long name sharing one size sized to the single worst case.
+//
+// The right size for a given name is found by shrinking in small steps and
+// re-measuring it FOR REAL at each candidate size, rather than measuring
+// once at the base size and computing one ratio to extrapolate from: font
+// rendering/hinting doesn't always scale perfectly linearly, so a
+// computed-not-verified size can still land back on the wrap boundary.
+//
+// "Fits" also requires a few px of headroom rather than fitting exactly:
+// the probe measuring this (an isolated, off-grid element — see below) and
+// the live card can round fractional pixel widths slightly differently, and
+// with zero margin that was enough for one particular name ("Hisuian
+// Avalugg") to read as "fits" here while still visibly wrapping in the grid.
+//
+// Measuring by forcing white-space: nowrap on the live grid cells themselves
+// doesn't work: #box-container's columns are 1fr with the default implicit
+// min-width: auto, so each column sizes to the widest cell IT contains
+// across every row. Forcing every name nowrap at once inflates a whole
+// column to fit the longest name anywhere in it, which then inflates
+// scrollWidth for every other (often much shorter) name sharing that
+// column — that's what was shrinking short names like Virizion, measuring
+// them against a neighbour's width instead of their own. Measuring against
+// an isolated probe element that lives outside #box-container sidesteps
+// this entirely: it can't influence, or be influenced by, grid track sizing.
+function equalizePokemonNameSizes() {
+
+    const nameEls = [];
+    cardMap.forEach(card => {
+        const nameEl = card.querySelector(".pokemon-name");
+        if (nameEl) nameEls.push(nameEl);
+    });
+
+    if (nameEls.length === 0) return;
+
+    nameEls.forEach(el => {
+        el.style.fontSize = "";
+    });
+
+    const style = getComputedStyle(nameEls[0]);
+    const baseFontSize = parseFloat(style.fontSize);
+    const availableWidth = nameEls[0].clientWidth;
+    if (!availableWidth) return;
+
+    const probe = document.createElement("span");
+    probe.style.position = "absolute";
+    probe.style.visibility = "hidden";
+    probe.style.whiteSpace = "nowrap";
+    probe.style.left = "-9999px";
+    probe.style.top = "0";
+    probe.style.fontFamily = style.fontFamily;
+    probe.style.fontWeight = style.fontWeight;
+    probe.style.letterSpacing = style.letterSpacing;
+    document.body.appendChild(probe);
+
+    const FIT_MARGIN = 3;
+    const fits = (fontSize, text) => {
+        probe.style.fontSize = `${fontSize}px`;
+        probe.textContent = text;
+        return probe.offsetWidth <= availableWidth - FIT_MARGIN;
+    };
+
+    // Below this, text would be unreadably small — a name may still wrap
+    // rather than shrink past this, but that's a better outcome than
+    // illegibility.
+    const minFontSize = baseFontSize * 0.7;
+
+    cardMap.forEach((card, name) => {
+
+        const nameEl = card.querySelector(".pokemon-name");
+        if (!nameEl) return;
+
+        if (fits(baseFontSize, name)) return;
+
+        let fontSize = baseFontSize;
+        while (fontSize > minFontSize && !fits(fontSize, name)) {
+            fontSize -= 0.25;
+        }
+        fontSize = Math.max(fontSize, minFontSize);
+
+        nameEl.style.fontSize = `${fontSize.toFixed(2)}px`;
+    });
+
+    probe.remove();
+}
+
+// The card grid's column count/width changes at the mobile breakpoint (and
+// with any future responsive tweak), which changes how much width each name
+// actually has to work with — recompute rather than let it go stale.
+let equalizeNameSizesResizeTimer = null;
+window.addEventListener("resize", () => {
+    clearTimeout(equalizeNameSizesResizeTimer);
+    equalizeNameSizesResizeTimer = setTimeout(equalizePokemonNameSizes, 150);
 });
 
 
@@ -319,21 +421,37 @@ function createPokemonCards(pokemonList) {
                 // dex itself, instead of the normal add/remove-from-dex click.
                 //
                 // While Find is running, the whole page is shown unfiltered
-                // (not just the queued pokemon), so a click here only marks
-                // it pending — the actual update waits until Find finishes
-                // (see commitTodoPending, called from resetTodoFind) so the
+                // (not just the queued pokemon) for context, but only cards
+                // still actually on the to-do list are clickable — everything
+                // else on the page is inert. A click here only marks it
+                // pending — the actual update waits until Find finishes (see
+                // commitTodoPending, called from resetTodoFind) so the
                 // in-progress queue doesn't shift out from under you mid-cycle.
                 // -----------------------------
                 const todoField = todoFieldFor(activeDexEdit);
                 if (todoField && todoFilterActive) {
 
                     if (todoFindActive) {
+
+                        if (!pokemonData[todoField]) return;
+
                         if (todoPendingDone.has(key)) {
                             todoPendingDone.delete(key);
-                        } else {
-                            todoPendingDone.add(key);
+                            card.classList.remove("todo-pending-done");
+                            return;
                         }
-                        card.classList.toggle("todo-pending-done", todoPendingDone.has(key));
+
+                        todoPendingDone.add(key);
+                        card.classList.add("todo-pending-done");
+
+                        // Advance to the next open item once the card's own
+                        // "select me → done" transition (see .todo-pending-done
+                        // in style.css) has actually played, instead of
+                        // jumping the page out from under the click.
+                        card.addEventListener("transitionend", () => {
+                            advanceTodoFind(key);
+                        }, { once: true });
+
                         return;
                     }
 
@@ -526,6 +644,9 @@ function resetTodoFind() {
 
 // Jumps to whichever page holds the pokemon currently at todoQueuePos, and
 // highlights its card so it's easy to spot among the rest of that page.
+// applyPagination() sets page-display to the real page number — Find is
+// genuine Page Mode (see updateModeUI), so that's what should show here too,
+// not queue position.
 function showTodoQueuePage() {
 
     const pokemon = todoQueue[todoQueuePos];
@@ -539,9 +660,32 @@ function showTodoQueuePage() {
 
     const card = cardMap.get(pokemon.name);
     if (card) card.classList.add("todo-find-highlight");
+}
 
-    document.getElementById("page-display").textContent =
-        `${todoQueuePos + 1} / ${todoQueue.length}`;
+// Called once a to-do pokemon's "done" transition finishes (see the card
+// click handler). Only steps the pointer/page forward when the item just
+// finished was actually the current target — clicking some other to-do
+// pokemon that happens to share the page is marked done in place without
+// moving anything, and gets skipped over automatically whenever the pointer
+// reaches it later.
+function advanceTodoFind(justCompletedKey) {
+
+    const currentTarget = todoQueue[todoQueuePos];
+    if (!currentTarget || normalizeName(currentTarget.name) !== justCompletedKey) return;
+
+    do {
+        todoQueuePos++;
+    } while (
+        todoQueuePos < todoQueue.length &&
+        todoPendingDone.has(normalizeName(todoQueue[todoQueuePos].name))
+    );
+
+    if (todoQueuePos >= todoQueue.length) {
+        exitTodoFind();
+        return;
+    }
+
+    showTodoQueuePage();
 }
 
 function enterTodoFind() {
@@ -578,6 +722,29 @@ function exitTodoFind() {
     updateTodoButtonUI();
 }
 
+// Entering Todo mode clears every other filter (not just hides them — see
+// updateModeUI, which also disables the controls going forward) so the list
+// it shows is always exactly that dex's to-do items, nothing narrowed
+// further and nothing left silently armed for whenever you leave.
+function clearNonTodoFilters() {
+
+    gameFilterState = {};
+    selectedGeneration = null;
+    tagFilters = {};
+    searchInput.value = "";
+    missingDexFilter = null;
+    selectedCompletionFilter = null;
+
+    document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
+        el.classList.remove("active");
+    });
+
+    updateGameButtonHighlight();
+    updateGenerationButtonHighlight();
+    updateTagButtonHighlight();
+    updateMissingButtonHighlight();
+}
+
 document.getElementById("todo-filter-btn").addEventListener("click", () => {
 
     if (!todoFieldFor(activeDexEdit)) return;
@@ -585,9 +752,10 @@ document.getElementById("todo-filter-btn").addEventListener("click", () => {
     todoFilterActive = !todoFilterActive;
 
     if (todoFilterActive) {
-        // Page Mode ignores filters entirely (see applyPagination) — hopping
-        // into the to-do list only makes sense from List Mode.
+        // To Do is its own mode — not Page Mode, not List Mode (see
+        // updateModeUI) — and nothing else filters on top of it.
         pageMode = false;
+        clearNonTodoFilters();
     } else if (todoFindActive) {
         resetTodoFind();
         pageMode = false;
@@ -1710,7 +1878,8 @@ function updatePokemonCount() {
         Object.keys(tagFilters).length > 0 ||
         missingDexFilter !== null ||
         selectedCompletionFilter !== null ||
-        searchInput.value.trim() !== ""
+        searchInput.value.trim() !== "" ||
+        todoFilterActive
     );
 
     if (!hasActiveFilters) {
@@ -1803,7 +1972,9 @@ document.getElementById("page-mode").addEventListener("click", () => {
         // drop out of Find navigation back into a plain, unfiltered page.
         if (todoFindActive) {
             resetTodoFind();
+            todoFilterActive = false;
             updateTodoButtonUI();
+            updateModeUI();
         }
         return;
     }
@@ -1833,9 +2004,10 @@ document.getElementById("page-mode").addEventListener("click", () => {
 
 document.getElementById("list-mode").addEventListener("click", () => {
 
-    if (!pageMode) return;
+    if (!pageMode && !todoFilterActive) return;
 
     pageMode = false;
+    todoFilterActive = false;
     resetTodoFind();
     updateTodoButtonUI();
 
@@ -1847,18 +2019,11 @@ document.getElementById("list-mode").addEventListener("click", () => {
     updateModeUI();
 });
 
+// Plain page navigation — Find no longer hijacks these (advancing through
+// the to-do queue now happens by clicking the to-do pokemon itself, see
+// advanceTodoFind), so these just browse pages like normal Page Mode,
+// leaving Find's target and highlight wherever they are.
 document.getElementById("next-page").addEventListener("click", () => {
-
-    if (todoFindActive) {
-        if (todoQueuePos < todoQueue.length - 1) {
-            todoQueuePos++;
-            showTodoQueuePage();
-        } else {
-            // Wrapped past the last queued pokemon — back to the to-do list.
-            exitTodoFind();
-        }
-        return;
-    }
 
     const cards = document.querySelectorAll(".pokemon-card");
     const maxPage = Math.ceil(cards.length / pageSize);
@@ -1870,14 +2035,6 @@ document.getElementById("next-page").addEventListener("click", () => {
 });
 
 document.getElementById("prev-page").addEventListener("click", () => {
-
-    if (todoFindActive) {
-        if (todoQueuePos > 0) {
-            todoQueuePos--;
-            showTodoQueuePage();
-        }
-        return;
-    }
 
     if (currentPage > 1) {
         currentPage--;
@@ -1919,13 +2076,21 @@ function updateModeUI() {
     const listBtn = document.getElementById("list-mode");
     const pagination = document.getElementById("pagination-controls");
 
+    // Browsing the to-do list itself (filter on, Find not running) is its
+    // own mode — neither List nor Page Mode, so neither button reads as
+    // active while it's showing. Find still rides on real Page Mode
+    // (todoFindActive forces pageMode = true) since it's genuinely paging
+    // through the full grid one page at a time, not a filtered list.
+    const inTodoMode = todoFilterActive && !todoFindActive;
+
     pageBtn.classList.toggle("active-mode", pageMode === true);
-    listBtn.classList.toggle("active-mode", pageMode === false);
+    listBtn.classList.toggle("active-mode", pageMode === false && !inTodoMode);
 
     pagination.classList.toggle("hidden", pageMode === false);
 
     document.body.classList.toggle("page-mode", pageMode);
-    document.body.classList.toggle("list-mode", !pageMode);
+    document.body.classList.toggle("list-mode", !pageMode && !inTodoMode);
+    document.body.classList.toggle("todo-mode", inTodoMode);
 
     // Disabling is applied per row rather than on the whole container —
     // opacity on a parent bleeds through to children regardless of their own
@@ -1934,13 +2099,23 @@ function updateModeUI() {
     // shared ancestor in the first place. Generation rows are identified by
     // containing a Gen N button (the "Missing"/"Not Missing" pair shares the
     // same .generation-filter-row layout class but has no [data-gen] button).
+    // Todo mode disables every row, generation included — there's no
+    // dex-wide filtering left to do once it's narrowed to a to-do list.
     const filterContainer = document.getElementById("game-filter-container");
     if (filterContainer) {
         Array.from(filterContainer.children).forEach(child => {
             const isGenerationRow = !!child.querySelector("[data-gen]");
-            child.classList.toggle("filters-disabled", pageMode && !isGenerationRow);
+            child.classList.toggle("filters-disabled", inTodoMode || (pageMode && !isGenerationRow));
         });
     }
+
+    // Search and the completion-swatch filter live outside
+    // #game-filter-container, so they need their own disabling here.
+    const searchWrapper = document.getElementById("search-wrapper");
+    if (searchWrapper) searchWrapper.classList.toggle("filters-disabled", inTodoMode);
+
+    const dexKey = document.getElementById("dex-key");
+    if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode);
 
     updateCardImages();
 }
