@@ -717,6 +717,33 @@ document.getElementById("edit-item").addEventListener("click", () => {
     modalOverlay.classList.add("hidden");
 });
 
+// #import-export-controls sits fixed directly under #search-wrapper and is
+// meant to span exactly as wide as it — but #search-wrapper has no fixed
+// width of its own (it shrinks to fit the search input/clear icon), so
+// there's no CSS value to just copy. Measuring and copying it here keeps
+// the two in sync even if the search row's content ever changes. It starts
+// hidden (.width-sync-pending, in style.css) precisely so this can run
+// whenever it runs — even late, at the bottom of the page load — without
+// ever being visible in its pre-sync (full viewport width) state. Mirrors
+// pokedexes.js/collections.js's own copies of this function (cards has its
+// own dedicated script instead of the shared collections.js).
+function syncImportExportWidth() {
+    const searchWrapper = document.getElementById("search-wrapper");
+    const importExport = document.getElementById("import-export-controls");
+    if (!searchWrapper || !importExport) return;
+
+    importExport.style.width = `${searchWrapper.offsetWidth}px`;
+    importExport.classList.remove("width-sync-pending");
+}
+
+syncImportExportWidth();
+
+let syncImportExportWidthResizeTimer = null;
+window.addEventListener("resize", () => {
+    clearTimeout(syncImportExportWidthResizeTimer);
+    syncImportExportWidthResizeTimer = setTimeout(syncImportExportWidth, 150);
+});
+
 document.getElementById("import-button").addEventListener("click", () => {
     document.getElementById("import-items").click();
 });

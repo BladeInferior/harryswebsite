@@ -938,17 +938,31 @@ h1 {
    flow element — #search-wrapper is position: fixed, so a flow element
    placed after it in the DOM lands wherever the next in-flow element is,
    nowhere near the search box on screen. width is set from JS
-   (syncImportExportWidth in pokedexes.js) to match #search-wrapper's own
-   rendered width exactly, since #search-wrapper has no fixed width of its
-   own to copy a number from. .filter-row (buttons: .game-filter-btn) gives
-   it the same look/equal-width-button layout as the actual game filters —
-   it isn't part of #page-controls anymore, so it shouldn't look like it. */
+   (syncImportExportWidth, in collections.js/cards.js/pokedexes.js
+   depending on the page) to match #search-wrapper's own rendered width
+   exactly, since #search-wrapper has no fixed width of its own to copy a
+   number from. .filter-row (buttons: .game-filter-btn) gives it the same
+   look/equal-width-button layout as the actual game filters — it isn't
+   part of #page-controls anymore, so it shouldn't look like it. */
 #import-export-controls {
     position: fixed;
     top: 130px;
     right: 20px;
 
     z-index: 2000;
+}
+
+/* Starts hidden (see .width-sync-pending below) rather than relying on
+   syncImportExportWidth() running before first paint — without this, the
+   element's only width comes from .filter-row's width:100%, which with no
+   `left` set resolves against the full viewport (not #search-wrapper),
+   so it would flash edge-to-edge with its buttons stretched by
+   .filter-row .game-filter-btn's flex:1 before JS ever gets a chance to
+   correct it. Same fix, same root cause as #untagged-filter's own
+   .filter-relocating class above — just a different class name since this
+   one is about sizing in place, not relocating into another container. */
+.width-sync-pending {
+    display: none;
 }
 
 /* Keeps mode/pagination controls reachable while paging through a long grid
@@ -994,6 +1008,14 @@ body.page-mode #page-controls {
 #stats-btn {
     border: 1px solid var(--border);
     background: linear-gradient(180deg, var(--surface), var(--surface-2));
+}
+
+/* Admin-only (see collections.js) — starts invisible-but-space-reserved
+   rather than display:none, so #page-controls' centered flex row doesn't
+   shift its other buttons over once the async admin check resolves and
+   this pops in. JS toggles visibility, not display. */
+#scan-dlc-btn {
+    visibility: hidden;
 }
 
 /* Lets you know there's something to Export before you go looking — cleared

@@ -4,12 +4,12 @@
 (function () {
     const style = document.createElement("style");
     style.textContent = `
-        /* One fixed look everywhere — this is a utility control, not a
-           themed page element, so it deliberately does NOT pick up each
-           page's own accent color (that was tried before and looked
-           inconsistent site-to-site). Hardcoded to collection-hub's palette
-           (its style.css :root: --surface/--border/--accent) so every page
-           renders byte-identical to how it already looks there. */
+        /* Same dark circle everywhere, but the arrow (and hover border)
+           picks up whichever hub the visitor is currently on via
+           --hub-accent — each *-nav.js (or index.html's inline nav script
+           for the homepage) sets that custom property on :root the moment
+           it knows its theme. Falls back to collection-hub's own green in
+           case something loads before that's set. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -21,7 +21,7 @@
             border-radius: 50%;
             background: #1c1f26;
             border: 1px solid #2f3542;
-            color: #86efac;
+            color: var(--hub-accent, #86efac);
             font-size: 18px;
             align-items: center;
             justify-content: center;
@@ -36,7 +36,7 @@
            no pointer to actually leave the element afterward. */
         @media (hover: hover) and (pointer: fine) {
             #scroll-to-top-btn:hover {
-                border-color: #86efac;
+                border-color: var(--hub-accent, #86efac);
                 background: rgba(255,255,255,.08);
             }
         }

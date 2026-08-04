@@ -37,6 +37,12 @@
         </div>
     </div>
 
+    <div id="import-export-controls" class="filter-row width-sync-pending">
+        <input type="file" id="import-items" accept=".json" hidden>
+        <button id="import-button" class="game-filter-btn">Import</button>
+        <button id="export-items" class="game-filter-btn">Export</button>
+    </div>
+
     <div id="popfigure-controls" class="filter-relocating">
         <button id="untagged-filter">Untagged</button>
         <button id="toggle-front-image">Boxed</button>
@@ -45,10 +51,10 @@
     </div>
 
     <!-- =========================
-        MODE + PAGINATION 
+        MODE + PAGINATION
     ========================== -->
 
-    
+
     <div id="page-controls">
 
         <button id="list-mode">List Mode</button>
@@ -63,9 +69,6 @@
         </div>
 
         <button id="add-item">Add Pop Figure</button>
-        <input type="file" id="import-items" accept=".json" hidden>
-        <button id="import-button">Import</button>
-        <button id="export-items">Export</button>
         <button id="stats-btn">Stats</button>
 
     </div>

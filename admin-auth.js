@@ -145,26 +145,6 @@ function mountWidget() {
             white-space: normal;
         }
 
-        /* Same positioning as .gaa-error, but a neutral heads-up rather than
-           a failure — installed/standalone PWAs are a known-fragile
-           combination with Google's redirect sign-in flow (the OAuth
-           handoff can lose the app's session entirely), so this warns
-           upfront instead of just failing silently later. */
-        #admin-auth-widget .gaa-standalone-notice {
-            position: absolute;
-            bottom: 100%;
-            right: 0;
-            margin-bottom: 8px;
-            background: rgba(20, 20, 20, 0.95);
-            border: 1px solid #f1c40f;
-            color: #f1c40f;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            max-width: 220px;
-            white-space: normal;
-        }
-
         @media (max-width: 480px) {
             #admin-auth-widget {
                 bottom: 10px;
@@ -257,31 +237,10 @@ function mountWidget() {
         });
 
         widget.appendChild(signInBtn);
-
-        // Installed/standalone PWAs (Add to Home Screen) are a known-fragile
-        // combination with Google's redirect sign-in flow — the OAuth
-        // handoff can lose the installed app's session entirely and bounce
-        // back before the account picker ever appears, with no reliable
-        // client-side fix (it's a platform-level context switch, not
-        // something retryable in JS). Warn upfront rather than leave it
-        // looking broken with no explanation.
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            const notice = document.createElement('div');
-            notice.className = 'gaa-standalone-notice';
-            notice.textContent = "Sign-in can fail in the installed app — if it kicks you back out, open this site in your regular browser (not the home screen icon) to sign in instead.";
-            widget.appendChild(notice);
-        }
     }
 
     function showError(message) {
         clearError();
-
-        // Both sit at the same position: absolute / bottom: 100% spot above
-        // the widget — hide the standalone notice while an error is up so
-        // they don't render on top of each other; clearError() below brings
-        // it back.
-        const notice = widget.querySelector('.gaa-standalone-notice');
-        if (notice) notice.style.display = 'none';
 
         const err = document.createElement('div');
         err.className = 'gaa-error';
@@ -292,9 +251,6 @@ function mountWidget() {
     function clearError() {
         const existing = widget.querySelector('.gaa-error');
         if (existing) existing.remove();
-
-        const notice = widget.querySelector('.gaa-standalone-notice');
-        if (notice) notice.style.display = '';
     }
 
     // Surfaces a failed signInWithRedirect() (mobile) the same way a failed

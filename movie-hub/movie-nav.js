@@ -28,6 +28,12 @@ fetch(new URL('../navbar.html', MOVIE_NAV_SCRIPT_URL))
         const nav = document.querySelector('.site-nav');
         nav.classList.add('movie-theme');
 
+        // Single source of truth for "this hub's colour" — anything site-wide
+        // that wants to theme itself per-hub (e.g. scroll-to-top.js's arrow)
+        // reads this instead of hardcoding its own copy of the hex value.
+        // Matches .site-nav.movie-theme's own colour in ../navbar.css.
+        document.documentElement.style.setProperty('--hub-accent', '#ff8000');
+
         const basePath =
             window.location.hostname === "bladeinferior.github.io"
                 ? "/harryswebsite/"

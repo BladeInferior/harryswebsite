@@ -30,6 +30,12 @@ fetch(new URL('../navbar.html', QUIZ_NAV_SCRIPT_URL))
         const nav = document.querySelector('.site-nav');
         nav.classList.add('quiz-theme');
 
+        // Single source of truth for "this hub's colour" — anything site-wide
+        // that wants to theme itself per-hub (e.g. scroll-to-top.js's arrow)
+        // reads this instead of hardcoding its own copy of the hex value.
+        // Matches .site-nav.quiz-theme's own colour in ../navbar.css.
+        document.documentElement.style.setProperty('--hub-accent', '#a855f7');
+
         const basePath =
             window.location.hostname === "bladeinferior.github.io"
                 ? "/harryswebsite/"
