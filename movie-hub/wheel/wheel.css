@@ -1,0 +1,581 @@
+:root{
+    --bg:#1c1206;
+    --card:#3d2a15;
+    --card-2:#4d3518;
+    --card-hover:#5c401c;
+    --gold:#ff8000;
+    --text:#ffffff;
+    --secondary:#bdbdbd;
+    --border:#4a3520;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background-image:radial-gradient(circle at top, #b35400, #3a2408 45%, var(--bg));
+    background-attachment:fixed;
+    background-color:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+.back-button{
+    display:inline-block;
+    margin:90px 0 0 20px;
+    padding:6px 10px;
+    border-radius:8px;
+    background:var(--card);
+    border:1px solid var(--gold);
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    transition:.15s ease;
+}
+
+.back-button:hover{
+    border-color:var(--gold);
+    background:rgba(255,128,0,.15);
+}
+
+@media (min-width:769px){
+    .back-button{
+        position:sticky;
+        top:90px;
+        z-index:1000;
+    }
+}
+
+.hero{
+    text-align:center;
+    padding:21.4375px 20px 20px;
+}
+
+.hero h1{
+    font-size:2rem;
+    padding-top:20px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    max-width:700px;
+    margin:auto;
+    color:var(--secondary);
+    line-height:1.6;
+    font-size:14px;
+}
+
+.wheel-page{
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px 20px 60px;
+    display:flex;
+    gap:30px;
+    align-items:flex-start;
+}
+
+/* ===========================
+   Controls / Filters sidebar
+=========================== */
+
+.controls-panel{
+    width:280px;
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    position:sticky;
+    top:110px;
+}
+
+.control-block{
+    background:linear-gradient(180deg, var(--card-2), var(--card));
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:16px;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    width:100%;
+    padding:10px 14px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:var(--card-2);
+    color:white;
+    font-size:14px;
+    cursor:pointer;
+    transition:.15s ease;
+    text-decoration:none;
+}
+
+.btn:hover:not(:disabled){
+    border-color:var(--gold);
+}
+
+.btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
+.btn-primary{
+    background:var(--gold);
+    color:#1c1206;
+    border-color:var(--gold);
+    font-weight:bold;
+}
+
+.btn-primary:hover:not(:disabled){
+    background:#ffa040;
+}
+
+.btn-secondary{
+    background:transparent;
+}
+
+.status-text{
+    margin-top:10px;
+    font-size:13px;
+    color:var(--secondary);
+    line-height:1.5;
+}
+
+.status-text--muted{
+    margin-top:0;
+    opacity:.8;
+}
+
+.status-text.error{
+    color:#ff6b6b;
+}
+
+#filters-summary{
+    color:var(--gold);
+    font-weight:bold;
+}
+
+.filters-panel{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.filter-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.filter-label{
+    font-size:13px;
+    font-weight:bold;
+    color:var(--secondary);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+}
+
+#runtime-input{
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#241708;
+    color:white;
+    font-size:14px;
+}
+
+.genre-options{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.filter-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:5px 10px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:#241708;
+    font-size:12.5px;
+    cursor:pointer;
+    user-select:none;
+    transition:.15s ease;
+}
+
+.filter-chip:has(input:checked){
+    background:rgba(255,128,0,.2);
+    border-color:var(--gold);
+    color:var(--gold);
+}
+
+.filter-chip input{
+    accent-color:var(--gold);
+}
+
+.filter-empty,
+.filter-hint{
+    font-size:12px;
+    color:var(--secondary);
+    opacity:.75;
+    line-height:1.5;
+}
+
+.filter-actions{
+    display:flex;
+    gap:8px;
+}
+
+/* ===========================
+   Wheel
+=========================== */
+
+.wheel-main{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:0;
+}
+
+.wheel-shell{
+    position:relative;
+    width:100%;
+    max-width:480px;
+    aspect-ratio:1/1;
+}
+
+.wheel-pointer{
+    position:absolute;
+    top:-6px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:16px solid transparent;
+    border-right:16px solid transparent;
+    border-top:26px solid var(--gold);
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));
+    z-index:10;
+}
+
+.wheel-container{
+    position:relative;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:#241708;
+    box-shadow:0 0 0 4px var(--border), 0 10px 40px rgba(0,0,0,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+
+.wheel-empty-message{
+    max-width:220px;
+    text-align:center;
+    color:var(--secondary);
+    font-size:14px;
+    padding:20px;
+}
+
+.btn-spin{
+    width:auto;
+    min-width:180px;
+    margin-top:24px;
+    padding:14px 36px;
+    font-size:16px;
+    border-radius:999px;
+}
+
+#spin-message{
+    text-align:center;
+}
+
+/* ===========================
+   Result panel
+=========================== */
+
+.result-panel{
+    margin-top:36px;
+    width:100%;
+    max-width:640px;
+    display:flex;
+    gap:20px;
+    background:linear-gradient(180deg, var(--card-2), var(--card));
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:20px;
+}
+
+/* Same [hidden] specificity issue as the poster fix above — the
+   unconditional display:flex here otherwise wins over the browser's
+   default `[hidden] { display: none }` rule, leaving the panel visible
+   before a first spin. */
+.result-panel[hidden]{
+    display:none;
+}
+
+.result-poster-wrap{
+    width:140px;
+    flex-shrink:0;
+}
+
+.result-poster,
+.result-poster-fallback{
+    width:100%;
+    aspect-ratio:2/3;
+    border-radius:8px;
+    object-fit:cover;
+    display:block;
+}
+
+.result-poster-fallback{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#241708;
+    border:1px solid var(--border);
+    color:var(--secondary);
+    font-size:13px;
+    padding:10px;
+}
+
+/* The [hidden] attribute is toggled from JS to switch between the poster
+   image and this fallback — needs explicit overrides here since the
+   unconditional display:block/flex above it otherwise wins over the
+   browser's default `[hidden] { display: none }` UA rule, which was
+   showing both at once. */
+.result-poster[hidden],
+.result-poster-fallback[hidden]{
+    display:none;
+}
+
+.result-details{
+    min-width:0;
+    flex:1;
+}
+
+#result-title{
+    font-size:1.3rem;
+    margin-bottom:4px;
+}
+
+.result-meta{
+    color:var(--secondary);
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.result-genres{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:10px;
+}
+
+.result-genre-tag{
+    padding:3px 9px;
+    border-radius:999px;
+    background:rgba(255,128,0,.15);
+    border:1px solid var(--gold);
+    color:var(--gold);
+    font-size:11.5px;
+}
+
+.result-overview{
+    font-size:13px;
+    line-height:1.6;
+    color:var(--secondary);
+    margin-bottom:14px;
+}
+
+.result-providers{
+    margin-bottom:14px;
+}
+
+.provider-group{
+    margin-bottom:10px;
+}
+
+.provider-group-label{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    color:var(--secondary);
+    margin-bottom:6px;
+}
+
+.provider-logos{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.provider-logo{
+    width:36px;
+    height:36px;
+    border-radius:8px;
+    object-fit:cover;
+    border:1px solid var(--border);
+}
+
+.result-actions{
+    display:flex;
+    gap:8px;
+}
+
+.result-actions .btn{
+    width:auto;
+}
+
+footer{
+    text-align:center;
+    padding:40px;
+    color:#888;
+}
+
+/* ===========================
+   Result modal
+=========================== */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-overlay[hidden]{
+    display:none;
+}
+
+.modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(10,6,2,.75);
+    backdrop-filter:blur(2px);
+}
+
+.modal-box{
+    position:relative;
+    z-index:1;
+    width:100%;
+    max-width:520px;
+    max-height:85vh;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    background:linear-gradient(180deg, var(--card-2), var(--card));
+    border:1px solid var(--gold);
+    border-radius:16px;
+    padding:32px 24px 24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.6), 0 0 40px rgba(255,128,0,.2);
+    animation:modal-pop .35s ease;
+}
+
+@keyframes modal-pop{
+    from{ opacity:0; transform:scale(.85) translateY(10px); }
+    to{ opacity:1; transform:scale(1) translateY(0); }
+}
+
+.modal-close{
+    position:absolute;
+    top:10px;
+    right:10px;
+    width:32px;
+    height:32px;
+    border-radius:50%;
+    border:1px solid var(--border);
+    background:rgba(0,0,0,.35);
+    color:white;
+    font-size:14px;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.15s ease;
+}
+
+.modal-close:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+}
+
+.modal-box .result-poster-wrap{
+    width:160px;
+    margin-bottom:16px;
+}
+
+.modal-box .result-genres,
+.modal-box .provider-logos,
+.modal-box .result-actions{
+    justify-content:center;
+}
+
+.modal-box .result-actions{
+    flex-wrap:wrap;
+}
+
+.modal-box .btn{
+    width:auto;
+}
+
+@media (max-width:480px){
+    .modal-box{
+        padding:28px 16px 20px;
+    }
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width:900px){
+    .wheel-page{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .controls-panel{
+        width:100%;
+        position:static;
+    }
+
+    .result-panel{
+        flex-direction:column;
+        align-items:center;
+        text-align:center;
+    }
+
+    .result-poster-wrap{
+        width:160px;
+    }
+
+    .result-genres,
+    .provider-logos{
+        justify-content:center;
+    }
+
+    .result-actions{
+        justify-content:center;
+    }
+}

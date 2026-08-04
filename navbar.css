@@ -109,6 +109,33 @@
     color: #c084fc;
 }
 
+.site-nav.movie-theme {
+    background: linear-gradient(90deg, #7a3a05, #b35400, #7a3a05);
+    border-bottom: 1px solid rgba(255, 128, 0, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 24px rgba(255, 128, 0, 0.18);
+}
+
+.site-nav.movie-theme .site-logo {
+    color: #ff8000;
+}
+
+.site-nav.movie-theme .site-nav-links a:hover {
+    background: #ff8000;
+    border-color: #ff8000;
+    color: black;
+}
+
+.site-nav.movie-theme .site-nav-links a.active-link {
+    background: rgba(255, 128, 0, 0.18);
+    border: 1px solid #ff8000;
+    color: #ff8000;
+}
+
+.site-nav.movie-theme .nav-toggle {
+    border: 1px solid rgba(255, 128, 0, 0.4);
+    color: #ff8000;
+}
+
 .site-nav.admin-theme {
     background: linear-gradient(90deg, #5c1a1a, #7a2323, #5c1a1a);
     border-bottom: 1px solid rgba(248, 113, 113, 0.3);
@@ -225,6 +252,36 @@
     }
 
     .site-nav.quiz-theme .site-nav-links a {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: 10px 14px;
+    }
+
+    .site-nav.movie-theme {
+        flex-wrap: wrap;
+        padding: 12px 20px;
+    }
+
+    .site-nav.movie-theme .nav-toggle {
+        display: block;
+    }
+
+    .site-nav.movie-theme .site-nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 4px;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(212, 175, 55, 0.15);
+    }
+
+    .site-nav.movie-theme .site-nav-links.open {
+        display: flex;
+    }
+
+    .site-nav.movie-theme .site-nav-links a {
         width: 100%;
         box-sizing: border-box;
         text-align: left;

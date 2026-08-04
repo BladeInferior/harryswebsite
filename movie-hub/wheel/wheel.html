@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Spin the Wheel — Movie Hub</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎡</text></svg>">
+
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="wheel.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="../movie-nav.js"></script>
+
+<a class="back-button" href="../moviehub.html">← Back</a>
+
+<section class="hero">
+    <h1>🎡 Spin the Wheel</h1>
+    <p>All films on my Letterboxd watchlist. Refresh to pick up anything new, filters for if I'm after something specific, then spin.</p>
+</section>
+
+<div class="wheel-page">
+
+    <aside class="controls-panel">
+
+        <div class="control-block">
+            <button id="refresh-btn" class="btn btn-primary">🔄 Refresh Watchlist</button>
+            <p id="refresh-status" class="status-text">Loading your watchlist…</p>
+        </div>
+
+        <div class="control-block">
+            <button id="filters-toggle" class="btn btn-secondary" aria-expanded="false">
+                ⚙ Filters <span id="filters-summary"></span>
+            </button>
+
+            <div id="filters-panel" class="filters-panel" hidden>
+
+                <div class="filter-group">
+                    <label class="filter-label" for="runtime-input">Max runtime (minutes)</label>
+                    <input type="number" id="runtime-input" min="1" placeholder="e.g. 120">
+                </div>
+
+                <div class="filter-group">
+                    <span class="filter-label">Genres</span>
+                    <div id="genre-options" class="genre-options">
+                        <p class="filter-empty">Genres will appear here once your watchlist details finish loading.</p>
+                    </div>
+                    <p class="filter-hint">Films still loading their details are hidden while a filter is active.</p>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-chip">
+                        <input type="checkbox" id="streamable-only-input">
+                        Only films I can stream (excludes rent/buy-only)
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-chip">
+                        <input type="checkbox" id="subscriptions-only-input" checked>
+                        Only on my subscriptions (Prime, Netflix, Disney+, ITVX, Sky Cinema)
+                    </label>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-chip">
+                        <input type="checkbox" id="skip-sequels-input">
+                        Hide sequels (keep earliest per franchise on my watchlist)
+                    </label>
+                </div>
+
+                <div class="filter-actions">
+                    <button id="apply-filters" class="btn btn-primary">Apply Filters</button>
+                    <button id="clear-filters" class="btn btn-secondary">Clear</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="control-block">
+            <p id="enrich-status" class="status-text status-text--muted"></p>
+        </div>
+
+    </aside>
+
+    <main class="wheel-main">
+
+        <div class="wheel-shell">
+            <div class="wheel-pointer" aria-hidden="true"></div>
+            <div id="wheel-container" class="wheel-container">
+                <p id="wheel-empty-message" class="wheel-empty-message">Click <strong>Refresh Watchlist</strong> to load your wheel.</p>
+            </div>
+        </div>
+
+        <button id="spin-btn" class="btn btn-spin" disabled>Spin</button>
+        <p id="spin-message" class="status-text"></p>
+
+        <section id="result-panel" class="result-panel" hidden>
+
+            <div class="result-poster-wrap">
+                <img id="result-poster" class="result-poster" alt="">
+                <div id="result-poster-fallback" class="result-poster-fallback" hidden>No Poster</div>
+            </div>
+
+            <div class="result-details">
+                <h2 id="result-title"></h2>
+                <p id="result-meta" class="result-meta"></p>
+                <div id="result-genres" class="result-genres"></div>
+                <p id="result-overview" class="result-overview"></p>
+
+                <div id="result-providers" class="result-providers"></div>
+
+                <div class="result-actions">
+                    <a id="result-letterboxd-link" class="btn btn-secondary" href="#" target="_blank" rel="noopener">View on Letterboxd</a>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div id="result-modal" class="modal-overlay" hidden>
+    <div id="modal-backdrop" class="modal-backdrop"></div>
+
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modal-result-title">
+        <button id="modal-close-btn" class="modal-close" aria-label="Close">✕</button>
+
+        <div class="result-poster-wrap">
+            <img id="modal-result-poster" class="result-poster" alt="">
+            <div id="modal-result-poster-fallback" class="result-poster-fallback" hidden>No Poster</div>
+        </div>
+
+        <div class="result-details">
+            <h2 id="modal-result-title"></h2>
+            <p id="modal-result-meta" class="result-meta"></p>
+            <div id="modal-result-genres" class="result-genres"></div>
+            <p id="modal-result-overview" class="result-overview"></p>
+
+            <div id="modal-result-providers" class="result-providers"></div>
+
+            <div class="result-actions">
+                <a id="modal-result-letterboxd-link" class="btn btn-secondary" href="#" target="_blank" rel="noopener">View on Letterboxd</a>
+                <button id="modal-spin-again-btn" class="btn btn-primary">Spin Again</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    Movie Hub
+</footer>
+
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
+<script type="module" src="wheel.js"></script>
+</body>
+</html>

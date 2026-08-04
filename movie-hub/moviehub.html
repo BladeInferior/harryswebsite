@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Movie Hub</title>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎬</text></svg>">
+
+    <link rel="stylesheet" href="../navbar.css">
+
+    <style>
+        :root{
+            --bg:#1c1206;
+            --card:#3d2a15;
+            --card-2:#4d3518;
+            --card-hover:#5c401c;
+            --gold:#ff8000;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#4a3520;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background-image:radial-gradient(circle at top, #b35400, #3a2408 45%, var(--bg));
+            background-attachment:fixed;
+            background-color:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:var(--card);
+            border:1px solid var(--gold);
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(255,128,0,.15);
+        }
+
+        @media (min-width:769px){
+            .back-button{
+                position:sticky;
+                top:90px;
+                z-index:1000;
+            }
+        }
+
+        .hero{
+            text-align:center;
+            padding:21.4375px 20px 30px;
+        }
+
+        .hero h1{
+            font-size:2rem;
+            padding-top:20px;
+            margin-bottom:10px;
+        }
+
+        .hero p{
+            max-width:700px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+            font-size:14px;
+        }
+
+        .section{
+            max-width:1200px;
+            margin:auto;
+            padding:30px 20px;
+        }
+
+        .section h2{
+            margin-bottom:16px;
+            font-size:1.3rem;
+        }
+
+        .card-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+            gap:16px;
+        }
+
+        .card{
+            background:linear-gradient(180deg, var(--card-2), var(--card));
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:20px;
+            text-decoration:none;
+            color:white;
+            transition:.2s;
+        }
+
+        @media (hover:hover) and (pointer:fine){
+            .card:hover{
+                transform:translateY(-4px);
+                background:var(--card-hover);
+                border-color:var(--gold);
+            }
+        }
+
+        .card h3{
+            margin-bottom:8px;
+            font-size:1.1rem;
+        }
+
+        .card p{
+            color:var(--secondary);
+            line-height:1.5;
+            font-size:14px;
+        }
+
+        .how-it-works{
+            margin-top:10px;
+            background: linear-gradient(180deg, var(--card-2), var(--card));
+            border:1px solid var(--border);
+            border-radius:12px;
+            padding:20px;
+        }
+
+        .how-it-works ol{
+            padding-left:20px;
+            color:var(--secondary);
+            line-height:1.9;
+            font-size:14px;
+        }
+
+        .how-it-works li::marker{
+            color:var(--gold);
+        }
+
+        footer{
+            text-align:center;
+            padding:40px;
+            color:#888;
+        }
+    </style>
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="movie-nav.js"></script>
+
+<a class="back-button" href="../index.html">← Back</a>
+
+<section class="hero">
+    <h1>🎬 Movie Hub</h1>
+
+    <p>
+        Can't decide what to watch? Spin the wheel and let it pick
+        something straight off your Letterboxd watchlist.
+    </p>
+</section>
+
+<section class="section">
+
+    <h2>Play</h2>
+
+    <div class="card-grid">
+
+        <a href="wheel/wheel.html" class="card">
+            <h3>🎡 Spin the Wheel</h3>
+            <p>
+                Pulls my live Letterboxd watchlist, spins for a random
+                movie, and shows where to watch it.
+            </p>
+        </a>
+
+    </div>
+
+    <div class="how-it-works">
+        <h2>How it works</h2>
+        <ol>
+            <li>Hit <strong>Refresh Watchlist</strong> on the wheel page to pull whatever's currently on my Letterboxd watchlist.</li>
+            <li>Optionally filter by genre or max runtime before spinning.</li>
+            <li>Spin the wheel — it lands on a film and shows its poster, year, runtime and where to stream it.</li>
+            <li>Spin again as many times as you like. To take a film off the wheel, just remove it from my Letterboxd watchlist and refresh.</li>
+        </ol>
+    </div>
+
+</section>
+
+<footer>
+    Movie Hub
+</footer>
+
+<script src="../scroll-to-top.js"></script>
+<script type="module" src="../admin-auth.js"></script>
+</body>
+</html>

@@ -25,6 +25,7 @@ function getPageAccent() {
     const path = window.location.pathname;
     if (path.includes('/collection-hub/')) return { hex: '#4ade80', rgb: '74, 222, 128' };   // collection-theme
     if (path.includes('/quizhub/')) return { hex: '#a855f7', rgb: '168, 85, 247' };           // quiz-theme
+    if (path.includes('/movie-hub/')) return { hex: '#ff8000', rgb: '255, 128, 0' };          // movie-theme
     if (path.includes('/adminhub/')) return { hex: '#ef4444', rgb: '239, 68, 68' };           // admin-theme
     return { hex: '#d4af37', rgb: '212, 175, 55' };                                           // home-theme
 }
