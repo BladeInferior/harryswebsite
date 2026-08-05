@@ -56,15 +56,8 @@
 
                 <div class="filter-group">
                     <label class="filter-chip">
-                        <input type="checkbox" id="streamable-only-input">
-                        Only films I can stream (excludes rent/buy-only)
-                    </label>
-                </div>
-
-                <div class="filter-group">
-                    <label class="filter-chip">
-                        <input type="checkbox" id="subscriptions-only-input" checked>
-                        Only on my subscriptions (Prime, Netflix, Disney+, ITVX, Sky Cinema)
+                        <input type="checkbox" id="streamable-only-input" checked>
+                        Films I can stream (Prime, Netflix, Disney+, ITVX, Sky Cinema)
                     </label>
                 </div>
 
@@ -90,6 +83,8 @@
     </aside>
 
     <main class="wheel-main">
+
+        <p id="wheel-count" class="wheel-count" hidden></p>
 
         <div class="wheel-shell">
             <div class="wheel-pointer" aria-hidden="true"></div>

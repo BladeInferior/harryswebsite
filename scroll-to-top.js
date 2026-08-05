@@ -9,7 +9,16 @@
            --hub-accent — each *-nav.js (or index.html's inline nav script
            for the homepage) sets that custom property on :root the moment
            it knows its theme. Falls back to collection-hub's own green in
-           case something loads before that's set. */
+           case something loads before that's set.
+
+           The arrow itself is a CSS triangle rather than the "↑" text
+           glyph (font-size: 0 hides the text node, kept in the DOM for
+           accessibility) — same reasoning as collection-hub's
+           .dlc-carousel-nav arrows: a text glyph's ink isn't centered or
+           sized consistently across fonts, so this rendered a different
+           shape (thinner/longer) depending on which font a given page's
+           button happened to inherit. A drawn shape looks identical
+           everywhere. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -22,12 +31,21 @@
             background: #1c1f26;
             border: 1px solid #2f3542;
             color: var(--hub-accent, #86efac);
-            font-size: 18px;
+            font-size: 0;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             transition: border-color .15s ease, background .15s ease;
+        }
+
+        #scroll-to-top-btn::before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+            border-bottom: 9px solid currentColor;
         }
 
         /* Scoped to devices with a real hover-capable pointer (a mouse) —

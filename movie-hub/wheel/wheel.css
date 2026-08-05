@@ -282,6 +282,18 @@ body{
     overflow:hidden;
 }
 
+.wheel-count{
+    margin-bottom:14px;
+    padding:6px 14px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(255,128,0,.1);
+    color:var(--gold);
+    font-size:13px;
+    font-weight:bold;
+    text-align:center;
+}
+
 .wheel-empty-message{
     max-width:220px;
     text-align:center;

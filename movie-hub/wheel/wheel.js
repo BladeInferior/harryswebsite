@@ -21,13 +21,13 @@ const filtersPanel = document.getElementById('filters-panel');
 const runtimeInput = document.getElementById('runtime-input');
 const genreOptions = document.getElementById('genre-options');
 const streamableOnlyInput = document.getElementById('streamable-only-input');
-const subscriptionsOnlyInput = document.getElementById('subscriptions-only-input');
 const skipSequelsInput = document.getElementById('skip-sequels-input');
 const applyFiltersBtn = document.getElementById('apply-filters');
 const clearFiltersBtn = document.getElementById('clear-filters');
 
 const wheelContainer = document.getElementById('wheel-container');
 const wheelEmptyMessage = document.getElementById('wheel-empty-message');
+const wheelCount = document.getElementById('wheel-count');
 const spinBtn = document.getElementById('spin-btn');
 const spinMessage = document.getElementById('spin-message');
 
@@ -213,16 +213,9 @@ function getSelectedGenres() {
     );
 }
 
-function isStreamable(enrichment) {
-    const providers = enrichment.watchProviders;
-    if (!providers) return false;
-    return (providers.flatrate && providers.flatrate.length > 0) ||
-        (providers.free && providers.free.length > 0);
-}
-
 // Matched against TMDB's provider_name strings for the GB region — these
-// are the services actually subscribed to, so this is the only filter that
-// defaults to checked on page load rather than opt-in.
+// are the services actually subscribed to, so this filter defaults to
+// checked on page load rather than opt-in.
 const MY_SUBSCRIPTION_PATTERNS = [
     /prime video/i,
     /netflix/i,
@@ -268,10 +261,9 @@ function applyFilters(films) {
     const hasRuntimeFilter = Number.isFinite(maxRuntime) && maxRuntime > 0;
     const hasGenreFilter = selectedGenres.size > 0;
     const hasStreamableFilter = streamableOnlyInput.checked;
-    const hasSubscriptionFilter = subscriptionsOnlyInput.checked;
     const hasSequelFilter = skipSequelsInput.checked;
 
-    if (!hasGenreFilter && !hasRuntimeFilter && !hasStreamableFilter && !hasSubscriptionFilter && !hasSequelFilter) {
+    if (!hasGenreFilter && !hasRuntimeFilter && !hasStreamableFilter && !hasSequelFilter) {
         return films;
     }
 
@@ -279,8 +271,7 @@ function applyFilters(films) {
         if (!f.enrichment || f.enrichment.found === false) return false;
         if (hasGenreFilter && !(f.enrichment.genres || []).some(g => selectedGenres.has(g))) return false;
         if (hasRuntimeFilter && (!f.enrichment.runtime || f.enrichment.runtime > maxRuntime)) return false;
-        if (hasStreamableFilter && !isStreamable(f.enrichment)) return false;
-        if (hasSubscriptionFilter && !isOnMySubscriptions(f.enrichment)) return false;
+        if (hasStreamableFilter && !isOnMySubscriptions(f.enrichment)) return false;
         if (hasSequelFilter && !isEarliestInFranchise(f, films)) return false;
         return true;
     });
@@ -336,8 +327,7 @@ function updateFiltersSummary() {
     const parts = [];
     if (selectedGenres.size > 0) parts.push(`${selectedGenres.size} genre${selectedGenres.size === 1 ? '' : 's'}`);
     if (Number.isFinite(maxRuntime) && maxRuntime > 0) parts.push(`≤${maxRuntime}m`);
-    if (streamableOnlyInput.checked) parts.push('streamable');
-    if (subscriptionsOnlyInput.checked) parts.push('my subscriptions');
+    if (streamableOnlyInput.checked) parts.push('films I can stream');
     if (skipSequelsInput.checked) parts.push('no sequels');
     filtersSummary.textContent = parts.length ? `(${parts.join(', ')})` : '';
 }
@@ -356,7 +346,6 @@ applyFiltersBtn.addEventListener('click', () => {
 clearFiltersBtn.addEventListener('click', () => {
     runtimeInput.value = '';
     streamableOnlyInput.checked = false;
-    subscriptionsOnlyInput.checked = false;
     skipSequelsInput.checked = false;
     genreOptions.querySelectorAll('input[type=checkbox]').forEach(cb => cb.checked = false);
     rebuildWheel();
@@ -371,8 +360,18 @@ function truncateLabel(title, max = 24) {
     return title.length > max ? title.slice(0, max - 1).trim() + '…' : title;
 }
 
+function updateWheelCount() {
+    if (allFilms.length === 0) {
+        wheelCount.hidden = true;
+        return;
+    }
+    wheelCount.hidden = false;
+    wheelCount.textContent = `${currentWheelFilms.length} option${currentWheelFilms.length === 1 ? '' : 's'} on the wheel`;
+}
+
 function rebuildWheel() {
     currentWheelFilms = applyFilters(allFilms);
+    updateWheelCount();
 
     if (currentWheelFilms.length === 0) {
         spinBtn.disabled = true;
