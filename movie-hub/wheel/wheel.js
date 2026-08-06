@@ -7,7 +7,7 @@ import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/co
 const WORKER_URL = 'https://orange-bar-b027.harrycummins.workers.dev';
 const REGION = 'GB';
 const ENRICH_CONCURRENCY = 6;
-const CACHE_KEY = 'movieHubEnrichmentCache_v1';
+const CACHE_KEY = 'movieHubEnrichmentCache_v2';
 
 const WHEEL_COLORS = ['#8a3a00', '#b35400', '#e67300', '#ff8000'];
 
@@ -94,13 +94,18 @@ function saveCache() {
 // Watchlist + enrichment
 // =========================
 
-async function refreshWatchlist() {
+async function refreshWatchlist(forceReEnrich = false) {
     if (isSpinning) return;
 
     const runId = ++enrichRunId;
     refreshBtn.disabled = true;
     refreshStatus.classList.remove('error');
     refreshStatus.textContent = 'Loading your watchlist…';
+
+    if (forceReEnrich) {
+        filmCache = {};
+        saveCache();
+    }
 
     try {
         const res = await fetch(`${WORKER_URL}/watchlist`);
@@ -459,7 +464,7 @@ async function onWheelRest(event) {
 }
 
 spinBtn.addEventListener('click', onSpinClick);
-refreshBtn.addEventListener('click', refreshWatchlist);
+refreshBtn.addEventListener('click', () => refreshWatchlist(true));
 modalSpinAgainBtn.addEventListener('click', onSpinClick);
 
 // =========================
