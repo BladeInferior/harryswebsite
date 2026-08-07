@@ -11,10 +11,12 @@
            it knows its theme. Falls back to collection-hub's own green in
            case something loads before that's set.
 
-           The arrow is the "↑" text glyph with an explicit font-family
-           (rather than inheriting the page's) so it renders as the same
-           shape everywhere — left to inherit, this glyph came out
-           thinner/longer on some pages' fonts than others. */
+           The arrow is a drawn SVG path (short shaft, wide chevron head)
+           rather than the "↑" text glyph — a glyph's ink isn't sized or
+           proportioned consistently across fonts, so it came out
+           thinner/longer on some pages than others. A drawn shape looks
+           identical everywhere and its proportions (shaft length, tip
+           length, stroke thickness) are explicit instead of inherited. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -27,13 +29,17 @@
             background: #1c1f26;
             border: 1px solid #2f3542;
             color: var(--hub-accent, #86efac);
-            font-family: Arial, sans-serif;
-            font-size: 18px;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             transition: border-color .15s ease, background .15s ease;
+        }
+
+        #scroll-to-top-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
         }
 
         /* Scoped to devices with a real hover-capable pointer (a mouse) —
@@ -63,7 +69,9 @@
     btn.id = "scroll-to-top-btn";
     btn.type = "button";
     btn.setAttribute("aria-label", "Scroll to top");
-    btn.textContent = "↑";
+    // Shaft + wide chevron head, drawn explicitly (see style comment
+    // above) rather than left to a font's "↑" glyph.
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6"/><path d="M7 11l5-5 5 5"/></svg>';
     document.body.appendChild(btn);
 
     btn.addEventListener("click", () => {
