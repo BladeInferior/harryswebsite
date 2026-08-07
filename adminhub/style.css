@@ -192,16 +192,24 @@ footer {
 .admin-auth-back {
     display: inline-block;
     margin-top: 20px;
-    color: var(--secondary);
+    background: rgba(239, 68, 68, .15);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 8px 14px;
+    color: var(--accent-light);
     font-size: 13px;
     text-decoration: none;
+    transition: .15s ease;
 }
 
 .admin-auth-back:hover {
+    background: var(--accent);
     color: white;
-    text-decoration: underline;
 }
 
+/* Matches the site-wide admin-auth-widget's .gaa-pill exactly (same
+   translucent-dark-plus-blur container) so this page's own session pill
+   looks identical to the one on every other hub, not just same-sized. */
 #admin-session-pill {
     position: fixed;
     bottom: 16px;
@@ -210,8 +218,9 @@ footer {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: var(--card);
-    border: 1px solid var(--border);
+    background: rgba(20, 20, 20, .85);
+    border: 1px solid rgba(255, 255, 255, .15);
+    backdrop-filter: blur(6px);
     border-radius: 999px;
     padding: 6px 8px 6px 14px;
     font-size: 12px;

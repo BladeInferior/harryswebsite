@@ -131,6 +131,7 @@ function showQuizList() {
     document.getElementById('breadcrumb').innerHTML = '';
     const backBtn = document.createElement('button');
     backBtn.type = 'button';
+    backBtn.className = 'breadcrumb-back';
     backBtn.textContent = '← Search a different name';
     backBtn.addEventListener('click', () => {
         hideAllViews();
@@ -281,6 +282,7 @@ function showQuestionDetail(entry) {
 function makeBackBtn(label, onClick) {
     const btn = document.createElement('button');
     btn.type = 'button';
+    btn.className = 'breadcrumb-back';
     btn.textContent = label;
     btn.addEventListener('click', onClick);
     return btn;

@@ -11,14 +11,10 @@
            it knows its theme. Falls back to collection-hub's own green in
            case something loads before that's set.
 
-           The arrow itself is a CSS triangle rather than the "↑" text
-           glyph (font-size: 0 hides the text node, kept in the DOM for
-           accessibility) — same reasoning as collection-hub's
-           .dlc-carousel-nav arrows: a text glyph's ink isn't centered or
-           sized consistently across fonts, so this rendered a different
-           shape (thinner/longer) depending on which font a given page's
-           button happened to inherit. A drawn shape looks identical
-           everywhere. */
+           The arrow is the "↑" text glyph with an explicit font-family
+           (rather than inheriting the page's) so it renders as the same
+           shape everywhere — left to inherit, this glyph came out
+           thinner/longer on some pages' fonts than others. */
         #scroll-to-top-btn {
             display: none;
             position: fixed;
@@ -31,21 +27,13 @@
             background: #1c1f26;
             border: 1px solid #2f3542;
             color: var(--hub-accent, #86efac);
-            font-size: 0;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             transition: border-color .15s ease, background .15s ease;
-        }
-
-        #scroll-to-top-btn::before {
-            content: "";
-            width: 0;
-            height: 0;
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-bottom: 9px solid currentColor;
         }
 
         /* Scoped to devices with a real hover-capable pointer (a mouse) —

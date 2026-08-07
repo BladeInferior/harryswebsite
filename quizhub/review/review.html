@@ -155,14 +155,21 @@
             font-size:13px;
         }
 
-        #breadcrumb button{
-            background:none;
-            border:none;
-            color:var(--gold);
+        .breadcrumb-back{
+            display:inline-block;
+            padding:6px 12px;
+            border-radius:8px;
+            background:rgba(168,85,247,.15);
+            border:1px solid var(--gold);
+            color:var(--text);
             cursor:pointer;
             font-size:13px;
-            text-decoration:underline;
-            padding:0;
+            transition:.15s ease;
+        }
+
+        .breadcrumb-back:hover{
+            border-color:#c084fc;
+            background:rgba(168,85,247,.3);
         }
 
         .tile-list{
