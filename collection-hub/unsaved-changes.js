@@ -143,6 +143,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (link.target === "_blank") return;
         if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
 
+        // Download links (e.g. the export button's synthetic <a download>
+        // it builds and .click()s to save a blob) don't navigate away from
+        // the page either — without this, that programmatic click event
+        // bubbles up to this same-document listener and gets caught here,
+        // popping the modal instead of letting the file download.
+        if (link.hasAttribute("download")) return;
+
         const href = link.getAttribute("href");
         if (!href || href.startsWith("#") || href.startsWith("javascript:")) return;
 
