@@ -7,6 +7,7 @@ let todoFindActive = false; // stepping through todoQueue one page at a time
 let todoQueue = []; // pokemon (from allPokemon) currently on the to-do list, in dex order
 let todoQueuePos = 0;
 let todoPendingDone = new Set(); // keys clicked while Find is active — not committed until Find ends
+let todoPendingShiny = new Set(); // subset of todoPendingDone marked shiny (PoGo Dex only, see pogoShinyModeFlag) — not committed until Find ends
 let gameFilterState = {};
 let allPokemon = [];
 let cardMap = new Map();
@@ -37,11 +38,13 @@ const dexTypes = [
     { key: "cherishDex", label: "Cherish Dex" }
 ];
 
-// Trade Dex and Wonder Trade Dex each get their own to-do list — no other
-// dex has a matching persisted field, so this returns null for the rest.
+// Trade Dex, Wonder Trade Dex, and PoGo Dex each get their own to-do list —
+// no other dex has a matching persisted field, so this returns null for the
+// rest.
 function todoFieldFor(dexKey) {
     if (dexKey === "tradeDex") return "tradeDexTodo";
     if (dexKey === "wonderTradeDex") return "wonderTradeDexTodo";
+    if (dexKey === "pogoDex") return "pogoDexTodo";
     return null;
 }
 
@@ -121,6 +124,7 @@ Promise.all([
 
             tradeDexTodo: !!entry.tradeDexTodo,
             wonderTradeDexTodo: !!entry.wonderTradeDexTodo,
+            pogoDexTodo: !!entry.pogoDexTodo,
 
             shinyDex: !!entry.shinyDex,
 
@@ -151,14 +155,16 @@ Promise.all([
                     return;
                 }
 
-                // pogoShiny/tradeDexTodo/wonderTradeDexTodo were added after
-                // this pokemon's local record was first saved — default them
-                // in place so the unsaved-changes snapshot already includes
-                // them, instead of the first toggle silently adding the key
-                // and still reading as "unsaved" even after toggling it back off.
+                // pogoShiny/tradeDexTodo/wonderTradeDexTodo/pogoDexTodo were
+                // added after this pokemon's local record was first saved —
+                // default them in place so the unsaved-changes snapshot
+                // already includes them, instead of the first toggle
+                // silently adding the key and still reading as "unsaved"
+                // even after toggling it back off.
                 if (!("pogoShiny" in savedDexData[key])) savedDexData[key].pogoShiny = false;
                 if (!("tradeDexTodo" in savedDexData[key])) savedDexData[key].tradeDexTodo = false;
                 if (!("wonderTradeDexTodo" in savedDexData[key])) savedDexData[key].wonderTradeDexTodo = false;
+                if (!("pogoDexTodo" in savedDexData[key])) savedDexData[key].pogoDexTodo = false;
             });
         } catch {
             savedDexData = sourceDexData;
@@ -439,7 +445,7 @@ function createPokemonCards(pokemonList) {
             if (activeDexEdit) {
 
                 // -----------------------------
-                // TRADE/WONDER TRADE TO-DO FILTER ACTIVE → CLICK REMOVES
+                // TRADE/WONDER TRADE/POGO TO-DO FILTER ACTIVE → CLICK REMOVES
                 // Once the To Do filter is narrowing the grid down to just
                 // that dex's list, clicking an item there means "done with
                 // this one" — take it off the list AND mark it caught on the
@@ -452,9 +458,17 @@ function createPokemonCards(pokemonList) {
                 // pending — the actual update waits until Find finishes (see
                 // commitTodoPending, called from resetTodoFind) so the
                 // in-progress queue doesn't shift out from under you mid-cycle.
+                //
+                // PoGo Dex only: Shiny Mode (pogo-shiny-mode-btn) stays
+                // available the whole time, including mid-Find — toggling it
+                // on before clicking (selecting) a pokemon marks that pick
+                // shiny at the same time it's marked caught, instead of
+                // requiring a separate pass afterwards.
                 // -----------------------------
                 const todoField = todoFieldFor(activeDexEdit);
                 if (todoField && todoFilterActive) {
+
+                    const wantsShiny = activeDexEdit === "pogoDex" && pogoShinyModeFlag;
 
                     if (todoFindActive) {
 
@@ -462,12 +476,24 @@ function createPokemonCards(pokemonList) {
 
                         if (todoPendingDone.has(key)) {
                             todoPendingDone.delete(key);
-                            card.classList.remove("todo-pending-done");
+                            if (todoPendingShiny.has(key)) {
+                                todoPendingShiny.delete(key);
+                                const img = card.querySelector("img");
+                                if (img) img.src = getPokemonSpritePath(name, false);
+                            }
+                            card.classList.remove("todo-pending-done", "todo-pending-shiny");
                             return;
                         }
 
                         todoPendingDone.add(key);
                         card.classList.add("todo-pending-done");
+
+                        if (wantsShiny) {
+                            todoPendingShiny.add(key);
+                            card.classList.add("todo-pending-shiny");
+                            const img = card.querySelector("img");
+                            if (img) img.src = getPokemonSpritePath(name, true);
+                        }
 
                         // Advance to the next open item once the card's own
                         // "select me → done" transition (see .todo-pending-done
@@ -482,6 +508,7 @@ function createPokemonCards(pokemonList) {
 
                     pokemonData[activeDexEdit] = true;
                     pokemonData[todoField] = false;
+                    if (wantsShiny) pokemonData.pogoShiny = true;
                     savedDexData[key] = pokemonData;
                     saveData();
 
@@ -629,13 +656,14 @@ function clearTodoFindHighlight() {
 }
 
 function clearTodoPendingMarks() {
-    document.querySelectorAll(".pokemon-card.todo-pending-done").forEach(card => {
-        card.classList.remove("todo-pending-done");
+    document.querySelectorAll(".pokemon-card.todo-pending-done, .pokemon-card.todo-pending-shiny").forEach(card => {
+        card.classList.remove("todo-pending-done", "todo-pending-shiny");
     });
 }
 
 // Applies every pokemon clicked during this Find session — marks each
-// caught on the dex and off the to-do list — in one go, then saves once.
+// caught on the dex and off the to-do list (and, for any picked while
+// Shiny Mode was on, shiny too) — in one go, then saves once.
 function commitTodoPending() {
 
     if (todoPendingDone.size === 0) return;
@@ -647,12 +675,14 @@ function commitTodoPending() {
             const data = savedDexData[key] || {};
             data[activeDexEdit] = true;
             data[field] = false;
+            if (todoPendingShiny.has(key)) data.pogoShiny = true;
             savedDexData[key] = data;
         });
         saveData();
     }
 
     todoPendingDone.clear();
+    todoPendingShiny.clear();
 }
 
 // Drops out of Find navigation, committing any pending picks first. Doesn't
@@ -2067,6 +2097,53 @@ document.getElementById("prev-page").addEventListener("click", () => {
     }
 });
 
+// -----------------------------
+// PAGE JUMP — click the page number to type a page and jump straight to it
+// -----------------------------
+const pageDisplay = document.getElementById("page-display");
+const pageJumpInput = document.getElementById("page-jump-input");
+
+function getMaxPage() {
+    const cards = document.querySelectorAll(".pokemon-card");
+    return Math.max(1, Math.ceil(cards.length / pageSize));
+}
+
+function openPageJumpInput() {
+    pageJumpInput.value = currentPage;
+    pageDisplay.classList.add("hidden");
+    pageJumpInput.classList.remove("hidden");
+    pageJumpInput.focus();
+    pageJumpInput.select();
+}
+
+function closePageJumpInput(commit) {
+
+    if (commit) {
+        const value = parseInt(pageJumpInput.value, 10);
+        if (!Number.isNaN(value)) {
+            currentPage = Math.min(Math.max(value, 1), getMaxPage());
+            applyPagination();
+        }
+    }
+
+    pageJumpInput.classList.add("hidden");
+    pageDisplay.classList.remove("hidden");
+}
+
+pageDisplay.addEventListener("click", openPageJumpInput);
+
+pageJumpInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault();
+        closePageJumpInput(true);
+    } else if (e.key === "Escape") {
+        e.preventDefault();
+        closePageJumpInput(false);
+    }
+});
+
+pageJumpInput.addEventListener("blur", () => closePageJumpInput(true));
+
 function applyPagination() {
 
     const cards = document.querySelectorAll(".pokemon-card");
@@ -2076,10 +2153,23 @@ function applyPagination() {
 
     cards.forEach((card, index) => {
 
-        if (index >= start && index < end) {
-            card.style.display = "block";
-        } else {
-            card.style.display = "none";
+        const visible = index >= start && index < end;
+        card.style.display = visible ? "block" : "none";
+
+        // Some browsers (Safari in particular) key loading="lazy" off of
+        // scroll events rather than genuinely re-checking intersection
+        // whenever a card flips from display:none to display:block —
+        // landing directly on a page via Find (a jump, not a scroll) can
+        // leave a card's image stuck permanently unrequested even though
+        // it's now on screen. Pagination already limits what's visible to
+        // pageSize cards at a time, so there's no bandwidth reason to keep
+        // a just-revealed image lazy — upgrading it to eager the moment its
+        // card becomes visible forces the browser to actually fetch it.
+        if (visible) {
+            const img = card.querySelector("img");
+            if (img && img.loading === "lazy" && !img.complete) {
+                img.loading = "eager";
+            }
         }
 
     });
@@ -2160,6 +2250,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
 
             tradeDexTodo: !!data.tradeDexTodo,
             wonderTradeDexTodo: !!data.wonderTradeDexTodo,
+            pogoDexTodo: !!data.pogoDexTodo,
 
             shinyDex: !!data.shinyDex,
             shinyDexData: {
@@ -2266,6 +2357,7 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
 
                     tradeDexTodo: !!entry.tradeDexTodo,
                     wonderTradeDexTodo: !!entry.wonderTradeDexTodo,
+                    pogoDexTodo: !!entry.pogoDexTodo,
 
                     shinyDex: !!entry.shinyDex,
 
@@ -2305,7 +2397,8 @@ const POKEDEX_CHANGE_FIELD_LABELS = {
     cherishDex: "Cherish Dex",
     shinyDex: "Shiny Dex",
     tradeDexTodo: "Trade Dex To Do",
-    wonderTradeDexTodo: "Wonder Trade Dex To Do"
+    wonderTradeDexTodo: "Wonder Trade Dex To Do",
+    pogoDexTodo: "PoGo Dex To Do"
 };
 
 const POKEDEX_CHANGE_VARIANT_LABELS = {

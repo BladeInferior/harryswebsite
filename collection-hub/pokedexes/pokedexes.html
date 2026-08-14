@@ -61,15 +61,16 @@
 
         <button id="list-mode">List Mode</button>
         <button id="page-mode">Page Mode</button>
-        <button id="todo-filter-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: show only pokemon on the to-do list">📝 To Do</button>
-        <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex only: add pokemon to the to-do list">➕ Add To Do</button>
+        <button id="todo-filter-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex only: show only pokemon on the to-do list">📝 To Do</button>
+        <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one page at a time">🔍 Find</button>
-        <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite">✨ Shiny Mode</button>
+        <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite. On the to-do list, turn this on before selecting a pokemon to mark it shiny at the same time.">✨ Shiny Mode</button>
 
         <div id="pagination-controls" class="hidden">
 
             <button id="prev-page">◀</button>
-            <span id="page-display">1</span>
+            <span id="page-display" title="Click to jump to a page">1</span>
+            <input type="number" id="page-jump-input" class="hidden" min="1" inputmode="numeric">
             <button id="next-page">▶</button>
 
         </div>

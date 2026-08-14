@@ -671,6 +671,23 @@ h1 {
     border-radius: 6px;
 }
 
+/* PoGo Dex only — Shiny Mode was on when this pick was made during Find
+   (see todoPendingShiny in pokedexes.js). Sits at top-right, same corner
+   .shiny-plus uses elsewhere, since that's only visible in Shiny Dex edit
+   mode and PoGo Dex never shows it. */
+.pokemon-card.todo-pending-shiny::before {
+    content: "✨ Shiny";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: gold;
+    color: #14161a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
 .shiny-plus {
     position: absolute;
     top: 6px;
@@ -1073,6 +1090,35 @@ body.page-mode #page-controls {
 #page-display {
     min-width: 40px;
     text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #page-display:hover {
+        background: rgba(var(--accent-rgb), 0.15);
+    }
+}
+
+#page-jump-input {
+    width: 50px;
+    min-width: 40px;
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 6px;
+    border: 1px solid var(--accent);
+    background: #2d2d2d;
+    color: white;
+
+    /* hide the native up/down spinner so it matches #page-display's plain look */
+    -moz-appearance: textfield;
+}
+
+#page-jump-input::-webkit-outer-spin-button,
+#page-jump-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 #pagination-controls {
