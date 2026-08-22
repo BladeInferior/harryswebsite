@@ -2527,7 +2527,7 @@ if (document.body.classList.contains("completions-page")) {
                 const tags = item[COLLECTION.fields.tags] || [];
                 const hasDlcAvailableTag = tags.some(t => t.toLowerCase().trim() === "dlc available");
 
-                if (hasDlcAvailableTag && confirm('Remove the "dlc available" tag from this completion?')) {
+                if (hasDlcAvailableTag && confirm('Remove the "DLC available" tag from this completion?')) {
                     item[COLLECTION.fields.tags] = tags.filter(t => t.toLowerCase().trim() !== "dlc available");
                 }
 
@@ -2561,11 +2561,11 @@ if (document.body.classList.contains("completions-page")) {
         const tags = item[COLLECTION.fields.tags] || [];
 
         if (tags.some(t => t.toLowerCase().trim() === "dlc available")) {
-            alert('Already tagged "dlc available".');
+            alert('Already tagged "DLC available".');
             return;
         }
 
-        item[COLLECTION.fields.tags] = [...tags, "dlc available"];
+        item[COLLECTION.fields.tags] = [...tags, "DLC available"];
         saveItems();
         openModal(index);
     });
