@@ -1738,6 +1738,48 @@ body.page-mode #page-controls {
     display: block;
 }
 
+/* Milestones tab — same card grid width as the Completions tab above, but
+   scoped to #milestones-container so none of the .completions-page rules
+   above (which also match milestone cards via the shared .pokemon-card
+   class) get touched. Unlike completion covers, which are uniformly 16:9,
+   milestone images range from 16:9 screenshots to very tall Xbox story
+   graphics — object-fit: cover on a fixed 16:9 box crops the long ones down
+   to the same card footprint instead of letting them stretch the card. */
+.completions-page #milestones-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+#milestones-container .pokemon-card img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+}
+
+/* Milestone modal — shows the full, uncropped image (unlike the cropped
+   grid thumbnail above), same "big preview" treatment as the Completions
+   modal's #modal-image, just under its own selector so #modal-image and
+   #pokemon-modal stay untouched. */
+.completions-page #milestone-modal {
+    width: 95vw;
+    max-width: 1000px;
+}
+
+.completions-page #milestone-modal-image {
+    width: 100%;
+    height: auto;
+
+    max-width: none;
+    max-height: none;
+
+    height: 40vh;
+    object-fit: contain;
+
+    display: block;
+    margin: 0 auto;
+}
+
 .completions-page #modal-title {
     font-size: 1.4rem;
     font-weight: 400;
@@ -2435,7 +2477,8 @@ footer {
         max-width: 100% !important;
     }
 
-    .completions-page #box-container {
+    .completions-page #box-container,
+    .completions-page #milestones-container {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
     }
 
