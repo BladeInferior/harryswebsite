@@ -2035,6 +2035,13 @@ body.page-mode #page-controls {
     flex-direction: column;
 }
 
+/* Milestone modal has no tags/dex-entry content above item-actions like the
+   game modal does, so the flex-column override above (needed for that modal's
+   stacked content) would otherwise leave Edit/Delete stuck at the top. */
+.completions-page #milestone-modal .modal-right {
+    justify-content: center;
+}
+
 
 #delete-dlc-modal {
     position: fixed;
