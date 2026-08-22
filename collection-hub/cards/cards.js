@@ -13,6 +13,18 @@ const DECKS = [
 let activeDeck = DECKS[0];
 let items = [];
 
+// Lights up Export whenever there's something not yet exported for the
+// currently active deck — cleared the moment markSaved() runs (GitHub
+// commit or manual download, see the export-items handler below). Mirrors
+// pokedexes.js's updateExportGlow(); cards.js tracks a single ("default")
+// tracker shared across deck switches rather than one per deck.
+function updateExportGlow() {
+    const btn = document.getElementById("export-items");
+    if (!btn) return;
+    const dirty = typeof isTrackerDirty === "function" ? isTrackerDirty() : false;
+    btn.classList.toggle("has-unsaved-changes", dirty);
+}
+
 let pageMode = false;
 let currentPage = 1;
 
@@ -244,6 +256,7 @@ async function loadDeck(key) {
     if (typeof initUnsavedChangesSnapshot === "function") {
         initUnsavedChangesSnapshot(JSON.stringify(items));
     }
+    updateExportGlow();
 
     if (needsMasterList) {
         pokemonMasterList = masterList;
@@ -671,6 +684,7 @@ document.getElementById("save-item").addEventListener("click", () => {
     delete addModal.dataset.editIndex;
 
     if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+    updateExportGlow();
 
     renderItems();
     addModal.classList.add("hidden");
@@ -695,6 +709,7 @@ document.getElementById("delete-item").addEventListener("click", () => {
 
     items.splice(index, 1);
     if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+    updateExportGlow();
     renderItems();
     modalOverlay.classList.add("hidden");
 });
@@ -765,6 +780,7 @@ document.getElementById("import-items").addEventListener("change", (e) => {
 
             items = importedItems;
             if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+            updateExportGlow();
             renderItems();
 
             alert(`Imported ${items.length} items`);
@@ -801,6 +817,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
 
             if (result.verified && result.committed) {
                 if (typeof markSaved === "function") markSaved(snapshotData);
+                updateExportGlow();
                 alert(`✅ ${activeDeck.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -827,6 +844,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
     URL.revokeObjectURL(url);
 
     if (typeof markSaved === "function") markSaved(snapshotData);
+    updateExportGlow();
 });
 
 // =========================

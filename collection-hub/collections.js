@@ -76,7 +76,8 @@ let currentImages = [];
 
 // collection-specific filter state
 let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (mutually exclusive)
-let filterHasDlc = null; // for completions: true = only show items with DLC tag
+let filterHasDlc = null; // for completions: true = only show items with at least one DLC attached
+let filterDlcAvailable = false; // for completions: true = only show items tagged "dlc available"
 let filterUnnamedDlc = false; // for completions: true = only show items with an auto-linked, not-yet-named DLC
 let selectedVariant = null; // for popfigures: variant name, lowercase (mutually exclusive)
 let selectedFranchise = null; // for popfigures: franchise name (mutually exclusive)
@@ -240,6 +241,7 @@ Promise.all([
     if (typeof initUnsavedChangesSnapshot === "function") {
         initUnsavedChangesSnapshot(JSON.stringify(items), COLLECTION.storageKey);
     }
+    updateExportGlow();
 
     renderItems();
 
@@ -330,6 +332,12 @@ function renderDlcCarousel(item, index) {
     if (dlcs.length === 0) {
         dlcCarousel.classList.add("hidden");
         dlcEmptyEl.classList.remove("hidden");
+        // dlcNameEl and dlcNameBtn are siblings of dlcCarousel, not children
+        // of it, so hiding dlcCarousel above doesn't hide them — without
+        // this they'd keep showing the previous item's DLC name/button.
+        dlcNameEl.textContent = "";
+        dlcNameBtn.classList.add("hidden");
+        dlcNameBtn.onclick = null;
         return;
     }
 
@@ -760,6 +768,18 @@ function createCollectionFilters() {
 
         generationRow.appendChild(hasDlcBtn);
 
+        const dlcAvailableBtn = document.createElement("button");
+        dlcAvailableBtn.textContent = "DLC Available";
+        dlcAvailableBtn.classList.add("generation-filter-btn");
+        dlcAvailableBtn.dataset.dlcAvailable = "1";
+
+        dlcAvailableBtn.addEventListener("click", () => {
+            filterDlcAvailable = dlcAvailableBtn.classList.toggle("game-filter-active");
+            filterItems(searchInput.value);
+        });
+
+        generationRow.appendChild(dlcAvailableBtn);
+
         container.appendChild(generationRow);
     }
 
@@ -990,9 +1010,32 @@ function adjustFilterSidebarWidth() {
     if (!container || !box) return;
 
     container.style.width = `${computeFilterSidebarWidth(box)}px`;
+
+    positionItemCountLabel();
 }
 
 window.addEventListener("resize", adjustFilterSidebarWidth);
+
+// #item-count-label sits right above this sidebar and needs to stay
+// centered on it — but the sidebar's own width shrinks dynamically on
+// narrower viewports (see computeFilterSidebarWidth() above), and the
+// label needs to stay a single line regardless of how narrow that gets.
+// Centering it on the sidebar's actual midpoint via left + translateX(-50%)
+// (rather than matching its width, which would just force the text to
+// wrap) satisfies both at once. No-ops on mobile, where a `!important`
+// media query repositions this into a bottom pill instead.
+function positionItemCountLabel() {
+    if (!itemCountLabel) return;
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+
+    const container = document.getElementById("game-filter-container");
+    if (!container) return;
+
+    const rect = container.getBoundingClientRect();
+    itemCountLabel.style.right = "auto";
+    itemCountLabel.style.left = `${rect.left + rect.width / 2}px`;
+    itemCountLabel.style.transform = "translateX(-50%)";
+}
 
 function getCurrentPageSize() {
 
@@ -1011,6 +1054,17 @@ function saveItems() {
     localStorage.setItem(COLLECTION.storageKey, serialized);
     if (typeof markDirty === "function") markDirty(serialized, COLLECTION.storageKey);
     updateModeUI();
+    updateExportGlow();
+}
+
+// Lights up Export whenever there's something not yet exported — cleared
+// the moment markSaved() runs (GitHub commit or manual download, see the
+// export-items handler below). Mirrors pokedexes.js's updateExportGlow().
+function updateExportGlow() {
+    const btn = document.getElementById("export-items");
+    if (!btn) return;
+    const dirty = typeof isTrackerDirty === "function" ? isTrackerDirty(COLLECTION.storageKey) : false;
+    btn.classList.toggle("has-unsaved-changes", dirty);
 }
 
 function hasAnyUntaggedItems() {
@@ -1480,6 +1534,163 @@ const dateInput = document.getElementById("item-date");
 const customInput = document.getElementById("item-custom");
 const tagsInput = document.getElementById("item-tags");
 
+// TAG AUTOCOMPLETE DROPDOWN
+// Shows every tag already used elsewhere in this collection (most-used
+// first, so frequent ones like "Game Pass"/"Series X" are easy to spot
+// without typing), narrowing as text is typed. Sleeves excludes anything
+// matching a Pokémon name (cross-checked against fullPokemonList.json, the
+// same source renderFeaturedPokemonDetail() uses further down) since the
+// Pokémon itself is already implied by which sleeve it is — only
+// non-Pokémon descriptor tags are useful to suggest there. Positioned via
+// getBoundingClientRect() rather than CSS containing-block tricks, since
+// tagsInput's parent is an unstyled inline <label> that isn't a reliable
+// positioning context.
+const tagSuggestionsBox = document.createElement("div");
+tagSuggestionsBox.id = "tag-suggestions";
+tagSuggestionsBox.classList.add("hidden");
+document.body.appendChild(tagSuggestionsBox);
+
+let sleevePokemonNameSet = null;
+async function getSleevePokemonNameSet() {
+    if (!sleevePokemonNameSet) {
+        const list = await getFullPokemonNameList();
+        sleevePokemonNameSet = new Set(list.map(p => normalizeStatsTag(p.name)));
+    }
+    return sleevePokemonNameSet;
+}
+
+// Most-used first (tie-broken alphabetically) so the tags actually worth
+// clicking surface at the top of the always-visible list rather than
+// needing to be typed out.
+function getAllExistingTagsByUsage() {
+    const counts = new Map();
+    items.forEach(item => {
+        (item[COLLECTION.fields.tags] || []).forEach(t => {
+            const trimmed = (t || "").trim();
+            if (!trimmed) return;
+            counts.set(trimmed, (counts.get(trimmed) || 0) + 1);
+        });
+    });
+    return [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+        .map(([tag]) => tag);
+}
+
+// Splits the textbox at the last comma OR run of whitespace — whichever is
+// closer to the cursor — so a plain space works as an alternative to typing
+// a comma when moving on to the next tag.
+function tagSegmentBoundary(value) {
+    let i = value.length - 1;
+    while (i >= 0 && !/[,\s]/.test(value[i])) i--;
+    return i + 1;
+}
+
+// True once the user has actually typed something since the tags box was
+// focused — as opposed to the dropdown just having been opened by focusing
+// a box that already has committed content in it (editing an item with
+// existing tags). Only in the latter case does a click need to *replace*
+// the trailing text (it's an in-progress search term); otherwise it's
+// existing, already-committed content a click should be added after, not
+// eaten by. Reset on every focus and after every click-insertion, so a run
+// of several clicks in a row all append rather than only the first one.
+let tagsUserTyped = false;
+
+function positionTagSuggestions() {
+    const rect = tagsInput.getBoundingClientRect();
+    tagSuggestionsBox.style.left = `${rect.left}px`;
+    tagSuggestionsBox.style.top = `${rect.bottom + 2}px`;
+    tagSuggestionsBox.style.width = `${rect.width}px`;
+}
+
+// Inserting after a plain trailing space turns that space into a proper
+// ", " — so a hand-typed tag left with just a trailing space (no comma)
+// still gets separated correctly from whatever's clicked next. Nothing
+// before the cursor at all (empty box, or box is only whitespace) means
+// this is the very first tag, so no leading comma either.
+function buildTagInsertion(committed, tag) {
+    if (!committed) return `${tag} `;
+    if (committed.endsWith(",")) return `${committed} ${tag} `;
+    return `${committed}, ${tag} `;
+}
+
+async function renderTagSuggestions() {
+    const value = tagsInput.value;
+
+    let committed, current;
+
+    if (!tagsUserTyped || /\s$/.test(value)) {
+        committed = value.replace(/\s+$/, "");
+        current = "";
+    } else {
+        const boundary = tagSegmentBoundary(value);
+        committed = value.slice(0, boundary);
+        current = value.slice(boundary).trim().toLowerCase();
+    }
+
+    const already = new Set(
+        committed.split(",").map(t => t.trim().toLowerCase()).filter(Boolean)
+    );
+
+    // Empty current segment (box empty, focused with nothing typed yet, or
+    // just typed/clicked past a separator) shows the full list rather than
+    // nothing, so it also works as a browsable "which tags exist"
+    // reference, not just a filter.
+    let candidates = getAllExistingTagsByUsage().filter(tag => {
+        const lower = tag.toLowerCase();
+        return !already.has(lower) && (!current || lower.includes(current));
+    });
+
+    if (COLLECTION.name === "sleeves") {
+        const pokemonNames = await getSleevePokemonNameSet();
+        candidates = candidates.filter(tag => !pokemonNames.has(normalizeStatsTag(tag)));
+    }
+
+    // Stale async response (sleeves' Pokémon-name fetch resolved after a
+    // newer keystroke already moved the search on) — drop it rather than
+    // clobbering what's now on screen.
+    if (tagsInput.value !== value) return;
+
+    if (candidates.length === 0) {
+        tagSuggestionsBox.classList.add("hidden");
+        tagSuggestionsBox.innerHTML = "";
+        return;
+    }
+
+    tagSuggestionsBox.innerHTML = "";
+    candidates.forEach(tag => {
+        const option = document.createElement("div");
+        option.classList.add("tag-suggestion-option");
+        option.textContent = tag;
+
+        // mousedown (not click) fires before the input's blur hides this
+        // box — and re-focusing + re-rendering afterward (rather than just
+        // leaving the box open) is what lets several tags get clicked in a
+        // row without typing anything in between.
+        option.addEventListener("mousedown", (e) => {
+            e.preventDefault();
+            tagsInput.value = buildTagInsertion(committed, tag);
+            tagsUserTyped = false;
+            tagsInput.focus();
+            renderTagSuggestions();
+        });
+
+        tagSuggestionsBox.appendChild(option);
+    });
+
+    positionTagSuggestions();
+    tagSuggestionsBox.classList.remove("hidden");
+}
+
+tagsInput.addEventListener("input", () => {
+    tagsUserTyped = true;
+    renderTagSuggestions();
+});
+tagsInput.addEventListener("focus", () => {
+    tagsUserTyped = false;
+    renderTagSuggestions();
+});
+tagsInput.addEventListener("blur", () => tagSuggestionsBox.classList.add("hidden"));
+
 // Quick-fill button next to the date field (not present on popfigures,
 // whose #item-date is a repurposed free-text variant field, not a real
 // date) — sets it to today's local calendar date, not UTC, so it doesn't
@@ -1779,6 +1990,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
 
             if (result.verified && result.committed) {
                 if (typeof markSaved === "function") markSaved(snapshotData, COLLECTION.storageKey);
+                updateExportGlow();
                 alert(`✅ ${COLLECTION.jsonFile} committed to GitHub automatically.`);
                 return;
             }
@@ -1807,6 +2019,7 @@ document.getElementById("export-items").addEventListener("click", async () => {
     URL.revokeObjectURL(url);
 
     if (typeof markSaved === "function") markSaved(snapshotData, COLLECTION.storageKey);
+    updateExportGlow();
 });
 
 /* earlier filterItems placeholder — implementation below */
@@ -2007,14 +2220,18 @@ function filterItems(query) {
             if (!isSignedPop(realItem)) match2 = false;
         }
 
-        // Completions: DLC tag filter
+        // Completions: Has DLC filter — items with at least one DLC actually attached
         if (COLLECTION.name === "completions" && filterHasDlc === true) {
+            if (!(realItem.dlcs && realItem.dlcs.length > 0)) match2 = false;
+        }
+
+        // Completions: DLC Available filter — items tagged "dlc available"
+        if (COLLECTION.name === "completions" && filterDlcAvailable) {
             const tags = realItem[COLLECTION.fields.tags] || [];
-            const hasDlc = (Array.isArray(tags)
-                ? tags.some(t => t.toLowerCase().includes("dlc"))
-                : String(tags).toLowerCase().includes("dlc")
-            );
-            if (!hasDlc) match2 = false;
+            const hasTag = Array.isArray(tags)
+                ? tags.some(t => t.toLowerCase().trim() === "dlc available")
+                : String(tags).toLowerCase().trim() === "dlc available";
+            if (!hasTag) match2 = false;
         }
 
         // Missing Photos: only show items whose image failed to load
@@ -2047,6 +2264,7 @@ function hasActiveFilters() {
         searchInput.value.trim() !== "" ||
         selectedNationality !== null ||
         filterHasDlc !== null ||
+        filterDlcAvailable ||
         selectedVariant !== null ||
         selectedFranchise !== null ||
         filterSigned ||
@@ -2070,6 +2288,7 @@ function updateItemCount() {
     const label = COLLECTION.name.charAt(0).toUpperCase() + COLLECTION.name.slice(1);
     itemCountLabel.textContent = `${label} displayed: ${count}`;
     itemCountLabel.style.display = "block";
+    positionItemCountLabel();
 }
 
 previewBtn.addEventListener("click", () => {
@@ -2301,6 +2520,17 @@ if (document.body.classList.contains("completions-page")) {
                 item.dlcs = item.dlcs || [];
                 item.dlcs.push(name);
 
+                // "dlc available" flags a completion as having a DLC still
+                // to add — now that one has actually been added, ask
+                // whether it's still accurate rather than silently leaving
+                // a stale tag behind.
+                const tags = item[COLLECTION.fields.tags] || [];
+                const hasDlcAvailableTag = tags.some(t => t.toLowerCase().trim() === "dlc available");
+
+                if (hasDlcAvailableTag && confirm('Remove the "dlc available" tag from this completion?')) {
+                    item[COLLECTION.fields.tags] = tags.filter(t => t.toLowerCase().trim() !== "dlc available");
+                }
+
                 saveItems();
 
                 dlcError.classList.add("hidden");
@@ -2318,6 +2548,26 @@ if (document.body.classList.contains("completions-page")) {
         };
 
         tryNext();
+    });
+
+    // Quick way to flag "I know this has DLC, I just haven't added it yet"
+    // without opening Edit Completion and retyping the whole tags list.
+    document.getElementById("mark-dlc-available-btn")?.addEventListener("click", () => {
+
+        const index = modalOverlay.dataset.index;
+        if (index === undefined) return;
+
+        const item = items[index];
+        const tags = item[COLLECTION.fields.tags] || [];
+
+        if (tags.some(t => t.toLowerCase().trim() === "dlc available")) {
+            alert('Already tagged "dlc available".');
+            return;
+        }
+
+        item[COLLECTION.fields.tags] = [...tags, "dlc available"];
+        saveItems();
+        openModal(index);
     });
 
     document.getElementById("cancel-dlc").addEventListener("click", () => {

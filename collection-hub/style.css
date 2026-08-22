@@ -380,6 +380,15 @@ h1 {
     gap: 8px;
 }
 
+/* right/width here are only the default (still used as-is by pokedexes.js,
+   which has no dynamic sidebar-width logic and pairs this with its own
+   static .pokemon-page override below). collections.js's five pages
+   override both via inline style instead — positionItemCountLabel() there
+   centers this on #game-filter-container's actual midpoint with
+   left + translateX(-50%), since that container's width can shrink
+   dynamically on narrower viewports (see adjustFilterSidebarWidth()) and a
+   fixed width/right pairing here would either stop lining up with it or
+   force the text to wrap. white-space:nowrap keeps it one line either way. */
 #item-count-label {
     position: fixed;
     top: 260px;
@@ -391,6 +400,7 @@ h1 {
     font-size: 14px;
     font-weight: 500;
     text-align: center;
+    white-space: nowrap;
     z-index: 2001;
     box-sizing: border-box;
 }
@@ -804,6 +814,7 @@ h1 {
 .filter-row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 6px;
     width: 100%;
 }
@@ -1041,7 +1052,8 @@ body.page-mode #page-controls {
    nothing (the low point of the pulse is still a visible glow, not 0) —
    otherwise it's easy to glance over during the half of the cycle it
    spends fading out. Still a slow, smooth pulse rather than a flash. */
-#export-pokedex.has-unsaved-changes {
+#export-pokedex.has-unsaved-changes,
+#export-items.has-unsaved-changes {
     opacity: 1;
     border-color: var(--accent);
     background: rgba(var(--accent-rgb), 0.15);
@@ -1230,6 +1242,31 @@ body.page-mode #page-controls {
     border: 1px solid #555;
     background: #1e1e1e;
     color: white;
+}
+
+/* Tag autocomplete dropdown (see the tags textbox handling in
+   collections.js) — positioned via JS with getBoundingClientRect() rather
+   than CSS, so z-index just needs to clear the add/edit modal itself. */
+#tag-suggestions {
+    position: fixed;
+    z-index: 3100;
+    background: #1e1e1e;
+    border: 1px solid #555;
+    border-radius: 6px;
+    max-height: 160px;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+}
+
+.tag-suggestion-option {
+    padding: 6px 8px;
+    font-size: 13px;
+    color: white;
+    cursor: pointer;
+}
+
+.tag-suggestion-option:hover {
+    background: rgba(var(--accent-rgb), 0.15);
 }
 
 .today-btn {
@@ -1815,6 +1852,18 @@ body.page-mode #page-controls {
 .dlc-action-btn:hover {
     border-color: var(--accent);
     background: rgba(var(--accent-rgb), 0.15);
+}
+
+/* Smaller/secondary variant, sitting under the Tags field rather than in
+   the DLC editor's own button row — a one-off convenience action (flag
+   this completion as having a DLC to add), not a peer of Delete/Reorder/Add
+   DLC. Text color is inherited from .dlc-action-btn (plain white), same as
+   the rest of them. */
+.dlc-available-btn {
+    display: block;
+    margin: 8px auto 0;
+    padding: 4px 8px;
+    font-size: 12px;
 }
 
 /* One DLC shown at a time (name above it, prev/next either side) instead of
