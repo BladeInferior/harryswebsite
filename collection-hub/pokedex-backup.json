@@ -3069,7 +3069,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": false,
     "shinyDexData": {
       "correctStage": false,
@@ -3339,7 +3339,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexData": {
       "correctStage": true,
@@ -7389,7 +7389,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexData": {
       "correctStage": false,
