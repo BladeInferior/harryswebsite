@@ -1139,7 +1139,7 @@ document.getElementById("save-hunt").addEventListener("click", () => {
 
     const name = huntNameInput.value.trim();
     const completed = huntCompletedInput.checked;
-    const encounters = parseInt(huntEncountersInput.value, 10);
+    const resetsRaw = huntEncountersInput.value.trim();
 
     if (!name) {
         huntErrorBox.textContent = "Please enter a Pokémon name.";
@@ -1147,10 +1147,19 @@ document.getElementById("save-hunt").addEventListener("click", () => {
         return;
     }
 
-    if (!Number.isFinite(encounters) || encounters < 0) {
-        huntErrorBox.textContent = "Please enter a valid reset count.";
-        huntErrorBox.classList.remove("hidden");
-        return;
+    // "?"/"unknown" (any case) is a real, storable value here — not every
+    // hunt has an exact count remembered — anything else has to be a valid
+    // non-negative whole number.
+    let encounters;
+    if (resetsRaw === "?" || resetsRaw.toLowerCase() === "unknown") {
+        encounters = "Unknown";
+    } else {
+        encounters = parseInt(resetsRaw, 10);
+        if (!Number.isFinite(encounters) || encounters < 0) {
+            huntErrorBox.textContent = "Enter a valid reset count, or \"?\" / \"Unknown\".";
+            huntErrorBox.classList.remove("hidden");
+            return;
+        }
     }
 
     huntErrorBox.classList.add("hidden");
