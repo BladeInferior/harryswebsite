@@ -1147,20 +1147,14 @@ document.getElementById("save-hunt").addEventListener("click", () => {
         return;
     }
 
-    // "?"/"unknown" (any case) is a real, storable value here — not every
-    // hunt has an exact count remembered — anything else has to be a valid
-    // non-negative whole number.
-    let encounters;
-    if (resetsRaw === "?" || resetsRaw.toLowerCase() === "unknown") {
-        encounters = "Unknown";
-    } else {
-        encounters = parseInt(resetsRaw, 10);
-        if (!Number.isFinite(encounters) || encounters < 0) {
-            huntErrorBox.textContent = "Enter a valid reset count, or \"?\" / \"Unknown\".";
-            huntErrorBox.classList.remove("hidden");
-            return;
-        }
+    // Free text, not just a number — "?", "Unknown", "500+", whatever's
+    // actually known about the hunt, stored and displayed exactly as typed.
+    if (!resetsRaw) {
+        huntErrorBox.textContent = "Please enter a reset count.";
+        huntErrorBox.classList.remove("hidden");
+        return;
     }
+    const encounters = resetsRaw;
 
     huntErrorBox.classList.add("hidden");
 
