@@ -100,6 +100,16 @@ h1 {
     color: var(--text-dim);
 }
 
+/* Finished hunts — same mint-green "selected" treatment as .active-dex uses
+   for a caught pokemon on the currently-edited dex, applied here instead to
+   mark a hunt as done rather than still in progress (which stays plain). */
+.hunt-card.hunt-completed {
+    background:
+        linear-gradient(180deg, rgba(var(--accent-rgb), 0.55), rgba(var(--accent-rgb), 0.35)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--accent);
+}
+
 .hidden {
     display: none !important;
 }
@@ -1376,13 +1386,36 @@ body.page-mode #page-controls {
     background: rgba(231, 76, 60, 0.15);
 }
 
-.add-item-box input {
+.add-item-box input:not([type="checkbox"]) {
     width: 100%;
     padding: 6px;
     border-radius: 6px;
     border: 1px solid #555;
     background: #1e1e1e;
     color: white;
+}
+
+/* Was unstyled — a checkbox falling under the width: 100% rule above
+   (before it excluded checkboxes) stretched to the full row width and
+   dropped its label text onto its own line beneath it instead of sitting
+   inline next to it. */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    /* .add-item-box's own gap (10px) already spaces every field evenly —
+       this adds extra breathing room on top of that specifically around the
+       checkbox row, since it reads as a smaller, different kind of field
+       than the text/number inputs above and below it. */
+    margin: 6px 0;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: auto;
+    flex-shrink: 0;
+    cursor: pointer;
 }
 
 /* Tag autocomplete dropdown (see the tags textbox handling in

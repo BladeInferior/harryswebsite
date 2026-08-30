@@ -960,6 +960,16 @@ function updateHuntsButtonUI() {
     addBtn.classList.toggle("hidden", !isShinyDex || !huntsModeActive);
 }
 
+// Active hunts first, finished ones after — stable within each group, so
+// otherwise unrelated hunts don't get reshuffled by an edit/reorder.
+function getSortedHunts() {
+    return [...shinyHunts].sort((a, b) => (a.completed ? 1 : 0) - (b.completed ? 1 : 0));
+}
+
+function huntResetsLabel(hunt) {
+    return hunt.completed ? `Total Resets: ${hunt.encounters}` : `Resets So Far: ${hunt.encounters}`;
+}
+
 function renderHunts() {
 
     const container = document.getElementById("hunts-container");
@@ -967,9 +977,10 @@ function renderHunts() {
 
     container.innerHTML = "";
 
-    shinyHunts.forEach(hunt => {
+    getSortedHunts().forEach(hunt => {
         const card = document.createElement("div");
         card.classList.add("pokemon-card", "hunt-card");
+        card.classList.toggle("hunt-completed", !!hunt.completed);
 
         const img = document.createElement("img");
         img.loading = "lazy";
@@ -984,7 +995,7 @@ function renderHunts() {
 
         const encounters = document.createElement("div");
         encounters.classList.add("hunt-encounters");
-        encounters.textContent = `Total Encounters: ${hunt.encounters}`;
+        encounters.textContent = huntResetsLabel(hunt);
         card.appendChild(encounters);
 
         card.addEventListener("click", () => openHuntModal(hunt.id));
@@ -1043,7 +1054,7 @@ function openHuntModal(id) {
 
     huntModalImage.src = getPokemonSpritePath(hunt.name, true);
     huntModalName.textContent = hunt.name;
-    huntModalEncounters.textContent = `Total Encounters: ${hunt.encounters}`;
+    huntModalEncounters.textContent = huntResetsLabel(hunt);
 
     huntModalOverlay.classList.remove("hidden");
     huntModalOverlay.dataset.id = id;
@@ -1060,17 +1071,20 @@ huntModalOverlay.addEventListener("click", (e) => {
 });
 
 function openAdjacentHunt(offset) {
-    const count = shinyHunts.length;
+    // Same order as renderHunts() (active first, then finished) so prev/next
+    // steps through the cards in the order they're actually shown on screen.
+    const ordered = getSortedHunts();
+    const count = ordered.length;
     if (count === 0) return;
 
-    let index = shinyHunts.findIndex(h => h.id === huntModalOverlay.dataset.id);
+    let index = ordered.findIndex(h => h.id === huntModalOverlay.dataset.id);
     if (index === -1) index = 0;
 
     let next = index + offset;
     if (next < 0) next = count - 1;
     if (next >= count) next = 0;
 
-    openHuntModal(shinyHunts[next].id);
+    openHuntModal(ordered[next].id);
 }
 
 huntNavLeft.addEventListener("click", (e) => {
@@ -1095,9 +1109,17 @@ document.addEventListener("keydown", (e) => {
 // -------------------------
 const addHuntModal = document.getElementById("add-hunt-modal");
 const huntNameInput = document.getElementById("hunt-name-input");
+const huntCompletedInput = document.getElementById("hunt-completed-input");
 const huntEncountersInput = document.getElementById("hunt-encounters-input");
+const huntResetsLabelText = document.getElementById("hunt-resets-label-text");
 const huntModalTitleText = document.getElementById("hunt-modal-title-text");
 const huntErrorBox = document.getElementById("hunt-item-error");
+
+function updateHuntResetsLabelText() {
+    huntResetsLabelText.textContent = huntCompletedInput.checked ? "Total Resets" : "Resets So Far";
+}
+
+huntCompletedInput.addEventListener("change", updateHuntResetsLabelText);
 
 document.getElementById("hunts-add-btn").addEventListener("click", () => {
 
@@ -1106,7 +1128,9 @@ document.getElementById("hunts-add-btn").addEventListener("click", () => {
     delete addHuntModal.dataset.editId;
 
     huntNameInput.value = "";
+    huntCompletedInput.checked = false;
     huntEncountersInput.value = "";
+    updateHuntResetsLabelText();
     huntErrorBox.classList.add("hidden");
     huntNameInput.focus();
 });
@@ -1114,6 +1138,7 @@ document.getElementById("hunts-add-btn").addEventListener("click", () => {
 document.getElementById("save-hunt").addEventListener("click", () => {
 
     const name = huntNameInput.value.trim();
+    const completed = huntCompletedInput.checked;
     const encounters = parseInt(huntEncountersInput.value, 10);
 
     if (!name) {
@@ -1123,7 +1148,7 @@ document.getElementById("save-hunt").addEventListener("click", () => {
     }
 
     if (!Number.isFinite(encounters) || encounters < 0) {
-        huntErrorBox.textContent = "Please enter a valid encounter count.";
+        huntErrorBox.textContent = "Please enter a valid reset count.";
         huntErrorBox.classList.remove("hidden");
         return;
     }
@@ -1136,10 +1161,11 @@ document.getElementById("save-hunt").addEventListener("click", () => {
         const hunt = shinyHunts.find(h => h.id === editId);
         if (hunt) {
             hunt.name = name;
+            hunt.completed = completed;
             hunt.encounters = encounters;
         }
     } else {
-        shinyHunts.push({ id: generateHuntId(), name, encounters });
+        shinyHunts.push({ id: generateHuntId(), name, completed, encounters });
     }
 
     delete addHuntModal.dataset.editId;
@@ -1169,7 +1195,9 @@ document.getElementById("edit-hunt").addEventListener("click", () => {
     if (!hunt) return;
 
     huntNameInput.value = hunt.name;
+    huntCompletedInput.checked = !!hunt.completed;
     huntEncountersInput.value = hunt.encounters;
+    updateHuntResetsLabelText();
     huntErrorBox.classList.add("hidden");
 
     addHuntModal.dataset.editId = id;
@@ -2857,6 +2885,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     const huntsExportData = shinyHunts.map(hunt => ({
         id: hunt.id,
         name: hunt.name,
+        completed: !!hunt.completed,
         encounters: hunt.encounters
     }));
 
@@ -3022,9 +3051,9 @@ function getHuntsChanges() {
         const prev = beforeById.get(id);
 
         if (!prev) {
-            changes.push({ name: hunt.name, parts: [`+Hunt added (${hunt.encounters} encounters)`] });
-        } else if (prev.name !== hunt.name || prev.encounters !== hunt.encounters) {
-            changes.push({ name: hunt.name, parts: [`Hunt edited: ${prev.encounters} → ${hunt.encounters} encounters`] });
+            changes.push({ name: hunt.name, parts: [`+Hunt added (${hunt.encounters} resets, ${hunt.completed ? "finished" : "active"})`] });
+        } else if (prev.name !== hunt.name || prev.encounters !== hunt.encounters || !!prev.completed !== !!hunt.completed) {
+            changes.push({ name: hunt.name, parts: [`Hunt edited: ${prev.encounters} → ${hunt.encounters} resets${!!prev.completed !== !!hunt.completed ? `, now ${hunt.completed ? "finished" : "active"}` : ""}`] });
         }
     });
 
