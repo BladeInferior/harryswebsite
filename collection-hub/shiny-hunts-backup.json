@@ -130,5 +130,215 @@
     "name": "terrakion",
     "completed": true,
     "encounters": 154
+  },
+  {
+    "id": "0cc6d655-be17-438a-aced-3b855749cb9c",
+    "name": "lugia",
+    "completed": true,
+    "encounters": "Unknown / 40+ ish"
+  },
+  {
+    "id": "ab7e16e0-d8ae-4330-8bb8-b4e61287de0d",
+    "name": "zekrom",
+    "completed": true,
+    "encounters": "25+"
+  },
+  {
+    "id": "2e55493c-54f1-4516-a4fc-035861603ef5",
+    "name": "rayquaza",
+    "completed": true,
+    "encounters": "Unknown"
+  },
+  {
+    "id": "82107f7c-ca34-45cb-9e67-6d40ee490833",
+    "name": "arceus",
+    "completed": false,
+    "encounters": "10600"
+  },
+  {
+    "id": "7b88baad-fff4-4387-ad25-7fff6bf1b7f1",
+    "name": "sprigatito",
+    "completed": false,
+    "encounters": "202"
+  },
+  {
+    "id": "86358e8e-b475-4334-bb3f-9b105602b8d5",
+    "name": "fuecoco",
+    "completed": false,
+    "encounters": "202"
+  },
+  {
+    "id": "59ac8f58-4eb9-409e-a399-b100d1f58372",
+    "name": "buzzwole",
+    "completed": false,
+    "encounters": "0"
+  },
+  {
+    "id": "2836dee4-dca9-428a-a71e-b65465a92b1f",
+    "name": "celesteela",
+    "completed": false,
+    "encounters": "0"
+  },
+  {
+    "id": "90f1f074-5fc9-4e08-9d18-eea3a06404a0",
+    "name": "entei",
+    "completed": false,
+    "encounters": "5"
+  },
+  {
+    "id": "5db5b0ce-580d-4d70-8e99-a0e0153ef4db",
+    "name": "kartana",
+    "completed": false,
+    "encounters": "3"
+  },
+  {
+    "id": "c990b4b0-46ab-40d7-a7ef-57368f6c3e24",
+    "name": "kyogre",
+    "completed": false,
+    "encounters": "12"
+  },
+  {
+    "id": "1f2ad24b-8ad1-4aa8-a1a1-401851ded783",
+    "name": "kyurem",
+    "completed": false,
+    "encounters": "51"
+  },
+  {
+    "id": "53a01c01-489b-49e6-a7d0-3e554bb36385",
+    "name": "latios",
+    "completed": true,
+    "encounters": "805"
+  },
+  {
+    "id": "51543302-4121-4eed-bab9-74442554ffaf",
+    "name": "lunala",
+    "completed": false,
+    "encounters": "149"
+  },
+  {
+    "id": "40d6d0f9-9295-44d2-990a-869897033d5d",
+    "name": "mewtwo",
+    "completed": false,
+    "encounters": "6"
+  },
+  {
+    "id": "4b9cfc97-4a75-47d9-860f-ff7dd2a06701",
+    "name": "moltres",
+    "completed": false,
+    "encounters": "7"
+  },
+  {
+    "id": "4d9a1cdb-fb20-42e4-a0d2-04112a426535",
+    "name": "nihilego",
+    "completed": false,
+    "encounters": "11"
+  },
+  {
+    "id": "efc9d322-8558-4387-b014-ef8df1de38b1",
+    "name": "palkia",
+    "completed": false,
+    "encounters": "10"
+  },
+  {
+    "id": "4f5983d2-11f6-4f32-bceb-220a62ec6259",
+    "name": "raikou",
+    "completed": false,
+    "encounters": "4"
+  },
+  {
+    "id": "5839e011-c07e-4cf7-a008-efcdac8c5fb1",
+    "name": "reshiram",
+    "completed": false,
+    "encounters": "7"
+  },
+  {
+    "id": "dcef0f14-a24c-4cb4-bc98-d39354861126",
+    "name": "solgaleo",
+    "completed": false,
+    "encounters": "10"
+  },
+  {
+    "id": "e4903930-3e99-4cb2-8f59-59076b979af2",
+    "name": "stakataka",
+    "completed": false,
+    "encounters": "0"
+  },
+  {
+    "id": "ddf3b0c5-4d0e-41d9-a009-ad132d61db26",
+    "name": "suicune",
+    "completed": false,
+    "encounters": "0"
+  },
+  {
+    "id": "0ab64fb2-f422-4d0f-85bf-8a5e1b046552",
+    "name": "tapu bulu",
+    "completed": false,
+    "encounters": "5"
+  },
+  {
+    "id": "415ab956-2ea1-4b7e-b943-1e4c8feaca55",
+    "name": "tapu fini",
+    "completed": false,
+    "encounters": "0"
+  },
+  {
+    "id": "8f1c74b0-e4ff-48b0-9075-c4ba2dd5e432",
+    "name": "tapu lele",
+    "completed": false,
+    "encounters": "11"
+  },
+  {
+    "id": "f60ffbfd-2dd2-4369-8388-4e89e94b26c8",
+    "name": "thundurus",
+    "completed": false,
+    "encounters": "8"
+  },
+  {
+    "id": "e04f51c7-37e9-4d03-ae47-95852a0f4930",
+    "name": "tornadus",
+    "completed": false,
+    "encounters": "8"
+  },
+  {
+    "id": "3873ae89-f51f-4fd2-8c8b-e6847aa5a655",
+    "name": "uxie",
+    "completed": false,
+    "encounters": "3"
+  },
+  {
+    "id": "5629e097-150b-419b-803f-ebce0b699415",
+    "name": "xerneas",
+    "completed": false,
+    "encounters": "4"
+  },
+  {
+    "id": "4d4158ec-e284-4b00-80e2-a7d4434fa44a",
+    "name": "xurkitree",
+    "completed": false,
+    "encounters": "11"
+  },
+  {
+    "id": "cc45187f-af82-43ae-9f9f-2a560e23e4d3",
+    "name": "yveltal",
+    "completed": false,
+    "encounters": "13"
+  },
+  {
+    "id": "5d7dfd3b-eb76-4a22-bd1c-d83b6a670182",
+    "name": "zygarde",
+    "completed": false,
+    "encounters": "31"
+  },
+  {
+    "id": "af857aaa-0de0-45a3-8d9e-e6e6a45e2664",
+    "name": "darkrai",
+    "completed": false,
+    "encounters": "2"
+  },
+  {
+    "id": "4c54c3ed-c693-4172-b1e3-203a642fbe0d",
+    "name": "necrozma",
+    "completed": true,
+    "encounters": "Unknown"
   }
 ]
