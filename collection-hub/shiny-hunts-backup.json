@@ -340,5 +340,11 @@
     "name": "necrozma",
     "completed": true,
     "encounters": "Unknown"
+  },
+  {
+    "id": "dde019dc-70ab-4784-9946-794c159496e1",
+    "name": "dhelmise",
+    "completed": false,
+    "encounters": "187"
   }
 ]
