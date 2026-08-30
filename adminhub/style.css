@@ -454,6 +454,42 @@ footer {
     text-decoration: line-through;
 }
 
+.note-line-image {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    margin: 4px 0;
+}
+
+.note-line-image img {
+    display: block;
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+}
+
+.note-image-remove-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.85;
+    transition: opacity .15s ease;
+}
+
+.note-image-remove-btn:hover {
+    opacity: 1;
+}
+
 .editor-footer {
     display: flex;
     align-items: center;

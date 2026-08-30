@@ -1,5 +1,5 @@
 import { requireAdminAuth } from './auth.js';
-import { db } from './firebase/firebase-config.js';
+import { db, storage } from './firebase/firebase-config.js';
 import {
     collection,
     doc,
@@ -11,6 +11,11 @@ import {
     orderBy,
     serverTimestamp
 } from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js';
+import {
+    ref as storageRef,
+    uploadBytes,
+    getDownloadURL
+} from 'https://www.gstatic.com/firebasejs/12.15.0/firebase-storage.js';
 
 const adminContent = document.getElementById('admin-content');
 const notesListEl = document.getElementById('notes-list');
@@ -18,6 +23,8 @@ const newNoteBtn = document.getElementById('new-note-btn');
 const titleInput = document.getElementById('note-title-input');
 const contentInput = document.getElementById('note-content-input');
 const addCheckboxBtn = document.getElementById('add-checkbox-btn');
+const addImageBtn = document.getElementById('add-image-btn');
+const imageFileInput = document.getElementById('note-image-input');
 const deleteBtn = document.getElementById('delete-note-btn');
 const deleteNoteModal = document.getElementById('delete-note-modal');
 const cancelDeleteNoteBtn = document.getElementById('cancel-delete-note-btn');
@@ -37,6 +44,7 @@ requireAdminAuth().then(() => {
 });
 
 const CHECKBOX_LINE_RE = /^\[( |x|X)\] (.*)$/;
+const IMAGE_LINE_RE = /^\[img\] (.*)$/;
 
 function createTextLine(text = '') {
     const line = document.createElement('div');
@@ -73,8 +81,48 @@ function createCheckboxLine(text = '', checked = false) {
     return line;
 }
 
+function createImageLine(url) {
+    const line = document.createElement('div');
+    line.className = 'note-line note-line-image';
+    line.dataset.type = 'image';
+    line.dataset.url = url;
+
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = '';
+    line.appendChild(img);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.className = 'note-image-remove-btn';
+    removeBtn.title = 'Remove image';
+    removeBtn.textContent = '×';
+    removeBtn.addEventListener('click', () => {
+        const prev = line.previousElementSibling;
+        line.remove();
+
+        // Never leave the editor with zero lines — nothing left to click
+        // into to start typing again.
+        if (contentInput.children.length === 0) {
+            const newLine = createTextLine('');
+            contentInput.appendChild(newLine);
+            focusLineStart(newLine);
+        } else {
+            const target = prev ? getEditablePart(prev) : getEditablePart(contentInput.firstElementChild);
+            if (target) focusLineEnd(target);
+        }
+
+        scheduleSave();
+    });
+    line.appendChild(removeBtn);
+
+    return line;
+}
+
 function lineOfType(type, text, checked) {
-    return type === 'checkbox' ? createCheckboxLine(text, checked) : createTextLine(text);
+    if (type === 'checkbox') return createCheckboxLine(text, checked);
+    if (type === 'image') return createImageLine(text);
+    return createTextLine(text);
 }
 
 function focusLineEnd(el) {
@@ -98,6 +146,8 @@ function focusLineStart(el) {
 }
 
 function getEditablePart(lineEl) {
+    if (!lineEl) return null;
+    if (lineEl.dataset.type === 'image') return null;
     return lineEl.dataset.type === 'checkbox' ? lineEl.querySelector('.note-line-text') : lineEl;
 }
 
@@ -148,8 +198,9 @@ function attachLineEvents(editableEl, lineEl) {
             e.preventDefault();
             const prev = lineEl.previousElementSibling;
             lineEl.remove();
-            if (prev) {
-                focusLineEnd(getEditablePart(prev));
+            const prevEditable = getEditablePart(prev);
+            if (prevEditable) {
+                focusLineEnd(prevEditable);
             }
             scheduleSave();
         }
@@ -186,6 +237,12 @@ function deserializeContent(text) {
     const lines = (text || '').split('\n');
 
     lines.forEach(raw => {
+        const imageMatch = raw.match(IMAGE_LINE_RE);
+        if (imageMatch) {
+            contentInput.appendChild(createImageLine(imageMatch[1]));
+            return;
+        }
+
         const match = raw.match(CHECKBOX_LINE_RE);
         contentInput.appendChild(
             match ? createCheckboxLine(match[2], match[1].toLowerCase() === 'x') : createTextLine(raw)
@@ -199,6 +256,9 @@ function serializeContent() {
             const checked = line.querySelector('input[type="checkbox"]').checked;
             const text = line.querySelector('.note-line-text').textContent;
             return `[${checked ? 'x' : ' '}] ${text}`;
+        }
+        if (line.dataset.type === 'image') {
+            return `[img] ${line.dataset.url}`;
         }
         return line.textContent;
     }).join('\n');
@@ -220,6 +280,55 @@ addCheckboxBtn.addEventListener('click', () => {
     scheduleSave();
 });
 
+// The reference line (where to insert) has to be captured on click, before
+// the OS file picker steals focus — by the time the async upload finishes,
+// document.activeElement is back on the page but no longer reflects where
+// the cursor was.
+let imageInsertReferenceLine = null;
+
+addImageBtn.addEventListener('click', () => {
+    const active = document.activeElement;
+    imageInsertReferenceLine = contentInput.contains(active) ? active.closest('.note-line') : null;
+
+    imageFileInput.value = '';
+    imageFileInput.click();
+});
+
+imageFileInput.addEventListener('change', async () => {
+    const file = imageFileInput.files[0];
+    if (!file || !activeNoteId) return;
+
+    const referenceLine = imageInsertReferenceLine;
+    const noteId = activeNoteId;
+
+    setSaveStatus('Uploading image…');
+
+    try {
+        const path = `notes/${noteId}/${Date.now()}-${file.name}`;
+        const fileRef = storageRef(storage, path);
+        await uploadBytes(fileRef, file);
+        const url = await getDownloadURL(fileRef);
+
+        // The note may have been switched away from while the upload was
+        // in flight — drop the result rather than inserting it into
+        // whatever note happens to be open now.
+        if (activeNoteId !== noteId) return;
+
+        const newLine = createImageLine(url);
+
+        if (referenceLine && contentInput.contains(referenceLine)) {
+            referenceLine.insertAdjacentElement('afterend', newLine);
+        } else {
+            contentInput.appendChild(newLine);
+        }
+
+        scheduleSave();
+    } catch (err) {
+        console.error(err);
+        setSaveStatus('Image upload failed');
+    }
+});
+
 // Clicking a line (or its text) already places the cursor there natively —
 // this only fires for clicks that land on the container itself: the empty
 // space below the last line (contentInput is flex:1, so there's usually a
@@ -230,9 +339,8 @@ contentInput.addEventListener('click', e => {
     if (e.target !== contentInput) return;
 
     const lastLine = contentInput.lastElementChild;
-    if (!lastLine) return;
-
-    focusLineEnd(getEditablePart(lastLine));
+    const editable = getEditablePart(lastLine);
+    if (editable) focusLineEnd(editable);
 });
 
 function subscribeToNotes() {

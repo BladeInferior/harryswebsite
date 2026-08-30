@@ -19,6 +19,8 @@ let currentPage = 1;
 let pageMode = false; 
 let selectedGeneration = null;
 let tagFilters = {};
+let selectedTypes = []; // lowercase type names selected in the type-filter popup
+let typeFilterMode = "any"; // "any" (OR match) | "only" (exact match, max 2 types)
 let pokemonCountLabel = null;
 let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #dex-key swatch
 
@@ -185,6 +187,7 @@ Promise.all([
     updateProgress();
     updateCardHighlights();
     updateMissingButtonHighlight();
+    updateTypeFilterHighlight();
     updatePogoShinyModeButtonUI();
     updatePogoFilterRowVisibility();
     updatePogoShinyFilterHighlight();
@@ -789,6 +792,8 @@ function clearNonTodoFilters() {
     searchInput.value = "";
     missingDexFilter = null;
     selectedCompletionFilter = null;
+    selectedTypes = [];
+    typeFilterMode = "any";
 
     document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
         el.classList.remove("active");
@@ -798,6 +803,7 @@ function clearNonTodoFilters() {
     updateGenerationButtonHighlight();
     updateTagButtonHighlight();
     updateMissingButtonHighlight();
+    updateTypeFilterHighlight();
 }
 
 document.getElementById("todo-filter-btn").addEventListener("click", () => {
@@ -1078,7 +1084,23 @@ function applyFilters() {
             return !!(savedDexData[key] || {})[field];
         })();
 
-        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo) {
+        // Type-filter popup: "any" mode matches a pokemon with at least one
+        // of the selected types; "only" mode matches only pokemon whose full
+        // type set is exactly the selected types (e.g. selecting just
+        // Electric shows pure Electric-types only, not Electric/Steel etc.).
+        const matchesType = (() => {
+
+            if (selectedTypes.length === 0) return true;
+
+            if (typeFilterMode === "only") {
+                if (types.length !== selectedTypes.length) return false;
+                return selectedTypes.every(t => types.includes(t));
+            }
+
+            return selectedTypes.some(t => types.includes(t));
+        })();
+
+        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo && matchesType) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
@@ -1605,6 +1627,136 @@ function createFilterButtons() {
     const container = document.getElementById("game-filter-container");
 
     // -----------------------------
+    // TYPES (toggle + dropdown that overlays the rest of the filters below
+    // it rather than pushing them down or living in a separate panel —
+    // sits as the very first row so it's in the same place open or closed)
+    // -----------------------------
+    const TYPE_LIST = [
+        "normal", "fire", "water", "electric", "grass", "ice",
+        "fighting", "poison", "ground", "flying", "psychic", "bug",
+        "rock", "ghost", "dragon", "dark", "steel", "fairy"
+    ];
+
+    const typeFilterWrapper = document.createElement("div");
+    typeFilterWrapper.classList.add("type-filter-wrapper");
+
+    const typeFilterToggle = document.createElement("button");
+    typeFilterToggle.type = "button";
+    typeFilterToggle.id = "type-filter-toggle";
+    typeFilterToggle.classList.add("game-filter-btn");
+    typeFilterToggle.textContent = "Types ▾";
+
+    typeFilterToggle.addEventListener("click", () => {
+        typeFilterWrapper.classList.toggle("open");
+    });
+
+    const typeFilterPanel = document.createElement("div");
+    typeFilterPanel.classList.add("type-filter-panel");
+
+    const typeModeRow = document.createElement("div");
+    typeModeRow.classList.add("type-filter-mode-row");
+
+    [
+        { mode: "any", label: "Any" },
+        { mode: "only", label: "Only" }
+    ].forEach(({ mode, label }) => {
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = label;
+        btn.classList.add("type-filter-mode-btn");
+        btn.dataset.mode = mode;
+
+        btn.addEventListener("click", () => {
+            typeFilterMode = mode;
+
+            // "Only" is an exact-match filter capped at two types — trim
+            // down to the two most-recently-picked if more were selected
+            // while in "Any" mode.
+            if (typeFilterMode === "only" && selectedTypes.length > 2) {
+                selectedTypes = selectedTypes.slice(-2);
+            }
+
+            applyFilters();
+            scrollResultsToTop();
+            updateTypeFilterHighlight();
+        });
+
+        typeModeRow.appendChild(btn);
+    });
+
+    typeFilterPanel.appendChild(typeModeRow);
+
+    const typeGrid = document.createElement("div");
+    typeGrid.classList.add("type-filter-grid");
+
+    TYPE_LIST.forEach(type => {
+
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.classList.add("type-filter-btn");
+        btn.dataset.type = type;
+        const label = type.charAt(0).toUpperCase() + type.slice(1);
+        btn.title = label;
+
+        const icon = document.createElement("img");
+        icon.src = `../icons/types/${type}.png`;
+        icon.alt = label;
+        icon.loading = "lazy";
+        btn.appendChild(icon);
+
+        btn.addEventListener("click", () => {
+            const index = selectedTypes.indexOf(type);
+
+            if (index !== -1) {
+                selectedTypes.splice(index, 1);
+            } else {
+                selectedTypes.push(type);
+
+                // "Only" mode exact-matches at most two types — a third
+                // click bumps out the oldest selection rather than stacking.
+                if (typeFilterMode === "only" && selectedTypes.length > 2) {
+                    selectedTypes.shift();
+                }
+            }
+
+            applyFilters();
+            scrollResultsToTop();
+            updateTypeFilterHighlight();
+        });
+
+        typeGrid.appendChild(btn);
+    });
+
+    typeFilterPanel.appendChild(typeGrid);
+
+    const typeFilterClearBtn = document.createElement("button");
+    typeFilterClearBtn.type = "button";
+    typeFilterClearBtn.textContent = "Clear Types";
+    typeFilterClearBtn.classList.add("game-filter-btn", "type-filter-clear-btn");
+
+    typeFilterClearBtn.addEventListener("click", () => {
+        selectedTypes = [];
+        applyFilters();
+        scrollResultsToTop();
+        updateTypeFilterHighlight();
+    });
+
+    typeFilterPanel.appendChild(typeFilterClearBtn);
+
+    typeFilterWrapper.appendChild(typeFilterToggle);
+    typeFilterWrapper.appendChild(typeFilterPanel);
+    container.appendChild(typeFilterWrapper);
+
+    // Closing on outside click needs to check the live wrapper, not just the
+    // panel, since the toggle button itself sits outside the panel.
+    document.addEventListener("click", (e) => {
+        if (!typeFilterWrapper.classList.contains("open")) return;
+        if (typeFilterWrapper.contains(e.target)) return;
+        typeFilterWrapper.classList.remove("open");
+    });
+
+    // -----------------------------
     // MISSING / NOT MISSING (half-width with/without pair)
     // -----------------------------
     const missingRow = document.createElement("div");
@@ -1877,6 +2029,8 @@ function createFilterButtons() {
         searchInput.value = "";
         missingDexFilter = null;
         selectedCompletionFilter = null;
+        selectedTypes = [];
+        typeFilterMode = "any";
 
         activeDexEdit = null;
         shinyEditModeFlag = false;
@@ -1900,6 +2054,7 @@ function createFilterButtons() {
         updateGenerationButtonHighlight();
         updateTagButtonHighlight();
         updateMissingButtonHighlight();
+        updateTypeFilterHighlight();
         updateCardHighlights();
         updateProgress();
         updateModeUI();
@@ -1934,7 +2089,8 @@ function updatePokemonCount() {
         missingDexFilter !== null ||
         selectedCompletionFilter !== null ||
         searchInput.value.trim() !== "" ||
-        todoFilterActive
+        todoFilterActive ||
+        selectedTypes.length > 0
     );
 
     if (!hasActiveFilters) {
@@ -1997,6 +2153,25 @@ function updateGenerationButtonHighlight() {
                 Number(btn.dataset.gen) === selectedGeneration
             );
         });
+}
+
+function updateTypeFilterHighlight() {
+
+    document.querySelectorAll(".type-filter-mode-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.mode === typeFilterMode);
+    });
+
+    document.querySelectorAll(".type-filter-btn").forEach(btn => {
+        btn.classList.toggle("active", selectedTypes.includes(btn.dataset.type));
+    });
+
+    const toggle = document.getElementById("type-filter-toggle");
+    if (!toggle) return;
+
+    toggle.classList.toggle("game-filter-active", selectedTypes.length > 0);
+    toggle.textContent = selectedTypes.length > 0
+        ? `Types (${selectedTypes.length}) ▾`
+        : "Types ▾";
 }
 
 // #dex-key swatches double as filter toggles — click blue/green to show only

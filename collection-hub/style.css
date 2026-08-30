@@ -948,6 +948,113 @@ h1 {
     flex: 1;
 }
 
+/* -----------------------------
+   TYPES — toggle sits as the first row in #game-filter-container; the
+   dropdown that opens beneath it is positioned absolute so it overlays the
+   filter rows below (Missing/games/tags/generations) instead of pushing
+   them down or needing its own separate panel.
+   ----------------------------- */
+.type-filter-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* .game-filter-btn's own flex:1 only stretches it inside a .filter-row —
+   here the toggle is alone in its wrapper (plain block, not a flex
+   container), so it needs its own full-width rule to match the rest of the
+   filter rows instead of shrinking to fit its text. */
+#type-filter-toggle {
+    display: block;
+    width: 100%;
+}
+
+.type-filter-panel {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    z-index: 1001;
+
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.type-filter-wrapper.open .type-filter-panel {
+    display: flex;
+}
+
+.type-filter-mode-row {
+    display: flex;
+    gap: 6px;
+}
+
+.type-filter-mode-btn {
+    flex: 1;
+    padding: 8px 10px;
+    min-height: 28px;
+
+    border-radius: 8px;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+    color: white;
+
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.type-filter-mode-btn.active {
+    background: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+.type-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+}
+
+.type-filter-btn {
+    padding: 4px;
+    border-radius: 8px;
+
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+
+    cursor: pointer;
+    transition: 0.15s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.type-filter-btn img {
+    width: 100%;
+    height: auto;
+    display: block;
+    pointer-events: none;
+}
+
+.type-filter-btn.active {
+    background: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid var(--accent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .type-filter-mode-btn:hover,
+    .type-filter-btn:hover {
+        border: 1px solid var(--accent);
+    }
+}
+
 #page-controls, #milestones-controls {
     position: relative;
     width: min(1000px, calc(100% - 40px));
@@ -2616,7 +2723,8 @@ footer {
 
     .mobile-popout-list #game-filter-container .game-filter-btn,
     .mobile-popout-list #game-filter-container .tag-filter-btn,
-    .mobile-popout-list #game-filter-container .generation-filter-btn {
+    .mobile-popout-list #game-filter-container .generation-filter-btn,
+    .mobile-popout-list #game-filter-container .type-filter-mode-btn {
         padding: 6px 8px !important;
         min-height: 0 !important;
         font-size: 12px !important;
