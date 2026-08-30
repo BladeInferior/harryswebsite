@@ -21,6 +21,8 @@ let selectedGeneration = null;
 let tagFilters = {};
 let selectedTypes = []; // lowercase type names selected in the type-filter popup
 let typeFilterMode = "any"; // "any" (OR match) | "only" (exact match, max 2 types)
+let shinyHunts = []; // Shiny Dex only — archive of { id, name, encounters } hunt records
+let huntsModeActive = false;
 let pokemonCountLabel = null;
 let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #dex-key swatch
 
@@ -60,6 +62,16 @@ function saveData() {
     updateExportGlow();
 }
 
+// Shiny hunts are a separate archive, not part of savedDexData — its own
+// localStorage key/tracker, but the same Export button commits both (see
+// the export-pokedex handler) so one Export always covers everything.
+function saveHunts() {
+    const serialized = JSON.stringify(shinyHunts);
+    localStorage.setItem("shinyHunts", serialized);
+    if (typeof markDirty === "function") markDirty(serialized, "shinyHunts");
+    updateExportGlow();
+}
+
 // Lights up Export Pokémon, and reveals the Changes button next to it,
 // whenever there's something not yet exported — both cleared the moment
 // markSaved() runs (GitHub commit or manual download, see the
@@ -70,7 +82,9 @@ function updateExportGlow() {
     const btn = document.getElementById("export-pokedex");
     const changesBtn = document.getElementById("pokedex-changes-btn");
 
-    const dirty = typeof isTrackerDirty === "function" ? isTrackerDirty("dexData") : false;
+    const dirty = typeof isTrackerDirty === "function"
+        ? (isTrackerDirty("dexData") || isTrackerDirty("shinyHunts"))
+        : false;
 
     if (btn) btn.classList.toggle("has-unsaved-changes", dirty);
     if (changesBtn) changesBtn.classList.toggle("hidden", !dirty);
@@ -103,9 +117,10 @@ window.addEventListener("resize", () => {
 
 Promise.all([
     fetch("../fullPokemonList.json").then(res => res.json()),
-    fetch("../pokedex-backup.json").then(res => res.json())
+    fetch("../pokedex-backup.json").then(res => res.json()),
+    fetch("../shiny-hunts-backup.json").then(res => res.json())
 ])
-.then(([pokemonList, dexList]) => {
+.then(([pokemonList, dexList, huntsList]) => {
 
     allPokemon = pokemonList;
 
@@ -175,8 +190,25 @@ Promise.all([
         savedDexData = sourceDexData;
     }
 
+    // Shiny hunts archive — an independent flat list, not keyed per-pokemon
+    // like savedDexData, so no field-by-field reconciliation is needed: local
+    // wins outright if present (it's always the full list), otherwise fall
+    // back to whatever's in the backup.
+    const localHuntsRaw = localStorage.getItem("shinyHunts");
+
+    if (localHuntsRaw) {
+        try {
+            shinyHunts = JSON.parse(localHuntsRaw);
+        } catch {
+            shinyHunts = huntsList;
+        }
+    } else {
+        shinyHunts = huntsList;
+    }
+
     if (typeof initUnsavedChangesSnapshot === "function") {
         initUnsavedChangesSnapshot(JSON.stringify(savedDexData), "dexData");
+        initUnsavedChangesSnapshot(JSON.stringify(shinyHunts), "shinyHunts");
     }
 
     createPokemonCards(allPokemon);
@@ -192,6 +224,7 @@ Promise.all([
     updatePogoFilterRowVisibility();
     updatePogoShinyFilterHighlight();
     updateTodoButtonUI();
+    updateHuntsButtonUI();
     updateExportGlow();
 
     updateModeUI();
@@ -893,6 +926,270 @@ todoModal.addEventListener("click", (e) => {
     if (e.target === todoModal) todoModal.classList.add("hidden");
 });
 
+// =========================
+// SHINY HUNTS (Shiny Dex only)
+// An archive of shiny hunts and their total encounter counts — unlike the
+// To Do list above, entries here aren't drawn from allPokemon and don't get
+// "completed": they're free-form records (name + encounters) added, edited,
+// and deleted through their own modals, closer to milestones.js's pattern
+// than to anything else on this page.
+// =========================
+// crypto.randomUUID() needs a secure context (HTTPS/localhost) — fine for
+// the deployed site, but not guaranteed if this page is ever opened directly
+// as a file:// URL, so this falls back to something still unique enough.
+function generateHuntId() {
+    if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+        return crypto.randomUUID();
+    }
+    return `hunt-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+function updateHuntsButtonUI() {
+
+    const huntsBtn = document.getElementById("hunts-mode-btn");
+    const addBtn = document.getElementById("hunts-add-btn");
+    if (!huntsBtn || !addBtn) return;
+
+    const isShinyDex = activeDexEdit === "shinyDex";
+
+    huntsBtn.classList.toggle("hidden", !isShinyDex);
+    huntsBtn.classList.toggle("active-mode", huntsModeActive);
+
+    // Add only shows up once the Hunts tab itself is open — no point
+    // offering it before the list is actually in view.
+    addBtn.classList.toggle("hidden", !isShinyDex || !huntsModeActive);
+}
+
+function renderHunts() {
+
+    const container = document.getElementById("hunts-container");
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    shinyHunts.forEach(hunt => {
+        const card = document.createElement("div");
+        card.classList.add("pokemon-card", "hunt-card");
+
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.src = getPokemonSpritePath(hunt.name, true);
+        img.onerror = () => { img.style.visibility = "hidden"; };
+        card.appendChild(img);
+
+        const label = document.createElement("div");
+        label.classList.add("pokemon-name");
+        label.textContent = hunt.name;
+        card.appendChild(label);
+
+        const encounters = document.createElement("div");
+        encounters.classList.add("hunt-encounters");
+        encounters.textContent = `Total Encounters: ${hunt.encounters}`;
+        card.appendChild(encounters);
+
+        card.addEventListener("click", () => openHuntModal(hunt.id));
+
+        container.appendChild(card);
+    });
+
+    applyHuntsSearch();
+}
+
+// Search stays live while browsing Hunts (see applyFilters()'s early
+// branch) — narrows #hunts-container's own cards by name instead of
+// cardMap's, since hunts aren't part of allPokemon/cardMap at all.
+function applyHuntsSearch() {
+
+    const query = searchInput.value.trim().toLowerCase();
+
+    document.querySelectorAll("#hunts-container .hunt-card").forEach(card => {
+        const name = card.querySelector(".pokemon-name")?.textContent.toLowerCase() || "";
+        card.style.display = !query || name.includes(query) ? "block" : "none";
+    });
+}
+
+document.getElementById("hunts-mode-btn").addEventListener("click", () => {
+
+    if (activeDexEdit !== "shinyDex") return;
+
+    huntsModeActive = !huntsModeActive;
+
+    if (huntsModeActive) {
+        renderHunts();
+        // Stale count from whatever filters were active before switching
+        // over — meaningless once #box-container itself is hidden.
+        if (pokemonCountLabel) pokemonCountLabel.style.display = "none";
+    } else {
+        applyFilters();
+    }
+
+    updateHuntsButtonUI();
+    updateModeUI();
+});
+
+// -------------------------
+// VIEW MODAL
+// -------------------------
+const huntModalOverlay = document.getElementById("hunt-modal-overlay");
+const huntModalImage = document.getElementById("hunt-modal-image");
+const huntModalName = document.getElementById("hunt-modal-name");
+const huntModalEncounters = document.getElementById("hunt-modal-encounters");
+const huntNavLeft = document.getElementById("hunt-modal-nav-left");
+const huntNavRight = document.getElementById("hunt-modal-nav-right");
+
+function openHuntModal(id) {
+    const hunt = shinyHunts.find(h => h.id === id);
+    if (!hunt) return;
+
+    huntModalImage.src = getPokemonSpritePath(hunt.name, true);
+    huntModalName.textContent = hunt.name;
+    huntModalEncounters.textContent = `Total Encounters: ${hunt.encounters}`;
+
+    huntModalOverlay.classList.remove("hidden");
+    huntModalOverlay.dataset.id = id;
+}
+
+function closeHuntModal() {
+    huntModalOverlay.classList.add("hidden");
+}
+
+document.getElementById("hunt-modal-close").addEventListener("click", closeHuntModal);
+
+huntModalOverlay.addEventListener("click", (e) => {
+    if (e.target === huntModalOverlay) closeHuntModal();
+});
+
+function openAdjacentHunt(offset) {
+    const count = shinyHunts.length;
+    if (count === 0) return;
+
+    let index = shinyHunts.findIndex(h => h.id === huntModalOverlay.dataset.id);
+    if (index === -1) index = 0;
+
+    let next = index + offset;
+    if (next < 0) next = count - 1;
+    if (next >= count) next = 0;
+
+    openHuntModal(shinyHunts[next].id);
+}
+
+huntNavLeft.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacentHunt(-1);
+});
+
+huntNavRight.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openAdjacentHunt(1);
+});
+
+document.addEventListener("keydown", (e) => {
+    if (huntModalOverlay.classList.contains("hidden")) return;
+    if (e.key === "ArrowLeft") openAdjacentHunt(-1);
+    if (e.key === "ArrowRight") openAdjacentHunt(1);
+    if (e.key === "Escape") closeHuntModal();
+});
+
+// -------------------------
+// ADD / EDIT
+// -------------------------
+const addHuntModal = document.getElementById("add-hunt-modal");
+const huntNameInput = document.getElementById("hunt-name-input");
+const huntEncountersInput = document.getElementById("hunt-encounters-input");
+const huntModalTitleText = document.getElementById("hunt-modal-title-text");
+const huntErrorBox = document.getElementById("hunt-item-error");
+
+document.getElementById("hunts-add-btn").addEventListener("click", () => {
+
+    addHuntModal.classList.remove("hidden");
+    huntModalTitleText.textContent = "Add Hunt";
+    delete addHuntModal.dataset.editId;
+
+    huntNameInput.value = "";
+    huntEncountersInput.value = "";
+    huntErrorBox.classList.add("hidden");
+    huntNameInput.focus();
+});
+
+document.getElementById("save-hunt").addEventListener("click", () => {
+
+    const name = huntNameInput.value.trim();
+    const encounters = parseInt(huntEncountersInput.value, 10);
+
+    if (!name) {
+        huntErrorBox.textContent = "Please enter a Pokémon name.";
+        huntErrorBox.classList.remove("hidden");
+        return;
+    }
+
+    if (!Number.isFinite(encounters) || encounters < 0) {
+        huntErrorBox.textContent = "Please enter a valid encounter count.";
+        huntErrorBox.classList.remove("hidden");
+        return;
+    }
+
+    huntErrorBox.classList.add("hidden");
+
+    const editId = addHuntModal.dataset.editId;
+
+    if (editId) {
+        const hunt = shinyHunts.find(h => h.id === editId);
+        if (hunt) {
+            hunt.name = name;
+            hunt.encounters = encounters;
+        }
+    } else {
+        shinyHunts.push({ id: generateHuntId(), name, encounters });
+    }
+
+    delete addHuntModal.dataset.editId;
+
+    saveHunts();
+    renderHunts();
+    addHuntModal.classList.add("hidden");
+});
+
+document.addEventListener("keydown", (e) => {
+    if (addHuntModal.classList.contains("hidden")) return;
+    if (e.key === "Enter") {
+        e.preventDefault();
+        document.getElementById("save-hunt").click();
+    }
+});
+
+document.getElementById("cancel-hunt").addEventListener("click", () => {
+    addHuntModal.classList.add("hidden");
+    huntErrorBox.classList.add("hidden");
+});
+
+document.getElementById("edit-hunt").addEventListener("click", () => {
+
+    const id = huntModalOverlay.dataset.id;
+    const hunt = shinyHunts.find(h => h.id === id);
+    if (!hunt) return;
+
+    huntNameInput.value = hunt.name;
+    huntEncountersInput.value = hunt.encounters;
+    huntErrorBox.classList.add("hidden");
+
+    addHuntModal.dataset.editId = id;
+    huntModalTitleText.textContent = "Edit Hunt";
+
+    addHuntModal.classList.remove("hidden");
+    closeHuntModal();
+});
+
+document.getElementById("delete-hunt").addEventListener("click", () => {
+
+    const id = huntModalOverlay.dataset.id;
+    if (!id) return;
+
+    shinyHunts = shinyHunts.filter(h => h.id !== id);
+    saveHunts();
+    renderHunts();
+    closeHuntModal();
+});
+
 const todoEmptyModal = document.getElementById("todo-empty-modal");
 
 document.getElementById("todo-empty-modal-close").addEventListener("click", () => {
@@ -963,6 +1260,14 @@ function scrollResultsToTop() {
 }
 
 function applyFilters() {
+
+    // Hunts is its own archive, not a filtered view of allPokemon — search
+    // still works there (unlike every other filter, which just greys out),
+    // but it narrows #hunts-container's own cards instead.
+    if (huntsModeActive) {
+        applyHuntsSearch();
+        return;
+    }
 
     const query = searchInput.value.toLowerCase();
 
@@ -1423,6 +1728,15 @@ document.addEventListener("click", (e) => {
     }
     updateTodoButtonUI();
 
+    // Hunts only makes sense while Shiny Dex itself is being edited —
+    // leaving it, same as To Do above, drops back to the normal grid so
+    // re-entering Shiny Dex always starts there rather than silently
+    // carrying the archive view over.
+    if (activeDexEdit !== "shinyDex") {
+        huntsModeActive = false;
+    }
+    updateHuntsButtonUI();
+
     // Comparing against the resulting activeDexEdit (not just dexType)
     // matters for turning editing OFF: clicking the same dex again sets
     // activeDexEdit back to null, which is still a real change (e.g. it's
@@ -1647,7 +1961,20 @@ function createFilterButtons() {
     typeFilterToggle.textContent = "Types ▾";
 
     typeFilterToggle.addEventListener("click", () => {
-        typeFilterWrapper.classList.toggle("open");
+        const opening = !typeFilterWrapper.classList.contains("open");
+        typeFilterWrapper.classList.toggle("open", opening);
+
+        // #game-filter-container now scrolls internally (see its own
+        // max-height comment in style.css), which clips anything absolutely
+        // positioned inside it — position: fixed instead, placed here via
+        // JS off the toggle's actual on-screen position, escapes that
+        // clipping so the dropdown still overlays the rows below it.
+        if (opening) {
+            const rect = typeFilterToggle.getBoundingClientRect();
+            typeFilterPanel.style.top = `${rect.bottom + 6}px`;
+            typeFilterPanel.style.left = `${rect.left}px`;
+            typeFilterPanel.style.width = `${rect.width}px`;
+        }
     });
 
     const typeFilterPanel = document.createElement("div");
@@ -2038,6 +2365,7 @@ function createFilterButtons() {
         pogoShinyFilter = null;
         todoFilterActive = false;
         resetTodoFind();
+        huntsModeActive = false;
 
         pageMode = false;
         currentPage = 1;
@@ -2062,6 +2390,7 @@ function createFilterButtons() {
         updatePogoFilterRowVisibility();
         updatePogoShinyFilterHighlight();
         updateTodoButtonUI();
+        updateHuntsButtonUI();
     });
 
     container.appendChild(resetBtn);
@@ -2197,6 +2526,12 @@ document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(item
 
 document.getElementById("page-mode").addEventListener("click", () => {
 
+    const wasHuntsMode = huntsModeActive;
+    if (wasHuntsMode) {
+        huntsModeActive = false;
+        updateHuntsButtonUI();
+    }
+
     if (pageMode) {
         // Already paginated — the only way this button does anything is to
         // drop out of Find navigation back into a plain, unfiltered page.
@@ -2204,6 +2539,8 @@ document.getElementById("page-mode").addEventListener("click", () => {
             resetTodoFind();
             todoFilterActive = false;
             updateTodoButtonUI();
+            updateModeUI();
+        } else if (wasHuntsMode) {
             updateModeUI();
         }
         return;
@@ -2234,12 +2571,15 @@ document.getElementById("page-mode").addEventListener("click", () => {
 
 document.getElementById("list-mode").addEventListener("click", () => {
 
-    if (!pageMode && !todoFilterActive) return;
+    if (!pageMode && !todoFilterActive && !huntsModeActive) return;
 
     pageMode = false;
     todoFilterActive = false;
     resetTodoFind();
     updateTodoButtonUI();
+
+    huntsModeActive = false;
+    updateHuntsButtonUI();
 
     // show everything
     document.querySelectorAll(".pokemon-card").forEach(card => {
@@ -2376,11 +2716,21 @@ function updateModeUI() {
     pageBtn.classList.toggle("active-mode", pageMode === true);
     listBtn.classList.toggle("active-mode", pageMode === false && !inTodoMode);
 
-    pagination.classList.toggle("hidden", pageMode === false);
+    pagination.classList.toggle("hidden", pageMode === false || huntsModeActive);
 
     document.body.classList.toggle("page-mode", pageMode);
     document.body.classList.toggle("list-mode", !pageMode && !inTodoMode);
     document.body.classList.toggle("todo-mode", inTodoMode);
+    document.body.classList.toggle("hunts-mode", huntsModeActive);
+
+    // Hunts is an archive of custom entries, not a view onto allPokemon —
+    // swap just the per-pokemon card grid out for its own grid. Filters,
+    // search, and the dex progress list all stay put (filters just grey out
+    // below, same as they do for pageMode/todoMode) — nothing about the rest
+    // of the page's chrome disappears, and clicking a different dex's Edit
+    // button still works normally to leave Hunts and start editing it.
+    boxContainer.classList.toggle("hidden", huntsModeActive);
+    document.getElementById("hunts-container")?.classList.toggle("hidden", !huntsModeActive);
 
     // Disabling is applied per row rather than on the whole container —
     // opacity on a parent bleeds through to children regardless of their own
@@ -2390,12 +2740,13 @@ function updateModeUI() {
     // containing a Gen N button (the "Missing"/"Not Missing" pair shares the
     // same .generation-filter-row layout class but has no [data-gen] button).
     // Todo mode disables every row, generation included — there's no
-    // dex-wide filtering left to do once it's narrowed to a to-do list.
+    // dex-wide filtering left to do once it's narrowed to a to-do list. Hunts
+    // mode disables every row too — none of them apply to the hunts archive.
     const filterContainer = document.getElementById("game-filter-container");
     if (filterContainer) {
         Array.from(filterContainer.children).forEach(child => {
             const isGenerationRow = !!child.querySelector("[data-gen]");
-            child.classList.toggle("filters-disabled", inTodoMode || (pageMode && !isGenerationRow));
+            child.classList.toggle("filters-disabled", inTodoMode || huntsModeActive || (pageMode && !isGenerationRow));
         });
     }
 
@@ -2408,6 +2759,63 @@ function updateModeUI() {
     if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode);
 
     updateCardImages();
+}
+
+// Shared by both files the Export button commits (pokedex-backup.json and
+// shiny-hunts-backup.json) — tries the GitHub auto-commit first, falling
+// back to a manual download only if that didn't verify+commit. Each file
+// marks its own tracker saved independently, so exporting one doesn't
+// silently clear the unsaved-changes glow for the other if only it failed.
+async function exportJsonFile(filename, json, trackerKey, snapshotData) {
+
+    const { getAdminIdToken } = await adminAuthReady;
+    const idToken = await getAdminIdToken();
+
+    if (idToken) {
+        try {
+            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${idToken}`
+                },
+                body: JSON.stringify({ filename, content: json })
+            });
+
+            const result = await res.json();
+
+            if (result.verified && result.committed) {
+                if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
+                updateExportGlow();
+                alert(`✅ ${filename} committed to GitHub automatically.`);
+                return;
+            }
+
+            if (result.verified && !result.committed) {
+                console.error("GitHub commit failed:", result.error);
+                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
+            }
+
+        } catch (err) {
+            console.error("Export sync failed:", err);
+        }
+    }
+
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
+    updateExportGlow();
 }
 
 document.getElementById("export-pokedex").addEventListener("click", async () => {
@@ -2436,62 +2844,28 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
         };
     });
 
-    const json = JSON.stringify(exportData, null, 2);
-    // Matches saveData()'s format (JSON.stringify(savedDexData), not the
-    // reshaped exportData array) — the snapshot markDirty() diffs against
-    // has to be serialized the same way every time it's set.
-    const snapshotData = JSON.stringify(savedDexData);
-    const { getAdminIdToken } = await adminAuthReady;
-    const idToken = await getAdminIdToken();
+    await exportJsonFile(
+        "pokedex-backup.json",
+        JSON.stringify(exportData, null, 2),
+        "dexData",
+        // Matches saveData()'s format (JSON.stringify(savedDexData), not the
+        // reshaped exportData array) — the snapshot markDirty() diffs
+        // against has to be serialized the same way every time it's set.
+        JSON.stringify(savedDexData)
+    );
 
-    if (idToken) {
-        try {
-            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${idToken}`
-                },
-                body: JSON.stringify({
-                    filename: "pokedex-backup.json",
-                    content: json
-                })
-            });
+    const huntsExportData = shinyHunts.map(hunt => ({
+        id: hunt.id,
+        name: hunt.name,
+        encounters: hunt.encounters
+    }));
 
-            const result = await res.json();
-
-            if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
-                updateExportGlow();
-                alert("✅ pokedex-backup.json committed to GitHub automatically.");
-                return;
-            }
-
-            if (result.verified && !result.committed) {
-                console.error("GitHub commit failed:", result.error);
-                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
-            }
-
-        } catch (err) {
-            console.error("Export sync failed:", err);
-        }
-    }
-
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `pokedex-backup.json`;
-
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    if (typeof markSaved === "function") markSaved(snapshotData, "dexData");
-    updateExportGlow();
+    await exportJsonFile(
+        "shiny-hunts-backup.json",
+        JSON.stringify(huntsExportData, null, 2),
+        "shinyHunts",
+        JSON.stringify(shinyHunts)
+    );
 });
 
 document.getElementById("import-button").addEventListener("click", () => {
@@ -2630,6 +3004,39 @@ function getPokedexChanges() {
     return changes;
 }
 
+// Shiny hunts are a separate tracker ("shinyHunts", see saveHunts()) — diffed
+// by id (added/edited/removed) rather than by field, since a hunt is just a
+// name + encounter count, not a bag of toggles.
+function getHuntsChanges() {
+
+    const snapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("shinyHunts") : null;
+    const before = snapshotRaw ? JSON.parse(snapshotRaw) : [];
+    const after = shinyHunts;
+
+    const beforeById = new Map(before.map(h => [h.id, h]));
+    const afterById = new Map(after.map(h => [h.id, h]));
+
+    const changes = [];
+
+    afterById.forEach((hunt, id) => {
+        const prev = beforeById.get(id);
+
+        if (!prev) {
+            changes.push({ name: hunt.name, parts: [`+Hunt added (${hunt.encounters} encounters)`] });
+        } else if (prev.name !== hunt.name || prev.encounters !== hunt.encounters) {
+            changes.push({ name: hunt.name, parts: [`Hunt edited: ${prev.encounters} → ${hunt.encounters} encounters`] });
+        }
+    });
+
+    beforeById.forEach((hunt, id) => {
+        if (!afterById.has(id)) {
+            changes.push({ name: hunt.name, parts: ["-Hunt removed"] });
+        }
+    });
+
+    return changes;
+}
+
 const pokedexChangesBtn = document.getElementById("pokedex-changes-btn");
 const pokedexChangesModal = document.getElementById("pokedex-changes-modal");
 const pokedexChangesModalBody = document.getElementById("pokedex-changes-modal-body");
@@ -2637,7 +3044,8 @@ const pokedexChangesModalClose = document.getElementById("pokedex-changes-modal-
 
 function renderPokedexChanges() {
 
-    const changes = getPokedexChanges();
+    const changes = [...getPokedexChanges(), ...getHuntsChanges()]
+        .sort((a, b) => a.name.localeCompare(b.name));
 
     if (changes.length === 0) {
         pokedexChangesModalBody.innerHTML = `<div class="stats-row"><span>No unsaved changes.</span></div>`;

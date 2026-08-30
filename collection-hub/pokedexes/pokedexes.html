@@ -65,6 +65,8 @@
         <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one page at a time">🔍 Find</button>
         <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite. On the to-do list, turn this on before selecting a pokemon to mark it shiny at the same time.">✨ Shiny Mode</button>
+        <button id="hunts-mode-btn" class="hidden" title="Shiny Dex only: an archive of shiny hunts and their total encounter counts">🎯 Hunts</button>
+        <button id="hunts-add-btn" class="hidden" title="Add a new shiny hunt">➕ Add Hunt</button>
 
         <div id="pagination-controls" class="hidden">
 
@@ -78,6 +80,8 @@
     </div>
 
     <div id="box-container"></div>
+
+    <div id="hunts-container" class="hidden"></div>
 
     <div id="game-filter-container"></div>
 
@@ -190,6 +194,73 @@
             <h2>Unsaved Changes</h2>
             <div id="pokedex-changes-modal-body"></div>
         </div>
+    </div>
+
+    <!-- =========================
+        SHINY HUNTS (Shiny Dex only — an archive of hunts and their total
+        encounter counts, not a per-pokemon dex toggle. See renderHunts() and
+        friends in pokedexes.js. Mirrors completions.html's Milestones tab.)
+    ========================== -->
+    <div id="add-hunt-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2 id="hunt-modal-title-text">Add Hunt</h2>
+
+            <div id="hunt-item-error" class="hidden"></div>
+
+            <label>
+                Pokémon Name
+                <input type="text" id="hunt-name-input">
+            </label>
+
+            <label>
+                Total Encounters
+                <input type="number" id="hunt-encounters-input" min="0">
+            </label>
+
+            <div class="modal-buttons">
+                <button id="save-hunt">Save</button>
+                <button id="cancel-hunt">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="hunt-modal-overlay" class="hidden">
+
+        <div id="hunt-modal-nav-left" class="modal-nav">◀</div>
+
+        <div id="hunt-modal">
+
+            <div id="hunt-modal-close" class="modal-close-btn">✕</div>
+
+            <div class="modal-left">
+
+                <div id="hunt-modal-name"></div>
+
+                <img id="hunt-modal-image" src="">
+
+                <div id="hunt-modal-encounters" class="hunt-encounters"></div>
+
+            </div>
+
+            <div class="modal-right">
+
+                <div class="item-actions">
+
+                    <button id="edit-hunt" class="item-action-btn">Edit Hunt</button>
+                    <button id="delete-hunt" class="item-action-btn danger">Delete Hunt</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="hunt-modal-nav-right" class="modal-nav">▶</div>
+
     </div>
 
     <script src="../mobile-popout.js"></script>

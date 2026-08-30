@@ -38,7 +38,7 @@ function mountWidget() {
     style.textContent = `
         #admin-auth-widget {
             position: fixed;
-            bottom: 16px;
+            bottom: 8px;
             right: 16px;
             z-index: 6000;
             display: flex;
