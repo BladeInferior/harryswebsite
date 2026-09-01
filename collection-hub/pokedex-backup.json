@@ -5932,11 +5932,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -6148,10 +6148,10 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": false,
+      "correctStage": true,
+      "originalRegion": true,
       "luxuryBall": false
     }
   },
