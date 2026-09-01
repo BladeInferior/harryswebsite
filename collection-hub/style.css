@@ -346,6 +346,34 @@ h1 {
     height: 52px;
 }
 
+/* Bottom-right of the modal box itself (not inside .modal-right's grid, and
+   not one of the icon-dot .variant rows above) — only shown while the modal
+   is in shiny-edit-layout (see renderModalState), and dimmed/inert like the
+   variants above when the current pokemon isn't actually shiny yet. */
+#not-in-dex-toggle {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    color: #aaa;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#not-in-dex-toggle input[type="checkbox"] {
+    cursor: pointer;
+}
+
+#not-in-dex-toggle.disabled {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
 .dot {
     width: 50px;
     height: 50px;
@@ -773,6 +801,28 @@ h1 {
 
 .shiny-edit-layout .shiny-plus {
     opacity: 1;
+}
+
+/* "Not in dex" flag (see #not-in-dex-toggle in the shiny variant modal) —
+   persistent, so unlike .shiny-plus above this shows regardless of which dex
+   is being edited (see updateCardHighlights). Search "*" filters to exactly
+   the pokemon carrying this badge (see applyFilters). */
+.not-in-dex-badge {
+    display: none;
+    position: absolute;
+    top: 2px;
+    left: 8px;
+
+    font-size: 22px;
+    line-height: 1;
+    font-weight: 700;
+    color: gold;
+
+    pointer-events: none;
+}
+
+.pokemon-card.shiny-not-in-dex .not-in-dex-badge {
+    display: block;
 }
 
 .hidden {

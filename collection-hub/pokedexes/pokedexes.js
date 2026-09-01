@@ -2,7 +2,7 @@ let savedDexData = {};
 let shinyEditModeFlag = false;
 let pogoShinyModeFlag = false;
 let pogoShinyFilter = null; // null | true (Shiny) | false (Not Shiny) — PoGo Dex only, replaces the S&S game filter row
-let todoFilterActive = false; // Trade Dex / Wonder Trade Dex only — show only pokemon on that dex's to-do list
+let todoFilterActive = false; // Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only — show only pokemon on that dex's to-do list
 let todoFindActive = false; // stepping through todoQueue one page at a time
 let todoQueue = []; // pokemon (from allPokemon) currently on the to-do list, in dex order
 let todoQueuePos = 0;
@@ -43,13 +43,14 @@ const dexTypes = [
     { key: "cherishDex", label: "Cherish Dex" }
 ];
 
-// Trade Dex, Wonder Trade Dex, and PoGo Dex each get their own to-do list —
-// no other dex has a matching persisted field, so this returns null for the
-// rest.
+// Trade Dex, Wonder Trade Dex, PoGo Dex, and Shiny Dex each get their own
+// to-do list — no other dex has a matching persisted field, so this returns
+// null for the rest.
 function todoFieldFor(dexKey) {
     if (dexKey === "tradeDex") return "tradeDexTodo";
     if (dexKey === "wonderTradeDex") return "wonderTradeDexTodo";
     if (dexKey === "pogoDex") return "pogoDexTodo";
+    if (dexKey === "shinyDex") return "shinyDexTodo";
     return null;
 }
 
@@ -164,11 +165,13 @@ Promise.all([
             pogoDexTodo: !!entry.pogoDexTodo,
 
             shinyDex: !!entry.shinyDex,
+            shinyDexTodo: !!entry.shinyDexTodo,
 
             shinyDexData: {
                 correctStage: !!entry.shinyDexData?.correctStage,
                 originalRegion: !!entry.shinyDexData?.originalRegion,
-                luxuryBall: !!entry.shinyDexData?.luxuryBall
+                luxuryBall: !!entry.shinyDexData?.luxuryBall,
+                notInDex: !!entry.shinyDexData?.notInDex
             }
         };
     });
@@ -192,16 +195,24 @@ Promise.all([
                     return;
                 }
 
-                // pogoShiny/tradeDexTodo/wonderTradeDexTodo/pogoDexTodo were
-                // added after this pokemon's local record was first saved —
-                // default them in place so the unsaved-changes snapshot
-                // already includes them, instead of the first toggle
-                // silently adding the key and still reading as "unsaved"
-                // even after toggling it back off.
+                // pogoShiny/tradeDexTodo/wonderTradeDexTodo/pogoDexTodo/
+                // shinyDexTodo were added after this pokemon's local record
+                // was first saved — default them in place so the
+                // unsaved-changes snapshot already includes them, instead of
+                // the first toggle silently adding the key and still reading
+                // as "unsaved" even after toggling it back off.
                 if (!("pogoShiny" in savedDexData[key])) savedDexData[key].pogoShiny = false;
                 if (!("tradeDexTodo" in savedDexData[key])) savedDexData[key].tradeDexTodo = false;
                 if (!("wonderTradeDexTodo" in savedDexData[key])) savedDexData[key].wonderTradeDexTodo = false;
                 if (!("pogoDexTodo" in savedDexData[key])) savedDexData[key].pogoDexTodo = false;
+                if (!("shinyDexTodo" in savedDexData[key])) savedDexData[key].shinyDexTodo = false;
+
+                // Same reasoning, one level down — shinyDexData.notInDex was
+                // added after some local records' shinyDexData sub-object
+                // already existed.
+                if (savedDexData[key].shinyDexData && !("notInDex" in savedDexData[key].shinyDexData)) {
+                    savedDexData[key].shinyDexData.notInDex = false;
+                }
             });
         } catch {
             savedDexData = sourceDexData;
@@ -412,7 +423,8 @@ function toggleShinyDex(pokemonKey) {
         data.shinyDexData = {
             correctStage: false,
             originalRegion: false,
-            luxuryBall: false
+            luxuryBall: false,
+            notInDex: false
         };
     } else {
         // ensure structure exists when turning ON
@@ -420,7 +432,8 @@ function toggleShinyDex(pokemonKey) {
             data.shinyDexData = {
                 correctStage: false,
                 originalRegion: false,
-                luxuryBall: false
+                luxuryBall: false,
+                notInDex: false
             };
         }
     }
@@ -463,6 +476,7 @@ function createPokemonCards(pokemonList) {
         card.classList.add("pokemon-card");
 
         card.innerHTML = `
+            <div class="not-in-dex-badge">*</div>
             <img loading="lazy" src="${getPokemonSpritePath(name, useShinySpriteFor(cardKey))}">
             <div class="pokemon-name">${name}</div>
             <div class="shiny-plus">➕</div>
@@ -684,7 +698,7 @@ document.getElementById("pogo-shiny-mode-btn").addEventListener("click", () => {
 
 
 // ---------------------------
-// TO DO LIST (lives in #page-controls, Trade Dex / Wonder Trade Dex only)
+// TO DO LIST (lives in #page-controls, Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only)
 // ---------------------------
 function updateTodoButtonUI() {
 
@@ -870,6 +884,14 @@ document.getElementById("todo-filter-btn").addEventListener("click", () => {
         // updateModeUI) — and nothing else filters on top of it.
         pageMode = false;
         clearNonTodoFilters();
+
+        // Shiny Dex only: Hunts is its own separate archive view (a
+        // different grid entirely, not filtered by anything below) — can't
+        // show alongside a to-do list of the normal per-pokemon grid.
+        if (huntsModeActive) {
+            huntsModeActive = false;
+            updateHuntsButtonUI();
+        }
     } else if (todoFindActive) {
         resetTodoFind();
         pageMode = false;
@@ -1046,6 +1068,17 @@ document.getElementById("hunts-mode-btn").addEventListener("click", () => {
     huntsModeActive = !huntsModeActive;
 
     if (huntsModeActive) {
+        // Same reasoning as the todo-filter-btn handler's mirror of this —
+        // the two views can't coexist, so opening one closes the other.
+        if (todoFilterActive) {
+            todoFilterActive = false;
+            if (todoFindActive) {
+                resetTodoFind();
+                pageMode = false;
+            }
+            updateTodoButtonUI();
+        }
+
         renderHunts();
         // Stale count from whatever filters were active before switching
         // over — meaningless once #box-container itself is hidden.
@@ -1356,6 +1389,14 @@ function applyFilters() {
 
             if (!query) return true;
 
+            // "*" is a shortcut, not a literal search term — shows every
+            // pokemon flagged "Not in dex" from the shiny variant modal,
+            // instead of trying to name/type-match the character itself
+            // (which would otherwise just match nothing).
+            if (query === "*") {
+                return !!(savedDexData[key]?.shinyDexData?.notInDex);
+            }
+
             const nameMatch = imageName(name).includes(query);
             const typeMatch = types.some(t => t.includes(query));
             const evolutionMatch = evolutionExpandedNames?.has(name) ?? false;
@@ -1448,8 +1489,9 @@ function applyFilters() {
             return pogoShinyFilter === true ? isShiny : !isShiny;
         })();
 
-        // Trade Dex / Wonder Trade Dex only, and only while their To Do
-        // filter is toggled on — narrows the grid to just that dex's list.
+        // Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only, and only
+        // while their To Do filter is toggled on — narrows the grid to just
+        // that dex's list.
         const matchesTodo = (() => {
 
             const field = todoFieldFor(activeDexEdit);
@@ -1640,6 +1682,40 @@ modalOverlay.addEventListener("click", (e) => {
     saveData();
 
     renderModalState(currentPokemon);
+});
+
+// A real checkbox (not one of the .variant icon-dots above, and not gated
+// behind that delegated click handler) — lives in shinyDexData alongside the
+// other variants so it rides along with the same export/import/changes-diff
+// plumbing, but it's just a note ("I don't actually have this banked
+// anymore"), not a completion trait, so getCompletionColor() deliberately
+// ignores it. Drives the small "*" badge on the card (see
+// updateCardHighlights) and the "*" search shortcut (see applyFilters).
+document.getElementById("not-in-dex-checkbox").addEventListener("change", (e) => {
+
+    if (!currentPokemon) return;
+
+    const pokemonData = savedDexData[currentPokemon] || {};
+
+    if (!pokemonData.shinyDex) {
+        e.target.checked = false;
+        return;
+    }
+
+    if (!pokemonData.shinyDexData) {
+        pokemonData.shinyDexData = {
+            correctStage: false,
+            originalRegion: false,
+            luxuryBall: false,
+            notInDex: false
+        };
+    }
+
+    pokemonData.shinyDexData.notInDex = e.target.checked;
+
+    savedDexData[currentPokemon] = pokemonData;
+
+    saveData();
 });
 
 
@@ -1942,6 +2018,13 @@ function updateCardHighlights() {
         card.classList.remove("active-dex", "complete-blue", "complete-green");
 
         // -----------------------------
+        // "NOT IN DEX" BADGE — a note on a shiny already owned (see the
+        // checkbox in the shiny variant modal), not tied to whichever dex is
+        // currently being edited, so this runs before the early return below.
+        // -----------------------------
+        card.classList.toggle("shiny-not-in-dex", !!data.shinyDexData?.notInDex);
+
+        // -----------------------------
         // FILTER MODE (GOLD)
         // -----------------------------
         if (activeDexEdit) {
@@ -2009,6 +2092,15 @@ function renderModalState(pokemonKey) {
         v.classList.toggle("disabled", !enabled);
         v.classList.toggle("active", !!value);
     });
+
+    const notInDexToggle = document.getElementById("not-in-dex-toggle");
+    const notInDexCheckbox = document.getElementById("not-in-dex-checkbox");
+
+    if (notInDexToggle && notInDexCheckbox) {
+        notInDexToggle.classList.toggle("hidden", !isShinyEdit);
+        notInDexToggle.classList.toggle("disabled", !data.shinyDex);
+        notInDexCheckbox.checked = !!data.shinyDexData?.notInDex;
+    }
 }
 
 function createFilterButtons() {
@@ -2911,10 +3003,12 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
             pogoDexTodo: !!data.pogoDexTodo,
 
             shinyDex: !!data.shinyDex,
+            shinyDexTodo: !!data.shinyDexTodo,
             shinyDexData: {
                 correctStage: !!data.shinyDexData?.correctStage,
                 originalRegion: !!data.shinyDexData?.originalRegion,
-                luxuryBall: !!data.shinyDexData?.luxuryBall
+                luxuryBall: !!data.shinyDexData?.luxuryBall,
+                notInDex: !!data.shinyDexData?.notInDex
             }
         };
     });
@@ -2985,11 +3079,13 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
                     pogoDexTodo: !!entry.pogoDexTodo,
 
                     shinyDex: !!entry.shinyDex,
+                    shinyDexTodo: !!entry.shinyDexTodo,
 
                     shinyDexData: {
                         correctStage: !!entry.shinyDexData?.correctStage,
                         originalRegion: !!entry.shinyDexData?.originalRegion,
-                        luxuryBall: !!entry.shinyDexData?.luxuryBall
+                        luxuryBall: !!entry.shinyDexData?.luxuryBall,
+                        notInDex: !!entry.shinyDexData?.notInDex
                     }
                 };
             });
@@ -3023,13 +3119,15 @@ const POKEDEX_CHANGE_FIELD_LABELS = {
     shinyDex: "Shiny Dex",
     tradeDexTodo: "Trade Dex To Do",
     wonderTradeDexTodo: "Wonder Trade Dex To Do",
-    pogoDexTodo: "PoGo Dex To Do"
+    pogoDexTodo: "PoGo Dex To Do",
+    shinyDexTodo: "Shiny Dex To Do"
 };
 
 const POKEDEX_CHANGE_VARIANT_LABELS = {
     correctStage: "Correct Stage",
     originalRegion: "Original Region",
-    luxuryBall: "Luxury Ball"
+    luxuryBall: "Luxury Ball",
+    notInDex: "Not In Dex"
 };
 
 // Diffs one pokemon's before/after records into a list of "+Field"/"-Field"
