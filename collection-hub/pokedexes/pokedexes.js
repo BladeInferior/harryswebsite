@@ -10,6 +10,7 @@ let todoPendingDone = new Set(); // keys clicked while Find is active — not co
 let todoPendingShiny = new Set(); // subset of todoPendingDone marked shiny (PoGo Dex only, see pogoShinyModeFlag) — not committed until Find ends
 let gameFilterState = {};
 let allPokemon = [];
+let evolutionFamilies = {}; // name -> array of other pokemon names in the same evolution line, from evolutionFamilies.json
 let cardMap = new Map();
 let currentPokemon = null;
 let activeDexEdit = null;
@@ -90,39 +91,58 @@ function updateExportGlow() {
     if (changesBtn) changesBtn.classList.toggle("hidden", !dirty);
 }
 
-// #import-export-controls sits fixed directly under #search-wrapper and is
-// meant to span exactly as wide as it — but #search-wrapper has no fixed
-// width of its own (it shrinks to fit the search input/clear icon), so
-// there's no CSS value to just copy. Measuring and copying it here keeps
-// the two in sync even if the search row's content ever changes. It starts
-// hidden (.width-sync-pending, in style.css) precisely so this can run
-// whenever it runs — even late, at the bottom of the page load — without
-// ever being visible in its pre-sync (full viewport width) state.
-function syncImportExportWidth() {
+// #search-evolutions-row and #import-export-controls sit fixed directly
+// under #search-wrapper (and each other), stacked in that order, and are
+// meant to span exactly as wide as #search-wrapper — but #search-wrapper has
+// no fixed width of its own (it shrinks to fit the search input/clear icon),
+// so there's no CSS value to just copy, and #search-evolutions-row's own
+// rendered height is what determines how far down #import-export-controls
+// needs to sit. Measuring and copying it here keeps all three in sync even
+// if the search row's content ever changes. The two lower rows start hidden
+// (.width-sync-pending, in style.css) precisely so this can run whenever it
+// runs — even late, at the bottom of the page load — without ever being
+// visible in their pre-sync (full viewport width / wrong top) state.
+function syncSearchControlsLayout() {
     const searchWrapper = document.getElementById("search-wrapper");
+    const evolutionsRow = document.getElementById("search-evolutions-row");
     const importExport = document.getElementById("import-export-controls");
     if (!searchWrapper || !importExport) return;
 
-    importExport.style.width = `${searchWrapper.offsetWidth}px`;
+    const width = searchWrapper.offsetWidth;
+    const gap = 10;
+    let nextTop = searchWrapper.getBoundingClientRect().bottom + gap;
+
+    if (evolutionsRow) {
+        evolutionsRow.style.width = `${width}px`;
+        evolutionsRow.style.top = `${nextTop}px`;
+        evolutionsRow.classList.remove("width-sync-pending");
+
+        nextTop = evolutionsRow.getBoundingClientRect().bottom + gap;
+    }
+
+    importExport.style.width = `${width}px`;
+    importExport.style.top = `${nextTop}px`;
     importExport.classList.remove("width-sync-pending");
 }
 
-syncImportExportWidth();
+syncSearchControlsLayout();
 
-let syncImportExportWidthResizeTimer = null;
+let syncSearchControlsLayoutResizeTimer = null;
 window.addEventListener("resize", () => {
-    clearTimeout(syncImportExportWidthResizeTimer);
-    syncImportExportWidthResizeTimer = setTimeout(syncImportExportWidth, 150);
+    clearTimeout(syncSearchControlsLayoutResizeTimer);
+    syncSearchControlsLayoutResizeTimer = setTimeout(syncSearchControlsLayout, 150);
 });
 
 Promise.all([
     fetch("../fullPokemonList.json").then(res => res.json()),
     fetch("../pokedex-backup.json").then(res => res.json()),
-    fetch("../shiny-hunts-backup.json").then(res => res.json())
+    fetch("../shiny-hunts-backup.json").then(res => res.json()),
+    fetch("../evolutionFamilies.json").then(res => res.json())
 ])
-.then(([pokemonList, dexList, huntsList]) => {
+.then(([pokemonList, dexList, huntsList, evolutionFamiliesData]) => {
 
     allPokemon = pokemonList;
+    evolutionFamilies = evolutionFamiliesData;
 
     // convert exported array into your existing format
     const sourceDexData = {};
@@ -1302,6 +1322,23 @@ function applyFilters() {
 
     const query = searchInput.value.toLowerCase();
 
+    // With "Include evolutions" ticked, a query that name-matches a pokemon
+    // also pulls in every other stage in its evolution line (e.g. "pikac"
+    // matches Pikachu directly, then this set adds Raichu and Pichu too) —
+    // computed once per applyFilters() call rather than per-card, since it
+    // needs the full set of direct name matches before it can expand them.
+    const evolutionExpandedNames = (() => {
+        if (!query || !searchEvolutionsToggle.checked) return null;
+
+        const expanded = new Set();
+        allPokemon.forEach(p => {
+            if (imageName(p.name).includes(query)) {
+                (evolutionFamilies[p.name] || []).forEach(familyName => expanded.add(familyName));
+            }
+        });
+        return expanded;
+    })();
+
     cardMap.forEach((card, name) => {
 
         const key = normalizeName(name);
@@ -1321,8 +1358,9 @@ function applyFilters() {
 
             const nameMatch = imageName(name).includes(query);
             const typeMatch = types.some(t => t.includes(query));
+            const evolutionMatch = evolutionExpandedNames?.has(name) ?? false;
 
-            return nameMatch || typeMatch;
+            return nameMatch || typeMatch || evolutionMatch;
         })();
 
 
@@ -1612,6 +1650,12 @@ const searchInput = document.getElementById("search");
 
 searchInput.addEventListener("input", (e) => {
     applyFilters(e.target.value);
+});
+
+const searchEvolutionsToggle = document.getElementById("search-evolutions-toggle");
+
+searchEvolutionsToggle.addEventListener("change", () => {
+    applyFilters();
 });
 
 const clearBtn = document.getElementById("clear-search");

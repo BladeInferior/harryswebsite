@@ -469,6 +469,40 @@ h1 {
     opacity: 1;
 }
 
+/* Its own fixed card directly under #search-wrapper, same shape as
+   #import-export-controls just below it (see that rule's comment) — top and
+   width are both set from JS (syncSearchControlsLayout, in pokedexes.js)
+   since neither can be pinned down from static CSS: #search-wrapper has no
+   fixed width to copy, and this row's own height determines how far down
+   #import-export-controls needs to sit. */
+#search-evolutions-row {
+    position: fixed;
+    right: 20px;
+    z-index: 2000;
+
+    background: rgba(28, 31, 38, 0.9);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius);
+    padding: 10px;
+
+    box-sizing: border-box;
+}
+
+#search-evolutions-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #aaa;
+    font-size: 12px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#search-evolutions-label input[type="checkbox"] {
+    cursor: pointer;
+}
+
 #progress-container {
     position: fixed;
     top: 300px;
