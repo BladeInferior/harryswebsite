@@ -2210,7 +2210,7 @@
     "shinyDexData": {
       "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -2548,11 +2548,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": false,
-      "luxuryBall": false
+      "correctStage": true,
+      "originalRegion": true,
+      "luxuryBall": true
     }
   },
   {
@@ -8362,11 +8362,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -8380,11 +8380,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false
+      "luxuryBall": true
     }
   },
   {
@@ -11386,11 +11386,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
       "correctStage": false,
-      "originalRegion": false,
-      "luxuryBall": false
+      "originalRegion": true,
+      "luxuryBall": true
     }
   },
   {
@@ -11584,11 +11584,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": false,
-      "luxuryBall": false
+      "correctStage": true,
+      "originalRegion": true,
+      "luxuryBall": true
     }
   },
   {
@@ -11602,11 +11602,11 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": false,
-      "luxuryBall": false
+      "correctStage": true,
+      "originalRegion": true,
+      "luxuryBall": true
     }
   },
   {
@@ -11659,7 +11659,7 @@
     "shinyDex": true,
     "shinyDexData": {
       "correctStage": true,
-      "originalRegion": false,
+      "originalRegion": true,
       "luxuryBall": true
     }
   },
@@ -15780,9 +15780,9 @@
     "pogoDexTodo": false,
     "shinyDex": true,
     "shinyDexData": {
-      "correctStage": false,
-      "originalRegion": true,
-      "luxuryBall": false
+      "correctStage": true,
+      "originalRegion": false,
+      "luxuryBall": true
     }
   },
   {
