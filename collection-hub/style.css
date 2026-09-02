@@ -598,11 +598,59 @@ h1 {
     z-index: 2000;
 }
 
+.dex-key-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.dex-key-header .dex-key-title {
+    margin-bottom: 0;
+}
+
 .dex-key-title {
     font-weight: bold;
     font-size: 13px;
     color: var(--accent);
     margin-bottom: 2px;
+}
+
+/* Exclusively (default) vs All — see the click handler on #dex-key swatches
+   in pokedexes.js for what the two modes actually change about the filter.
+   Fixed min-width (sized to fit "Exclusively", the longer of the two
+   labels) plus centered text keeps the button the same size in both states
+   instead of shrinking around "All". */
+.dex-key-mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 84px;
+    padding: 4px 8px;
+    box-sizing: border-box;
+
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-dim);
+
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: 0.15s ease;
+}
+
+.dex-key-mode-toggle:hover {
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.12);
+    color: var(--accent);
 }
 
 .dex-key-item {

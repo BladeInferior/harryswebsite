@@ -26,6 +26,8 @@ let shinyHunts = []; // Shiny Dex only — archive of { id, name, encounters } h
 let huntsModeActive = false;
 let pokemonCountLabel = null;
 let selectedCompletionFilter = null; // 'blue' | 'gold' | 'green' | null — clicking a #dex-key swatch
+let completionFilterMode = "exclusive"; // "exclusive" (exact tier only) | "all" (that tier and every tier above it) — the #dex-key-mode-toggle checkbox
+const COMPLETION_TIER_RANK = { blue: 0, gold: 1, green: 2 };
 let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
 
 // Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
@@ -867,12 +869,15 @@ function clearNonTodoFilters() {
     searchInput.value = "";
     missingDexFilter = null;
     selectedCompletionFilter = null;
+    completionFilterMode = "exclusive";
     selectedTypes = [];
     typeFilterMode = "any";
 
     document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
         el.classList.remove("active");
     });
+
+    if (dexKeyModeToggle) dexKeyModeToggle.textContent = "Exclusively";
 
     updateGameButtonHighlight();
     updateGenerationButtonHighlight();
@@ -1503,12 +1508,23 @@ function applyFilters() {
 
         })();
 
-        // #dex-key swatch filter: only pokemon at that exact completion tier
+        // #dex-key swatch filter — Exclusively (default): only pokemon at
+        // that exact completion tier. All: that tier and every tier above it
+        // (e.g. clicking "All 5 dexes" also shows the gold/green tiers,
+        // since they're strictly more complete than blue). See
+        // COMPLETION_TIER_RANK and #dex-key-mode-toggle.
         const matchesCompletion = (() => {
 
             if (selectedCompletionFilter === null) return true;
 
-            return getCompletionColor(name) === selectedCompletionFilter;
+            const color = getCompletionColor(name);
+
+            if (completionFilterMode === "all") {
+                if (color === null) return false;
+                return COMPLETION_TIER_RANK[color] >= COMPLETION_TIER_RANK[selectedCompletionFilter];
+            }
+
+            return color === selectedCompletionFilter;
         })();
 
         // PoGo Dex only — replaces the S&S game filter there (see
@@ -2674,8 +2690,11 @@ function createFilterButtons() {
         searchInput.value = "";
         missingDexFilter = null;
         selectedCompletionFilter = null;
+        completionFilterMode = "exclusive";
         selectedTypes = [];
         typeFilterMode = "any";
+
+        if (dexKeyModeToggle) dexKeyModeToggle.textContent = "Exclusively";
 
         activeDexEdit = null;
         shinyEditModeFlag = false;
@@ -2839,6 +2858,21 @@ function updateTypeFilterHighlight() {
     toggle.textContent = selectedTypes.length > 0
         ? `Types (${selectedTypes.length}) ▾`
         : "Types ▾";
+}
+
+// Exclusively (default) vs All — see matchesCompletion in applyFilters() for
+// what this actually changes about the #dex-key swatch filter below.
+const dexKeyModeToggle = document.getElementById("dex-key-mode-toggle");
+
+if (dexKeyModeToggle) {
+    dexKeyModeToggle.addEventListener("click", () => {
+        completionFilterMode = completionFilterMode === "all" ? "exclusive" : "all";
+        dexKeyModeToggle.textContent = completionFilterMode === "all" ? "All" : "Exclusively";
+
+        applyFilters();
+        scrollResultsToTop();
+        if (pageMode) applyPagination();
+    });
 }
 
 // #dex-key swatches double as filter toggles — click blue/green to show only
