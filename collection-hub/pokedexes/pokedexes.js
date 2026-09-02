@@ -1392,9 +1392,10 @@ function applyFilters() {
             // "*" is a shortcut, not a literal search term — shows every
             // pokemon flagged "Not in dex" from the shiny variant modal,
             // instead of trying to name/type-match the character itself
-            // (which would otherwise just match nothing).
+            // (which would otherwise just match nothing). Only meaningful
+            // while viewing the Shiny Dex itself.
             if (query === "*") {
-                return !!(savedDexData[key]?.shinyDexData?.notInDex);
+                return activeDexEdit === "shinyDex" && !!(savedDexData[key]?.shinyDexData?.notInDex);
             }
 
             const nameMatch = imageName(name).includes(query);
@@ -2019,10 +2020,10 @@ function updateCardHighlights() {
 
         // -----------------------------
         // "NOT IN DEX" BADGE — a note on a shiny already owned (see the
-        // checkbox in the shiny variant modal), not tied to whichever dex is
-        // currently being edited, so this runs before the early return below.
+        // checkbox in the shiny variant modal). Only shown while viewing the
+        // Shiny Dex itself, so this runs before the early return below.
         // -----------------------------
-        card.classList.toggle("shiny-not-in-dex", !!data.shinyDexData?.notInDex);
+        card.classList.toggle("shiny-not-in-dex", activeDexEdit === "shinyDex" && !!data.shinyDexData?.notInDex);
 
         // -----------------------------
         // FILTER MODE (GOLD)
