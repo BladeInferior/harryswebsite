@@ -1215,6 +1215,20 @@ h1 {
     z-index: 2000;
 }
 
+/* Slightly smaller than Import/Export, and never wraps to a second line —
+   #import-export-controls is position: fixed, directly over the grid below
+   it, so an unbroken second row here would grow the panel taller and hide
+   whatever pokemon card happens to land underneath once a filter narrows
+   the results down. Gets a bit more of the row's flex share than its
+   one-word siblings since its own label (icon + "Changes") is the longest
+   of the three. */
+#pokedex-changes-btn {
+    flex: 1.3;
+    font-size: 12px;
+    padding: 8px 6px;
+    white-space: nowrap;
+}
+
 /* Starts hidden (see .width-sync-pending below) rather than relying on
    syncImportExportWidth() running before first paint — without this, the
    element's only width comes from .filter-row's width:100%, which with no

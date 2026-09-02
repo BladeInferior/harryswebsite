@@ -2880,8 +2880,13 @@ function updateModeUI() {
     // through the full grid one page at a time, not a filtered list.
     const inTodoMode = todoFilterActive && !todoFindActive;
 
-    pageBtn.classList.toggle("active-mode", pageMode === true);
-    listBtn.classList.toggle("active-mode", pageMode === false && !inTodoMode);
+    // Hunts is its own mode too, same as To Do — neither Page nor List Mode
+    // should read as active while it's showing (see the mutual-exclusivity
+    // resets in the hunts-mode-btn/todo-filter-btn handlers: entering Hunts
+    // doesn't touch pageMode, so without this a Page-Mode-then-Hunts switch
+    // would leave Page Mode looking highlighted the whole time Hunts is up).
+    pageBtn.classList.toggle("active-mode", pageMode === true && !huntsModeActive);
+    listBtn.classList.toggle("active-mode", pageMode === false && !inTodoMode && !huntsModeActive);
 
     pagination.classList.toggle("hidden", pageMode === false || huntsModeActive);
 
