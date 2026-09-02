@@ -14,6 +14,8 @@
     --accent-rgb: 134, 239, 172;
     --accent-2: #60a5fa; /* soft blue fallback */
     --accent-2-rgb: 96, 165, 250;
+    --accent-3: #fbbf24; /* gold — mid shiny-completion tier, between blue and green */
+    --accent-3-rgb: 251, 191, 36;
 
     /* semantic colours */
     --success: #2ecc71;
@@ -330,7 +332,7 @@ h1 {
 .shiny-edit-layout .shiny-variants {
     flex-direction: row;
     justify-content: center;
-    gap: 85px;
+    gap: 45px;
 }
 
 .shiny-edit-layout .variant {
@@ -533,7 +535,7 @@ h1 {
 
 #progress-container {
     position: fixed;
-    top: 300px;
+    top: 320px;
     left: 20px;
 
     width: 260px;
@@ -544,16 +546,16 @@ h1 {
     z-index: 2000;
 }
 
-/* Sits in the gap between #dex-key (top: 150px, ~85px tall) and
-   #progress-container (top: 300px) — a sibling of #dex-key rather than a
-   row inside it, so it reads as its own control, just anchored under the
-   Key box. Not part of #page-controls anymore, so it needs its own button
-   look instead of inheriting that row's flex-item styling. Scoped to
+/* Sits in the gap between #dex-key (top: 150px, ~105px tall with 3 key
+   rows) and #progress-container (top: 320px) — a sibling of #dex-key rather
+   than a row inside it, so it reads as its own control, just anchored under
+   the Key box. Not part of #page-controls anymore, so it needs its own
+   button look instead of inheriting that row's flex-item styling. Scoped to
    .pokemon-page (pokedexes.html) only — the other collection-hub pages
    each have their own #stats-btn that stays a normal #page-controls button. */
 .pokemon-page #stats-btn {
     position: fixed;
-    top: 240px;
+    top: 260px;
     left: 20px;
 
     width: 260px;
@@ -624,6 +626,11 @@ h1 {
     box-shadow: inset 0 0 0 1px var(--accent-2);
 }
 
+.dex-key-item[data-key-color="gold"].active {
+    background: rgba(var(--accent-3-rgb), 0.18);
+    box-shadow: inset 0 0 0 1px var(--accent-3);
+}
+
 .dex-key-item[data-key-color="green"].active {
     background: rgba(var(--accent-rgb), 0.18);
     box-shadow: inset 0 0 0 1px var(--accent);
@@ -640,6 +647,11 @@ h1 {
 .dex-key-swatch--blue {
     background: linear-gradient(180deg, rgba(var(--accent-2-rgb), 0.55), rgba(var(--accent-2-rgb), 0.35));
     border: 1px solid var(--accent-2);
+}
+
+.dex-key-swatch--gold {
+    background: linear-gradient(180deg, rgba(var(--accent-3-rgb), 0.55), rgba(var(--accent-3-rgb), 0.35));
+    border: 1px solid var(--accent-3);
 }
 
 .dex-key-swatch--green {
@@ -720,6 +732,13 @@ h1 {
         linear-gradient(180deg, rgba(var(--accent-2-rgb), 0.55), rgba(var(--accent-2-rgb), 0.35)),
         linear-gradient(180deg, var(--surface), var(--surface-2));
     border: 1px solid var(--accent-2);
+}
+
+.complete-gold {
+    background:
+        linear-gradient(180deg, rgba(var(--accent-3-rgb), 0.55), rgba(var(--accent-3-rgb), 0.35)),
+        linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--accent-3);
 }
 
 .complete-green {
@@ -1084,9 +1103,22 @@ h1 {
    here the toggle is alone in its wrapper (plain block, not a flex
    container), so it needs its own full-width rule to match the rest of the
    filter rows instead of shrinking to fit its text. */
-#type-filter-toggle {
+#type-filter-toggle,
+#constraint-filter-toggle {
     display: block;
     width: 100%;
+}
+
+/* Neither toggle carries .generation-filter-btn/.tag-filter-btn/etc, so
+   without this the game-filter-active class the JS applies once anything
+   inside the dropdown is selected (see updateTypeFilterHighlight /
+   updateConstraintButtonHighlight) has no matching style — same mint-accent
+   single-toggle look as Gen 1-10 / Legendary / Recent Set use elsewhere. */
+#type-filter-toggle.game-filter-active,
+#constraint-filter-toggle.game-filter-active {
+    background: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
 }
 
 /* position: fixed rather than absolute — top/left/width are set inline by
@@ -2958,16 +2990,18 @@ footer {
         order: 99;
     }
 
-    /* The 3 shiny constraints (Correct Stage / Home Region / Luxury Ball)
-       stack vertically by default (desktop fits that fine in a narrow grid
-       column) and spread 85px apart when actively editing — neither fits a
-       phone row. Put all three side by side with a stacked icon/label each,
-       in one compact row, the same way in both states. */
+    /* The 4 shiny constraints (Correct Stage / Original Region / Luxury
+       Ball / Alpha) stack vertically by default (desktop fits that fine in
+       a narrow grid column) and spread apart when actively editing —
+       neither fits a phone row. Put all four side by side with a stacked
+       icon/label each, in one compact (wrapping if needed) row, the same
+       way in both states. */
     .shiny-variants {
         flex-direction: row !important;
+        flex-wrap: wrap !important;
         justify-content: center !important;
         width: 100% !important;
-        gap: 18px !important;
+        gap: 14px !important;
     }
 
     .variant {

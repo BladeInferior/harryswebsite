@@ -1,4 +1,4 @@
-// Wraps admin-auth-core.js with a self-mounting bottom-right sign-in/status
+// Wraps admin-auth-core.js with a self-mounting bottom-left sign-in/status
 // widget — load this via a <script type="module"> tag on any page that
 // wants the generic widget (everywhere except adminhub, which mounts its
 // own richer page-gate + pill on top of admin-auth-core.js directly, so it
@@ -39,7 +39,7 @@ function mountWidget() {
         #admin-auth-widget {
             position: fixed;
             bottom: 8px;
-            right: 16px;
+            left: 16px;
             z-index: 6000;
             display: flex;
             align-items: center;
@@ -133,7 +133,7 @@ function mountWidget() {
         #admin-auth-widget .gaa-error {
             position: absolute;
             bottom: 100%;
-            right: 0;
+            left: 0;
             margin-bottom: 8px;
             background: rgba(20, 20, 20, 0.95);
             border: 1px solid #f87171;
@@ -148,7 +148,7 @@ function mountWidget() {
         @media (max-width: 480px) {
             #admin-auth-widget {
                 bottom: 10px;
-                right: 10px;
+                left: 10px;
             }
 
             /* The full "🔒 Admin Sign-In" label eats a big chunk of a phone

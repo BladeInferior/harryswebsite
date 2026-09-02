@@ -25,7 +25,8 @@ let typeFilterMode = "any"; // "any" (OR match) | "only" (exact match, max 2 typ
 let shinyHunts = []; // Shiny Dex only — archive of { id, name, encounters } hunt records
 let huntsModeActive = false;
 let pokemonCountLabel = null;
-let selectedCompletionFilter = null; // 'blue' | 'green' | null — clicking a #dex-key swatch
+let selectedCompletionFilter = null; // 'blue' | 'gold' | 'green' | null — clicking a #dex-key swatch
+let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
 
 // Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
 // since this file is a plain <script>, not a module. Replaces the old
@@ -171,6 +172,7 @@ Promise.all([
                 correctStage: !!entry.shinyDexData?.correctStage,
                 originalRegion: !!entry.shinyDexData?.originalRegion,
                 luxuryBall: !!entry.shinyDexData?.luxuryBall,
+                alpha: !!entry.shinyDexData?.alpha,
                 notInDex: !!entry.shinyDexData?.notInDex
             }
         };
@@ -207,11 +209,14 @@ Promise.all([
                 if (!("pogoDexTodo" in savedDexData[key])) savedDexData[key].pogoDexTodo = false;
                 if (!("shinyDexTodo" in savedDexData[key])) savedDexData[key].shinyDexTodo = false;
 
-                // Same reasoning, one level down — shinyDexData.notInDex was
-                // added after some local records' shinyDexData sub-object
-                // already existed.
+                // Same reasoning, one level down — shinyDexData.notInDex and
+                // shinyDexData.alpha were added after some local records'
+                // shinyDexData sub-object already existed.
                 if (savedDexData[key].shinyDexData && !("notInDex" in savedDexData[key].shinyDexData)) {
                     savedDexData[key].shinyDexData.notInDex = false;
+                }
+                if (savedDexData[key].shinyDexData && !("alpha" in savedDexData[key].shinyDexData)) {
+                    savedDexData[key].shinyDexData.alpha = false;
                 }
             });
         } catch {
@@ -424,6 +429,7 @@ function toggleShinyDex(pokemonKey) {
             correctStage: false,
             originalRegion: false,
             luxuryBall: false,
+            alpha: false,
             notInDex: false
         };
     } else {
@@ -433,6 +439,7 @@ function toggleShinyDex(pokemonKey) {
                 correctStage: false,
                 originalRegion: false,
                 luxuryBall: false,
+                alpha: false,
                 notInDex: false
             };
         }
@@ -856,6 +863,7 @@ function clearNonTodoFilters() {
     gameFilterState = {};
     selectedGeneration = null;
     tagFilters = {};
+    constraintFilters = {};
     searchInput.value = "";
     missingDexFilter = null;
     selectedCompletionFilter = null;
@@ -869,6 +877,7 @@ function clearNonTodoFilters() {
     updateGameButtonHighlight();
     updateGenerationButtonHighlight();
     updateTagButtonHighlight();
+    updateConstraintButtonHighlight();
     updateMissingButtonHighlight();
     updateTypeFilterHighlight();
 }
@@ -1470,6 +1479,30 @@ function applyFilters() {
             return missingDexFilter === true ? !hasIt : hasIt;
         })();
 
+        // Shiny constraint Has/Missing pairs (Correct Stage, Original
+        // Region, Luxury Ball, Alpha) — see constraintFilters and the
+        // "SHINY CONSTRAINTS" section of createFilterButtons().
+        const matchesConstraints = (() => {
+
+            const activeKeys = Object.keys(constraintFilters);
+            if (activeKeys.length === 0) return true;
+
+            const s = savedDexData[key]?.shinyDexData || {};
+
+            return activeKeys.every(filterKey => {
+                if (filterKey === "correctStage") return !!s.correctStage;
+                if (filterKey === "notCorrectStage") return !s.correctStage;
+                if (filterKey === "originalRegion") return !!s.originalRegion;
+                if (filterKey === "notOriginalRegion") return !s.originalRegion;
+                if (filterKey === "luxuryBall") return !!s.luxuryBall;
+                if (filterKey === "notLuxuryBall") return !s.luxuryBall;
+                if (filterKey === "alpha") return !!s.alpha;
+                if (filterKey === "notAlpha") return !s.alpha;
+                return true;
+            });
+
+        })();
+
         // #dex-key swatch filter: only pokemon at that exact completion tier
         const matchesCompletion = (() => {
 
@@ -1517,7 +1550,7 @@ function applyFilters() {
             return selectedTypes.some(t => types.includes(t));
         })();
 
-        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo && matchesType) {
+        if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo && matchesType && matchesConstraints) {
             card.style.display = "block";
         } else {
             card.style.display = "none";
@@ -1671,7 +1704,8 @@ modalOverlay.addEventListener("click", (e) => {
         pokemonData.shinyDexData = {
             correctStage: false,
             originalRegion: false,
-            luxuryBall: false
+            luxuryBall: false,
+            alpha: false
         };
     }
 
@@ -1708,6 +1742,7 @@ document.getElementById("not-in-dex-checkbox").addEventListener("change", (e) =>
             correctStage: false,
             originalRegion: false,
             luxuryBall: false,
+            alpha: false,
             notInDex: false
         };
     }
@@ -1973,10 +2008,11 @@ function updateProgress() {
     });
 }
 
-// null | "blue" (all 5 dexes) | "green" (all 5 dexes + all shiny variants) —
-// shared by updateCardHighlights() (drives the card border colour) and
-// applyFilters()'s completion filter (driven by clicking a #dex-key swatch),
-// so the two can never drift out of sync with each other.
+// null | "blue" (all 5 dexes) | "gold" (all 5 dexes + Correct Stage/Original
+// Region/Luxury Ball) | "green" (all 5 dexes + all 4 shiny constraints,
+// including Alpha) — shared by updateCardHighlights() (drives the card
+// border colour) and applyFilters()'s completion filter (driven by clicking
+// a #dex-key swatch), so the two can never drift out of sync with each other.
 function getCompletionColor(name) {
 
     const key = normalizeName(name);
@@ -1991,11 +2027,14 @@ function getCompletionColor(name) {
     const correctStage = !!data.shinyDexData?.correctStage;
     const originalRegion = !!data.shinyDexData?.originalRegion;
     const luxuryBall = !!data.shinyDexData?.luxuryBall;
+    const alpha = !!data.shinyDexData?.alpha;
 
     const mainComplete = master && trade && wonder && pogo && shinyEnabled;
-    const fullComplete = mainComplete && correctStage && originalRegion && luxuryBall;
+    const midComplete = mainComplete && correctStage && originalRegion && luxuryBall;
+    const fullComplete = midComplete && alpha;
 
     if (fullComplete) return "green";
+    if (midComplete) return "gold";
     if (mainComplete) return "blue";
     return null;
 }
@@ -2016,7 +2055,7 @@ function updateCardHighlights() {
         // -----------------------------
         // RESET CLASSES
         // -----------------------------
-        card.classList.remove("active-dex", "complete-blue", "complete-green");
+        card.classList.remove("active-dex", "complete-blue", "complete-gold", "complete-green");
 
         // -----------------------------
         // "NOT IN DEX" BADGE — a note on a shiny already owned (see the
@@ -2249,6 +2288,116 @@ function createFilterButtons() {
         if (!typeFilterWrapper.classList.contains("open")) return;
         if (typeFilterWrapper.contains(e.target)) return;
         typeFilterWrapper.classList.remove("open");
+    });
+
+    // -----------------------------
+    // SHINY CONSTRAINTS (toggle + dropdown, same overlay pattern as Types
+    // above) — Has/Missing pairs for Correct Stage, Original Region, Luxury
+    // Ball, Alpha. Collapsed into a dropdown rather than 4 flat rows so it
+    // doesn't push the game/tag/generation rows below out of the sidebar's
+    // scroll view. See matchesConstraints in applyFilters() and
+    // getCompletionColor() for the gold/green completion tiers built from
+    // the same four fields.
+    // -----------------------------
+    const oppositeConstraint = {
+        correctStage: "notCorrectStage",
+        notCorrectStage: "correctStage",
+        originalRegion: "notOriginalRegion",
+        notOriginalRegion: "originalRegion",
+        luxuryBall: "notLuxuryBall",
+        notLuxuryBall: "luxuryBall",
+        alpha: "notAlpha",
+        notAlpha: "alpha"
+    };
+
+    const constraintPairs = [
+        { yesKey: "correctStage", yesLabel: "Correct Stage", noKey: "notCorrectStage", noLabel: "Not Correct Stage" },
+        { yesKey: "originalRegion", yesLabel: "Original Region", noKey: "notOriginalRegion", noLabel: "Not Original Region" },
+        { yesKey: "luxuryBall", yesLabel: "Luxury Ball", noKey: "notLuxuryBall", noLabel: "Not Luxury Ball" },
+        { yesKey: "alpha", yesLabel: "Alpha", noKey: "notAlpha", noLabel: "Not Alpha" }
+    ];
+
+    const constraintFilterWrapper = document.createElement("div");
+    constraintFilterWrapper.classList.add("type-filter-wrapper");
+
+    const constraintFilterToggle = document.createElement("button");
+    constraintFilterToggle.type = "button";
+    constraintFilterToggle.id = "constraint-filter-toggle";
+    constraintFilterToggle.classList.add("game-filter-btn");
+    constraintFilterToggle.textContent = "Constraints ▾";
+
+    constraintFilterToggle.addEventListener("click", () => {
+        const opening = !constraintFilterWrapper.classList.contains("open");
+        constraintFilterWrapper.classList.toggle("open", opening);
+
+        if (opening) {
+            const rect = constraintFilterToggle.getBoundingClientRect();
+            constraintFilterPanel.style.top = `${rect.bottom + 6}px`;
+            constraintFilterPanel.style.left = `${rect.left}px`;
+            constraintFilterPanel.style.width = `${rect.width}px`;
+        }
+    });
+
+    const constraintFilterPanel = document.createElement("div");
+    constraintFilterPanel.classList.add("type-filter-panel");
+
+    constraintPairs.forEach(pair => {
+        const row = document.createElement("div");
+        row.classList.add("filter-row");
+
+        [
+            { key: pair.yesKey, label: pair.yesLabel, mode: "include" },
+            { key: pair.noKey, label: pair.noLabel, mode: "exclude" }
+        ].forEach(constraint => {
+            const btn = document.createElement("button");
+            const icon = constraint.mode === "include" ? "✔" : "✖";
+            btn.textContent = `${constraint.label} ${icon}`;
+            btn.classList.add("game-filter-btn", constraint.mode === "include" ? "include-btn" : "exclude-btn", "constraint-filter-btn");
+            btn.dataset.constraint = constraint.key;
+
+            btn.addEventListener("click", () => {
+                const opposite = oppositeConstraint[constraint.key];
+
+                if (constraintFilters[constraint.key]) {
+                    delete constraintFilters[constraint.key];
+                } else {
+                    delete constraintFilters[opposite];
+                    constraintFilters[constraint.key] = true;
+                }
+
+                applyFilters();
+                scrollResultsToTop();
+                updateConstraintButtonHighlight();
+            });
+
+            row.appendChild(btn);
+        });
+
+        constraintFilterPanel.appendChild(row);
+    });
+
+    const constraintFilterClearBtn = document.createElement("button");
+    constraintFilterClearBtn.type = "button";
+    constraintFilterClearBtn.textContent = "Clear Constraints";
+    constraintFilterClearBtn.classList.add("game-filter-btn", "type-filter-clear-btn");
+
+    constraintFilterClearBtn.addEventListener("click", () => {
+        constraintFilters = {};
+        applyFilters();
+        scrollResultsToTop();
+        updateConstraintButtonHighlight();
+    });
+
+    constraintFilterPanel.appendChild(constraintFilterClearBtn);
+
+    constraintFilterWrapper.appendChild(constraintFilterToggle);
+    constraintFilterWrapper.appendChild(constraintFilterPanel);
+    container.appendChild(constraintFilterWrapper);
+
+    document.addEventListener("click", (e) => {
+        if (!constraintFilterWrapper.classList.contains("open")) return;
+        if (constraintFilterWrapper.contains(e.target)) return;
+        constraintFilterWrapper.classList.remove("open");
     });
 
     // -----------------------------
@@ -2521,6 +2670,7 @@ function createFilterButtons() {
         gameFilterState = {};
         selectedGeneration = null;
         tagFilters = {};
+        constraintFilters = {};
         searchInput.value = "";
         missingDexFilter = null;
         selectedCompletionFilter = null;
@@ -2549,6 +2699,7 @@ function createFilterButtons() {
         updateGameButtonHighlight();
         updateGenerationButtonHighlight();
         updateTagButtonHighlight();
+        updateConstraintButtonHighlight();
         updateMissingButtonHighlight();
         updateTypeFilterHighlight();
         updateCardHighlights();
@@ -2583,6 +2734,7 @@ function updatePokemonCount() {
         Object.keys(gameFilterState).length > 0 ||
         selectedGeneration !== null ||
         Object.keys(tagFilters).length > 0 ||
+        Object.keys(constraintFilters).length > 0 ||
         missingDexFilter !== null ||
         selectedCompletionFilter !== null ||
         searchInput.value.trim() !== "" ||
@@ -2637,6 +2789,24 @@ function updateTagButtonHighlight() {
 
         btn.classList.toggle("game-filter-active", isActive);
     });
+}
+
+function updateConstraintButtonHighlight() {
+
+    document.querySelectorAll(".constraint-filter-btn").forEach(btn => {
+        const constraint = btn.dataset.constraint;
+        const isActive = !!constraintFilters[constraint];
+
+        btn.classList.toggle("game-filter-active", isActive);
+    });
+
+    const count = Object.keys(constraintFilters).length;
+
+    const toggle = document.getElementById("constraint-filter-toggle");
+    if (!toggle) return;
+
+    toggle.classList.toggle("game-filter-active", count > 0);
+    toggle.textContent = count > 0 ? `Constraints (${count}) ▾` : "Constraints ▾";
 }
 
 function updateGenerationButtonHighlight() {
@@ -3014,6 +3184,7 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
                 correctStage: !!data.shinyDexData?.correctStage,
                 originalRegion: !!data.shinyDexData?.originalRegion,
                 luxuryBall: !!data.shinyDexData?.luxuryBall,
+                alpha: !!data.shinyDexData?.alpha,
                 notInDex: !!data.shinyDexData?.notInDex
             }
         };
@@ -3091,6 +3262,7 @@ document.getElementById("import-pokedex").addEventListener("change", (e) => {
                         correctStage: !!entry.shinyDexData?.correctStage,
                         originalRegion: !!entry.shinyDexData?.originalRegion,
                         luxuryBall: !!entry.shinyDexData?.luxuryBall,
+                        alpha: !!entry.shinyDexData?.alpha,
                         notInDex: !!entry.shinyDexData?.notInDex
                     }
                 };
@@ -3133,6 +3305,7 @@ const POKEDEX_CHANGE_VARIANT_LABELS = {
     correctStage: "Correct Stage",
     originalRegion: "Original Region",
     luxuryBall: "Luxury Ball",
+    alpha: "Alpha",
     notInDex: "Not In Dex"
 };
 
@@ -3282,6 +3455,8 @@ function renderStats() {
     let correctStage = 0;
     let originalRegion = 0;
     let luxuryBall = 0;
+    let alpha = 0;
+    let mid = 0;
     let perfect = 0;
 
     allPokemon.forEach(pokemon => {
@@ -3295,7 +3470,9 @@ function renderStats() {
         if (s.correctStage) correctStage++;
         if (s.originalRegion) originalRegion++;
         if (s.luxuryBall) luxuryBall++;
-        if (s.correctStage && s.originalRegion && s.luxuryBall) perfect++;
+        if (s.alpha) alpha++;
+        if (s.correctStage && s.originalRegion && s.luxuryBall) mid++;
+        if (s.correctStage && s.originalRegion && s.luxuryBall && s.alpha) perfect++;
     });
 
     statsModalBody.innerHTML = `
@@ -3309,11 +3486,13 @@ function renderStats() {
             <div class="stats-row"><span>Correct Stage</span><span class="stats-value">${correctStage} / ${shinyTotal}</span></div>
             <div class="stats-row"><span>Original Region</span><span class="stats-value">${originalRegion} / ${shinyTotal}</span></div>
             <div class="stats-row"><span>Luxury Ball</span><span class="stats-value">${luxuryBall} / ${shinyTotal}</span></div>
+            <div class="stats-row"><span>Alpha</span><span class="stats-value">${alpha} / ${shinyTotal}</span></div>
         </div>
 
         <div class="stats-section">
             <h3>Perfect Shinies</h3>
-            <div class="stats-row"><span>All 3 Constraints</span><span class="stats-value">${perfect} / ${shinyTotal}</span></div>
+            <div class="stats-row"><span>Main 3 Constraints</span><span class="stats-value">${mid} / ${shinyTotal}</span></div>
+            <div class="stats-row"><span>All 4 Constraints</span><span class="stats-value">${perfect} / ${shinyTotal}</span></div>
         </div>
     `;
 }
