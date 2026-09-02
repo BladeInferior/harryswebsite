@@ -16,6 +16,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -36,6 +37,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -56,6 +58,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -76,6 +79,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -96,6 +100,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -116,6 +121,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -136,6 +142,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -156,6 +163,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -176,6 +184,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -196,6 +205,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -216,6 +226,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -236,6 +247,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -256,6 +268,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -276,6 +289,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -296,6 +310,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -316,6 +331,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -336,6 +352,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -356,6 +373,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -376,6 +394,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -396,6 +415,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -416,6 +436,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -436,6 +457,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -456,6 +478,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -476,6 +499,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -496,6 +520,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -516,6 +541,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -536,6 +562,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -556,6 +583,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -576,6 +604,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -596,6 +625,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -616,6 +646,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": true
     }
   },
@@ -636,6 +667,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -656,6 +688,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -676,6 +709,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -696,6 +730,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -716,6 +751,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -736,6 +772,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -756,6 +793,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -776,6 +814,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -796,6 +835,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -816,6 +856,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -836,6 +877,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -856,6 +898,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -876,6 +919,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -896,6 +940,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -916,6 +961,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -936,6 +982,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -956,6 +1003,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -976,6 +1024,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -996,6 +1045,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1016,6 +1066,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1036,6 +1087,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1056,6 +1108,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1076,6 +1129,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1096,6 +1150,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1116,6 +1171,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1136,6 +1192,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1156,6 +1213,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1176,6 +1234,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1196,6 +1255,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1216,6 +1276,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1236,6 +1297,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1256,6 +1318,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1276,6 +1339,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1296,6 +1360,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1316,6 +1381,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1336,6 +1402,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1356,6 +1423,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1376,6 +1444,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1396,6 +1465,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1416,6 +1486,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1436,6 +1507,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1456,6 +1528,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1476,6 +1549,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1496,6 +1570,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1516,6 +1591,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1536,6 +1612,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1556,6 +1633,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1576,6 +1654,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1596,6 +1675,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1616,6 +1696,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1636,6 +1717,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1656,6 +1738,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1676,6 +1759,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1696,6 +1780,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1716,6 +1801,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1736,6 +1822,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -1756,6 +1843,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1776,6 +1864,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1796,6 +1885,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1816,6 +1906,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1836,6 +1927,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -1856,6 +1948,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1876,6 +1969,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1896,6 +1990,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1916,6 +2011,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1936,6 +2032,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1956,6 +2053,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1976,6 +2074,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -1996,6 +2095,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2016,6 +2116,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2036,6 +2137,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2056,6 +2158,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2076,6 +2179,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2096,6 +2200,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2116,6 +2221,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2136,6 +2242,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2156,6 +2263,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2176,6 +2284,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2196,6 +2305,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2216,6 +2326,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2236,6 +2347,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2256,6 +2368,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2276,6 +2389,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2296,6 +2410,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2316,6 +2431,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2336,6 +2452,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2356,6 +2473,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2376,6 +2494,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2396,6 +2515,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2416,6 +2536,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2436,6 +2557,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2456,6 +2578,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2476,6 +2599,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2496,6 +2620,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2516,6 +2641,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2536,6 +2662,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2556,6 +2683,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2576,6 +2704,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2596,6 +2725,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2616,6 +2746,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2636,6 +2767,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2656,6 +2788,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2676,6 +2809,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2696,6 +2830,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2716,6 +2851,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2736,6 +2872,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2756,6 +2893,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2776,6 +2914,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2796,6 +2935,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2816,6 +2956,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2834,8 +2975,9 @@
     "shinyDexTodo": false,
     "shinyDexData": {
       "correctStage": true,
-      "originalRegion": true,
+      "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2856,6 +2998,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2876,6 +3019,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2896,6 +3040,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2916,6 +3061,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -2936,6 +3082,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2956,6 +3103,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2976,6 +3124,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -2996,6 +3145,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3016,6 +3166,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3036,6 +3187,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3056,6 +3208,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3076,6 +3229,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3096,6 +3250,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3116,6 +3271,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3136,6 +3292,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3156,6 +3313,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3176,6 +3334,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3196,6 +3355,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -3216,6 +3376,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3236,6 +3397,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3256,6 +3418,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3276,6 +3439,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3296,6 +3460,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3316,6 +3481,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3336,6 +3502,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3356,6 +3523,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3376,6 +3544,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3396,6 +3565,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3416,6 +3586,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3436,6 +3607,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3456,6 +3628,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3476,6 +3649,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3496,6 +3670,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -3516,6 +3691,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3536,6 +3712,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3556,6 +3733,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3576,6 +3754,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3596,6 +3775,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3616,6 +3796,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3636,6 +3817,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3656,6 +3838,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3676,6 +3859,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3696,6 +3880,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3716,6 +3901,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3736,6 +3922,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3756,6 +3943,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -3776,6 +3964,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3796,6 +3985,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3816,6 +4006,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3836,6 +4027,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3856,6 +4048,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3876,6 +4069,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3896,6 +4090,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3916,6 +4111,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3936,6 +4132,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3956,6 +4153,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3976,6 +4174,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -3996,6 +4195,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4016,6 +4216,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4036,6 +4237,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4056,6 +4258,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4076,6 +4279,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4096,6 +4300,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4116,6 +4321,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4136,6 +4342,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4156,6 +4363,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4176,6 +4384,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4196,6 +4405,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4216,6 +4426,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4236,6 +4447,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4256,6 +4468,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4276,6 +4489,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4296,6 +4510,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4316,6 +4531,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4336,6 +4552,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4356,6 +4573,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4376,6 +4594,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4396,6 +4615,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4416,6 +4636,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4436,6 +4657,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4456,6 +4678,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4476,6 +4699,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4496,6 +4720,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4516,6 +4741,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4536,6 +4762,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4556,6 +4783,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4576,6 +4804,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4596,6 +4825,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4616,6 +4846,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4636,6 +4867,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4656,6 +4888,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4676,6 +4909,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4696,6 +4930,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4716,6 +4951,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4736,6 +4972,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4756,6 +4993,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4776,6 +5014,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4796,6 +5035,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4816,6 +5056,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4836,6 +5077,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4856,6 +5098,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4876,6 +5119,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4896,6 +5140,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4916,6 +5161,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4936,6 +5182,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4956,6 +5203,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4976,6 +5224,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -4996,6 +5245,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5016,6 +5266,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5036,6 +5287,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5056,6 +5308,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5076,6 +5329,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5096,6 +5350,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5116,6 +5371,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5136,6 +5392,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5156,6 +5413,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5176,6 +5434,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5196,6 +5455,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5216,6 +5476,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5236,6 +5497,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5256,6 +5518,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5276,6 +5539,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5296,6 +5560,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5316,6 +5581,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5336,6 +5602,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5356,6 +5623,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5376,6 +5644,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5396,6 +5665,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5416,6 +5686,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5436,6 +5707,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5456,6 +5728,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5476,6 +5749,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5496,6 +5770,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5516,6 +5791,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5536,6 +5812,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5556,6 +5833,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5576,6 +5854,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5596,6 +5875,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5616,6 +5896,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5636,6 +5917,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5656,6 +5938,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5676,6 +5959,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5696,6 +5980,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5716,6 +6001,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5736,6 +6022,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5756,6 +6043,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5776,6 +6064,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5796,6 +6085,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5816,6 +6106,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5836,6 +6127,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5856,6 +6148,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5876,6 +6169,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5896,6 +6190,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5916,6 +6211,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5936,6 +6232,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5956,6 +6253,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5976,6 +6274,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -5996,6 +6295,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6016,6 +6316,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6036,6 +6337,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6056,6 +6358,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6076,6 +6379,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6096,6 +6400,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6116,6 +6421,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6136,6 +6442,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6156,6 +6463,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6176,6 +6484,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6196,6 +6505,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6216,6 +6526,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6236,6 +6547,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6256,6 +6568,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6276,6 +6589,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6296,6 +6610,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6316,6 +6631,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6336,6 +6652,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6356,6 +6673,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6376,6 +6694,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6396,6 +6715,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6416,6 +6736,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6436,6 +6757,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -6456,6 +6778,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6476,6 +6799,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6496,6 +6820,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6516,6 +6841,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6536,6 +6862,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6556,6 +6883,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6576,6 +6904,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6596,6 +6925,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": true
     }
   },
@@ -6616,6 +6946,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6636,6 +6967,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6656,6 +6988,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6676,6 +7009,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6696,6 +7030,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6716,6 +7051,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6736,6 +7072,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6756,6 +7093,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -6776,6 +7114,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6796,6 +7135,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6816,6 +7156,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6836,6 +7177,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6856,6 +7198,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6876,6 +7219,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6896,6 +7240,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6916,6 +7261,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6936,6 +7282,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6956,6 +7303,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6976,6 +7324,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -6996,6 +7345,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7016,6 +7366,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7036,6 +7387,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7056,6 +7408,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7076,6 +7429,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7096,6 +7450,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7116,6 +7471,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7136,6 +7492,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7156,6 +7513,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7176,6 +7534,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7196,6 +7555,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7216,6 +7576,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7236,6 +7597,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7256,6 +7618,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7276,6 +7639,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7296,6 +7660,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7316,6 +7681,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7336,6 +7702,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7356,6 +7723,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7376,6 +7744,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7396,6 +7765,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7416,6 +7786,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7436,6 +7807,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7456,6 +7828,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7476,6 +7849,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7496,6 +7870,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7516,6 +7891,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7536,6 +7912,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7556,6 +7933,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7576,6 +7954,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7596,6 +7975,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7616,6 +7996,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7636,6 +8017,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7656,6 +8038,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7676,6 +8059,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7696,6 +8080,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7716,6 +8101,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7736,6 +8122,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7756,6 +8143,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7776,6 +8164,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7796,6 +8185,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7816,6 +8206,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7836,6 +8227,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7856,6 +8248,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7876,6 +8269,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7896,6 +8290,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7916,6 +8311,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7936,6 +8332,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7956,6 +8353,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7976,6 +8374,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -7996,6 +8395,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8016,6 +8416,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8036,6 +8437,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8056,6 +8458,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8076,6 +8479,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8096,6 +8500,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8116,6 +8521,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8136,6 +8542,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8156,6 +8563,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8176,6 +8584,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8196,6 +8605,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8216,6 +8626,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8236,6 +8647,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8256,6 +8668,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8276,6 +8689,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8296,6 +8710,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8316,6 +8731,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8336,6 +8752,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8356,6 +8773,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8376,6 +8794,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8396,6 +8815,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8416,6 +8836,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8436,6 +8857,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8456,7 +8878,8 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
-      "notInDex": false
+      "alpha": false,
+      "notInDex": true
     }
   },
   {
@@ -8476,6 +8899,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -8496,6 +8920,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8516,6 +8941,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8536,6 +8962,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8556,6 +8983,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8576,6 +9004,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8596,6 +9025,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8616,6 +9046,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8636,6 +9067,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8656,6 +9088,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8676,6 +9109,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8696,6 +9130,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8716,6 +9151,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8736,6 +9172,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8756,6 +9193,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8776,6 +9214,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8796,6 +9235,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8816,6 +9256,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8836,6 +9277,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8856,6 +9298,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8876,6 +9319,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8896,6 +9340,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8916,6 +9361,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8936,6 +9382,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8956,6 +9403,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8976,6 +9424,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -8996,6 +9445,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9016,6 +9466,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9036,6 +9487,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9056,6 +9508,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9076,6 +9529,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9096,6 +9550,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9116,6 +9571,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9136,6 +9592,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9156,6 +9613,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9176,6 +9634,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9196,6 +9655,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9216,6 +9676,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -9236,6 +9697,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9256,6 +9718,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9276,6 +9739,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9296,6 +9760,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9316,6 +9781,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9336,6 +9802,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9356,6 +9823,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9376,6 +9844,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9396,6 +9865,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9416,6 +9886,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9436,6 +9907,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9456,6 +9928,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9476,6 +9949,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9496,6 +9970,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9516,6 +9991,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9536,6 +10012,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9556,6 +10033,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9576,6 +10054,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9596,6 +10075,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9616,6 +10096,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9636,6 +10117,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9656,6 +10138,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9676,6 +10159,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9696,6 +10180,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9716,6 +10201,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9736,6 +10222,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9756,6 +10243,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9776,6 +10264,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9796,6 +10285,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9816,6 +10306,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9836,6 +10327,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -9856,6 +10348,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9876,6 +10369,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9896,6 +10390,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9916,6 +10411,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9936,6 +10432,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9956,6 +10453,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9976,6 +10474,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -9996,6 +10495,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10016,6 +10516,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10036,6 +10537,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10056,6 +10558,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10076,6 +10579,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10096,6 +10600,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10116,6 +10621,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10136,6 +10642,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10156,6 +10663,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10176,6 +10684,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10196,6 +10705,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10216,6 +10726,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10236,6 +10747,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10256,6 +10768,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10276,6 +10789,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10296,6 +10810,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10316,6 +10831,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10336,6 +10852,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -10356,6 +10873,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10376,6 +10894,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10396,6 +10915,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10416,6 +10936,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10436,6 +10957,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10456,6 +10978,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10476,6 +10999,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10496,6 +11020,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10516,6 +11041,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10536,6 +11062,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10556,6 +11083,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10576,6 +11104,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10596,6 +11125,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10616,6 +11146,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10636,6 +11167,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10656,6 +11188,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10676,6 +11209,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10696,6 +11230,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10716,6 +11251,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10736,6 +11272,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10756,6 +11293,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10776,6 +11314,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10796,6 +11335,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10816,6 +11356,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10836,6 +11377,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10856,6 +11398,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10876,6 +11419,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10896,6 +11440,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10916,6 +11461,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10936,6 +11482,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10956,6 +11503,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10976,6 +11524,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -10996,6 +11545,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11016,6 +11566,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11036,6 +11587,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11056,6 +11608,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11076,6 +11629,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11096,6 +11650,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11116,6 +11671,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11136,6 +11692,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11156,6 +11713,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11176,6 +11734,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11196,6 +11755,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11216,6 +11776,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11236,6 +11797,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11256,6 +11818,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11276,6 +11839,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11296,6 +11860,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11316,6 +11881,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11336,6 +11902,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11356,6 +11923,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11376,6 +11944,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11396,6 +11965,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11416,6 +11986,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11436,6 +12007,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11456,6 +12028,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11476,6 +12049,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11496,6 +12070,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11516,6 +12091,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11536,6 +12112,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11556,6 +12133,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11576,6 +12154,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11596,6 +12175,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11616,6 +12196,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11636,6 +12217,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11656,6 +12238,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11676,6 +12259,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11696,6 +12280,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11716,6 +12301,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": true
     }
   },
@@ -11736,6 +12322,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": true
     }
   },
@@ -11756,6 +12343,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": true
     }
   },
@@ -11776,6 +12364,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11796,6 +12385,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11816,6 +12406,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11836,6 +12427,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11856,6 +12448,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11876,6 +12469,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11896,6 +12490,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11916,6 +12511,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11936,6 +12532,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11956,6 +12553,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11976,6 +12574,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -11996,6 +12595,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12016,6 +12616,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12036,6 +12637,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12056,6 +12658,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12076,6 +12679,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12096,6 +12700,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12116,6 +12721,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12136,6 +12742,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12156,6 +12763,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12176,6 +12784,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -12196,6 +12805,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12216,6 +12826,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12236,6 +12847,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12256,6 +12868,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12276,6 +12889,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12296,6 +12910,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -12316,6 +12931,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12336,6 +12952,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12356,6 +12973,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12376,6 +12994,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12396,6 +13015,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -12416,6 +13036,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12436,6 +13057,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12456,6 +13078,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12476,6 +13099,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12496,6 +13120,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12516,6 +13141,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12536,6 +13162,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12556,6 +13183,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12576,6 +13204,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12596,6 +13225,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12616,6 +13246,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12636,6 +13267,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12656,6 +13288,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12676,6 +13309,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12696,6 +13330,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12716,6 +13351,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12736,6 +13372,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12756,6 +13393,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12776,6 +13414,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12796,6 +13435,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12816,6 +13456,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12836,6 +13477,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12856,6 +13498,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12876,6 +13519,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12896,6 +13540,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12916,6 +13561,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -12936,6 +13582,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12956,6 +13603,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -12976,7 +13624,8 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
-      "notInDex": false
+      "alpha": true,
+      "notInDex": true
     }
   },
   {
@@ -12996,6 +13645,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13016,6 +13666,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -13036,6 +13687,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13056,6 +13708,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13076,6 +13729,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13096,6 +13750,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13116,6 +13771,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13136,6 +13792,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13156,6 +13813,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13176,6 +13834,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13196,6 +13855,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -13216,6 +13876,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -13236,6 +13897,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13256,6 +13918,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13276,6 +13939,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13296,6 +13960,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13316,6 +13981,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13336,6 +14002,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13356,6 +14023,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13376,6 +14044,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13396,6 +14065,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13416,6 +14086,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13436,6 +14107,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13456,6 +14128,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13476,6 +14149,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13496,6 +14170,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13516,6 +14191,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13536,6 +14212,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13556,6 +14233,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13576,6 +14254,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13596,6 +14275,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13616,6 +14296,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13636,6 +14317,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13656,6 +14338,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13676,6 +14359,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13696,6 +14380,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13716,6 +14401,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13736,6 +14422,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13756,6 +14443,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13776,6 +14464,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13796,6 +14485,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13816,6 +14506,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13836,6 +14527,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13856,6 +14548,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13876,6 +14569,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13896,6 +14590,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13916,6 +14611,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13936,6 +14632,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13956,6 +14653,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13976,6 +14674,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -13996,6 +14695,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14016,6 +14716,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14036,6 +14737,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14056,6 +14758,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14076,6 +14779,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14096,6 +14800,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14116,6 +14821,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14136,6 +14842,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14156,6 +14863,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14176,6 +14884,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14196,6 +14905,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14216,6 +14926,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14236,6 +14947,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14256,6 +14968,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14276,6 +14989,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14296,6 +15010,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14316,6 +15031,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14336,6 +15052,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14356,6 +15073,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14376,6 +15094,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14396,6 +15115,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14416,6 +15136,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14436,6 +15157,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14456,6 +15178,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14476,6 +15199,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14496,6 +15220,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14516,6 +15241,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14536,6 +15262,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14556,6 +15283,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14576,6 +15304,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14596,6 +15325,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14616,6 +15346,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14636,6 +15367,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14656,6 +15388,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14676,6 +15409,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14696,6 +15430,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14716,6 +15451,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14736,6 +15472,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14756,6 +15493,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14776,6 +15514,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14796,6 +15535,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14816,6 +15556,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14836,6 +15577,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14856,6 +15598,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14876,6 +15619,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14896,6 +15640,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14916,6 +15661,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14936,6 +15682,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14956,6 +15703,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14976,6 +15724,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -14996,6 +15745,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15016,6 +15766,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15036,6 +15787,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15056,6 +15808,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15076,6 +15829,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15096,6 +15850,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15116,6 +15871,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15136,6 +15892,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15156,6 +15913,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15176,6 +15934,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15196,6 +15955,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15216,6 +15976,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15236,6 +15997,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15256,6 +16018,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15276,6 +16039,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15296,6 +16060,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15316,6 +16081,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15336,6 +16102,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15356,6 +16123,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15376,6 +16144,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15396,6 +16165,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15416,6 +16186,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15436,6 +16207,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15456,6 +16228,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15476,6 +16249,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15496,6 +16270,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15516,6 +16291,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15536,6 +16312,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15556,6 +16333,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15576,6 +16354,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15596,6 +16375,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15616,6 +16396,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15636,6 +16417,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15656,6 +16438,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15676,6 +16459,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15696,6 +16480,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15716,6 +16501,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15736,6 +16522,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15756,6 +16543,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15776,6 +16564,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15796,6 +16585,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15816,6 +16606,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15836,6 +16627,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15856,6 +16648,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15876,6 +16669,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15896,6 +16690,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15916,6 +16711,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15936,6 +16732,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15956,6 +16753,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15976,6 +16774,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -15996,6 +16795,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16016,6 +16816,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16036,6 +16837,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16056,6 +16858,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16076,6 +16879,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16096,6 +16900,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16116,6 +16921,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16136,6 +16942,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16156,6 +16963,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16176,6 +16984,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16196,6 +17005,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16216,6 +17026,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16236,6 +17047,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16256,6 +17068,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16276,6 +17089,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16296,6 +17110,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16316,6 +17131,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16336,6 +17152,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16356,6 +17173,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16376,6 +17194,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16396,6 +17215,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16416,6 +17236,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16436,6 +17257,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16456,6 +17278,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16476,6 +17299,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16496,6 +17320,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16516,6 +17341,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16536,6 +17362,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16556,6 +17383,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16576,6 +17404,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16596,6 +17425,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16616,6 +17446,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16636,6 +17467,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16656,6 +17488,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16676,6 +17509,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16696,6 +17530,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16716,6 +17551,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16736,6 +17572,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16756,6 +17593,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16776,6 +17614,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16796,6 +17635,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16816,6 +17656,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16836,6 +17677,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16856,6 +17698,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16876,6 +17719,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16896,6 +17740,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16916,6 +17761,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16936,6 +17782,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16956,6 +17803,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16976,6 +17824,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -16996,6 +17845,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17016,6 +17866,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17036,6 +17887,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17056,6 +17908,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17076,6 +17929,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17096,6 +17950,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17116,6 +17971,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17136,6 +17992,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17156,6 +18013,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17176,6 +18034,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17196,6 +18055,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17216,6 +18076,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17236,6 +18097,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17256,6 +18118,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17276,6 +18139,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17296,6 +18160,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17316,6 +18181,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17336,6 +18202,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17356,6 +18223,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17376,6 +18244,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17396,6 +18265,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17416,6 +18286,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17436,6 +18307,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17456,6 +18328,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17476,6 +18349,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17496,6 +18370,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17516,6 +18391,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17536,6 +18412,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17556,6 +18433,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17576,6 +18454,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17596,6 +18475,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17616,6 +18496,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17636,6 +18517,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17656,6 +18538,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17676,6 +18559,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17696,6 +18580,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17716,6 +18601,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17736,6 +18622,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17756,6 +18643,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17776,6 +18664,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17796,6 +18685,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17816,6 +18706,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17836,6 +18727,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17856,6 +18748,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17876,6 +18769,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17896,6 +18790,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17916,6 +18811,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17936,6 +18832,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17956,6 +18853,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17976,6 +18874,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -17996,6 +18895,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18016,6 +18916,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18036,6 +18937,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18056,6 +18958,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18076,6 +18979,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18096,6 +19000,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18116,6 +19021,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18136,6 +19042,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18156,6 +19063,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18176,6 +19084,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18196,6 +19105,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18216,6 +19126,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18236,6 +19147,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18256,6 +19168,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18276,6 +19189,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18296,6 +19210,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18316,6 +19231,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18336,6 +19252,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18356,6 +19273,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18376,6 +19294,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18396,6 +19315,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18416,6 +19336,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18436,6 +19357,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18456,6 +19378,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18476,6 +19399,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18496,6 +19420,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18516,6 +19441,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18536,6 +19462,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18556,6 +19483,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18576,6 +19504,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18596,6 +19525,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18616,6 +19546,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18636,6 +19567,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18656,6 +19588,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18676,6 +19609,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18696,6 +19630,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18716,6 +19651,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18736,6 +19672,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18756,6 +19693,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18776,6 +19714,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18796,6 +19735,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18816,6 +19756,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18836,6 +19777,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18856,6 +19798,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18876,6 +19819,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18896,6 +19840,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18916,6 +19861,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18936,6 +19882,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18956,6 +19903,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18976,6 +19924,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -18996,6 +19945,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19016,6 +19966,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19036,6 +19987,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19056,6 +20008,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19076,6 +20029,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19096,6 +20050,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19116,6 +20071,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19136,6 +20092,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19156,6 +20113,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19176,6 +20134,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19196,6 +20155,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19216,6 +20176,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19236,6 +20197,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19256,6 +20218,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19276,6 +20239,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19296,6 +20260,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19316,6 +20281,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19336,6 +20302,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19356,6 +20323,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19376,6 +20344,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19396,6 +20365,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19416,6 +20386,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19436,6 +20407,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19456,6 +20428,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19476,6 +20449,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19496,6 +20470,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19516,6 +20491,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19536,6 +20512,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19556,6 +20533,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19576,6 +20554,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19596,6 +20575,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19616,6 +20596,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19636,6 +20617,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19656,6 +20638,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19676,6 +20659,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19696,6 +20680,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19716,6 +20701,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -19736,6 +20722,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -19756,6 +20743,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19776,6 +20764,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19796,6 +20785,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19816,6 +20806,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19836,6 +20827,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19856,6 +20848,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19876,6 +20869,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19896,6 +20890,7 @@
       "correctStage": true,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19916,6 +20911,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19936,6 +20932,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19956,6 +20953,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19976,6 +20974,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -19996,6 +20995,7 @@
       "correctStage": false,
       "originalRegion": true,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20016,6 +21016,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20036,6 +21037,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20056,6 +21058,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20076,6 +21079,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20096,6 +21100,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20116,6 +21121,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20136,6 +21142,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20156,6 +21163,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20176,6 +21184,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20196,6 +21205,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20216,6 +21226,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20236,6 +21247,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20256,6 +21268,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20276,6 +21289,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20296,6 +21310,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20316,6 +21331,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20336,6 +21352,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20356,6 +21373,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20376,6 +21394,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20396,6 +21415,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20416,6 +21436,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20436,6 +21457,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20456,6 +21478,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20476,6 +21499,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20496,6 +21520,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20516,6 +21541,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20536,6 +21562,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -20556,6 +21583,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20576,6 +21604,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20596,6 +21625,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20616,6 +21646,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20636,6 +21667,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -20656,6 +21688,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20676,6 +21709,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20696,6 +21730,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20716,6 +21751,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20736,6 +21772,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20756,6 +21793,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20776,6 +21814,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20796,6 +21835,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20816,6 +21856,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20836,6 +21877,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20856,6 +21898,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20876,6 +21919,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20896,6 +21940,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20916,6 +21961,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20936,6 +21982,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20956,6 +22003,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20976,6 +22024,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -20996,6 +22045,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21016,6 +22066,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21036,6 +22087,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21056,6 +22108,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -21076,6 +22129,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21096,6 +22150,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21116,6 +22171,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21136,6 +22192,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21156,6 +22213,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21176,6 +22234,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": true,
       "notInDex": false
     }
   },
@@ -21196,6 +22255,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21216,6 +22276,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21236,6 +22297,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21256,6 +22318,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21276,6 +22339,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21296,6 +22360,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21316,6 +22381,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21336,6 +22402,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21356,6 +22423,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21376,6 +22444,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21396,6 +22465,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21416,6 +22486,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21436,6 +22507,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21456,6 +22528,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21476,6 +22549,7 @@
       "correctStage": true,
       "originalRegion": false,
       "luxuryBall": true,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21496,6 +22570,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21516,6 +22591,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21536,6 +22612,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21556,6 +22633,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21576,6 +22654,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21596,6 +22675,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21616,6 +22696,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21636,6 +22717,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   },
@@ -21656,6 +22738,7 @@
       "correctStage": false,
       "originalRegion": false,
       "luxuryBall": false,
+      "alpha": false,
       "notInDex": false
     }
   }
