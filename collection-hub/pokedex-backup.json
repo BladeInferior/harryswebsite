@@ -9250,8 +9250,8 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
-    "shinyDexTodo": true,
+    "shinyDex": true,
+    "shinyDexTodo": false,
     "shinyDexData": {
       "correctStage": false,
       "originalRegion": false,
@@ -19751,7 +19751,7 @@
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
     "shinyDex": true,
-    "shinyDexTodo": false,
+    "shinyDexTodo": true,
     "shinyDexData": {
       "correctStage": true,
       "originalRegion": false,
@@ -19771,7 +19771,7 @@
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
     "shinyDex": false,
-    "shinyDexTodo": false,
+    "shinyDexTodo": true,
     "shinyDexData": {
       "correctStage": false,
       "originalRegion": false,
