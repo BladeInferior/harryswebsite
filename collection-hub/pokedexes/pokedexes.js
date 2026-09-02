@@ -2186,6 +2186,7 @@ function createFilterButtons() {
     typeFilterToggle.addEventListener("click", () => {
         const opening = !typeFilterWrapper.classList.contains("open");
         typeFilterWrapper.classList.toggle("open", opening);
+        updateTypeFilterHighlight();
 
         // #game-filter-container now scrolls internally (see its own
         // max-height comment in style.css), which clips anything absolutely
@@ -2304,6 +2305,7 @@ function createFilterButtons() {
         if (!typeFilterWrapper.classList.contains("open")) return;
         if (typeFilterWrapper.contains(e.target)) return;
         typeFilterWrapper.classList.remove("open");
+        updateTypeFilterHighlight();
     });
 
     // -----------------------------
@@ -2345,6 +2347,7 @@ function createFilterButtons() {
     constraintFilterToggle.addEventListener("click", () => {
         const opening = !constraintFilterWrapper.classList.contains("open");
         constraintFilterWrapper.classList.toggle("open", opening);
+        updateConstraintButtonHighlight();
 
         if (opening) {
             const rect = constraintFilterToggle.getBoundingClientRect();
@@ -2414,6 +2417,7 @@ function createFilterButtons() {
         if (!constraintFilterWrapper.classList.contains("open")) return;
         if (constraintFilterWrapper.contains(e.target)) return;
         constraintFilterWrapper.classList.remove("open");
+        updateConstraintButtonHighlight();
     });
 
     // -----------------------------
@@ -2824,8 +2828,11 @@ function updateConstraintButtonHighlight() {
     const toggle = document.getElementById("constraint-filter-toggle");
     if (!toggle) return;
 
+    const isOpen = toggle.closest(".type-filter-wrapper")?.classList.contains("open");
+    const arrow = isOpen ? "◂" : "▾";
+
     toggle.classList.toggle("game-filter-active", count > 0);
-    toggle.textContent = count > 0 ? `Constraints (${count}) ▾` : "Constraints ▾";
+    toggle.textContent = count > 0 ? `Constraints (${count}) ${arrow}` : `Constraints ${arrow}`;
 }
 
 function updateGenerationButtonHighlight() {
@@ -2854,10 +2861,13 @@ function updateTypeFilterHighlight() {
     const toggle = document.getElementById("type-filter-toggle");
     if (!toggle) return;
 
+    const isOpen = toggle.closest(".type-filter-wrapper")?.classList.contains("open");
+    const arrow = isOpen ? "◂" : "▾";
+
     toggle.classList.toggle("game-filter-active", selectedTypes.length > 0);
     toggle.textContent = selectedTypes.length > 0
-        ? `Types (${selectedTypes.length}) ▾`
-        : "Types ▾";
+        ? `Types (${selectedTypes.length}) ${arrow}`
+        : `Types ${arrow}`;
 }
 
 // Exclusively (default) vs All — see matchesCompletion in applyFilters() for

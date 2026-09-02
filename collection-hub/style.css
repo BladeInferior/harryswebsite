@@ -546,16 +546,18 @@ h1 {
     z-index: 2000;
 }
 
-/* Sits in the gap between #dex-key (top: 150px, ~105px tall with 3 key
-   rows) and #progress-container (top: 320px) — a sibling of #dex-key rather
-   than a row inside it, so it reads as its own control, just anchored under
-   the Key box. Not part of #page-controls anymore, so it needs its own
-   button look instead of inheriting that row's flex-item styling. Scoped to
-   .pokemon-page (pokedexes.html) only — the other collection-hub pages
-   each have their own #stats-btn that stays a normal #page-controls button. */
+/* Sits in the gap between #dex-key (top: 150px, ~110px tall with the
+   Exclusively/All toggle row plus 3 key rows) and #progress-container
+   (top: 320px) — centered in that ~60px gap, not flush against either box.
+   A sibling of #dex-key rather than a row inside it, so it reads as its own
+   control, just anchored under the Key box. Not part of #page-controls
+   anymore, so it needs its own button look instead of inheriting that row's
+   flex-item styling. Scoped to .pokemon-page (pokedexes.html) only — the
+   other collection-hub pages each have their own #stats-btn that stays a
+   normal #page-controls button. */
 .pokemon-page #stats-btn {
     position: fixed;
-    top: 260px;
+    top: 272px;
     left: 20px;
 
     width: 260px;
@@ -1163,7 +1165,9 @@ h1 {
    updateConstraintButtonHighlight) has no matching style — same mint-accent
    single-toggle look as Gen 1-10 / Legendary / Recent Set use elsewhere. */
 #type-filter-toggle.game-filter-active,
-#constraint-filter-toggle.game-filter-active {
+#constraint-filter-toggle.game-filter-active,
+.type-filter-wrapper.open #type-filter-toggle,
+.type-filter-wrapper.open #constraint-filter-toggle {
     background: rgba(var(--accent-rgb), 0.15);
     border: 1px solid var(--accent);
     color: var(--accent);
