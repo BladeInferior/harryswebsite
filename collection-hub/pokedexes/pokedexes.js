@@ -3143,7 +3143,7 @@ function updateModeUI() {
     if (searchWrapper) searchWrapper.classList.toggle("filters-disabled", inTodoMode);
 
     const dexKey = document.getElementById("dex-key");
-    if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode);
+    if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode || huntsModeActive || pageMode);
 
     updateCardImages();
 }
