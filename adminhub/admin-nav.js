@@ -34,6 +34,7 @@ fetch('../navbar.html')
 
         const subPages = [
             { label: "Notes", page: "adminhub/notes.html" },
+            { label: "Stream Counter", page: "adminhub/counter.html" },
         ];
 
         const linksContainer = nav.querySelector('.site-nav-links');

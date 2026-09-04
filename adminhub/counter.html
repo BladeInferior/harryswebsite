@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Stream Counter — Admin Hub</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="admin-nav.js"></script>
+
+<a class="back-button" href="adminhub.html">← Back</a>
+
+<section class="hero">
+    <h1>🎮 Stream Counter</h1>
+
+    <p>
+        Bumps the Pokémon counter overlay and regenerates it via Textcraft,
+        overwriting the image OBS reads from disk.
+    </p>
+</section>
+
+<main id="admin-content" class="hidden">
+
+    <section class="section">
+
+        <div class="counter-card">
+            <h2>Pokémon Counter</h2>
+
+            <div class="counter-display">
+                <span id="counter-current">737</span>
+                <span class="counter-slash">/</span>
+                <span id="counter-total">1034</span>
+            </div>
+
+            <div class="counter-buttons">
+                <button type="button" id="counter-minus" class="counter-btn">−1</button>
+                <button type="button" id="counter-plus" class="counter-btn counter-btn-primary">+1</button>
+            </div>
+
+            <p id="counter-status" class="counter-status">Status: Ready</p>
+
+            <details class="counter-set-panel">
+                <summary>Set number manually</summary>
+                <form id="counter-set-form" class="counter-set-form">
+                    <label>
+                        Current
+                        <input type="number" id="counter-set-current" min="0" step="1" required>
+                    </label>
+                    <label>
+                        Total
+                        <input type="number" id="counter-set-total" min="0" step="1" required>
+                    </label>
+                    <button type="submit" class="counter-btn counter-btn-primary">Generate</button>
+                </form>
+            </details>
+
+            <p class="counter-hint">
+                Requires the local stream-counter server to be running —
+                <code>node adminhub/stream-counter-server/server.js</code>.
+                Overwrites <code>D:\Libraries\Desktop\leisure\streaming\currentNum.png</code> directly.
+            </p>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Admin Hub
+</footer>
+
+<script type="module" src="counter.js"></script>
+<script src="../scroll-to-top.js"></script>
+</body>
+</html>

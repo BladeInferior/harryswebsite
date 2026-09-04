@@ -1,0 +1,15 @@
+{
+  "name": "stream-counter-server",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local Node server that automates Textcraft's Pokemon-style counter image for the stream, and serves the site while it's running.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.16.0",
+    "express": "^4.19.2",
+    "fast-xml-parser": "^4.5.0"
+  }
+}

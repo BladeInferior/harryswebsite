@@ -596,3 +596,129 @@ footer {
         display: inline-block;
     }
 }
+
+/* =========================
+   STREAM COUNTER
+   ========================= */
+.counter-card {
+    max-width: 420px;
+    margin: 0 auto;
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.counter-card h2 {
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+}
+
+.counter-display {
+    font-size: 2.4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.counter-slash {
+    color: var(--secondary);
+    margin: 0 6px;
+}
+
+.counter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.counter-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.counter-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+}
+
+.counter-btn:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.counter-btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.counter-btn-primary:hover:not(:disabled) {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+}
+
+.counter-status {
+    color: var(--secondary);
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.counter-status-error {
+    color: #fca5a5;
+}
+
+.counter-set-panel {
+    text-align: left;
+    margin-bottom: 16px;
+}
+
+.counter-set-panel summary {
+    cursor: pointer;
+    color: var(--secondary);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.counter-set-form {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.counter-set-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 12px;
+    color: var(--secondary);
+}
+
+.counter-set-form input {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 6px;
+    padding: 6px 8px;
+    width: 90px;
+    font-size: 14px;
+}
+
+.counter-hint {
+    font-size: 11px;
+    color: var(--secondary);
+    line-height: 1.5;
+}
+
+.counter-hint code {
+    background: rgba(255, 255, 255, .08);
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 11px;
+}
