@@ -5,6 +5,11 @@
 // the repo itself: it drives Textcraft's actual Pokemon-style generator
 // (see gentext3.php below) and overwrites the local stream image.
 //
+// Started via start-counter.bat (double-click it, or a desktop shortcut to
+// it) rather than run continuously — it's only needed the rare times a
+// stream is actually happening. That script also opens the browser straight
+// to the right page once the server's up.
+//
 // Run with: node adminhub/stream-counter-server/server.js
 // Then open: http://localhost:4747/adminhub/counter.html
 
@@ -66,6 +71,7 @@ function buildTextcraftUrl(text) {
 let generationInProgress = false;
 
 const app = express();
+
 app.use(express.json());
 app.use(express.static(SITE_ROOT));
 
