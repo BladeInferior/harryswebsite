@@ -9774,7 +9774,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexTodo": false,
     "shinyDexData": {
@@ -10383,7 +10383,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexTodo": false,
     "shinyDexData": {
@@ -11412,7 +11412,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexTodo": false,
     "shinyDexData": {
@@ -12693,7 +12693,7 @@
     "cherishDex": false,
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
-    "pogoDexTodo": false,
+    "pogoDexTodo": true,
     "shinyDex": true,
     "shinyDexTodo": false,
     "shinyDexData": {
