@@ -29,6 +29,7 @@ let selectedCompletionFilter = null; // 'blue' | 'gold' | 'green' | null — cli
 let completionFilterMode = "exclusive"; // "exclusive" (exact tier only) | "all" (that tier and every tier above it) — the #dex-key-mode-toggle checkbox
 const COMPLETION_TIER_RANK = { blue: 0, gold: 1, green: 2 };
 let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
+let constraintFilterMode = "and"; // "or" (matches any active constraint) | "and" (must match every active constraint) — the OR/AND slider atop the Constraints dropdown
 
 // Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
 // since this file is a plain <script>, not a module. Replaces the old
@@ -260,6 +261,7 @@ Promise.all([
     updateTypeFilterHighlight();
     updatePogoShinyModeButtonUI();
     updatePogoFilterRowVisibility();
+    updateConstraintFilterRowVisibility();
     updatePogoShinyFilterHighlight();
     updateTodoButtonUI();
     updateHuntsButtonUI();
@@ -866,6 +868,7 @@ function clearNonTodoFilters() {
     selectedGeneration = null;
     tagFilters = {};
     constraintFilters = {};
+    constraintFilterMode = "and";
     searchInput.value = "";
     missingDexFilter = null;
     selectedCompletionFilter = null;
@@ -1494,7 +1497,7 @@ function applyFilters() {
 
             const s = savedDexData[key]?.shinyDexData || {};
 
-            return activeKeys.every(filterKey => {
+            const matchesKey = (filterKey) => {
                 if (filterKey === "correctStage") return !!s.correctStage;
                 if (filterKey === "notCorrectStage") return !s.correctStage;
                 if (filterKey === "originalRegion") return !!s.originalRegion;
@@ -1504,7 +1507,11 @@ function applyFilters() {
                 if (filterKey === "alpha") return !!s.alpha;
                 if (filterKey === "notAlpha") return !s.alpha;
                 return true;
-            });
+            };
+
+            return constraintFilterMode === "or"
+                ? activeKeys.some(matchesKey)
+                : activeKeys.every(matchesKey);
 
         })();
 
@@ -1839,6 +1846,15 @@ function updatePogoFilterRowVisibility() {
     pogoShinyRow.classList.toggle("hidden", !isPogoEdit);
 }
 
+// The Constraints dropdown (Correct Stage/Original Region/Luxury Ball/Alpha)
+// only means anything against Shiny Dex data — hidden for every other dex.
+function updateConstraintFilterRowVisibility() {
+    const wrapper = document.getElementById("constraint-filter-wrapper");
+    if (!wrapper) return;
+
+    wrapper.classList.toggle("hidden", activeDexEdit !== "shinyDex");
+}
+
 
 // ---------------------------
 // PROGRESS UI
@@ -1939,6 +1955,17 @@ document.addEventListener("click", (e) => {
         huntsModeActive = false;
     }
     updateHuntsButtonUI();
+
+    // Constraints (Correct Stage/Original Region/Luxury Ball/Alpha) only
+    // apply to Shiny Dex data — leaving it clears any active constraint
+    // filter/mode so they don't stay silently armed (and hidden) once their
+    // row is gone from other dexes' filter sidebar.
+    if (activeDexEdit !== "shinyDex") {
+        constraintFilters = {};
+        constraintFilterMode = "and";
+    }
+    updateConstraintFilterRowVisibility();
+    updateConstraintButtonHighlight();
 
     // Comparing against the resulting activeDexEdit (not just dexType)
     // matters for turning editing OFF: clicking the same dex again sets
@@ -2336,6 +2363,7 @@ function createFilterButtons() {
     ];
 
     const constraintFilterWrapper = document.createElement("div");
+    constraintFilterWrapper.id = "constraint-filter-wrapper";
     constraintFilterWrapper.classList.add("type-filter-wrapper");
 
     const constraintFilterToggle = document.createElement("button");
@@ -2359,6 +2387,37 @@ function createFilterButtons() {
 
     const constraintFilterPanel = document.createElement("div");
     constraintFilterPanel.classList.add("type-filter-panel");
+
+    // OR/AND mode slider — OR shows any pokemon matching at least one active
+    // constraint, AND (default, matches the old always-AND behavior) only
+    // shows pokemon matching every active constraint. The whole track is one
+    // click target that flips the mode; see matchesConstraints() above for
+    // where the mode is actually applied.
+    const constraintModeSlider = document.createElement("div");
+    constraintModeSlider.classList.add("constraint-mode-slider");
+    constraintModeSlider.dataset.mode = constraintFilterMode;
+
+    const constraintModeThumb = document.createElement("div");
+    constraintModeThumb.classList.add("constraint-mode-slider-thumb");
+    constraintModeSlider.appendChild(constraintModeThumb);
+
+    ["or", "and"].forEach(mode => {
+        const label = document.createElement("span");
+        label.classList.add("constraint-mode-slider-label");
+        label.dataset.mode = mode;
+        label.textContent = mode.toUpperCase();
+        constraintModeSlider.appendChild(label);
+    });
+
+    constraintModeSlider.addEventListener("click", () => {
+        constraintFilterMode = constraintFilterMode === "or" ? "and" : "or";
+        constraintModeSlider.dataset.mode = constraintFilterMode;
+
+        applyFilters();
+        scrollResultsToTop();
+    });
+
+    constraintFilterPanel.appendChild(constraintModeSlider);
 
     constraintPairs.forEach(pair => {
         const row = document.createElement("div");
@@ -2402,6 +2461,7 @@ function createFilterButtons() {
 
     constraintFilterClearBtn.addEventListener("click", () => {
         constraintFilters = {};
+        constraintFilterMode = "and";
         applyFilters();
         scrollResultsToTop();
         updateConstraintButtonHighlight();
@@ -2691,6 +2751,7 @@ function createFilterButtons() {
         selectedGeneration = null;
         tagFilters = {};
         constraintFilters = {};
+        constraintFilterMode = "and";
         searchInput.value = "";
         missingDexFilter = null;
         selectedCompletionFilter = null;
@@ -2730,6 +2791,7 @@ function createFilterButtons() {
         updateModeUI();
         updatePogoShinyModeButtonUI();
         updatePogoFilterRowVisibility();
+        updateConstraintFilterRowVisibility();
         updatePogoShinyFilterHighlight();
         updateTodoButtonUI();
         updateHuntsButtonUI();
@@ -2815,6 +2877,9 @@ function updateTagButtonHighlight() {
 }
 
 function updateConstraintButtonHighlight() {
+
+    const modeSlider = document.querySelector(".constraint-mode-slider");
+    if (modeSlider) modeSlider.dataset.mode = constraintFilterMode;
 
     document.querySelectorAll(".constraint-filter-btn").forEach(btn => {
         const constraint = btn.dataset.constraint;

@@ -1227,6 +1227,64 @@ h1 {
     color: var(--accent);
 }
 
+/* OR/AND slider atop the Shiny Constraints dropdown (pokedexes.js) — the
+   whole track is one click target; the thumb slides to whichever half is
+   active and that label brightens to match. */
+.constraint-mode-slider {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30px;
+
+    border-radius: 8px;
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border);
+
+    cursor: pointer;
+    user-select: none;
+}
+
+.constraint-mode-slider-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: calc(50% - 3px);
+    height: calc(100% - 4px);
+
+    border-radius: 6px;
+    background: rgba(var(--accent-rgb), 0.18);
+    border: 1px solid var(--accent);
+
+    transition: transform 0.18s ease;
+    pointer-events: none;
+}
+
+.constraint-mode-slider[data-mode="and"] .constraint-mode-slider-thumb {
+    transform: translateX(calc(100% + 2px));
+}
+
+.constraint-mode-slider-label {
+    position: relative;
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+
+    color: var(--text-dim);
+    transition: color 0.15s ease;
+    pointer-events: none;
+}
+
+.constraint-mode-slider[data-mode="or"] .constraint-mode-slider-label[data-mode="or"],
+.constraint-mode-slider[data-mode="and"] .constraint-mode-slider-label[data-mode="and"] {
+    color: var(--accent);
+}
+
 .type-filter-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
