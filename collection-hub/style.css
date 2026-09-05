@@ -2812,6 +2812,34 @@ footer {
     background: rgba(var(--accent-rgb), 0.15);
 }
 
+/* Shiny Dex Find only (see todoFindShinyModalActive in pokedexes.js) — the
+   modal's only exclusive-to-Find control, so it sits apart from the normal
+   dex-entry/variant grid rather than inline with it. Stacked directly above
+   #not-in-dex-toggle's own bottom-right corner spot (both are visible at
+   once here, since Find only ever opens this modal in Shiny Dex edit mode)
+   rather than sharing it. */
+#todo-find-save-btn {
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+
+    padding: 8px 18px;
+
+    background: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+#todo-find-save-btn:hover {
+    background: rgba(var(--accent-rgb), 0.3);
+}
+
 .mobile-popout-toggle,
 .mobile-popout-panel {
     display: none;

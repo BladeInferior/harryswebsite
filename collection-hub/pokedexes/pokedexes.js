@@ -8,6 +8,7 @@ let todoQueue = []; // pokemon (from allPokemon) currently on the to-do list, in
 let todoQueuePos = 0;
 let todoPendingDone = new Set(); // keys clicked while Find is active — not committed until Find ends
 let todoPendingShiny = new Set(); // subset of todoPendingDone marked shiny (PoGo Dex only, see pogoShinyModeFlag) — not committed until Find ends
+let todoFindShinyModalActive = false; // Shiny Dex Find only — the variant modal is open for a not-yet-caught to-do pokemon (see the todoFindActive branch in the card click handler and the #todo-find-save-btn handler)
 let gameFilterState = {};
 let allPokemon = [];
 let evolutionFamilies = {}; // name -> array of other pokemon names in the same evolution line, from evolutionFamilies.json
@@ -46,6 +47,12 @@ const GAME_NATIVE_GENERATION = {
     plza: 6,   // Legends Z-A — Kalos
     wiwa: 10   // Winds & Waves
 };
+
+// Per-game filter rows that mean nothing for PoGo Dex (a pokemon's `games`
+// list is about mainline Switch games, not Pokémon GO availability) — hidden
+// alongside Sword & Shield's row while PoGo Dex is being edited, see
+// updatePogoFilterRowVisibility.
+const POGO_HIDDEN_GAME_KEYS = ["bdsp", "pla", "scvi", "plza", "wiwa"];
 
 // Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
 // since this file is a plain <script>, not a module. Replaces the old
@@ -582,6 +589,27 @@ function createPokemonCards(pokemonList) {
                             return;
                         }
 
+                        // Shiny Dex only: not done the moment it's clicked —
+                        // opens the variant modal instead so the constraints
+                        // (Correct Stage/Original Region/Luxury Ball/Alpha)
+                        // can be set before it's marked caught. Saving there
+                        // (see #todo-find-save-btn) is what actually adds it
+                        // to todoPendingDone and advances Find; closing the
+                        // modal without saving leaves it untouched on the
+                        // to-do list.
+                        if (activeDexEdit === "shinyDex") {
+                            currentPokemon = key;
+                            todoFindShinyModalActive = true;
+
+                            document.getElementById("modal-name").textContent = name;
+                            modalImage.src = getPokemonSpritePath(name, true);
+
+                            modalOverlay.classList.remove("hidden");
+                            renderModalState(key);
+
+                            return;
+                        }
+
                         todoPendingDone.add(key);
                         card.classList.add("todo-pending-done");
 
@@ -671,6 +699,7 @@ function createPokemonCards(pokemonList) {
                     // CASE 2: ALREADY SHINY → OPEN MODAL ONLY
                     // -----------------------------
                     currentPokemon = key;
+                    todoFindShinyModalActive = false;
 
                     document.getElementById("modal-name").textContent = name;
                     modalImage.src = getPokemonSpritePath(name, true);
@@ -685,6 +714,7 @@ function createPokemonCards(pokemonList) {
             // =====================================================
             // NORMAL MODE → OPEN MODAL
             // =====================================================
+            todoFindShinyModalActive = false;
             currentPokemon = key;
 
             document.getElementById("modal-name").textContent = name;
@@ -788,6 +818,7 @@ function commitTodoPending() {
 function resetTodoFind() {
     commitTodoPending();
     todoFindActive = false;
+    todoFindShinyModalActive = false;
     todoQueue = [];
     todoQueuePos = 0;
     clearTodoFindHighlight();
@@ -1633,8 +1664,14 @@ function applyFilters() {
 // ---------------------------
 // CLOSE MODAL
 // ---------------------------
+// Closing without hitting Save (see #todo-find-save-btn) discards nothing
+// that wasn't already true — the pokemon just stays on the to-do list, still
+// unclicked, exactly as if the modal had never been opened. Any constraint
+// values already toggled stay saved (each toggle saves itself immediately)
+// and are simply reused if it's reopened later.
 modalOverlay.addEventListener("click", (event) => {
     if (event.target === modalOverlay) {
+        todoFindShinyModalActive = false;
         modalOverlay.classList.add("hidden");
     }
 });
@@ -1642,6 +1679,7 @@ modalOverlay.addEventListener("click", (event) => {
 const modalCloseBtn = document.getElementById("modal-close");
 if (modalCloseBtn) {
     modalCloseBtn.addEventListener("click", () => {
+        todoFindShinyModalActive = false;
         modalOverlay.classList.add("hidden");
     });
 }
@@ -1663,6 +1701,12 @@ function getVisibleCardNames() {
 
 function openAdjacentPokemon(offset) {
     if (!currentPokemon) return;
+
+    // Shiny Dex Find's constraint-editing modal (see todoFindShinyModalActive)
+    // is scoped to one specific to-do pokemon — browsing away from it via the
+    // nav arrows would leave variants editable for whatever unrelated pokemon
+    // got landed on next.
+    if (todoFindShinyModalActive) return;
 
     const visibleNames = getVisibleCardNames();
     if (visibleNames.length === 0) return;
@@ -1701,7 +1745,10 @@ document.addEventListener("keydown", (e) => {
     if (modalOverlay.classList.contains("hidden")) return;
     if (e.key === "ArrowLeft") openAdjacentPokemon(-1);
     if (e.key === "ArrowRight") openAdjacentPokemon(1);
-    if (e.key === "Escape") modalOverlay.classList.add("hidden");
+    if (e.key === "Escape") {
+        todoFindShinyModalActive = false;
+        modalOverlay.classList.add("hidden");
+    }
 });
 
 
@@ -1765,7 +1812,7 @@ modalOverlay.addEventListener("click", (e) => {
 
     const pokemonData = savedDexData[currentPokemon] || {};
 
-    if (!pokemonData.shinyDex) return;
+    if (!pokemonData.shinyDex && !todoFindShinyModalActive) return;
 
     const type = variant.dataset.variant;
 
@@ -1786,6 +1833,34 @@ modalOverlay.addEventListener("click", (e) => {
     saveData();
 
     renderModalState(currentPokemon);
+});
+
+// ---------------------------
+// SHINY DEX FIND — SAVE BUTTON
+// Only shown while todoFindShinyModalActive (see renderModalState and the
+// todoFindActive branch of the card click handler) — commits the pokemon via
+// the same deferred pending mechanism every other to-do dex uses (see
+// todoPendingDone/commitTodoPending), so the actual shinyDex/shinyDexTodo
+// flip happens exactly like a Trade/Wonder/PoGo pick, just one click later
+// than usual. The constraint values themselves are already saved the moment
+// each variant was toggled above, so there's nothing left to write here.
+// ---------------------------
+document.getElementById("todo-find-save-btn").addEventListener("click", () => {
+
+    if (!todoFindShinyModalActive || !currentPokemon) return;
+
+    const key = currentPokemon;
+    const pokemon = allPokemon.find(p => normalizeName(p.name) === key);
+    const card = pokemon ? cardMap.get(pokemon.name) : null;
+
+    todoPendingDone.add(key);
+    if (card) card.classList.add("todo-pending-done");
+
+    todoFindShinyModalActive = false;
+    currentPokemon = null;
+    modalOverlay.classList.add("hidden");
+
+    advanceTodoFind(key);
 });
 
 // A real checkbox (not one of the .variant icon-dots above, and not gated
@@ -1890,6 +1965,10 @@ function updatePogoFilterRowVisibility() {
     const isPogoEdit = activeDexEdit === "pogoDex";
     swshRow.classList.toggle("hidden", isPogoEdit);
     pogoShinyRow.classList.toggle("hidden", !isPogoEdit);
+
+    POGO_HIDDEN_GAME_KEYS.forEach(gameKey => {
+        document.getElementById(`${gameKey}-filter-row`)?.classList.toggle("hidden", isPogoEdit);
+    });
 }
 
 // The Constraints dropdown (Correct Stage/Original Region/Luxury Ball/Alpha)
@@ -1975,6 +2054,11 @@ document.addEventListener("click", (e) => {
         // editing PoGo Dex — clear any leftover S&S filter so it doesn't
         // keep silently narrowing results once its row is no longer shown.
         delete gameFilterState.swsh;
+
+        // Same reasoning for the other per-game rows hidden alongside it
+        // (see POGO_HIDDEN_GAME_KEYS/updatePogoFilterRowVisibility) — none
+        // of them mean anything for PoGo Dex.
+        POGO_HIDDEN_GAME_KEYS.forEach(gameKey => delete gameFilterState[gameKey]);
     }
     updatePogoShinyModeButtonUI();
     updatePogoFilterRowVisibility();
@@ -2211,14 +2295,19 @@ function renderModalState(pokemonKey) {
         });
     }    
 
+    // Shiny Dex Find only: the modal can be open for a pokemon that isn't
+    // shinyDex yet (see todoFindShinyModalActive) so its constraints can be
+    // set before Save marks it caught — variants are enabled for editing in
+    // that case too, not just once shinyDex is already true.
+    const variantsEnabled = !!data.shinyDex || todoFindShinyModalActive;
+
     modalOverlay.querySelectorAll(".variant").forEach(v => {
 
         const type = v.dataset.variant;
 
-        const enabled = !!data.shinyDex;
         const value = data.shinyDexData?.[type];
 
-        v.classList.toggle("disabled", !enabled);
+        v.classList.toggle("disabled", !variantsEnabled);
         v.classList.toggle("active", !!value);
     });
 
@@ -2230,6 +2319,12 @@ function renderModalState(pokemonKey) {
         notInDexToggle.classList.toggle("disabled", !data.shinyDex);
         notInDexCheckbox.checked = !!data.shinyDexData?.notInDex;
     }
+
+    // Exclusive to Shiny Dex Find (see todoFindShinyModalActive) — normal
+    // browsing of this modal never shows a Save button, since every other
+    // change there already saves itself immediately.
+    const findSaveBtn = document.getElementById("todo-find-save-btn");
+    if (findSaveBtn) findSaveBtn.classList.toggle("hidden", !todoFindShinyModalActive);
 }
 
 function createFilterButtons() {
@@ -2619,7 +2714,7 @@ function createFilterButtons() {
 
         const row = document.createElement("div");
         row.classList.add("filter-row");
-        if (game.key === "swsh") row.id = "swsh-filter-row";
+        row.id = `${game.key}-filter-row`;
 
         row.appendChild(includeBtn);
         row.appendChild(excludeBtn);
@@ -3377,29 +3472,43 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
         };
     });
 
-    await exportJsonFile(
-        "pokedex-backup.json",
-        JSON.stringify(exportData, null, 2),
-        "dexData",
-        // Matches saveData()'s format (JSON.stringify(savedDexData), not the
-        // reshaped exportData array) — the snapshot markDirty() diffs
-        // against has to be serialized the same way every time it's set.
-        JSON.stringify(savedDexData)
-    );
+    // Each file only gets committed if its own tracker is actually dirty —
+    // the Worker commits each file separately, and every commit to the repo
+    // triggers its own GitHub Pages deployment, so unconditionally exporting
+    // both regardless of what changed meant a single Export click that only
+    // touched, say, pokedex data still silently pushed a second no-op commit
+    // (and a second deploy) for shiny-hunts-backup.json every time.
+    const dexDataDirty = typeof isTrackerDirty !== "function" || isTrackerDirty("dexData");
+    const shinyHuntsDirty = typeof isTrackerDirty !== "function" || isTrackerDirty("shinyHunts");
 
-    const huntsExportData = shinyHunts.map(hunt => ({
-        id: hunt.id,
-        name: hunt.name,
-        completed: !!hunt.completed,
-        encounters: hunt.encounters
-    }));
+    if (dexDataDirty) {
+        await exportJsonFile(
+            "pokedex-backup.json",
+            JSON.stringify(exportData, null, 2),
+            "dexData",
+            // Matches saveData()'s format (JSON.stringify(savedDexData), not
+            // the reshaped exportData array) — the snapshot markDirty()
+            // diffs against has to be serialized the same way every time
+            // it's set.
+            JSON.stringify(savedDexData)
+        );
+    }
 
-    await exportJsonFile(
-        "shiny-hunts-backup.json",
-        JSON.stringify(huntsExportData, null, 2),
-        "shinyHunts",
-        JSON.stringify(shinyHunts)
-    );
+    if (shinyHuntsDirty) {
+        const huntsExportData = shinyHunts.map(hunt => ({
+            id: hunt.id,
+            name: hunt.name,
+            completed: !!hunt.completed,
+            encounters: hunt.encounters
+        }));
+
+        await exportJsonFile(
+            "shiny-hunts-backup.json",
+            JSON.stringify(huntsExportData, null, 2),
+            "shinyHunts",
+            JSON.stringify(shinyHunts)
+        );
+    }
 
     } finally {
         exportInProgress = false;
