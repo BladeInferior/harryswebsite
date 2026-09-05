@@ -31,6 +31,22 @@ const COMPLETION_TIER_RANK = { blue: 0, gold: 1, green: 2 };
 let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
 let constraintFilterMode = "and"; // "or" (matches any active constraint) | "and" (must match every active constraint) — the OR/AND slider atop the Constraints dropdown
 
+// Which generation's native region each mainline game is set in — e.g.
+// Legends Z-A (plza) takes place in Kalos, so its native generation is 6.
+// Used only by the Original Region constraint (see matchesConstraints):
+// with that constraint on and one of these games included in the game
+// filter, a pokemon also has to be from that game's native generation,
+// since "caught in its original region" is only possible there for
+// pokemon that actually belong to that region.
+const GAME_NATIVE_GENERATION = {
+    swsh: 8,   // Sword & Shield — Galar
+    bdsp: 4,   // Brilliant Diamond & Shining Pearl — Sinnoh
+    pla: 4,    // Legends Arceus — Hisui, treated as Sinnoh's dex
+    scvi: 9,   // Scarlet & Violet — Paldea
+    plza: 6,   // Legends Z-A — Kalos
+    wiwa: 10   // Winds & Waves
+};
+
 // Site-wide admin identity (see ../admin-auth-core.js) — dynamic import
 // since this file is a plain <script>, not a module. Replaces the old
 // "paste a secret into localStorage via devtools" (exportAuthKey) approach
@@ -1372,22 +1388,44 @@ function applyFilters() {
 
     const query = searchInput.value.toLowerCase();
 
+    // A comma separates independent search terms rather than being part of
+    // one literal term — "pikachu, charmander" matches either name, not the
+    // (nonexistent) pokemon literally named "pikachu, charmander".
+    const searchTerms = query
+        ? query.split(",").map(term => term.trim()).filter(term => term.length > 0)
+        : [];
+
     // With "Include evolutions" ticked, a query that name-matches a pokemon
     // also pulls in every other stage in its evolution line (e.g. "pikac"
     // matches Pikachu directly, then this set adds Raichu and Pichu too) —
     // computed once per applyFilters() call rather than per-card, since it
     // needs the full set of direct name matches before it can expand them.
+    // With multiple comma-separated terms, each term expands its own family
+    // independently (e.g. "pikachu, charmander" also pulls in Raichu/Pichu
+    // *and* Charmeleon/Charizard).
     const evolutionExpandedNames = (() => {
-        if (!query || !searchEvolutionsToggle.checked) return null;
+        if (searchTerms.length === 0 || !searchEvolutionsToggle.checked) return null;
 
         const expanded = new Set();
         allPokemon.forEach(p => {
-            if (imageName(p.name).includes(query)) {
+            if (searchTerms.some(term => imageName(p.name).includes(term))) {
                 (evolutionFamilies[p.name] || []).forEach(familyName => expanded.add(familyName));
             }
         });
         return expanded;
     })();
+
+    // Original Region constraint (see matchesConstraints below) narrows by
+    // generation once a game with a known native region is included in the
+    // game filter — e.g. selecting Legends Z-A restricts Original Region to
+    // Gen 6, since that's the only generation that could actually be "caught
+    // in its original region" while playing a Kalos-set game.
+    const originalRegionGenerations = new Set(
+        Object.entries(gameFilterState)
+            .filter(([, mode]) => mode === "include")
+            .map(([game]) => GAME_NATIVE_GENERATION[game])
+            .filter(gen => gen !== undefined)
+    );
 
     cardMap.forEach((card, name) => {
 
@@ -1415,8 +1453,8 @@ function applyFilters() {
                 return activeDexEdit === "shinyDex" && !!(savedDexData[key]?.shinyDexData?.notInDex);
             }
 
-            const nameMatch = imageName(name).includes(query);
-            const typeMatch = types.some(t => t.includes(query));
+            const nameMatch = searchTerms.some(term => imageName(name).includes(term));
+            const typeMatch = searchTerms.some(term => types.some(t => t.includes(term)));
             const evolutionMatch = evolutionExpandedNames?.has(name) ?? false;
 
             return nameMatch || typeMatch || evolutionMatch;
@@ -1497,11 +1535,19 @@ function applyFilters() {
 
             const s = savedDexData[key]?.shinyDexData || {};
 
+            // Both Original Region and Not Original Region only make sense
+            // for pokemon that are actually obtainable in the selected game
+            // in the first place (e.g. hunting in Legends Z-A, a Kanto
+            // pokemon can't be "not caught in its original region" there —
+            // it can't be caught there at all), so the generation gate
+            // applies to both, not just the positive case.
+            const matchesOriginalRegionGeneration = originalRegionGenerations.size === 0 || originalRegionGenerations.has(generation);
+
             const matchesKey = (filterKey) => {
                 if (filterKey === "correctStage") return !!s.correctStage;
                 if (filterKey === "notCorrectStage") return !s.correctStage;
-                if (filterKey === "originalRegion") return !!s.originalRegion;
-                if (filterKey === "notOriginalRegion") return !s.originalRegion;
+                if (filterKey === "originalRegion") return !!s.originalRegion && matchesOriginalRegionGeneration;
+                if (filterKey === "notOriginalRegion") return !s.originalRegion && matchesOriginalRegionGeneration;
                 if (filterKey === "luxuryBall") return !!s.luxuryBall;
                 if (filterKey === "notLuxuryBall") return !s.luxuryBall;
                 if (filterKey === "alpha") return !!s.alpha;
@@ -2815,6 +2861,16 @@ function updatePokemonCount() {
 
     if (!pokemonCountLabel) return;
 
+    // Page Mode always shows a plain unfiltered slice (see applyPagination),
+    // so any count carried over from before entering it (e.g. from a to-do
+    // list that was showing right before Page Mode/List Mode was clicked)
+    // would be stale and never get recomputed, since Page Mode's pagination
+    // doesn't run the filter criteria this count is based on.
+    if (pageMode) {
+        pokemonCountLabel.style.display = "none";
+        return;
+    }
+
     const hasActiveFilters = (
         Object.keys(gameFilterState).length > 0 ||
         selectedGeneration !== null ||
@@ -3033,6 +3089,7 @@ document.getElementById("list-mode").addEventListener("click", () => {
         card.style.display = "block";
     });
 
+    updatePokemonCount();
     updateModeUI();
 });
 
@@ -3137,6 +3194,7 @@ function applyPagination() {
     });
 
     document.getElementById("page-display").textContent = currentPage;
+    updatePokemonCount();
 }
 
 function updateCardImages() {
@@ -3210,6 +3268,14 @@ function updateModeUI() {
     const dexKey = document.getElementById("dex-key");
     if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode || huntsModeActive || pageMode);
 
+    // Include Evolutions modifies search, but unlike search itself it's
+    // dead weight the moment Hunts mode's plain name-only applyHuntsSearch()
+    // takes over (see the huntsModeActive branch atop applyFilters) — so it
+    // greys out alongside every other filter rather than following
+    // #search-wrapper's narrower inTodoMode-only rule.
+    const evolutionsRow = document.getElementById("search-evolutions-row");
+    if (evolutionsRow) evolutionsRow.classList.toggle("filters-disabled", inTodoMode || huntsModeActive || pageMode);
+
     updateCardImages();
 }
 
@@ -3270,7 +3336,19 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData) {
     updateExportGlow();
 }
 
+// Guards against a double export — the button stays clickable while the
+// fetch to the Cloudflare Worker is in flight, so a second click (or an
+// impatient double-click before the first request resolves) would
+// otherwise fire this whole handler again and commit/download everything
+// twice.
+let exportInProgress = false;
+
 document.getElementById("export-pokedex").addEventListener("click", async () => {
+
+    if (exportInProgress) return;
+    exportInProgress = true;
+
+    try {
 
     const exportData = Object.entries(savedDexData).map(([name, data]) => {
 
@@ -3322,6 +3400,10 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
         "shinyHunts",
         JSON.stringify(shinyHunts)
     );
+
+    } finally {
+        exportInProgress = false;
+    }
 });
 
 document.getElementById("import-button").addEventListener("click", () => {
