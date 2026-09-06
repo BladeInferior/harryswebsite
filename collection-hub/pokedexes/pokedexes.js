@@ -631,15 +631,12 @@ function createPokemonCards(pokemonList) {
                         return;
                     }
 
-                    pokemonData[activeDexEdit] = true;
-                    pokemonData[todoField] = false;
-                    if (wantsShiny) pokemonData.pogoShiny = true;
-                    savedDexData[key] = pokemonData;
-                    saveData();
-
-                    applyFilters();
-                    if (pageMode) applyPagination();
-
+                    // Plain (non-Find) browsing of the to-do list itself —
+                    // this used to add it straight to the dex on click, but
+                    // that's Find-only now (see the todoFindActive branch
+                    // above); a click here just offers to take it off the
+                    // list instead.
+                    openTodoRemoveConfirm(key, name);
                     return;
                 }
 
@@ -753,6 +750,55 @@ document.getElementById("pogo-shiny-mode-btn").addEventListener("click", () => {
     updatePogoShinyModeButtonUI();
 });
 
+
+// ---------------------------
+// TO DO REMOVE CONFIRM — plain (non-Find) browsing of a to-do list no longer
+// adds a clicked entry straight to the dex (that's Find-only now, see the
+// todoFindActive branch in the card click handler); it offers to take it
+// off the list instead, via this small Yes/No modal.
+// ---------------------------
+let todoRemoveConfirmKey = null;
+
+const todoRemoveConfirmModal = document.getElementById("todo-remove-confirm-modal");
+const todoRemoveConfirmText = document.getElementById("todo-remove-confirm-text");
+
+function openTodoRemoveConfirm(key, name) {
+    todoRemoveConfirmKey = key;
+    todoRemoveConfirmText.textContent = `Do you want to remove ${name} from the to-do list?`;
+    todoRemoveConfirmModal.classList.remove("hidden");
+}
+
+function closeTodoRemoveConfirm() {
+    todoRemoveConfirmKey = null;
+    todoRemoveConfirmModal.classList.add("hidden");
+}
+
+document.getElementById("todo-remove-confirm-yes").addEventListener("click", () => {
+
+    const key = todoRemoveConfirmKey;
+    const field = todoFieldFor(activeDexEdit);
+
+    if (key && field) {
+        // Off the to-do list only — never marks it caught on the dex
+        // itself, that still only happens through Find.
+        const pokemonData = savedDexData[key] || {};
+        pokemonData[field] = false;
+        savedDexData[key] = pokemonData;
+        saveData();
+
+        applyFilters();
+        if (pageMode) applyPagination();
+    }
+
+    closeTodoRemoveConfirm();
+});
+
+document.getElementById("todo-remove-confirm-no").addEventListener("click", closeTodoRemoveConfirm);
+document.getElementById("todo-remove-confirm-close").addEventListener("click", closeTodoRemoveConfirm);
+
+todoRemoveConfirmModal.addEventListener("click", (e) => {
+    if (e.target === todoRemoveConfirmModal) closeTodoRemoveConfirm();
+});
 
 // ---------------------------
 // TO DO LIST (lives in #page-controls, Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only)
@@ -3636,11 +3682,14 @@ const pokedexChangesBtn = document.getElementById("pokedex-changes-btn");
 const pokedexChangesModal = document.getElementById("pokedex-changes-modal");
 const pokedexChangesModalBody = document.getElementById("pokedex-changes-modal-body");
 const pokedexChangesModalClose = document.getElementById("pokedex-changes-modal-close");
+const pokedexChangesCancelBtn = document.getElementById("pokedex-changes-cancel-btn");
 
 function renderPokedexChanges() {
 
     const changes = [...getPokedexChanges(), ...getHuntsChanges()]
         .sort((a, b) => a.name.localeCompare(b.name));
+
+    pokedexChangesCancelBtn.classList.toggle("hidden", changes.length === 0);
 
     if (changes.length === 0) {
         pokedexChangesModalBody.innerHTML = `<div class="stats-row"><span>No unsaved changes.</span></div>`;
@@ -3666,6 +3715,39 @@ pokedexChangesModalClose.addEventListener("click", () => {
 
 pokedexChangesModal.addEventListener("click", (e) => {
     if (e.target === pokedexChangesModal) pokedexChangesModal.classList.add("hidden");
+});
+
+// Reverts both trackers to the snapshot taken at the last export (or page
+// load, if nothing's ever been exported this session) — the same baseline
+// getPokedexChanges()/getHuntsChanges() diff against above, so "no changes
+// left to show" and "fully reverted" are the same state by construction.
+pokedexChangesCancelBtn.addEventListener("click", () => {
+
+    if (!confirm("Discard all unsaved changes since your last export? This can't be undone.")) return;
+
+    const dexSnapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("dexData") : null;
+    const huntsSnapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("shinyHunts") : null;
+
+    if (dexSnapshotRaw !== null) {
+        savedDexData = JSON.parse(dexSnapshotRaw);
+        localStorage.setItem("dexData", dexSnapshotRaw);
+        if (typeof markSaved === "function") markSaved(dexSnapshotRaw, "dexData");
+    }
+
+    if (huntsSnapshotRaw !== null) {
+        shinyHunts = JSON.parse(huntsSnapshotRaw);
+        localStorage.setItem("shinyHunts", huntsSnapshotRaw);
+        if (typeof markSaved === "function") markSaved(huntsSnapshotRaw, "shinyHunts");
+    }
+
+    updateExportGlow();
+    updateProgress();
+    updateCardHighlights();
+    applyFilters();
+    if (pageMode) applyPagination();
+    if (huntsModeActive) renderHunts();
+
+    pokedexChangesModal.classList.add("hidden");
 });
 
 // =========================

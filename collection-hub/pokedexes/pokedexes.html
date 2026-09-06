@@ -214,11 +214,25 @@
         </div>
     </div>
 
+    <!-- Plain (non-Find) browsing of a to-do list — clicking an entry no
+        longer adds it straight to the dex (that's Find-only now, see
+        todo-find-btn), it just offers to take it off the list instead. -->
+    <div id="todo-remove-confirm-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="todo-remove-confirm-close" class="modal-close-btn">✕</div>
+            <h2>Remove From To Do?</h2>
+            <p id="todo-remove-confirm-text"></p>
+            <button id="todo-remove-confirm-yes" class="item-action-btn danger stats-detail-btn">Yes, remove it</button>
+            <button id="todo-remove-confirm-no" class="item-action-btn stats-detail-btn">No</button>
+        </div>
+    </div>
+
     <div id="pokedex-changes-modal" class="stats-modal-overlay hidden">
         <div class="stats-modal-box">
             <div id="pokedex-changes-modal-close" class="modal-close-btn">✕</div>
             <h2>Unsaved Changes</h2>
             <div id="pokedex-changes-modal-body"></div>
+            <button id="pokedex-changes-cancel-btn" class="item-action-btn danger stats-detail-btn hidden">Cancel All Changes</button>
         </div>
     </div>
 
