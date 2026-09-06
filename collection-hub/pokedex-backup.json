@@ -472,7 +472,7 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": true,
+    "shinyDex": false,
     "shinyDexTodo": false,
     "shinyDexData": {
       "correctStage": false,
