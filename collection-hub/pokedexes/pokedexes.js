@@ -3374,62 +3374,9 @@ function updateModeUI() {
     updateCardImages();
 }
 
-// Shared by both files the Export button commits (pokedex-backup.json and
-// shiny-hunts-backup.json) — tries the GitHub auto-commit first, falling
-// back to a manual download only if that didn't verify+commit. Each file
-// marks its own tracker saved independently, so exporting one doesn't
-// silently clear the unsaved-changes glow for the other if only it failed.
-async function exportJsonFile(filename, json, trackerKey, snapshotData) {
-
-    const { getAdminIdToken } = await adminAuthReady;
-    const idToken = await getAdminIdToken();
-
-    if (idToken) {
-        try {
-            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${idToken}`
-                },
-                body: JSON.stringify({ filename, content: json })
-            });
-
-            const result = await res.json();
-
-            if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
-                updateExportGlow();
-                alert(`✅ ${filename} committed to GitHub automatically.`);
-                return;
-            }
-
-            if (result.verified && !result.committed) {
-                console.error("GitHub commit failed:", result.error);
-                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
-            }
-
-        } catch (err) {
-            console.error("Export sync failed:", err);
-        }
-    }
-
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
-    updateExportGlow();
-}
+// exportJsonFile() itself now lives in ../export-to-github.js, shared with
+// every other collection-hub export button — see that file for what it
+// actually does with the auth token this handler resolves below.
 
 // Guards against a double export — the button stays clickable while the
 // fetch to the Cloudflare Worker is in flight, so a second click (or an
@@ -3444,6 +3391,9 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
     exportInProgress = true;
 
     try {
+
+    const { getAdminIdToken } = await adminAuthReady;
+    const idToken = await getAdminIdToken();
 
     const exportData = Object.entries(savedDexData).map(([name, data]) => {
 
@@ -3472,43 +3422,35 @@ document.getElementById("export-pokedex").addEventListener("click", async () => 
         };
     });
 
-    // Each file only gets committed if its own tracker is actually dirty —
-    // the Worker commits each file separately, and every commit to the repo
-    // triggers its own GitHub Pages deployment, so unconditionally exporting
-    // both regardless of what changed meant a single Export click that only
-    // touched, say, pokedex data still silently pushed a second no-op commit
-    // (and a second deploy) for shiny-hunts-backup.json every time.
-    const dexDataDirty = typeof isTrackerDirty !== "function" || isTrackerDirty("dexData");
-    const shinyHuntsDirty = typeof isTrackerDirty !== "function" || isTrackerDirty("shinyHunts");
+    // Both files are always sent — the Worker itself now compares against
+    // what's already committed and reports back { unchanged: true } without
+    // creating a commit (or a deploy) for whichever one hasn't actually
+    // changed, so there's no need to duplicate that check here too.
+    await exportJsonFile(
+        "pokedex-backup.json",
+        JSON.stringify(exportData, null, 2),
+        "dexData",
+        // Matches saveData()'s format (JSON.stringify(savedDexData), not the
+        // reshaped exportData array) — the snapshot markDirty() diffs
+        // against has to be serialized the same way every time it's set.
+        JSON.stringify(savedDexData),
+        idToken
+    );
 
-    if (dexDataDirty) {
-        await exportJsonFile(
-            "pokedex-backup.json",
-            JSON.stringify(exportData, null, 2),
-            "dexData",
-            // Matches saveData()'s format (JSON.stringify(savedDexData), not
-            // the reshaped exportData array) — the snapshot markDirty()
-            // diffs against has to be serialized the same way every time
-            // it's set.
-            JSON.stringify(savedDexData)
-        );
-    }
+    const huntsExportData = shinyHunts.map(hunt => ({
+        id: hunt.id,
+        name: hunt.name,
+        completed: !!hunt.completed,
+        encounters: hunt.encounters
+    }));
 
-    if (shinyHuntsDirty) {
-        const huntsExportData = shinyHunts.map(hunt => ({
-            id: hunt.id,
-            name: hunt.name,
-            completed: !!hunt.completed,
-            encounters: hunt.encounters
-        }));
-
-        await exportJsonFile(
-            "shiny-hunts-backup.json",
-            JSON.stringify(huntsExportData, null, 2),
-            "shinyHunts",
-            JSON.stringify(shinyHunts)
-        );
-    }
+    await exportJsonFile(
+        "shiny-hunts-backup.json",
+        JSON.stringify(huntsExportData, null, 2),
+        "shinyHunts",
+        JSON.stringify(shinyHunts),
+        idToken
+    );
 
     } finally {
         exportInProgress = false;

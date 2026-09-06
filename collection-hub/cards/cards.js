@@ -799,52 +799,9 @@ document.getElementById("export-items").addEventListener("click", async () => {
     const { getAdminIdToken } = await adminAuthReady;
     const idToken = await getAdminIdToken();
 
-    if (idToken) {
-        try {
-            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${idToken}`
-                },
-                body: JSON.stringify({
-                    filename: activeDeck.jsonFile,
-                    content: data
-                })
-            });
-
-            const result = await res.json();
-
-            if (result.verified && result.committed) {
-                if (typeof markSaved === "function") markSaved(snapshotData);
-                updateExportGlow();
-                alert(`✅ ${activeDeck.jsonFile} committed to GitHub automatically.`);
-                return;
-            }
-
-            if (result.verified && !result.committed) {
-                console.error("GitHub commit failed:", result.error);
-                alert("Verified, but GitHub commit failed — falling back to manual download. Check console.");
-            }
-        } catch (err) {
-            console.error("Export sync failed:", err);
-        }
-    }
-
-    const blob = new Blob([data], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = activeDeck.jsonFile;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    if (typeof markSaved === "function") markSaved(snapshotData);
-    updateExportGlow();
+    // exportJsonFile() lives in ../export-to-github.js, shared with every
+    // other collection-hub export button.
+    await exportJsonFile(activeDeck.jsonFile, data, undefined, snapshotData, idToken);
 });
 
 // =========================
