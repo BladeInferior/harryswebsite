@@ -34,7 +34,7 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
             if (result.verified && result.committed) {
                 if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
                 if (typeof updateExportGlow === "function") updateExportGlow();
-                alert(`✅ ${filename} committed to GitHub automatically.`);
+                showExportToast(filename);
                 return;
             }
 
@@ -72,4 +72,42 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
 
     if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
     if (typeof updateExportGlow === "function") updateExportGlow();
+}
+
+// A blocking alert() for every successful export got old fast — this is a
+// small self-dismissing toast instead. Only one lives on the page at a
+// time: exporting both a dex and its hunts back to back (see pokedexes.js)
+// just restarts the same toast's timer with the new filename rather than
+// stacking a second one underneath it.
+let exportToastTimer = null;
+
+function showExportToast(filename) {
+
+    let toast = document.getElementById("export-toast");
+
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "export-toast";
+        toast.innerHTML = `
+            <div class="export-toast-line">Successfully committed</div>
+            <div class="export-toast-filename"></div>
+            <div class="export-toast-line">to GitHub</div>
+        `;
+        document.body.appendChild(toast);
+    }
+
+    toast.querySelector(".export-toast-filename").textContent = `${filename} ✅`;
+
+    // Forces the fade-in transition to replay even if a toast is already
+    // showing (e.g. the pokedex + shiny-hunts exports landing seconds
+    // apart) — toggling the class off and immediately back on with no
+    // reflow in between would just no-op.
+    toast.classList.remove("visible");
+    void toast.offsetWidth;
+    toast.classList.add("visible");
+
+    clearTimeout(exportToastTimer);
+    exportToastTimer = setTimeout(() => {
+        toast.classList.remove("visible");
+    }, 3000);
 }

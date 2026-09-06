@@ -2840,6 +2840,53 @@ footer {
     background: rgba(var(--accent-rgb), 0.3);
 }
 
+/* Export success toast (see showExportToast() in export-to-github.js) —
+   replaces the old blocking alert() every collection-hub export button used
+   to show on success. Fixed to the viewport rather than the page, since the
+   pages that use it scroll (unlike a modal overlay, nothing needs dimming
+   behind it). Hidden by translating off-screen rather than display:none, so
+   the fade/slide transition has something to animate. */
+#export-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2000;
+
+    max-width: 280px;
+    padding: 14px 18px;
+
+    background: linear-gradient(180deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--success);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: center;
+
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#export-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#export-toast .export-toast-line {
+    color: var(--text-dim);
+}
+
+#export-toast .export-toast-filename {
+    margin: 2px 0;
+    color: var(--success);
+    font-weight: 600;
+    word-break: break-word;
+}
+
 .mobile-popout-toggle,
 .mobile-popout-panel {
     display: none;
