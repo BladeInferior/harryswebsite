@@ -32,6 +32,15 @@ const COMPLETION_TIER_RANK = { blue: 0, gold: 1, green: 2 };
 let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
 let constraintFilterMode = "and"; // "or" (matches any active constraint) | "and" (must match every active constraint) — the OR/AND slider atop the Constraints dropdown
 
+// Custom lists — "Add List" accumulates pokemon names across as many filter
+// passes as needed (capped at 100 newly-visible names per click, but nothing
+// stops repeated clicks after changing filters from building an arbitrarily
+// large final list), "Save List" persists the accumulator to Firestore under
+// a name (see the CUSTOM LISTS section below for why Firestore rather than
+// localStorage), and "Load List" drops any combination of saved lists into
+// the search bar.
+let customListStaging = [];
+
 // Which generation's native region each mainline game is set in — e.g.
 // Legends Z-A (plza) takes place in Kalos, so its native generation is 6.
 // Used only by the Original Region constraint (see matchesConstraints):
@@ -134,6 +143,7 @@ function syncSearchControlsLayout() {
     const searchWrapper = document.getElementById("search-wrapper");
     const evolutionsRow = document.getElementById("search-evolutions-row");
     const importExport = document.getElementById("import-export-controls");
+    const customListColumn = document.getElementById("custom-list-controls");
     if (!searchWrapper || !importExport) return;
 
     const width = searchWrapper.offsetWidth;
@@ -151,6 +161,17 @@ function syncSearchControlsLayout() {
     importExport.style.width = `${width}px`;
     importExport.style.top = `${nextTop}px`;
     importExport.classList.remove("width-sync-pending");
+
+    // Its own column of stacked buttons to the LEFT of the search/
+    // evolutions/import-export stack (rather than a 4th row below it, which
+    // pushed the stack past the bottom of the viewport) — right is computed
+    // from #search-wrapper's own left edge rather than copying its width, so
+    // it always sits flush against whatever that stack's actual width is.
+    if (customListColumn) {
+        const rightOffset = window.innerWidth - searchWrapper.getBoundingClientRect().left + gap;
+        customListColumn.style.right = `${rightOffset}px`;
+        customListColumn.classList.remove("width-sync-pending");
+    }
 }
 
 syncSearchControlsLayout();
@@ -1970,6 +1991,228 @@ clearBtn.addEventListener("click", () => {
 
     searchInput.value = "";
     applyFilters("");
+});
+
+// ---------------------------
+// CUSTOM LISTS
+// ---------------------------
+// "Add List" only ever touches in-memory state (customListStaging) — no
+// auth needed to build up a list by browsing filters. "Save List" and
+// "Load List" persist to/read from Firestore (collection
+// "customPokemonLists") instead of localStorage, since these need to survive
+// across devices/browsers for the one admin account, not just one machine.
+// Requires a Firestore rule allowing read/write on that collection to
+// request.auth.token.email == OWNER_EMAIL (see admin-auth-core.js) — that
+// lives in the Firebase console, not this repo, and has to be added there by
+// hand the first time this ships.
+const firestoreReady = Promise.all([
+    import('../../firebase-config.js'),
+    import('https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js')
+]).then(([{ db }, firestore]) => ({ db, ...firestore }));
+
+const CUSTOM_LISTS_COLLECTION = "customPokemonLists";
+
+async function requireAdminForCustomLists() {
+    const { isSignedInAsAdmin } = await adminAuthReady;
+    if (isSignedInAsAdmin()) return true;
+    alert("Sign in as admin (bottom-right) to save or load custom lists.");
+    return false;
+}
+
+function updateCustomListSaveBtnLabel() {
+    const btn = document.getElementById("custom-list-save-btn");
+    if (btn) btn.textContent = `💾 Save List (${customListStaging.length})`;
+}
+
+// Search terms are matched against imageName(name) (lowercased, punctuation/
+// spaces stripped — see matchesSearch in applyFilters), so names with a
+// space or hyphen (Alolan Rattata, Ho-oh, Mr-mime, ...) would never
+// re-match themselves if dropped into the search bar verbatim. Running
+// every name through imageName() first guarantees each one matches only
+// itself once it round-trips through the search bar.
+function customListToSearchValue(names) {
+    return names.map(imageName).join(", ");
+}
+
+document.getElementById("custom-list-add-btn").addEventListener("click", () => {
+    const visible = getVisibleCardNames().slice(0, 100);
+    visible.forEach(name => {
+        if (!customListStaging.includes(name)) customListStaging.push(name);
+    });
+    updateCustomListSaveBtnLabel();
+});
+
+// ---- Save List ----
+const customListSaveModal = document.getElementById("custom-list-save-modal");
+const customListSaveSummary = document.getElementById("custom-list-save-summary");
+const customListSaveNameInput = document.getElementById("custom-list-save-name-input");
+
+function closeCustomListSaveModal() {
+    customListSaveModal.classList.add("hidden");
+}
+
+document.getElementById("custom-list-save-btn").addEventListener("click", () => {
+    if (customListStaging.length === 0) {
+        alert("Add some Pokémon to your list first with \"Add List\".");
+        return;
+    }
+
+    customListSaveSummary.textContent = `Save this list of ${customListStaging.length} Pokémon for later?`;
+    customListSaveNameInput.value = "";
+    customListSaveModal.classList.remove("hidden");
+    customListSaveNameInput.focus();
+});
+
+document.getElementById("custom-list-save-confirm").addEventListener("click", async () => {
+    const name = customListSaveNameInput.value.trim();
+    if (!name) return;
+
+    if (!(await requireAdminForCustomLists())) return;
+
+    const { db, collection, addDoc, doc, setDoc, getDocs, query, where, serverTimestamp } = await firestoreReady;
+
+    try {
+        // Same name as an existing saved list overwrites it in place (same
+        // doc id) rather than leaving two lists with that name around.
+        const existing = await getDocs(query(collection(db, CUSTOM_LISTS_COLLECTION), where("name", "==", name)));
+
+        const payload = {
+            name,
+            pokemon: [...customListStaging],
+            updatedAt: serverTimestamp()
+        };
+
+        if (!existing.empty) {
+            await setDoc(doc(db, CUSTOM_LISTS_COLLECTION, existing.docs[0].id), payload);
+        } else {
+            await addDoc(collection(db, CUSTOM_LISTS_COLLECTION), payload);
+        }
+    } catch (err) {
+        console.error("Failed to save custom list:", err);
+        alert("Failed to save the list — see console for details.");
+        return;
+    }
+
+    customListStaging = [];
+    updateCustomListSaveBtnLabel();
+    closeCustomListSaveModal();
+});
+
+document.getElementById("custom-list-save-skip").addEventListener("click", () => {
+    closeCustomListSaveModal();
+});
+
+customListSaveNameInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") document.getElementById("custom-list-save-confirm").click();
+});
+
+customListSaveModal.addEventListener("click", (event) => {
+    if (event.target === customListSaveModal) closeCustomListSaveModal();
+});
+
+// ---- Load List ----
+const customListLoadModal = document.getElementById("custom-list-load-modal");
+const customListLoadItems = document.getElementById("custom-list-load-items");
+const customListLoadEmpty = document.getElementById("custom-list-load-empty");
+
+async function renderCustomListLoadModal() {
+    customListLoadItems.innerHTML = "<p>Loading…</p>";
+    customListLoadEmpty.classList.add("hidden");
+
+    const { db, collection, getDocs, doc, deleteDoc } = await firestoreReady;
+
+    let snapshot;
+    try {
+        snapshot = await getDocs(collection(db, CUSTOM_LISTS_COLLECTION));
+    } catch (err) {
+        console.error("Failed to load custom lists:", err);
+        customListLoadItems.innerHTML = "";
+        customListLoadEmpty.textContent = "Failed to load saved lists — see console for details.";
+        customListLoadEmpty.classList.remove("hidden");
+        return;
+    }
+
+    const docs = snapshot.docs.sort((a, b) => (a.data().name || "").localeCompare(b.data().name || ""));
+
+    customListLoadEmpty.textContent = "No saved lists yet — build one with Add List, then Save List.";
+    customListLoadEmpty.classList.toggle("hidden", docs.length > 0);
+    customListLoadItems.innerHTML = "";
+
+    docs.forEach(docSnap => {
+        const { name, pokemon } = docSnap.data();
+
+        const row = document.createElement("div");
+        row.classList.add("custom-list-row");
+
+        const label = document.createElement("label");
+        label.classList.add("checkbox-label");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.dataset.docId = docSnap.id;
+        checkbox.dataset.pokemon = JSON.stringify(pokemon || []);
+
+        label.appendChild(checkbox);
+        label.append(` ${name} (${(pokemon || []).length})`);
+
+        const deleteBtn = document.createElement("span");
+        deleteBtn.classList.add("custom-list-delete");
+        deleteBtn.textContent = "✕";
+        deleteBtn.title = "Delete this saved list";
+        deleteBtn.addEventListener("click", async () => {
+            if (!confirm(`Delete the saved list "${name}"?`)) return;
+            if (!(await requireAdminForCustomLists())) return;
+
+            try {
+                await deleteDoc(doc(db, CUSTOM_LISTS_COLLECTION, docSnap.id));
+            } catch (err) {
+                console.error("Failed to delete custom list:", err);
+                alert("Failed to delete the list — see console for details.");
+                return;
+            }
+
+            renderCustomListLoadModal();
+        });
+
+        row.appendChild(label);
+        row.appendChild(deleteBtn);
+        customListLoadItems.appendChild(row);
+    });
+}
+
+document.getElementById("custom-list-load-btn").addEventListener("click", async () => {
+    if (!(await requireAdminForCustomLists())) return;
+    customListLoadModal.classList.remove("hidden");
+    renderCustomListLoadModal();
+});
+
+document.getElementById("custom-list-load-cancel").addEventListener("click", () => {
+    customListLoadModal.classList.add("hidden");
+});
+
+customListLoadModal.addEventListener("click", (event) => {
+    if (event.target === customListLoadModal) customListLoadModal.classList.add("hidden");
+});
+
+document.getElementById("custom-list-load-apply").addEventListener("click", () => {
+    const checkedBoxes = Array.from(customListLoadItems.querySelectorAll("input[type=checkbox]:checked"));
+
+    if (checkedBoxes.length === 0) {
+        customListLoadModal.classList.add("hidden");
+        return;
+    }
+
+    const combined = [];
+    checkedBoxes.forEach(cb => {
+        JSON.parse(cb.dataset.pokemon).forEach(name => {
+            if (!combined.includes(name)) combined.push(name);
+        });
+    });
+
+    searchInput.value = customListToSearchValue(combined);
+    applyFilters();
+    scrollResultsToTop();
+    customListLoadModal.classList.add("hidden");
 });
 
 function updateMissingButtonHighlight() {

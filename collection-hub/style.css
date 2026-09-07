@@ -1357,6 +1357,32 @@ h1 {
     z-index: 2000;
 }
 
+/* Its own column of stacked buttons (Add List / Save List / Load List)
+   sitting to the LEFT of the #search-wrapper/#search-evolutions-row/
+   #import-export-controls stack, rather than a 4th row below it — three
+   rows already ran past the bottom of the viewport on shorter screens.
+   `right` is computed from #search-wrapper's own left edge (see
+   syncSearchControlsLayout in pokedexes.js) so it always sits flush against
+   that stack regardless of its actual rendered width; `top` matches
+   #search-wrapper's own fixed top since both start at the same height. */
+#custom-list-controls {
+    position: fixed;
+    top: 80px;
+
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    z-index: 2000;
+}
+
+#custom-list-controls .game-filter-btn {
+    flex: none;
+    width: 100%;
+    font-size: 13px;
+}
+
 /* Slightly smaller than Import/Export, and never wraps to a second line —
    #import-export-controls is position: fixed, directly over the grid below
    it, so an unbroken second row here would grow the panel taller and hide
@@ -1554,7 +1580,7 @@ body.page-mode #page-controls {
     color: var(--accent);
 }
 
-#add-item-modal, #add-milestone-modal, #add-hunt-modal {
+#add-item-modal, #add-milestone-modal, #add-hunt-modal, #custom-list-load-modal, #custom-list-save-modal {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.7);
@@ -1656,6 +1682,50 @@ body.page-mode #page-controls {
     width: auto;
     flex-shrink: 0;
     cursor: pointer;
+}
+
+/* Scrolls internally past a handful of saved lists rather than growing
+   .add-item-box tall enough to push the Apply/Cancel buttons off-screen. */
+#custom-list-load-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.custom-list-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.custom-list-row .checkbox-label {
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-list-delete {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.custom-list-delete:hover {
+    opacity: 1;
+    color: #e74c3c;
+}
+
+#custom-list-save-summary {
+    margin: 0;
+    color: #ccc;
+    font-size: 14px;
 }
 
 /* Tag autocomplete dropdown (see the tags textbox handling in

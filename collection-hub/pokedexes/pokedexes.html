@@ -69,6 +69,18 @@
         <button id="pokedex-changes-btn" class="game-filter-btn hidden" title="Show what's changed since the last export">📋 Changes</button>
     </div>
 
+    <!-- ==========================
+        CUSTOM LISTS — build a list by browsing filters and adding whatever's
+        currently shown, save it under a name (Firestore, not localStorage —
+        see the CUSTOM LISTS section in pokedexes.js), then load any
+        combination of saved lists back into the search bar later.
+    ========================== -->
+    <div id="custom-list-controls" class="width-sync-pending">
+        <button id="custom-list-add-btn" class="game-filter-btn" title="Add up to 100 currently visible Pokémon to your custom list — change filters and click again to keep adding">➕ Add List</button>
+        <button id="custom-list-save-btn" class="game-filter-btn" title="Save your custom list under a name">💾 Save List (0)</button>
+        <button id="custom-list-load-btn" class="game-filter-btn" title="Load one or more saved custom lists into the search bar">📂 Load List</button>
+    </div>
+
     <div id="progress-container"></div>
 
     <div id="page-controls">
@@ -304,6 +316,56 @@
         </div>
 
         <div id="hunt-modal-nav-right" class="modal-nav">▶</div>
+
+    </div>
+
+    <!-- ==========================
+        CUSTOM LISTS — save modal, shown right after "Use List" applies the
+        search. Saving is optional; "Don't Save" just leaves the search
+        applied without persisting anything.
+    ========================== -->
+    <div id="custom-list-save-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2>Save List?</h2>
+
+            <p id="custom-list-save-summary"></p>
+
+            <label>
+                Name
+                <input type="text" id="custom-list-save-name-input" placeholder="e.g. Gen 6 shiny hunts">
+            </label>
+
+            <div class="modal-buttons">
+                <button id="custom-list-save-confirm">Save</button>
+                <button id="custom-list-save-skip">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================
+        CUSTOM LISTS — load modal. Populated from savedCustomLists in
+        pokedexes.js each time it's opened (renderCustomListLoadModal()).
+    ========================== -->
+    <div id="custom-list-load-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2>Load Custom Lists</h2>
+
+            <div id="custom-list-load-empty" class="hidden">No saved lists yet — build one with Add Shown, then Use List.</div>
+
+            <div id="custom-list-load-items"></div>
+
+            <div class="modal-buttons">
+                <button id="custom-list-load-apply">Apply Selected</button>
+                <button id="custom-list-load-cancel">Cancel</button>
+            </div>
+
+        </div>
 
     </div>
 
