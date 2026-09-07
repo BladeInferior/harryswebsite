@@ -5785,14 +5785,14 @@
     "tradeDexTodo": false,
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
-    "shinyDex": false,
+    "shinyDex": true,
     "shinyDexTodo": false,
     "shinyDexData": {
-      "correctStage": false,
+      "correctStage": true,
       "originalRegion": false,
-      "luxuryBall": false,
+      "luxuryBall": true,
       "alpha": false,
-      "notInDex": false
+      "notInDex": true
     }
   },
   {
