@@ -37,6 +37,15 @@ html {
     scrollbar-gutter: stable;
 }
 
+/* Set on <body> while a custom-list modal with its own internal scroll area
+   (Load Lists, Edit List) is open — see updateCustomListBodyScrollLock() in
+   pokedexes.js — so scrolling inside that list doesn't also scroll the
+   pokemon grid underneath it. */
+body.custom-list-modal-open {
+    overflow: hidden;
+    touch-action: none;
+}
+
 body {
     background-image: radial-gradient(ellipse at top, #2a5a9a, #1f4a38 45%, var(--bg));
     background-attachment: fixed;
@@ -516,10 +525,14 @@ h1 {
     border-radius: var(--radius);
     padding: 10px;
 
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
     box-sizing: border-box;
 }
 
-#search-evolutions-label {
+.search-toggle-label {
     display: flex;
     align-items: center;
     gap: 6px;
@@ -529,7 +542,7 @@ h1 {
     user-select: none;
 }
 
-#search-evolutions-label input[type="checkbox"] {
+.search-toggle-label input[type="checkbox"] {
     cursor: pointer;
 }
 
@@ -1580,7 +1593,7 @@ body.page-mode #page-controls {
     color: var(--accent);
 }
 
-#add-item-modal, #add-milestone-modal, #add-hunt-modal, #custom-list-load-modal, #custom-list-save-modal {
+#add-item-modal, #add-milestone-modal, #add-hunt-modal, #custom-list-load-modal, #custom-list-save-modal, #custom-list-notice-modal, #custom-list-edit-modal, #custom-list-confirm-modal {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.7);
@@ -1590,6 +1603,15 @@ body.page-mode #page-controls {
     align-items: center;
 
     z-index: 3000;
+}
+
+/* Both can pop up over an already-open Load Lists (or Edit List) modal —
+   Delete's confirm, and any failure/sign-in notice from a Load/Edit action —
+   but come earlier in the DOM than either, so equal z-index would fall back
+   to DOM order and paint them underneath instead of on top. */
+#custom-list-notice-modal,
+#custom-list-confirm-modal {
+    z-index: 3100;
 }
 
 .add-item-box {
@@ -1643,12 +1665,14 @@ body.page-mode #page-controls {
     font-size: 14px;
 }
 
-#unsaved-changes-overlay .modal-buttons button.danger {
+#unsaved-changes-overlay .modal-buttons button.danger,
+#custom-list-confirm-modal .modal-buttons button.danger {
     border: 1px solid #e74c3c;
     color: #e74c3c;
 }
 
-#unsaved-changes-overlay .modal-buttons button.danger:hover {
+#unsaved-changes-overlay .modal-buttons button.danger:hover,
+#custom-list-confirm-modal .modal-buttons button.danger:hover {
     background: rgba(231, 76, 60, 0.15);
 }
 
@@ -1685,13 +1709,17 @@ body.page-mode #page-controls {
 }
 
 /* Scrolls internally past a handful of saved lists rather than growing
-   .add-item-box tall enough to push the Apply/Cancel buttons off-screen. */
+   .add-item-box tall enough to push the Apply/Cancel buttons off-screen.
+   padding-right keeps the ✕ delete icon (flush to the row's own right edge
+   via .custom-list-row's space-between) clear of the scrollbar track that
+   overflow-y: auto can add right along that same edge. */
 #custom-list-load-items {
     display: flex;
     flex-direction: column;
     gap: 4px;
     max-height: 280px;
     overflow-y: auto;
+    padding-right: 10px;
 }
 
 .custom-list-row {
@@ -1722,10 +1750,60 @@ body.page-mode #page-controls {
     color: #e74c3c;
 }
 
-#custom-list-save-summary {
+#custom-list-save-summary,
+#custom-list-notice-message,
+#custom-list-confirm-message {
     margin: 0;
     color: #ccc;
     font-size: 14px;
+}
+
+.custom-list-load-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.custom-list-load-header h2 {
+    margin: 0;
+}
+
+#custom-list-load-edit-toggle {
+    flex: none;
+    font-size: 12px;
+    padding: 6px 10px;
+    min-height: unset;
+}
+
+/* Rows become plain click targets (open the per-pokemon editor) while Edit
+   Lists is active, in place of their normal checkbox — see
+   renderCustomListLoadModal() in pokedexes.js. */
+.custom-list-row--editable {
+    cursor: pointer;
+}
+
+.custom-list-row--editable:hover {
+    color: var(--accent);
+}
+
+.custom-list-edit-name {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Same scroll treatment as #custom-list-load-items — a saved list can run
+   to 100 pokemon, far taller than .add-item-box should grow to fit. */
+#custom-list-edit-items {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
 /* Tag autocomplete dropdown (see the tags textbox handling in
@@ -1788,6 +1866,16 @@ body.page-mode #page-controls {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+}
+
+/* Edit Lists hides Apply Selected entirely (see renderCustomListLoadModal
+   in pokedexes.js) rather than disabling it, which leaves Cancel as the
+   only flex child — space-between has nothing to space it apart from, so
+   it collapses to the left instead of staying bottom-right. margin-left:
+   auto keeps it pinned right regardless of whether Apply Selected is
+   present. */
+#custom-list-load-cancel {
+    margin-left: auto;
 }
 
 .modal-buttons button {

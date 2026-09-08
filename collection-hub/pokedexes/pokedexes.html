@@ -56,9 +56,13 @@
     </div>
 
     <div id="search-evolutions-row" class="width-sync-pending">
-        <label id="search-evolutions-label">
+        <label id="search-evolutions-label" class="search-toggle-label">
             <input type="checkbox" id="search-evolutions-toggle">
-            Include evolutions
+            Include evos
+        </label>
+        <label id="search-regionals-label" class="search-toggle-label">
+            <input type="checkbox" id="search-regionals-toggle" checked>
+            Include regionals
         </label>
     </div>
 
@@ -320,9 +324,9 @@
     </div>
 
     <!-- ==========================
-        CUSTOM LISTS — save modal, shown right after "Use List" applies the
-        search. Saving is optional; "Don't Save" just leaves the search
-        applied without persisting anything.
+        CUSTOM LISTS — save modal, opened by "Save List". Saves the
+        currently staged (Add List) pokemon to Firestore under a name;
+        Cancel just closes without saving anything.
     ========================== -->
     <div id="custom-list-save-modal" class="hidden">
 
@@ -347,22 +351,86 @@
     </div>
 
     <!-- ==========================
-        CUSTOM LISTS — load modal. Populated from savedCustomLists in
-        pokedexes.js each time it's opened (renderCustomListLoadModal()).
+        CUSTOM LISTS — small single-message notice, standing in for the
+        native alert()/confirm() popups elsewhere so it can't get silently
+        auto-dismissed the way those can (e.g. in automated testing).
+    ========================== -->
+    <div id="custom-list-notice-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <p id="custom-list-notice-message"></p>
+
+            <div class="modal-buttons">
+                <button id="custom-list-notice-ok">OK</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================
+        CUSTOM LISTS — yes/no confirm, standing in for the native confirm()
+        popup (e.g. "delete this saved list?").
+    ========================== -->
+    <div id="custom-list-confirm-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <p id="custom-list-confirm-message"></p>
+
+            <div class="modal-buttons">
+                <button id="custom-list-confirm-yes" class="danger">Delete</button>
+                <button id="custom-list-confirm-no">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================
+        CUSTOM LISTS — load modal. Populated from Firestore
+        (customPokemonLists collection) each time it's opened
+        (renderCustomListLoadModal() in pokedexes.js).
     ========================== -->
     <div id="custom-list-load-modal" class="hidden">
 
         <div class="add-item-box">
 
-            <h2>Load Custom Lists</h2>
+            <div class="custom-list-load-header">
+                <h2>Load Custom Lists</h2>
+                <button id="custom-list-load-edit-toggle" type="button" class="game-filter-btn">✏️ Edit Lists</button>
+            </div>
 
-            <div id="custom-list-load-empty" class="hidden">No saved lists yet — build one with Add Shown, then Use List.</div>
+            <div id="custom-list-load-empty" class="hidden">No saved lists yet — build one with Add List, then Save List.</div>
 
             <div id="custom-list-load-items"></div>
 
             <div class="modal-buttons">
                 <button id="custom-list-load-apply">Apply Selected</button>
                 <button id="custom-list-load-cancel">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ==========================
+        CUSTOM LISTS — edit modal. Opened from Load Lists (via its Edit
+        Lists toggle) for one saved list at a time — each pokemon can be
+        removed from the working copy, committed to Firestore on Save.
+    ========================== -->
+    <div id="custom-list-edit-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2 id="custom-list-edit-title">Edit List</h2>
+
+            <div id="custom-list-edit-items"></div>
+
+            <div class="modal-buttons">
+                <button id="custom-list-edit-save">Save</button>
+                <button id="custom-list-edit-cancel">Cancel</button>
             </div>
 
         </div>

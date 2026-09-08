@@ -30,7 +30,7 @@ let selectedCompletionFilter = null; // 'blue' | 'gold' | 'green' | null — cli
 let completionFilterMode = "exclusive"; // "exclusive" (exact tier only) | "all" (that tier and every tier above it) — the #dex-key-mode-toggle checkbox
 const COMPLETION_TIER_RANK = { blue: 0, gold: 1, green: 2 };
 let constraintFilters = {}; // { correctStage: true, notLuxuryBall: true, ... } — Has/Missing pairs for the 4 shiny constraints
-let constraintFilterMode = "and"; // "or" (matches any active constraint) | "and" (must match every active constraint) — the OR/AND slider atop the Constraints dropdown
+let constraintFilterMode = "or"; // "or" (matches any active constraint) | "and" (must match every active constraint) — the OR/AND slider atop the Constraints dropdown
 
 // Custom lists — "Add List" accumulates pokemon names across as many filter
 // passes as needed (capped at 100 newly-visible names per click, but nothing
@@ -982,7 +982,7 @@ function clearNonTodoFilters() {
     selectedGeneration = null;
     tagFilters = {};
     constraintFilters = {};
-    constraintFilterMode = "and";
+    constraintFilterMode = "or";
     searchInput.value = "";
     missingDexFilter = null;
     selectedCompletionFilter = null;
@@ -1474,6 +1474,31 @@ function scrollResultsToTop() {
     window.scrollTo({ top: 0, behavior: "instant" });
 }
 
+// A regional-form pokemon's name is always "{Prefix} {Species}" (Alolan
+// Rattata, Galarian Ponyta, Hisuian Sliggoo, Paldean Wooper, ...) — tagged
+// "Regional" in fullPokemonList.json (see matchesTags in applyFilters for
+// the other place that tag gets read). The base species name is therefore
+// always a substring of every one of its regional forms' names too, so
+// typing e.g. "sliggoo" used to surface Hisuian Sliggoo right alongside
+// Sliggoo with no way to separate them. With "Include regionals" off, a
+// regional-tagged pokemon only matches a term that actually touches its
+// region prefix (typing "hisui"/"hisuian", or the form's full name) —
+// typing just the shared species name no longer pulls it in.
+function matchesNameTerm(pokemonEntry, fullName, term) {
+    const strippedName = imageName(fullName);
+    const strippedTerm = imageName(term);
+
+    if (!strippedName.includes(strippedTerm)) return false;
+    if (includeRegionalsToggle.checked) return true;
+    if (!pokemonEntry?.tags?.includes("Regional")) return true;
+
+    const spaceIdx = fullName.indexOf(" ");
+    if (spaceIdx === -1) return true; // not actually "Prefix Species" shaped
+
+    const strippedPrefix = imageName(fullName.slice(0, spaceIdx));
+    return strippedPrefix.includes(strippedTerm) || strippedTerm.includes(strippedPrefix);
+}
+
 function applyFilters() {
 
     // Hunts is its own archive, not a filtered view of allPokemon — search
@@ -1506,10 +1531,22 @@ function applyFilters() {
 
         const expanded = new Set();
         allPokemon.forEach(p => {
-            if (searchTerms.some(term => imageName(p.name).includes(term))) {
+            if (searchTerms.some(term => matchesNameTerm(p, p.name, term))) {
                 (evolutionFamilies[p.name] || []).forEach(familyName => expanded.add(familyName));
             }
         });
+
+        // Families group regional forms alongside their base species (e.g.
+        // Goomy/Sliggoo/Goodra's family also lists Hisuian Sliggoo/Hisuian
+        // Goodra) — with regionals off, a family pulled in by its base
+        // species name shouldn't hand back its regional members for free;
+        // they can still show up if matchesNameTerm lets them in directly.
+        if (!includeRegionalsToggle.checked) {
+            allPokemon.forEach(p => {
+                if (p.tags?.includes("Regional")) expanded.delete(p.name);
+            });
+        }
+
         return expanded;
     })();
 
@@ -1551,7 +1588,13 @@ function applyFilters() {
                 return activeDexEdit === "shinyDex" && !!(savedDexData[key]?.shinyDexData?.notInDex);
             }
 
-            const nameMatch = searchTerms.some(term => imageName(name).includes(term));
+            // matchesNameTerm runs imageName() on both sides — not just
+            // `name` — so a term typed (or built from a saved custom list)
+            // with the exact punctuation a name uses (a space, hyphen,
+            // apostrophe: "Hisuian Qwilfish", "Ho-oh", "Farfetch'd") still
+            // matches it, and additionally gates regional forms behind
+            // "Include regionals" (see that function).
+            const nameMatch = searchTerms.some(term => matchesNameTerm(pokemonData, name, term));
             const typeMatch = searchTerms.some(term => types.some(t => t.includes(term)));
             const evolutionMatch = evolutionExpandedNames?.has(name) ?? false;
 
@@ -1981,6 +2024,12 @@ searchEvolutionsToggle.addEventListener("change", () => {
     applyFilters();
 });
 
+const includeRegionalsToggle = document.getElementById("search-regionals-toggle");
+
+includeRegionalsToggle.addEventListener("change", () => {
+    applyFilters();
+});
+
 const clearBtn = document.getElementById("clear-search");
 let missingFilterBtn = null;
 let notMissingFilterBtn = null;
@@ -2015,7 +2064,7 @@ const CUSTOM_LISTS_COLLECTION = "customPokemonLists";
 async function requireAdminForCustomLists() {
     const { isSignedInAsAdmin } = await adminAuthReady;
     if (isSignedInAsAdmin()) return true;
-    alert("Sign in as admin (bottom-right) to save or load custom lists.");
+    showCustomListNotice("Sign in as admin (bottom-right) to save or load custom lists.");
     return false;
 }
 
@@ -2024,14 +2073,59 @@ function updateCustomListSaveBtnLabel() {
     if (btn) btn.textContent = `💾 Save List (${customListStaging.length})`;
 }
 
-// Search terms are matched against imageName(name) (lowercased, punctuation/
-// spaces stripped — see matchesSearch in applyFilters), so names with a
-// space or hyphen (Alolan Rattata, Ho-oh, Mr-mime, ...) would never
-// re-match themselves if dropped into the search bar verbatim. Running
-// every name through imageName() first guarantees each one matches only
-// itself once it round-trips through the search bar.
+const customListNoticeModal = document.getElementById("custom-list-notice-modal");
+const customListNoticeMessage = document.getElementById("custom-list-notice-message");
+
+function showCustomListNotice(message) {
+    customListNoticeMessage.textContent = message;
+    customListNoticeModal.classList.remove("hidden");
+}
+
+document.getElementById("custom-list-notice-ok").addEventListener("click", () => {
+    customListNoticeModal.classList.add("hidden");
+});
+
+customListNoticeModal.addEventListener("click", (event) => {
+    if (event.target === customListNoticeModal) customListNoticeModal.classList.add("hidden");
+});
+
+const customListConfirmModal = document.getElementById("custom-list-confirm-modal");
+const customListConfirmMessage = document.getElementById("custom-list-confirm-message");
+let customListConfirmResolve = null;
+
+// Promise-based stand-in for window.confirm() — `await` it same as the
+// native one, but backed by a modal so it can't get silently auto-dismissed
+// the way a real confirm() can (e.g. in automated testing).
+function showCustomListConfirm(message) {
+    return new Promise(resolve => {
+        customListConfirmMessage.textContent = message;
+        customListConfirmResolve = resolve;
+        customListConfirmModal.classList.remove("hidden");
+    });
+}
+
+function closeCustomListConfirm(result) {
+    customListConfirmModal.classList.add("hidden");
+    if (customListConfirmResolve) {
+        customListConfirmResolve(result);
+        customListConfirmResolve = null;
+    }
+}
+
+document.getElementById("custom-list-confirm-yes").addEventListener("click", () => closeCustomListConfirm(true));
+document.getElementById("custom-list-confirm-no").addEventListener("click", () => closeCustomListConfirm(false));
+
+customListConfirmModal.addEventListener("click", (event) => {
+    if (event.target === customListConfirmModal) closeCustomListConfirm(false);
+});
+
+// matchesSearch now runs imageName() on the typed term as well as the name
+// (see applyFilters), so raw display names round-trip through the search bar
+// correctly even with a space/hyphen/apostrophe (Hisuian Qwilfish, Ho-oh,
+// Farfetch'd, ...) instead of needing to be pre-stripped into something like
+// "hisuianqwilfish" to match themselves.
 function customListToSearchValue(names) {
-    return names.map(imageName).join(", ");
+    return names.join(", ");
 }
 
 document.getElementById("custom-list-add-btn").addEventListener("click", () => {
@@ -2053,7 +2147,7 @@ function closeCustomListSaveModal() {
 
 document.getElementById("custom-list-save-btn").addEventListener("click", () => {
     if (customListStaging.length === 0) {
-        alert("Add some Pokémon to your list first with \"Add List\".");
+        showCustomListNotice("Add some Pokémon to your list first with \"Add List\".");
         return;
     }
 
@@ -2089,7 +2183,7 @@ document.getElementById("custom-list-save-confirm").addEventListener("click", as
         }
     } catch (err) {
         console.error("Failed to save custom list:", err);
-        alert("Failed to save the list — see console for details.");
+        showCustomListNotice("Failed to save the list — see console for details.");
         return;
     }
 
@@ -2114,10 +2208,23 @@ customListSaveModal.addEventListener("click", (event) => {
 const customListLoadModal = document.getElementById("custom-list-load-modal");
 const customListLoadItems = document.getElementById("custom-list-load-items");
 const customListLoadEmpty = document.getElementById("custom-list-load-empty");
+const customListLoadApplyBtn = document.getElementById("custom-list-load-apply");
+const customListLoadEditToggle = document.getElementById("custom-list-load-edit-toggle");
+
+// While active, rows open the per-pokemon editor instead of toggling a
+// checkbox for Apply Selected — the two are different tools for the same
+// modal (pick lists to search vs. change what's in one), not meant to be
+// used at the same time, so Apply Selected hides rather than sitting there
+// unusable with every checkbox gone.
+let customListEditModeActive = false;
 
 async function renderCustomListLoadModal() {
     customListLoadItems.innerHTML = "<p>Loading…</p>";
     customListLoadEmpty.classList.add("hidden");
+
+    customListLoadEditToggle.textContent = customListEditModeActive ? "✅ Done Editing" : "✏️ Edit Lists";
+    customListLoadEditToggle.classList.toggle("game-filter-active", customListEditModeActive);
+    customListLoadApplyBtn.classList.toggle("hidden", customListEditModeActive);
 
     const { db, collection, getDocs, doc, deleteDoc } = await firestoreReady;
 
@@ -2140,48 +2247,68 @@ async function renderCustomListLoadModal() {
 
     docs.forEach(docSnap => {
         const { name, pokemon } = docSnap.data();
+        const count = (pokemon || []).length;
 
         const row = document.createElement("div");
         row.classList.add("custom-list-row");
 
-        const label = document.createElement("label");
-        label.classList.add("checkbox-label");
+        if (customListEditModeActive) {
+            row.classList.add("custom-list-row--editable");
 
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.dataset.docId = docSnap.id;
-        checkbox.dataset.pokemon = JSON.stringify(pokemon || []);
+            const label = document.createElement("span");
+            label.classList.add("custom-list-edit-name");
+            label.textContent = `${name} (${count})`;
 
-        label.appendChild(checkbox);
-        label.append(` ${name} (${(pokemon || []).length})`);
+            row.appendChild(label);
+            row.addEventListener("click", () => openCustomListEditor(docSnap.id, name, pokemon || []));
+        } else {
+            const label = document.createElement("label");
+            label.classList.add("checkbox-label");
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.dataset.docId = docSnap.id;
+            checkbox.dataset.pokemon = JSON.stringify(pokemon || []);
+
+            label.appendChild(checkbox);
+            label.append(` ${name} (${count})`);
+
+            row.appendChild(label);
+        }
 
         const deleteBtn = document.createElement("span");
         deleteBtn.classList.add("custom-list-delete");
         deleteBtn.textContent = "✕";
         deleteBtn.title = "Delete this saved list";
-        deleteBtn.addEventListener("click", async () => {
-            if (!confirm(`Delete the saved list "${name}"?`)) return;
+        deleteBtn.addEventListener("click", async (event) => {
+            event.stopPropagation(); // don't also trigger the row's own edit-mode click handler above
+            if (!(await showCustomListConfirm(`Delete the saved list "${name}"?`))) return;
             if (!(await requireAdminForCustomLists())) return;
 
             try {
                 await deleteDoc(doc(db, CUSTOM_LISTS_COLLECTION, docSnap.id));
             } catch (err) {
                 console.error("Failed to delete custom list:", err);
-                alert("Failed to delete the list — see console for details.");
+                showCustomListNotice("Failed to delete the list — see console for details.");
                 return;
             }
 
             renderCustomListLoadModal();
         });
 
-        row.appendChild(label);
         row.appendChild(deleteBtn);
         customListLoadItems.appendChild(row);
     });
 }
 
+customListLoadEditToggle.addEventListener("click", () => {
+    customListEditModeActive = !customListEditModeActive;
+    renderCustomListLoadModal();
+});
+
 document.getElementById("custom-list-load-btn").addEventListener("click", async () => {
     if (!(await requireAdminForCustomLists())) return;
+    customListEditModeActive = false;
     customListLoadModal.classList.remove("hidden");
     renderCustomListLoadModal();
 });
@@ -2213,6 +2340,95 @@ document.getElementById("custom-list-load-apply").addEventListener("click", () =
     applyFilters();
     scrollResultsToTop();
     customListLoadModal.classList.add("hidden");
+});
+
+// ---- Edit List ----
+const customListEditModal = document.getElementById("custom-list-edit-modal");
+const customListEditTitle = document.getElementById("custom-list-edit-title");
+const customListEditItems = document.getElementById("custom-list-edit-items");
+
+let customListEditDocId = null;
+let customListEditName = "";
+let customListEditPokemon = [];
+
+function renderCustomListEditItems() {
+    customListEditTitle.textContent = `Edit "${customListEditName}" (${customListEditPokemon.length})`;
+    customListEditItems.innerHTML = "";
+
+    customListEditPokemon.forEach(name => {
+        const row = document.createElement("div");
+        row.classList.add("custom-list-row");
+
+        const label = document.createElement("span");
+        label.classList.add("custom-list-edit-name");
+        label.textContent = name;
+
+        const removeBtn = document.createElement("span");
+        removeBtn.classList.add("custom-list-delete");
+        removeBtn.textContent = "✕";
+        removeBtn.title = "Remove from this list";
+        removeBtn.addEventListener("click", () => {
+            customListEditPokemon = customListEditPokemon.filter(n => n !== name);
+            renderCustomListEditItems();
+        });
+
+        row.appendChild(label);
+        row.appendChild(removeBtn);
+        customListEditItems.appendChild(row);
+    });
+}
+
+function openCustomListEditor(docId, name, pokemon) {
+    customListEditDocId = docId;
+    customListEditName = name;
+    customListEditPokemon = [...pokemon];
+    renderCustomListEditItems();
+    customListEditModal.classList.remove("hidden");
+}
+
+document.getElementById("custom-list-edit-save").addEventListener("click", async () => {
+    if (!(await requireAdminForCustomLists())) return;
+
+    const { db, doc, updateDoc, serverTimestamp } = await firestoreReady;
+
+    try {
+        await updateDoc(doc(db, CUSTOM_LISTS_COLLECTION, customListEditDocId), {
+            pokemon: [...customListEditPokemon],
+            updatedAt: serverTimestamp()
+        });
+    } catch (err) {
+        console.error("Failed to update custom list:", err);
+        showCustomListNotice("Failed to save changes — see console for details.");
+        return;
+    }
+
+    customListEditModal.classList.add("hidden");
+    renderCustomListLoadModal();
+});
+
+document.getElementById("custom-list-edit-cancel").addEventListener("click", () => {
+    customListEditModal.classList.add("hidden");
+});
+
+customListEditModal.addEventListener("click", (event) => {
+    if (event.target === customListEditModal) customListEditModal.classList.add("hidden");
+});
+
+// Load Lists and Edit List both scroll their own pokemon list internally —
+// without this, scrolling that list (mouse wheel, touch drag) also scrolls
+// the pokemon grid underneath once the list itself runs out of room to
+// scroll further. A MutationObserver on each modal's class, rather than
+// updating this at every single show/hide call site above, means any of
+// them opening or closing is always reflected here with nothing to keep in
+// sync by hand.
+function updateCustomListBodyScrollLock() {
+    const anyOpen = [customListSaveModal, customListNoticeModal, customListConfirmModal, customListLoadModal, customListEditModal]
+        .some(modal => !modal.classList.contains("hidden"));
+    document.body.classList.toggle("custom-list-modal-open", anyOpen);
+}
+
+[customListSaveModal, customListNoticeModal, customListConfirmModal, customListLoadModal, customListEditModal].forEach(modal => {
+    new MutationObserver(updateCustomListBodyScrollLock).observe(modal, { attributes: true, attributeFilter: ["class"] });
 });
 
 function updateMissingButtonHighlight() {
@@ -2381,7 +2597,7 @@ document.addEventListener("click", (e) => {
     // row is gone from other dexes' filter sidebar.
     if (activeDexEdit !== "shinyDex") {
         constraintFilters = {};
-        constraintFilterMode = "and";
+        constraintFilterMode = "or";
     }
     updateConstraintFilterRowVisibility();
     updateConstraintButtonHighlight();
@@ -2891,7 +3107,7 @@ function createFilterButtons() {
 
     constraintFilterClearBtn.addEventListener("click", () => {
         constraintFilters = {};
-        constraintFilterMode = "and";
+        constraintFilterMode = "or";
         applyFilters();
         scrollResultsToTop();
         updateConstraintButtonHighlight();
@@ -3181,7 +3397,7 @@ function createFilterButtons() {
         selectedGeneration = null;
         tagFilters = {};
         constraintFilters = {};
-        constraintFilterMode = "and";
+        constraintFilterMode = "or";
         searchInput.value = "";
         missingDexFilter = null;
         selectedCompletionFilter = null;
