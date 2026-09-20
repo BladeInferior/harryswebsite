@@ -16682,7 +16682,7 @@
     "pogoShiny": false,
     "cherishDex": false,
     "tradeDexTodo": false,
-    "wonderTradeDexTodo": false,
+    "wonderTradeDexTodo": true,
     "pogoDexTodo": false,
     "shinyDex": false,
     "shinyDexTodo": false,
