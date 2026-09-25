@@ -996,7 +996,7 @@
     "tags": []
   },
   {
-    "name": "Farfetchd",
+    "name": "Farfetch'd",
     "generation": 1,
     "dex": "0083",
     "type": "Normal, Flying",
@@ -1458,7 +1458,7 @@
     "tags": []
   },
   {
-    "name": "Mr-mime",
+    "name": "Mr. Mime",
     "generation": 1,
     "dex": "0122",
     "type": "Psychic, Fairy",
@@ -3002,7 +3002,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Ho-oh",
+    "name": "Ho-Oh",
     "generation": 2,
     "dex": "0250",
     "type": "Fire, Flying",
@@ -5248,7 +5248,7 @@
     "tags": []
   },
   {
-    "name": "Mime-jr",
+    "name": "Mime Jr.",
     "generation": 4,
     "dex": "0439",
     "type": "Psychic, Fairy",
@@ -5700,7 +5700,7 @@
     "tags": []
   },
   {
-    "name": "Porygon-z",
+    "name": "Porygon-Z",
     "generation": 4,
     "dex": "0474",
     "type": "Normal",
@@ -9072,7 +9072,7 @@
     "tags": []
   },
   {
-    "name": "Type-null",
+    "name": "Type: Null",
     "generation": 7,
     "dex": "0772",
     "type": "Normal",
@@ -9294,7 +9294,7 @@
     "tags": []
   },
   {
-    "name": "Tapu-koko",
+    "name": "Tapu Koko",
     "generation": 7,
     "dex": "0785",
     "type": "Electric, Fairy",
@@ -9304,7 +9304,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Tapu-lele",
+    "name": "Tapu Lele",
     "generation": 7,
     "dex": "0786",
     "type": "Psychic, Fairy",
@@ -9314,7 +9314,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Tapu-bulu",
+    "name": "Tapu Bulu",
     "generation": 7,
     "dex": "0787",
     "type": "Grass, Fairy",
@@ -9324,7 +9324,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Tapu-fini",
+    "name": "Tapu Fini",
     "generation": 7,
     "dex": "0788",
     "type": "Water, Fairy",
@@ -10241,7 +10241,7 @@
     "tags": ["Regional"]
   },
   {
-    "name": "Sirfetchd",
+    "name": "Sirfetch'd",
     "generation": 8,
     "dex": "0865",
     "type": "Fighting",
@@ -10264,7 +10264,7 @@
     "tags": ["Regional"]
   },
   {
-    "name": "Mr-rime",
+    "name": "Mr. Rime",
     "generation": 8,
     "dex": "0866",
     "type": "Ice, Psychic",
@@ -10836,7 +10836,7 @@
     "games": [
       "pla"
     ],
-    "tags": []
+    "tags": ["Regional"]
   },
   {
     "name": "Basculegion",
@@ -11973,7 +11973,7 @@
     "tags": []
   },
   {
-    "name": "Wo-chien",
+    "name": "Wo-Chien",
     "generation": 9,
     "dex": "1001",
     "type": "Dark, Grass",
@@ -11983,7 +11983,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Chien-pao",
+    "name": "Chien-Pao",
     "generation": 9,
     "dex": "1002",
     "type": "Dark, Ice",
@@ -11993,7 +11993,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Ting-lu",
+    "name": "Ting-Lu",
     "generation": 9,
     "dex": "1003",
     "type": "Ground, Dark",
@@ -12003,7 +12003,7 @@
     "tags": ["Legendary"]
   },
   {
-    "name": "Chi-yu",
+    "name": "Chi-Yu",
     "generation": 9,
     "dex": "1004",
     "type": "Dark, Fire",

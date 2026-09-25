@@ -356,9 +356,9 @@
     "Magnemite",
     "Magnezone"
   ],
-  "Farfetchd": [
+  "Farfetch'd": [
     "Galarian Farfetch'd",
-    "Sirfetchd"
+    "Sirfetch'd"
   ],
   "Doduo": [
     "Dodrio"
@@ -497,10 +497,10 @@
   "Starmie": [
     "Staryu"
   ],
-  "Mr-mime": [
-    "Mime-jr",
+  "Mr. Mime": [
+    "Mime Jr.",
     "Galarian Mr. Mime",
-    "Mr-rime"
+    "Mr. Rime"
   ],
   "Scyther": [
     "Scizor",
@@ -568,7 +568,7 @@
   ],
   "Porygon": [
     "Porygon2",
-    "Porygon-z"
+    "Porygon-Z"
   ],
   "Omanyte": [
     "Omastar"
@@ -901,7 +901,7 @@
   ],
   "Porygon2": [
     "Porygon",
-    "Porygon-z"
+    "Porygon-Z"
   ],
   "Stantler": [
     "Wyrdeer"
@@ -1512,10 +1512,10 @@
   "Bonsly": [
     "Sudowoodo"
   ],
-  "Mime-jr": [
-    "Mr-mime",
+  "Mime Jr.": [
+    "Mr. Mime",
     "Galarian Mr. Mime",
-    "Mr-rime"
+    "Mr. Rime"
   ],
   "Happiny": [
     "Chansey",
@@ -1636,7 +1636,7 @@
     "Swinub",
     "Piloswine"
   ],
-  "Porygon-z": [
+  "Porygon-Z": [
     "Porygon",
     "Porygon2"
   ],
@@ -2562,11 +2562,11 @@
   "Palossand": [
     "Sandygast"
   ],
-  "Type-null": [
+  "Type: Null": [
     "Silvally"
   ],
   "Silvally": [
-    "Type-null"
+    "Type: Null"
   ],
   "Alolan Geodude": [
     "Geodude",
@@ -2895,21 +2895,21 @@
     "Galarian Corsola"
   ],
   "Galarian Farfetch'd": [
-    "Farfetchd",
-    "Sirfetchd"
+    "Farfetch'd",
+    "Sirfetch'd"
   ],
-  "Sirfetchd": [
-    "Farfetchd",
+  "Sirfetch'd": [
+    "Farfetch'd",
     "Galarian Farfetch'd"
   ],
   "Galarian Mr. Mime": [
-    "Mime-jr",
-    "Mr-mime",
-    "Mr-rime"
+    "Mime Jr.",
+    "Mr. Mime",
+    "Mr. Rime"
   ],
-  "Mr-rime": [
-    "Mime-jr",
-    "Mr-mime",
+  "Mr. Rime": [
+    "Mime Jr.",
+    "Mr. Mime",
     "Galarian Mr. Mime"
   ],
   "Galarian Yamask": [

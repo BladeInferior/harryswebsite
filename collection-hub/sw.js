@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v5';
+const CACHE_VERSION = 'collection-hub-v12';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -27,6 +27,7 @@ const SHELL_URLS = [
     'completions/completions.html',
     'collection-nav.js',
     'mobile-popout.js',
+    'voice-search.js',
     'export-to-github.js',
     'cards/recent-set.js',
     'cards/cards.js',

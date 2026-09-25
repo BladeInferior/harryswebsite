@@ -51,9 +51,14 @@
     <div id="search-wrapper">
         <div id="search-row">
             <input id="search" type="text" placeholder="Search Pokémon..." />
+            <span id="search-terms-toggle" title="Show search terms">▾</span>
             <span id="clear-search">✕</span>
         </div>
     </div>
+
+    <!-- Each comma-separated search term, with its own ✕ to remove it —
+         opened by #search-terms-toggle, positioned under the search bar. -->
+    <div id="search-terms-panel" hidden></div>
 
     <div id="search-evolutions-row" class="width-sync-pending">
         <label id="search-evolutions-label" class="search-toggle-label">
@@ -61,8 +66,12 @@
             Include evos
         </label>
         <label id="search-regionals-label" class="search-toggle-label">
-            <input type="checkbox" id="search-regionals-toggle" checked>
+            <input type="checkbox" id="search-regionals-toggle">
             Include regionals
+        </label>
+        <label id="search-exact-label" class="search-toggle-label">
+            <input type="checkbox" id="search-exact-toggle">
+            Exact match
         </label>
     </div>
 
@@ -438,6 +447,7 @@
     </div>
 
     <script src="../mobile-popout.js"></script>
+    <script src="../voice-search.js"></script>
     <script src="../unsaved-changes.js"></script>
     <script src="../export-to-github.js"></script>
     <script src="pokedexes.js"></script>

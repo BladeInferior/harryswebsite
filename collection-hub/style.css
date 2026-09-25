@@ -508,6 +508,150 @@ h1 {
     opacity: 1;
 }
 
+/* Sleeves stats: list of sleeves whose Nationality didn't match a code. */
+.stats-note {
+    color: #aaa;
+    font-size: 12px;
+    margin: 8px 0 0;
+}
+
+ul.stats-note {
+    padding-left: 18px;
+}
+
+/* Pokédex: ▾ at the end of the search bar and the list of search terms it
+   opens (see SEARCH TERMS DROPDOWN in pokedexes.js, which sets the panel's
+   top/right/width from #search-wrapper). */
+/* scaleX stretches the ▾ glyph wider without making it taller. */
+#search-terms-toggle {
+    display: inline-block;
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 14px;
+    padding: 0 3px;
+    transform: scaleX(1.6);
+    transition: transform 0.15s ease;
+}
+
+#search-terms-toggle:hover,
+#search-terms-toggle.open {
+    opacity: 1;
+}
+
+#search-terms-toggle.open {
+    transform: scaleX(1.6) rotate(180deg);
+}
+
+#search-terms-panel {
+    position: fixed;
+    z-index: 2100;
+    box-sizing: border-box;
+    max-height: 50vh;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+
+    background: rgba(28, 31, 38, 0.97);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius);
+}
+
+.search-term-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 6px 4px 10px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 13px;
+}
+
+.search-term-item span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.search-term-remove {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 2px 4px;
+}
+
+.search-term-remove:hover {
+    color: #e74c3c;
+}
+
+.search-terms-empty {
+    color: #aaa;
+    font-size: 12px;
+    text-align: center;
+    padding: 4px 0;
+}
+
+/* Both are display:flex, which would otherwise override the hidden
+   attribute they're toggled with. */
+#search-terms-panel[hidden],
+#voice-search-notice[hidden] {
+    display: none;
+}
+
+/* Injected by voice-search.js; pulses red while listening. */
+#voice-search {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 14px;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+#voice-search:hover {
+    opacity: 1;
+}
+
+/* Tucks the ✕ in next to the mic (overriding its usual 8px margin, which
+   is on top of #search-row's own gap). */
+#voice-search + #clear-search {
+    margin-left: -2px;
+}
+
+#voice-search.listening {
+    opacity: 1;
+    animation: voice-search-pulse 1s ease-in-out infinite;
+}
+
+/* Shown for a few seconds when spoken words couldn't be matched to a
+   Pokémon. top/left/width/min-height are set from voice-search.js to cover
+   #search-evolutions-row exactly. */
+#voice-search-notice {
+    position: fixed;
+    z-index: 2100;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: var(--radius);
+    background: rgba(231, 76, 60, 0.95);
+    color: white;
+    font-size: 12px;
+}
+
+@keyframes voice-search-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    50% { box-shadow: 0 0 0 5px rgba(231, 76, 60, 0); }
+}
+
 /* Its own fixed card directly under #search-wrapper, same shape as
    #import-export-controls just below it (see that rule's comment) — top and
    width are both set from JS (syncSearchControlsLayout, in pokedexes.js)
@@ -955,9 +1099,13 @@ h1 {
     transition: width 0.15s ease;
 }
 
+/* Top values sit 24px lower than the base rules on this page only: its
+   search stack has an extra #search-evolutions-row toggle line (Exact match)
+   that pushes #import-export-controls down onto the count label otherwise. */
 .pokemon-page #game-filter-container {
     width: 240px;
     gap: 2px;
+    top: 324px;
 }
 
 /* Matches #game-filter-container's own width override above — both are
@@ -966,6 +1114,7 @@ h1 {
    throwing its centered text off from the filters' actual horizontal center. */
 .pokemon-page #item-count-label {
     width: 240px;
+    top: 284px;
 }
 
 .pokemon-page #game-filter-container .filter-row,

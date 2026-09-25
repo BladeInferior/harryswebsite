@@ -11,6 +11,11 @@ let todoPendingShiny = new Set(); // subset of todoPendingDone marked shiny (PoG
 let todoFindShinyModalActive = false; // Shiny Dex Find only — the variant modal is open for a not-yet-caught to-do pokemon (see the todoFindActive branch in the card click handler and the #todo-find-save-btn handler)
 let gameFilterState = {};
 let allPokemon = [];
+
+// Tells voice-search.js this page's search takes comma-separated terms, so
+// each spoken word becomes its own term. Filled with every name once
+// fullPokemonList.json loads, so multi-word names stay one term.
+window.voiceSearchNames = [];
 let evolutionFamilies = {}; // name -> array of other pokemon names in the same evolution line, from evolutionFamilies.json
 let cardMap = new Map();
 let currentPokemon = null;
@@ -192,6 +197,7 @@ Promise.all([
 
     allPokemon = pokemonList;
     evolutionFamilies = evolutionFamiliesData;
+    window.voiceSearchNames = pokemonList.map(p => p.name);
 
     // convert exported array into your existing format
     const sourceDexData = {};
@@ -1188,7 +1194,8 @@ function applyHuntsSearch() {
 
     document.querySelectorAll("#hunts-container .hunt-card").forEach(card => {
         const name = card.querySelector(".pokemon-name")?.textContent.toLowerCase() || "";
-        card.style.display = !query || name.includes(query) ? "block" : "none";
+        const matches = exactMatchToggle.checked ? name === query : name.includes(query);
+        card.style.display = !query || matches ? "block" : "none";
     });
 }
 
@@ -1484,10 +1491,16 @@ function scrollResultsToTop() {
 // regional-tagged pokemon only matches a term that actually touches its
 // region prefix (typing "hisui"/"hisuian", or the form's full name) —
 // typing just the shared species name no longer pulls it in.
+//
+// With "Exact match" on, the (punctuation-stripped) name has to equal the
+// term outright — "charm" no longer matches Charmander/Charmeleon, and
+// "sliggoo" never matches "Hisuian Sliggoo", so the regional gate below is
+// moot in that mode.
 function matchesNameTerm(pokemonEntry, fullName, term) {
     const strippedName = imageName(fullName);
     const strippedTerm = imageName(term);
 
+    if (exactMatchToggle.checked) return strippedName === strippedTerm;
     if (!strippedName.includes(strippedTerm)) return false;
     if (includeRegionalsToggle.checked) return true;
     if (!pokemonEntry?.tags?.includes("Regional")) return true;
@@ -1595,7 +1608,9 @@ function applyFilters() {
             // matches it, and additionally gates regional forms behind
             // "Include regionals" (see that function).
             const nameMatch = searchTerms.some(term => matchesNameTerm(pokemonData, name, term));
-            const typeMatch = searchTerms.some(term => types.some(t => t.includes(term)));
+            const typeMatch = searchTerms.some(term => types.some(t =>
+                exactMatchToggle.checked ? t === term : t.includes(term)
+            ));
             const evolutionMatch = evolutionExpandedNames?.has(name) ?? false;
 
             return nameMatch || typeMatch || evolutionMatch;
@@ -2030,6 +2045,12 @@ includeRegionalsToggle.addEventListener("change", () => {
     applyFilters();
 });
 
+const exactMatchToggle = document.getElementById("search-exact-toggle");
+
+exactMatchToggle.addEventListener("change", () => {
+    applyFilters();
+});
+
 const clearBtn = document.getElementById("clear-search");
 let missingFilterBtn = null;
 let notMissingFilterBtn = null;
@@ -2040,6 +2061,102 @@ clearBtn.addEventListener("click", () => {
 
     searchInput.value = "";
     applyFilters("");
+});
+
+// ---------------------------
+// SEARCH TERMS DROPDOWN
+// ---------------------------
+// ▾ at the end of the search bar lists each comma-separated term on its own
+// row with a ✕ to drop just that one. Rebuilt from the box on open and on
+// every input while open, so typing, voice search, and removals all stay in
+// step. Removing a term fires the box's own "input" event, so applyFilters()
+// (and voice-search.js's running list) pick it up like any other edit.
+const searchTermsToggle = document.getElementById("search-terms-toggle");
+const searchTermsPanel = document.getElementById("search-terms-panel");
+
+function currentSearchTerms() {
+    return searchInput.value.split(",").map(term => term.trim()).filter(Boolean);
+}
+
+function renderSearchTermsPanel() {
+    searchTermsPanel.innerHTML = "";
+    const terms = currentSearchTerms();
+
+    if (terms.length === 0) {
+        const empty = document.createElement("div");
+        empty.className = "search-terms-empty";
+        empty.textContent = "No search terms";
+        searchTermsPanel.appendChild(empty);
+        return;
+    }
+
+    terms.forEach((term, index) => {
+        const row = document.createElement("div");
+        row.className = "search-term-item";
+
+        const label = document.createElement("span");
+        label.textContent = term;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "search-term-remove";
+        removeBtn.textContent = "✕";
+        removeBtn.title = `Remove "${term}"`;
+        removeBtn.addEventListener("click", () => removeSearchTerm(index));
+
+        row.append(label, removeBtn);
+        searchTermsPanel.appendChild(row);
+    });
+}
+
+function removeSearchTerm(index) {
+    const terms = currentSearchTerms();
+    terms.splice(index, 1);
+    searchInput.value = terms.join(", ");
+    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+// Exactly the search bar's width and horizontal position, just below it.
+function positionSearchTermsPanel() {
+    const rect = document.getElementById("search-wrapper").getBoundingClientRect();
+    searchTermsPanel.style.top = `${rect.bottom + 6}px`;
+    searchTermsPanel.style.left = `${rect.left}px`;
+    searchTermsPanel.style.width = `${rect.width}px`;
+}
+
+function setSearchTermsPanelOpen(open) {
+    searchTermsPanel.hidden = !open;
+    searchTermsToggle.classList.toggle("open", open);
+    if (open) {
+        renderSearchTermsPanel();
+        positionSearchTermsPanel();
+    }
+}
+
+searchTermsToggle.addEventListener("click", () => {
+    setSearchTermsPanelOpen(searchTermsPanel.hidden);
+});
+
+searchInput.addEventListener("input", () => {
+    if (!searchTermsPanel.hidden) renderSearchTermsPanel();
+});
+
+// composedPath() rather than contains(): a ✕ click re-renders the panel,
+// so by the time this runs the clicked button is no longer in the DOM.
+document.addEventListener("click", (e) => {
+    if (searchTermsPanel.hidden) return;
+    const path = e.composedPath();
+    if (!path.includes(searchTermsPanel) && !path.includes(searchTermsToggle)) {
+        setSearchTermsPanelOpen(false);
+    }
+});
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !searchTermsPanel.hidden) setSearchTermsPanelOpen(false);
+});
+
+window.addEventListener("resize", () => {
+    if (!searchTermsPanel.hidden) positionSearchTermsPanel();
 });
 
 // ---------------------------

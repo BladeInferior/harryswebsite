@@ -2905,6 +2905,12 @@ function normalizeStatsTag(name) {
     return (name || "").toLowerCase().replace(/[^a-z0-9]/g, "");
 }
 
+function escapeStatsHtml(text) {
+    const div = document.createElement("div");
+    div.textContent = text ?? "";
+    return div.innerHTML;
+}
+
 function renderStatsRows(rows) {
     return rows.map(([label, value]) =>
         `<div class="stats-row"><span>${label}</span><span class="stats-value">${value}</span></div>`
@@ -2917,22 +2923,39 @@ function renderStats() {
 
         const total = items.length;
         const counts = { eng: 0, jpn: 0, chn: 0 };
+        // Sleeves whose Nationality matches none of the three codes (blank,
+        // or a typo'd value) — without this row they silently drop out and
+        // the three rows no longer add up to the total.
+        const unrecognised = [];
 
         items.forEach(item => {
             const nat = (item[COLLECTION.fields.custom] || "").toLowerCase();
-            ["eng", "jpn", "chn"].forEach(key => {
-                if (nat.includes(key)) counts[key]++;
-            });
+            const matched = ["eng", "jpn", "chn"].filter(key => nat.includes(key));
+            matched.forEach(key => counts[key]++);
+            if (matched.length === 0) unrecognised.push(item);
         });
+
+        const rows = [
+            ["English", `${counts.eng} / ${total}`],
+            ["Japanese", `${counts.jpn} / ${total}`],
+            ["Chinese", `${counts.chn} / ${total}`]
+        ];
+        if (unrecognised.length) {
+            rows.push(["Unknown", `${unrecognised.length} / ${total}`]);
+        }
+
+        const unrecognisedList = unrecognised.length
+            ? `<p class="stats-note">Sleeves with an unrecognised Nationality:</p>
+               <ul class="stats-note">${unrecognised.map(item =>
+                   `<li>${escapeStatsHtml(item[COLLECTION.fields.title])} — “${escapeStatsHtml(item[COLLECTION.fields.custom] || "blank")}”</li>`
+               ).join("")}</ul>`
+            : "";
 
         statsModalBody.innerHTML = `
             <div class="stats-section">
                 <h3>By Nationality</h3>
-                ${renderStatsRows([
-                    ["English", `${counts.eng} / ${total}`],
-                    ["Japanese", `${counts.jpn} / ${total}`],
-                    ["Chinese", `${counts.chn} / ${total}`]
-                ])}
+                ${renderStatsRows(rows)}
+                ${unrecognisedList}
             </div>
             <button id="stats-featured-pokemon-btn" class="item-action-btn stats-detail-btn">View Featured Pokémon</button>
         `;
