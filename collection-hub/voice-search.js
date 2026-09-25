@@ -6,11 +6,11 @@
 //
 // One click keeps listening until clicked again, or until you say "stop"
 // (which is never added to the search). Spoken words are appended to
-// whatever's already in the box. On pages that set window.voiceSearchNames
-// (the Pokédex, whose search treats commas as separate terms), each spoken
-// word becomes its own comma-separated term, snapped to the closest real
-// name — see matchSpokenTerms(). Everywhere else commas aren't understood by
-// the search, so words are joined with spaces as heard.
+// whatever's already in the box as comma-separated terms — every page this
+// is on treats a comma as "match any of these". On the Pokédex (which sets
+// window.voiceSearchNames) each term is snapped to the closest real name —
+// see matchSpokenTerms(). Elsewhere, exact Pokémon names are split out and
+// other words kept as heard — see splitLooseTerms().
 
 // Turns a list of spoken words into search terms, snapping each to the
 // closest real Pokémon name by spelling or sound (speech often hears "Sligo"
@@ -128,6 +128,7 @@ const voiceSearchMatcher = (() => {
         index = {
             all: entries,
             exact: new Set(entries.map(e => e.key)),
+            byKey: new Map(entries.map(e => [e.key, e.name])),
             byRegion: Object.fromEntries([...new Set(Object.values(REGIONS))].map(region =>
                 [region, names
                     .filter(name => name.startsWith(region + " "))
@@ -246,14 +247,58 @@ const voiceSearchMatcher = (() => {
         return { terms, missed, trailingRegion };
     }
 
-    return { normalize, toWords, matchSpokenTerms };
+    // For the other collection pages, whose searches cover more than
+    // Pokémon (sleeve words like "etb", "ultra pro", "shiny"). Only exact
+    // Pokémon names (up to MAX_NAME_WORDS words, "galarian ponyta") are split
+    // out as their own terms — no near-miss or sound-alike snapping, which
+    // would "correct" ordinary words ("shiny" → Shinx). Everything else is
+    // kept as heard, consecutive words together as one phrase. "and" next to
+    // a name is dropped ("zapdos and articuno"), but kept inside a phrase.
+    function splitLooseTerms(rawWords, names) {
+        const idx = buildIndex(names);
+        const terms = [];
+        let phrase = [];
+
+        const flushPhrase = () => {
+            while (phrase.length && normalize(phrase[phrase.length - 1]) === "and") phrase.pop();
+            if (phrase.length) terms.push(phrase.join(" "));
+            phrase = [];
+        };
+
+        let i = 0;
+        while (i < rawWords.length) {
+            const key = normalize(rawWords[i]);
+            if (!key || (DROPPED.has(key) && key !== "and")) { i++; continue; }
+            if (key === "and" && phrase.length === 0) { i++; continue; }
+
+            let name = null;
+            let taken = 0;
+            for (let n = Math.min(MAX_NAME_WORDS, rawWords.length - i); n >= 1 && !name; n--) {
+                name = idx.byKey.get(normalize(rawWords.slice(i, i + n).join(""))) || null;
+                if (name) taken = n;
+            }
+
+            if (name) {
+                flushPhrase();
+                terms.push(name);
+                i += taken;
+            } else {
+                phrase.push(rawWords[i]);
+                i++;
+            }
+        }
+        flushPhrase();
+        return terms;
+    }
+
+    return { normalize, toWords, matchSpokenTerms, splitLooseTerms };
 })();
 
 if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
 
 (function () {
     if (typeof window === "undefined") return;
-    const { normalize, toWords, matchSpokenTerms } = voiceSearchMatcher;
+    const { normalize, toWords, matchSpokenTerms, splitLooseTerms } = voiceSearchMatcher;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const searchInput = document.getElementById("search");
     const searchRow = document.getElementById("search-row");
@@ -325,23 +370,41 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     let resultOffset = 0;  // results already folded into `terms` this session
     let carriedRegion = ""; // region said at the end of the last phrase, e.g. "Hisuian" before a pause
 
-    function termMode() {
+    // The Pokédex sets window.voiceSearchNames: every term must be a real
+    // Pokémon (near-misses snapped, anything else reported as missed).
+    // Elsewhere, only exact Pokémon names are split out and nothing is ever
+    // missed — see splitLooseTerms(). pokedexes.js loads after this script,
+    // so this is checked when needed, not once up front.
+    function strictMode() {
         return Array.isArray(window.voiceSearchNames);
     }
 
-    // { terms, missed }. Outside the Pokédex there's no name list to check
-    // against, so everything heard is kept as-is.
+    // Name list for splitLooseTerms(), fetched on first use of the mic.
+    // Until it arrives, speech still works — it just isn't split on names.
+    let looseNames = null;
+    let looseNamesRequested = false;
+
+    function loadLooseNames() {
+        if (strictMode() || looseNamesRequested) return;
+        looseNamesRequested = true;
+        fetch("../fullPokemonList.json")
+            .then(res => res.json())
+            .then(list => { looseNames = list.map(p => p.name); })
+            .catch(() => { looseNamesRequested = false; });
+    }
+
+    // { terms, missed, trailingRegion }
     function splitIntoTerms(text) {
         const words = toWords(text);
-        if (!termMode()) return { terms: words.length ? [words.join(" ")] : [], missed: [] };
-        return matchSpokenTerms(words, window.voiceSearchNames);
+        if (strictMode()) return matchSpokenTerms(words, window.voiceSearchNames);
+        return { terms: splitLooseTerms(words, looseNames || []), missed: [] };
     }
 
     // Of the browser's guesses for one phrase, the one that places the most
     // words as names (fewest missed on a tie, then the top guess).
     function pickBestAlternative(result) {
         const alternatives = Array.from(result, alt => alt.transcript);
-        if (!termMode() || alternatives.length < 2) return alternatives[0];
+        if (!strictMode() || alternatives.length < 2) return alternatives[0];
 
         let best = alternatives[0];
         let bestScore = -Infinity;
@@ -360,7 +423,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
 
     function render(interimText) {
         const all = [...terms, ...splitIntoTerms(interimText || "").terms];
-        searchInput.value = all.join(termMode() ? ", " : " ");
+        searchInput.value = all.join(", ");
         rendering = true;
         searchInput.dispatchEvent(new Event("input", { bubbles: true }));
         rendering = false;
@@ -435,10 +498,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     });
 
     function termsFromBox() {
-        const existing = searchInput.value.trim();
-        return termMode()
-            ? existing.split(",").map(t => t.trim()).filter(Boolean)
-            : (existing ? [existing] : []);
+        return searchInput.value.split(",").map(t => t.trim()).filter(Boolean);
     }
 
     // Any change to the box mid-dictation that didn't come from render() —
@@ -458,6 +518,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
             return;
         }
 
+        loadLooseNames();
         terms = termsFromBox();
         carriedRegion = "";
         resultOffset = 0;

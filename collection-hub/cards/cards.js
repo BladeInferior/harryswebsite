@@ -862,7 +862,10 @@ clearBtn.addEventListener("click", () => {
 });
 
 function filterItems(query) {
-    const q = (query || "").toLowerCase().trim();
+    // A comma separates independent search terms (a card matching any one
+    // of them shows), same as the Pokédex search.
+    const terms = (query || "").toLowerCase().split(",").map(t => t.trim()).filter(Boolean);
+    if (terms.length === 0) terms.push("");
 
     const recentSetNames = (filterRecentSet && typeof RECENT_SETS !== "undefined" && RECENT_SETS.length)
         ? new Set(RECENT_SETS[0].pokemon.map(normalizeCardName))
@@ -877,15 +880,19 @@ function filterItems(query) {
             return;
         }
 
-        let match = item.name.toLowerCase().includes(q);
+        const name = item.name.toLowerCase();
 
         // Dex number search — plain digits, no "#" required (a leading one
         // is stripped if typed anyway), matched against the zero-padded
         // dex string so "25" finds "0025".
-        if (activeDeck.hasDex && item.dex && q !== "") {
-            const dexQuery = q.replace(/^#/, "");
-            if (dexQuery !== "" && String(item.dex).includes(dexQuery)) match = true;
-        }
+        let match = terms.some(q => {
+            if (name.includes(q)) return true;
+            if (activeDeck.hasDex && item.dex && q !== "") {
+                const dexQuery = q.replace(/^#/, "");
+                if (dexQuery !== "" && String(item.dex).includes(dexQuery)) return true;
+            }
+            return false;
+        });
 
         if (filterOwned === true && !item.owned) match = false;
         if (filterOwned === false && item.owned) match = false;

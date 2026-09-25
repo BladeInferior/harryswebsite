@@ -2109,7 +2109,11 @@ function isoDateToSlashFormat(dateStr) {
 
 function filterItems(query) {
 
-    const q = query.toLowerCase().trim();
+    // A comma separates independent search terms (an item matching any one
+    // of them shows), same as the Pokédex search — "pikachu, charizard"
+    // shows both rather than looking for that literal text.
+    const terms = query.toLowerCase().split(",").map(t => t.trim()).filter(Boolean);
+    if (terms.length === 0) terms.push("");
 
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
 
@@ -2125,17 +2129,6 @@ function filterItems(query) {
             return;
         }
 
-        // replace item with the realItem for checks
-        const titleMatch2 = realItem[COLLECTION.fields.title].toLowerCase().includes(q);
-
-        const tagMatch2 = (realItem[COLLECTION.fields.tags] || []).some(tag =>
-            tag.toLowerCase().includes(q)
-        );
-
-        const untaggedMatch2 =
-            (q === "untagged" || q === "no tags") &&
-            (!realItem[COLLECTION.fields.tags] || realItem[COLLECTION.fields.tags].length === 0);
-
         // Search box also matches each collection's "date" field (variant
         // for popfigures, date acquired/completed/released elsewhere — as
         // both the raw ISO string and "DD/MM/YYYY") and "custom" field
@@ -2143,14 +2136,19 @@ function filterItems(query) {
         // Every collection maps both fields to something meaningful, so
         // this applies universally rather than per-name.
         const rawDateField = (realItem[COLLECTION.fields.date] || "").toString().toLowerCase();
+        const slashDateField = isoDateToSlashFormat(rawDateField);
+        const title = realItem[COLLECTION.fields.title].toLowerCase();
+        const tags = (realItem[COLLECTION.fields.tags] || []).map(tag => tag.toLowerCase());
+        const customField = (realItem[COLLECTION.fields.custom] || "").toString().toLowerCase();
+        const isUntagged = !realItem[COLLECTION.fields.tags] || realItem[COLLECTION.fields.tags].length === 0;
 
-        const dateFieldMatch2 =
-            rawDateField.includes(q) || isoDateToSlashFormat(rawDateField).includes(q);
-
-        const customFieldMatch2 =
-            (realItem[COLLECTION.fields.custom] || "").toString().toLowerCase().includes(q);
-
-        let match2 = titleMatch2 || tagMatch2 || untaggedMatch2 || dateFieldMatch2 || customFieldMatch2;
+        let match2 = terms.some(q =>
+            title.includes(q) ||
+            tags.some(tag => tag.includes(q)) ||
+            ((q === "untagged" || q === "no tags") && isUntagged) ||
+            rawDateField.includes(q) || slashDateField.includes(q) ||
+            customField.includes(q)
+        );
 
         // Sleeves: nationality filter (mutually exclusive)
         if (COLLECTION.name === "sleeves" && selectedNationality !== null) {
