@@ -523,7 +523,8 @@ ul.stats-note {
    opens (see SEARCH TERMS DROPDOWN in pokedexes.js, which sets the panel's
    top/right/width from #search-wrapper). */
 /* scaleX stretches the ▾ glyph wider without making it taller. */
-#search-terms-toggle {
+#search-terms-toggle,
+.search-terms-toggle {
     display: inline-block;
     cursor: pointer;
     opacity: 0.6;
@@ -534,11 +535,14 @@ ul.stats-note {
 }
 
 #search-terms-toggle:hover,
-#search-terms-toggle.open {
+#search-terms-toggle.open,
+.search-terms-toggle:hover,
+.search-terms-toggle.open {
     opacity: 1;
 }
 
-#search-terms-toggle.open {
+#search-terms-toggle.open,
+.search-terms-toggle.open {
     transform: scaleX(1.6) rotate(180deg);
 }
 
@@ -602,12 +606,13 @@ ul.stats-note {
 /* Both are display:flex, which would otherwise override the hidden
    attribute they're toggled with. */
 #search-terms-panel[hidden],
-#voice-search-notice[hidden] {
+.search-terms-panel[hidden],
+.voice-search-notice[hidden] {
     display: none;
 }
 
 /* Injected by voice-search.js; pulses red while listening. */
-#voice-search {
+.voice-search {
     cursor: pointer;
     opacity: 0.6;
     font-size: 14px;
@@ -615,27 +620,29 @@ ul.stats-note {
     padding: 2px;
 }
 
-#voice-search:hover {
+.voice-search:hover {
     opacity: 1;
 }
 
 /* Tucks the ✕ in next to the mic (overriding its usual 8px margin, which
    is on top of #search-row's own gap). */
-#voice-search + #clear-search {
+.voice-search + #clear-search,
+.voice-search + .clear-search {
     margin-left: -2px;
 }
 
-#voice-search.listening {
+.voice-search.listening {
     opacity: 1;
     animation: voice-search-pulse 1s ease-in-out infinite;
 }
 
 /* Shown for a few seconds when spoken words couldn't be matched to a
-   Pokémon. top/left/width/min-height are set from voice-search.js to cover
-   #search-evolutions-row exactly. */
-#voice-search-notice {
+   Pokémon. top/left/width/min-height are set from voice-search.js (for the
+   main search bar, to cover #search-evolutions-row exactly). Above the
+   .stats-modal-overlay modals too, for the Add To Do box's own mic. */
+.voice-search-notice {
     position: fixed;
-    z-index: 2100;
+    z-index: 4100;
     box-sizing: border-box;
 
     display: flex;
@@ -978,6 +985,27 @@ ul.stats-note {
     top: 6px;
     left: 6px;
     background: var(--accent);
+    color: #14161a;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+/* On the current dex's to-do list but not caught yet (see isUncaughtTodo in
+   pokedexes.js) — same cover as a Find pick above, so a Missing search
+   shows it's already lined up. Not shown in the To Do view itself (or
+   Find), where every card is on the list. */
+#box-container:not(.todo-view) .pokemon-card.on-todo {
+    opacity: 0.45;
+}
+
+#box-container:not(.todo-view) .pokemon-card.on-todo::after {
+    content: "📝 To Do";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    background: var(--accent-2);
     color: #14161a;
     font-size: 11px;
     font-weight: 700;
@@ -1519,6 +1547,20 @@ ul.stats-note {
     z-index: 2000;
 }
 
+/* Always one line: .filter-row wraps by default, and when 📋 Changes appears
+   (see updateExportGlow) it would drop onto a second line, growing this
+   fixed panel down over #item-count-label. The buttons shrink instead. */
+#import-export-controls.filter-row {
+    flex-wrap: nowrap;
+}
+
+#import-export-controls .game-filter-btn {
+    min-width: 0;
+    padding-left: 6px;
+    padding-right: 6px;
+    white-space: nowrap;
+}
+
 /* Its own column of stacked buttons (Add List / Save List / Load List)
    sitting to the LEFT of the #search-wrapper/#search-evolutions-row/
    #import-export-controls stack, rather than a 4th row below it — three
@@ -1543,6 +1585,38 @@ ul.stats-note {
     flex: none;
     width: 100%;
     font-size: 13px;
+}
+
+/* Save List + its ✕, together exactly the width Save List had alone — the
+   ✕ is a permanent thin sliver and Save List shrinks to make room, the
+   same way Import/Export make room for 📋 Changes. */
+#custom-list-save-row {
+    display: flex;
+    gap: 2px;
+}
+
+#custom-list-save-row #custom-list-save-btn {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+    white-space: nowrap;
+}
+
+/* ~2:9 against Save List (27px of the column's 150px, less the 2px gap).
+   flex-basis pinned so neither flex nor the button's own content can
+   widen it. */
+#custom-list-save-row #custom-list-clear-btn {
+    flex: 0 0 27px;
+    width: 27px;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 10px;
+}
+
+#custom-list-save-row #custom-list-clear-btn:hover {
+    border-color: #e74c3c;
+    color: #e74c3c;
 }
 
 /* Slightly smaller than Import/Export, and never wraps to a second line —
@@ -3384,7 +3458,8 @@ footer {
     .mobile-popout-list #game-filter-container,
     .mobile-popout-list #progress-container,
     .mobile-popout-list #dex-key,
-    .mobile-popout-list #stats-btn {
+    .mobile-popout-list #stats-btn,
+    .mobile-popout-list #custom-list-controls {
         display: flex !important;
         justify-content: center;
         position: static !important;
@@ -3606,20 +3681,53 @@ footer {
     width: 100%;
 }
 
-#todo-modal-input {
-    width: 100%;
+/* Add To Do box — dressed like an input, holding the real input plus the
+   same 🎤/▾/✕ controls as the main search bar. */
+#todo-modal-search-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #555;
     background: #2d2d2d;
-    color: white;
-    font: inherit;
     box-sizing: border-box;
-    outline: none;
     transition: 0.15s ease;
 }
 
-#todo-modal-input:focus {
+#todo-modal-search-row:focus-within {
     border-color: var(--accent);
+}
+
+#todo-modal-input {
+    flex: 1;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: white;
+    font: inherit;
+    outline: none;
+}
+
+.clear-search {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 14px;
+}
+
+.clear-search:hover {
+    opacity: 1;
+}
+
+/* The Add To Do box's search terms list — in the modal's own flow (it
+   just grows the modal) rather than floating like #search-terms-panel. */
+#todo-modal-terms-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+    max-height: 30vh;
+    overflow-y: auto;
 }
 

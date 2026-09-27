@@ -3,6 +3,9 @@
 // page's search logic already listens for the input's "input" event, so this
 // just sets the value and fires that event — no page-specific wiring needed.
 // Browsers without speech recognition (e.g. Firefox) never get the button.
+// Other inputs get their own mic via window.attachVoiceSearch() (e.g. the
+// Pokédex's Add To Do box); only one mic dictates at a time, and
+// window.stopVoiceSearch() stops whichever is on.
 //
 // One click keeps listening until clicked again, or until you say "stop"
 // (which is never added to the search). Spoken words are appended to
@@ -300,75 +303,17 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     if (typeof window === "undefined") return;
     const { normalize, toWords, matchSpokenTerms, splitLooseTerms } = voiceSearchMatcher;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const searchInput = document.getElementById("search");
-    const searchRow = document.getElementById("search-row");
-    if (!SpeechRecognition || !searchInput || !searchRow) return;
 
     const MIC_TITLE = "Search by voice (click again, or say \"stop\", to stop)";
-
-    const micBtn = document.createElement("span");
-    micBtn.id = "voice-search";
-    micBtn.textContent = "🎤";
-    micBtn.title = MIC_TITLE;
-    searchRow.insertBefore(micBtn, document.getElementById("clear-search"));
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-GB";
-    recognition.interimResults = true;
-    recognition.continuous = true;
-    // The browser's backup guesses for each phrase — pickBestAlternative()
-    // chooses whichever lines up with the most real names.
-    recognition.maxAlternatives = 5;
-
-    // The raw words the browser heard, shown in the mic's hover tooltip so a
-    // miss can be traced back to what was actually heard.
-    const heardLog = [];
     const HEARD_LOG_SIZE = 5;
 
-    function logHeard(raw, { terms: found, missed }) {
-        const outcome = [found.join(", "), missed.length ? `missed: ${missed.join(", ")}` : ""]
-            .filter(Boolean).join(" | ") || "(nothing)";
-        heardLog.push(`"${raw.trim()}" → ${outcome}`);
-        if (heardLog.length > HEARD_LOG_SIZE) heardLog.shift();
-        micBtn.title = `${MIC_TITLE}\n\nRecently heard:\n${heardLog.join("\n")}`;
-        console.info("[voice search] heard", JSON.stringify(raw.trim()), "→", found, missed.length ? { missed } : "");
+    // Every mic on the page — only one may dictate at a time, so starting
+    // one (or window.stopVoiceSearch()) stops the rest.
+    const controllers = [];
+
+    function stopAll() {
+        controllers.forEach(c => c.stop());
     }
-
-    // Brief note when spoken words couldn't be matched to a Pokémon — they're
-    // left out of the search, so this is the cue to just say the name again
-    // (listening carries on). Laid directly over the search toggles row
-    // (#search-evolutions-row) where there is one, else just under the
-    // search bar; positioned on show since those rows are placed from JS.
-    const notice = document.createElement("div");
-    notice.id = "voice-search-notice";
-    notice.hidden = true;
-    document.body.appendChild(notice);
-    let noticeTimer = null;
-
-    function positionNotice() {
-        const targetRect = document.getElementById("search-evolutions-row")?.getBoundingClientRect();
-        const anchor = targetRect && targetRect.height > 0 ? targetRect : null;
-        const wrapper = document.getElementById("search-wrapper").getBoundingClientRect();
-        const rect = anchor || { top: wrapper.bottom + 6, left: wrapper.left, width: wrapper.width, height: 0 };
-        notice.style.top = `${rect.top}px`;
-        notice.style.left = `${rect.left}px`;
-        notice.style.width = `${rect.width}px`;
-        notice.style.minHeight = `${rect.height}px`;
-    }
-
-    function showMissed(missed) {
-        if (!missed.length) return;
-        notice.textContent = `Didn't catch "${missed.join("\", \"")}" — say it again`;
-        positionNotice();
-        notice.hidden = false;
-        clearTimeout(noticeTimer);
-        noticeTimer = setTimeout(() => { notice.hidden = true; }, 4000);
-    }
-
-    let listening = false;
-    let terms = [];        // committed terms (existing box text + finished speech)
-    let resultOffset = 0;  // results already folded into `terms` this session
-    let carriedRegion = ""; // region said at the end of the last phrase, e.g. "Hisuian" before a pause
 
     // The Pokédex sets window.voiceSearchNames: every term must be a real
     // Pokémon (near-misses snapped, anything else reported as missed).
@@ -379,7 +324,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         return Array.isArray(window.voiceSearchNames);
     }
 
-    // Name list for splitLooseTerms(), fetched on first use of the mic.
+    // Name list for splitLooseTerms(), fetched on first use of a mic.
     // Until it arrives, speech still works — it just isn't split on names.
     let looseNames = null;
     let looseNamesRequested = false;
@@ -419,116 +364,209 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         return best;
     }
 
-    let rendering = false;
+    // Adds a 🎤 to `row`, just before `before`, that dictates into `input`.
+    // `clearBtn` is that row's ✕ (it wipes the running list of terms), and
+    // `placeNotice()` returns where the "didn't catch" notice goes, as
+    // { top, left, width, height }. Returns { stop }, or null when the
+    // browser has no speech recognition (no mic is added).
+    function attachVoiceSearch({ input, row, before, clearBtn, id, placeNotice }) {
+        if (!SpeechRecognition || !input || !row) return null;
 
-    function render(interimText) {
-        const all = [...terms, ...splitIntoTerms(interimText || "").terms];
-        searchInput.value = all.join(", ");
-        rendering = true;
-        searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-        rendering = false;
-    }
+        const micBtn = document.createElement("span");
+        if (id) micBtn.id = id;
+        micBtn.className = "voice-search";
+        micBtn.textContent = "🎤";
+        micBtn.title = MIC_TITLE;
+        row.insertBefore(micBtn, before || null);
 
-    function stop() {
-        listening = false;
-        carriedRegion = "";
-        micBtn.classList.remove("listening");
-        recognition.stop();
-    }
+        const recognition = new SpeechRecognition();
+        recognition.lang = "en-GB";
+        recognition.interimResults = true;
+        recognition.continuous = true;
+        // The browser's backup guesses for each phrase — pickBestAlternative()
+        // chooses whichever lines up with the most real names.
+        recognition.maxAlternatives = 5;
 
-    recognition.addEventListener("result", (e) => {
-        // Results for the utterance that contained "stop" can still arrive
-        // after stop() — ignore them.
-        if (!listening) return;
+        // The raw words the browser heard, shown in the mic's hover tooltip so
+        // a miss can be traced back to what was actually heard.
+        const heardLog = [];
 
-        let interim = carriedRegion;
-        for (let i = resultOffset; i < e.results.length; i++) {
-            const text = e.results[i][0].transcript;
+        function logHeard(raw, { terms: found, missed }) {
+            const outcome = [found.join(", "), missed.length ? `missed: ${missed.join(", ")}` : ""]
+                .filter(Boolean).join(" | ") || "(nothing)";
+            heardLog.push(`"${raw.trim()}" → ${outcome}`);
+            if (heardLog.length > HEARD_LOG_SIZE) heardLog.shift();
+            micBtn.title = `${MIC_TITLE}\n\nRecently heard:\n${heardLog.join("\n")}`;
+            console.info("[voice search] heard", JSON.stringify(raw.trim()), "→", found, missed.length ? { missed } : "");
+        }
 
-            // Acts on interim results too, so it stops as soon as "stop" is
-            // heard rather than after the browser's end-of-phrase pause.
-            const words = toWords(text);
-            const stopIdx = words.findIndex(w => normalize(w) === "stop");
-            if (stopIdx !== -1) {
-                const beforeStop = interim + " " + words.slice(0, stopIdx).join(" ");
-                const split = splitIntoTerms(beforeStop);
-                // Nothing more is coming, so a trailing region is a miss.
-                if (split.trailingRegion) split.missed.push(split.trailingRegion);
-                if (split.terms.length || split.missed.length) logHeard(beforeStop, split);
-                showMissed(split.missed);
-                terms.push(...split.terms);
-                render("");
+        // Brief note when spoken words couldn't be matched to a Pokémon —
+        // they're left out of the search, so this is the cue to just say the
+        // name again (listening carries on). Positioned on show, since what
+        // it sits over is itself placed from JS.
+        const notice = document.createElement("div");
+        notice.className = "voice-search-notice";
+        notice.hidden = true;
+        document.body.appendChild(notice);
+        let noticeTimer = null;
+
+        function showMissed(missed) {
+            if (!missed.length) return;
+            notice.textContent = `Didn't catch "${missed.join("\", \"")}" — say it again`;
+            const rect = placeNotice();
+            notice.style.top = `${rect.top}px`;
+            notice.style.left = `${rect.left}px`;
+            notice.style.width = `${rect.width}px`;
+            notice.style.minHeight = `${rect.height}px`;
+            notice.hidden = false;
+            clearTimeout(noticeTimer);
+            noticeTimer = setTimeout(() => { notice.hidden = true; }, 4000);
+        }
+
+        let listening = false;
+        let terms = [];        // committed terms (existing box text + finished speech)
+        let resultOffset = 0;  // results already folded into `terms` this session
+        let carriedRegion = ""; // region said at the end of the last phrase, e.g. "Hisuian" before a pause
+        let rendering = false;
+
+        function render(interimText) {
+            const all = [...terms, ...splitIntoTerms(interimText || "").terms];
+            input.value = all.join(", ");
+            rendering = true;
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            rendering = false;
+        }
+
+        // abort() rather than stop(): anything still being processed would be
+        // ignored anyway (see the `listening` check in "result"), and it frees
+        // the microphone straight away for another mic to start.
+        function stop() {
+            listening = false;
+            carriedRegion = "";
+            micBtn.classList.remove("listening");
+            recognition.abort();
+        }
+
+        recognition.addEventListener("result", (e) => {
+            // Results for the utterance that contained "stop" can still arrive
+            // after stop() — ignore them.
+            if (!listening) return;
+
+            let interim = carriedRegion;
+            for (let i = resultOffset; i < e.results.length; i++) {
+                const text = e.results[i][0].transcript;
+
+                // Acts on interim results too, so it stops as soon as "stop" is
+                // heard rather than after the browser's end-of-phrase pause.
+                const words = toWords(text);
+                const stopIdx = words.findIndex(w => normalize(w) === "stop");
+                if (stopIdx !== -1) {
+                    const beforeStop = interim + " " + words.slice(0, stopIdx).join(" ");
+                    const split = splitIntoTerms(beforeStop);
+                    // Nothing more is coming, so a trailing region is a miss.
+                    if (split.trailingRegion) split.missed.push(split.trailingRegion);
+                    if (split.terms.length || split.missed.length) logHeard(beforeStop, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    render("");
+                    stop();
+                    return;
+                }
+
+                if (e.results[i].isFinal) {
+                    const chosen = carriedRegion + " " + pickBestAlternative(e.results[i]);
+                    const split = splitIntoTerms(chosen);
+                    logHeard(chosen, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    carriedRegion = split.trailingRegion || "";
+                    interim = carriedRegion;
+                    resultOffset = i + 1;
+                } else {
+                    interim += " " + text;
+                }
+            }
+            render(interim);
+        });
+
+        // Browsers end a session on their own after a stretch of silence —
+        // restart it so listening only stops when the button is clicked again.
+        recognition.addEventListener("end", () => {
+            resultOffset = 0;
+            if (!listening) return;
+            try {
+                recognition.start();
+            } catch {
+                stop();
+            }
+        });
+
+        recognition.addEventListener("error", (e) => {
+            if (e.error === "not-allowed" || e.error === "service-not-allowed") {
+                micBtn.title = "Microphone access was blocked";
+                stop();
+            }
+        });
+
+        function termsFromBox() {
+            return input.value.split(",").map(t => t.trim()).filter(Boolean);
+        }
+
+        // Any change to the box mid-dictation that didn't come from render() —
+        // typing, ✕ (which empties it), removing a term from the search-terms
+        // dropdown — becomes the new base that later speech is appended to,
+        // rather than being overwritten.
+        input.addEventListener("input", () => {
+            if (listening && !rendering) terms = termsFromBox();
+        });
+        clearBtn?.addEventListener("click", () => {
+            terms = [];
+        });
+
+        micBtn.addEventListener("click", () => {
+            if (listening) {
                 stop();
                 return;
             }
 
-            if (e.results[i].isFinal) {
-                const chosen = carriedRegion + " " + pickBestAlternative(e.results[i]);
-                const split = splitIntoTerms(chosen);
-                logHeard(chosen, split);
-                showMissed(split.missed);
-                terms.push(...split.terms);
-                carriedRegion = split.trailingRegion || "";
-                interim = carriedRegion;
-                resultOffset = i + 1;
-            } else {
-                interim += " " + text;
+            stopAll();
+            loadLooseNames();
+            terms = termsFromBox();
+            carriedRegion = "";
+            resultOffset = 0;
+
+            try {
+                recognition.start();
+                listening = true;
+                micBtn.classList.add("listening");
+            } catch {
+                // start() throws if a previous session hasn't fully ended yet.
             }
-        }
-        render(interim);
-    });
+        });
 
-    // Browsers end a session on their own after a stretch of silence —
-    // restart it so listening only stops when the button is clicked again.
-    recognition.addEventListener("end", () => {
-        resultOffset = 0;
-        if (!listening) return;
-        try {
-            recognition.start();
-        } catch {
-            stop();
-        }
-    });
-
-    recognition.addEventListener("error", (e) => {
-        if (e.error === "not-allowed" || e.error === "service-not-allowed") {
-            micBtn.title = "Microphone access was blocked";
-            stop();
-        }
-    });
-
-    function termsFromBox() {
-        return searchInput.value.split(",").map(t => t.trim()).filter(Boolean);
+        const controller = { stop: () => { if (listening) stop(); } };
+        controllers.push(controller);
+        return controller;
     }
 
-    // Any change to the box mid-dictation that didn't come from render() —
-    // typing, ✕ (which empties it), removing a term from the search-terms
-    // dropdown — becomes the new base that later speech is appended to,
-    // rather than being overwritten.
-    searchInput.addEventListener("input", () => {
-        if (listening && !rendering) terms = termsFromBox();
-    });
-    document.getElementById("clear-search")?.addEventListener("click", () => {
-        terms = [];
-    });
+    window.attachVoiceSearch = attachVoiceSearch;
+    window.stopVoiceSearch = stopAll;
 
-    micBtn.addEventListener("click", () => {
-        if (listening) {
-            stop();
-            return;
-        }
-
-        loadLooseNames();
-        terms = termsFromBox();
-        carriedRegion = "";
-        resultOffset = 0;
-
-        try {
-            recognition.start();
-            listening = true;
-            micBtn.classList.add("listening");
-        } catch {
-            // start() throws if a previous session hasn't fully ended yet.
+    // Every collection page's main search bar. The notice is laid directly
+    // over the search toggles row (#search-evolutions-row) where there is
+    // one, else just under the search bar.
+    const clearSearch = document.getElementById("clear-search");
+    attachVoiceSearch({
+        input: document.getElementById("search"),
+        row: document.getElementById("search-row"),
+        before: clearSearch,
+        clearBtn: clearSearch,
+        id: "voice-search",
+        placeNotice() {
+            const toggles = document.getElementById("search-evolutions-row")?.getBoundingClientRect();
+            if (toggles && toggles.height > 0) return toggles;
+            const wrapper = document.getElementById("search-wrapper").getBoundingClientRect();
+            return { top: wrapper.bottom + 6, left: wrapper.left, width: wrapper.width, height: 0 };
         }
     });
 })();

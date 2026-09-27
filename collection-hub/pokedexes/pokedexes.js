@@ -95,6 +95,19 @@ function todoFieldFor(dexKey) {
     return null;
 }
 
+// On the current dex's to-do list but not caught there yet — it still
+// browses as missing (it is), just with a "📝 To Do" cover so a Missing
+// search doesn't send you off after one that's already lined up. Kept in
+// step by both applyFilters() and updateCardHighlights(); hidden in the
+// To Do view itself (see .todo-view in updateModeUI), where every card is.
+function isUncaughtTodo(key) {
+    const field = todoFieldFor(activeDexEdit);
+    if (!field) return false;
+    const data = savedDexData[key] || {};
+    const caught = activeDexEdit === "shinyDex" ? data.shinyDex === true : !!data[activeDexEdit];
+    return !!data[field] && !caught;
+}
+
 
 function saveData() {
     const serialized = JSON.stringify(savedDexData);
@@ -1056,14 +1069,53 @@ const todoModalTitle = document.getElementById("todo-modal-title");
 const todoModalInput = document.getElementById("todo-modal-input");
 const todoModalSubmit = document.getElementById("todo-modal-submit");
 const todoModalClose = document.getElementById("todo-modal-close");
+const todoModalSearchRow = document.getElementById("todo-modal-search-row");
+const todoModalClear = document.getElementById("todo-modal-clear");
+
+// Same 🎤 / ▾ / ✕ trio as the main search bar, so a whole to-do list can be
+// spoken in (voice-search.js snaps each word to a real name, same as the
+// Pokédex search).
+const todoModalTerms = createSearchTermsDropdown({
+    input: todoModalInput,
+    toggle: document.getElementById("todo-modal-terms-toggle"),
+    panel: document.getElementById("todo-modal-terms-panel")
+});
+
+window.attachVoiceSearch?.({
+    input: todoModalInput,
+    row: todoModalSearchRow,
+    before: todoModalClear,
+    clearBtn: todoModalClear,
+    placeNotice() {
+        const rect = todoModalSearchRow.getBoundingClientRect();
+        return { top: rect.bottom + 6, left: rect.left, width: rect.width, height: 0 };
+    }
+});
+
+todoModalClear.addEventListener("click", () => {
+    todoModalInput.value = "";
+    todoModalInput.dispatchEvent(new Event("input", { bubbles: true }));
+    todoModalInput.focus();
+});
+
+// Every way out of the modal also turns its mic off.
+function closeTodoModal() {
+    window.stopVoiceSearch?.();
+    todoModalTerms.setOpen(false);
+    todoModal.classList.add("hidden");
+}
 
 document.getElementById("todo-add-btn").addEventListener("click", () => {
 
     const dex = dexTypes.find(d => d.key === activeDexEdit);
     if (!dex || !todoFieldFor(activeDexEdit)) return;
 
+    // Otherwise the main search bar's mic would keep dictating behind it.
+    window.stopVoiceSearch?.();
+
     todoModalTitle.textContent = `Add To ${dex.label} To Do List`;
     todoModalInput.value = "";
+    todoModalTerms.setOpen(false);
     todoModal.classList.remove("hidden");
     todoModalInput.focus();
 });
@@ -1088,7 +1140,7 @@ todoModalSubmit.addEventListener("click", () => {
     applyFilters();
     if (pageMode) applyPagination();
 
-    todoModal.classList.add("hidden");
+    closeTodoModal();
 });
 
 todoModalInput.addEventListener("keydown", (e) => {
@@ -1097,12 +1149,10 @@ todoModalInput.addEventListener("keydown", (e) => {
     todoModalSubmit.click();
 });
 
-todoModalClose.addEventListener("click", () => {
-    todoModal.classList.add("hidden");
-});
+todoModalClose.addEventListener("click", closeTodoModal);
 
 todoModal.addEventListener("click", (e) => {
-    if (e.target === todoModal) todoModal.classList.add("hidden");
+    if (e.target === todoModal) closeTodoModal();
 });
 
 // =========================
@@ -1775,6 +1825,8 @@ function applyFilters() {
             return selectedTypes.some(t => types.includes(t));
         })();
 
+        card.classList.toggle("on-todo", isUncaughtTodo(key));
+
         if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo && matchesType && matchesConstraints) {
             card.style.display = "block";
         } else {
@@ -2066,97 +2118,109 @@ clearBtn.addEventListener("click", () => {
 // ---------------------------
 // SEARCH TERMS DROPDOWN
 // ---------------------------
-// ▾ at the end of the search bar lists each comma-separated term on its own
+// ▾ at the end of a search box lists each comma-separated term on its own
 // row with a ✕ to drop just that one. Rebuilt from the box on open and on
 // every input while open, so typing, voice search, and removals all stay in
-// step. Removing a term fires the box's own "input" event, so applyFilters()
-// (and voice-search.js's running list) pick it up like any other edit.
-const searchTermsToggle = document.getElementById("search-terms-toggle");
+// step. Removing a term fires the box's own "input" event, so whatever
+// listens to it (applyFilters(), voice-search.js's running list) picks it up
+// like any other edit. Used by the main search bar and the Add To Do box;
+// `position` (optional) places a floating panel each time it opens.
+function createSearchTermsDropdown({ input, toggle, panel, position }) {
+
+    function currentTerms() {
+        return input.value.split(",").map(term => term.trim()).filter(Boolean);
+    }
+
+    function render() {
+        panel.innerHTML = "";
+        const terms = currentTerms();
+
+        if (terms.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "search-terms-empty";
+            empty.textContent = "No search terms";
+            panel.appendChild(empty);
+            return;
+        }
+
+        terms.forEach((term, index) => {
+            const row = document.createElement("div");
+            row.className = "search-term-item";
+
+            const label = document.createElement("span");
+            label.textContent = term;
+
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "search-term-remove";
+            removeBtn.textContent = "✕";
+            removeBtn.title = `Remove "${term}"`;
+            removeBtn.addEventListener("click", () => removeTerm(index));
+
+            row.append(label, removeBtn);
+            panel.appendChild(row);
+        });
+    }
+
+    function removeTerm(index) {
+        const terms = currentTerms();
+        terms.splice(index, 1);
+        input.value = terms.join(", ");
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+
+    function setOpen(open) {
+        panel.hidden = !open;
+        toggle.classList.toggle("open", open);
+        if (open) {
+            render();
+            position?.();
+        }
+    }
+
+    toggle.addEventListener("click", () => {
+        setOpen(panel.hidden);
+    });
+
+    input.addEventListener("input", () => {
+        if (!panel.hidden) render();
+    });
+
+    // composedPath() rather than contains(): a ✕ click re-renders the panel,
+    // so by the time this runs the clicked button is no longer in the DOM.
+    document.addEventListener("click", (e) => {
+        if (panel.hidden) return;
+        const path = e.composedPath();
+        if (!path.includes(panel) && !path.includes(toggle)) setOpen(false);
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !panel.hidden) setOpen(false);
+    });
+
+    if (position) {
+        window.addEventListener("resize", () => {
+            if (!panel.hidden) position();
+        });
+    }
+
+    return { setOpen };
+}
+
+// Main search bar: exactly the bar's width and horizontal position, just
+// below it.
 const searchTermsPanel = document.getElementById("search-terms-panel");
 
-function currentSearchTerms() {
-    return searchInput.value.split(",").map(term => term.trim()).filter(Boolean);
-}
-
-function renderSearchTermsPanel() {
-    searchTermsPanel.innerHTML = "";
-    const terms = currentSearchTerms();
-
-    if (terms.length === 0) {
-        const empty = document.createElement("div");
-        empty.className = "search-terms-empty";
-        empty.textContent = "No search terms";
-        searchTermsPanel.appendChild(empty);
-        return;
+createSearchTermsDropdown({
+    input: searchInput,
+    toggle: document.getElementById("search-terms-toggle"),
+    panel: searchTermsPanel,
+    position() {
+        const rect = document.getElementById("search-wrapper").getBoundingClientRect();
+        searchTermsPanel.style.top = `${rect.bottom + 6}px`;
+        searchTermsPanel.style.left = `${rect.left}px`;
+        searchTermsPanel.style.width = `${rect.width}px`;
     }
-
-    terms.forEach((term, index) => {
-        const row = document.createElement("div");
-        row.className = "search-term-item";
-
-        const label = document.createElement("span");
-        label.textContent = term;
-
-        const removeBtn = document.createElement("button");
-        removeBtn.type = "button";
-        removeBtn.className = "search-term-remove";
-        removeBtn.textContent = "✕";
-        removeBtn.title = `Remove "${term}"`;
-        removeBtn.addEventListener("click", () => removeSearchTerm(index));
-
-        row.append(label, removeBtn);
-        searchTermsPanel.appendChild(row);
-    });
-}
-
-function removeSearchTerm(index) {
-    const terms = currentSearchTerms();
-    terms.splice(index, 1);
-    searchInput.value = terms.join(", ");
-    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
-}
-
-// Exactly the search bar's width and horizontal position, just below it.
-function positionSearchTermsPanel() {
-    const rect = document.getElementById("search-wrapper").getBoundingClientRect();
-    searchTermsPanel.style.top = `${rect.bottom + 6}px`;
-    searchTermsPanel.style.left = `${rect.left}px`;
-    searchTermsPanel.style.width = `${rect.width}px`;
-}
-
-function setSearchTermsPanelOpen(open) {
-    searchTermsPanel.hidden = !open;
-    searchTermsToggle.classList.toggle("open", open);
-    if (open) {
-        renderSearchTermsPanel();
-        positionSearchTermsPanel();
-    }
-}
-
-searchTermsToggle.addEventListener("click", () => {
-    setSearchTermsPanelOpen(searchTermsPanel.hidden);
-});
-
-searchInput.addEventListener("input", () => {
-    if (!searchTermsPanel.hidden) renderSearchTermsPanel();
-});
-
-// composedPath() rather than contains(): a ✕ click re-renders the panel,
-// so by the time this runs the clicked button is no longer in the DOM.
-document.addEventListener("click", (e) => {
-    if (searchTermsPanel.hidden) return;
-    const path = e.composedPath();
-    if (!path.includes(searchTermsPanel) && !path.includes(searchTermsToggle)) {
-        setSearchTermsPanelOpen(false);
-    }
-});
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !searchTermsPanel.hidden) setSearchTermsPanelOpen(false);
-});
-
-window.addEventListener("resize", () => {
-    if (!searchTermsPanel.hidden) positionSearchTermsPanel();
 });
 
 // ---------------------------
@@ -2250,6 +2314,13 @@ document.getElementById("custom-list-add-btn").addEventListener("click", () => {
     visible.forEach(name => {
         if (!customListStaging.includes(name)) customListStaging.push(name);
     });
+    updateCustomListSaveBtnLabel();
+});
+
+// ✕ next to Save List — throws away the list being built (nothing saved
+// is touched), so Add List starts fresh.
+document.getElementById("custom-list-clear-btn").addEventListener("click", () => {
+    customListStaging = [];
     updateCustomListSaveBtnLabel();
 });
 
@@ -2649,17 +2720,13 @@ document.addEventListener("click", (e) => {
 
     const previousDexEdit = activeDexEdit;
 
-    if (activeDexEdit === dexType) {
-        activeDexEdit = null;
-        if (dexType === "shinyDex") {
-            shinyEditModeFlag = false;
-        }
-    } else {
-        activeDexEdit = dexType;
-        if (dexType === "shinyDex") {
-            shinyEditModeFlag = true;
-        }
-    }
+    activeDexEdit = activeDexEdit === dexType ? null : dexType;
+
+    // Derived from activeDexEdit every time rather than only flipped when
+    // Shiny Dex itself is toggled — switching straight from Shiny Dex to
+    // another dex's Edit used to leave it on, so every modal afterwards
+    // (main page included) showed the shiny constraints layout.
+    shinyEditModeFlag = activeDexEdit === "shinyDex";
 
     // Shiny Mode only makes sense while PoGo Dex itself is being edited —
     // leaving it (switching to another dex, or turning edit mode off
@@ -2840,6 +2907,8 @@ function updateCardHighlights() {
 
         const key = normalizeName(name);
         const data = savedDexData[key] || {};
+
+        card.classList.toggle("on-todo", isUncaughtTodo(key));
 
         // -----------------------------
         // SPRITE (shiny only while viewing the PoGo Dex, or in Shiny Dex edit mode)
@@ -3924,6 +3993,13 @@ function updateCardImages() {
 
 function updateModeUI() {
 
+    // Switching mode (Page/List/To Do/Find/Hunts, or to another dex — that
+    // handler ends here too) turns the mic off, so it isn't left dictating
+    // into a search the new view has already moved on from.
+    window.stopVoiceSearch?.();
+
+    boxContainer.classList.toggle("todo-view", todoFilterActive);
+
     const pageBtn = document.getElementById("page-mode");
     const listBtn = document.getElementById("list-mode");
     const pagination = document.getElementById("pagination-controls");
@@ -4429,6 +4505,15 @@ createMobilePopout({
     right: 16,
     heading: "Filters",
     elementIds: ["game-filter-container"]
+});
+
+createMobilePopout({
+    toggleId: "mobile-lists-toggle",
+    icon: "🗂",
+    top: 130,
+    right: 128,
+    heading: "Custom Lists",
+    elementIds: ["custom-list-controls"]
 });
 
 createMobilePopout({

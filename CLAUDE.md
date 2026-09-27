@@ -6,6 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A personal static website (`bladeinferior.github.io` / served from `/` on a custom domain — `index.html` picks the base path at runtime by checking `window.location.hostname`) with no build step, no bundler, and no framework. Every page is plain HTML with `<script>` tags (some `type="module"`, most not). There is no lint or test suite — `package.json` only lists `axios`/`node-fetch`, used by a handful of one-off Node scripts (see "Asset-download scripts" below), not by the site itself.
 
+## Standing rules for every change
+
+- **Keep this file up to date.** Any change to the site (new feature, changed behaviour, new file, new convention) gets a matching update here in the same turn. Don't wait to be asked.
+- **Open the local site after a change.** The owner previews on VS Code's Live Server (`http://127.0.0.1:5500/`). If nothing is serving on port 5500, start a server there and open `collection-hub/collectionhub.html`. If something already is, leave it alone.
+
+Both rules are also enforced by the project hooks in `.claude/settings.json` → `.claude/hooks/turn-guard.js`. `UserPromptSubmit` snapshots a hash of every uncommitted file. `Stop` compares against it, and if the turn changed anything it does two things. First, it opens the Collection Hub in the browser — starting `.claude/hooks/static-server.js` on port 5500 first if nothing is listening there (that fallback has no live reload, unlike Live Server, and keeps running until its node process is killed) — but only on the first changing turn of a session, or whenever it had to start the server itself; a server already running doesn't by itself prove a tab is open, but repeat opens on every turn would be worse, so a `claude-turn-guard-<session>.opened` marker in the OS temp dir remembers it already did this once this session. Second, it blocks the stop once, asking for a CLAUDE.md update, if CLAUDE.md wasn't among the changed files.
+
 ## Commands
 
 - **Run the site locally**: just open the HTML files directly, or serve the repo root with any static file server (e.g. `npx serve .`) — there is nothing to build or compile first.
@@ -43,6 +50,28 @@ Each collection type (pokedex, cards, sleeves, etc.) ships a static `*-backup.js
 ## Pokédex filters (`collection-hub/pokedexes/pokedexes.js`)
 
 All filter UI is built dynamically into an empty `#game-filter-container` div by `createFilterButtons()` — there's no static filter markup in `pokedexes.html` to edit. `applyFilters()` computes each filter as an independent `matchesX` boolean (search, game, generation, tags, missing/completion, type, etc.) and ANDs them together at the end; adding a new filter means adding both a UI section in `createFilterButtons()` and a `matchesX` const in `applyFilters()`, plus wiring its reset into the Reset Filters handler and `clearNonTodoFilters()`. Pokémon type data comes from `fullPokemonList.json`'s `type` field, a comma-separated string (e.g. `"Grass, Poison"`), parsed and lowercased at filter time — it is not pre-normalized in the JSON itself.
+
+## Voice search (`collection-hub/voice-search.js`)
+
+Loaded on every collection page; adds a 🎤 to `#search-row` (before `#clear-search`) using the browser's Web Speech API (no button at all where it's unsupported, e.g. Firefox). It just writes comma-separated terms into the input and fires its `input` event — every page's search already treats a comma as "match any", so no per-page wiring is needed. Continuous listening until clicked again or the word "stop" is said. Two matching modes, split on whether the page sets `window.voiceSearchNames`: the Pokédex does, so every spoken word is snapped to the nearest real Pokémon name (spelling distance, then a sound-alike key, plus regional-form handling like "Hisui and sligoo" → Hisuian Sliggoo) and unplaceable words show a red "didn't catch" notice; other pages only split out exact Pokémon names and keep everything else as heard (so "shiny" isn't "corrected" to Shinx). The pure matcher (`voiceSearchMatcher`) has no DOM and is `module.exports`-ed so it can be exercised from Node.
+
+`window.attachVoiceSearch({ input, row, before, clearBtn, placeNotice })` adds another mic to any other input (the Pokédex's Add To Do modal uses it); only one mic dictates at a time, and `window.stopVoiceSearch()` stops whichever is on. On the Pokédex, `updateModeUI()` calls it, so any mode switch (Page/List/To Do/Find/Hunts, or changing dex) turns the mic off. The ▾ search-terms dropdown next to it is `createSearchTermsDropdown()` in `pokedexes.js`, shared by the main search bar and the Add To Do box.
+
+## Pokédex modal layout (`shinyEditModeFlag`)
+
+The Pokémon modal has two layouts: the normal all-dexes view, and Shiny Dex's variants/constraints view (`.shiny-edit-layout`, chosen in `renderModalState()`). `shinyEditModeFlag` must always equal `activeDexEdit === "shinyDex"`. The Edit-button handler derives it that way after every toggle. Setting it only when Shiny Dex itself is toggled on or off left it stuck on after switching straight from Shiny Dex to another dex, and every modal afterwards showed the shiny layout. The Reset Filters handler also clears it.
+
+## Pokédex fixed side stack
+
+`#search-wrapper` → `#search-evolutions-row` → `#import-export-controls` are stacked by `syncSearchControlsLayout()` (measured, not static), but `#item-count-label` (284px) and `#game-filter-container` (324px) below them sit at fixed `.pokemon-page` tops. Anything that makes the upper stack taller covers the count. So `#import-export-controls` is forced onto one line (`flex-wrap: nowrap`, buttons shrink), rather than letting 📋 Changes wrap onto a second row when it appears.
+
+## Pokédex custom lists (`#custom-list-controls`)
+
+These are the Add List / Save List / Load List buttons in the column left of the search stack. Add List adds the visible Pokémon to an in-memory `customListStaging`. Save List writes that to Firestore (`customPokemonLists`, owner-only rules set in the console). Load List puts saved lists back into the search bar. The ✕ beside Save List (`#custom-list-clear-btn`) empties `customListStaging` without saving anything. It is always visible and 2:9 against Save List's width (27px, pinned with `flex: 0 0 27px`); Save List shrinks to make room so the pair stays the column's width. On mobile the whole column is its own `createMobilePopout()` panel (🗂, `right: 128`), next to the ⚙ Filters and 📊 Dex Progress toggles.
+
+## Pokédex to-do cover
+
+On Trade/Wonder Trade/PoGo/Shiny Dex, a Pokémon that's on that dex's to-do list but not yet caught there gets `.on-todo` (see `isUncaughtTodo()`), set in both `applyFilters()` and `updateCardHighlights()` — dimmed with a "📝 To Do" badge, same look as a pending Find pick, so a Missing search shows it's already lined up. It's purely visual (still counts as missing everywhere) and hidden while the To Do view/Find is active via `#box-container.todo-view`.
 
 ## Shiny Hunts archive (`collection-hub/pokedexes/pokedexes.js`, Shiny Dex only)
 

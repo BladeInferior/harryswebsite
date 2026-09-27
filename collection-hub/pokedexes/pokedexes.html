@@ -90,7 +90,10 @@
     ========================== -->
     <div id="custom-list-controls" class="width-sync-pending">
         <button id="custom-list-add-btn" class="game-filter-btn" title="Add up to 100 currently visible Pokémon to your custom list — change filters and click again to keep adding">➕ Add List</button>
-        <button id="custom-list-save-btn" class="game-filter-btn" title="Save your custom list under a name">💾 Save List (0)</button>
+        <div id="custom-list-save-row">
+            <button id="custom-list-save-btn" class="game-filter-btn" title="Save your custom list under a name">💾 Save List (0)</button>
+            <button id="custom-list-clear-btn" class="game-filter-btn" title="Clear the list you're building without saving it">✕</button>
+        </div>
         <button id="custom-list-load-btn" class="game-filter-btn" title="Load one or more saved custom lists into the search bar">📂 Load List</button>
     </div>
 
@@ -225,7 +228,16 @@
         <div class="stats-modal-box">
             <div id="todo-modal-close" class="modal-close-btn">✕</div>
             <h2 id="todo-modal-title">Add To Do</h2>
-            <input type="text" id="todo-modal-input" placeholder="Pikachu, Charizard, Bulbasaur...">
+            <!-- Same three controls as the main search bar: 🎤 (added by
+                 voice-search.js's attachVoiceSearch, before the ✕), ▾ search
+                 terms dropdown, ✕ clear — see the TO DO MODAL block in
+                 pokedexes.js. -->
+            <div id="todo-modal-search-row">
+                <input type="text" id="todo-modal-input" placeholder="Pikachu, Charizard, Bulbasaur...">
+                <span id="todo-modal-terms-toggle" class="search-terms-toggle" title="Show pokemon to add">▾</span>
+                <span id="todo-modal-clear" class="clear-search" title="Clear">✕</span>
+            </div>
+            <div id="todo-modal-terms-panel" class="search-terms-panel" hidden></div>
             <button id="todo-modal-submit" class="item-action-btn stats-detail-btn">Add</button>
         </div>
     </div>
