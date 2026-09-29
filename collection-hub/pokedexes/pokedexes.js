@@ -1663,6 +1663,17 @@ function applyFilters() {
             .filter(gen => gen !== undefined)
     );
 
+    // Grid order otherwise never changes (cards are created once, in dex
+    // order, in createPokemonCards) — but a comma-separated search, most
+    // notably voice search's own spoken order, reads oddly if the results
+    // just come back in dex order regardless. CSS `order` (grid respects it
+    // same as flex) reshuffles matches to follow searchTerms' order instead,
+    // dex order only as the tie-break for cards sharing a term (e.g. two
+    // type matches) — cleared back to dex order the moment the box is
+    // empty. dexIndex tracks each card's original position since cardMap
+    // itself iterates in that same dex order.
+    let dexIndex = 0;
+
     cardMap.forEach((card, name) => {
 
         const key = normalizeName(name);
@@ -1870,6 +1881,18 @@ function applyFilters() {
         } else {
             card.style.display = "none";
         }
+
+        // Page Mode slices cards by DOM index (applyPagination), which
+        // dex-order tie-break would desync from if this also reordered
+        // visually — Page Mode already browses in a fixed numeric order on
+        // purpose, so it's left alone.
+        if (searchTerms.length && !pageMode) {
+            const termIndex = searchTerms.findIndex(term => matchesNameTerm(pokemonData, name, term));
+            card.style.order = (termIndex === -1 ? searchTerms.length : termIndex) * 100000 + dexIndex;
+        } else {
+            card.style.order = "";
+        }
+        dexIndex++;
     });
 
     updatePokemonCount();

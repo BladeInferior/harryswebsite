@@ -369,7 +369,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     // `placeNotice()` returns where the "didn't catch" notice goes, as
     // { top, left, width, height }. Returns { stop }, or null when the
     // browser has no speech recognition (no mic is added).
-    function attachVoiceSearch({ input, row, before, clearBtn, id, placeNotice }) {
+    function attachVoiceSearch({ input, row, before, clearBtn, id, placeNotice, onListenChange }) {
         if (!SpeechRecognition || !input || !row) return null;
 
         const micBtn = document.createElement("span");
@@ -445,6 +445,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
             carriedRegion = "";
             micBtn.classList.remove("listening");
             recognition.abort();
+            onListenChange?.(false);
         }
 
         recognition.addEventListener("result", (e) => {
@@ -539,6 +540,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                 recognition.start();
                 listening = true;
                 micBtn.classList.add("listening");
+                onListenChange?.(true);
             } catch {
                 // start() throws if a previous session hasn't fully ended yet.
             }
@@ -567,6 +569,16 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
             if (toggles && toggles.height > 0) return toggles;
             const wrapper = document.getElementById("search-wrapper").getBoundingClientRect();
             return { top: wrapper.bottom + 6, left: wrapper.left, width: wrapper.width, height: 0 };
+        },
+        // Pokédex-only ("Exact match" doesn't exist elsewhere) — spoken terms
+        // are already snapped to real Pokémon names, so exact matching keeps
+        // e.g. "Onix" from also pulling in every other name that merely
+        // contains "on". On while dictating, off the moment it stops.
+        onListenChange(listening) {
+            const exactToggle = document.getElementById("search-exact-toggle");
+            if (!exactToggle) return;
+            exactToggle.checked = listening;
+            exactToggle.dispatchEvent(new Event("change", { bubbles: true }));
         }
     });
 })();
