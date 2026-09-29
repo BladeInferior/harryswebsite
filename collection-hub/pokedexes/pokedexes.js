@@ -166,9 +166,22 @@ function syncSearchControlsLayout() {
 
     const width = searchWrapper.offsetWidth;
     const gap = 10;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     let nextTop = searchWrapper.getBoundingClientRect().bottom + gap;
 
-    if (evolutionsRow) {
+    // On mobile, "Include evos / Include regionals / Exact match" moves into
+    // its own createMobilePopout() panel (see "🔎 Search Options" below)
+    // instead of sitting in this fixed stack, which used to push
+    // #import-export-controls down onto the count label below it. That
+    // pop-out only relocates the row once the page's data fetch resolves —
+    // well after this function's own synchronous call on page load — so
+    // revealing it here first in its desktop position, then yanking it into
+    // the panel a moment later, is exactly the flash-then-settle glitch
+    // #custom-list-controls has below. Skipping it here on mobile leaves it
+    // hidden (width-sync-pending) for that same createMobilePopout() call to
+    // uncover instead, and leaves nextTop where it was so import/export sits
+    // directly under the search bar rather than leaving a gap behind.
+    if (evolutionsRow && !isMobile) {
         evolutionsRow.style.width = `${width}px`;
         evolutionsRow.style.top = `${nextTop}px`;
         evolutionsRow.classList.remove("width-sync-pending");
@@ -185,7 +198,8 @@ function syncSearchControlsLayout() {
     // pushed the stack past the bottom of the viewport) — right is computed
     // from #search-wrapper's own left edge rather than copying its width, so
     // it always sits flush against whatever that stack's actual width is.
-    if (customListColumn) {
+    // Same mobile pop-out timing note as evolutionsRow above.
+    if (customListColumn && !isMobile) {
         const rightOffset = window.innerWidth - searchWrapper.getBoundingClientRect().left + gap;
         customListColumn.style.right = `${rightOffset}px`;
         customListColumn.classList.remove("width-sync-pending");
@@ -4547,4 +4561,13 @@ createMobilePopout({
     right: 72,
     heading: "Dex Progress",
     elementIds: ["dex-key", "stats-btn", "progress-container"]
+});
+
+createMobilePopout({
+    toggleId: "mobile-search-options-toggle",
+    icon: "🔎",
+    top: 130,
+    right: 184,
+    heading: "Search Options",
+    elementIds: ["search-evolutions-row"]
 });

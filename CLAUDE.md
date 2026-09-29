@@ -65,7 +65,7 @@ The Pokémon modal has two layouts: the normal all-dexes view, and Shiny Dex's v
 
 ## Pokédex fixed side stack
 
-`#search-wrapper` → `#search-evolutions-row` → `#import-export-controls` are stacked by `syncSearchControlsLayout()` (measured, not static), but `#item-count-label` (284px) and `#game-filter-container` (324px) below them sit at fixed `.pokemon-page` tops. Anything that makes the upper stack taller covers the count. So `#import-export-controls` is forced onto one line (`flex-wrap: nowrap`, buttons shrink), rather than letting 📋 Changes wrap onto a second row when it appears.
+`#search-wrapper` → `#search-evolutions-row` → `#import-export-controls` are stacked by `syncSearchControlsLayout()` (measured, not static), but `#item-count-label` (284px) and `#game-filter-container` (324px) below them sit at fixed `.pokemon-page` tops. Anything that makes the upper stack taller covers the count. So `#import-export-controls` is forced onto one line (`flex-wrap: nowrap`, buttons shrink), rather than letting 📋 Changes wrap onto a second row when it appears. On mobile, `#search-evolutions-row` (Include evos/regionals, Exact match) and `#custom-list-controls` drop out of this stack entirely into their own `createMobilePopout()` panels instead (see below) — `syncSearchControlsLayout()` skips positioning either one under `window.matchMedia("(max-width: 768px)")`, leaving them `width-sync-pending`-hidden for that pop-out to uncover instead. Without that guard, this function's own synchronous call on page load reveals them in their desktop fixed position well before the pop-outs (set up later, inside the async data-fetch `.then()`) get a chance to relocate them — a visible flash-then-relocate glitch on every load.
 
 ## Pokédex custom lists (`#custom-list-controls`)
 
@@ -89,7 +89,7 @@ The one admin-hub feature that needs write access outside the repo, so unlike ev
 
 ## Mobile pop-out pattern (`collection-hub/mobile-popout.js`)
 
-`createMobilePopout()` doesn't build a separate mobile UI — it *relocates* the real, already-wired desktop controls (e.g. the whole `#game-filter-container`) into a floating panel below a toggle button on narrow screens, moving them back to their original DOM position above the mobile breakpoint. Returns a `sync()` function that must be re-called if the tracked container gets rebuilt (e.g. `createFilterButtons()` re-running). Only one panel can be open at a time across the page.
+`createMobilePopout()` doesn't build a separate mobile UI — it *relocates* the real, already-wired desktop controls (e.g. the whole `#game-filter-container`) into a floating panel below a toggle button on narrow screens, moving them back to their original DOM position above the mobile breakpoint. Returns a `sync()` function that must be re-called if the tracked container gets rebuilt (e.g. `createFilterButtons()` re-running). Only one panel can be open at a time across the page. The Pokédex has four: ⚙ Filters (`right: 16`), 📊 Dex Progress (`right: 72`), 🗂 Custom Lists (`right: 128`), 🔎 Search Options (`right: 184`, `#search-evolutions-row` — Include evos/regionals, Exact match). Any element handed to `createMobilePopout()` this way needs its *own* desktop-positioning code (if it has any, e.g. `syncSearchControlsLayout()`) to skip it on mobile too — see the fixed-side-stack note above for why.
 
 ## Service workers
 

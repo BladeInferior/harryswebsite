@@ -3459,7 +3459,8 @@ footer {
     .mobile-popout-list #progress-container,
     .mobile-popout-list #dex-key,
     .mobile-popout-list #stats-btn,
-    .mobile-popout-list #custom-list-controls {
+    .mobile-popout-list #custom-list-controls,
+    .mobile-popout-list #search-evolutions-row {
         display: flex !important;
         justify-content: center;
         position: static !important;
