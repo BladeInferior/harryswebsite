@@ -573,11 +573,15 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         // Pokédex-only ("Exact match" doesn't exist elsewhere) — spoken terms
         // are already snapped to real Pokémon names, so exact matching keeps
         // e.g. "Onix" from also pulling in every other name that merely
-        // contains "on". On while dictating, off the moment it stops.
+        // contains "on". Only turned on here, not off — it stays on after
+        // the mic stops (so the results you just dictated don't change),
+        // until the search bar itself is cleared (see pokedexes.js's
+        // clear-search and #search "input" handlers).
         onListenChange(listening) {
+            if (!listening) return;
             const exactToggle = document.getElementById("search-exact-toggle");
             if (!exactToggle) return;
-            exactToggle.checked = listening;
+            exactToggle.checked = true;
             exactToggle.dispatchEvent(new Event("change", { bubbles: true }));
         }
     });

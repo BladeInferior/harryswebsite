@@ -2143,6 +2143,12 @@ document.getElementById("not-in-dex-checkbox").addEventListener("change", (e) =>
 const searchInput = document.getElementById("search");
 
 searchInput.addEventListener("input", (e) => {
+    // Voice search turns "Exact match" on for the duration of dictation
+    // (see voice-search.js's onListenChange) but deliberately leaves it on
+    // after the mic stops, so the results just dictated don't change —
+    // clearing the box back to empty (by hand, letter by letter) is what
+    // resets it instead.
+    if (!e.target.value) exactMatchToggle.checked = false;
     applyFilters(e.target.value);
 });
 
@@ -2173,6 +2179,7 @@ let pogoShinyFilterNoBtn = null;
 clearBtn.addEventListener("click", () => {
 
     searchInput.value = "";
+    exactMatchToggle.checked = false;
     applyFilters("");
 });
 
