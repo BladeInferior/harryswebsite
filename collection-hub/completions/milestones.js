@@ -109,23 +109,36 @@ function loadMilestones() {
 
         if (local) {
             try {
-                milestoneItems = JSON.parse(local);
+                const localItems = JSON.parse(local);
 
-                // Same reconciliation as collections.js's own load: items
-                // exported from another device/session exist in the source
-                // JSON but never made it into this browser's local copy —
-                // pull those in without touching anything locally-added
-                // that hasn't been exported yet.
-                const localNames = new Set(milestoneItems.map(i => i.name));
-                sourceList.forEach(source => {
-                    if (!localNames.has(source.name)) milestoneItems.push(source);
-                });
+                // reconcileList() (unsaved-changes.js) does a proper
+                // three-way merge against the last confirmed remote
+                // baseline: a field only stays local if THIS device
+                // actually changed it since then, rather than local always
+                // winning wholesale even when it's the stale copy. Falls
+                // back to the old local-wins + pull-in-new-items behavior
+                // for one load if there's no baseline yet.
+                const reconciled = typeof reconcileList === "function"
+                    ? reconcileList(localItems, sourceList, MILESTONES_STORAGE_KEY, "name")
+                    : null;
+
+                if (reconciled) {
+                    milestoneItems = reconciled;
+                } else {
+                    milestoneItems = localItems;
+                    const localNames = new Set(milestoneItems.map(i => i.name));
+                    sourceList.forEach(source => {
+                        if (!localNames.has(source.name)) milestoneItems.push(source);
+                    });
+                }
             } catch {
                 milestoneItems = sourceList;
             }
         } else {
             milestoneItems = sourceList;
         }
+
+        if (typeof setRemoteBaseline === "function") setRemoteBaseline(MILESTONES_STORAGE_KEY, sourceList);
 
         if (typeof initUnsavedChangesSnapshot === "function") {
             initUnsavedChangesSnapshot(JSON.stringify(milestoneItems), MILESTONES_STORAGE_KEY);

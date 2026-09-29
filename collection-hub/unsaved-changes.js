@@ -47,6 +47,116 @@ function markSaved(stateJSON, storageKey) {
     recomputeGlobalDirty();
 }
 
+// ---------------------------
+// REMOTE-BASELINE RECONCILIATION
+//
+// A device's localStorage only changes when *that* device edits something —
+// nothing here ever expires it. The old "local wins wholesale, only pull in
+// entries missing from local entirely" merge (still the fallback below) was
+// fine for one editor on one device, but the moment a second device opens
+// with older data sitting in its localStorage, it silently reverts anything
+// changed elsewhere the instant it next exports — whichever device exports
+// last just overwrites the whole file with its own stale snapshot. This is
+// a proper three-way merge instead: a field only survives on the local side
+// if *this device* actually changed it since the last time it confirmed
+// what the remote looked like (on load, or right after its own last
+// export) — everything else defers to whatever's freshest on the remote.
+//
+// getRemoteBaseline/setRemoteBaseline persist that "last confirmed remote"
+// snapshot per storageKey, separately from the live editing buffer at
+// localStorage[storageKey] and from the in-memory dirty-flag snapshot above.
+// ---------------------------
+
+function getRemoteBaseline(storageKey) {
+    const raw = localStorage.getItem(storageKey + "__remoteBaseline");
+    if (!raw) return null;
+    try { return JSON.parse(raw); } catch { return null; }
+}
+
+function setRemoteBaseline(storageKey, data) {
+    try { localStorage.setItem(storageKey + "__remoteBaseline", JSON.stringify(data)); } catch {}
+}
+
+function fieldsEqual(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
+// One record's fields, reconciled: local's value survives only where it
+// actually diverges from the baseline (a real unsynced edit); everywhere
+// else the remote's (possibly newer) value wins — including fields that
+// exist in remote but not in local at all, since merged starts as a full
+// copy of remote. Recurses one level into plain-object sub-fields (e.g.
+// shinyDexData) so a change buried in there doesn't mark the whole
+// sub-object as dirty.
+function reconcileRecord(local, baseline, remote) {
+    if (!baseline) return local;
+    const merged = { ...remote };
+    Object.keys(local).forEach(key => {
+        const lv = local[key], bv = baseline[key], rv = remote[key];
+        if (lv && typeof lv === "object" && !Array.isArray(lv) && rv && typeof rv === "object") {
+            merged[key] = reconcileRecord(lv, bv || {}, rv);
+        } else if (!fieldsEqual(lv, bv)) {
+            merged[key] = lv;
+        }
+    });
+    return merged;
+}
+
+// dexData shape: { [pokemonKey]: {flags...} }. Returns null (caller should
+// fall back to its own old local-wins behavior) when there's no baseline
+// yet — e.g. the first load on a device after this reconciliation shipped.
+function reconcileDict(localDict, remoteDict, storageKey) {
+    const baseline = getRemoteBaseline(storageKey);
+    if (!baseline) return null;
+
+    const result = {};
+    new Set([...Object.keys(remoteDict), ...Object.keys(localDict)]).forEach(id => {
+        const remote = remoteDict[id], local = localDict[id], base = baseline[id];
+        if (!local) { if (remote) result[id] = remote; return; }
+        if (!remote) { result[id] = local; return; }
+        result[id] = reconcileRecord(local, base, remote);
+    });
+    return result;
+}
+
+// Array-of-records shape, keyed by idField (e.g. shinyHunts' "id", a
+// collection's title field, or milestones'/collections' "name"). Same
+// null-means-fall-back contract as reconcileDict.
+function reconcileList(localList, remoteList, storageKey, idField) {
+    const baseline = getRemoteBaseline(storageKey);
+    if (!baseline) return null;
+
+    const byId = list => new Map(list.map(x => [x[idField], x]));
+    const remoteById = byId(remoteList), localById = byId(localList), baseById = byId(baseline);
+
+    const result = [];
+    new Set([...remoteById.keys(), ...localById.keys()]).forEach(id => {
+        const remote = remoteById.get(id), local = localById.get(id), base = baseById.get(id);
+
+        if (!local) {
+            // This device knew about it before (it's in the baseline) and
+            // no longer does — a deletion made here, not yet exported.
+            // Don't resurrect it just because the remote still has it.
+            if (base) return;
+            if (remote) result.push(remote);
+            return;
+        }
+
+        if (!remote) {
+            // Missing remotely. Unchanged since the last sync means someone
+            // else deleted it there — follow suit. Otherwise this device
+            // has a real pending edit to something deleted elsewhere; keep
+            // it rather than silently losing that edit.
+            if (base && fieldsEqual(local, base)) return;
+            result.push(local);
+            return;
+        }
+
+        result.push(base ? reconcileRecord(local, base, remote) : local);
+    });
+    return result;
+}
+
 // Read-only lookups for pages that want to reflect a tracker's state in
 // their own UI (e.g. an export button glow, or a "what changed" list) —
 // exposed instead of reaching into the trackers Map's internals directly.

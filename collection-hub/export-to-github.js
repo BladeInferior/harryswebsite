@@ -31,8 +31,18 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
 
             const result = await res.json();
 
+            // Both of these mean GitHub now genuinely holds this exact
+            // content — record it as this device's reconciliation baseline
+            // (see reconcileDict/reconcileList in unsaved-changes.js) so a
+            // later load on ANY device can tell "changed since this export"
+            // from "just stale," instead of always letting local win. Only
+            // done here, not in markSaved() generally — the manual-download
+            // fallback below also calls markSaved() to clear this device's
+            // own dirty flag, but that path never actually reaches GitHub,
+            // so it must never be mistaken for a confirmed remote sync.
             if (result.verified && result.committed) {
                 if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
+                if (typeof setRemoteBaseline === "function") setRemoteBaseline(trackerKey, JSON.parse(snapshotData));
                 if (typeof updateExportGlow === "function") updateExportGlow();
                 showExportToast(filename);
                 return;
@@ -43,6 +53,7 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
             // export.
             if (result.verified && result.unchanged) {
                 if (typeof markSaved === "function") markSaved(snapshotData, trackerKey);
+                if (typeof setRemoteBaseline === "function") setRemoteBaseline(trackerKey, JSON.parse(snapshotData));
                 if (typeof updateExportGlow === "function") updateExportGlow();
                 return;
             }
@@ -54,7 +65,11 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
 
         } catch (err) {
             console.error("Export sync failed:", err);
+            alert(`Couldn't reach GitHub to export ${filename} — falling back to manual download. This device's changes are NOT on GitHub yet; re-export once you're back online.`);
         }
+    } else {
+        console.warn(`Exporting ${filename} without an admin token — falling back to manual download. This device's changes are NOT on GitHub.`);
+        alert(`Not signed in as admin — falling back to manual download for ${filename}. This device's changes are NOT on GitHub yet.`);
     }
 
     const blob = new Blob([json], { type: "application/json" });

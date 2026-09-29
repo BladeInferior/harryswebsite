@@ -200,43 +200,61 @@ Promise.all([
 .then(([itemList]) => {
 
     const local = localStorage.getItem(COLLECTION.storageKey);
+    const titleKey = COLLECTION.fields.title;
 
     if (local) {
         try {
-            items = JSON.parse(local);
+            const localItems = JSON.parse(local);
 
-            // Fields added to the source JSON after this browser's copy was
-            // cached (e.g. "franchise") won't exist on the cached items —
-            // backfill any such gaps from the source so they don't stay
-            // permanently blank just because localStorage predates them.
-            const titleKey = COLLECTION.fields.title;
-            const sourceByTitle = new Map(itemList.map(i => [i[titleKey], i]));
-            const localTitles = new Set(items.map(i => i[titleKey]));
+            // reconcileList() (unsaved-changes.js) does a proper three-way
+            // merge against the last confirmed remote baseline: a field only
+            // stays local if THIS device actually changed it since then,
+            // new/removed items are reconciled the same way, and any field
+            // present in the source but not locally (e.g. "franchise" added
+            // after this browser's copy was cached) comes through
+            // automatically since it starts from the source's copy. Falls
+            // back to the old local-wins-wholesale + manual backfill for one
+            // load if there's no baseline yet.
+            const reconciled = typeof reconcileList === "function"
+                ? reconcileList(localItems, itemList, COLLECTION.storageKey, titleKey)
+                : null;
 
-            items.forEach(item => {
-                const source = sourceByTitle.get(item[titleKey]);
-                if (!source) return;
+            if (reconciled) {
+                items = reconciled;
+            } else {
+                items = localItems;
 
-                Object.keys(source).forEach(key => {
-                    if (item[key] === undefined || item[key] === "") {
-                        item[key] = source[key];
-                    }
+                const sourceByTitle = new Map(itemList.map(i => [i[titleKey], i]));
+                const localTitles = new Set(items.map(i => i[titleKey]));
+
+                items.forEach(item => {
+                    const source = sourceByTitle.get(item[titleKey]);
+                    if (!source) return;
+
+                    Object.keys(source).forEach(key => {
+                        if (item[key] === undefined || item[key] === "") {
+                            item[key] = source[key];
+                        }
+                    });
                 });
-            });
 
-            // Items exported from another device/session exist in the source
-            // JSON but were never added to this browser's local copy — pull
-            // those in too, without touching any locally-added item that
-            // hasn't been exported yet (those simply won't be in itemList).
-            itemList.forEach(source => {
-                if (!localTitles.has(source[titleKey])) items.push(source);
-            });
+                // Items exported from another device/session exist in the
+                // source JSON but were never added to this browser's local
+                // copy — pull those in too, without touching any
+                // locally-added item that hasn't been exported yet (those
+                // simply won't be in itemList).
+                itemList.forEach(source => {
+                    if (!localTitles.has(source[titleKey])) items.push(source);
+                });
+            }
         } catch {
             items = itemList;
         }
     } else {
         items = itemList;
     }
+
+    if (typeof setRemoteBaseline === "function") setRemoteBaseline(COLLECTION.storageKey, itemList);
 
     if (typeof initUnsavedChangesSnapshot === "function") {
         initUnsavedChangesSnapshot(JSON.stringify(items), COLLECTION.storageKey);

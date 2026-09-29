@@ -246,16 +246,27 @@ Promise.all([
 
     // saveData() has always written every toggle to localStorage, but
     // nothing ever read it back on load — a refresh before exporting was
-    // silently reverting to whatever pokedex-backup.json last had. Local
-    // wins per-pokemon (it's always a full snapshot of the whole dex, so
-    // it's at least as current as the backup for anything it covers);
-    // entries only present in the backup (new pokemon, or synced from
-    // another device) get pulled in without touching anything saved locally.
+    // silently reverting to whatever pokedex-backup.json last had.
+    // reconcileDict() (unsaved-changes.js) does a proper three-way merge
+    // against the last confirmed remote baseline: a field only stays local
+    // if THIS device actually changed it since then, otherwise the backup's
+    // (possibly newer, from another device) value wins. Without that check,
+    // a device that hadn't been opened in a while would silently revert
+    // anything changed elsewhere the moment it next exported — local always
+    // won, even when local was the stale one. Falls back to the old
+    // local-wins-wholesale behavior for one load if there's no baseline yet
+    // (a device opening for the first time since this reconciliation shipped).
     const localRaw = localStorage.getItem("dexData");
 
     if (localRaw) {
         try {
-            savedDexData = JSON.parse(localRaw);
+            const localDexData = JSON.parse(localRaw);
+
+            const reconciled = typeof reconcileDict === "function"
+                ? reconcileDict(localDexData, sourceDexData, "dexData")
+                : null;
+
+            savedDexData = reconciled || localDexData;
 
             Object.keys(sourceDexData).forEach(key => {
                 if (!(key in savedDexData)) {
@@ -293,19 +304,32 @@ Promise.all([
     }
 
     // Shiny hunts archive — an independent flat list, not keyed per-pokemon
-    // like savedDexData, so no field-by-field reconciliation is needed: local
-    // wins outright if present (it's always the full list), otherwise fall
-    // back to whatever's in the backup.
+    // like savedDexData. Same three-way reconciliation as above, keyed by
+    // each hunt's "id".
     const localHuntsRaw = localStorage.getItem("shinyHunts");
 
     if (localHuntsRaw) {
         try {
-            shinyHunts = JSON.parse(localHuntsRaw);
+            const localHunts = JSON.parse(localHuntsRaw);
+
+            const reconciledHunts = typeof reconcileList === "function"
+                ? reconcileList(localHunts, huntsList, "shinyHunts", "id")
+                : null;
+
+            shinyHunts = reconciledHunts || localHunts;
         } catch {
             shinyHunts = huntsList;
         }
     } else {
         shinyHunts = huntsList;
+    }
+
+    // Record what the backup files actually looked like on this load as the
+    // new reconciliation baseline — the point future edits get diffed
+    // against to tell "changed here" from "just stale."
+    if (typeof setRemoteBaseline === "function") {
+        setRemoteBaseline("dexData", sourceDexData);
+        setRemoteBaseline("shinyHunts", huntsList);
     }
 
     if (typeof initUnsavedChangesSnapshot === "function") {
