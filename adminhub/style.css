@@ -878,6 +878,52 @@ footer {
     margin-bottom: 14px;
 }
 
+/* A short lead-in line merged into the step after it as a heading (see
+   mergeShortHeadings() in the userscript, and step.heading in
+   renderStepElement()) rather than standing alone as its own step. */
+.walkthrough-step-heading-wrap {
+    margin-bottom: 14px;
+}
+
+.walkthrough-step-heading-wrap .walkthrough-step-text,
+.walkthrough-step-heading-wrap .walkthrough-step-image,
+.walkthrough-step-heading-wrap .walkthrough-achievement-card,
+.walkthrough-step-heading-wrap .walkthrough-spoiler {
+    margin-bottom: 0;
+}
+
+.walkthrough-step-heading {
+    font-weight: bold;
+    color: var(--accent-light);
+    margin-bottom: 8px;
+}
+
+/* Scroll mode only — click any paragraph to jump into Step mode at that
+   exact step (see onClickText in renderStepElement()/renderReader()). */
+.walkthrough-step-text--clickable {
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 4px 6px;
+    margin-left: -6px;
+    margin-right: -6px;
+    transition: background .15s ease;
+}
+
+.walkthrough-step-text--clickable:hover {
+    background: rgba(239, 68, 68, .12);
+}
+
+/* Reading-aloud tracking (Step mode only, see sentenceReadIndex/
+   matchSpokenSentence() in walkthroughs.js) — dimmed, never hidden, so a
+   sentence already read is still a glance away, not gone. */
+.walkthrough-sentence {
+    transition: opacity .2s ease, color .2s ease;
+}
+
+.walkthrough-sentence--read {
+    opacity: 0.4;
+}
+
 .walkthrough-step-image {
     display: block;
     max-width: 100%;
@@ -991,7 +1037,8 @@ footer {
 
 .reader-step-content .walkthrough-step-text,
 .reader-step-content .walkthrough-step-image,
-.reader-step-content .walkthrough-achievement-card {
+.reader-step-content .walkthrough-achievement-card,
+.reader-step-content .walkthrough-step-heading-wrap {
     margin-bottom: 0;
 }
 
