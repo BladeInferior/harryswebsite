@@ -111,6 +111,72 @@ h1 {
     color: var(--text-dim);
 }
 
+/* Legends Z-A Hyperspace Wild Zone star rating(s) — only shown while the
+   "Legends ZA" game filter is active, see applyFilters() in pokedexes.js. */
+.plza-distortion-note {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--accent);
+}
+
+/* Legends Z-A "Combinations" modal (#plza-combos-modal) — wider than the
+   standard .stats-modal-box so a distortion's mates fit several to a row
+   before wrapping, matching the "all in one row" look of the main grid just
+   at a smaller scale. */
+#plza-combos-modal .stats-modal-box {
+    width: 640px;
+}
+
+.plza-combo-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.plza-combo-row:last-child {
+    border-bottom: none;
+}
+
+.plza-combo-row-star {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+.plza-combo-row-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+.plza-combo-card {
+    width: 64px;
+    text-align: center;
+}
+
+.plza-combo-card img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.plza-combo-card .pokemon-name {
+    margin-top: 2px;
+    font-size: 10px;
+    line-height: 1.15;
+    text-transform: capitalize;
+}
+
+/* The pokemon Combinations was actually opened for, now shown in its own
+   row alongside its mates — picked out so it doesn't just blend in. */
+.plza-combo-card--self .pokemon-name {
+    color: var(--accent);
+    font-weight: 600;
+}
+
 /* Finished hunts — same mint-green "selected" treatment as .active-dex uses
    for a caught pokemon on the currently-edited dex, applied here instead to
    mark a hunt as done rather than still in progress (which stays plain). */
@@ -1831,10 +1897,15 @@ body.page-mode #page-controls {
 /* Both can pop up over an already-open Load Lists (or Edit List) modal —
    Delete's confirm, and any failure/sign-in notice from a Load/Edit action —
    but come earlier in the DOM than either, so equal z-index would fall back
-   to DOM order and paint them underneath instead of on top. */
+   to DOM order and paint them underneath instead of on top. #custom-list-
+   confirm-modal is also reused as this whole page's generic yes/no modal
+   (see showCustomListConfirm() in pokedexes.js) and needs to beat the
+   tallest thing it can be opened over too — e.g. Cancel All Changes, which
+   lives inside .stats-modal-overlay (z-index 4000) — not just this one's own
+   3000-level modals. */
 #custom-list-notice-modal,
 #custom-list-confirm-modal {
-    z-index: 3100;
+    z-index: 4200;
 }
 
 .add-item-box {
@@ -2027,6 +2098,19 @@ body.page-mode #page-controls {
     max-height: 280px;
     overflow-y: auto;
     padding-right: 10px;
+}
+
+/* "Add Matches" to-do checklist (#todo-matches-modal) — same treatment as
+   #custom-list-load-items, reusing its row styling (.custom-list-row /
+   .checkbox-label) since it's the same checkbox-list shape. */
+#todo-matches-modal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: 280px;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 12px;
 }
 
 /* Tag autocomplete dropdown (see the tags textbox handling in

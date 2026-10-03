@@ -104,6 +104,7 @@
         <button id="list-mode">List Mode</button>
         <button id="page-mode">Page Mode</button>
         <button id="todo-filter-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only: show only pokemon on the to-do list">📝 To Do</button>
+        <button id="todo-add-matches-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only: pick which of your current search's missing matches to add to the to-do list">📝 Add Matches</button>
         <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one page at a time">🔍 Find</button>
         <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite. On the to-do list, turn this on before selecting a pokemon to mark it shiny at the same time.">✨ Shiny Mode</button>
@@ -140,6 +141,11 @@
                 <div id="modal-name"></div>
 
                 <img id="modal-image" src="">
+
+                <!-- Legends Z-A only (see updatePlzaCombosButtonUI() in
+                     pokedexes.js) — which other pokemon can turn up in the
+                     same Hyperspace Wild Zone distortion as this one. -->
+                <button id="plza-combos-btn" class="game-filter-btn hidden" title="See which other pokémon can appear alongside this one in a Legends Z-A distortion">🔀 Combinations</button>
 
             </div>
 
@@ -216,6 +222,18 @@
 
     </div>
 
+    <!-- Legends Z-A "Combinations" — one row per Hyperspace Wild Zone
+         distortion #plza-combos-btn's pokemon can spawn in, each row being
+         the other pokemon (not itself) sharing that same distortion. See
+         getPlzaCombosWithMates()/renderPlzaCombosModal() in pokedexes.js. -->
+    <div id="plza-combos-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="plza-combos-modal-close" class="modal-close-btn">✕</div>
+            <h2 id="plza-combos-modal-title">Combinations</h2>
+            <div id="plza-combos-modal-body"></div>
+        </div>
+    </div>
+
     <div id="stats-modal" class="stats-modal-overlay hidden">
         <div class="stats-modal-box">
             <div id="stats-modal-close" class="modal-close-btn">✕</div>
@@ -239,6 +257,21 @@
             </div>
             <div id="todo-modal-terms-panel" class="search-terms-panel" hidden></div>
             <button id="todo-modal-submit" class="item-action-btn stats-detail-btn">Add</button>
+        </div>
+    </div>
+
+    <!-- "Add Matches" — picks from whatever's currently visible on the main
+         grid behind this modal (same search/filters that are already
+         narrowing it down), not a second typed/spoken list — see
+         #todo-add-matches-btn in pokedexes.js. Only pokemon missing from the
+         dex and not already on its to-do list are offered. -->
+    <div id="todo-matches-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="todo-matches-modal-close" class="modal-close-btn">✕</div>
+            <h2 id="todo-matches-modal-title">Add To Do</h2>
+            <p>Select which of these should be added to the to-do list:</p>
+            <div id="todo-matches-modal-list"></div>
+            <button id="todo-matches-modal-submit" class="item-action-btn stats-detail-btn">Add</button>
         </div>
     </div>
 

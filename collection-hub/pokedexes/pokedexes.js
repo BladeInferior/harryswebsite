@@ -17,6 +17,7 @@ let allPokemon = [];
 // fullPokemonList.json loads, so multi-word names stay one term.
 window.voiceSearchNames = [];
 let evolutionFamilies = {}; // name -> array of other pokemon names in the same evolution line, from evolutionFamilies.json
+let plzaDistortions = {}; // name -> array of { star, mates } Hyperspace Wild Zone combos it spawns in in Legends Z-A, from plza-distortions.json (see download-plza-distortions.js and getPlzaStars()/getPlzaCombosWithMates())
 let cardMap = new Map();
 let currentPokemon = null;
 let activeDexEdit = null;
@@ -218,12 +219,14 @@ Promise.all([
     fetch("../fullPokemonList.json").then(res => res.json()),
     fetch("../pokedex-backup.json").then(res => res.json()),
     fetch("../shiny-hunts-backup.json").then(res => res.json()),
-    fetch("../evolutionFamilies.json").then(res => res.json())
+    fetch("../evolutionFamilies.json").then(res => res.json()),
+    fetch("../plza-distortions.json").then(res => res.json())
 ])
-.then(([pokemonList, dexList, huntsList, evolutionFamiliesData]) => {
+.then(([pokemonList, dexList, huntsList, evolutionFamiliesData, plzaDistortionsData]) => {
 
     allPokemon = pokemonList;
     evolutionFamilies = evolutionFamiliesData;
+    plzaDistortions = plzaDistortionsData;
     window.voiceSearchNames = pokemonList.map(p => p.name);
 
     // convert exported array into your existing format
@@ -480,6 +483,72 @@ function imageName(name) {
         .replace(/[^a-z0-9]/g, "");
 }
 
+// Sorted, de-duped star ratings a pokemon spawns at in Legends Z-A — the
+// card badge (see applyFilters()) only needs these, not which other pokemon
+// share each distortion.
+function getPlzaStars(name) {
+    const combos = plzaDistortions[name];
+    if (!combos || !combos.length) return [];
+    return [...new Set(combos.map(c => c.star))].sort((a, b) => a - b);
+}
+
+// This pokemon's distortion combos that actually have another pokemon in
+// them — a combo with no mates (it spawns alone there) has nothing to show
+// in the Combinations modal, so it's filtered out here rather than in the
+// data itself (plza-distortions.json keeps those, since they still count
+// toward getPlzaStars() above).
+function getPlzaCombosWithMates(name) {
+    return (plzaDistortions[name] || []).filter(c => c.mates.length > 0);
+}
+
+function plzaDexNumber(name) {
+    const p = allPokemon.find(p => p.name === name);
+    return p ? parseInt(p.dex, 10) : Infinity;
+}
+
+// name plus every other pokemon evolutionFamilies.json lists alongside it —
+// evolutionFamilies itself only lists the *others*, never the pokemon it's
+// keyed by.
+function plzaEvolutionFamily(name) {
+    return [name, ...(evolutionFamilies[name] || [])];
+}
+
+// Orders a Combinations row so it reads like a dex, not a random scatter:
+// the searched-for pokemon's own evolution line first (itself before the
+// rest of its line, which is sorted by Pokédex number — a baby form like
+// Igglybuff can have a *higher* number than what it evolves into, so it
+// can't just be "lowest number first" within that one line), then every
+// other line in the combo, each sorted by Pokédex number internally, the
+// lines themselves ordered by their own lowest number. Pokédex number is
+// only a proxy for evolution stage, not the real thing — a line that isn't
+// numbered in evolution order (same Igglybuff situation, if it ever shows up
+// as a *mate* rather than the target) is left ordered by number regardless,
+// same as any other line.
+function orderPlzaComboMembers(targetName, mates) {
+    const targetFamily = new Set(plzaEvolutionFamily(targetName));
+
+    const ownLine = mates
+        .filter(m => targetFamily.has(m))
+        .sort((a, b) => plzaDexNumber(a) - plzaDexNumber(b));
+
+    const remaining = mates.filter(m => !targetFamily.has(m));
+
+    const otherLines = [];
+    const used = new Set();
+    remaining.forEach(m => {
+        if (used.has(m)) return;
+        const family = new Set(plzaEvolutionFamily(m));
+        const line = remaining
+            .filter(other => !used.has(other) && (other === m || family.has(other)))
+            .sort((a, b) => plzaDexNumber(a) - plzaDexNumber(b));
+        line.forEach(l => used.add(l));
+        otherLines.push(line);
+    });
+    otherLines.sort((a, b) => plzaDexNumber(a[0]) - plzaDexNumber(b[0]));
+
+    return [targetName, ...ownLine, ...otherLines.flat()];
+}
+
 // Pokémon GO's region-locked pokemon — a completely different list from the
 // core-games "Regional" tag in fullPokemonList.json (which flags Alolan/
 // Galarian/etc. form variants). Only relevant while editing the PoGo Dex
@@ -591,6 +660,7 @@ function createPokemonCards(pokemonList) {
             <div class="not-in-dex-badge">*</div>
             <img loading="lazy" src="${getPokemonSpritePath(name, useShinySpriteFor(cardKey))}">
             <div class="pokemon-name">${name}</div>
+            <div class="plza-distortion-note hidden"></div>
             <div class="shiny-plus">➕</div>
         `;
 
@@ -716,6 +786,26 @@ function createPokemonCards(pokemonList) {
                     // list instead.
                     openTodoRemoveConfirm(key, name);
                     return;
+                }
+
+                // -----------------------------
+                // LEGENDS Z-A COMBINATIONS SHORTCUT
+                // Shiny Dex only (hunting new shinies is the one case this
+                // is actually useful for) — while that game filter is on, a
+                // pokemon not yet shiny there goes straight to its
+                // Combinations instead of doing nothing at all (CASE 1
+                // further down), so checking what else can turn up in the
+                // same distortion never requires "catching" it first.
+                // Already-shiny pokemon are untouched by this and keep
+                // their normal click behaviour (opens the Shiny Dex modal,
+                // CASE 2 further down).
+                // -----------------------------
+                if (activeDexEdit === "shinyDex" && gameFilterState.plza === "include" && !pokemonData[activeDexEdit]) {
+                    const combos = getPlzaCombosWithMates(name);
+                    if (combos.length > 0) {
+                        renderPlzaCombosModal(name);
+                        return;
+                    }
                 }
 
                 // -----------------------------
@@ -1193,6 +1283,122 @@ todoModal.addEventListener("click", (e) => {
     if (e.target === todoModal) closeTodoModal();
 });
 
+// ---- Add Matches ----
+// A second way into the to-do list, distinct from the typed/spoken Add To Do
+// box above: instead of naming pokemon a second time, this works off
+// whatever's already visible on the main grid behind it — the result of
+// whatever search (voice or typed) and filters are currently active there.
+// Only pokemon missing from the dex (the ones a search like that shows
+// un-highlighted) and not already on the to-do list are offered, each with
+// its own checkbox so only some of them have to be picked, not all.
+const todoMatchesModal = document.getElementById("todo-matches-modal");
+const todoMatchesModalTitle = document.getElementById("todo-matches-modal-title");
+const todoMatchesModalList = document.getElementById("todo-matches-modal-list");
+const todoAddMatchesBtn = document.getElementById("todo-add-matches-btn");
+
+// Pokemon currently shown on the main grid that aren't yet on the dex being
+// edited and aren't already queued on its to-do list — the actionable set
+// for both the button's own visibility and the modal's checklist.
+function getTodoMatchCandidates() {
+    const field = todoFieldFor(activeDexEdit);
+    if (!field) return [];
+
+    return getVisibleCardNames().filter(name => {
+        const data = savedDexData[normalizeName(name)] || {};
+        return !data[activeDexEdit] && !data[field];
+    });
+}
+
+// Called from applyFilters() (search/filters just changed what's visible)
+// and from everywhere else that can change activeDexEdit/todoFilterActive/
+// huntsModeActive, same as updateTodoButtonUI() — only ever useful outside
+// the to-do list's own filtered view (nothing "missing" left to offer once
+// it's already narrowed to the to-do list itself) and outside Hunts, which
+// isn't a view of allPokemon at all.
+function updateTodoAddMatchesButtonUI() {
+    if (!todoAddMatchesBtn) return;
+
+    const eligible = !!todoFieldFor(activeDexEdit) && !todoFilterActive && !huntsModeActive
+        && searchInput.value.trim() !== "";
+
+    todoAddMatchesBtn.classList.toggle("hidden", !eligible || getTodoMatchCandidates().length === 0);
+}
+
+// Shared by the single-candidate auto-add below and the modal's own Add
+// button — marks each name on activeDexEdit's to-do list and refreshes
+// everything that reflects it.
+function addNamesToTodo(names) {
+    const field = todoFieldFor(activeDexEdit);
+    if (!field || names.length === 0) return;
+
+    names.forEach(name => {
+        const key = normalizeName(name);
+        const data = savedDexData[key] || {};
+        data[field] = true;
+        savedDexData[key] = data;
+    });
+
+    saveData();
+    applyFilters();
+    updateCardHighlights();
+    updateProgress();
+    if (pageMode) applyPagination();
+}
+
+todoAddMatchesBtn?.addEventListener("click", () => {
+
+    const dex = dexTypes.find(d => d.key === activeDexEdit);
+    const candidates = getTodoMatchCandidates();
+    if (!dex || candidates.length === 0) return;
+
+    // Nothing to actually choose between — skip the checklist and just add
+    // the one pokemon straight away.
+    if (candidates.length === 1) {
+        addNamesToTodo(candidates);
+        return;
+    }
+
+    todoMatchesModalTitle.textContent = `Add To ${dex.label} To Do List`;
+    todoMatchesModalList.innerHTML = "";
+
+    candidates.forEach(name => {
+        const row = document.createElement("div");
+        row.classList.add("custom-list-row");
+
+        const label = document.createElement("label");
+        label.classList.add("checkbox-label");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.dataset.pokemon = name;
+
+        label.appendChild(checkbox);
+        label.append(` ${name}`);
+        row.appendChild(label);
+        todoMatchesModalList.appendChild(row);
+    });
+
+    todoMatchesModal.classList.remove("hidden");
+});
+
+document.getElementById("todo-matches-modal-submit")?.addEventListener("click", () => {
+
+    const checked = Array.from(todoMatchesModalList.querySelectorAll("input[type=checkbox]:checked"))
+        .map(checkbox => checkbox.dataset.pokemon);
+
+    addNamesToTodo(checked);
+
+    todoMatchesModal.classList.add("hidden");
+});
+
+document.getElementById("todo-matches-modal-close")?.addEventListener("click", () => {
+    todoMatchesModal.classList.add("hidden");
+});
+
+todoMatchesModal?.addEventListener("click", (e) => {
+    if (e.target === todoMatchesModal) todoMatchesModal.classList.add("hidden");
+});
+
 // =========================
 // SHINY HUNTS (Shiny Dex only)
 // An archive of shiny hunts and their total encounter counts — unlike the
@@ -1309,6 +1515,7 @@ document.getElementById("hunts-mode-btn").addEventListener("click", () => {
         // Stale count from whatever filters were active before switching
         // over — meaningless once #box-container itself is hidden.
         if (pokemonCountLabel) pokemonCountLabel.style.display = "none";
+        updateTodoAddMatchesButtonUI();
     } else {
         applyFilters();
     }
@@ -1607,6 +1814,7 @@ function applyFilters() {
     // but it narrows #hunts-container's own cards instead.
     if (huntsModeActive) {
         applyHuntsSearch();
+        updateTodoAddMatchesButtonUI();
         return;
     }
 
@@ -1876,6 +2084,22 @@ function applyFilters() {
 
         card.classList.toggle("on-todo", isUncaughtTodo(key));
 
+        // Legends Z-A ("plza") Hyperspace Wild Zone distortions are
+        // star-rated (2-5 star so far) rather than tied to a fixed spot, so
+        // this is the one thing worth surfacing on the card itself rather
+        // than through a filter — only while the Legends ZA game filter is
+        // actually narrowing the list to what's obtainable there, since
+        // outside that it's not actionable info (plza-distortions.json, see
+        // download-plza-distortions.js, keyed by this same pokemon.name).
+        const distortionNoteEl = card.querySelector(".plza-distortion-note");
+        if (distortionNoteEl) {
+            const stars = gameFilterState.plza === "include" ? getPlzaStars(name) : [];
+            distortionNoteEl.classList.toggle("hidden", stars.length === 0);
+            if (stars.length) {
+                distortionNoteEl.textContent = stars.map(s => `${s}★`).join(" / ");
+            }
+        }
+
         if (matchesSearch && matchesGame && matchesGeneration && matchesTags && matchesMissing && matchesCompletion && matchesPogoShiny && matchesTodo && matchesType && matchesConstraints) {
             card.style.display = "block";
         } else {
@@ -1896,6 +2120,7 @@ function applyFilters() {
     });
 
     updatePokemonCount();
+    updateTodoAddMatchesButtonUI();
 }
 
 
@@ -2340,14 +2565,22 @@ customListNoticeModal.addEventListener("click", (event) => {
 
 const customListConfirmModal = document.getElementById("custom-list-confirm-modal");
 const customListConfirmMessage = document.getElementById("custom-list-confirm-message");
+const customListConfirmYesBtn = document.getElementById("custom-list-confirm-yes");
+const customListConfirmNoBtn = document.getElementById("custom-list-confirm-no");
 let customListConfirmResolve = null;
 
 // Promise-based stand-in for window.confirm() — `await` it same as the
 // native one, but backed by a modal so it can't get silently auto-dismissed
-// the way a real confirm() can (e.g. in automated testing).
-function showCustomListConfirm(message) {
+// the way a real confirm() can (e.g. in automated testing). Despite the
+// "custom list" name (it was built for "delete this saved list?"), this is
+// the page's one generic yes/no modal — every other confirmation on this
+// page (e.g. Cancel All Changes) reuses it rather than a second near-
+// identical modal, with its own button wording passed in.
+function showCustomListConfirm(message, { yesLabel = "Delete", noLabel = "Cancel" } = {}) {
     return new Promise(resolve => {
         customListConfirmMessage.textContent = message;
+        customListConfirmYesBtn.textContent = yesLabel;
+        customListConfirmNoBtn.textContent = noLabel;
         customListConfirmResolve = resolve;
         customListConfirmModal.classList.remove("hidden");
     });
@@ -2361,8 +2594,8 @@ function closeCustomListConfirm(result) {
     }
 }
 
-document.getElementById("custom-list-confirm-yes").addEventListener("click", () => closeCustomListConfirm(true));
-document.getElementById("custom-list-confirm-no").addEventListener("click", () => closeCustomListConfirm(false));
+customListConfirmYesBtn.addEventListener("click", () => closeCustomListConfirm(true));
+customListConfirmNoBtn.addEventListener("click", () => closeCustomListConfirm(false));
 
 customListConfirmModal.addEventListener("click", (event) => {
     if (event.target === customListConfirmModal) closeCustomListConfirm(false);
@@ -3084,7 +3317,93 @@ function renderModalState(pokemonKey) {
     // change there already saves itself immediately.
     const findSaveBtn = document.getElementById("todo-find-save-btn");
     if (findSaveBtn) findSaveBtn.classList.toggle("hidden", !todoFindShinyModalActive);
+
+    updatePlzaCombosButtonUI();
 }
+
+// Legends Z-A "Combinations" — only offered while that game filter is
+// actually on (same reasoning as the card's own distortion badge, see
+// applyFilters()) and only when there's actually another pokemon to show
+// alongside this one in some distortion. Called from renderModalState()
+// whenever the modal's own content changes, but also needs its own call from
+// the "Legends ZA" game filter button itself — toggling that filter while
+// the modal is already open doesn't otherwise re-run renderModalState(), so
+// without this the button stayed stuck showing whatever it last was until
+// something else (nav arrows, reopening) happened to touch the modal.
+function updatePlzaCombosButtonUI() {
+    const plzaCombosBtn = document.getElementById("plza-combos-btn");
+    if (!plzaCombosBtn || modalOverlay.classList.contains("hidden")) return;
+
+    const modalName = document.getElementById("modal-name")?.textContent || "";
+    const hasCombos = activeDexEdit === "shinyDex" && gameFilterState.plza === "include"
+        && getPlzaCombosWithMates(modalName).length > 0;
+    plzaCombosBtn.classList.toggle("hidden", !hasCombos);
+}
+
+// ---------------------------
+// LEGENDS Z-A COMBINATIONS
+// One row per Hyperspace Wild Zone distortion this pokemon can spawn in,
+// each row showing the other pokemon (not this one) sharing that same
+// distortion as its own small, labelled sprite — same idea as the main grid
+// cards, just smaller, since spotting several at a glance matters more here
+// than any per-card detail.
+// ---------------------------
+const plzaCombosModal = document.getElementById("plza-combos-modal");
+const plzaCombosModalTitle = document.getElementById("plza-combos-modal-title");
+const plzaCombosModalBody = document.getElementById("plza-combos-modal-body");
+
+function renderPlzaCombosModal(name) {
+
+    plzaCombosModalTitle.textContent = `${name} — Legends Z-A Combinations`;
+    plzaCombosModalBody.innerHTML = "";
+
+    getPlzaCombosWithMates(name).forEach(({ star, mates }) => {
+
+        const row = document.createElement("div");
+        row.classList.add("plza-combo-row");
+
+        const starLabel = document.createElement("div");
+        starLabel.classList.add("plza-combo-row-star");
+        starLabel.textContent = `${star}★ distortion`;
+        row.appendChild(starLabel);
+
+        const cardsRow = document.createElement("div");
+        cardsRow.classList.add("plza-combo-row-cards");
+
+        // Includes the searched-for pokemon itself, not just its mates —
+        // easier to read the combo as a whole than to have to remember what
+        // was clicked to get here. orderPlzaComboMembers() puts it, and the
+        // rest of its own evolution line, first.
+        orderPlzaComboMembers(name, mates).forEach(memberName => {
+            const card = document.createElement("div");
+            card.classList.add("plza-combo-card");
+            card.classList.toggle("plza-combo-card--self", memberName === name);
+            card.innerHTML = `
+                <img loading="lazy" src="${getPokemonSpritePath(memberName, true)}">
+                <div class="pokemon-name">${memberName}</div>
+            `;
+            cardsRow.appendChild(card);
+        });
+
+        row.appendChild(cardsRow);
+        plzaCombosModalBody.appendChild(row);
+    });
+
+    plzaCombosModal.classList.remove("hidden");
+}
+
+document.getElementById("plza-combos-btn")?.addEventListener("click", () => {
+    const name = document.getElementById("modal-name")?.textContent;
+    if (name) renderPlzaCombosModal(name);
+});
+
+document.getElementById("plza-combos-modal-close")?.addEventListener("click", () => {
+    plzaCombosModal.classList.add("hidden");
+});
+
+plzaCombosModal?.addEventListener("click", (e) => {
+    if (e.target === plzaCombosModal) plzaCombosModal.classList.add("hidden");
+});
 
 function createFilterButtons() {
 
@@ -3447,6 +3766,7 @@ function createFilterButtons() {
             applyFilters();
             scrollResultsToTop();
             updateGameButtonHighlight();
+            updatePlzaCombosButtonUI();
         });
 
         // -----------------------------
@@ -3469,6 +3789,7 @@ function createFilterButtons() {
             applyFilters();
             scrollResultsToTop();
             updateGameButtonHighlight();
+            updatePlzaCombosButtonUI();
         });
 
         const row = document.createElement("div");
@@ -3645,6 +3966,11 @@ function createFilterButtons() {
     resetBtn.textContent = "Reset Filters";
     resetBtn.classList.add("game-filter-btn");
 
+    // Clears every filter/search criterion, but deliberately leaves which
+    // dex is being edited (activeDexEdit) and that dex's own edit-mode flags
+    // (Shiny Mode, Hunts) alone — this button narrows/un-narrows what's
+    // shown within whichever dex you're already editing, it doesn't back you
+    // out of editing it altogether.
     resetBtn.addEventListener("click", () => {
 
         gameFilterState = {};
@@ -3658,21 +3984,20 @@ function createFilterButtons() {
         completionFilterMode = "exclusive";
         selectedTypes = [];
         typeFilterMode = "any";
+        pogoShinyFilter = null;
 
         if (dexKeyModeToggle) dexKeyModeToggle.textContent = "Exclusively";
 
-        activeDexEdit = null;
-        shinyEditModeFlag = false;
-        pogoShinyModeFlag = false;
-        pogoShinyFilter = null;
+        // The To Do filter is a filter like Missing/Not Missing above, so it
+        // resets too — but exiting it only forces back out of Page Mode when
+        // Find was actually running (same condition exitTodoFind() itself
+        // guards on), not unconditionally, since Page Mode vs List Mode is
+        // the user's own browsing choice, not something this button touches.
         todoFilterActive = false;
-        resetTodoFind();
-        huntsModeActive = false;
-
-        pageMode = false;
-        currentPage = 1;
-
-        boxContainer.classList.remove("shiny-edit-layout");
+        if (todoFindActive) {
+            resetTodoFind();
+            pageMode = false;
+        }
 
         document.querySelectorAll("#dex-key .dex-key-item[data-key-color]").forEach(el => {
             el.classList.remove("active");
@@ -3689,12 +4014,9 @@ function createFilterButtons() {
         updateCardHighlights();
         updateProgress();
         updateModeUI();
-        updatePogoShinyModeButtonUI();
-        updatePogoFilterRowVisibility();
-        updateConstraintFilterRowVisibility();
         updatePogoShinyFilterHighlight();
         updateTodoButtonUI();
-        updateHuntsButtonUI();
+        updatePlzaCombosButtonUI();
     });
 
     container.appendChild(resetBtn);
@@ -4123,8 +4445,18 @@ function updateModeUI() {
 
     // Search and the completion-swatch filter live outside
     // #game-filter-container, so they need their own disabling here.
+    // Greying it out also makes it unclickable (.filters-disabled is
+    // pointer-events: none) — so whatever's still typed in gets cleared
+    // right here, otherwise it'd be stuck showing a stale search with no way
+    // to reach the ✕ to clear it until the box is enabled again.
     const searchWrapper = document.getElementById("search-wrapper");
-    if (searchWrapper) searchWrapper.classList.toggle("filters-disabled", inTodoMode);
+    if (searchWrapper) {
+        if (inTodoMode && searchInput.value !== "") {
+            searchInput.value = "";
+            applyFilters();
+        }
+        searchWrapper.classList.toggle("filters-disabled", inTodoMode);
+    }
 
     const dexKey = document.getElementById("dex-key");
     if (dexKey) dexKey.classList.toggle("filters-disabled", inTodoMode || huntsModeActive || pageMode);
@@ -4441,9 +4773,13 @@ pokedexChangesModal.addEventListener("click", (e) => {
 // load, if nothing's ever been exported this session) — the same baseline
 // getPokedexChanges()/getHuntsChanges() diff against above, so "no changes
 // left to show" and "fully reverted" are the same state by construction.
-pokedexChangesCancelBtn.addEventListener("click", () => {
+pokedexChangesCancelBtn.addEventListener("click", async () => {
 
-    if (!confirm("Discard all unsaved changes since your last export? This can't be undone.")) return;
+    const confirmed = await showCustomListConfirm(
+        "Discard all unsaved changes since your last export? This can't be undone.",
+        { yesLabel: "Discard Changes" }
+    );
+    if (!confirmed) return;
 
     const dexSnapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("dexData") : null;
     const huntsSnapshotRaw = typeof getTrackerSnapshot === "function" ? getTrackerSnapshot("shinyHunts") : null;

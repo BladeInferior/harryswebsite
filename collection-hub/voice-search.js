@@ -8,12 +8,14 @@
 // window.stopVoiceSearch() stops whichever is on.
 //
 // One click keeps listening until clicked again, or until you say "stop"
-// (which is never added to the search). Spoken words are appended to
-// whatever's already in the box as comma-separated terms — every page this
-// is on treats a comma as "match any of these". On the Pokédex (which sets
-// window.voiceSearchNames) each term is snapped to the closest real name —
-// see matchSpokenTerms(). Elsewhere, exact Pokémon names are split out and
-// other words kept as heard — see splitLooseTerms().
+// (which is never added to the search). Saying "back" removes the most
+// recently added term without stopping the mic — neither word is ever added
+// to the search itself. Spoken words are appended to whatever's already in
+// the box as comma-separated terms — every page this is on treats a comma as
+// "match any of these". On the Pokédex (which sets window.voiceSearchNames)
+// each term is snapped to the closest real name — see matchSpokenTerms().
+// Elsewhere, exact Pokémon names are split out and other words kept as heard
+// — see splitLooseTerms().
 
 // Turns a list of spoken words into search terms, snapping each to the
 // closest real Pokémon name by spelling or sound (speech often hears "Sligo"
@@ -304,7 +306,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     const { normalize, toWords, matchSpokenTerms, splitLooseTerms } = voiceSearchMatcher;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    const MIC_TITLE = "Search by voice (click again, or say \"stop\", to stop)";
+    const MIC_TITLE = "Search by voice (click again, or say \"stop\", to stop; say \"back\" to undo the last one)";
     const HEARD_LOG_SIZE = 5;
 
     // Every mic on the page — only one may dictate at a time, so starting
@@ -472,6 +474,28 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     render("");
                     stop();
                     return;
+                }
+
+                // "back" undoes the most recent term — same reactive-on-interim
+                // handling as "stop" above (so it fires the moment it's heard),
+                // but keeps listening instead of ending the session. Anything
+                // said earlier in this same phrase is committed first (so
+                // "pikachu back" nets out to nothing added, same as never
+                // saying it), then the single most recent term — from that or
+                // an earlier phrase — is popped.
+                const backIdx = words.findIndex(w => normalize(w) === "back");
+                if (backIdx !== -1) {
+                    const beforeBack = interim + " " + words.slice(0, backIdx).join(" ");
+                    const split = splitIntoTerms(beforeBack);
+                    if (split.terms.length || split.missed.length) logHeard(beforeBack, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    terms.pop();
+                    carriedRegion = "";
+                    interim = "";
+                    resultOffset = i + 1;
+                    render(interim);
+                    continue;
                 }
 
                 if (e.results[i].isFinal) {
