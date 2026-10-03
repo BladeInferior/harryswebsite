@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Walkthroughs — Admin Hub</title>
+
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="../admin-nav.js"></script>
+
+<a class="back-button" href="../adminhub.html">← Back</a>
+
+<section class="hero">
+    <h1>🧭 Walkthroughs</h1>
+
+    <p>
+        Imported achievement walkthroughs. Read a whole section at once, or
+        step through it one paragraph/image/achievement at a time — by
+        click, arrow key, or saying "next"/"back"/"stop".
+    </p>
+</section>
+
+<main id="admin-content" class="hidden">
+
+    <!-- ==========================
+        LIBRARY — every imported walkthrough. A tile with saved progress
+        resumes straight into it on click; "Outline" always goes to the
+        section menu instead. New walkthroughs only ever arrive here via the
+        Tampermonkey importer → Cloudflare Worker → this repo's own
+        walkthroughs-backup.json — see walkthroughs.js.
+    ========================== -->
+    <section id="walkthrough-library" class="walkthrough-panel">
+
+        <div id="walkthrough-library-empty" class="walkthrough-empty hidden">
+            <p>No walkthroughs imported yet — use the TrueAchievements importer userscript on a game's walkthrough overview page.</p>
+        </div>
+
+        <div id="walkthrough-library-grid" class="walkthrough-library-grid"></div>
+
+    </section>
+
+    <!-- ==========================
+        OUTLINE — one game's section menu. Each row offers both reading
+        modes directly, rather than making Read/Step a toggle you only find
+        once you're already inside a section.
+    ========================== -->
+    <section id="walkthrough-outline" class="walkthrough-panel hidden">
+
+        <button type="button" id="outline-back-btn" class="walkthrough-back-btn">← Walkthroughs</button>
+
+        <h2 id="outline-title"></h2>
+
+        <div id="outline-section-list" class="outline-section-list"></div>
+
+        <button type="button" id="outline-delete-btn" class="btn-danger">Delete this walkthrough</button>
+
+    </section>
+
+    <!-- ==========================
+        READER — one section, in either mode. Scroll mode renders every step
+        inline; Step mode renders exactly one with Prev/Next (click, arrow
+        keys, or mic) — see goToStep()/renderReader() in walkthroughs.js.
+    ========================== -->
+    <section id="walkthrough-reader" class="walkthrough-panel hidden">
+
+        <button type="button" id="reader-back-btn" class="walkthrough-back-btn">← Outline</button>
+
+        <div class="reader-header">
+            <h2 id="reader-section-title"></h2>
+
+            <div class="reader-mode-toggle">
+                <button type="button" id="reader-mode-scroll-btn" class="editor-toolbar-btn">📖 Read</button>
+                <button type="button" id="reader-mode-step-btn" class="editor-toolbar-btn">👣 Step Through</button>
+            </div>
+        </div>
+
+        <div id="reader-scroll-view" class="reader-scroll-view"></div>
+
+        <div id="reader-step-view" class="reader-step-view hidden">
+
+            <div class="reader-step-nav">
+                <button type="button" id="reader-step-prev" class="walkthrough-step-nav-btn" title="Previous (← or say 'back')">◀</button>
+
+                <div id="reader-step-content" class="reader-step-content"></div>
+
+                <button type="button" id="reader-step-next" class="walkthrough-step-nav-btn" title="Next (→ or say 'next')">▶</button>
+            </div>
+
+            <div class="reader-step-footer">
+                <span id="reader-step-position" class="reader-step-position"></span>
+                <!-- Added by attachWalkthroughMic() in walkthroughs.js — no
+                     button at all where SpeechRecognition is unsupported,
+                     same as collection-hub/voice-search.js's own mic. -->
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- Confirm, same pattern as adminhub/notes.html's #delete-note-modal. -->
+<div id="delete-walkthrough-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+        <h2>Delete this walkthrough?</h2>
+        <p>This removes it (and your reading progress for it) for good.</p>
+        <div class="modal-buttons">
+            <button type="button" id="cancel-delete-walkthrough-btn" class="editor-toolbar-btn">Cancel</button>
+            <button type="button" id="confirm-delete-walkthrough-btn" class="btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script type="module" src="walkthroughs.js"></script>
+<script src="../../scroll-to-top.js"></script>
+</body>
+</html>

@@ -3,13 +3,24 @@
 // site-level link group (Collection Hub / Quiz Hub / Admin Hub / Github
 // Repo) so every page shares one nav instead of each page duplicating it.
 
+// This file itself always lives at adminhub/admin-nav.js, but the pages
+// loading it don't all sit at the same depth — most are directly in
+// adminhub/, but adminhub/walkthroughs/walkthroughs.html is one folder
+// deeper. fetch() and serviceWorker.register() both resolve a relative URL
+// against the CALLING PAGE, not this script's own location, so a plain
+// relative path here would only be correct for whichever depth happened to
+// be tested first — anchoring explicitly to this script's own URL
+// (document.currentScript.src) keeps it correct regardless of depth, same
+// fix collection-nav.js already needed for the same reason.
+const ADMIN_NAV_SCRIPT_URL = document.currentScript.src;
+
 // Forces every page load to always reflect what's actually deployed rather
 // than a stale browser-cached copy — see ../sw-nocache.js.
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('../sw-nocache.js').catch(err => console.error('Service worker registration failed:', err));
+    navigator.serviceWorker.register(new URL('../sw-nocache.js', ADMIN_NAV_SCRIPT_URL)).catch(err => console.error('Service worker registration failed:', err));
 }
 
-fetch('../navbar.html')
+fetch(new URL('../navbar.html', ADMIN_NAV_SCRIPT_URL))
     .then(res => res.text())
     .then(data => {
         document.getElementById('navbar').innerHTML = data;
@@ -35,6 +46,7 @@ fetch('../navbar.html')
         const subPages = [
             { label: "Notes", page: "adminhub/notes.html" },
             { label: "Stream Counter", page: "adminhub/counter.html" },
+            { label: "Walkthroughs", page: "adminhub/walkthroughs/walkthroughs.html" },
         ];
 
         const linksContainer = nav.querySelector('.site-nav-links');

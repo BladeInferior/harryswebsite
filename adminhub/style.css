@@ -722,3 +722,260 @@ footer {
     border-radius: 4px;
     font-size: 11px;
 }
+
+/* =========================
+   ACHIEVEMENT WALKTHROUGHS
+   Visually inspired by collection-hub's own small-card conventions
+   (.dex-entry/.plza-combo-card) and voice-search.js's mic button, but
+   redefined locally rather than imported — each hub stays self-contained
+   (see CLAUDE.md).
+   ========================= */
+.walkthrough-panel {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+}
+
+.walkthrough-empty {
+    color: var(--secondary);
+    font-size: 14px;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.walkthrough-library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.walkthrough-tile {
+    position: relative;
+    background: linear-gradient(180deg, var(--card-2), var(--card));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: .2s;
+}
+
+.walkthrough-tile:hover {
+    border-color: var(--accent);
+}
+
+.walkthrough-tile-main {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 20px;
+    cursor: pointer;
+}
+
+.walkthrough-tile-main h3 {
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.walkthrough-tile-main p {
+    color: var(--secondary);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.walkthrough-resume-line {
+    color: var(--accent-light) !important;
+    margin-top: 6px;
+}
+
+.walkthrough-tile-outline-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+
+/* Same look as .editor-toolbar-btn/.back-to-list-btn (notes.html), but its
+   own class — .back-to-list-btn is notes.html's and stays display:none
+   outside mobile there; this page's panels aren't a sidebar+pane split, so
+   its own back button needs to always be visible, not just on mobile. */
+.walkthrough-back-btn {
+    display: inline-block;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.walkthrough-back-btn:hover {
+    border-color: var(--accent);
+    color: white;
+}
+
+.outline-section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.outline-section-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+}
+
+.outline-section-title {
+    flex: 1;
+    font-size: 14px;
+}
+
+.reader-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.reader-mode-toggle {
+    display: flex;
+    gap: 8px;
+}
+
+.reader-mode-toggle .active-mode {
+    background: rgba(239, 68, 68, .2);
+    border-color: var(--accent);
+    color: white;
+}
+
+.reader-scroll-view {
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.walkthrough-step-text {
+    margin-bottom: 14px;
+}
+
+.walkthrough-step-image {
+    display: block;
+    max-width: 100%;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+}
+
+.walkthrough-achievement-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+}
+
+.walkthrough-achievement-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    object-fit: contain;
+}
+
+.walkthrough-achievement-name {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.walkthrough-achievement-desc {
+    color: var(--secondary);
+    font-size: 13px;
+}
+
+.reader-step-nav {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.walkthrough-step-nav-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.walkthrough-step-nav-btn:hover {
+    border-color: var(--accent);
+    background: rgba(239, 68, 68, .15);
+}
+
+.reader-step-content {
+    flex: 1;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.reader-step-content .walkthrough-step-text,
+.reader-step-content .walkthrough-step-image,
+.reader-step-content .walkthrough-achievement-card {
+    margin-bottom: 0;
+}
+
+.reader-step-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.reader-step-position {
+    color: var(--secondary);
+    font-size: 13px;
+}
+
+/* Mic — mirrors collection-hub/voice-search.js's own .voice-search/
+   .listening look (pulses while listening), redefined locally. */
+#walkthrough-mic {
+    cursor: pointer;
+    opacity: 0.6;
+    font-size: 16px;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+#walkthrough-mic:hover {
+    opacity: 1;
+}
+
+#walkthrough-mic.listening {
+    opacity: 1;
+    animation: walkthrough-mic-pulse 1s ease-in-out infinite;
+}
+
+@keyframes walkthrough-mic-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    50% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
+}
