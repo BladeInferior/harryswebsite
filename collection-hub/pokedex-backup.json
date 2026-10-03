@@ -10700,7 +10700,7 @@
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
     "shinyDex": false,
-    "shinyDexTodo": false,
+    "shinyDexTodo": true,
     "shinyDexData": {
       "correctStage": false,
       "originalRegion": false,
@@ -10721,7 +10721,7 @@
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
     "shinyDex": false,
-    "shinyDexTodo": false,
+    "shinyDexTodo": true,
     "shinyDexData": {
       "correctStage": false,
       "originalRegion": false,
