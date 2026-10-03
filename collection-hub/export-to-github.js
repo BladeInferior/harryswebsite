@@ -20,7 +20,7 @@ async function exportJsonFile(filename, json, trackerKey, snapshotData, idToken)
 
     if (idToken) {
         try {
-            const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/export", {
+            const res = await fetch("https://letterboxd-import.harrycummins.workers.dev/export", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

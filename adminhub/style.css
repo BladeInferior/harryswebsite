@@ -788,12 +788,6 @@ footer {
     margin-top: 6px;
 }
 
-.walkthrough-tile-outline-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-}
-
 /* Same look as .editor-toolbar-btn/.back-to-list-btn (notes.html), but its
    own class — .back-to-list-btn is notes.html's and stays display:none
    outside mobile there; this page's panels aren't a sidebar+pane split, so
@@ -809,6 +803,17 @@ footer {
     font-size: 13px;
     cursor: pointer;
     margin-bottom: 16px;
+}
+
+.reader-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.reader-top-row .walkthrough-back-btn {
+    margin-bottom: 0;
 }
 
 .walkthrough-back-btn:hover {
@@ -831,6 +836,12 @@ footer {
     border: 1px solid var(--border);
     border-radius: 8px;
     padding: 10px 12px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.outline-section-row:hover {
+    border-color: var(--accent);
 }
 
 .outline-section-title {
@@ -886,13 +897,6 @@ footer {
     margin-bottom: 14px;
 }
 
-.walkthrough-achievement-icon {
-    width: 40px;
-    height: 40px;
-    flex-shrink: 0;
-    object-fit: contain;
-}
-
 .walkthrough-achievement-name {
     font-weight: bold;
     margin-bottom: 2px;
@@ -901,6 +905,34 @@ footer {
 .walkthrough-achievement-desc {
     color: var(--secondary);
     font-size: 13px;
+}
+
+.walkthrough-spoiler {
+    margin-bottom: 14px;
+}
+
+.walkthrough-spoiler-toggle {
+    background: var(--card);
+    border: 1px dashed var(--border);
+    color: var(--accent-light);
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: .15s ease;
+}
+
+.walkthrough-spoiler-toggle:hover {
+    border-color: var(--accent);
+}
+
+.walkthrough-spoiler-content {
+    margin-top: 10px;
+}
+
+.walkthrough-spoiler-content .walkthrough-step-text,
+.walkthrough-spoiler-content .walkthrough-step-image {
+    margin-bottom: 0;
 }
 
 .reader-step-nav {

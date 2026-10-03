@@ -32,7 +32,7 @@ function renderStars(rating) {
 
 async function loadLatestWatch() {
     try {
-        const res = await fetch("https://orange-bar-b027.harrycummins.workers.dev/", {
+        const res = await fetch("https://letterboxd-import.harrycummins.workers.dev/", {
             cache: "no-store"
         });
 

@@ -23,6 +23,7 @@ const outlineDeleteBtn = document.getElementById('outline-delete-btn');
 
 const readerPanel = document.getElementById('walkthrough-reader');
 const readerBackBtn = document.getElementById('reader-back-btn');
+const readerNextSectionBtn = document.getElementById('reader-next-section-btn');
 const readerSectionTitle = document.getElementById('reader-section-title');
 const readerModeScrollBtn = document.getElementById('reader-mode-scroll-btn');
 const readerModeStepBtn = document.getElementById('reader-mode-step-btn');
@@ -38,7 +39,7 @@ const cancelDeleteBtn = document.getElementById('cancel-delete-walkthrough-btn')
 const confirmDeleteBtn = document.getElementById('confirm-delete-walkthrough-btn');
 
 const WALKTHROUGHS_FILE = './walkthroughs-backup.json';
-const EXPORT_WORKER_URL = 'https://orange-bar-b027.harrycummins.workers.dev/export';
+const EXPORT_WORKER_URL = 'https://letterboxd-import.harrycummins.workers.dev/export';
 const EXPORT_FILENAME = 'adminhub/walkthroughs/walkthroughs-backup.json';
 const PROGRESS_KEY_PREFIX = 'walkthroughProgress:';
 
@@ -147,6 +148,10 @@ function renderLibrary() {
             ${resumeLine}
         `;
 
+        // No separate "Outline" button — this already goes somewhere
+        // useful either way (resume, or the outline if there's nothing to
+        // resume), so a second button doing one of those same two things
+        // was redundant.
         main.addEventListener('click', () => {
             if (progress && walkthrough.sections?.[progress.sectionIndex]) {
                 openSection(index, progress.sectionIndex, progress.mode || 'scroll', progress.stepIndex || 0);
@@ -155,17 +160,7 @@ function renderLibrary() {
             }
         });
 
-        const outlineBtn = document.createElement('button');
-        outlineBtn.type = 'button';
-        outlineBtn.className = 'walkthrough-tile-outline-btn editor-toolbar-btn';
-        outlineBtn.textContent = 'Outline';
-        outlineBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            renderOutline(index);
-        });
-
         tile.appendChild(main);
-        tile.appendChild(outlineBtn);
         libraryGrid.appendChild(tile);
     });
 }
@@ -189,6 +184,13 @@ function renderOutline(walkthroughIndex) {
         const row = document.createElement('div');
         row.className = 'outline-section-row';
 
+        // Clicking the row itself (anywhere but the two explicit buttons
+        // below) jumps straight into Step Through at this section's first
+        // step — the fastest path in, since that's the default way most
+        // sections get read. "📖 Read" stays as the explicit way to open it
+        // in Scroll mode instead.
+        row.addEventListener('click', () => openSection(walkthroughIndex, sectionIndex, 'step'));
+
         const label = document.createElement('span');
         label.className = 'outline-section-title';
         label.textContent = `${sectionIndex + 1}. ${section.title}`;
@@ -197,13 +199,19 @@ function renderOutline(walkthroughIndex) {
         readBtn.type = 'button';
         readBtn.className = 'editor-toolbar-btn';
         readBtn.textContent = '📖 Read';
-        readBtn.addEventListener('click', () => openSection(walkthroughIndex, sectionIndex, 'scroll'));
+        readBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSection(walkthroughIndex, sectionIndex, 'scroll');
+        });
 
         const stepBtn = document.createElement('button');
         stepBtn.type = 'button';
         stepBtn.className = 'editor-toolbar-btn';
         stepBtn.textContent = '👣 Step Through';
-        stepBtn.addEventListener('click', () => openSection(walkthroughIndex, sectionIndex, 'step'));
+        stepBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSection(walkthroughIndex, sectionIndex, 'step');
+        });
 
         row.appendChild(label);
         row.appendChild(readBtn);
@@ -294,6 +302,17 @@ readerBackBtn.addEventListener('click', () => {
     renderOutline(currentWalkthroughIndex);
 });
 
+readerNextSectionBtn.addEventListener('click', () => {
+    const walkthrough = walkthroughs[currentWalkthroughIndex];
+    if (!walkthrough || currentSectionIndex >= walkthrough.sections.length - 1) return;
+
+    currentSectionIndex += 1;
+    currentStepIndex = 0;
+    renderReader();
+    saveProgress();
+    readerPanel.scrollIntoView({ block: 'start' });
+});
+
 readerModeScrollBtn.addEventListener('click', () => {
     currentMode = 'scroll';
     renderReader();
@@ -318,6 +337,13 @@ function renderReader() {
 
     readerSectionTitle.textContent = `${currentSectionIndex + 1}. ${section.title}`;
 
+    // Only shown while actually reading a whole section at once — Step
+    // Through already has its own Next/Back that cross section boundaries,
+    // so a second "next section" control there would just be a redundant,
+    // differently-scoped jump.
+    const hasNextSection = currentSectionIndex < walkthrough.sections.length - 1;
+    readerNextSectionBtn.classList.toggle('hidden', currentMode !== 'scroll' || !hasNextSection);
+
     readerModeScrollBtn.classList.toggle('active-mode', currentMode === 'scroll');
     readerModeStepBtn.classList.toggle('active-mode', currentMode === 'step');
 
@@ -338,6 +364,12 @@ function renderStepElement(step) {
     if (step.type === 'image') {
         const img = document.createElement('img');
         img.loading = 'lazy';
+        // TrueAchievements blocks hotlinked images by checking the Referer
+        // header (confirmed: a plain request from this site's origin gets a
+        // 403, no Referer at all gets a 200) — this tells the browser to
+        // send no Referer for this request at all, same as the no-Referer
+        // case that works.
+        img.referrerPolicy = 'no-referrer';
         img.src = step.url;
         img.alt = step.alt || '';
         img.className = 'walkthrough-step-image';
@@ -345,16 +377,43 @@ function renderStepElement(step) {
     }
 
     if (step.type === 'achievement') {
+        // No icon — just the name + description, together as this one step.
         const card = document.createElement('div');
         card.className = 'walkthrough-achievement-card';
         card.innerHTML = `
-            ${step.iconUrl ? `<img loading="lazy" src="${escapeHtml(step.iconUrl)}" class="walkthrough-achievement-icon">` : ''}
             <div class="walkthrough-achievement-text">
                 <div class="walkthrough-achievement-name">${escapeHtml(step.name || '')}</div>
                 <div class="walkthrough-achievement-desc">${escapeHtml(step.description || '')}</div>
             </div>
         `;
         return card;
+    }
+
+    // Mirrors TrueAchievements' own spoiler widget (a reveal link sitting
+    // next to a display:none payload) rather than just showing the content
+    // straight away — same click-to-reveal interaction, just rebuilt here
+    // since the original markup doesn't come along with the capture.
+    if (step.type === 'spoiler') {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'walkthrough-spoiler';
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'walkthrough-spoiler-toggle';
+        toggle.textContent = '🔒 Spoiler — click to reveal';
+
+        const content = document.createElement('div');
+        content.className = 'walkthrough-spoiler-content hidden';
+        (step.steps || []).forEach(inner => content.appendChild(renderStepElement(inner)));
+
+        toggle.addEventListener('click', () => {
+            const nowHidden = content.classList.toggle('hidden');
+            toggle.textContent = nowHidden ? '🔒 Spoiler — click to reveal' : '🔓 Click to hide';
+        });
+
+        wrapper.appendChild(toggle);
+        wrapper.appendChild(content);
+        return wrapper;
     }
 
     const p = document.createElement('p');

@@ -4,7 +4,7 @@ import confetti from 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/co
 // Same Cloudflare Worker the homepage's "latest film" widget already uses —
 // see /watchlist and /tmdb/movie routes added alongside its existing
 // diary-RSS and GitHub-export routes.
-const WORKER_URL = 'https://orange-bar-b027.harrycummins.workers.dev';
+const WORKER_URL = 'https://letterboxd-import.harrycummins.workers.dev';
 const REGION = 'GB';
 const ENRICH_CONCURRENCY = 6;
 const CACHE_KEY = 'movieHubEnrichmentCache_v2';
