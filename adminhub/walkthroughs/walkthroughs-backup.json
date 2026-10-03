@@ -2599,100 +2599,45 @@
             "text": "1) The Follow the trail achievement is related to collecting all journals in the game. There is one missable journal that requires the \"Old Key\" item found in the prologue to collect. The item will be pointed out and emphasised in the prologue. Update: This is no longer missable as of the \"Thank you\" update. If the \"Old Key\" is not collected in the prologue, it can be found in Act 3 and will be pointed out in the guide."
           },
           {
-            "type": "text",
-            "text": "Follow The Trail"
-          },
-          {
-            "type": "text",
-            "text": "Find all of the journals from prior expeditions."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Follow The TrailFind all of the journals from prior expeditions.",
+            "description": "Follow The TrailFind all of the journals from prior expeditions."
           },
           {
             "type": "text",
             "text": "2) The Maelle achievement is related to reaching Maelle's final relationship rank. You can be locked out of this if you choose to lie to Maelle instead of telling the truth. This will be emphasised at the time. If you choose to lie, your relationship will not rank up. You can load an earlier save if you mess this one up, provided you realise quickly as the game only uses autosaves and after a while you won't be able to go back far enough."
           },
           {
-            "type": "text",
-            "text": "Maelle"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Maelle."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/sprites/flags/missable.png",
-            "alt": "Missable - These achievements can be missed."
+            "type": "achievement",
+            "name": "MaelleReach relationship level 7 with Maelle.",
+            "description": "MaelleReach relationship level 7 with Maelle."
           },
           {
             "type": "text",
             "text": "3) The Connoisseur achievement is related to collecting 33 of the 34 music records in the game. There are 2 missable records so you can miss one but not both. One missable record is in the prologue and the other is obtainable during a certain interaction at camp. Both will be pointed out and emphasised. If you do miss collecting both, you will be unable to get this achievement in your current playthrough."
           },
           {
-            "type": "text",
-            "text": "Connoisseur"
-          },
-          {
-            "type": "text",
-            "text": "Find all 33 music records."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/sprites/flags/missable.png",
-            "alt": "Missable - These achievements can be missed."
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/sprites/flags/buggy-plus.png",
-            "alt": "Buggy + - These achievements may unlock before the requirements have been met."
+            "type": "achievement",
+            "name": "ConnoisseurFind all 33 music records.",
+            "description": "ConnoisseurFind all 33 music records."
           },
           {
             "type": "text",
             "text": "4) The Peculiar Encounter achievement is related to defeating the Mime enemy in the prologue. This is required anyway for one of the missable records and will be pointed out. If you miss the Mime, you won't be able to get this achievement on your current playthrough but as it is near the start, you can quickly get it on a fresh save if needed."
           },
           {
-            "type": "text",
-            "text": "A Peculiar Encounter"
-          },
-          {
-            "type": "text",
-            "text": "Defeat the Mime in Lumière."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/sprites/flags/missable.png",
-            "alt": "Missable - These achievements can be missed."
+            "type": "achievement",
+            "name": "A Peculiar EncounterDefeat the Mime in Lumière.",
+            "description": "A Peculiar EncounterDefeat the Mime in Lumière."
           },
           {
             "type": "text",
             "text": "5) The Professional achievement is related to defeating a boss without taking damage. Technically this is missable as there is only a finite number of bosses in the game. There are a couple of easier chances to get this early on, either by legitimately avoiding every move one of the early bosses does or by leaving one of the optional bosses up until much later in the game then coming back and killing it instantly, unlocking the achievement."
           },
           {
-            "type": "text",
-            "text": "Professional"
-          },
-          {
-            "type": "text",
-            "text": "Defeat a boss without taking any damage."
-          },
-          {
-            "type": "text",
-            "text": "9 guides"
+            "type": "achievement",
+            "name": "ProfessionalDefeat a boss without taking any damage.",
+            "description": "ProfessionalDefeat a boss without taking any damage."
           },
           {
             "type": "text",
@@ -2813,6 +2758,11 @@
             "text": "Head down the street between more stalls until the area opens up again with a fountain in the middle. This is the final part of this area. If you head forward from the fountain you will receive the pop-up about leaving the area. Looking at the fountain from where you entered this area from, turn right. You will see a stage ahead with what looks like fireworks going off."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162563/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Head to the right of the stage in the picture to find the mime. Interact with it to begin a battle."
           },
@@ -2845,40 +2795,19 @@
             "text": "This may take a few goes whilst you get used to combat. The mime takes virtually no damage unless it is in a broken state so the ideal strategy is to parry/dodge and attack until you do enough damage to \"break\" it. Build your overcharge to 10/10 and then use it to break the enemy, unlocking the below three achievements."
           },
           {
-            "type": "text",
-            "text": "A Peculiar Encounter"
+            "type": "achievement",
+            "name": "A Peculiar EncounterDefeat the Mime in Lumière.",
+            "description": "A Peculiar EncounterDefeat the Mime in Lumière."
           },
           {
-            "type": "text",
-            "text": "Defeat the Mime in Lumière."
+            "type": "achievement",
+            "name": "Time to Spill Some InkBreak an enemy.",
+            "description": "Time to Spill Some InkBreak an enemy."
           },
           {
-            "type": "text",
-            "text": "2 guides"
-          },
-          {
-            "type": "text",
-            "text": "Time to Spill Some Ink"
-          },
-          {
-            "type": "text",
-            "text": "Break an enemy."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
-          },
-          {
-            "type": "text",
-            "text": "Overcharge"
-          },
-          {
-            "type": "text",
-            "text": "With Gustave, use a fully charged Overcharge that Breaks an enemy."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy.",
+            "description": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy."
           },
           {
             "type": "text",
@@ -2917,16 +2846,9 @@
             "text": "With all that done, it's now time to continue the story and finish the prologue. Move to the back of the area from where you entered and speak with the children for a cutscene. Make sure you have obtained the Old Key item from the blue tent; this is your last chance. Now go back to the entrance of this area and speak with the woman to begin a cutscene. This ends the prologue and awards the below achievement."
           },
           {
-            "type": "text",
-            "text": "Lumière"
-          },
-          {
-            "type": "text",
-            "text": "Embark on the Expedition."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "LumièreEmbark on the Expedition.",
+            "description": "LumièreEmbark on the Expedition."
           }
         ]
       },
@@ -3035,16 +2957,9 @@
             "text": "For defeating the boss, you will get a cutscene and unlock:"
           },
           {
-            "type": "text",
-            "text": "Spring Meadows"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Spring Meadows."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Spring MeadowsFind your way through Spring Meadows.",
+            "description": "Spring MeadowsFind your way through Spring Meadows."
           },
           {
             "type": "text",
@@ -3079,16 +2994,9 @@
             "text": "Head forward for a cutscene and then turn left and move forward to the edge of the area. Turn left and follow this path to the end for the \"SOS Shell\" pictos. Head to the back of this area and a message will popup telling you about the paint cage. When facing the cage, turn left 90 degrees and you will see the first lock on the wall in front of you. Shoot it with free aim. Turn left another 90 degrees so you are facing the direction you came from and the second lock will be right in front of you, on the tail of the statue. Finally, turn 90 degrees a third time and the final lock is on the wall here, hidden behind the air bubble and purple corals. Shoot it to open the paint cage, loot the Chroma Elixir Shard and unlock:"
           },
           {
-            "type": "text",
-            "text": "Paint Cage"
-          },
-          {
-            "type": "text",
-            "text": "Break a Paint Cage."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Paint CageBreak a Paint Cage.",
+            "description": "Paint CageBreak a Paint Cage."
           },
           {
             "type": "text",
@@ -3107,16 +3015,36 @@
             "text": "Now return back to the top of the first set of stairs, which lead down to the flag. Run down the corridor in between the left/right sets of stairs. We have a record to get here but it requires a few things first. There are four ornaments in the room that must be interacted with."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162648/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "The first is to the right as you enter the dining room."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162649/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "The second is at the back of the room, on the back side of a pillar"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162650/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Facing the second, turn right and run straight to the wall to find this third ornament."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162651/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -3143,6 +3071,11 @@
             "text": "To the left of this, climb onto the low platform to loot a Recoat. You can then jump to the next platform along and follow the series of handholds and grapples to the end of a high path where the \"Augmented Aim\" pictos is located. Now return to the opening in the shell and go through. Shortly inside you will find our Nevron. Interact with it and choose to [Examine], NOT [Attack] to learn it needs a mine. Head to its right to see a series of platforms. Jump across straight and then to the right to pull up onto a bigger island. Go straight ahead to another circular platform on your right. You will see the purple item pickup in the distance."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170806/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "It's not super obvious but jump from this platform to the spiky area on the right and then jump across to the item. Loot it and drop down ahead of you. Then just run back to the shell tunnel and interact with the Nevron again and give it the mine to receive a new weapon for Lune. I always speak to them again to make sure but this completes [Nevron Quest #2/10]. Now you can return to the path through the ship that we ignored earlier. You will see a large enemy ahead that looks like it is forging something. You can run past it if you really want but it drops a weapon for Gustave and you can loot 2x Chroma Catalyst from behind the anvil."
           },
@@ -3155,12 +3088,27 @@
             "text": "Grapple across to your left and turn to the right. You can see Lock #1 across from you"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170807/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Turn left and grapple across the next gap. Turn around and Lock #2 will be on the mine directly in front of you."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170808/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Climb up the platform opposite the mine and jump across the circular pillars to reach a path uphill. Loot a Colour of Lumina at the top. Drop off this ledge and head to the left. You'll see the paint cage ahead and another big enemy wandering around. Lock #3 is immediately to the right of the paint cage."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170809/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -3271,16 +3219,9 @@
             "text": "You will receive a Shape of Health from defeating Goblu, something we can use soon to upgrade the potency of health tints. Leave this area and you will automatically be in the camp, following a cutscene. This completes Flying Waters and unlocks:"
           },
           {
-            "type": "text",
-            "text": "Flying Waters"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Flying Waters."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Flying WatersFind your way through Flying Waters.",
+            "description": "Flying WatersFind your way through Flying Waters."
           },
           {
             "type": "text",
@@ -3291,48 +3232,27 @@
             "text": "When back in control, you will find yourself in front of the Curator. He will always be here at camp and offers a range of services. Speak to him to see that he can upgrade weapons or expedition resources. Go to weapons first. There will be a few popups telling you how this works. If you've played any souls-like games before, it will be very familiar. Attribute points scale with certain weapons and weapons themselves can be upgraded up to certain levels with the use of various items. I'm not going to tell you what to upgrade or not, just be aware that you can buy upgrade materials from most merchants and even past this, most of them can be farmed. Upgrade any weapon now to unlock:"
           },
           {
-            "type": "text",
-            "text": "Weapon Upgrade"
-          },
-          {
-            "type": "text",
-            "text": "Upgrade a weapon once."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Weapon UpgradeUpgrade a weapon once.",
+            "description": "Weapon UpgradeUpgrade a weapon once."
           },
           {
             "type": "text",
             "text": "Now back go out and this time choose to upgrade expedition resources. The Upgrade Lumina section will use your Colours of Lumina to give a character of your choice an extra Lumina point. This, in turn, allows you to equip more pictos to them. Colours of Lumina are plentiful in the game. There are plenty to pick up in the open world, most merchants sell a number of them and if all else fails, you can farm them. So again, spend at your leisure. Give any character a Lumina point now to unlock:"
           },
           {
-            "type": "text",
-            "text": "Lumina"
-          },
-          {
-            "type": "text",
-            "text": "Consume a Lumina point."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "LuminaConsume a Lumina point.",
+            "description": "LuminaConsume a Lumina point."
           },
           {
             "type": "text",
             "text": "Finally, at the bottom is the Upgrade Tints section. You should already be able to upgrade the healing and revive tints. Unlike the shard items which are applied automatically and increase the number of tints you can carry, the Shape items must be used here. This will increase the potency of the tints, healing your characters for more health and reviving them with more health. Upgrade both tints now. When done with the curator, leave this cave to be back at the campfire. The characters don't have much to say at this point so interact with the fire. Choose to write in the journal if you wish and then choose to check up on the others. This starts a cutscene and unlocks:"
           },
           {
-            "type": "text",
-            "text": "Curious"
-          },
-          {
-            "type": "text",
-            "text": "Witness an optional scene at camp."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "CuriousWitness an optional scene at camp.",
+            "description": "CuriousWitness an optional scene at camp."
           },
           {
             "type": "text",
@@ -3345,6 +3265,11 @@
           {
             "type": "text",
             "text": "Rest at the flag ahead and just past this you will see a strange little ball like creature. These are Petanks and I personally find them extremely irritating. They are mostly optional so it's up to you if you want to bother with them. Essentially you need to \"herd\" them onto a certain space on the floor which is indicated with their colour."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170810/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -3407,12 +3332,27 @@
             "text": "Take the path to the right of the item to reach another open area. Defeat the enemy and then take the left path. You will see [Journal #3/49 - Expedition 63] ahead. There is a paint cage nearby but we can destroy all of the locks from here. From the journal, facing the middle structure in the area, turn left and look up for Lock #1."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162784/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Now go to the right side of the structure and destroy the crates in the image below for Lock #2."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162785/image-2.jpg",
+            "alt": "Image 2"
+          },
+          {
             "type": "text",
             "text": "For the final lock, look left from the crates and you can see Lock #3 partially hidden behind some trees."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162786/image-3.jpg",
+            "alt": "Image 3"
           },
           {
             "type": "text",
@@ -3455,16 +3395,9 @@
             "text": "Defeating the boss will give you a cutscene as well as unlock the below achievement for completing this area:"
           },
           {
-            "type": "text",
-            "text": "Ancient Sanctuary"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Ancient Sanctuary."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Ancient SanctuaryFind your way through Ancient Sanctuary.",
+            "description": "Ancient SanctuaryFind your way through Ancient Sanctuary."
           },
           {
             "type": "text",
@@ -3539,16 +3472,9 @@
             "text": "Once done with the optional stuff or if you choose to continue without, leave the village the way you came in. You will unlock the below achievement for completing this area:"
           },
           {
-            "type": "text",
-            "text": "Gestral Village"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through the Gestral Village."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Gestral VillageFind your way through the Gestral Village.",
+            "description": "Gestral VillageFind your way through the Gestral Village."
           },
           {
             "type": "text",
@@ -3583,28 +3509,14 @@
             "text": "This boss only has one move, the ice attack. It will one-shot your characters, so watch the pulse from the boss and get ready to parry just after the second one. Otherwise, just damage the boss down. You will get another cutscene afterwards. When back in control, go to the rope ahead. Follow the path to the right and loot another 1,305x Chroma to your left. Continue following the path, climbing up at the end. You can jump to the ledge ahead for another Colour of Lumina if you wish. Either way, return to Esquie at the top of the stairs for a cutscene. You will unlock the two achievements below for finishing this area and unlocking Esquie:"
           },
           {
-            "type": "text",
-            "text": "Esquie's Nest"
+            "type": "achievement",
+            "name": "Esquie's NestFind your way through Esquie's Nest.",
+            "description": "Esquie's NestFind your way through Esquie's Nest."
           },
           {
-            "type": "text",
-            "text": "Find your way through Esquie's Nest."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
-          },
-          {
-            "type": "text",
-            "text": "Legend"
-          },
-          {
-            "type": "text",
-            "text": "Unlock Esquie."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "LegendUnlock Esquie.",
+            "description": "LegendUnlock Esquie."
           },
           {
             "type": "text",
@@ -3629,6 +3541,11 @@
             "text": "First up, we will go to the \"Yellow Harvest\" side-area. Where some side-areas are literally just one room with the collectible in the middle, this one is more akin to an optional dungeon. Summon Esquie with and hold to sprint. Make your way to the location below."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162782/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Yellow Harvest"
           },
@@ -3639,6 +3556,11 @@
           {
             "type": "text",
             "text": "Look to the right of the flag to see another large area with a statue in the middle. Make your way to the right first and you will see a ramp going up. Take this path all the way and climb up twice at the end. Straight ahead of you is [Journal #6/49 - Expedition 38]. Continue straight on past the journal and look up at the end to find a grapple point."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162783/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -3689,6 +3611,11 @@
             "text": "Look to your right and interact with the object to form a bridge leading back to the rest of the map. Turn around and go straight ahead to another swirling portal for the \"Lost Woods\". There is nothing in this area apart from [Record #3/34 - Aline's Glasshouse]. Loot it and exit back to the Continent. Cross over the bridge we made and at the other side look to your left to see some destroyed buildings. In between them is [Journal #9/49 - Expedition 62]. Head to the location in the image below to reach the Gestral Beach side area."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162835/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Gestral Beach"
           },
@@ -3737,6 +3664,11 @@
             "text": "Head to the location on the image below to find a merchant."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162836/image-2.jpg",
+            "alt": "Image 2"
+          },
+          {
             "type": "text",
             "text": "Buy [Record #4/34 - Goblu] from him as well as anything else you fancy. Facing the merchant straight on, turn around and you will see a group of enemies ahead to the right. Run past or defeat these and on the right is an entrance to the Small Bourgeon side-area. Enter here."
           },
@@ -3769,16 +3701,9 @@
             "text": "Move ahead and take the rope on the left down back to where we fought the Eveque boss. Go to the flag and then fast travel to \"Grand Meadow\". We're going back to the Chromatic boss we skipped earlier. Take the path right from the flag and under the fallen stone pillar like last time. At the top of the hill, take a right before the rope and you will see the green tinted enemy ahead. This is the Chromatic Lancelier. Make sure to get a first strike on it and then shoot its weak spot on your first turn. This should remove at least 1/4 of health. I then defeated it with Maelle given she starts in Virutose stance, provided Medalum is equipped. At the very most, the enemy might get one move off but I find this doubtful if you are anything around level 15+. Defeating the enemy without taking damage will unlock:"
           },
           {
-            "type": "text",
-            "text": "Professional"
-          },
-          {
-            "type": "text",
-            "text": "Defeat a boss without taking any damage."
-          },
-          {
-            "type": "text",
-            "text": "9 guides"
+            "type": "achievement",
+            "name": "ProfessionalDefeat a boss without taking any damage.",
+            "description": "ProfessionalDefeat a boss without taking any damage."
           },
           {
             "type": "text",
@@ -3795,6 +3720,11 @@
           {
             "type": "text",
             "text": "Make your way to the location in the image below, you will need to cross back over the bridge we took from the Small Bourgeon first."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162838/image-3.jpg",
+            "alt": "Image 3"
           },
           {
             "type": "text",
@@ -3817,12 +3747,27 @@
             "text": "Follow the linear path until you trigger a cutscene. When back in control, keep heading forward, the only way you can, until you see a flag ahead. Just to the left is 790x Chroma. Rest if needed and then continue. Follow the right wall in this area until you reach a rope. Take it up and loot [Journal #11/49 - Expedition 78]. Turn left from the journal and you'll see a paint cage ahead. For the first lock, walk around the back of the cage itself and you should be able to see this on the wall behind. You might need to be in front of the cage, aiming past it in order to hit it."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162839/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Climb the rope to the right of the cage and straight in front of you, slightly above, is the second lock."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162840/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Now walk straight until you reach the wall ahead. Turn around and look up to your left for the final lock."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162841/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -3845,12 +3790,27 @@
             "text": "Back in the area with the hut, head back to the original slope we came down from the flag and go straight across it, dropping off the other side. There is another Polished Chroma Catalyst here. Now take the path ahead, sticking to the left and you will see a paint cage at the top of a slope. Go right up to the cage and turn around. You will see the first lock ahead, attached to the side of some wooden pallets."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162880/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Turn left 90 degrees from this, and directly across from you, is the second lock."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162881/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Finally, turn 180 degrees and look up and to the left. The final lock is here."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162882/image-2.jpg",
+            "alt": "Image 2"
           },
           {
             "type": "text",
@@ -3861,12 +3821,22 @@
             "text": "Head right from the flag, and grapple across the gap. We have three quest items to collect here for the quest Nevron, so will do this first. Go down the rope ahead. In one direction you should see a giant enemy and towards the left wall, a blue crystal. This is Crystal #1 needed for the quest."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162883/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Run up to it hit, press to break it, and loot. From the crystal, turn around and head to the other side of the room, near the water. Follow the water along, past the submerged building and follow the wall right. There will be two paths, a slope going upwards and a path to the right of it."
           },
           {
             "type": "text",
             "text": "To the left of the slope is a Colour of Lumina. Take the right path, past the slope and loot a second Colour of Lumina straight ahead. Now turn around and take the left path. You will see Crystal #2 just ahead."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/162884/image-2.jpg",
+            "alt": "Image 2"
           },
           {
             "type": "text",
@@ -3953,16 +3923,9 @@
             "text": "After the boss fight, you will find yourself in a series of cutscenes, at the end of which you will be in camp. You will also unlock the below achievement for finishing this area:"
           },
           {
-            "type": "text",
-            "text": "Stone Wave Cliffs"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Stone Wave Cliffs."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Stone Wave CliffsFind your way through Stone Wave Cliffs.",
+            "description": "Stone Wave CliffsFind your way through Stone Wave Cliffs."
           },
           {
             "type": "text",
@@ -4033,6 +3996,11 @@
           {
             "type": "text",
             "text": "We've now got everything we want to get here. Head back to the ramp and drop off it to the right. We're now back at the split path. Take the right path here back up, and keep going straight, past the wrecked boat to your left. You will see a ramp ahead. This is the one we took earlier that leads to a flag. Take it, rest at the flag and then drop down through the gap in the fence to the left of it. Before moving down the path, there is a very easy to miss Energy Tint Shard here."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166430/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -4159,6 +4127,11 @@
             "text": "Find your way through Forgotten Battlefield."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imagestore/0009593400/9593416.jpg",
+            "alt": "Forgotten Battlefield"
+          },
+          {
             "type": "text",
             "text": "Camp"
           },
@@ -4239,16 +4212,9 @@
             "text": "You will unlock the below achievement during the cutscene, as Monoco will now join the party, becoming the final party member:"
           },
           {
-            "type": "text",
-            "text": "Expedition 33"
-          },
-          {
-            "type": "text",
-            "text": "Unlock all playable characters."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Expedition 33Unlock all playable characters.",
+            "description": "Expedition 33Unlock all playable characters."
           },
           {
             "type": "text",
@@ -4267,16 +4233,9 @@
             "text": "With Monoco's tutorial complete, you will unlock the below achievement for completing this short area:"
           },
           {
-            "type": "text",
-            "text": "Monoco's Station"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Monoco's Station."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Monoco's StationFind your way through Monoco's Station.",
+            "description": "Monoco's StationFind your way through Monoco's Station."
           },
           {
             "type": "text",
@@ -4391,6 +4350,11 @@
             "text": "Find your way through Old Lumière."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imagestore/0009593400/9593418.jpg",
+            "alt": "Old Lumière"
+          },
+          {
             "type": "text",
             "text": "After the cutscene ends, you will be back at camp."
           },
@@ -4447,12 +4411,27 @@
             "text": "Climb the rope back up and go back down the slope. Follow the edge of the area to the left until you reach another slope. On the wall to the right is Lock #1 for the upcoming paint cage."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166438/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "A few steps ahead, you will see the paint cage and to the right of it, attached to a chunk of wall, is lock #2."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166439/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Finally, approach the cage and look to the cliff behind it for lock #3."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166440/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -4503,16 +4482,9 @@
             "text": "I reached level 33 upon killing the boss. You might already be there by now but if not, you should be close and will get it within Visages. You will unlock the below achievement once you reach level 33:"
           },
           {
-            "type": "text",
-            "text": "Expeditioner"
-          },
-          {
-            "type": "text",
-            "text": "Reach level 33."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "ExpeditionerReach level 33.",
+            "description": "ExpeditionerReach level 33."
           },
           {
             "type": "text",
@@ -4635,16 +4607,9 @@
             "text": "Defeating the boss will start another cutscene. You will unlock the below achievement for defeating the first axon:"
           },
           {
-            "type": "text",
-            "text": "First Axon"
-          },
-          {
-            "type": "text",
-            "text": "Defeat the first Axon."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "First AxonDefeat the first Axon.",
+            "description": "First AxonDefeat the first Axon."
           },
           {
             "type": "text",
@@ -4703,8 +4668,18 @@
             "text": "Go into the opening opposite this balcony and turn left to see a rope. Take it down and turn right into a room. There is an enemy on the right and a Resplendent Chroma Catalyst on the left. Leave this room and look right where you will see a grapple point. Follow the path downstairs and you will end up back outside with one of those moving platforms ahead. Look to the left here for a paint cage. Locks 1 and 2 should be visible to its left and behind it."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166443/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "To find lock #3, turn around and you will see some rubble ahead. Look behind this for the lock."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166444/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -4791,12 +4766,27 @@
             "text": "After the battle, face the doorway we came from and pan to the left. You should see a purple item. Loot the Resplendent Chroma Catalyst. Now look to the right of the doorway leading back to the flag. There are some ledges here you can climb. At the top, look up for Lock #1 attached to what looks like a spool of yarn."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166446/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Follow the path you're on all the way around to the paint cage and then look ahead to see lock #2"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170811/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Follow this path right to the end and then look up and to your right for lock #3"
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166448/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -4891,16 +4881,9 @@
             "text": "For defeating the second axon, you will get a cutscene as well as the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Second Axon"
-          },
-          {
-            "type": "text",
-            "text": "Defeat the second Axon."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Second AxonDefeat the second Axon.",
+            "description": "Second AxonDefeat the second Axon."
           },
           {
             "type": "text",
@@ -4935,6 +4918,11 @@
           {
             "type": "text",
             "text": "We're now going to go back to side-areas as well as merchants on the world map to hoover up some goodies. As mentioned, I'm leaving Monoco skills until the post-game as there is a post-game dungeon where you can get virtually all of them. First things first, go to the world map location in the image below and enter the \"Sinister Cave\" located here."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163122/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -4973,6 +4961,11 @@
             "text": "It's been a while but it's time for another Gestral Beach minigame. Head to the below location on the map."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163126/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Gestral Beach"
           },
@@ -4993,12 +4986,27 @@
             "text": "Now go to the below location to find a merchant. Buy [Record #12/34 - Robe De Jour]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163126/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Proceed to the below location for [Lost Gestral #3/9]. Note that you can interact with him and leave without fighting the enemies."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163128/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Continuing our world map tour, go to the below location where you will find a Chromatic Boss and a journal."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163129/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -5037,8 +5045,18 @@
             "text": "Once dealt with, go to the below location to find [Lost Gestral #4/9]. It is found behind the mimes here, near some pots. The two mimes have the same moves as always, it's just that there are two of them now. They drop a hairstyle for Sciel and one for Lune."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163130/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "With that small batch of collectibles done, it's time to break things up with a side-dungeon, stopping off at a Gestral Beach on the way. Head south from the island where we just found the gestral and cross over land to reach the location below."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163131/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -5073,16 +5091,9 @@
             "text": "Following the cutscene, you will be on a small island with a merchant. Look nearby to find [Journal #27/49 - Expedition 40]. Approach the Monolith again, this time entering a new area for another cutscene. There is nothing to do here other than proceed down the only path you can. You will find yourself in another battle, after which you will be in another cutscene and will unlock the below achievement for reaching the Monolith:"
           },
           {
-            "type": "text",
-            "text": "Monolith"
-          },
-          {
-            "type": "text",
-            "text": "Reach the Monolith."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "MonolithReach the Monolith.",
+            "description": "MonolithReach the Monolith."
           },
           {
             "type": "text",
@@ -5115,6 +5126,11 @@
           {
             "type": "text",
             "text": "Again, follow the left edge in this area until you reach a path going upwards between some seaweed."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166787/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -5191,6 +5207,11 @@
           {
             "type": "text",
             "text": "After you've beaten the boss, look opposite the flaming tree and go to this edge to find a grapple. Right in front of you here on the right wall is Lock #1. Move ahead to the cage and then go to the right, all the way to the edge of this platform. Turn around again and look left to find Lock #2 in the image below."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/166788/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -5325,16 +5346,9 @@
             "text": "You will unlock the below achievement for defeating the boss and then will watch a number of cutscenes. When back in control in the Manor, make your way to the room with the canvases in and interact with the person here. Go through the dialogue and there will be some more cutscenes after which you will finally end up in Lumiére. This signifies the start of Act III and will continue on the next page."
           },
           {
-            "type": "text",
-            "text": "Paintress"
-          },
-          {
-            "type": "text",
-            "text": "Defeat the Paintress."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "PaintressDefeat the Paintress.",
+            "description": "PaintressDefeat the Paintress."
           }
         ]
       },
@@ -5355,16 +5369,9 @@
             "text": "Take the only path you can take until you find the curator and start another cutscene, unlocking the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Back to Lumière"
-          },
-          {
-            "type": "text",
-            "text": "Return to Lumière."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Back to LumièreReturn to Lumière.",
+            "description": "Back to LumièreReturn to Lumière."
           },
           {
             "type": "text",
@@ -5383,8 +5390,13 @@
             "text": "I will point out in the when I do this part but if you go exploring on your own and pop it early, do bear this in mind. The specifics are below."
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***When speaking to Maelle after completing the Reacher side-area and fighting Alicia, there will be a cutscene at camp where she asks Verso if he could have saved Gustave. You MUST tell the truth here to advance the relationship and unlock the achievement. If you lie, the relationship will not go up."
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "When speaking to Maelle after completing the Reacher side-area and fighting Alicia, there will be a cutscene at camp where she asks Verso if he could have saved Gustave. You MUST tell the truth here to advance the relationship and unlock the achievement. If you lie, the relationship will not go up."
+              }
+            ]
           },
           {
             "type": "text",
@@ -5395,44 +5407,23 @@
             "text": "Speak to Esquie. You get nothing for reaching level 5. Speaking to him again will eventually put you in a battle with Francois. This is the same fight as when you fought him back in Act I, just with only Verso this time and will unlock the ability to swim underwater when defeated. Keep speaking to Esquie until you reach level 7, maxing out the relationship and unlocking the below two achievements, as well as Verso's final gradient attack:"
           },
           {
-            "type": "text",
-            "text": "Plane, Train, and Submarine"
+            "type": "achievement",
+            "name": "Plane, Train, and SubmarineDiscover all of Esquie’s abilities.",
+            "description": "Plane, Train, and SubmarineDiscover all of Esquie’s abilities."
           },
           {
-            "type": "text",
-            "text": "Discover all of Esquie’s abilities."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
-          },
-          {
-            "type": "text",
-            "text": "Esquie"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Esquie."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "EsquieReach relationship level 7 with Esquie.",
+            "description": "EsquieReach relationship level 7 with Esquie."
           },
           {
             "type": "text",
             "text": "Now speak to Sciel twice. Reaching level 6 will unlock [Record #14/34 - Sciel], as well as outfits for Verso and Sciel. Reaching level 7 will unlock Sciel's final gradient attack as well as the below achievement for maxing the relationship:"
           },
           {
-            "type": "text",
-            "text": "Sciel"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Sciel."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "ScielReach relationship level 7 with Sciel.",
+            "description": "ScielReach relationship level 7 with Sciel."
           },
           {
             "type": "text",
@@ -5499,16 +5490,9 @@
             "text": "Without painted power, the boss will not fall over quick and as the attacks are all fairly easy to avoid, this is a good place to get it done. Bear in mind that not all characters will actually have a level 3 gradient ability as this point though. Once at 3 charges, use a level 3 gradient attack on the boss to unlock:"
           },
           {
-            "type": "text",
-            "text": "Chroma Proficiency"
-          },
-          {
-            "type": "text",
-            "text": "Use a level 3 Gradient Attack."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Chroma ProficiencyUse a level 3 Gradient Attack.",
+            "description": "Chroma ProficiencyUse a level 3 Gradient Attack."
           },
           {
             "type": "text",
@@ -5647,16 +5631,9 @@
             "text": "During the cutscenes you will unlock the below achievement for reaching the end, although you're not quite done yet:"
           },
           {
-            "type": "text",
-            "text": "The End"
-          },
-          {
-            "type": "text",
-            "text": "Reach the end."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "The EndReach the end.",
+            "description": "The EndReach the end."
           },
           {
             "type": "text",
@@ -5689,6 +5666,11 @@
             "text": "In terms of post-game stuff, the first thing I chose to do was get the Gestral Games out of the way. We have already done the parkour, the climb and the race games so all that remains are two more. I didn't particularly enjoy these and just wanted them done. Go to the location on the map below:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163859/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "This Gestral Beach is home to the volleyball minigame. Speak to the Gestral here. There are three levels to complete but for the achievement you only need to do the first two. You can try the third if you wish but I felt that it wasn't worth the trouble personally as this minigame felt janky at best and downright horrible at worst. The aim of the game is to punt back the gestrals that the enemy on the raft opposite throws at you, thus breaking his raft."
           },
@@ -5705,6 +5687,11 @@
             "text": "With that game won, we only have one left [Gestral Game #4/5]. Return to the Continent and head to the location below for the final Gestral Beach:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163860/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "On entering this beach area, look to the right and loot [Journal #31/49 - Expedition 37] from next to the torch ahead. Now approach the giant climbing wall. I found this game no less frustrating than most of the others but your mileage may vary. There are three \"lanes\" with fireballs shooting down them. The aim is to climb to the top of the wall whilst swapping between lanes to avoid being hit. Being hit sends you back to the start. The best advice for this one is to take your time, especially near the top. Wait until you see which lanes are unsafe next and climb accordingly. One important note is that you can only climb onto the top from the middle lane."
           },
@@ -5713,52 +5700,63 @@
             "text": "The first time I got to the top, I was in the right lane and didn't understand why I couldn't get up. I promptly got knocked back to the start and was not impressed. The patterns on the wall can be free at points, essentially allowing you to climb a good chunk up the wall without having to move. Just keep a look out, especially nearer the top. Once you reach the top you will unlock an outfit for Maelle and, if you've completed all the other games you will unlock the below achievement [Gestral Game #5/5]:"
           },
           {
-            "type": "text",
-            "text": "Gestral Games"
-          },
-          {
-            "type": "text",
-            "text": "Win all of the Gestral games."
-          },
-          {
-            "type": "text",
-            "text": "4 guides"
+            "type": "achievement",
+            "name": "Gestral GamesWin all of the Gestral games.",
+            "description": "Gestral GamesWin all of the Gestral games."
           },
           {
             "type": "text",
             "text": "The next thing on the list for me was locating the remaining Lost Gestrals as they are all available on the world map and it gets another achievement ticked off. We should have 4/9 already. Head to the location below for [Lost Gestral #5/9]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163862/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "For [Lost Gestral #6/9], head to the location below:"
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163863/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "For [Lost Gestral #7/9], head to the location below. This one is very high up in the air, on a platform in the clouds:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163864/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "For [Lost Gestral #8/9], head to the location below. There are enemies here but you can speak to the Gestral whilst mounted on Esquie:"
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170812/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "Finally, for [Lost Gestral #9/9], head to this location:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163866/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "For rescuing all 9 Lost Gestrals, you will unlock the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Lost Gestrals"
-          },
-          {
-            "type": "text",
-            "text": "Find all of the Lost Gestrals."
-          },
-          {
-            "type": "text",
-            "text": "4 guides"
+            "type": "achievement",
+            "name": "Lost GestralsFind all of the Lost Gestrals.",
+            "description": "Lost GestralsFind all of the Lost Gestrals."
           },
           {
             "type": "text",
@@ -5767,6 +5765,11 @@
           {
             "type": "text",
             "text": "With the Gestral related achievements done, it's time to finish off our relationships, starting with Maelle. Spend time with her at camp whilst we are here to learn that she wants to see Alicia. Head to the location below and enter \"The Reacher\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/163867/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -5877,16 +5880,9 @@
             "text": "Once you have pressed TRUTH, go through the rest of the dialogue to reach relationship level 7 with Maelle. This will unlock her incredibly powerful level 3 gradient attack \"Gommage\" as well as the below achievement for maxing her relationship:"
           },
           {
-            "type": "text",
-            "text": "Maelle"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Maelle."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "MaelleReach relationship level 7 with Maelle.",
+            "description": "MaelleReach relationship level 7 with Maelle."
           },
           {
             "type": "text",
@@ -5945,16 +5941,9 @@
             "text": "With the fight out of the way, head to the back of this area and across the bridge to finally loot [Journal #34/49 - Expedition 46]. Now leave the area and you will again automatically go to camp, reaching relationship level 6 after the dialogue. You will automatically obtain [Record #17/34 - Lune]. Speak to Lune again and spend time with her. Go through the dialogue and at the end you will unlock her final gradient attack as well as the below achievement for maxing her relationship:"
           },
           {
-            "type": "text",
-            "text": "Lune"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Lune."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "LuneReach relationship level 7 with Lune.",
+            "description": "LuneReach relationship level 7 with Lune."
           },
           {
             "type": "text",
@@ -5973,16 +5962,9 @@
             "text": "Head forward the only way you can and interact with the giant crystal Gestral. Following the cutscene, you will be in a boss battle. This fight is also a good chance to get the achievement for using a level 3 gradient attack if you haven't done so yet. The boss has a lot of health, even with Painted Power. Simply use as many AP attacks as you can until you have 3/3 gradient charges. Then use Verso's \"Angel Eyes\" ability. This will also give you a free revive on Verso if he dies, which is useful in this fight as there are only two of you. Using the level 3 gradient will unlock the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Chroma Proficiency"
-          },
-          {
-            "type": "text",
-            "text": "Use a level 3 Gradient Attack."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Chroma ProficiencyUse a level 3 Gradient Attack.",
+            "description": "Chroma ProficiencyUse a level 3 Gradient Attack."
           },
           {
             "type": "text",
@@ -6033,16 +6015,9 @@
             "text": "Following the cutscene, leave this area to be returned once again to the camp automatically. After some dialogue, you will reach relationship level 6 as well as obtain [Record #19/34 - Monoco]. Spend time with Monoco again now to reach the max relationship level with Monoco. You will unlock Monoco's level 3 gradient attack as well as the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Monoco"
-          },
-          {
-            "type": "text",
-            "text": "Reach relationship level 7 with Monoco."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "MonocoReach relationship level 7 with Monoco.",
+            "description": "MonocoReach relationship level 7 with Monoco."
           },
           {
             "type": "text",
@@ -6085,28 +6060,36 @@
             "text": "You will receive the \"Cheater\" pictos for defeating Sprong which I'd advise equipping on a character straight away for learning as it allows you play twice in a row. You also unlock the below achievement for defeating the boss:"
           },
           {
-            "type": "text",
-            "text": "Sprong"
-          },
-          {
-            "type": "text",
-            "text": "Beat Sprong."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "SprongBeat Sprong.",
+            "description": "SprongBeat Sprong."
           },
           {
             "type": "text",
             "text": "With the pictos equipped, we are now going to do some collectible gathering. You should have 34/49 journals and 19/34 records. With all of the map open we can go now and grab almost all of the rest both from the overworld and from side areas. Along the way we will naturally increase the party level through fighting enemies which beats grinding it. First go to the location below:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168952/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Here you will find [Journal #35/49 - Expedition 47]. Now go to the location below, way back in this Act I area for [Journal #36/49 - Expedition 64]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168969/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Now head to the location below and enter the spiral portal here to enter the side area, \"The Fountain\". Don't worry about it saying \"Danger\", it just means we are under-leveled for the area but we are only dipping in now for the journal."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170464/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6121,6 +6104,11 @@
             "text": "We will visit a few more side-areas to get quick journals, rather than fully exploring them. You are free to explore these areas as you wish, the majority of them I won't be coming back to. Head to the location below and enter the portal for \"The Crows\" side area."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170465/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Look to the left in here to see the flag, and next to it is [Journal #38/49 - Expedition 34]. If interested, you can shoot all the crows in this area with free aim to trigger a boss. The boss is just a chromatic enemy that drops the usual upgrade materials, a weapon for Sciel and the \"Shielding Death\" pictos which gives other party members 3 shields each when you die. I didn't personally feel it was worth doing but you can decide for yourself."
           },
@@ -6129,12 +6117,27 @@
             "text": "Back on the Continent, head to the below location:"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170466/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Loot [Journal #39/49 - Julie] from the tents here and then look to the right. At the back of this area, guarded by enemies is [Journal #40/49 - Verso]. Anti-blight is good here as the enemy group features one of the nasty enemies we fought in the Reacher area. The next journal is a two-step process. First, head to the area below and enter \"The Canvas\"."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170467/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Take the only path you can here until find a familiar painting. Interact with it and choose to remove the portrait. We will use this later when we visit the Manor. It's time to head to a side-area now as it has a journal, a record and an entrance to the Manor we can use. Head to the below location and enter the \"Falling Leaves\" area."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170473/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6169,8 +6172,18 @@
             "text": "We are getting there with the collectibles now. We have a few more journals and records to obtain and then it's essentially going to be a few side-areas to level up until we are over level 70 and can start tackling the final areas. Head to the area below and enter the side-area entitled \"White Tree\"."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170480/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "There is nothing to do here other than to loot [Record #22/34 - Honeymoon in Lumiére] and [Journal #44/49 - Expedition 36]. Return to the Continent and then head to the location below entitled \"Crushing Cavern\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170482/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6181,12 +6194,22 @@
             "text": "Head to the location below entitled \"Stone Waves Cliff Cave\"."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170483/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Again, there isn't too much to do here. Take the path down past the flag and as you move down the path, you will see a crystal enemy in the distance. Loot the Colour of Lumina as you go. To the right of this is a crawlspace with a paint cage if you want that gives a Chroma Elixir Shard. Continue down to the enemy. You can loot the journal without fighting it if you wish. Either way, loot [Journal #46/49 - Expedition 54]. You can also loot a pictos from this area if you wish. Fighting the boss will give you the \"Energising Revive\" pictos and as with the boss in the previous area, you are over-leveled to the point it won't get a turn. When you are done, leave through the swirling portal here to return to the Continent."
           },
           {
             "type": "text",
             "text": "Head to the location below entitled \"Stone Quarry\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170501/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6197,8 +6220,18 @@
             "text": "Once all rounds are complete, speak to the Nevron again for a pictos. Go through his dialogue once more to make sure you have seen everything. As always DO NOT ATTACK. This completes [Nevron Quest #5/10]. Return to the Continent. We now only have two journals left. One is locked behind the final super-boss and one is in the area we are going to next. I was around level 60 at this point and the next area we are going to is good for grinding out some levels. Head to the location below entitled \"The Carousel\"."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170511/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Head past the flag here, sticking to the left side. Keeping looking left and a short way in, you will see the purple item. Loot it for [Record #23/34 - Le Grand Café de Lumiére]. Now leave and head to the location below to enter the area entitled \"Frozen Hearts\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170512/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6249,16 +6282,9 @@
             "text": "Maelle hit level 66 for me here whilst fighting the enemies, unlocking:"
           },
           {
-            "type": "text",
-            "text": "Trailbreaker"
-          },
-          {
-            "type": "text",
-            "text": "Reach level 66."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "TrailbreakerReach level 66.",
+            "description": "TrailbreakerReach level 66."
           },
           {
             "type": "text",
@@ -6287,32 +6313,72 @@
             "text": "With all but one journal left, we now repeat the process with records. You should be on 24 records. We will go around the map picking some up and will be left with only one that is in one of the last areas we have to visit. After this, we then go and take out two boss achievements before heading for the final remaining areas. First of all, head to the location below entitled \"Boat Graveyard\", and enter it for [Record #25/34 - Alicia's Birthday Party]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168968/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Now head to the image below and enter the area entitled \"White Sands\", looting [Record #26/34 - Aline] from the end of the path."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168970/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "Head to the image below where you will find a door to the Manor."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168971/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Enter the Manor and open the cabinet on the right. Pass through and loot [Record #27/34 - Forlorn] from in here. Exit the Manor and head to the location in the image below to find a merchant."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168972/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "Buy [Record #28/34 - Lost Voice] from the merchant. Now go to the location in the image below for another merchant, where you can buy [Record #29/34 - Linen and Cotton]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168973/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Nearly done! Head to the location below and enter the area entitled \"The Meadows\". Inside, loot [Record #30/34 - Our Painted Family]."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168975/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "Head to the location below and enter the side area entitled \"Blades Graveyard\", looting [Record #31/34 - Reverence]."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/168974/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Finally, for the last record we are going to get for now, head to the location below, and enter the \"Flying Casino\". Take the path the only way you can until you reach the casino. Head round to the right of it and loot [Record #32/34 - Reveries dan Paris]."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170514/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6321,6 +6387,11 @@
           {
             "type": "text",
             "text": "Head to the location below and enter the \"Esoteric Ruins\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170515/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6339,6 +6410,11 @@
             "text": "Head back to the blue orb and speak to it to give it the \"Wood Boards\". Cycle through the dialogue carefully, being careful not to attack it. This completes [Nevron Quest #7/10]. Return to the continent and head to the next location below, entitled \"Floating Cemetery\"."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170516/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Floating Cemetery"
           },
@@ -6355,16 +6431,9 @@
             "text": "This is another quick and easy quest. Run to the bubbling well ahead and interact with it. You will be prompted to donate Chroma. Do this four times for a total of 90,000 total Chroma. Cycle through the extra dialogue at the end, being sure not to attack. This completes [Nevron Quest #9/10]. From here, return to the Continent and fly west to the \"Fountain\" area that we briefly entered earlier whilst journal hunting. This time speak to the creepy Nevron. Provided you have not killed any of the Nevron Quest NPC's, this Nevron will give you 100 Lumina points, completing [Nevron Quest #10/10] and unlocking:"
           },
           {
-            "type": "text",
-            "text": "Aiding the Enemy"
-          },
-          {
-            "type": "text",
-            "text": "Finish all of the Nevron quests."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Aiding the EnemyFinish all of the Nevron quests.",
+            "description": "Aiding the EnemyFinish all of the Nevron quests."
           },
           {
             "type": "text",
@@ -6387,24 +6456,54 @@
             "text": "Head forward and rest at the flag in the next area if needed. This area is essentially just battles one after another, with no exploration so I will list what Monoco skills I learnt here but won't include much otherwise as most of this is just enemies you've fought before, including bosses albeit beefed up. Ahead you will see a canvas, with an NPC to its right. Speak to her for some context and then interact with the canvas here. There will only be one option to start with and you will instantly begin a fight. You can rest at the flag after each battle so make sure to do so to upgrade characters as you go. You will get a lot of Grandiose Chroma Catalysts from this area. The spoiler tag contains the stages where I learnt skills."
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***Stage 1 - Trial 1: [Monoco Skill - Ramasseur Bonk] + [Monoco Skill - Gault Fury]Stage 1 - Trial 2: [Monoco Skill - Potier Energy]Stage 1 - Trial 3: [Monoco Skill - Duallist Storm]Stage 2 - Trial 3: [Monoco Skill - Lampmaster Light]Stage 4 - Trial 1: [Monoco Skill - Orphelin Cheers]Stage 4 - Trial 2: [Monoco Skill - Jar Lampstorm] + [Monoco Skill - Rocher Hammering]Stage 5 - Trial 2: [Monoco Skill - Sapling Absorption]Stage 6 - Trial 2: [Monoco Skill - Glaise Earhquakes] Stage 11 - Trial 2: [Monoco Skill - Creation Void]"
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "Stage 1 - Trial 1: [Monoco Skill - Ramasseur Bonk] + [Monoco Skill - Gault Fury]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 1 - Trial 2: [Monoco Skill - Potier Energy]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 1 - Trial 3: [Monoco Skill - Duallist Storm]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 2 - Trial 3: [Monoco Skill - Lampmaster Light]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 4 - Trial 1: [Monoco Skill - Orphelin Cheers]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 4 - Trial 2: [Monoco Skill - Jar Lampstorm] + [Monoco Skill - Rocher Hammering]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 5 - Trial 2: [Monoco Skill - Sapling Absorption]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 6 - Trial 2: [Monoco Skill - Glaise Earhquakes]"
+              },
+              {
+                "type": "text",
+                "text": "Stage 11 - Trial 2: [Monoco Skill - Creation Void]"
+              }
+            ]
           },
           {
             "type": "text",
             "text": "During my time in the tower, I had been leveling up Maelle's Medalum weapon and at this point got it to level 32. I still had the Perfect Chroma Catalyst from when we found it in the story, so I upgraded it to level 33 here and unlocked:"
           },
           {
-            "type": "text",
-            "text": "Weapon Mastery"
-          },
-          {
-            "type": "text",
-            "text": "Fully upgrade a weapon."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Weapon MasteryFully upgrade a weapon.",
+            "description": "Weapon MasteryFully upgrade a weapon."
           },
           {
             "type": "text",
@@ -6415,36 +6514,27 @@
             "text": "For winning the final battle you will automatically obtain [Record #33/34 - Clea] and as this is also the end of the tower, you will unlock the achievement below for finishing it:"
           },
           {
-            "type": "text",
-            "text": "“Endless”"
-          },
-          {
-            "type": "text",
-            "text": "Reach the top of the Endless Tower."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "“Endless”Reach the top of the Endless Tower.",
+            "description": "“Endless”Reach the top of the Endless Tower."
           },
           {
             "type": "text",
             "text": "You should have every Monoco skill now, bar one. So let's go and get the final one! Head to the location below where you will find an enemy called Gross Tete."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170517/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "At this level and with end-game abilities, you should make short work of the boss, it's nothing special at this point. On defeating the boss, you will receive your final [Monoco Skill - Gross Tete Whack]. Assuming this is your last skill, you will unlock:"
           },
           {
-            "type": "text",
-            "text": "Feet Collection"
-          },
-          {
-            "type": "text",
-            "text": "Acquire all of Monoco’s skills."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Feet CollectionAcquire all of Monoco’s skills.",
+            "description": "Feet CollectionAcquire all of Monoco’s skills."
           },
           {
             "type": "text",
@@ -6453,6 +6543,11 @@
           {
             "type": "text",
             "text": "When you have finished with the tower, or if you have leveled up and fancy a break, it's time for another end-game area, the Flying Manor. Head to the location below and enter. It may still say \"Danger!\" if you are at a certain level but this is with regards to the boss at the end, you should be able to clear up to that point if coming here earlier."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170518/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6543,44 +6638,45 @@
             "text": "You will receive the below achievement for defeating the boss:"
           },
           {
-            "type": "text",
-            "text": "Clea"
-          },
-          {
-            "type": "text",
-            "text": "Beat Clea."
-          },
-          {
-            "type": "text",
-            "text": "3 guides"
+            "type": "achievement",
+            "name": "CleaBeat Clea.",
+            "description": "CleaBeat Clea."
           },
           {
             "type": "text",
             "text": "I now chose to tackle the Painting Workshop, another high-level area with an achievement tied to it. This does require a bit of legwork (literally) before you can get it done but it's not as bad as some of the platforming you've done by now. First off, head slightly east, to the image below and enter. This is one of 3 painting workshops you will have to traverse,"
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170519/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Inside, there is a platforming puzzle of sorts where you must work your down to the giant picture below where you will find the Fading Boy. Speak to him and then choose \"we will\". From here you must now work your way down further until you reach a larger area with statues. Annoyingly if you fall off, you will return to the entrance. I found these not so bad as the game has no fall damage so you can skip large chunks of the platforming simply by landing further down. Once on the large platform, approach the statue of the Lampmaster and interact with it to place the lamp. The boss becomes accessible when all three lamps are placed. Head behind the statue and look to the right for a portal which will return you to the Continent. Now head to the second Painting Workshop location below:"
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170520/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
             "text": "Repeat the process. Platform down to the boy, speak to him to receive the quest item and then platform down further to the statue. Place the lamp and then leave via the portal behind. Finally, head to the location below, note that it is in the air, on a small island."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170521/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Repeat the process again only this time, instead of leaving behind the statue, continue on to the end. The enemy is yet again...the Lampmaster. This is just another beefed up version with the same moves as its other iterations. The boss does hit hard but equally at this level you will do a lot of damage back, particularly if you counter. Abilities like Stendhal in virtuoso stance will do the work here if you prefer that route. The only move you really need to worry about is the \"massive sword of light\" as it will wipe your group entirely if it hits. I just focused on dodging this and parrying everything else. Stendhal can hit for anywhere up to 3million+ with roulette. For defeating the boss, you will obtain various pictos and other items, as well as unlocking the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Noir et Blanc"
-          },
-          {
-            "type": "text",
-            "text": "Solve the Painting Workshop’s mystery."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Noir et BlancSolve the Painting Workshop’s mystery.",
+            "description": "Noir et BlancSolve the Painting Workshop’s mystery."
           },
           {
             "type": "text",
@@ -6639,20 +6735,18 @@
             "text": "With the boss defeated, you will obtain a nice pictos, a Perfect Chroma Catalyst and unlock the below achievement:"
           },
           {
-            "type": "text",
-            "text": "À On"
-          },
-          {
-            "type": "text",
-            "text": "Beat the Serpenphare."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "À OnBeat the Serpenphare.",
+            "description": "À OnBeat the Serpenphare."
           },
           {
             "type": "text",
             "text": "Now for another world boss which at your current level you should have no issue with. Head to the location below, where you will find a Petank."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170527/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6663,16 +6757,9 @@
             "text": "Assuming you are high level, you will have no issue here. The boss will call other petanks to help but just focus on doing damage to the boss itself. At high level you will defeat it in no time with little chance for it to attack. If you fail or if the boss defeats you, you will need to enter any area in the game and then return to the Continent in order for the Petank to respawn at its original location. For defeating the Petank, you will unlock the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Carreau Parfait"
-          },
-          {
-            "type": "text",
-            "text": "Beat the Chromatic Pétank."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Carreau ParfaitBeat the Chromatic Pétank.",
+            "description": "Carreau ParfaitBeat the Chromatic Pétank."
           },
           {
             "type": "text",
@@ -6687,6 +6774,11 @@
             "text": "If some of your B team is lacking a bit, you need to get to level 99 anyway so there is no harm in grinding some levels now until you feel comfortable, challenging the final boss and then finishing the grind. The way I've tackled this is that I go to the area that leads to the super-boss now, collecting the final unique record along the way before challenging the boss. I've also included grinding spots after the super-boss to get to level 99. These can be used now or after the boss, it's entirely up to you. Head to the location in the image below to enter this end-game area. Note that you should level up a bit naturally here anyway as you make your way through. The enemies are challenging and give good XP anyway."
           },
           {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170528/image-1.jpg",
+            "alt": "Image 1"
+          },
+          {
             "type": "text",
             "text": "Renoir's Drafts"
           },
@@ -6695,16 +6787,9 @@
             "text": "Take the path down from the flag and at the bottom take the sharp left. Use the grapple point to reach the top of the building with the faces on and take the slope down. Look to the right for a purple item. Loot it for [Record #34/34 - Endless Light]. If you didn't pop it earlier, and provided you haven't missed both of the missable records, you should now unlock:"
           },
           {
-            "type": "text",
-            "text": "Connoisseur"
-          },
-          {
-            "type": "text",
-            "text": "Find all 33 music records."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "ConnoisseurFind all 33 music records.",
+            "description": "ConnoisseurFind all 33 music records."
           },
           {
             "type": "text",
@@ -6827,32 +6912,18 @@
             "text": "Once Simon is defeated, you will unlock the below achievement:"
           },
           {
-            "type": "text",
-            "text": "Peace At Last"
-          },
-          {
-            "type": "text",
-            "text": "Beat Simon."
-          },
-          {
-            "type": "text",
-            "text": "3 guides"
+            "type": "achievement",
+            "name": "Peace At LastBeat Simon.",
+            "description": "Peace At LastBeat Simon."
           },
           {
             "type": "text",
             "text": "You can also loot the final journal from this area, [Journal #49/49 - Simon] which will unlock:"
           },
           {
-            "type": "text",
-            "text": "Follow The Trail"
-          },
-          {
-            "type": "text",
-            "text": "Find all of the journals from prior expeditions."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Follow The TrailFind all of the journals from prior expeditions.",
+            "description": "Follow The TrailFind all of the journals from prior expeditions."
           },
           {
             "type": "text",
@@ -6861,6 +6932,11 @@
           {
             "type": "text",
             "text": "For one possible grinding spot, head to the location below and enter \"Dark Shores\"."
+          },
+          {
+            "type": "image",
+            "url": "https://www.trueachievements.com/imgs/r/170530/image-1.jpg",
+            "alt": "Image 1"
           },
           {
             "type": "text",
@@ -6875,16 +6951,9 @@
             "text": "Once your first character hits level 99, you will unlock:"
           },
           {
-            "type": "text",
-            "text": "Survivor"
-          },
-          {
-            "type": "text",
-            "text": "Reach level 99."
-          },
-          {
-            "type": "text",
-            "text": "5 guides"
+            "type": "achievement",
+            "name": "SurvivorReach level 99.",
+            "description": "SurvivorReach level 99."
           },
           {
             "type": "text",
@@ -6909,16 +6978,9 @@
             "text": "Gustave"
           },
           {
-            "type": "text",
-            "text": "Overcharge"
-          },
-          {
-            "type": "text",
-            "text": "With Gustave, use a fully charged Overcharge that Breaks an enemy."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy.",
+            "description": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy."
           },
           {
             "type": "text",
@@ -6929,16 +6991,9 @@
             "text": "Lune"
           },
           {
-            "type": "text",
-            "text": "Perfect Flow"
-          },
-          {
-            "type": "text",
-            "text": "With Lune, consume Stains 4 turns in a row."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "Perfect FlowWith Lune, consume Stains 4 turns in a row.",
+            "description": "Perfect FlowWith Lune, consume Stains 4 turns in a row."
           },
           {
             "type": "text",
@@ -6953,16 +7008,9 @@
             "text": "Maelle"
           },
           {
-            "type": "text",
-            "text": "Synergy"
-          },
-          {
-            "type": "text",
-            "text": "With Maelle, use Percée on a Marked enemy while in Virtuose Stance."
-          },
-          {
-            "type": "text",
-            "text": "6 guides"
+            "type": "achievement",
+            "name": "SynergyWith Maelle, use Percée on a Marked enemy while in Virtuose Stance.",
+            "description": "SynergyWith Maelle, use Percée on a Marked enemy while in Virtuose Stance."
           },
           {
             "type": "text",
@@ -6977,16 +7025,9 @@
             "text": "Monoco"
           },
           {
-            "type": "text",
-            "text": "Wheel Control"
-          },
-          {
-            "type": "text",
-            "text": "With Monoco, cast an Upgraded Skill 4 turns in a row."
-          },
-          {
-            "type": "text",
-            "text": "1 guide"
+            "type": "achievement",
+            "name": "Wheel ControlWith Monoco, cast an Upgraded Skill 4 turns in a row.",
+            "description": "Wheel ControlWith Monoco, cast an Upgraded Skill 4 turns in a row."
           },
           {
             "type": "text",
@@ -7025,16 +7066,9 @@
             "text": "Sciel"
           },
           {
-            "type": "text",
-            "text": "Maximisation"
-          },
-          {
-            "type": "text",
-            "text": "With Sciel, consume 20 Foretell on a single target during Twilight."
-          },
-          {
-            "type": "text",
-            "text": "2 guides"
+            "type": "achievement",
+            "name": "MaximisationWith Sciel, consume 20 Foretell on a single target during Twilight.",
+            "description": "MaximisationWith Sciel, consume 20 Foretell on a single target during Twilight."
           },
           {
             "type": "text",
@@ -7053,16 +7087,9 @@
             "text": "Verso"
           },
           {
-            "type": "text",
-            "text": "Perfection"
-          },
-          {
-            "type": "text",
-            "text": "With Verso, reach Rank S."
-          },
-          {
-            "type": "text",
-            "text": "4 guides"
+            "type": "achievement",
+            "name": "PerfectionWith Verso, reach Rank S.",
+            "description": "PerfectionWith Verso, reach Rank S."
           },
           {
             "type": "text",
@@ -7095,44 +7122,653 @@
             "text": "Records (34)"
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***Note that as mentioned in the guide, two records are missable. So you can miss one and be fine but if you miss both then you will void the achievement. The record available in the prologue can be picked up a second time at the end of the story so will count twice if you get it both times and this is why my WT count is out of 34. There are 33 unique records but you can pick up 34 in total. 1) Alicia - The Manor - Entered from Falling Leaves2) Alicia's Birthday Party - Boat Graveyard3) Aline - White Sands 4) Aline's Glasshouse - Lost Woods5) Children of Lumiére - The Continent - Bought from a merchant by the Sacred River entrance6) Clea - Endless Tower 7) Clea! Don't Pull Your Sister's Hair! - The Manor - Entered from Frozen Hearts8) Endless Light - Renoir's Drafts9) Forlorn - The Manor - Entered from the Continent. 10) Goblu - The Continent - Bought from a merchant near the Hidden Gestral Arena. 11) Gustave - Stone Wave Cliffs 12) Honeymoon in Lumiére - White Tree13) L'amour D'une Mére - The Manor 14) Le Grand Café de Lumiére - The Carousel 15) Lettre á Maelle - MISSABLE - Obtained after watching an optional scene at camp. Cannot be obtained after Act II. 16) Lights of the Past - Ancient Gestral Village 17) Linen and Cotton - The Continent - Bought from a merchant on the Isle of Eyes. 18) Lost Voice - The Continent - Bought from a merchant north of the Forgotten Battlefield. 19 + 20) Lumiére - Prologue (MISSABLE) + Lumiére in Act III - This is the same record but can be looted twice. 21) Lune - Reach relationship level 622) Monoco - Reach relationship level 623) Nocturne Pour Lumiére - Sinister Caves 24) Nocturne Pour un Masque de Tristesse - The Manor25) Our Drafts Collide - Auto obtained from defeating the final boss in the story. 26) Our Painted Family - The Meadows27) Renoir - The Manor - Entered from Old Lumiére 28) Révérence - Blades' Graveyard29) Réveries dans Paris - Flying Casino 30) Robe de Jour - The Continent - Bought from a merchant on an island to the west of the Sunless Cliffs. 31) Sciel - Reach relationship level 632) Un 33 Décembre á Lumiére - Twilight Quarry 33) Until Next Life - Falling Leaves 34) Verso - The Manor - Entered from Visages"
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "Note that as mentioned in the guide, two records are missable. So you can miss one and be fine but if you miss both then you will void the achievement. The record available in the prologue can be picked up a second time at the end of the story so will count twice if you get it both times and this is why my WT count is out of 34. There are 33 unique records but you can pick up 34 in total."
+              },
+              {
+                "type": "text",
+                "text": "1) Alicia - The Manor - Entered from Falling Leaves"
+              },
+              {
+                "type": "text",
+                "text": "2) Alicia's Birthday Party - Boat Graveyard"
+              },
+              {
+                "type": "text",
+                "text": "3) Aline - White Sands"
+              },
+              {
+                "type": "text",
+                "text": "4) Aline's Glasshouse - Lost Woods"
+              },
+              {
+                "type": "text",
+                "text": "5) Children of Lumiére - The Continent - Bought from a merchant by the Sacred River entrance"
+              },
+              {
+                "type": "text",
+                "text": "6) Clea - Endless Tower"
+              },
+              {
+                "type": "text",
+                "text": "7) Clea! Don't Pull Your Sister's Hair! - The Manor - Entered from Frozen Hearts"
+              },
+              {
+                "type": "text",
+                "text": "8) Endless Light - Renoir's Drafts"
+              },
+              {
+                "type": "text",
+                "text": "9) Forlorn - The Manor - Entered from the Continent."
+              },
+              {
+                "type": "text",
+                "text": "10) Goblu - The Continent - Bought from a merchant near the Hidden Gestral Arena."
+              },
+              {
+                "type": "text",
+                "text": "11) Gustave - Stone Wave Cliffs"
+              },
+              {
+                "type": "text",
+                "text": "12) Honeymoon in Lumiére - White Tree"
+              },
+              {
+                "type": "text",
+                "text": "13) L'amour D'une Mére - The Manor"
+              },
+              {
+                "type": "text",
+                "text": "14) Le Grand Café de Lumiére - The Carousel"
+              },
+              {
+                "type": "text",
+                "text": "15) Lettre á Maelle - MISSABLE - Obtained after watching an optional scene at camp. Cannot be obtained after Act II."
+              },
+              {
+                "type": "text",
+                "text": "16) Lights of the Past - Ancient Gestral Village"
+              },
+              {
+                "type": "text",
+                "text": "17) Linen and Cotton - The Continent - Bought from a merchant on the Isle of Eyes."
+              },
+              {
+                "type": "text",
+                "text": "18) Lost Voice - The Continent - Bought from a merchant north of the Forgotten Battlefield."
+              },
+              {
+                "type": "text",
+                "text": "19 + 20) Lumiére - Prologue (MISSABLE) + Lumiére in Act III - This is the same record but can be looted twice."
+              },
+              {
+                "type": "text",
+                "text": "21) Lune - Reach relationship level 6"
+              },
+              {
+                "type": "text",
+                "text": "22) Monoco - Reach relationship level 6"
+              },
+              {
+                "type": "text",
+                "text": "23) Nocturne Pour Lumiére - Sinister Caves"
+              },
+              {
+                "type": "text",
+                "text": "24) Nocturne Pour un Masque de Tristesse - The Manor"
+              },
+              {
+                "type": "text",
+                "text": "25) Our Drafts Collide - Auto obtained from defeating the final boss in the story."
+              },
+              {
+                "type": "text",
+                "text": "26) Our Painted Family - The Meadows"
+              },
+              {
+                "type": "text",
+                "text": "27) Renoir - The Manor - Entered from Old Lumiére"
+              },
+              {
+                "type": "text",
+                "text": "28) Révérence - Blades' Graveyard"
+              },
+              {
+                "type": "text",
+                "text": "29) Réveries dans Paris - Flying Casino"
+              },
+              {
+                "type": "text",
+                "text": "30) Robe de Jour - The Continent - Bought from a merchant on an island to the west of the Sunless Cliffs."
+              },
+              {
+                "type": "text",
+                "text": "31) Sciel - Reach relationship level 6"
+              },
+              {
+                "type": "text",
+                "text": "32) Un 33 Décembre á Lumiére - Twilight Quarry"
+              },
+              {
+                "type": "text",
+                "text": "33) Until Next Life - Falling Leaves"
+              },
+              {
+                "type": "text",
+                "text": "34) Verso - The Manor - Entered from Visages"
+              }
+            ]
           },
           {
             "type": "text",
             "text": "Journals (49)"
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***1) Fracture Survivor - Old Lumiére 2) Expedition 34 - The Crows 3) Expedition 35 - Falling Leaves 4) Expedition 36 - White Tree 5) Expedition 37 - Gestral Beach - This is the beach east of Sunless Cliffs. 6) Expedition 38 - Yellow Harvest7) Expedition 39 - Visages8) Expedition 40 - The Continent - On the small island south of the Monolith, near the Merchant. 9) Expedition 41 - Forgotten Battlefield10) Expedition 42 - Old Lumiére11) Expedition 43 - The Continent - Northeast of the Coastal Cave. It is the small island with yellow and green trees on the map. 12) Expedition 44 - Yellow Harvest 13) Expedition 45 - Crushing Cavern14) Expedition 46 - Siréne's Dress. Note this is NOT the area where you fight Siréne. It is the other area on the same island, on the east side.15) Expedition 47 - The Continent - Near a merchant and a Gestral Beach (Find more on this one) 16) Expedition 48 - Stone Quarry17) Expedition 49 - Falling Leaves18) Expedition 50 - Stone Wave Cliffs19) Expedition 51 - Frozen Hearts20) Expedition 52 - Gestral Village21) Expedition 53 - The Small Bourgeon22) Expedition 54 - Stone Wave Cliffs Cave23) Expedition 55 - Siréne 24) Expedition 56 - Stone Wave Cliffs25) Expedition 57 - Forgotten Battlefield26) Expedition 58 - Old Lumiére27) Expedition 59 - Yellow Harvest28) Expedition 60 - Lumiére29) Expedition 61 - The Reacher30) Expedition 62 - The Continent - On the beach, behind the Gestral Village. 31) Expedition 63 - Ancient Sanctuary 32) Expedition 64 - The Continent - Down the left path from facing The Meadows. 33) Expedition 65 - Monoco's Station34) Expedition 66 - Esquie's Nest35) Expedition 67 - Siréne36) Expedition 68 - Flying Waters37) Expedition 69 - Visages38) Expedition 70 - The Monolith39) Expedition 78 - Stone Wave Cliffs40) Expedition 81 - Spring Meadows41) Expedition 84 - The Fountain42) Julie - The Continent - West of the Forgotten Battlefield (Needs Fly)43) Simon - The Abyss44) Aline - The Manor - Entered from the Forgotten Battlefield. 45) Renoir - The Manor - Entered from Old Lumiére. 46) Unknown 1 - The Manor - Entered from Visages. 47) Unknown 2 - The Manor - Entered from The Reacher. 48) Unknown 3 - The Manor - Requires completion of a quest. In the painting room. 49) Verso - The Continent - West of Stone Quarry."
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "1) Fracture Survivor - Old Lumiére"
+              },
+              {
+                "type": "text",
+                "text": "2) Expedition 34 - The Crows"
+              },
+              {
+                "type": "text",
+                "text": "3) Expedition 35 - Falling Leaves"
+              },
+              {
+                "type": "text",
+                "text": "4) Expedition 36 - White Tree"
+              },
+              {
+                "type": "text",
+                "text": "5) Expedition 37 - Gestral Beach - This is the beach east of Sunless Cliffs."
+              },
+              {
+                "type": "text",
+                "text": "6) Expedition 38 - Yellow Harvest"
+              },
+              {
+                "type": "text",
+                "text": "7) Expedition 39 - Visages"
+              },
+              {
+                "type": "text",
+                "text": "8) Expedition 40 - The Continent - On the small island south of the Monolith, near the Merchant."
+              },
+              {
+                "type": "text",
+                "text": "9) Expedition 41 - Forgotten Battlefield"
+              },
+              {
+                "type": "text",
+                "text": "10) Expedition 42 - Old Lumiére"
+              },
+              {
+                "type": "text",
+                "text": "11) Expedition 43 - The Continent - Northeast of the Coastal Cave. It is the small island with yellow and green trees on the map."
+              },
+              {
+                "type": "text",
+                "text": "12) Expedition 44 - Yellow Harvest"
+              },
+              {
+                "type": "text",
+                "text": "13) Expedition 45 - Crushing Cavern"
+              },
+              {
+                "type": "text",
+                "text": "14) Expedition 46 - Siréne's Dress. Note this is NOT the area where you fight Siréne. It is the other area on the same island, on the east side."
+              },
+              {
+                "type": "text",
+                "text": "15) Expedition 47 - The Continent - Near a merchant and a Gestral Beach (Find more on this one)"
+              },
+              {
+                "type": "text",
+                "text": "16) Expedition 48 - Stone Quarry"
+              },
+              {
+                "type": "text",
+                "text": "17) Expedition 49 - Falling Leaves"
+              },
+              {
+                "type": "text",
+                "text": "18) Expedition 50 - Stone Wave Cliffs"
+              },
+              {
+                "type": "text",
+                "text": "19) Expedition 51 - Frozen Hearts"
+              },
+              {
+                "type": "text",
+                "text": "20) Expedition 52 - Gestral Village"
+              },
+              {
+                "type": "text",
+                "text": "21) Expedition 53 - The Small Bourgeon"
+              },
+              {
+                "type": "text",
+                "text": "22) Expedition 54 - Stone Wave Cliffs Cave"
+              },
+              {
+                "type": "text",
+                "text": "23) Expedition 55 - Siréne"
+              },
+              {
+                "type": "text",
+                "text": "24) Expedition 56 - Stone Wave Cliffs"
+              },
+              {
+                "type": "text",
+                "text": "25) Expedition 57 - Forgotten Battlefield"
+              },
+              {
+                "type": "text",
+                "text": "26) Expedition 58 - Old Lumiére"
+              },
+              {
+                "type": "text",
+                "text": "27) Expedition 59 - Yellow Harvest"
+              },
+              {
+                "type": "text",
+                "text": "28) Expedition 60 - Lumiére"
+              },
+              {
+                "type": "text",
+                "text": "29) Expedition 61 - The Reacher"
+              },
+              {
+                "type": "text",
+                "text": "30) Expedition 62 - The Continent - On the beach, behind the Gestral Village."
+              },
+              {
+                "type": "text",
+                "text": "31) Expedition 63 - Ancient Sanctuary"
+              },
+              {
+                "type": "text",
+                "text": "32) Expedition 64 - The Continent - Down the left path from facing The Meadows."
+              },
+              {
+                "type": "text",
+                "text": "33) Expedition 65 - Monoco's Station"
+              },
+              {
+                "type": "text",
+                "text": "34) Expedition 66 - Esquie's Nest"
+              },
+              {
+                "type": "text",
+                "text": "35) Expedition 67 - Siréne"
+              },
+              {
+                "type": "text",
+                "text": "36) Expedition 68 - Flying Waters"
+              },
+              {
+                "type": "text",
+                "text": "37) Expedition 69 - Visages"
+              },
+              {
+                "type": "text",
+                "text": "38) Expedition 70 - The Monolith"
+              },
+              {
+                "type": "text",
+                "text": "39) Expedition 78 - Stone Wave Cliffs"
+              },
+              {
+                "type": "text",
+                "text": "40) Expedition 81 - Spring Meadows"
+              },
+              {
+                "type": "text",
+                "text": "41) Expedition 84 - The Fountain"
+              },
+              {
+                "type": "text",
+                "text": "42) Julie - The Continent - West of the Forgotten Battlefield (Needs Fly)"
+              },
+              {
+                "type": "text",
+                "text": "43) Simon - The Abyss"
+              },
+              {
+                "type": "text",
+                "text": "44) Aline - The Manor - Entered from the Forgotten Battlefield."
+              },
+              {
+                "type": "text",
+                "text": "45) Renoir - The Manor - Entered from Old Lumiére."
+              },
+              {
+                "type": "text",
+                "text": "46) Unknown 1 - The Manor - Entered from Visages."
+              },
+              {
+                "type": "text",
+                "text": "47) Unknown 2 - The Manor - Entered from The Reacher."
+              },
+              {
+                "type": "text",
+                "text": "48) Unknown 3 - The Manor - Requires completion of a quest. In the painting room."
+              },
+              {
+                "type": "text",
+                "text": "49) Verso - The Continent - West of Stone Quarry."
+              }
+            ]
           },
           {
             "type": "text",
             "text": "Nevron Quests (10)"
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***Note that whilst the WT recommends you don't kill any of these Nevrons, the achievement is not void if you do. If you don't kill any, you get 100 Lumina points at the final quest. If you do, you just have to fight the final Nevron. The achievement will unlock either way. 1) Jar Nevron - Spring Meadows - Loot the \"Resin\" item from the area ahead and return it, then shoot the lamp he is holding. 2) Demineur Nevron - Flying Waters - Jump across the nearby platforms to loot the \"Mine\" item and then return it. 3) Bourgeon Nevron - The Small Bourgeon - Defeat any of the large Bourgeon enemies to obtain the \"Bourgeon Skin\" item. Give it to this Nevron and then leave and re-enter the area. 4) Hexga Nevron - Stone Wave Cliffs - Loot 3x \"Rock Crystals\" from the next area and then return them. 5) Trobadour Nevron - Stone Quarry - Let the green orbs hit you and parry the red ones. Complete all 3 waves. 6) Portier Nevron - Esoteric Ruins - Interact with the blue orb. In the next area above, pass through the maze and loot the \"Wooden Boards\" item. Return to the orb. 7) Danseuse Nevron - Frozen Hearts - This NPC is a teacher. You must parry all of its attacks to win. 8) Bénisseur Nevron - Red Woods - Pay 4 different amounts of chroma (90k) total. 9) Chalier - Floating Cemetery - Talk to the NPC and choose any weapon. Go into the building and fight the Nevron. Afterwards, choose not to kill the Nevron. 10) Blanche - The Fountain - Provided you didn't kill any of the previous Nevrons, the NPC will give you 100 Lumina Points. If you did kill any, you will have to fight."
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "Note that whilst the WT recommends you don't kill any of these Nevrons, the achievement is not void if you do. If you don't kill any, you get 100 Lumina points at the final quest. If you do, you just have to fight the final Nevron. The achievement will unlock either way."
+              },
+              {
+                "type": "text",
+                "text": "1) Jar Nevron - Spring Meadows - Loot the \"Resin\" item from the area ahead and return it, then shoot the lamp he is holding."
+              },
+              {
+                "type": "text",
+                "text": "2) Demineur Nevron - Flying Waters - Jump across the nearby platforms to loot the \"Mine\" item and then return it."
+              },
+              {
+                "type": "text",
+                "text": "3) Bourgeon Nevron - The Small Bourgeon - Defeat any of the large Bourgeon enemies to obtain the \"Bourgeon Skin\" item. Give it to this Nevron and then leave and re-enter the area."
+              },
+              {
+                "type": "text",
+                "text": "4) Hexga Nevron - Stone Wave Cliffs - Loot 3x \"Rock Crystals\" from the next area and then return them."
+              },
+              {
+                "type": "text",
+                "text": "5) Trobadour Nevron - Stone Quarry - Let the green orbs hit you and parry the red ones. Complete all 3 waves."
+              },
+              {
+                "type": "text",
+                "text": "6) Portier Nevron - Esoteric Ruins - Interact with the blue orb. In the next area above, pass through the maze and loot the \"Wooden Boards\" item. Return to the orb."
+              },
+              {
+                "type": "text",
+                "text": "7) Danseuse Nevron - Frozen Hearts - This NPC is a teacher. You must parry all of its attacks to win."
+              },
+              {
+                "type": "text",
+                "text": "8) Bénisseur Nevron - Red Woods - Pay 4 different amounts of chroma (90k) total."
+              },
+              {
+                "type": "text",
+                "text": "9) Chalier - Floating Cemetery - Talk to the NPC and choose any weapon. Go into the building and fight the Nevron. Afterwards, choose not to kill the Nevron."
+              },
+              {
+                "type": "text",
+                "text": "10) Blanche - The Fountain - Provided you didn't kill any of the previous Nevrons, the NPC will give you 100 Lumina Points. If you did kill any, you will have to fight."
+              }
+            ]
           },
           {
             "type": "text",
             "text": "Lost Gestrals (9)"
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***Each Lost Gestral that you return to camp unlocks a reward when speaking to the camp NPC. Note that I unlock the Paint Spike ability very late in my WT and this means I miss destroying a huge amount of spikes over the course of the game. I didn't feel this was detrimental to the reader as most of this drop fairly common items. However, if you want to unlock this ability earlier, you need to save 4 of them. As all of the lost gestrals are found on the continent, I have included a note on which page of the WT I find them for easier navigation.1) Found outside the entrance to Esquie's nest - Act I Part I2) To the right of the entrance to Stone Wave Cliffs, near the big Bourgeon enemy - Act I Part II3) North of Coastal Cave - Act II Part II 4) South-West of Visages - Act II Part II5) East from Monoco's Station - Postgame Part I 6) On the island West of Yellow Harvest - Postgame Part I 7) South of the Endless Tower, on an island in the sky - Postgame Part I8) East side of the map, in a red wooded area. It is East of a Gestral Beach - Postgame Part I9) North-East of the Reacher - Postgame Part I"
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "Each Lost Gestral that you return to camp unlocks a reward when speaking to the camp NPC. Note that I unlock the Paint Spike ability very late in my WT and this means I miss destroying a huge amount of spikes over the course of the game. I didn't feel this was detrimental to the reader as most of this drop fairly common items. However, if you want to unlock this ability earlier, you need to save 4 of them. As all of the lost gestrals are found on the continent, I have included a note on which page of the WT I find them for easier navigation."
+              },
+              {
+                "type": "text",
+                "text": "1) Found outside the entrance to Esquie's nest - Act I Part I"
+              },
+              {
+                "type": "text",
+                "text": "2) To the right of the entrance to Stone Wave Cliffs, near the big Bourgeon enemy - Act I Part II"
+              },
+              {
+                "type": "text",
+                "text": "3) North of Coastal Cave - Act II Part II"
+              },
+              {
+                "type": "text",
+                "text": "4) South-West of Visages - Act II Part II"
+              },
+              {
+                "type": "text",
+                "text": "5) East from Monoco's Station - Postgame Part I"
+              },
+              {
+                "type": "text",
+                "text": "6) On the island West of Yellow Harvest - Postgame Part I"
+              },
+              {
+                "type": "text",
+                "text": "7) South of the Endless Tower, on an island in the sky - Postgame Part I"
+              },
+              {
+                "type": "text",
+                "text": "8) East side of the map, in a red wooded area. It is East of a Gestral Beach - Postgame Part I"
+              },
+              {
+                "type": "text",
+                "text": "9) North-East of the Reacher - Postgame Part I"
+              }
+            ]
           },
           {
             "type": "text",
             "text": "Monoco Skills (46)"
           },
           {
-            "type": "text",
-            "text": "*** Spoiler - click to reveal ***There are a whopping 46 different skills for Monoco. The good thing is that 45 of them can be obtained in the Endless Tower, with only one requiring a specific enemy in the open world. I have listed the skills below, in order of Monoco's skill tree in game. The list starts from the top left skill and goes left to right. I also note the type of skill it is and which stage of the Endless Tower the enemy that drops it can be fought. 1) Chalier Combo - Balanced Mask - Automatically obtained2) Stalact Punches - Heavy Mask - Automatically obtained3) Pelerin Heal - Caster Mask - Stage 6: Trial 24) Braseleur Smash - Balanced Mask - Stage 6: Trial 25) Ramasseur Bonk - Agile Mask - Stage 1: Trial 16) Troubadour Trumpet - Caster Mask - Stage 1: Trial 37) Duallist Storm - Almighty Mask - Stage 1: Trial 38) Creation Void - Caster Mask - Stage 11: Trial 2 9) Abbest Wind - Agile Mask - Stage 3: Trial 310) Lancelier Impale - Agile Mask - Stage 8: Trial 211) Portier Crash - Heavy Mask - Stage 6: Trial 112) Évéque Spear - Heavy Mask - Stage 7: Trial 113) Chevaliére Ice - Balanced Mask - Stage 7: Trial 2 (Must be the Gold variant) 14) Chevaliére Thrusts - Heavy Mask - Stage 1: Trial 2 (Must be the Silver variant) 15) Chevaliére Piercing - Agile Mask - Stage 10: Trial 2 (Must be the Ceramic variant)16) Aberration Light - Agile Mask - Stage 5: Trial 317) Démineur Thunder - Caster Mask - Stage 2: Trial 118) Bruler Bash - Caster Mask - Stage 5: Trial 119) Cruler Barrier - Heavy Mask - Stage 3: Trial 120) Luster Slices - Agile Mask - Stage 1: Trial 121) Contorsionniste Blast - Balanced Mask - Not found in Tower. Most likely you have this from Visages, but this enemy can also be found in Renoir's Drafts. 22) Boucheclier Fortify - Heavy Mask - Stage 3: Trial 223) Chapelier Slash - Agile Mask - Stage 2: Trial 224) Grosse Tété Whack - Heavy Mask - Not found in Tower. It is pointed out in the WT on page (??), the enemy is on its own on an island. 25) Sakapatate Explosion - Caster Mask - Stage 4: Trial 326) Sakapatate Estoc - Balanced Mask - Not found in Tower. Can be found in the Ancient Sanctuary area before the Gestral Village. 27) Sakapatate Slam - Heavy Mask - Stage 8: Trial 128) Sakapatate Fire - Almighty Mask - Stage 7: Trial 329) Bénisseur Mortar - Caster Mask - Stage 2: Trial 130) Ballet Charm - Caster Mask - Stage 9: Trial 131) Orphelin Cheers - Caster Mask - Stage 4: Trial 132) Échassier Stabs - Agile Mask - Stage 2: Trial 333) Cultist Blood - Heavy Mask - Stage 1: Trial 234) Cultist Slashes - Agile Mask - Stage 2: Trial 235) Hexga Crush - Heavy Mask - Stage 3: Trial 136) Rocher Hammreing - Heavy Mask - Stage 4: Trial 237) Lampmaster Light - Almighty Mask - Stage 11: Trial 238) Moissonneuse Vendange - Balanced Mask - Stage 11: Trial 139) Clair Enfeeble - Balanced Mask - Stage 10: Trial 140) Obscur Sword - Heavy Mask - Stage 10: Trial 341) Potier Energy - Caster Mask - Stage 1: Trial 242) Sapling Absorption - Caster Mask - Stage 5: Trial 243) Jar Lampstorm - Heavy Mask - Stage 10: Trial 344) Gault Fury - Balanced Mask - Stage 1: Trial 145) Glaise Earthquakes - Heavy Mask - Stage 8: Trial 346) Danseuse Waltz - Balanced Mask - Stage 6: Trial 1"
+            "type": "spoiler",
+            "steps": [
+              {
+                "type": "text",
+                "text": "There are a whopping 46 different skills for Monoco. The good thing is that 45 of them can be obtained in the Endless Tower, with only one requiring a specific enemy in the open world. I have listed the skills below, in order of Monoco's skill tree in game. The list starts from the top left skill and goes left to right. I also note the type of skill it is and which stage of the Endless Tower the enemy that drops it can be fought."
+              },
+              {
+                "type": "text",
+                "text": "1) Chalier Combo - Balanced Mask - Automatically obtained"
+              },
+              {
+                "type": "text",
+                "text": "2) Stalact Punches - Heavy Mask - Automatically obtained"
+              },
+              {
+                "type": "text",
+                "text": "3) Pelerin Heal - Caster Mask - Stage 6: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "4) Braseleur Smash - Balanced Mask - Stage 6: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "5) Ramasseur Bonk - Agile Mask - Stage 1: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "6) Troubadour Trumpet - Caster Mask - Stage 1: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "7) Duallist Storm - Almighty Mask - Stage 1: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "8) Creation Void - Caster Mask - Stage 11: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "9) Abbest Wind - Agile Mask - Stage 3: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "10) Lancelier Impale - Agile Mask - Stage 8: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "11) Portier Crash - Heavy Mask - Stage 6: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "12) Évéque Spear - Heavy Mask - Stage 7: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "13) Chevaliére Ice - Balanced Mask - Stage 7: Trial 2 (Must be the Gold variant)"
+              },
+              {
+                "type": "text",
+                "text": "14) Chevaliére Thrusts - Heavy Mask - Stage 1: Trial 2 (Must be the Silver variant)"
+              },
+              {
+                "type": "text",
+                "text": "15) Chevaliére Piercing - Agile Mask - Stage 10: Trial 2 (Must be the Ceramic variant)"
+              },
+              {
+                "type": "text",
+                "text": "16) Aberration Light - Agile Mask - Stage 5: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "17) Démineur Thunder - Caster Mask - Stage 2: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "18) Bruler Bash - Caster Mask - Stage 5: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "19) Cruler Barrier - Heavy Mask - Stage 3: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "20) Luster Slices - Agile Mask - Stage 1: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "21) Contorsionniste Blast - Balanced Mask - Not found in Tower. Most likely you have this from Visages, but this enemy can also be found in Renoir's Drafts."
+              },
+              {
+                "type": "text",
+                "text": "22) Boucheclier Fortify - Heavy Mask - Stage 3: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "23) Chapelier Slash - Agile Mask - Stage 2: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "24) Grosse Tété Whack - Heavy Mask - Not found in Tower. It is pointed out in the WT on page (??), the enemy is on its own on an island."
+              },
+              {
+                "type": "text",
+                "text": "25) Sakapatate Explosion - Caster Mask - Stage 4: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "26) Sakapatate Estoc - Balanced Mask - Not found in Tower. Can be found in the Ancient Sanctuary area before the Gestral Village."
+              },
+              {
+                "type": "text",
+                "text": "27) Sakapatate Slam - Heavy Mask - Stage 8: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "28) Sakapatate Fire - Almighty Mask - Stage 7: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "29) Bénisseur Mortar - Caster Mask - Stage 2: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "30) Ballet Charm - Caster Mask - Stage 9: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "31) Orphelin Cheers - Caster Mask - Stage 4: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "32) Échassier Stabs - Agile Mask - Stage 2: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "33) Cultist Blood - Heavy Mask - Stage 1: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "34) Cultist Slashes - Agile Mask - Stage 2: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "35) Hexga Crush - Heavy Mask - Stage 3: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "36) Rocher Hammreing - Heavy Mask - Stage 4: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "37) Lampmaster Light - Almighty Mask - Stage 11: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "38) Moissonneuse Vendange - Balanced Mask - Stage 11: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "39) Clair Enfeeble - Balanced Mask - Stage 10: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "40) Obscur Sword - Heavy Mask - Stage 10: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "41) Potier Energy - Caster Mask - Stage 1: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "42) Sapling Absorption - Caster Mask - Stage 5: Trial 2"
+              },
+              {
+                "type": "text",
+                "text": "43) Jar Lampstorm - Heavy Mask - Stage 10: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "44) Gault Fury - Balanced Mask - Stage 1: Trial 1"
+              },
+              {
+                "type": "text",
+                "text": "45) Glaise Earthquakes - Heavy Mask - Stage 8: Trial 3"
+              },
+              {
+                "type": "text",
+                "text": "46) Danseuse Waltz - Balanced Mask - Stage 6: Trial 1"
+              }
+            ]
           }
         ]
       }
     ],
-    "importedAt": "2026-10-03T22:06:30.311Z"
+    "importedAt": "2026-10-03T22:25:46.504Z"
   }
 ]
