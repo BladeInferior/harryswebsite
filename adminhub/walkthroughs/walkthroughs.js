@@ -38,9 +38,32 @@ const deleteModal = document.getElementById('delete-walkthrough-modal');
 const cancelDeleteBtn = document.getElementById('cancel-delete-walkthrough-btn');
 const confirmDeleteBtn = document.getElementById('confirm-delete-walkthrough-btn');
 
+const imageZoomOverlay = document.getElementById('walkthrough-zoom-overlay');
+const zoomImage = document.getElementById('walkthrough-zoom-image');
+
+// Click-to-enlarge, same pattern as collection-hub/collections.js's
+// #image-zoom-overlay — click the big version (or the backdrop) to close.
+function openImageZoom(url, alt) {
+    zoomImage.src = url;
+    zoomImage.alt = alt;
+    zoomImage.referrerPolicy = 'no-referrer';
+    imageZoomOverlay.classList.remove('hidden');
+}
+
+imageZoomOverlay.addEventListener('click', (e) => {
+    if (e.target === imageZoomOverlay || e.target === zoomImage) {
+        imageZoomOverlay.classList.add('hidden');
+    }
+});
+
 const WALKTHROUGHS_FILE = './walkthroughs-backup.json';
-const EXPORT_WORKER_URL = 'https://letterboxd-import.harrycummins.workers.dev/export';
-const EXPORT_FILENAME = 'adminhub/walkthroughs/walkthroughs-backup.json';
+// NOT the site's generic `.../export` Worker — that one always commits
+// under a hardcoded collection-hub/ prefix (confirmed: it silently wrote to
+// a bogus collection-hub/adminhub/walkthroughs/walkthroughs-backup.json
+// instead of the real file), so it can't target this file at all. This is
+// the same dedicated Worker /import POSTs to, now also handling /manage —
+// see its source for the Firebase-ID-token verification this call needs.
+const MANAGE_WORKER_URL = 'https://walkthrough-import.harrycummins.workers.dev/manage';
 const PROGRESS_KEY_PREFIX = 'walkthroughProgress:';
 
 let walkthroughs = [];
@@ -268,17 +291,17 @@ async function commitWalkthroughsFile(updatedArray) {
     const idToken = await getAdminIdToken();
     if (!idToken) throw new Error('Not signed in as admin');
 
-    const res = await fetch(EXPORT_WORKER_URL, {
+    const res = await fetch(MANAGE_WORKER_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`
         },
-        body: JSON.stringify({ filename: EXPORT_FILENAME, content: JSON.stringify(updatedArray, null, 2) })
+        body: JSON.stringify({ content: updatedArray })
     });
 
     const result = await res.json();
-    if (!result.verified || (!result.committed && !result.unchanged)) {
+    if (!result.ok) {
         throw new Error(result.error || 'Worker did not confirm the commit');
     }
 }
@@ -373,6 +396,7 @@ function renderStepElement(step) {
         img.src = step.url;
         img.alt = step.alt || '';
         img.className = 'walkthrough-step-image';
+        img.addEventListener('click', () => openImageZoom(step.url, step.alt || ''));
         return img;
     }
 
