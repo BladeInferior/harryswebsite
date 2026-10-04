@@ -1391,6 +1391,17 @@ document.getElementById("todo-matches-modal-submit")?.addEventListener("click", 
     todoMatchesModal.classList.add("hidden");
 });
 
+// Adds every name in the checklist, ticked or not.
+document.getElementById("todo-matches-modal-add-all")?.addEventListener("click", () => {
+
+    const all = Array.from(todoMatchesModalList.querySelectorAll("input[type=checkbox]"))
+        .map(checkbox => checkbox.dataset.pokemon);
+
+    addNamesToTodo(all);
+
+    todoMatchesModal.classList.add("hidden");
+});
+
 document.getElementById("todo-matches-modal-close")?.addEventListener("click", () => {
     todoMatchesModal.classList.add("hidden");
 });
@@ -2373,7 +2384,9 @@ searchInput.addEventListener("input", (e) => {
     // after the mic stops, so the results just dictated don't change —
     // clearing the box back to empty (by hand, letter by letter) is what
     // resets it instead.
-    if (!e.target.value) exactMatchToggle.checked = false;
+    // Not while dictating: render() fires this with an empty box whenever
+    // nothing's been recognised yet (or "back" removed the last term).
+    if (!e.target.value && !e.fromVoice) exactMatchToggle.checked = false;
     applyFilters(e.target.value);
 });
 

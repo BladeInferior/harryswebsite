@@ -2113,6 +2113,13 @@ body.page-mode #page-controls {
     margin-bottom: 12px;
 }
 
+/* Add on the left, Add All pushed to the right edge. */
+.todo-matches-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
 /* Tag autocomplete dropdown (see the tags textbox handling in
    collections.js) — positioned via JS with getBoundingClientRect() rather
    than CSS, so z-index just needs to clear the add/edit modal itself. */

@@ -349,18 +349,29 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
 
     // Of the browser's guesses for one phrase, the one that places the most
     // words as names (fewest missed on a tie, then the top guess).
-    function pickBestAlternative(result) {
+    // `shown` is what the box was last displaying for this phrase while it was
+    // still interim: it's tried first and only displaced by a guess that
+    // places strictly more names, so a Pokémon that's already appeared doesn't
+    // vanish or swap for another one just because the final guess differs.
+    function pickBestAlternative(result, shown) {
         const alternatives = Array.from(result, alt => alt.transcript);
-        if (!strictMode() || alternatives.length < 2) return alternatives[0];
+        if (!strictMode() || (alternatives.length < 2 && !shown)) return shown || alternatives[0];
 
-        let best = alternatives[0];
-        let bestScore = -Infinity;
-        for (const text of alternatives) {
+        const score = text => {
             const { terms: found, missed } = splitIntoTerms(text);
-            const score = found.length * 10 - missed.length;
-            if (score > bestScore) {
+            return found.length * 10 - missed.length;
+        };
+
+        // Only switch away from what was shown for a guess with strictly more
+        // names (a whole name's worth of score, not just fewer misses).
+        let best = shown || alternatives[0];
+        let bestScore = score(best);
+        const margin = shown ? 10 : 1;
+        for (const text of alternatives) {
+            const s = score(text);
+            if (s >= bestScore + margin) {
                 best = text;
-                bestScore = score;
+                bestScore = s;
             }
         }
         return best;
@@ -430,12 +441,18 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         let resultOffset = 0;  // results already folded into `terms` this session
         let carriedRegion = ""; // region said at the end of the last phrase, e.g. "Hisuian" before a pause
         let rendering = false;
+        // Last interim text shown for each in-progress phrase, by result index.
+        const shownInterim = new Map();
 
         function render(interimText) {
             const all = [...terms, ...splitIntoTerms(interimText || "").terms];
             input.value = all.join(", ");
             rendering = true;
-            input.dispatchEvent(new Event("input", { bubbles: true }));
+            // Flagged so listeners can tell dictation from the user emptying
+            // the box (the Pokédex turns "Exact match" off only for the latter).
+            const event = new Event("input", { bubbles: true });
+            event.fromVoice = true;
+            input.dispatchEvent(event);
             rendering = false;
         }
 
@@ -499,7 +516,8 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                 }
 
                 if (e.results[i].isFinal) {
-                    const chosen = carriedRegion + " " + pickBestAlternative(e.results[i]);
+                    const chosen = carriedRegion + " " + pickBestAlternative(e.results[i], shownInterim.get(i));
+                    shownInterim.delete(i);
                     const split = splitIntoTerms(chosen);
                     logHeard(chosen, split);
                     showMissed(split.missed);
@@ -508,6 +526,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     interim = carriedRegion;
                     resultOffset = i + 1;
                 } else {
+                    shownInterim.set(i, text);
                     interim += " " + text;
                 }
             }
@@ -518,6 +537,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         // restart it so listening only stops when the button is clicked again.
         recognition.addEventListener("end", () => {
             resultOffset = 0;
+            shownInterim.clear();
             if (!listening) return;
             try {
                 recognition.start();
