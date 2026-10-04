@@ -687,6 +687,13 @@ function escapeHtml(str) {
 
     const COMMANDS = new Set(['stop', 'back', 'previous', 'next']);
 
+    function runCommand(cmd) {
+        if (cmd === 'stop') { stop(); return; }
+        if (cmd === 'previous') goToStep(-1);
+        else if (cmd === 'next') goToStep(1);
+        else if (cmd === 'back') rewindCurrentSentence();
+    }
+
     // Only a short, isolated utterance counts as a command — otherwise the
     // walkthrough text itself saying e.g. "...went back to the village..."
     // while being read aloud would misfire navigation instead of being
@@ -703,13 +710,31 @@ function escapeHtml(str) {
         for (let i = e.resultIndex; i < e.results.length; i++) {
             const transcript = e.results[i][0].transcript.trim();
             const words = transcript.split(/\s+/).map(normalize).filter(Boolean);
-            const command = asCommand(words);
 
-            if (command === 'stop') { stop(); return; }
-            if (command === 'previous') { goToStep(-1); continue; }
-            if (command === 'next') { goToStep(1); continue; }
-            if (command === 'back') {
-                rewindCurrentSentence();
+            // Saying a short command word quickly more than once (or twice
+            // more) in a row often gets merged by the recognizer into one
+            // result ("next next next" instead of three separate ones) —
+            // without this, that transcript is too long to pass
+            // asCommand()'s isolated-word check and silently falls through
+            // to word-matching instead. Requires every word to be *some*
+            // command, not all the *same* one — a run of three "next"s
+            // where the engine mis-hears one as a different command word
+            // still fires each in turn, rather than the whole thing being
+            // thrown out for not matching exactly (a genuine misrecognition
+            // into a non-command word still can't be helped, since nothing
+            // here can know what was actually meant instead).
+            if (words.length > 1 && words.every(w => COMMANDS.has(w))) {
+                for (const w of words) {
+                    runCommand(w);
+                    if (w === 'stop') return;
+                }
+                continue;
+            }
+
+            const command = asCommand(words);
+            if (command) {
+                runCommand(command);
+                if (command === 'stop') return;
                 continue;
             }
 
@@ -780,6 +805,16 @@ function windowScore(normalizedWords, start, spokenWords) {
 // "cat" onward, not the whole sentence, and not the first "cat" either,
 // since the second is more recent. Step mode on a 'text' step only; a no-op
 // everywhere else, since there's nothing to match against.
+//
+// The *best*-scoring forward window wins, not the first one merely
+// clearing the threshold — e.g. saying "picks up the bricks" against "...He
+// picks up the bricks..." would otherwise stop one word early at "He picks
+// up the" (3/4 overlap, already past 0.6) before ever reaching the real,
+// exact match starting one word later, leaving "bricks" itself undimmed.
+// Ties still favour the earliest window, which is what actually gives "go
+// to the first occurrence" for an exact repeat like plain "cat" appearing
+// more than once — both score 1.0, and the first keeps it since a later
+// equal score doesn't beat it.
 function matchSpokenWords(transcript) {
     if (currentMode !== 'step') return;
 
@@ -793,12 +828,17 @@ function matchSpokenWords(transcript) {
     const windowLen = spokenWords.length;
     const lastStart = normalizedWords.length - windowLen;
 
+    let forwardBestStart = -1;
+    let forwardBestScore = 0;
     for (let start = wordReadIndex + 1; start <= lastStart; start++) {
-        if (windowScore(normalizedWords, start, spokenWords) >= WORD_MATCH_THRESHOLD) {
-            wordReadIndex = start + windowLen - 1;
-            updateWordDimming();
-            return;
-        }
+        const score = windowScore(normalizedWords, start, spokenWords);
+        if (score > forwardBestScore) { forwardBestScore = score; forwardBestStart = start; }
+    }
+
+    if (forwardBestStart !== -1 && forwardBestScore >= WORD_MATCH_THRESHOLD) {
+        wordReadIndex = forwardBestStart + windowLen - 1;
+        updateWordDimming();
+        return;
     }
 
     let backwardBestStart = -1;
