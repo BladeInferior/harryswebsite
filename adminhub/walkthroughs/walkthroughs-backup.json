@@ -31,11 +31,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Overview"
-          },
-          {
-            "type": "text",
-            "text": "There are 55 achievements to collect during your expedition. There are no achievements related to difficulty. The walkthrough is written based on the \"normal\" or \"expeditioner\" difficulty as it's known in game. How you play is entirely up to you when it comes to preferred characters, builds and strategies. When it comes to dealing with enemies and bosses, my aim is to give you as much information as I can on what attacks can happen and how they look."
+            "text": "There are 55 achievements to collect during your expedition. There are no achievements related to difficulty. The walkthrough is written based on the \"normal\" or \"expeditioner\" difficulty as it's known in game. How you play is entirely up to you when it comes to preferred characters, builds and strategies. When it comes to dealing with enemies and bosses, my aim is to give you as much information as I can on what attacks can happen and how they look.",
+            "heading": "Overview"
           },
           {
             "type": "text",
@@ -43,11 +40,8 @@
           },
           {
             "type": "text",
-            "text": "Achievement Breakdown"
-          },
-          {
-            "type": "text",
-            "text": "There are FIVE MISSABLE achievements in the game:"
+            "text": "There are FIVE MISSABLE achievements in the game:",
+            "heading": "Achievement Breakdown"
           },
           {
             "type": "text",
@@ -55,8 +49,8 @@
           },
           {
             "type": "achievement",
-            "name": "Follow The TrailFind all of the journals from prior expeditions.",
-            "description": "Follow The TrailFind all of the journals from prior expeditions."
+            "name": "Follow The Trail",
+            "description": "Find all of the journals from prior expeditions."
           },
           {
             "type": "text",
@@ -64,8 +58,8 @@
           },
           {
             "type": "achievement",
-            "name": "MaelleReach relationship level 7 with Maelle.",
-            "description": "MaelleReach relationship level 7 with Maelle."
+            "name": "Maelle",
+            "description": "Reach relationship level 7 with Maelle."
           },
           {
             "type": "text",
@@ -73,8 +67,8 @@
           },
           {
             "type": "achievement",
-            "name": "ConnoisseurFind all 33 music records.",
-            "description": "ConnoisseurFind all 33 music records."
+            "name": "Connoisseur",
+            "description": "Find all 33 music records."
           },
           {
             "type": "text",
@@ -82,8 +76,8 @@
           },
           {
             "type": "achievement",
-            "name": "A Peculiar EncounterDefeat the Mime in Lumière.",
-            "description": "A Peculiar EncounterDefeat the Mime in Lumière."
+            "name": "A Peculiar Encounter",
+            "description": "Defeat the Mime in Lumière."
           },
           {
             "type": "text",
@@ -91,8 +85,8 @@
           },
           {
             "type": "achievement",
-            "name": "ProfessionalDefeat a boss without taking any damage.",
-            "description": "ProfessionalDefeat a boss without taking any damage."
+            "name": "Professional",
+            "description": "Defeat a boss without taking any damage."
           },
           {
             "type": "text",
@@ -100,59 +94,38 @@
           },
           {
             "type": "text",
-            "text": "Items Overview"
+            "text": "There are quite a few different items in game and it can be a bit daunting at first understanding what everything does. Below is a brief explanation of the main items and abilities in game.",
+            "heading": "Items Overview"
           },
           {
             "type": "text",
-            "text": "There are quite a few different items in game and it can be a bit daunting at first understanding what everything does. Below is a brief explanation of the main items and abilities in game."
+            "text": "Chroma is the games currency and is typically found as a white item pickup. Chroma is used to buy items from merchants such as hairstyles, outfits, pictos, Colour of Lumina, recoats and weapon upgrade materials. If you pick it up as you go, you should easily have enough on hand to always buy what you want. Unless you're going for literally every single item from every merchant, it's unlikely you would ever need to farm this.",
+            "heading": "Chroma"
           },
           {
             "type": "text",
-            "text": "Chroma"
+            "text": "You will be introduced to the Pictos system shortly into the game. Pictos are passive abilities that you can use to create different builds and give your characters different effects. When you loot a new Pictos, it must be equipped on a character. Equipping a Pictos on a character requires Lumina Points and will give that specific character the passive effect. Win 4 battles with the Pictos equipped and it can then be equipped on any character as a passive. This still requires Lumina Points but does not require the Pictos to be equipped. The general way to do it is to always \"equip\" a new Pictos to a character until you win 4 battles with it. You can then swap it out for another Pictos and learn that one.",
+            "heading": "Pictos"
           },
           {
             "type": "text",
-            "text": "Chroma is the games currency and is typically found as a white item pickup. Chroma is used to buy items from merchants such as hairstyles, outfits, pictos, Colour of Lumina, recoats and weapon upgrade materials. If you pick it up as you go, you should easily have enough on hand to always buy what you want. Unless you're going for literally every single item from every merchant, it's unlikely you would ever need to farm this."
+            "text": "The Colour of Lumina item is used in the upgrade menu to give one of your characters an extra Lumina point. This is typically found as a blue item pickup. As mentioned above when discussing Pictos, Lumina Points are needed to equip different passive effects learnt from Pictos. The effects can require anywhere from 1 to 20 or more Lumina points to use so Colour of Lumina is useful to make sure you can equip many passives on your characters. As with Chroma, for a standard playthrough you will find more than enough Colour of Lumina items to be able to increase your characters Lumina Points comfortably as there are many world pickups and they can be bought from vendors.",
+            "heading": "Colour of Lumina"
           },
           {
             "type": "text",
-            "text": "Pictos"
+            "text": "The Recoat is an item which allows you to respec a character's attribute or skill points. Useful for re-allocating the stats on your character or if you want to try out different skills. These are typically found as red item pickups and can be bought from vendors. You will naturally find more than enough Recoats throughout the game so don't worry about accidentally putting attribute or skill points in the wrong place.",
+            "heading": "Recoat"
           },
           {
             "type": "text",
-            "text": "You will be introduced to the Pictos system shortly into the game. Pictos are passive abilities that you can use to create different builds and give your characters different effects. When you loot a new Pictos, it must be equipped on a character. Equipping a Pictos on a character requires Lumina Points and will give that specific character the passive effect. Win 4 battles with the Pictos equipped and it can then be equipped on any character as a passive. This still requires Lumina Points but does not require the Pictos to be equipped. The general way to do it is to always \"equip\" a new Pictos to a character until you win 4 battles with it. You can then swap it out for another Pictos and learn that one."
+            "text": "These are your weapon upgrade materials and come in 5 different forms ranging from standard to grandiose to perfect and more. Each and every weapon in the game can be levelled up to a max level of 33. Every few levels will require the next type of chroma catalyst. This effectively gates you from leveling a weapon too high before the story ends.",
+            "heading": "Chroma Catalysts"
           },
           {
             "type": "text",
-            "text": "Colour of Lumina"
-          },
-          {
-            "type": "text",
-            "text": "The Colour of Lumina item is used in the upgrade menu to give one of your characters an extra Lumina point. This is typically found as a blue item pickup. As mentioned above when discussing Pictos, Lumina Points are needed to equip different passive effects learnt from Pictos. The effects can require anywhere from 1 to 20 or more Lumina points to use so Colour of Lumina is useful to make sure you can equip many passives on your characters. As with Chroma, for a standard playthrough you will find more than enough Colour of Lumina items to be able to increase your characters Lumina Points comfortably as there are many world pickups and they can be bought from vendors."
-          },
-          {
-            "type": "text",
-            "text": "Recoat"
-          },
-          {
-            "type": "text",
-            "text": "The Recoat is an item which allows you to respec a character's attribute or skill points. Useful for re-allocating the stats on your character or if you want to try out different skills. These are typically found as red item pickups and can be bought from vendors. You will naturally find more than enough Recoats throughout the game so don't worry about accidentally putting attribute or skill points in the wrong place."
-          },
-          {
-            "type": "text",
-            "text": "Chroma Catalysts"
-          },
-          {
-            "type": "text",
-            "text": "These are your weapon upgrade materials and come in 5 different forms ranging from standard to grandiose to perfect and more. Each and every weapon in the game can be levelled up to a max level of 33. Every few levels will require the next type of chroma catalyst. This effectively gates you from leveling a weapon too high before the story ends."
-          },
-          {
-            "type": "text",
-            "text": "Tints"
-          },
-          {
-            "type": "text",
-            "text": "Tints come in 3 forms - Energy (AP), Health and Revive. Picking up tint shards will increase the number of each tint you can have, whilst collecting the Shape of Life, Energy and Revive items will increase the potency of the tints. Tints can be used in battle to replenish health, AP or to revive characters."
+            "text": "Tints come in 3 forms - Energy (AP), Health and Revive. Picking up tint shards will increase the number of each tint you can have, whilst collecting the Shape of Life, Energy and Revive items will increase the potency of the tints. Tints can be used in battle to replenish health, AP or to revive characters.",
+            "heading": "Tints"
           },
           {
             "type": "text",
@@ -166,11 +139,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Prologue - Lumiére"
-          },
-          {
-            "type": "text",
-            "text": "Reminder - There is one missable achievement and two missable items in the prologue."
+            "text": "Reminder - There is one missable achievement and two missable items in the prologue.",
+            "heading": "Prologue - Lumiére"
           },
           {
             "type": "text",
@@ -206,11 +176,8 @@
           },
           {
             "type": "text",
-            "text": "MISSABLE"
-          },
-          {
-            "type": "text",
-            "text": "Head down the street between more stalls until the area opens up again with a fountain in the middle. This is the final part of this area. If you head forward from the fountain you will receive the pop-up about leaving the area. Looking at the fountain from where you entered this area from, turn right. You will see a stage ahead with what looks like fireworks going off."
+            "text": "Head down the street between more stalls until the area opens up again with a fountain in the middle. This is the final part of this area. If you head forward from the fountain you will receive the pop-up about leaving the area. Looking at the fountain from where you entered this area from, turn right. You will see a stage ahead with what looks like fireworks going off.",
+            "heading": "MISSABLE"
           },
           {
             "type": "image",
@@ -231,11 +198,8 @@
           },
           {
             "type": "text",
-            "text": "Mime - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Hand to Hand Combo: A simple 3-hit combo. The first two hits are fast, followed by a short delay before hit 3."
+            "text": "Hand to Hand Combo: A simple 3-hit combo. The first two hits are fast, followed by a short delay before hit 3.",
+            "heading": "Mime - Attacks"
           },
           {
             "type": "text",
@@ -243,26 +207,23 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This may take a few goes whilst you get used to combat. The mime takes virtually no damage unless it is in a broken state so the ideal strategy is to parry/dodge and attack until you do enough damage to \"break\" it. Build your overcharge to 10/10 and then use it to break the enemy, unlocking the below three achievements."
+            "text": "This may take a few goes whilst you get used to combat. The mime takes virtually no damage unless it is in a broken state so the ideal strategy is to parry/dodge and attack until you do enough damage to \"break\" it. Build your overcharge to 10/10 and then use it to break the enemy, unlocking the below three achievements.",
+            "heading": "Additional Information"
           },
           {
             "type": "achievement",
-            "name": "A Peculiar EncounterDefeat the Mime in Lumière.",
-            "description": "A Peculiar EncounterDefeat the Mime in Lumière."
+            "name": "A Peculiar Encounter",
+            "description": "Defeat the Mime in Lumière."
           },
           {
             "type": "achievement",
-            "name": "Time to Spill Some InkBreak an enemy.",
-            "description": "Time to Spill Some InkBreak an enemy."
+            "name": "Time to Spill Some Ink",
+            "description": "Break an enemy."
           },
           {
             "type": "achievement",
-            "name": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy.",
-            "description": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy."
+            "name": "Overcharge",
+            "description": "With Gustave, use a fully charged Overcharge that Breaks an enemy."
           },
           {
             "type": "text",
@@ -278,11 +239,8 @@
           },
           {
             "type": "text",
-            "text": "MISSABLE"
-          },
-          {
-            "type": "text",
-            "text": "You will have a Festival Token automatically from the cutscene. Speak to the woman in the blue tent and exchange the token for the Old Key. You will need this later to obtain a journal and this is the only time you can get it."
+            "text": "You will have a Festival Token automatically from the cutscene. Speak to the woman in the blue tent and exchange the token for the Old Key. You will need this later to obtain a journal and this is the only time you can get it.",
+            "heading": "MISSABLE"
           },
           {
             "type": "text",
@@ -302,8 +260,8 @@
           },
           {
             "type": "achievement",
-            "name": "LumièreEmbark on the Expedition.",
-            "description": "LumièreEmbark on the Expedition."
+            "name": "Lumière",
+            "description": "Embark on the Expedition."
           }
         ]
       },
@@ -313,11 +271,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Act I - Part I"
-          },
-          {
-            "type": "text",
-            "text": "Spring Meadows"
+            "text": "Spring Meadows",
+            "heading": "Act I - Part I"
           },
           {
             "type": "text",
@@ -373,11 +328,8 @@
           },
           {
             "type": "text",
-            "text": "Eveque - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Ice Attack: A 3 hit combo that hits a single character, a single character, and then both characters. The best time to counter is shortly after seeing the second ice patch appear on the ground."
+            "text": "Ice Attack: A 3 hit combo that hits a single character, a single character, and then both characters. The best time to counter is shortly after seeing the second ice patch appear on the ground.",
+            "heading": "Eveque - Attacks"
           },
           {
             "type": "text",
@@ -393,11 +345,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "It's entirely possible to do this fight without taking damage given the attacks are quite easy to counter. Again, I will be doing that achievement later but it's completely feasible to learn this boss and do it now if you wish."
+            "text": "It's entirely possible to do this fight without taking damage given the attacks are quite easy to counter. Again, I will be doing that achievement later but it's completely feasible to learn this boss and do it now if you wish.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -413,8 +362,8 @@
           },
           {
             "type": "achievement",
-            "name": "Spring MeadowsFind your way through Spring Meadows.",
-            "description": "Spring MeadowsFind your way through Spring Meadows."
+            "name": "Spring Meadows",
+            "description": "Find your way through Spring Meadows."
           },
           {
             "type": "text",
@@ -422,19 +371,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "The Continent is the world map for this game. If you look behind you, you will see what looks like a white swirling effect. This signifies the entrance to an area. Pressing will bring up the map. You can see our next objective, Flying Waters, is to the North-East. There are multiple optional areas you can explore right now but the WT continues towards the end of Act I's story before going back to hoover up some goodies. Some locations are too difficult right now and some are locked off entirely until later in the game. When ready, head towards our objective and before long you will be prompted to press to go to camp.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "The Continent is the world map for this game. If you look behind you, you will see what looks like a white swirling effect. This signifies the entrance to an area. Pressing will bring up the map. You can see our next objective, Flying Waters, is to the North-East. There are multiple optional areas you can explore right now but the WT continues towards the end of Act I's story before going back to hoover up some goodies. Some locations are too difficult right now and some are locked off entirely until later in the game. When ready, head towards our objective and before long you will be prompted to press to go to camp."
-          },
-          {
-            "type": "text",
-            "text": "Camp"
-          },
-          {
-            "type": "text",
-            "text": "The camp is an area you can visit whenever you're on the world map. It allows you to speak to your party members for extra story (and later, relationship levels). You can also upgrade weapons, tints and assign Lumina points here when the functions unlock. No camp interactions are missable as you can always catch up later should you miss any. There is ONE interaction that you must do at a certain time for a record but as always, this will be pointed out."
+            "text": "The camp is an area you can visit whenever you're on the world map. It allows you to speak to your party members for extra story (and later, relationship levels). You can also upgrade weapons, tints and assign Lumina points here when the functions unlock. No camp interactions are missable as you can always catch up later should you miss any. There is ONE interaction that you must do at a certain time for a record but as always, this will be pointed out.",
+            "heading": "Camp"
           },
           {
             "type": "text",
@@ -442,16 +385,13 @@
           },
           {
             "type": "text",
-            "text": "Flying Waters"
-          },
-          {
-            "type": "text",
-            "text": "Head forward for a cutscene and then turn left and move forward to the edge of the area. Turn left and follow this path to the end for the \"SOS Shell\" pictos. Head to the back of this area and a message will popup telling you about the paint cage. When facing the cage, turn left 90 degrees and you will see the first lock on the wall in front of you. Shoot it with free aim. Turn left another 90 degrees so you are facing the direction you came from and the second lock will be right in front of you, on the tail of the statue. Finally, turn 90 degrees a third time and the final lock is on the wall here, hidden behind the air bubble and purple corals. Shoot it to open the paint cage, loot the Chroma Elixir Shard and unlock:"
+            "text": "Head forward for a cutscene and then turn left and move forward to the edge of the area. Turn left and follow this path to the end for the \"SOS Shell\" pictos. Head to the back of this area and a message will popup telling you about the paint cage. When facing the cage, turn left 90 degrees and you will see the first lock on the wall in front of you. Shoot it with free aim. Turn left another 90 degrees so you are facing the direction you came from and the second lock will be right in front of you, on the tail of the statue. Finally, turn 90 degrees a third time and the final lock is on the wall here, hidden behind the air bubble and purple corals. Shoot it to open the paint cage, loot the Chroma Elixir Shard and unlock:",
+            "heading": "Flying Waters"
           },
           {
             "type": "achievement",
-            "name": "Paint CageBreak a Paint Cage.",
-            "description": "Paint CageBreak a Paint Cage."
+            "name": "Paint Cage",
+            "description": "Break a Paint Cage."
           },
           {
             "type": "text",
@@ -575,11 +515,8 @@
           },
           {
             "type": "text",
-            "text": "Bourgeon - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Eat: On its first turn, the boss will always eat one party member, this cannot be dodged or avoided. Breaking the boss will cause the boss to spit the party member back out. The boss will then eat another party member a few turns later."
+            "text": "Eat: On its first turn, the boss will always eat one party member, this cannot be dodged or avoided. Breaking the boss will cause the boss to spit the party member back out. The boss will then eat another party member a few turns later.",
+            "heading": "Bourgeon - Attacks"
           },
           {
             "type": "text",
@@ -595,11 +532,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This boss caused me a lot of trouble the first time, if nothing else just because he has a lot of health and higher difficulties hit way harder. He will ALWAYS eat one party member shortly into the fight and they will remain out of action until the boss is broken. If there is a character you feel you can't play without, you can always restart the fight if they are eaten as it is random who is eaten on each attempt. Just like the mimes, he only has a couple of attacks and once you learn them, you will blitz him. The miasma spit is the easiest move to parry and you can sometimes have him do this repeatedly. I believe there is also a 4 hit combo variant but I didn't personally see it in my run."
+            "text": "This boss caused me a lot of trouble the first time, if nothing else just because he has a lot of health and higher difficulties hit way harder. He will ALWAYS eat one party member shortly into the fight and they will remain out of action until the boss is broken. If there is a character you feel you can't play without, you can always restart the fight if they are eaten as it is random who is eaten on each attempt. Just like the mimes, he only has a couple of attacks and once you learn them, you will blitz him. The miasma spit is the easiest move to parry and you can sometimes have him do this repeatedly. I believe there is also a 4 hit combo variant but I didn't personally see it in my run.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -607,19 +541,13 @@
           },
           {
             "type": "text",
-            "text": "Optional Boss Path"
+            "text": "Take the left path ahead and you'll see handholds. Climb them and defeat the enemy at the top. Run up the incline here and turn left. Ahead of you, across a gap, you will see more handholds. You can grapple over here. Once across, run around the building and loot a Chroma Catalyst at the end. Head down the path to the left of the item and you will see a grapple point below. Head down here to find the optional boss.",
+            "heading": "Optional Boss Path"
           },
           {
             "type": "text",
-            "text": "Take the left path ahead and you'll see handholds. Climb them and defeat the enemy at the top. Run up the incline here and turn left. Ahead of you, across a gap, you will see more handholds. You can grapple over here. Once across, run around the building and loot a Chroma Catalyst at the end. Head down the path to the left of the item and you will see a grapple point below. Head down here to find the optional boss."
-          },
-          {
-            "type": "text",
-            "text": "Chromatic Troubadour - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Tricky Shot: This one is a bait. You will see two orbs fly out from the boss. Ignore them! He will physically attack you with this trumpet first. Dodge/parry this, then do the orbs."
+            "text": "Tricky Shot: This one is a bait. You will see two orbs fly out from the boss. Ignore them! He will physically attack you with this trumpet first. Dodge/parry this, then do the orbs.",
+            "heading": "Chromatic Troubadour - Attacks"
           },
           {
             "type": "text",
@@ -627,27 +555,18 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
+            "text": "Chromatic bosses are just suped up versions of regular enemies. We skipped one earlier as it's a good candidate for the no damage achievement. This guy isn't too bad but the moves are annoying. In the end, I actually found the tricky shot easier once I was aware of the bait. The concerto caught me off guard quite a few times with the delays and slow hits. Loot the \"Energising Break\" pictos from behind the boss and then return to the flag.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
-            "text": "Chromatic bosses are just suped up versions of regular enemies. We skipped one earlier as it's a good candidate for the no damage achievement. This guy isn't too bad but the moves are annoying. In the end, I actually found the tricky shot easier once I was aware of the bait. The concerto caught me off guard quite a few times with the delays and slow hits. Loot the \"Energising Break\" pictos from behind the boss and then return to the flag."
+            "text": "Take the right path and follow it to another flag. Odd right? Boss battle ahead. Rest up and sort skills as necessary. Check Gustave's weapon. You may still have Cruleram equipped. If you do, swap it out for something as the boss is resistant to ice.",
+            "heading": "Story Path"
           },
           {
             "type": "text",
-            "text": "Story Path"
-          },
-          {
-            "type": "text",
-            "text": "Take the right path and follow it to another flag. Odd right? Boss battle ahead. Rest up and sort skills as necessary. Check Gustave's weapon. You may still have Cruleram equipped. If you do, swap it out for something as the boss is resistant to ice."
-          },
-          {
-            "type": "text",
-            "text": "Goblu - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Jump Attack: Every person I've seen play this fight, including me, has the initial reaction to try and jump counter this. I think it's just because it says \"Goblu Jumps\" and you've just learnt jump counters. Just dodge/parry normally though. It's 3 bounces back to back with a short delay."
+            "text": "Jump Attack: Every person I've seen play this fight, including me, has the initial reaction to try and jump counter this. I think it's just because it says \"Goblu Jumps\" and you've just learnt jump counters. Just dodge/parry normally though. It's 3 bounces back to back with a short delay.",
+            "heading": "Goblu - Attacks"
           },
           {
             "type": "text",
@@ -663,11 +582,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This fight mostly just challenges you on what you've learnt so far, combining shields, jump counters and everything else. The fight will start with Goblu jumping at you. Don't try and counter with jumps of your own, just dodge/parry. If you parry all 3 bounces, the expedition will counter and break both his shields. For this boss and others with shields onwards, Maelle's \"Breaking Rules\" ability is a godsend as it removes ALL shields an enemy has in one turn and rewards you with AP per shield destroyed."
+            "text": "This fight mostly just challenges you on what you've learnt so far, combining shields, jump counters and everything else. The fight will start with Goblu jumping at you. Don't try and counter with jumps of your own, just dodge/parry. If you parry all 3 bounces, the expedition will counter and break both his shields. For this boss and others with shields onwards, Maelle's \"Breaking Rules\" ability is a godsend as it removes ALL shields an enemy has in one turn and rewards you with AP per shield destroyed.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -675,21 +591,18 @@
           },
           {
             "type": "achievement",
-            "name": "Flying WatersFind your way through Flying Waters.",
-            "description": "Flying WatersFind your way through Flying Waters."
+            "name": "Flying Waters",
+            "description": "Find your way through Flying Waters."
           },
           {
             "type": "text",
-            "text": "Camp"
-          },
-          {
-            "type": "text",
-            "text": "When back in control, you will find yourself in front of the Curator. He will always be here at camp and offers a range of services. Speak to him to see that he can upgrade weapons or expedition resources. Go to weapons first. There will be a few popups telling you how this works. If you've played any souls-like games before, it will be very familiar. Attribute points scale with certain weapons and weapons themselves can be upgraded up to certain levels with the use of various items. I'm not going to tell you what to upgrade or not, just be aware that you can buy upgrade materials from most merchants and even past this, most of them can be farmed. Upgrade any weapon now to unlock:"
+            "text": "When back in control, you will find yourself in front of the Curator. He will always be here at camp and offers a range of services. Speak to him to see that he can upgrade weapons or expedition resources. Go to weapons first. There will be a few popups telling you how this works. If you've played any souls-like games before, it will be very familiar. Attribute points scale with certain weapons and weapons themselves can be upgraded up to certain levels with the use of various items. I'm not going to tell you what to upgrade or not, just be aware that you can buy upgrade materials from most merchants and even past this, most of them can be farmed. Upgrade any weapon now to unlock:",
+            "heading": "Camp"
           },
           {
             "type": "achievement",
-            "name": "Weapon UpgradeUpgrade a weapon once.",
-            "description": "Weapon UpgradeUpgrade a weapon once."
+            "name": "Weapon Upgrade",
+            "description": "Upgrade a weapon once."
           },
           {
             "type": "text",
@@ -697,8 +610,8 @@
           },
           {
             "type": "achievement",
-            "name": "LuminaConsume a Lumina point.",
-            "description": "LuminaConsume a Lumina point."
+            "name": "Lumina",
+            "description": "Consume a Lumina point."
           },
           {
             "type": "text",
@@ -706,8 +619,8 @@
           },
           {
             "type": "achievement",
-            "name": "CuriousWitness an optional scene at camp.",
-            "description": "CuriousWitness an optional scene at camp."
+            "name": "Curious",
+            "description": "Witness an optional scene at camp."
           },
           {
             "type": "text",
@@ -715,11 +628,8 @@
           },
           {
             "type": "text",
-            "text": "Ancient Sanctuary"
-          },
-          {
-            "type": "text",
-            "text": "Rest at the flag ahead and just past this you will see a strange little ball like creature. These are Petanks and I personally find them extremely irritating. They are mostly optional so it's up to you if you want to bother with them. Essentially you need to \"herd\" them onto a certain space on the floor which is indicated with their colour."
+            "text": "Rest at the flag ahead and just past this you will see a strange little ball like creature. These are Petanks and I personally find them extremely irritating. They are mostly optional so it's up to you if you want to bother with them. Essentially you need to \"herd\" them onto a certain space on the floor which is indicated with their colour.",
+            "heading": "Ancient Sanctuary"
           },
           {
             "type": "image",
@@ -736,11 +646,8 @@
           },
           {
             "type": "text",
-            "text": "Robust Sakapatate - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Club Attack: The popup will say that it is \"swinging its dead partner\". The windup for this attack is hilariously long and it will hit much, much later than you think it will."
+            "text": "Club Attack: The popup will say that it is \"swinging its dead partner\". The windup for this attack is hilariously long and it will hit much, much later than you think it will.",
+            "heading": "Robust Sakapatate - Attacks"
           },
           {
             "type": "text",
@@ -760,11 +667,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The enemy will get the first move so don't put down that controller for the cutscene! You can use free aim to hit the glowing white spot in its shoulder. If you see a popup at the top of the screen saying that \"it is raising its shield\", be prepared to try and dodge its attack on the next turn or it will break and stun the whole team, dealing high damage. This is the last time that I'll recommend Maelle's \"Breaking Rules\" ability but it is just invaluable as many enemies have shields in this game and removing them all in one turn is so powerful. Other than the moves doing high damage, it is a standard enemy and doesn't have boss levels of health. It is weak to fire so spamming Lune's \"Immolation\" and Maelle's \"Spark\" will help. On death, it will perform the body slam attack above."
+            "text": "The enemy will get the first move so don't put down that controller for the cutscene! You can use free aim to hit the glowing white spot in its shoulder. If you see a popup at the top of the screen saying that \"it is raising its shield\", be prepared to try and dodge its attack on the next turn or it will break and stun the whole team, dealing high damage. This is the last time that I'll recommend Maelle's \"Breaking Rules\" ability but it is just invaluable as many enemies have shields in this game and removing them all in one turn is so powerful. Other than the moves doing high damage, it is a standard enemy and doesn't have boss levels of health. It is weak to fire so spamming Lune's \"Immolation\" and Maelle's \"Spark\" will help. On death, it will perform the body slam attack above.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -819,11 +723,8 @@
           },
           {
             "type": "text",
-            "text": "Ultimate Sakapatate - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Club Attack: Similar to what you've seen already. The popup will say that \"it attacks with its dead partner\". This is just a simple 3-hit combo. No delays, just two quick hits followed by a jump counter."
+            "text": "Club Attack: Similar to what you've seen already. The popup will say that \"it attacks with its dead partner\". This is just a simple 3-hit combo. No delays, just two quick hits followed by a jump counter.",
+            "heading": "Ultimate Sakapatate - Attacks"
           },
           {
             "type": "text",
@@ -839,11 +740,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This guy isn't so bad, I actually found the standard enemies more annoying in this area and I was just glad to be done with these guys in general. Fire still works wonders here. Keep an eye out for when the popup says that the boss is \"taking the fight seriously\" as this will be followed by the Shield Slam Cannons move above. When you break him, the shoulder weak-spot will be exposed. Destroy this quickly as it will destroy his shield arm. This stops him from shield slamming or firing cannons again, making the rest of the fight trivial as he can only do the club attack or electric thingies from now on. Unlike the other enemies in this area, he doesn't crash into the party on death."
+            "text": "This guy isn't so bad, I actually found the standard enemies more annoying in this area and I was just glad to be done with these guys in general. Fire still works wonders here. Keep an eye out for when the popup says that the boss is \"taking the fight seriously\" as this will be followed by the Shield Slam Cannons move above. When you break him, the shoulder weak-spot will be exposed. Destroy this quickly as it will destroy his shield arm. This stops him from shield slamming or firing cannons again, making the rest of the fight trivial as he can only do the club attack or electric thingies from now on. Unlike the other enemies in this area, he doesn't crash into the party on death.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -851,8 +749,8 @@
           },
           {
             "type": "achievement",
-            "name": "Ancient SanctuaryFind your way through Ancient Sanctuary.",
-            "description": "Ancient SanctuaryFind your way through Ancient Sanctuary."
+            "name": "Ancient Sanctuary",
+            "description": "Find your way through Ancient Sanctuary."
           },
           {
             "type": "text",
@@ -860,19 +758,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "This is a very brief visit to the world map but for the sake of consistency I'm writing it as its own section. You will already see the swirling portal ahead that leads to our next area, the Gestral Village. To the right of this is a Colour of Lumina. You can press if you wish to go to the camp and upgrade weapons or add Lumina points. Other than that, that's it! Go into the Gestral Village portal now.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "This is a very brief visit to the world map but for the sake of consistency I'm writing it as its own section. You will already see the swirling portal ahead that leads to our next area, the Gestral Village. To the right of this is a Colour of Lumina. You can press if you wish to go to the camp and upgrade weapons or add Lumina points. Other than that, that's it! Go into the Gestral Village portal now."
-          },
-          {
-            "type": "text",
-            "text": "Gestral Village"
-          },
-          {
-            "type": "text",
-            "text": "There is a LOT of optional stuff here. I'll do the story and collectible stuff first and then list some optional bits afterwards for those that want them. Rest at the flag ahead and sort out the usual stuff before heading into the village proper. Enter the building straight ahead marked as \"Chief House\" and speak to the NPC at the back of the room. When given the option, choose to look around first as it's easier to give directions from here rather than from the arena."
+            "text": "There is a LOT of optional stuff here. I'll do the story and collectible stuff first and then list some optional bits afterwards for those that want them. Rest at the flag ahead and sort out the usual stuff before heading into the village proper. Enter the building straight ahead marked as \"Chief House\" and speak to the NPC at the back of the room. When given the option, choose to look around first as it's easier to give directions from here rather than from the arena.",
+            "heading": "Gestral Village"
           },
           {
             "type": "text",
@@ -888,11 +780,8 @@
           },
           {
             "type": "text",
-            "text": "Optional"
-          },
-          {
-            "type": "text",
-            "text": "First things first, you can challenge Golgra here with any character to a duel. Winning will award them with a weapon. Personally, I didn't bother with this as Maelle's is the best one and you already have that now. Leave the chief's building and this time turn left. You will see a path to the left, and an arch to the right. Take the path left and take the right path at the fork. You will be in an open area with two Gestrals sat down at a table in front of you. Look to the right of them to see a sign that says \"Turn Back\". Go through the arch next to this and enter the door at the end to find yourself in the Manor."
+            "text": "First things first, you can challenge Golgra here with any character to a duel. Winning will award them with a weapon. Personally, I didn't bother with this as Maelle's is the best one and you already have that now. Leave the chief's building and this time turn left. You will see a path to the left, and an arch to the right. Take the path left and take the right path at the fork. You will be in an open area with two Gestrals sat down at a table in front of you. Look to the right of them to see a sign that says \"Turn Back\". Go through the arch next to this and enter the door at the end to find yourself in the Manor.",
+            "heading": "Optional"
           },
           {
             "type": "text",
@@ -928,16 +817,13 @@
           },
           {
             "type": "achievement",
-            "name": "Gestral VillageFind your way through the Gestral Village.",
-            "description": "Gestral VillageFind your way through the Gestral Village."
+            "name": "Gestral Village",
+            "description": "Find your way through the Gestral Village."
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "You will find yourself put back into the camp on leaving the village. Make sure to speak to the curator in the cave and upgrade your tints/weapons. Other than this, there isn't much to do. You can speak to the characters but we don't have relationship levels yet so there isn't much dialogue. Interact with the campfire and write in the journal, then check up on the others for a scene. All that's left then is to go to sleep for another cutscene."
+            "text": "You will find yourself put back into the camp on leaving the village. Make sure to speak to the curator in the cave and upgrade your tints/weapons. Other than this, there isn't much to do. You can speak to the characters but we don't have relationship levels yet so there isn't much dialogue. Interact with the campfire and write in the journal, then check up on the others for a scene. All that's left then is to go to sleep for another cutscene.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
@@ -945,11 +831,8 @@
           },
           {
             "type": "text",
-            "text": "Esquie's Nest"
-          },
-          {
-            "type": "text",
-            "text": "This is quite a short area thankfully after the Sanctuary Maze and as usual, there are some goodies to get. Head forward along the only path to see a flag on the left. Rest if you wish and then speak to the Gestral for a cutscene. When back in control, turn right and you should see a crawlspace to the right of the Gestral. Go through it for a Colour of Lumina. You can also loot 653x Chroma at the end of the path behind the Gestral."
+            "text": "This is quite a short area thankfully after the Sanctuary Maze and as usual, there are some goodies to get. Head forward along the only path to see a flag on the left. Rest if you wish and then speak to the Gestral for a cutscene. When back in control, turn right and you should see a crawlspace to the right of the Gestral. Go through it for a Colour of Lumina. You can also loot 653x Chroma at the end of the path behind the Gestral.",
+            "heading": "Esquie's Nest"
           },
           {
             "type": "text",
@@ -965,13 +848,13 @@
           },
           {
             "type": "achievement",
-            "name": "Esquie's NestFind your way through Esquie's Nest.",
-            "description": "Esquie's NestFind your way through Esquie's Nest."
+            "name": "Esquie's Nest",
+            "description": "Find your way through Esquie's Nest."
           },
           {
             "type": "achievement",
-            "name": "LegendUnlock Esquie.",
-            "description": "LegendUnlock Esquie."
+            "name": "Legend",
+            "description": "Unlock Esquie."
           },
           {
             "type": "text",
@@ -985,11 +868,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "First things first, Esquie. You will gain more abilities for Esquie throughout the story that give you access to more of the map. At the moment, all he can do is smash through rubble. Riding him is faster than walking/sprinting though which is one reason I left the collectible stuff until now. As with everything else in this game, if there is an area or activity you really don't want to do right now, you can always come back later. Just remember that your counters will be different to mine."
+            "text": "First things first, Esquie. You will gain more abilities for Esquie throughout the story that give you access to more of the map. At the moment, all he can do is smash through rubble. Riding him is faster than walking/sprinting though which is one reason I left the collectible stuff until now. As with everything else in this game, if there is an area or activity you really don't want to do right now, you can always come back later. Just remember that your counters will be different to mine.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
@@ -1002,11 +882,8 @@
           },
           {
             "type": "text",
-            "text": "Yellow Harvest"
-          },
-          {
-            "type": "text",
-            "text": "On entering, there is a flag straight ahead. After resting, look to the right to find a wall with handholds. Climb up and drop down at the top. Follow the linear path past a destroyed shed and some tents. Once on the other side of a cave, you will find yourself in an open area with enemies. Defeat the enemy in front of you and then make your way over to the two in the back right and defeat them. Hop up the white ledge and follow the path to the right of the grapple to find another flag."
+            "text": "On entering, there is a flag straight ahead. After resting, look to the right to find a wall with handholds. Climb up and drop down at the top. Follow the linear path past a destroyed shed and some tents. Once on the other side of a cave, you will find yourself in an open area with enemies. Defeat the enemy in front of you and then make your way over to the two in the back right and defeat them. Hop up the white ledge and follow the path to the right of the grapple to find another flag.",
+            "heading": "Yellow Harvest"
           },
           {
             "type": "text",
@@ -1027,11 +904,8 @@
           },
           {
             "type": "text",
-            "text": "Glaise - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Earth Ground Pound: Similar to Eveque's attack but Earth. Parry just before the traveling Earth hits you."
+            "text": "Earth Ground Pound: Similar to Eveque's attack but Earth. Parry just before the traveling Earth hits you.",
+            "heading": "Glaise - Attacks"
           },
           {
             "type": "text",
@@ -1043,11 +917,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The boss will get the first turn, try and counter what you can for some easy shield removal. This boss seemed to get stuck in a cycle for me where all it would cast was the jump slam over and over. As this is relatively easy to counter once you get the feel for it, I just constantly parried him and he was dead in a couple of turns. If this attack connects it will either kill your team or drop people low so feel free to dodge for the easier timing if you want to play it safe. Nothing special about this boss to be honest though, it shouldn't give you much trouble."
+            "text": "The boss will get the first turn, try and counter what you can for some easy shield removal. This boss seemed to get stuck in a cycle for me where all it would cast was the jump slam over and over. As this is relatively easy to counter once you get the feel for it, I just constantly parried him and he was dead in a couple of turns. If this attack connects it will either kill your team or drop people low so feel free to dodge for the easier timing if you want to play it safe. Nothing special about this boss to be honest though, it shouldn't give you much trouble.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1059,11 +930,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Look to your right and interact with the object to form a bridge leading back to the rest of the map. Turn around and go straight ahead to another swirling portal for the \"Lost Woods\". There is nothing in this area apart from [Record #3/34 - Aline's Glasshouse]. Loot it and exit back to the Continent. Cross over the bridge we made and at the other side look to your left to see some destroyed buildings. In between them is [Journal #9/49 - Expedition 62]. Head to the location in the image below to reach the Gestral Beach side area."
+            "text": "Look to your right and interact with the object to form a bridge leading back to the rest of the map. Turn around and go straight ahead to another swirling portal for the \"Lost Woods\". There is nothing in this area apart from [Record #3/34 - Aline's Glasshouse]. Loot it and exit back to the Continent. Cross over the bridge we made and at the other side look to your left to see some destroyed buildings. In between them is [Journal #9/49 - Expedition 62]. Head to the location in the image below to reach the Gestral Beach side area.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -1072,11 +940,8 @@
           },
           {
             "type": "text",
-            "text": "Gestral Beach"
-          },
-          {
-            "type": "text",
-            "text": "There are a few Gestral Beaches throughout the game, each containing a mini-game of sorts such as obstacle courses, parkour and racing. Fair warning, they can be annoying. However, they are needed for an achievement so we're going to have to do them. Speak to the Gestral ahead for some context and then move behind him. There is a log in the water. This is the start of the course. It is linear so you can't really get lost but the parkour can be iffy as this isn't a game designed around it and if you fall off you have to restart. I'll outline below how I did it but your mileage may vary. Some people suggest playing as Lune here because she glides but I actually found this harder so stuck with Maelle as she has the smaller character model."
+            "text": "There are a few Gestral Beaches throughout the game, each containing a mini-game of sorts such as obstacle courses, parkour and racing. Fair warning, they can be annoying. However, they are needed for an achievement so we're going to have to do them. Speak to the Gestral ahead for some context and then move behind him. There is a log in the water. This is the start of the course. It is linear so you can't really get lost but the parkour can be iffy as this isn't a game designed around it and if you fall off you have to restart. I'll outline below how I did it but your mileage may vary. Some people suggest playing as Lune here because she glides but I actually found this harder so stuck with Maelle as she has the smaller character model.",
+            "heading": "Gestral Beach"
           },
           {
             "type": "text",
@@ -1088,11 +953,8 @@
           },
           {
             "type": "text",
-            "text": "Hidden Gestral Arena"
-          },
-          {
-            "type": "text",
-            "text": "There is a flag straight ahead here that you can use to tinker with things between battles. For reference, I was level 19 when I did this and used Maelle for all my fights as she was already doing 9,999 openers for me at this point thanks to the Medalum weapon we received from the Gestral Village. Proceed the only way you can and speak to the Gestral to choose your fighter and opponent. Below is each enemy and what pictos they give for defeating them. There is nothing special about any of these enemies and they all have basic moves that are easy to counter. The final fight against Julien could catch you off guard because of the 3 hit combo he does but it shouldn't take you long to smash through these encounters."
+            "text": "There is a flag straight ahead here that you can use to tinker with things between battles. For reference, I was level 19 when I did this and used Maelle for all my fights as she was already doing 9,999 openers for me at this point thanks to the Medalum weapon we received from the Gestral Village. Proceed the only way you can and speak to the Gestral to choose your fighter and opponent. Below is each enemy and what pictos they give for defeating them. There is nothing special about any of these enemies and they all have basic moves that are easy to counter. The final fight against Julien could catch you off guard because of the 3 hit combo he does but it shouldn't take you long to smash through these encounters.",
+            "heading": "Hidden Gestral Arena"
           },
           {
             "type": "text",
@@ -1112,11 +974,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Head to the location on the image below to find a merchant."
+            "text": "Head to the location on the image below to find a merchant.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -1129,11 +988,8 @@
           },
           {
             "type": "text",
-            "text": "The Small Bourgeon"
-          },
-          {
-            "type": "text",
-            "text": "Rest at the flag if needed then move forward into a large room. On the left side is a giant, dormant enemy like the one we fought earlier. Take the path to the left of it and loot [Journal #10/49 - Expedition 53]. Now go back to the giant enemy and speak to the small white version of it underneath. Cycle through its dialogue and then, provided you killed the bourgeon enemy back in Flying Waters, you will be able to give it the Bourgeon skin when speaking to it again."
+            "text": "Rest at the flag if needed then move forward into a large room. On the left side is a giant, dormant enemy like the one we fought earlier. Take the path to the left of it and loot [Journal #10/49 - Expedition 53]. Now go back to the giant enemy and speak to the small white version of it underneath. Cycle through its dialogue and then, provided you killed the bourgeon enemy back in Flying Waters, you will be able to give it the Bourgeon skin when speaking to it again.",
+            "heading": "The Small Bourgeon"
           },
           {
             "type": "text",
@@ -1141,24 +997,18 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "Back on the Continent, turn right and activate the switch ahead, forming another bridge. Move to the blue crystals ahead and re-enter Spring Meadows. We're going to go and get the achievement for killing a boss with no damage now that we are sufficiently levelled.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Back on the Continent, turn right and activate the switch ahead, forming another bridge. Move to the blue crystals ahead and re-enter Spring Meadows. We're going to go and get the achievement for killing a boss with no damage now that we are sufficiently levelled."
-          },
-          {
-            "type": "text",
-            "text": "Spring Meadows"
-          },
-          {
-            "type": "text",
-            "text": "Move ahead and take the rope on the left down back to where we fought the Eveque boss. Go to the flag and then fast travel to \"Grand Meadow\". We're going back to the Chromatic boss we skipped earlier. Take the path right from the flag and under the fallen stone pillar like last time. At the top of the hill, take a right before the rope and you will see the green tinted enemy ahead. This is the Chromatic Lancelier. Make sure to get a first strike on it and then shoot its weak spot on your first turn. This should remove at least 1/4 of health. I then defeated it with Maelle given she starts in Virutose stance, provided Medalum is equipped. At the very most, the enemy might get one move off but I find this doubtful if you are anything around level 15+. Defeating the enemy without taking damage will unlock:"
+            "text": "Move ahead and take the rope on the left down back to where we fought the Eveque boss. Go to the flag and then fast travel to \"Grand Meadow\". We're going back to the Chromatic boss we skipped earlier. Take the path right from the flag and under the fallen stone pillar like last time. At the top of the hill, take a right before the rope and you will see the green tinted enemy ahead. This is the Chromatic Lancelier. Make sure to get a first strike on it and then shoot its weak spot on your first turn. This should remove at least 1/4 of health. I then defeated it with Maelle given she starts in Virutose stance, provided Medalum is equipped. At the very most, the enemy might get one move off but I find this doubtful if you are anything around level 15+. Defeating the enemy without taking damage will unlock:",
+            "heading": "Spring Meadows"
           },
           {
             "type": "achievement",
-            "name": "ProfessionalDefeat a boss without taking any damage.",
-            "description": "ProfessionalDefeat a boss without taking any damage."
+            "name": "Professional",
+            "description": "Defeat a boss without taking any damage."
           },
           {
             "type": "text",
@@ -1166,11 +1016,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "We're almost done with our collectible gathering now. Back on the world map, cross the bridge directly ahead and turn right. There is an area with red trees ahead and some breakable rocks you can now smash through with Esquie. Loot the Colour of Lumina on the right and then enter the \"Ancient Gestral City\" side-area. There is nothing to do here apart from loot [Record #5/34 - Lights of the Past] and then leave."
+            "text": "We're almost done with our collectible gathering now. Back on the world map, cross the bridge directly ahead and turn right. There is an area with red trees ahead and some breakable rocks you can now smash through with Esquie. Loot the Colour of Lumina on the right and then enter the \"Ancient Gestral City\" side-area. There is nothing to do here apart from loot [Record #5/34 - Lights of the Past] and then leave.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
@@ -1195,11 +1042,8 @@
           },
           {
             "type": "text",
-            "text": "Stone Wave Cliffs"
-          },
-          {
-            "type": "text",
-            "text": "Follow the linear path until you trigger a cutscene. When back in control, keep heading forward, the only way you can, until you see a flag ahead. Just to the left is 790x Chroma. Rest if needed and then continue. Follow the right wall in this area until you reach a rope. Take it up and loot [Journal #11/49 - Expedition 78]. Turn left from the journal and you'll see a paint cage ahead. For the first lock, walk around the back of the cage itself and you should be able to see this on the wall behind. You might need to be in front of the cage, aiming past it in order to hit it."
+            "text": "Follow the linear path until you trigger a cutscene. When back in control, keep heading forward, the only way you can, until you see a flag ahead. Just to the left is 790x Chroma. Rest if needed and then continue. Follow the right wall in this area until you reach a rope. Take it up and loot [Journal #11/49 - Expedition 78]. Turn left from the journal and you'll see a paint cage ahead. For the first lock, walk around the back of the cage itself and you should be able to see this on the wall behind. You might need to be in front of the cage, aiming past it in order to hit it.",
+            "heading": "Stone Wave Cliffs"
           },
           {
             "type": "image",
@@ -1343,11 +1187,8 @@
           },
           {
             "type": "text",
-            "text": "Attacks - Phase 2"
-          },
-          {
-            "type": "text",
-            "text": "Light Ball: The popup will say that the Lampmaster is going to \"throw a ball of light\" at the party. This is a simple jump counter."
+            "text": "Light Ball: The popup will say that the Lampmaster is going to \"throw a ball of light\" at the party. This is a simple jump counter.",
+            "heading": "Attacks - Phase 2"
           },
           {
             "type": "text",
@@ -1363,11 +1204,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The first thing to note with this boss is that shooting the lamps in free aim, DOES do damage to him as well as reduces the damage of certain abilities. Whilst you shouldn't burn all your AP destroying them, tactically think on each characters turn if you can destroy any. Note that the lamps you need to destroy are the square ones floating near him, NOT the ones he is carrying and they only take one hit to destroy. Attempting to shoot the carried ones will just deal damage to the boss."
+            "text": "The first thing to note with this boss is that shooting the lamps in free aim, DOES do damage to him as well as reduces the damage of certain abilities. Whilst you shouldn't burn all your AP destroying them, tactically think on each characters turn if you can destroy any. Note that the lamps you need to destroy are the square ones floating near him, NOT the ones he is carrying and they only take one hit to destroy. Attempting to shoot the carried ones will just deal damage to the boss.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1379,8 +1217,8 @@
           },
           {
             "type": "achievement",
-            "name": "Stone Wave CliffsFind your way through Stone Wave Cliffs.",
-            "description": "Stone Wave CliffsFind your way through Stone Wave Cliffs."
+            "name": "Stone Wave Cliffs",
+            "description": "Find your way through Stone Wave Cliffs."
           },
           {
             "type": "text",
@@ -1394,11 +1232,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Act II - Part I"
-          },
-          {
-            "type": "text",
-            "text": "Camp"
+            "text": "Camp",
+            "heading": "Act II - Part I"
           },
           {
             "type": "text",
@@ -1410,11 +1245,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Esquie now has the swim ability so there is a lot of the map you can explore. As usual, if you want to go and look for yourself, there is no reason not to. We will do one quick backtrack though before carrying on with the story. Turn around when back in control, summon Esquie and swim to the merchant across from you. Behind him is a swirling portal. Enter it to return to the \"Stone Wave Cliffs\"."
+            "text": "Esquie now has the swim ability so there is a lot of the map you can explore. As usual, if you want to go and look for yourself, there is no reason not to. We will do one quick backtrack though before carrying on with the story. Turn around when back in control, summon Esquie and swim to the merchant across from you. Behind him is a swirling portal. Enter it to return to the \"Stone Wave Cliffs\".",
+            "heading": "The Continent"
           },
           {
             "type": "text",
@@ -1422,11 +1254,8 @@
           },
           {
             "type": "text",
-            "text": "Forgotten Battlefield"
-          },
-          {
-            "type": "text",
-            "text": "The cutscene ends with you in battle and introduces you to the gradient counter mechanic, as well as how Verso plays. Gradient attacks from enemies are always shown with that grey wash of the screen and are countered with . Normal parries will not work on them and gradient counters will not work on normal enemy attacks. If you are parrying a lot and are good at timings and counters, Verso will be incredibly powerful as you'll have him at A/S rank more. Check your party after this battle, swap in/out who you want and then continue forward along the linear path until you reach the first flag."
+            "text": "The cutscene ends with you in battle and introduces you to the gradient counter mechanic, as well as how Verso plays. Gradient attacks from enemies are always shown with that grey wash of the screen and are countered with . Normal parries will not work on them and gradient counters will not work on normal enemy attacks. If you are parrying a lot and are good at timings and counters, Verso will be incredibly powerful as you'll have him at A/S rank more. Check your party after this battle, swap in/out who you want and then continue forward along the linear path until you reach the first flag.",
+            "heading": "Forgotten Battlefield"
           },
           {
             "type": "text",
@@ -1467,11 +1296,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Luster - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Fire Explosion: The popup will say that the boss is \"charging a fire explosion\". There will be two \"pulses\" first and then the attack goes off. Easy to time, just dodge/parry on the 3rd."
+            "text": "Fire Explosion: The popup will say that the boss is \"charging a fire explosion\". There will be two \"pulses\" first and then the attack goes off. Easy to time, just dodge/parry on the 3rd.",
+            "heading": "Chromatic Luster - Attacks"
           },
           {
             "type": "text",
@@ -1487,11 +1313,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "Mechanically, this boss is very simple but it can easily one-shot party members if they are hit by even a single attack, at least on higher difficulties. The boss will absorb ANY fire attacks and will heal, so you may want to look at Maelle/Lune's skills before fighting this guy. The fire explosion is a very easy parry that gives nice damage in return. I mostly just applied mark on the boss here with Sciel and Verso, then used Percee with Maelle as even in defensive stance, it does high damage."
+            "text": "Mechanically, this boss is very simple but it can easily one-shot party members if they are hit by even a single attack, at least on higher difficulties. The boss will absorb ANY fire attacks and will heal, so you may want to look at Maelle/Lune's skills before fighting this guy. The fire explosion is a very easy parry that gives nice damage in return. I mostly just applied mark on the boss here with Sciel and Verso, then used Percee with Maelle as even in defensive stance, it does high damage.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1555,11 +1378,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This boss tends to be the first big step up for many due to the slew of abilities and how many hits they all consist of. This is a two phase fight so as with the Lampmaster, you want to try and save your revive tints until phase two. At this point I was using Sciel, Verso and Maelle. I essentially just kept applying foretell/burn/mark and then using Maelle for the heavy hitting attacks."
+            "text": "This boss tends to be the first big step up for many due to the slew of abilities and how many hits they all consist of. This is a two phase fight so as with the Lampmaster, you want to try and save your revive tints until phase two. At this point I was using Sciel, Verso and Maelle. I essentially just kept applying foretell/burn/mark and then using Maelle for the heavy hitting attacks.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1574,49 +1394,29 @@
             "text": "After the cutscene, go straight ahead and return to the world map. For completing this area, you will unlock:"
           },
           {
-            "type": "text",
-            "text": "Forgotten Battlefield"
+            "type": "achievement",
+            "name": "Forgotten Battlefield",
+            "description": "Find your way through Forgotten Battlefield."
           },
           {
             "type": "text",
-            "text": "Find your way through Forgotten Battlefield."
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/imagestore/0009593400/9593416.jpg",
-            "alt": "Forgotten Battlefield"
+            "text": "Make sure to do all the busywork first, upgrade weapons and assign Lumina points. This time round you can speak to all party members and increase relationship levels. Speak to Lune and Sciel and choose to spend time with each to reach Relationship Level 1 with them. Spend time with Esquie for Relationship Level 2. Check up on the others (do it twice for two optional scenes), and write in the journal at the campfire, then choose to sleep. You will automatically reach Relationship Level 1 with Maelle.",
+            "heading": "Camp"
           },
           {
             "type": "text",
-            "text": "Camp"
+            "text": "Back in control after the cutscene, press to check the map. You will see that you are now on the other side of the Forgotten Battlefield. Our next story destination, Monoco's Station lies to the North-West and is a simple run over.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Make sure to do all the busywork first, upgrade weapons and assign Lumina points. This time round you can speak to all party members and increase relationship levels. Speak to Lune and Sciel and choose to spend time with each to reach Relationship Level 1 with them. Spend time with Esquie for Relationship Level 2. Check up on the others (do it twice for two optional scenes), and write in the journal at the campfire, then choose to sleep. You will automatically reach Relationship Level 1 with Maelle."
+            "text": "This is a similar area to the Gestral Village in that it is more like a hub of sorts than a dungeon. On entering, move ahead and rest at the flag if needed. Follow the path the only way you can until it opens up. Head under the big archway to the right and turn left before the flag. Go behind the trains here to find 2,180x Chroma at the end. Rest at the flag so you get it as a fast travel point and then move past it for a cutscene, after which you will find yourself in a battle.",
+            "heading": "Monoco's Station"
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Back in control after the cutscene, press to check the map. You will see that you are now on the other side of the Forgotten Battlefield. Our next story destination, Monoco's Station lies to the North-West and is a simple run over."
-          },
-          {
-            "type": "text",
-            "text": "Monoco's Station"
-          },
-          {
-            "type": "text",
-            "text": "This is a similar area to the Gestral Village in that it is more like a hub of sorts than a dungeon. On entering, move ahead and rest at the flag if needed. Follow the path the only way you can until it opens up. Head under the big archway to the right and turn left before the flag. Go behind the trains here to find 2,180x Chroma at the end. Rest at the flag so you get it as a fast travel point and then move past it for a cutscene, after which you will find yourself in a battle."
-          },
-          {
-            "type": "text",
-            "text": "Monoco - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Standard Attack: Monoco uses his base attack. A one hit attack with a little windup."
+            "text": "Standard Attack: Monoco uses his base attack. A one hit attack with a little windup.",
+            "heading": "Monoco - Attacks"
           },
           {
             "type": "text",
@@ -1628,11 +1428,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "Unlike Sciel's fight earlier, this is a bit more serious. His attacks will decimate you if you don't have many points in vitality and he doesn't have an insubstantial amount of health either. The standard attack and dual attack are both fairly easy parries once you've seen them but absolutely dodge the relentless combo unless you are confident you can parry it successfully as it hurts a lot and its very fast."
+            "text": "Unlike Sciel's fight earlier, this is a bit more serious. His attacks will decimate you if you don't have many points in vitality and he doesn't have an insubstantial amount of health either. The standard attack and dual attack are both fairly easy parries once you've seen them but absolutely dodge the relentless combo unless you are confident you can parry it successfully as it hurts a lot and its very fast.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1640,11 +1437,8 @@
           },
           {
             "type": "text",
-            "text": "Stalact - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Earthquakes: The popup will say that the boss \"creates earthquakes\". This is an easy 3 jump counters back to back. Don't jump the second you see the symbol or you will be too early."
+            "text": "Earthquakes: The popup will say that the boss \"creates earthquakes\". This is an easy 3 jump counters back to back. Don't jump the second you see the symbol or you will be too early.",
+            "heading": "Stalact - Attacks"
           },
           {
             "type": "text",
@@ -1656,11 +1450,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is more an intro to gradient attacks than anything. The boss doesn't have much health and is a normal enemy in the next area anyway. The fight opens with the earthquakes move so be ready to jump straight away. After doing enough damage, the boss will \"heat up\" and gain six shields. Destroy them quickly and kill the boss before it can do the explosion attack above."
+            "text": "This is more an intro to gradient attacks than anything. The boss doesn't have much health and is a normal enemy in the next area anyway. The fight opens with the earthquakes move so be ready to jump straight away. After doing enough damage, the boss will \"heat up\" and gain six shields. Destroy them quickly and kill the boss before it can do the explosion attack above.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1668,8 +1459,8 @@
           },
           {
             "type": "achievement",
-            "name": "Expedition 33Unlock all playable characters.",
-            "description": "Expedition 33Unlock all playable characters."
+            "name": "Expedition 33",
+            "description": "Unlock all playable characters."
           },
           {
             "type": "text",
@@ -1689,8 +1480,8 @@
           },
           {
             "type": "achievement",
-            "name": "Monoco's StationFind your way through Monoco's Station.",
-            "description": "Monoco's StationFind your way through Monoco's Station."
+            "name": "Monoco's Station",
+            "description": "Find your way through Monoco's Station."
           },
           {
             "type": "text",
@@ -1698,19 +1489,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "Check your map again to get your bearings. As with the Forgotten Battlefield, we are now on the other side of the Monoco's Station area, with our next destination, Old Lumiére to the North-West. You will see a group of enemies ahead. Have Monoco in the party here to unlock the [Monoco Skill - Cultist Slashes]. Now head onward to your destination and enter Old Lumiére.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Check your map again to get your bearings. As with the Forgotten Battlefield, we are now on the other side of the Monoco's Station area, with our next destination, Old Lumiére to the North-West. You will see a group of enemies ahead. Have Monoco in the party here to unlock the [Monoco Skill - Cultist Slashes]. Now head onward to your destination and enter Old Lumiére."
-          },
-          {
-            "type": "text",
-            "text": "Old Lumiére"
-          },
-          {
-            "type": "text",
-            "text": "Head down the hill and take the rope down. Rest at the flag ahead and spend some time here assigning points and pictos to any party members that you haven't used in a while as the party will be split shortly and everyone will get a go. There is a merchant opposite the flag. Defeating him will unlock a weapon for Sciel in his inventory. Note that this merchant sells a Revive Tint Shard for a measly 1,000x Chroma. Definitely worth the investment."
+            "text": "Head down the hill and take the rope down. Rest at the flag ahead and spend some time here assigning points and pictos to any party members that you haven't used in a while as the party will be split shortly and everyone will get a go. There is a merchant opposite the flag. Defeating him will unlock a weapon for Sciel in his inventory. Note that this merchant sells a Revive Tint Shard for a measly 1,000x Chroma. Definitely worth the investment.",
+            "heading": "Old Lumiére"
           },
           {
             "type": "text",
@@ -1746,11 +1531,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Chroma Burst: The popup will say that the boss \"gathers an incredible amount of chroma\". This an attack that hits your whole party and it requires a gradient counter. There is a LONG wind-up to this. The camera will zoom out slowly before going back in for the pulse. This is when to parry. There is also an audio cue for this attack. Below 50% this attack will be 3 pulses not 1. The first two pulses require normal parries and the 3rd requires the gradient counter."
+            "text": "Chroma Burst: The popup will say that the boss \"gathers an incredible amount of chroma\". This an attack that hits your whole party and it requires a gradient counter. There is a LONG wind-up to this. The camera will zoom out slowly before going back in for the pulse. This is when to parry. There is also an audio cue for this attack. Below 50% this attack will be 3 pulses not 1. The first two pulses require normal parries and the 3rd requires the gradient counter.",
+            "heading": "??? - Attacks"
           },
           {
             "type": "text",
@@ -1782,11 +1564,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is another fun boss fight with an epic music score and a whole array of moves. To further complicate things, a few of his abilities gain more hits sub 50%, similar to how Dualliste's combos got longer. One thing to note is that your party will automatically be Lune, Maelle and Verso. However, should you die, you will get to choose who to take. As for the fight itself, this is a one phase fight, so feel free to go ham on tints without worry."
+            "text": "This is another fun boss fight with an epic music score and a whole array of moves. To further complicate things, a few of his abilities gain more hits sub 50%, similar to how Dualliste's combos got longer. One thing to note is that your party will automatically be Lune, Maelle and Verso. However, should you die, you will get to choose who to take. As for the fight itself, this is a one phase fight, so feel free to go ham on tints without worry.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -1797,17 +1576,9 @@
             "text": "Defeating the boss will automatically start a cutscene during which you will unlock the below achievement for completing Old Lumiére:"
           },
           {
-            "type": "text",
-            "text": "Old Lumière"
-          },
-          {
-            "type": "text",
-            "text": "Find your way through Old Lumière."
-          },
-          {
-            "type": "image",
-            "url": "https://www.trueachievements.com/imagestore/0009593400/9593418.jpg",
-            "alt": "Old Lumière"
+            "type": "achievement",
+            "name": "Old Lumière",
+            "description": "Find your way through Old Lumière."
           },
           {
             "type": "text",
@@ -1815,11 +1586,8 @@
           },
           {
             "type": "text",
-            "text": "Camp"
-          },
-          {
-            "type": "text",
-            "text": "You automatically have [Journal #19/49 - Expedition 58]. Technically you looted this at the end of Lune/Sciel/Monoco's section earlier but this is the first time you can actually listen to it. As usual, upgrade weapons/tints and add Lumina points, then it's relationship time. You may be ahead on relationship levels here if you camped at all previously. You can't go past the current cap but if you have already got some of these characters levelled, it's totally fine. As usual, none of the dialogue choices matter."
+            "text": "You automatically have [Journal #19/49 - Expedition 58]. Technically you looted this at the end of Lune/Sciel/Monoco's section earlier but this is the first time you can actually listen to it. As usual, upgrade weapons/tints and add Lumina points, then it's relationship time. You may be ahead on relationship levels here if you camped at all previously. You can't go past the current cap but if you have already got some of these characters levelled, it's totally fine. As usual, none of the dialogue choices matter.",
+            "heading": "Camp"
           },
           {
             "type": "text",
@@ -1847,19 +1615,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "Just like when we finished with Stone Wave Cliffs, we are going to do a little backtracking here quickly. Esquie also has a new ability that allows you to swim through and break the coral reefs. The expedition escape ability is also useful to quickly return to the Continent from any flag. Turn around and re-enter Old Lumiére.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Just like when we finished with Stone Wave Cliffs, we are going to do a little backtracking here quickly. Esquie also has a new ability that allows you to swim through and break the coral reefs. The expedition escape ability is also useful to quickly return to the Continent from any flag. Turn around and re-enter Old Lumiére."
-          },
-          {
-            "type": "text",
-            "text": "Old Lumiére"
-          },
-          {
-            "type": "text",
-            "text": "You will start off where the manor was before you fought the boss, with the flag ahead of you. Look to the left from the flag and you will see a path sloping up in the distance. Take this and slide down the rope to the right at the top. Defeat the enemy here, loot 4,990x Chroma from the chair and then loot [Journal #20/49 - Expedition 42]. It can be a little hard to see, it is right next to the sword implanted in the ground."
+            "text": "You will start off where the manor was before you fought the boss, with the flag ahead of you. Look to the left from the flag and you will see a path sloping up in the distance. Take this and slide down the rope to the right at the top. Defeat the enemy here, loot 4,990x Chroma from the chair and then loot [Journal #20/49 - Expedition 42]. It can be a little hard to see, it is right next to the sword implanted in the ground.",
+            "heading": "Old Lumiére"
           },
           {
             "type": "text",
@@ -1894,19 +1656,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "Now time to continue to the next story area. Open the map and you will see two red destinations this time. Whilst you can go to either first, the left is easier and the order that most do it in. Mount Esquie, smash through the reef ahead and swim all the way to the red destination on the left. The entrance to this area is straight ahead as you approach the island.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Now time to continue to the next story area. Open the map and you will see two red destinations this time. Whilst you can go to either first, the left is easier and the order that most do it in. Mount Esquie, smash through the reef ahead and swim all the way to the red destination on the left. The entrance to this area is straight ahead as you approach the island."
-          },
-          {
-            "type": "text",
-            "text": "Visages"
-          },
-          {
-            "type": "text",
-            "text": "Follow the path ahead the only way you can. When you see the giant face ahead, look to the right and loot a Colour of Lumina. Take the narrow path to the left of the face until you reach a cutscene and a flag. Back in control you are actually free to go wherever here. The path past the merchant you can see ahead leads to the boss who can be fought right now if you wish. The other paths lead to mini bosses that when defeated, make the actual boss fight easier, plus there's collectibles in each of them."
+            "text": "Follow the path ahead the only way you can. When you see the giant face ahead, look to the right and loot a Colour of Lumina. Take the narrow path to the left of the face until you reach a cutscene and a flag. Back in control you are actually free to go wherever here. The path past the merchant you can see ahead leads to the boss who can be fought right now if you wish. The other paths lead to mini bosses that when defeated, make the actual boss fight easier, plus there's collectibles in each of them.",
+            "heading": "Visages"
           },
           {
             "type": "text",
@@ -1938,8 +1694,8 @@
           },
           {
             "type": "achievement",
-            "name": "ExpeditionerReach level 33.",
-            "description": "ExpeditionerReach level 33."
+            "name": "Expeditioner",
+            "description": "Reach level 33."
           },
           {
             "type": "text",
@@ -1947,11 +1703,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Ramasseur - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Nevron Arm Combo: The popup will say that the boss \"attacks with a nevron arm combo\". This is a 4 hit combo. It goes windup -> Hit 1 -> Hit 2 -> Windup -> Hit 3 -> Hit 4. There is also an 8 hit combo that consists of the 4 hit combo, followed by another windup, then 2 more hits and then another 2 straight after without a windup. Best advice is just to be ready for the 8 but if you get the 4 then great."
+            "text": "Nevron Arm Combo: The popup will say that the boss \"attacks with a nevron arm combo\". This is a 4 hit combo. It goes windup -> Hit 1 -> Hit 2 -> Windup -> Hit 3 -> Hit 4. There is also an 8 hit combo that consists of the 4 hit combo, followed by another windup, then 2 more hits and then another 2 straight after without a windup. Best advice is just to be ready for the 8 but if you get the 4 then great.",
+            "heading": "Chromatic Ramasseur - Attacks"
           },
           {
             "type": "text",
@@ -1959,11 +1712,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "If you're not too hot on parries, you might struggle here as you will not get an attack unless you parry and counter successfully. This is a gimmick that other bosses use later so there is no way round it really. After a few rounds of countering, you will break the boss and it's time to go big damage. Note that if you don't kill the boss within the stun window, it will begin chain attacking again, in which case you need to again parry until you break it. I had all but Maelle dead when I did this and it took me a long to kill it. But you also won't get a chance to revive characters until you break it. It's an annoying boss. Unfortunately, there isn't much in the way of strategy here as your only option is to parry everything. He tends to cycle moves and never repeats twice. If you get an 8 hit combo, the next nevron arm attack will be 4 and vice versa."
+            "text": "If you're not too hot on parries, you might struggle here as you will not get an attack unless you parry and counter successfully. This is a gimmick that other bosses use later so there is no way round it really. After a few rounds of countering, you will break the boss and it's time to go big damage. Note that if you don't kill the boss within the stun window, it will begin chain attacking again, in which case you need to again parry until you break it. I had all but Maelle dead when I did this and it took me a long to kill it. But you also won't get a chance to revive characters until you break it. It's an annoying boss. Unfortunately, there isn't much in the way of strategy here as your only option is to parry everything. He tends to cycle moves and never repeats twice. If you get an 8 hit combo, the next nevron arm attack will be 4 and vice versa.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2047,11 +1797,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is two bosses, although it is fought as one fight so I have listed it in phases. The Visages stage has a lot of moves to learn and can take a while for everything to click. As with the other 2 phase bosses we've fought, you want to try and hold onto tints as long as you can. For boss one, your attacks will be focused on the mirror, which will produce different themed masks, each with their own attacks. The first boss looks intimidating but the attacks are actually pretty easy to learn. As we defeated all of the giant masks at the end of the optional paths, the boss will be unable to call masks in this phase."
+            "text": "This is two bosses, although it is fought as one fight so I have listed it in phases. The Visages stage has a lot of moves to learn and can take a while for everything to click. As with the other 2 phase bosses we've fought, you want to try and hold onto tints as long as you can. For boss one, your attacks will be focused on the mirror, which will produce different themed masks, each with their own attacks. The first boss looks intimidating but the attacks are actually pretty easy to learn. As we defeated all of the giant masks at the end of the optional paths, the boss will be unable to call masks in this phase.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2063,8 +1810,8 @@
           },
           {
             "type": "achievement",
-            "name": "First AxonDefeat the first Axon.",
-            "description": "First AxonDefeat the first Axon."
+            "name": "First Axon",
+            "description": "Defeat the first Axon."
           },
           {
             "type": "text",
@@ -2072,11 +1819,8 @@
           },
           {
             "type": "text",
-            "text": "Camp"
-          },
-          {
-            "type": "text",
-            "text": "You know the drill by now. Upgrade your weapons, assign Lumina points etc. There is a MISSABLE scene during this camp. Make sure you choose to check up on the others at the fire. If you have been doing this every time we've been at camp, you should get the scene we need right away where Verso plays the piano. You will receive [Record #10/34 - Lettre á Maelle]. If you don't get this scene straight away, don't panic. You should be able to choose to check up on the others until you're caught up. There will be a warning when we head for the end of Act II and a reminder to do this again if you don't do it here. But you're here already...so you might as well. Supposedly you have until the end of Act II to get it, just make sure you get it now and then it's done."
+            "text": "You know the drill by now. Upgrade your weapons, assign Lumina points etc. There is a MISSABLE scene during this camp. Make sure you choose to check up on the others at the fire. If you have been doing this every time we've been at camp, you should get the scene we need right away where Verso plays the piano. You will receive [Record #10/34 - Lettre á Maelle]. If you don't get this scene straight away, don't panic. You should be able to choose to check up on the others until you're caught up. There will be a warning when we head for the end of Act II and a reminder to do this again if you don't do it here. But you're here already...so you might as well. Supposedly you have until the end of Act II to get it, just make sure you get it now and then it's done.",
+            "heading": "Camp"
           },
           {
             "type": "text",
@@ -2100,19 +1844,13 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
+            "text": "Nothing much to do here other than check the map for the next red destination to the east. Swim to this island and enter \"Siréne\".",
+            "heading": "The Continent"
           },
           {
             "type": "text",
-            "text": "Nothing much to do here other than check the map for the next red destination to the east. Swim to this island and enter \"Siréne\"."
-          },
-          {
-            "type": "text",
-            "text": "Siréne"
-          },
-          {
-            "type": "text",
-            "text": "This is another chunky area, much like Visages, although it's just one pretty linear path this time. Head straight ahead to start a cutscene. Back in control, move onto the platform ahead and interact with it to get it moving. Head the only way you can at the bottom and take the first right you see. Follow this passage to the end and loot a Resplendent Chroma Catalyst. Return to the previous area and continue on, down the steps and forward to the next flag."
+            "text": "This is another chunky area, much like Visages, although it's just one pretty linear path this time. Head straight ahead to start a cutscene. Back in control, move onto the platform ahead and interact with it to get it moving. Head the only way you can at the bottom and take the first right you see. Follow this passage to the end and loot a Resplendent Chroma Catalyst. Return to the previous area and continue on, down the steps and forward to the next flag.",
+            "heading": "Siréne"
           },
           {
             "type": "text",
@@ -2142,11 +1880,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Greatsword Cultist - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Stab Attack: Just like with the normal enemy variant. The boss stabs itself, generating shields before swinging at you. This is an extended combo compared to the original, with two hits, one jump and then FOUR more hits. It feels like the same timing as the normal enemy so you shouldn't have too much trouble here."
+            "text": "Stab Attack: Just like with the normal enemy variant. The boss stabs itself, generating shields before swinging at you. This is an extended combo compared to the original, with two hits, one jump and then FOUR more hits. It feels like the same timing as the normal enemy so you shouldn't have too much trouble here.",
+            "heading": "Chromatic Greatsword Cultist - Attacks"
           },
           {
             "type": "text",
@@ -2154,11 +1889,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is one of the easier chromatic bosses by far. Just make sure you can remove shields easily and you are laughing with this one. Both attacks are very easy to time and parry so you will be full of AP constantly."
+            "text": "This is one of the easier chromatic bosses by far. Just make sure you can remove shields easily and you are laughing with this one. Both attacks are very easy to time and parry so you will be full of AP constantly.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2186,11 +1918,8 @@
           },
           {
             "type": "text",
-            "text": "Tisseur - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Curse: The boss curses your entire party, killing them at the end of 8 turns. This cannot be dodged or parried."
+            "text": "Curse: The boss curses your entire party, killing them at the end of 8 turns. This cannot be dodged or parried.",
+            "heading": "Tisseur - Attacks"
           },
           {
             "type": "text",
@@ -2210,11 +1939,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "Bear in mind that with the curse, if a character dies and is revived, the curse is gone. The boss will cast curse again, but you don't have strictly 8 turns. You have to do a good amount of damage to the boss to kill it within strictly 8 turns and you will quickly fall behind if you have to heal/revive."
+            "text": "Bear in mind that with the curse, if a character dies and is revived, the curse is gone. The boss will cast curse again, but you don't have strictly 8 turns. You have to do a good amount of damage to the boss to kill it within strictly 8 turns and you will quickly fall behind if you have to heal/revive.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2249,11 +1975,8 @@
           },
           {
             "type": "text",
-            "text": "Glissando - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Tail Slam: Quite an easy 3 hit combo. The tail swipes twice and then from above once. The final hit will have an audio cue."
+            "text": "Tail Slam: Quite an easy 3 hit combo. The tail swipes twice and then from above once. The final hit will have an audio cue.",
+            "heading": "Glissando - Attacks"
           },
           {
             "type": "text",
@@ -2273,11 +1996,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is more than likely one of the easiest bosses you've fought in a while. All of its attacks are easily dodged or parried and it's well telegraphed. If you killed Tisseur, definitely equip the anti-charm pictos, removing the boss's ability to charm one or all of your characters, depending who you have it equipped on. The boss has a deceptively large amount of health but it's a simple fight."
+            "text": "This is more than likely one of the easiest bosses you've fought in a while. All of its attacks are easily dodged or parried and it's well telegraphed. If you killed Tisseur, definitely equip the anti-charm pictos, removing the boss's ability to charm one or all of your characters, depending who you have it equipped on. The boss has a deceptively large amount of health but it's a simple fight.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2289,11 +2009,8 @@
           },
           {
             "type": "text",
-            "text": "Siréne - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Glissando Dance: Two Glissando's will appear either side of the boss and will slam into the party one after another. This is quite easily timed."
+            "text": "Glissando Dance: Two Glissando's will appear either side of the boss and will slam into the party one after another. This is quite easily timed.",
+            "heading": "Siréne - Attacks"
           },
           {
             "type": "text",
@@ -2325,11 +2042,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This boss has a lot of flashy moves that have long animations before anything happens. The boss itself isn't too hard. It just looks worse than it is. Read the moves above and bear in mind that the grand ballet particularly has a lot of dead time where the boss doesn't do anything. You are only in danger once the ballet enemies are in front of you. If you didn't kill the Tisseur enemy earlier on, the boss will have an extra move that will generate shields. It's not the end of the world, and assuming you are running at least one anti-shield ability, it is barely an inconvenience."
+            "text": "This boss has a lot of flashy moves that have long animations before anything happens. The boss itself isn't too hard. It just looks worse than it is. Read the moves above and bear in mind that the grand ballet particularly has a lot of dead time where the boss doesn't do anything. You are only in danger once the ballet enemies are in front of you. If you didn't kill the Tisseur enemy earlier on, the boss will have an extra move that will generate shields. It's not the end of the world, and assuming you are running at least one anti-shield ability, it is barely an inconvenience.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2337,8 +2051,8 @@
           },
           {
             "type": "achievement",
-            "name": "Second AxonDefeat the second Axon.",
-            "description": "Second AxonDefeat the second Axon."
+            "name": "Second Axon",
+            "description": "Defeat the second Axon."
           },
           {
             "type": "text",
@@ -2352,11 +2066,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Act II - Part II"
-          },
-          {
-            "type": "text",
-            "text": "Camp"
+            "text": "Camp",
+            "heading": "Act II - Part II"
           },
           {
             "type": "text",
@@ -2368,11 +2079,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "We're now going to go back to side-areas as well as merchants on the world map to hoover up some goodies. As mentioned, I'm leaving Monoco skills until the post-game as there is a post-game dungeon where you can get virtually all of them. First things first, go to the world map location in the image below and enter the \"Sinister Cave\" located here."
+            "text": "We're now going to go back to side-areas as well as merchants on the world map to hoover up some goodies. As mentioned, I'm leaving Monoco skills until the post-game as there is a post-game dungeon where you can get virtually all of them. First things first, go to the world map location in the image below and enter the \"Sinister Cave\" located here.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -2381,19 +2089,13 @@
           },
           {
             "type": "text",
-            "text": "Sinister Cave"
+            "text": "There is a flag right in front of you as you start. Move past it, through the tunnel and hug the right wall when you exit. Keep following it until you reach a slope with a grapple point at the top. There is a Chromatic boss down the path to the left of the ramp which drops a weapon for Maelle. Should you wish to fight it, the moveset is below.",
+            "heading": "Sinister Cave"
           },
           {
             "type": "text",
-            "text": "There is a flag right in front of you as you start. Move past it, through the tunnel and hug the right wall when you exit. Keep following it until you reach a slope with a grapple point at the top. There is a Chromatic boss down the path to the left of the ramp which drops a weapon for Maelle. Should you wish to fight it, the moveset is below."
-          },
-          {
-            "type": "text",
-            "text": "Chromatic Chalier - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Relentless Combo: This is a 6 hit combo. If you just fought Monoco at camp, this is identical. The attacks are all fairly fast and timing is tricky."
+            "text": "Relentless Combo: This is a 6 hit combo. If you just fought Monoco at camp, this is identical. The attacks are all fairly fast and timing is tricky.",
+            "heading": "Chromatic Chalier - Attacks"
           },
           {
             "type": "text",
@@ -2409,11 +2111,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "It's been a while but it's time for another Gestral Beach minigame. Head to the below location on the map."
+            "text": "It's been a while but it's time for another Gestral Beach minigame. Head to the below location on the map.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -2422,11 +2121,8 @@
           },
           {
             "type": "text",
-            "text": "Gestral Beach"
-          },
-          {
-            "type": "text",
-            "text": "This one felt like the easiest of the bunch to me. It's essentially just a timed platforming course. You must reach the end in 38 seconds for it to count towards the achievement. Look to the right upon entering and speak to the Gestral here to begin. The course itself is quite simple and with a few cut corners, you will ace it in no time. Climb the platforms at the start, make sure to always be running and try to angle yourself at the corners to the next platform so you are landing and jumping again immediately, spamming to lift yourself up."
+            "text": "This one felt like the easiest of the bunch to me. It's essentially just a timed platforming course. You must reach the end in 38 seconds for it to count towards the achievement. Look to the right upon entering and speak to the Gestral here to begin. The course itself is quite simple and with a few cut corners, you will ace it in no time. Climb the platforms at the start, make sure to always be running and try to angle yourself at the corners to the next platform so you are landing and jumping again immediately, spamming to lift yourself up.",
+            "heading": "Gestral Beach"
           },
           {
             "type": "text",
@@ -2434,11 +2130,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Now go to the below location to find a merchant. Buy [Record #12/34 - Robe De Jour]."
+            "text": "Now go to the below location to find a merchant. Buy [Record #12/34 - Robe De Jour].",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -2469,11 +2162,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Reaper Cultist - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Dark Projectiles: The boss fires a projectile at one character, then a second and then 3 at the same time. There is a delay on this, as the projectile kind of flies backwards first before homing on a character. Do not be baited into parrying early."
+            "text": "Dark Projectiles: The boss fires a projectile at one character, then a second and then 3 at the same time. There is a delay on this, as the projectile kind of flies backwards first before homing on a character. Do not be baited into parrying early.",
+            "heading": "Chromatic Reaper Cultist - Attacks"
           },
           {
             "type": "text",
@@ -2481,11 +2171,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "Every time that the boss connects an attack, that character will receive a stack of \"blight\". Chances are this is your first time encountering this. It is a nasty effect that reduces a character's overall HP by 10% per stack. I.E If every attack in the 7 hit combo connects with the same character, they will be left with 70% less HP at the end. It is very difficult to hit this boss through normal attacks so you are stuck with either parry countering or doing what you can with free aim."
+            "text": "Every time that the boss connects an attack, that character will receive a stack of \"blight\". Chances are this is your first time encountering this. It is a nasty effect that reduces a character's overall HP by 10% per stack. I.E If every attack in the 7 hit combo connects with the same character, they will be left with 70% less HP at the end. It is very difficult to hit this boss through normal attacks so you are stuck with either parry countering or doing what you can with free aim.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2493,11 +2180,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "Once dealt with, go to the below location to find [Lost Gestral #4/9]. It is found behind the mimes here, near some pots. The two mimes have the same moves as always, it's just that there are two of them now. They drop a hairstyle for Sciel and one for Lune."
+            "text": "Once dealt with, go to the below location to find [Lost Gestral #4/9]. It is found behind the mimes here, near some pots. The two mimes have the same moves as always, it's just that there are two of them now. They drop a hairstyle for Sciel and one for Lune.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -2515,11 +2199,8 @@
           },
           {
             "type": "text",
-            "text": "Gestral Beach"
-          },
-          {
-            "type": "text",
-            "text": "Fair warning, this one annoyed me a lot. This is essentially just a climbing challenge. The kicker though is that if you fall off at any point, you will likely fall back to the start and it is not a short climb. There are also some very annoying parts with jumps onto tiny ledges. A general rule of thumb is to always take your hand off the sticks when climbing and always spam . For most of the trickier jumps you don't want to be running either, simply get to the very edge and jump normally."
+            "text": "Fair warning, this one annoyed me a lot. This is essentially just a climbing challenge. The kicker though is that if you fall off at any point, you will likely fall back to the start and it is not a short climb. There are also some very annoying parts with jumps onto tiny ledges. A general rule of thumb is to always take your hand off the sticks when climbing and always spam . For most of the trickier jumps you don't want to be running either, simply get to the very edge and jump normally.",
+            "heading": "Gestral Beach"
           },
           {
             "type": "text",
@@ -2535,11 +2216,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "At this point I decided to continue with the main story. Whilst there are certainly more collectibles that you can grab now, the post-game ability to fly around the map is just faster than running and swimming is now. Time for the Monolith itself. Head there now for a cutscene."
+            "text": "At this point I decided to continue with the main story. Whilst there are certainly more collectibles that you can grab now, the post-game ability to fly around the map is just faster than running and swimming is now. Time for the Monolith itself. Head there now for a cutscene.",
+            "heading": "The Continent"
           },
           {
             "type": "text",
@@ -2547,16 +2225,13 @@
           },
           {
             "type": "achievement",
-            "name": "MonolithReach the Monolith.",
-            "description": "MonolithReach the Monolith."
+            "name": "Monolith",
+            "description": "Reach the Monolith."
           },
           {
             "type": "text",
-            "text": "Inside the Monolith"
-          },
-          {
-            "type": "text",
-            "text": "This is a long area that takes you through bits from all the zones you've been in previously. On higher difficulties, I found this area to be a bit of a step up in difficulty also. We are nearing the end of Act II and I will point out when the final flag is so that you can still get the missable record if needed. Follow the path a short way until you find the first flag. Continue along the path, crossing over several grapples until you end up in a grassy area, reminiscent of the first area we found ourselves in way back in Act I. You may want to have Monoco in your party throughout this whole area as there are a lot of skills to pick up but it's up to you. You can always return later and get them, or grab them from the endgame area."
+            "text": "This is a long area that takes you through bits from all the zones you've been in previously. On higher difficulties, I found this area to be a bit of a step up in difficulty also. We are nearing the end of Act II and I will point out when the final flag is so that you can still get the missable record if needed. Follow the path a short way until you find the first flag. Continue along the path, crossing over several grapples until you end up in a grassy area, reminiscent of the first area we found ourselves in way back in Act I. You may want to have Monoco in your party throughout this whole area as there are a lot of skills to pick up but it's up to you. You can always return later and get them, or grab them from the endgame area.",
+            "heading": "Inside the Monolith"
           },
           {
             "type": "text",
@@ -2629,11 +2304,8 @@
           },
           {
             "type": "text",
-            "text": "Gargant - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Punches: The boss punches fast 3 times. After the first hit, the other two come almost instantly."
+            "text": "Punches: The boss punches fast 3 times. After the first hit, the other two come almost instantly.",
+            "heading": "Gargant - Attacks"
           },
           {
             "type": "text",
@@ -2653,11 +2325,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The boss will switch stances between fire and ice so be careful what attacks you use. After the boss uses snowstorm, the empowered punches attack will happen. If freeze connects with a character you won't be able to use them again until they take damage and the effect breaks."
+            "text": "The boss will switch stances between fire and ice so be careful what attacks you use. After the boss uses snowstorm, the empowered punches attack will happen. If freeze connects with a character you won't be able to use them again until they take damage and the effect breaks.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2714,11 +2383,8 @@
           },
           {
             "type": "text",
-            "text": "Phase 2 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Tail Attack - This requires a gradient counter and will probably either outright wipe your party out or do serious dmg if it hits. I found this one hard to counter also. Don't wait too long trying to bait it out."
+            "text": "Tail Attack - This requires a gradient counter and will probably either outright wipe your party out or do serious dmg if it hits. I found this one hard to counter also. Don't wait too long trying to bait it out.",
+            "heading": "Phase 2 - Attacks"
           },
           {
             "type": "text",
@@ -2734,11 +2400,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is the big one. The boss retains some of the moves you saw back in Old Lumiére and gains some new ones. This is a 2 phase fight, with the 2nd phase starting when you get the boss to around half health. If the boss manages to banish a character, it may be worth just restarting the fight if you are near the beginning as you won't get them back. The fight gets very chaotic in phase 2 when the boss becomes enraged as he will attack twice."
+            "text": "This is the big one. The boss retains some of the moves you saw back in Old Lumiére and gains some new ones. This is a 2 phase fight, with the 2nd phase starting when you get the boss to around half health. If the boss manages to banish a character, it may be worth just restarting the fight if you are near the beginning as you won't get them back. The fight gets very chaotic in phase 2 when the boss becomes enraged as he will attack twice.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2770,11 +2433,8 @@
           },
           {
             "type": "text",
-            "text": "Phase 2 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Brush of Light - Easy 3 hit combo. It has a slow windup but is very obvious when to parry."
+            "text": "Brush of Light - Easy 3 hit combo. It has a slow windup but is very obvious when to parry.",
+            "heading": "Phase 2 - Attacks"
           },
           {
             "type": "text",
@@ -2802,8 +2462,8 @@
           },
           {
             "type": "achievement",
-            "name": "PaintressDefeat the Paintress.",
-            "description": "PaintressDefeat the Paintress."
+            "name": "Paintress",
+            "description": "Defeat the Paintress."
           }
         ]
       },
@@ -2813,11 +2473,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Act III"
-          },
-          {
-            "type": "text",
-            "text": "Lumiére"
+            "text": "Lumiére",
+            "heading": "Act III"
           },
           {
             "type": "text",
@@ -2825,16 +2482,13 @@
           },
           {
             "type": "achievement",
-            "name": "Back to LumièreReturn to Lumière.",
-            "description": "Back to LumièreReturn to Lumière."
+            "name": "Back to Lumière",
+            "description": "Return to Lumière."
           },
           {
             "type": "text",
-            "text": "Camp"
-          },
-          {
-            "type": "text",
-            "text": "After more cutscenes you will be back at camp. You will need to speak to each party member here. There is no relationship building in this version of the camp, it is just for story purposes. Once you have spoken to everyone, go to the campfire and choose to check up on the others, followed by starting the greatest expedition in history. There will be another cutscene, after which you will find yourself on the world map with Esquie, a \"final objective\" and the ability to fly."
+            "text": "After more cutscenes you will be back at camp. You will need to speak to each party member here. There is no relationship building in this version of the camp, it is just for story purposes. Once you have spoken to everyone, go to the campfire and choose to check up on the others, followed by starting the greatest expedition in history. There will be another cutscene, after which you will find yourself on the world map with Esquie, a \"final objective\" and the ability to fly.",
+            "heading": "Camp"
           },
           {
             "type": "text",
@@ -2863,13 +2517,13 @@
           },
           {
             "type": "achievement",
-            "name": "Plane, Train, and SubmarineDiscover all of Esquie’s abilities.",
-            "description": "Plane, Train, and SubmarineDiscover all of Esquie’s abilities."
+            "name": "Plane, Train, and Submarine",
+            "description": "Discover all of Esquie’s abilities."
           },
           {
             "type": "achievement",
-            "name": "EsquieReach relationship level 7 with Esquie.",
-            "description": "EsquieReach relationship level 7 with Esquie."
+            "name": "Esquie",
+            "description": "Reach relationship level 7 with Esquie."
           },
           {
             "type": "text",
@@ -2877,8 +2531,8 @@
           },
           {
             "type": "achievement",
-            "name": "ScielReach relationship level 7 with Sciel.",
-            "description": "ScielReach relationship level 7 with Sciel."
+            "name": "Sciel",
+            "description": "Reach relationship level 7 with Sciel."
           },
           {
             "type": "text",
@@ -2886,11 +2540,8 @@
           },
           {
             "type": "text",
-            "text": "Lumiére"
-          },
-          {
-            "type": "text",
-            "text": "Put Monoco in your party if you don't already have him and proceed ahead. Head forward to the stairs and look to the right of and behind the flag for a Colour of Lumina. Proceed up the stairs and fight the enemy at the top and on the left to obtain [Monoco Skill - Aberration Light]. You can now swap Monoco back out if you wish as there are no more skills for a while. Turn around and face the stairs. Look to the right for a Resplendent Chroma Catalyst. Now follow this wall round to the right for another Colour of Lumina."
+            "text": "Put Monoco in your party if you don't already have him and proceed ahead. Head forward to the stairs and look to the right of and behind the flag for a Colour of Lumina. Proceed up the stairs and fight the enemy at the top and on the left to obtain [Monoco Skill - Aberration Light]. You can now swap Monoco back out if you wish as there are no more skills for a while. Turn around and face the stairs. Look to the right for a Resplendent Chroma Catalyst. Now follow this wall round to the right for another Colour of Lumina.",
+            "heading": "Lumiére"
           },
           {
             "type": "text",
@@ -2914,11 +2565,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Echassier - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Jump Attack - This is a jump counter followed immediately by a gradient counter."
+            "text": "Jump Attack - This is a jump counter followed immediately by a gradient counter.",
+            "heading": "Chromatic Echassier - Attacks"
           },
           {
             "type": "text",
@@ -2934,11 +2582,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This boss is all about the blight. If you take too many blight stacks not only will your characters health be reduced by an absurd amount, but the boss will heal based off of how many stacks you have. The boss's abilities are all well telegraphed, you just have to be careful not to take too many hits, thus stacking up the blight. For the longer combos, it can be better just to dodge if not confident. For the jump attack, the gradient counter is literally straight away, do not wait with it like other gradients. There is also an opportunity for a quick achievement here. Unequip Painted Power from your characters and keep using abilities until you reach 3 gradient charges."
+            "text": "This boss is all about the blight. If you take too many blight stacks not only will your characters health be reduced by an absurd amount, but the boss will heal based off of how many stacks you have. The boss's abilities are all well telegraphed, you just have to be careful not to take too many hits, thus stacking up the blight. For the longer combos, it can be better just to dodge if not confident. For the jump attack, the gradient counter is literally straight away, do not wait with it like other gradients. There is also an opportunity for a quick achievement here. Unequip Painted Power from your characters and keep using abilities until you reach 3 gradient charges.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -2946,8 +2591,8 @@
           },
           {
             "type": "achievement",
-            "name": "Chroma ProficiencyUse a level 3 Gradient Attack.",
-            "description": "Chroma ProficiencyUse a level 3 Gradient Attack."
+            "name": "Chroma Proficiency",
+            "description": "Use a level 3 Gradient Attack."
           },
           {
             "type": "text",
@@ -2975,11 +2620,8 @@
           },
           {
             "type": "text",
-            "text": "Creation - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Kick - This attack is really hard to see. It targets one character, the boss turns around and then kicks them, like a horse. After enough tries I ended up doing this off feel alone but it can be frustrating to start with. As soon as the boss has turned, it's about to kick so be ready to dodge/parry and hope."
+            "text": "Kick - This attack is really hard to see. It targets one character, the boss turns around and then kicks them, like a horse. After enough tries I ended up doing this off feel alone but it can be frustrating to start with. As soon as the boss has turned, it's about to kick so be ready to dodge/parry and hope.",
+            "heading": "Creation - Attacks"
           },
           {
             "type": "text",
@@ -3003,11 +2645,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This is one of the few bosses in the game that I just did not enjoy, mostly as it's hard to tell when the boss will hit you due to its bulky design. The boss starts accompanied by two of the enemies you've no doubt seen a lot in this area. Focus them one at a time with your strongest attacks to get them out of the way. There are several aspects of this fight that are annoying. The main boss will apply inverted to all party members so you can't heal, and all of the enemies have attacks which apply blight. Removing them from the fight fast gives you some breathing room. The boss itself is just very chunky and the inverted status makes things difficult. Note that if a character dies and is revived, they will still have inverted BUT will be at full health or close to it from the revive tint."
+            "text": "This is one of the few bosses in the game that I just did not enjoy, mostly as it's hard to tell when the boss will hit you due to its bulky design. The boss starts accompanied by two of the enemies you've no doubt seen a lot in this area. Focus them one at a time with your strongest attacks to get them out of the way. There are several aspects of this fight that are annoying. The main boss will apply inverted to all party members so you can't heal, and all of the enemies have attacks which apply blight. Removing them from the fight fast gives you some breathing room. The boss itself is just very chunky and the inverted status makes things difficult. Note that if a character dies and is revived, they will still have inverted BUT will be at full health or close to it from the revive tint.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3075,11 +2714,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Info"
-          },
-          {
-            "type": "text",
-            "text": "There are two phases, with the second phase beginning once the boss's health is depleted so try and save your tints, etc. for that phase. In Phase 1, the boss will summon the axons at around 50% health, hence splitting the attacks above. Most of them just buff him but the hauler can decimate you if the rubble hits. Phase 2's combo attacks are very fast and heavy hitting so try and play defensively. There is no shame in dodging instead of parrying, particularly as some of the delayed attacks are hard to time. You will get faster at phase 1 whilst learning phase 2 and it is entirely possible to skip most of the axons' abilities if you damage the boss to 0 fast enough."
+            "text": "There are two phases, with the second phase beginning once the boss's health is depleted so try and save your tints, etc. for that phase. In Phase 1, the boss will summon the axons at around 50% health, hence splitting the attacks above. Most of them just buff him but the hauler can decimate you if the rubble hits. Phase 2's combo attacks are very fast and heavy hitting so try and play defensively. There is no shame in dodging instead of parrying, particularly as some of the delayed attacks are hard to time. You will get faster at phase 1 whilst learning phase 2 and it is entirely possible to skip most of the axons' abilities if you damage the boss to 0 fast enough.",
+            "heading": "Additional Info"
           },
           {
             "type": "text",
@@ -3087,8 +2723,8 @@
           },
           {
             "type": "achievement",
-            "name": "The EndReach the end.",
-            "description": "The EndReach the end."
+            "name": "The End",
+            "description": "Reach the end."
           },
           {
             "type": "text",
@@ -3102,11 +2738,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Postgame - Part I"
-          },
-          {
-            "type": "text",
-            "text": "Following the climax of the story, you will return to the main menu. Reload your last save and you will be back where we fought the Creation boss in Lumiére. With the story done we still have a lot of things left to do, such as Gestral games, relationships, collectibles and end-game bosses. As a disclaimer, I wrote the WT on my first playthrough of the postgame. Due to this, there is some back and forth traveling, especially with collectibles. There are undoubtedly routes through the postgame that are more efficient than this. However, it didn't overly bother me at the time as with Esquie flying it doesn't exactly take ages. I just wanted to acknowledge this now so readers are aware. For completing the game, you will also automatically have received [Record #16/34 - Our Drafts Collide]."
+            "text": "Following the climax of the story, you will return to the main menu. Reload your last save and you will be back where we fought the Creation boss in Lumiére. With the story done we still have a lot of things left to do, such as Gestral games, relationships, collectibles and end-game bosses. As a disclaimer, I wrote the WT on my first playthrough of the postgame. Due to this, there is some back and forth traveling, especially with collectibles. There are undoubtedly routes through the postgame that are more efficient than this. However, it didn't overly bother me at the time as with Esquie flying it doesn't exactly take ages. I just wanted to acknowledge this now so readers are aware. For completing the game, you will also automatically have received [Record #16/34 - Our Drafts Collide].",
+            "heading": "Postgame - Part I"
           },
           {
             "type": "text",
@@ -3114,11 +2747,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "In terms of post-game stuff, the first thing I chose to do was get the Gestral Games out of the way. We have already done the parkour, the climb and the race games so all that remains are two more. I didn't particularly enjoy these and just wanted them done. Go to the location on the map below:"
+            "text": "In terms of post-game stuff, the first thing I chose to do was get the Gestral Games out of the way. We have already done the parkour, the climb and the race games so all that remains are two more. I didn't particularly enjoy these and just wanted them done. Go to the location on the map below:",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -3156,8 +2786,8 @@
           },
           {
             "type": "achievement",
-            "name": "Gestral GamesWin all of the Gestral games.",
-            "description": "Gestral GamesWin all of the Gestral games."
+            "name": "Gestral Games",
+            "description": "Win all of the Gestral games."
           },
           {
             "type": "text",
@@ -3210,8 +2840,8 @@
           },
           {
             "type": "achievement",
-            "name": "Lost GestralsFind all of the Lost Gestrals.",
-            "description": "Lost GestralsFind all of the Lost Gestrals."
+            "name": "Lost Gestrals",
+            "description": "Find all of the Lost Gestrals."
           },
           {
             "type": "text",
@@ -3228,11 +2858,8 @@
           },
           {
             "type": "text",
-            "text": "The Reacher"
-          },
-          {
-            "type": "text",
-            "text": "Go forward upon entering the area to start a cutscene just before you reach the flag. After the cutscene, do anything you need to at the flag and then head forward and grapple over the gap, followed by taking the rope up. You can break the blue paint spike ahead now that you have the ability and take the rope up behind it to a Colour of Lumina."
+            "text": "Go forward upon entering the area to start a cutscene just before you reach the flag. After the cutscene, do anything you need to at the flag and then head forward and grapple over the gap, followed by taking the rope up. You can break the blue paint spike ahead now that you have the ability and take the rope up behind it to a Colour of Lumina.",
+            "heading": "The Reacher"
           },
           {
             "type": "text",
@@ -3280,11 +2907,8 @@
           },
           {
             "type": "text",
-            "text": "Chromatic Braseleur - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Jump Combo - This is a simple jump counter followed by a very telegraphed smash from above."
+            "text": "Jump Combo - This is a simple jump counter followed by a very telegraphed smash from above.",
+            "heading": "Chromatic Braseleur - Attacks"
           },
           {
             "type": "text",
@@ -3296,11 +2920,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "Don't ever bother destroying the orbs as the boss will resummon them. The shooting orbs give you plenty of opportunities for counter damage. The only threatening ability is the hammer combo just because it has so many hits. It's totally fine to just dodge this over parrying if not confident, the orbs will give you lots of chances for parries anyway. The boss will heal if you use fire attacks so any Maelle enjoyers may want to swap her out or just focus on using non-fire based attacks. If you successfully parry the orbs, they will continually fire so it is possible to defeat the boss without it ever attacking other than the opening moves. My Maelle was doing nearly 200k per counter and the boss kept targeting her with the orbs so I killed him in about 6 turns. This is the way to go."
+            "text": "Don't ever bother destroying the orbs as the boss will resummon them. The shooting orbs give you plenty of opportunities for counter damage. The only threatening ability is the hammer combo just because it has so many hits. It's totally fine to just dodge this over parrying if not confident, the orbs will give you lots of chances for parries anyway. The boss will heal if you use fire attacks so any Maelle enjoyers may want to swap her out or just focus on using non-fire based attacks. If you successfully parry the orbs, they will continually fire so it is possible to defeat the boss without it ever attacking other than the opening moves. My Maelle was doing nearly 200k per counter and the boss kept targeting her with the orbs so I killed him in about 6 turns. This is the way to go.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3308,19 +2929,13 @@
           },
           {
             "type": "text",
-            "text": "Alicia - Attacks"
+            "text": "I did not list the attacks for Alicia as they are all multi hit sword combos and it felt moot trying to describe the differences between them.",
+            "heading": "Alicia - Attacks"
           },
           {
             "type": "text",
-            "text": "I did not list the attacks for Alicia as they are all multi hit sword combos and it felt moot trying to describe the differences between them."
-          },
-          {
-            "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This fight can be very tough or very easy depending on how much damage you manage to dish out fast. At 75% and 25% health, Alicia will cast \"Powerful\" then \"Rush\" on herself but if you are doing enough damage you will not give her time to make much use of this. She gets a lot of moves in a row, especially with \"Rush\" so you need to try and dish out as much as you can through counters as you will be limited with what you can do on your own turn, especially if you have to heal. For reference, my first counter on Alicia dealt 234k damage and took her down to half health. It's still very possible to beat her just through dodges as this is what I did my first time through, but you are elongating the fight substantially."
+            "text": "This fight can be very tough or very easy depending on how much damage you manage to dish out fast. At 75% and 25% health, Alicia will cast \"Powerful\" then \"Rush\" on herself but if you are doing enough damage you will not give her time to make much use of this. She gets a lot of moves in a row, especially with \"Rush\" so you need to try and dish out as much as you can through counters as you will be limited with what you can do on your own turn, especially if you have to heal. For reference, my first counter on Alicia dealt 234k damage and took her down to half health. It's still very possible to beat her just through dodges as this is what I did my first time through, but you are elongating the fight substantially.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3336,8 +2951,8 @@
           },
           {
             "type": "achievement",
-            "name": "MaelleReach relationship level 7 with Maelle.",
-            "description": "MaelleReach relationship level 7 with Maelle."
+            "name": "Maelle",
+            "description": "Reach relationship level 7 with Maelle."
           },
           {
             "type": "text",
@@ -3345,19 +2960,13 @@
           },
           {
             "type": "text",
-            "text": "Siréne's Dress"
+            "text": "Head forward for a flag and then proceed to the large door. Choose to \"look around\" and then \"play music\" to open it. There is another flag ahead. Lune does not have to be in your party for the boss ahead but you may have her there from the recent cutscene so make sure to check and set up. When ready, head forwards and a giant snake will appear. This is a chromatic boss but one you must fight for Lune's quest.",
+            "heading": "Siréne's Dress"
           },
           {
             "type": "text",
-            "text": "Head forward for a flag and then proceed to the large door. Choose to \"look around\" and then \"play music\" to open it. There is another flag ahead. Lune does not have to be in your party for the boss ahead but you may have her there from the recent cutscene so make sure to check and set up. When ready, head forwards and a giant snake will appear. This is a chromatic boss but one you must fight for Lune's quest."
-          },
-          {
-            "type": "text",
-            "text": "Chromatic Glissando - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Tail Slam - A multi-hit combo where the boss slams its tail down. Easily telegraphed, just parry before each hit."
+            "text": "Tail Slam - A multi-hit combo where the boss slams its tail down. Easily telegraphed, just parry before each hit.",
+            "heading": "Chromatic Glissando - Attacks"
           },
           {
             "type": "text",
@@ -3373,11 +2982,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "You can Free aim attack the tail to destroy it but the boss will grow it back and I didn't notice anything being \"easier\" with the tail gone. The swallow move essentially means you can't risk having people die as you won't get them back outside of a stun and the heal is huge. The worst move for me was just the tail slam as it's a big multi-hit combo that does a large amount of damage if multiple hits connect."
+            "text": "You can Free aim attack the tail to destroy it but the boss will grow it back and I didn't notice anything being \"easier\" with the tail gone. The swallow move essentially means you can't risk having people die as you won't get them back outside of a stun and the heal is huge. The worst move for me was just the tail slam as it's a big multi-hit combo that does a large amount of damage if multiple hits connect.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3397,8 +3003,8 @@
           },
           {
             "type": "achievement",
-            "name": "LuneReach relationship level 7 with Lune.",
-            "description": "LuneReach relationship level 7 with Lune."
+            "name": "Lune",
+            "description": "Reach relationship level 7 with Lune."
           },
           {
             "type": "text",
@@ -3410,24 +3016,18 @@
           },
           {
             "type": "text",
-            "text": "Sacred River"
-          },
-          {
-            "type": "text",
-            "text": "Head forward the only way you can and interact with the giant crystal Gestral. Following the cutscene, you will be in a boss battle. This fight is also a good chance to get the achievement for using a level 3 gradient attack if you haven't done so yet. The boss has a lot of health, even with Painted Power. Simply use as many AP attacks as you can until you have 3/3 gradient charges. Then use Verso's \"Angel Eyes\" ability. This will also give you a free revive on Verso if he dies, which is useful in this fight as there are only two of you. Using the level 3 gradient will unlock the below achievement:"
+            "text": "Head forward the only way you can and interact with the giant crystal Gestral. Following the cutscene, you will be in a boss battle. This fight is also a good chance to get the achievement for using a level 3 gradient attack if you haven't done so yet. The boss has a lot of health, even with Painted Power. Simply use as many AP attacks as you can until you have 3/3 gradient charges. Then use Verso's \"Angel Eyes\" ability. This will also give you a free revive on Verso if he dies, which is useful in this fight as there are only two of you. Using the level 3 gradient will unlock the below achievement:",
+            "heading": "Sacred River"
           },
           {
             "type": "achievement",
-            "name": "Chroma ProficiencyUse a level 3 Gradient Attack.",
-            "description": "Chroma ProficiencyUse a level 3 Gradient Attack."
+            "name": "Chroma Proficiency",
+            "description": "Use a level 3 Gradient Attack."
           },
           {
             "type": "text",
-            "text": "Golgra - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Impressive Combo - A 4 hit attack. The first 3 hits come in semi-fast, with a slight delay before the 4th."
+            "text": "Impressive Combo - A 4 hit attack. The first 3 hits come in semi-fast, with a slight delay before the 4th.",
+            "heading": "Golgra - Attacks"
           },
           {
             "type": "text",
@@ -3459,11 +3059,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The first half of the fight you will want to hope for lots of easy gradient counters and the impressive combo. Post 50%, Golgra gets angry and uses new moves combined with her old ones. In all of my attempts I only saw the crazy combo a couple of times but the long combo constantly. It is good and bad, as not seeing it for a while can throw off your practice but also means you get more practice on other moves. All in all, this felt like a fun fight to me. It can take a few goes for the names of the different combo's to click but it shouldn't give you too much trouble."
+            "text": "The first half of the fight you will want to hope for lots of easy gradient counters and the impressive combo. Post 50%, Golgra gets angry and uses new moves combined with her old ones. In all of my attempts I only saw the crazy combo a couple of times but the long combo constantly. It is good and bad, as not seeing it for a while can throw off your practice but also means you get more practice on other moves. All in all, this felt like a fun fight to me. It can take a few goes for the names of the different combo's to click but it shouldn't give you too much trouble.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3471,8 +3068,8 @@
           },
           {
             "type": "achievement",
-            "name": "MonocoReach relationship level 7 with Monoco.",
-            "description": "MonocoReach relationship level 7 with Monoco."
+            "name": "Monoco",
+            "description": "Reach relationship level 7 with Monoco."
           },
           {
             "type": "text",
@@ -3480,11 +3077,8 @@
           },
           {
             "type": "text",
-            "text": "Sprong - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Stage 1 - Strike - A one hit attack where Sprong slams down onto the party. If this connects, it marks them. As the boss health gets lower, this will increase to a 2 hit and then a 3 hit combo."
+            "text": "Stage 1 - Strike - A one hit attack where Sprong slams down onto the party. If this connects, it marks them. As the boss health gets lower, this will increase to a 2 hit and then a 3 hit combo.",
+            "heading": "Sprong - Attacks"
           },
           {
             "type": "text",
@@ -3504,11 +3098,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "The boss will cast the above moves in order, sometimes two at a time and then repeat. Assuming you are around my level or possibly higher, this fight will be a breeze with painted power. Given his location on the map, I assume he was probably meant to be fought earlier. Keep an eye on the boss's health and as he gets lower, prepare for there to be more hits to each combo. For stage 1 and 3, the popup will say the hit numbers but stage 2 doesn't so be prepared for more lasers. The extermination beam will always be 2 hits so don't worry about that one."
+            "text": "The boss will cast the above moves in order, sometimes two at a time and then repeat. Assuming you are around my level or possibly higher, this fight will be a breeze with painted power. Given his location on the map, I assume he was probably meant to be fought earlier. Keep an eye on the boss's health and as he gets lower, prepare for there to be more hits to each combo. For stage 1 and 3, the popup will say the hit numbers but stage 2 doesn't so be prepared for more lasers. The extermination beam will always be 2 hits so don't worry about that one.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -3516,8 +3107,8 @@
           },
           {
             "type": "achievement",
-            "name": "SprongBeat Sprong.",
-            "description": "SprongBeat Sprong."
+            "name": "Sprong",
+            "description": "Beat Sprong."
           },
           {
             "type": "text",
@@ -3552,11 +3143,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "We will visit a few more side-areas to get quick journals, rather than fully exploring them. You are free to explore these areas as you wish, the majority of them I won't be coming back to. Head to the location below and enter the portal for \"The Crows\" side area."
+            "text": "We will visit a few more side-areas to get quick journals, rather than fully exploring them. You are free to explore these areas as you wish, the majority of them I won't be coming back to. Head to the location below and enter the portal for \"The Crows\" side area.",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -3596,11 +3184,8 @@
           },
           {
             "type": "text",
-            "text": "Falling Leaves"
-          },
-          {
-            "type": "text",
-            "text": "This is a large area but we are just going to beeline for the collectibles and then defeat the boss as it rewards a record. You will be over-leveled for here really but it's still worth fighting enemies to train pictos. Head forwards, under the log and over the bridge. You will see a rope to the right as you approach the flag. After resting, go ahead and turn right, wrapping back around on yourself. Loot the 4,010x Chroma you pass and then take the rope down, followed by another rope. Continue forward into the large cavern and look to the left for a door to the Manor. Ignore the giant figure hanging from the ceiling for now and enter the Manor."
+            "text": "This is a large area but we are just going to beeline for the collectibles and then defeat the boss as it rewards a record. You will be over-leveled for here really but it's still worth fighting enemies to train pictos. Head forwards, under the log and over the bridge. You will see a rope to the right as you approach the flag. After resting, go ahead and turn right, wrapping back around on yourself. Loot the 4,010x Chroma you pass and then take the rope down, followed by another rope. Continue forward into the large cavern and look to the left for a door to the Manor. Ignore the giant figure hanging from the ceiling for now and enter the Manor.",
+            "heading": "Falling Leaves"
           },
           {
             "type": "text",
@@ -3620,11 +3205,8 @@
           },
           {
             "type": "text",
-            "text": "The Continent"
-          },
-          {
-            "type": "text",
-            "text": "We are getting there with the collectibles now. We have a few more journals and records to obtain and then it's essentially going to be a few side-areas to level up until we are over level 70 and can start tackling the final areas. Head to the area below and enter the side-area entitled \"White Tree\"."
+            "text": "We are getting there with the collectibles now. We have a few more journals and records to obtain and then it's essentially going to be a few side-areas to level up until we are over level 70 and can start tackling the final areas. Head to the area below and enter the side-area entitled \"White Tree\".",
+            "heading": "The Continent"
           },
           {
             "type": "image",
@@ -3690,11 +3272,8 @@
           },
           {
             "type": "text",
-            "text": "Frozen Hearts"
-          },
-          {
-            "type": "text",
-            "text": "As mentioned, this is a lengthier side area. When this area is done, you will be higher level and we will then clear up most of the records, just like we did with the journals. I will be treating this area like the areas in the story and going into a bit more detail here. It is definitely worth fighting as much as you can for XP, as it just saves time grinding out levels later."
+            "text": "As mentioned, this is a lengthier side area. When this area is done, you will be higher level and we will then clear up most of the records, just like we did with the journals. I will be treating this area like the areas in the story and going into a bit more detail here. It is definitely worth fighting as much as you can for XP, as it just saves time grinding out levels later.",
+            "heading": "Frozen Hearts"
           },
           {
             "type": "text",
@@ -3738,8 +3317,8 @@
           },
           {
             "type": "achievement",
-            "name": "TrailbreakerReach level 66.",
-            "description": "TrailbreakerReach level 66."
+            "name": "Trailbreaker",
+            "description": "Reach level 66."
           },
           {
             "type": "text",
@@ -3761,11 +3340,8 @@
         "steps": [
           {
             "type": "text",
-            "text": "Postgame Part II"
-          },
-          {
-            "type": "text",
-            "text": "With all but one journal left, we now repeat the process with records. You should be on 24 records. We will go around the map picking some up and will be left with only one that is in one of the last areas we have to visit. After this, we then go and take out two boss achievements before heading for the final remaining areas. First of all, head to the location below entitled \"Boat Graveyard\", and enter it for [Record #25/34 - Alicia's Birthday Party]."
+            "text": "With all but one journal left, we now repeat the process with records. You should be on 24 records. We will go around the map picking some up and will be left with only one that is in one of the last areas we have to visit. After this, we then go and take out two boss achievements before heading for the final remaining areas. First of all, head to the location below entitled \"Boat Graveyard\", and enter it for [Record #25/34 - Alicia's Birthday Party].",
+            "heading": "Postgame Part II"
           },
           {
             "type": "image",
@@ -3850,11 +3426,8 @@
           },
           {
             "type": "text",
-            "text": "Esoteric Ruins"
-          },
-          {
-            "type": "text",
-            "text": "Once inside, head the only way you can, until you see a strange orb in the middle of the area. This is our next Nevron. Speak to it and cycle through the dialogue. Afterwards, climb the handholds beyond to the top, and then take the rope up. Take the sharp right at the top and follow the path down to the bottom. There is a paint cage here also if you wish. At the bottom, you will see a yellow orb ahead. The idea is that you shoot the orbs here to open the path ahead, it's essentially a light maze."
+            "text": "Once inside, head the only way you can, until you see a strange orb in the middle of the area. This is our next Nevron. Speak to it and cycle through the dialogue. Afterwards, climb the handholds beyond to the top, and then take the rope up. Take the sharp right at the top and follow the path down to the bottom. There is a paint cage here also if you wish. At the bottom, you will see a yellow orb ahead. The idea is that you shoot the orbs here to open the path ahead, it's essentially a light maze.",
+            "heading": "Esoteric Ruins"
           },
           {
             "type": "text",
@@ -3871,24 +3444,18 @@
           },
           {
             "type": "text",
-            "text": "Floating Cemetery"
+            "text": "This is one is quick and simple. On entering, head to the left and speak to the Nevron. It doesn't matter which weapon you choose here. Head inside the nearby building and win the fight, which should be over very quickly at this level. With the battle done, the Nevron will give you a choice, if you want the Lumina points at the end and haven't killed any Nevrons so far, then choose to spare him. This completes [Nevron Quest #8/10]. Return to the Continent and head to the location below, entitled \"Red Woods\".",
+            "heading": "Floating Cemetery"
           },
           {
             "type": "text",
-            "text": "This is one is quick and simple. On entering, head to the left and speak to the Nevron. It doesn't matter which weapon you choose here. Head inside the nearby building and win the fight, which should be over very quickly at this level. With the battle done, the Nevron will give you a choice, if you want the Lumina points at the end and haven't killed any Nevrons so far, then choose to spare him. This completes [Nevron Quest #8/10]. Return to the Continent and head to the location below, entitled \"Red Woods\"."
-          },
-          {
-            "type": "text",
-            "text": "Red Woods"
-          },
-          {
-            "type": "text",
-            "text": "This is another quick and easy quest. Run to the bubbling well ahead and interact with it. You will be prompted to donate Chroma. Do this four times for a total of 90,000 total Chroma. Cycle through the extra dialogue at the end, being sure not to attack. This completes [Nevron Quest #9/10]. From here, return to the Continent and fly west to the \"Fountain\" area that we briefly entered earlier whilst journal hunting. This time speak to the creepy Nevron. Provided you have not killed any of the Nevron Quest NPC's, this Nevron will give you 100 Lumina points, completing [Nevron Quest #10/10] and unlocking:"
+            "text": "This is another quick and easy quest. Run to the bubbling well ahead and interact with it. You will be prompted to donate Chroma. Do this four times for a total of 90,000 total Chroma. Cycle through the extra dialogue at the end, being sure not to attack. This completes [Nevron Quest #9/10]. From here, return to the Continent and fly west to the \"Fountain\" area that we briefly entered earlier whilst journal hunting. This time speak to the creepy Nevron. Provided you have not killed any of the Nevron Quest NPC's, this Nevron will give you 100 Lumina points, completing [Nevron Quest #10/10] and unlocking:",
+            "heading": "Red Woods"
           },
           {
             "type": "achievement",
-            "name": "Aiding the EnemyFinish all of the Nevron quests.",
-            "description": "Aiding the EnemyFinish all of the Nevron quests."
+            "name": "Aiding the Enemy",
+            "description": "Finish all of the Nevron quests."
           },
           {
             "type": "text",
@@ -3904,11 +3471,8 @@
           },
           {
             "type": "text",
-            "text": "Endless Tower"
-          },
-          {
-            "type": "text",
-            "text": "Head forward and rest at the flag in the next area if needed. This area is essentially just battles one after another, with no exploration so I will list what Monoco skills I learnt here but won't include much otherwise as most of this is just enemies you've fought before, including bosses albeit beefed up. Ahead you will see a canvas, with an NPC to its right. Speak to her for some context and then interact with the canvas here. There will only be one option to start with and you will instantly begin a fight. You can rest at the flag after each battle so make sure to do so to upgrade characters as you go. You will get a lot of Grandiose Chroma Catalysts from this area. The spoiler tag contains the stages where I learnt skills."
+            "text": "Head forward and rest at the flag in the next area if needed. This area is essentially just battles one after another, with no exploration so I will list what Monoco skills I learnt here but won't include much otherwise as most of this is just enemies you've fought before, including bosses albeit beefed up. Ahead you will see a canvas, with an NPC to its right. Speak to her for some context and then interact with the canvas here. There will only be one option to start with and you will instantly begin a fight. You can rest at the flag after each battle so make sure to do so to upgrade characters as you go. You will get a lot of Grandiose Chroma Catalysts from this area. The spoiler tag contains the stages where I learnt skills.",
+            "heading": "Endless Tower"
           },
           {
             "type": "spoiler",
@@ -3957,8 +3521,8 @@
           },
           {
             "type": "achievement",
-            "name": "Weapon MasteryFully upgrade a weapon.",
-            "description": "Weapon MasteryFully upgrade a weapon."
+            "name": "Weapon Mastery",
+            "description": "Fully upgrade a weapon."
           },
           {
             "type": "text",
@@ -3970,8 +3534,8 @@
           },
           {
             "type": "achievement",
-            "name": "“Endless”Reach the top of the Endless Tower.",
-            "description": "“Endless”Reach the top of the Endless Tower."
+            "name": "“Endless”",
+            "description": "Reach the top of the Endless Tower."
           },
           {
             "type": "text",
@@ -3988,8 +3552,8 @@
           },
           {
             "type": "achievement",
-            "name": "Feet CollectionAcquire all of Monoco’s skills.",
-            "description": "Feet CollectionAcquire all of Monoco’s skills."
+            "name": "Feet Collection",
+            "description": "Acquire all of Monoco’s skills."
           },
           {
             "type": "text",
@@ -4006,11 +3570,8 @@
           },
           {
             "type": "text",
-            "text": "Flying Manor"
-          },
-          {
-            "type": "text",
-            "text": "Take the path ahead the only way you can until you reach a large island with display cases in the middle. There is a flag here and an NPC. Speak to the NPC to learn that to open the door to \"her\", you need to return the colour to the paintings in the display cases. Head to the flag and go past it to what looks like four ropes. This is actually a lift. Take it up and again, follow the path. You will see two statues ahead. Go behind the one on the left for a Colour of Lumina. Continue on and grapple over the gap. This is a crossroads, with a path left, ahead and to the right, as well as some large enemies. Loot another Colour of Lumina here and then take the left path, defeating the enemy in the way."
+            "text": "Take the path ahead the only way you can until you reach a large island with display cases in the middle. There is a flag here and an NPC. Speak to the NPC to learn that to open the door to \"her\", you need to return the colour to the paintings in the display cases. Head to the flag and go past it to what looks like four ropes. This is actually a lift. Take it up and again, follow the path. You will see two statues ahead. Go behind the one on the left for a Colour of Lumina. Continue on and grapple over the gap. This is a crossroads, with a path left, ahead and to the right, as well as some large enemies. Loot another Colour of Lumina here and then take the left path, defeating the enemy in the way.",
+            "heading": "Flying Manor"
           },
           {
             "type": "text",
@@ -4042,19 +3603,13 @@
           },
           {
             "type": "text",
-            "text": "??? - General Info"
+            "text": "The \"Anti-Stun\" pictos is a godsend for this fight. I would highly recommend getting it and equipping to all of your characters before fighting this boss. It is obtained from defeating the Chromatic Petank, which is covered further down in the guide. Defeating the Petank is very simple at higher levels and unlocks an achievement anyway so I would urge you to at least do that and then come back. \"Anti-Freeze\" is also useful. You may have it already, but if not, it is found in the paint cage located in the Frozen Hearts area.",
+            "heading": "??? - General Info"
           },
           {
             "type": "text",
-            "text": "The \"Anti-Stun\" pictos is a godsend for this fight. I would highly recommend getting it and equipping to all of your characters before fighting this boss. It is obtained from defeating the Chromatic Petank, which is covered further down in the guide. Defeating the Petank is very simple at higher levels and unlocks an achievement anyway so I would urge you to at least do that and then come back. \"Anti-Freeze\" is also useful. You may have it already, but if not, it is found in the paint cage located in the Frozen Hearts area."
-          },
-          {
-            "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "I put the notes part first with this fight only as it's pivotal to understand from the off how the fight works. Every time you fail to parry an attack, the boss will heal a large amount. This amount does vary by difficulty and on higher difficulties it is basically a full heal. The boss herself doesn't fight you directly. Instead, she summons different types of Nevrons that perform attacks against you that must be parried. The pop-up will tell you which type of Nevron is next and you will have to learn each moveset and parry accordingly to succeed."
+            "text": "I put the notes part first with this fight only as it's pivotal to understand from the off how the fight works. Every time you fail to parry an attack, the boss will heal a large amount. This amount does vary by difficulty and on higher difficulties it is basically a full heal. The boss herself doesn't fight you directly. Instead, she summons different types of Nevrons that perform attacks against you that must be parried. The pop-up will tell you which type of Nevron is next and you will have to learn each moveset and parry accordingly to succeed.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -4062,11 +3617,8 @@
           },
           {
             "type": "text",
-            "text": "Abilities"
-          },
-          {
-            "type": "text",
-            "text": "Musical Nevrons - A 5 hit attack. This is quite fast but easy to learn once you've seen it a couple of times. There will be four of the trumpet Nevrons back to back that \"fire\" at you, followed by a slower wind-up attack at the end."
+            "text": "Musical Nevrons - A 5 hit attack. This is quite fast but easy to learn once you've seen it a couple of times. There will be four of the trumpet Nevrons back to back that \"fire\" at you, followed by a slower wind-up attack at the end.",
+            "heading": "Abilities"
           },
           {
             "type": "text",
@@ -4094,8 +3646,8 @@
           },
           {
             "type": "achievement",
-            "name": "CleaBeat Clea.",
-            "description": "CleaBeat Clea."
+            "name": "Clea",
+            "description": "Beat Clea."
           },
           {
             "type": "text",
@@ -4130,8 +3682,8 @@
           },
           {
             "type": "achievement",
-            "name": "Noir et BlancSolve the Painting Workshop’s mystery.",
-            "description": "Noir et BlancSolve the Painting Workshop’s mystery."
+            "name": "Noir et Blanc",
+            "description": "Solve the Painting Workshop’s mystery."
           },
           {
             "type": "text",
@@ -4139,11 +3691,8 @@
           },
           {
             "type": "text",
-            "text": "Serpenphare - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Tail Swipe - The boss will swipe its tail from left to right. Parry just before it hits and then be ready to jump counter. It can do this 2, 4 or 6 times as the fight goes on."
+            "text": "Tail Swipe - The boss will swipe its tail from left to right. Parry just before it hits and then be ready to jump counter. It can do this 2, 4 or 6 times as the fight goes on.",
+            "heading": "Serpenphare - Attacks"
           },
           {
             "type": "text",
@@ -4175,11 +3724,8 @@
           },
           {
             "type": "text",
-            "text": "Additional Information"
-          },
-          {
-            "type": "text",
-            "text": "This boss can probably be done much sooner but I found it kind of annoying so saved it till I was more leveled. There is no way to avoid the AP drain. Making sure each character has the \"Cheater\" pictos equipped will allow them to play twice in a row. Provided you defeated Sprong on the previous page, you will have this pictos. Having two goes at once is good for using energy tints to get off powerful attacks such as Stendhal."
+            "text": "This boss can probably be done much sooner but I found it kind of annoying so saved it till I was more leveled. There is no way to avoid the AP drain. Making sure each character has the \"Cheater\" pictos equipped will allow them to play twice in a row. Provided you defeated Sprong on the previous page, you will have this pictos. Having two goes at once is good for using energy tints to get off powerful attacks such as Stendhal.",
+            "heading": "Additional Information"
           },
           {
             "type": "text",
@@ -4191,8 +3737,8 @@
           },
           {
             "type": "achievement",
-            "name": "À OnBeat the Serpenphare.",
-            "description": "À OnBeat the Serpenphare."
+            "name": "À On",
+            "description": "Beat the Serpenphare."
           },
           {
             "type": "text",
@@ -4213,8 +3759,8 @@
           },
           {
             "type": "achievement",
-            "name": "Carreau ParfaitBeat the Chromatic Pétank.",
-            "description": "Carreau ParfaitBeat the Chromatic Pétank."
+            "name": "Carreau Parfait",
+            "description": "Beat the Chromatic Pétank."
           },
           {
             "type": "text",
@@ -4235,16 +3781,13 @@
           },
           {
             "type": "text",
-            "text": "Renoir's Drafts"
-          },
-          {
-            "type": "text",
-            "text": "Take the path down from the flag and at the bottom take the sharp left. Use the grapple point to reach the top of the building with the faces on and take the slope down. Look to the right for a purple item. Loot it for [Record #34/34 - Endless Light]. If you didn't pop it earlier, and provided you haven't missed both of the missable records, you should now unlock:"
+            "text": "Take the path down from the flag and at the bottom take the sharp left. Use the grapple point to reach the top of the building with the faces on and take the slope down. Look to the right for a purple item. Loot it for [Record #34/34 - Endless Light]. If you didn't pop it earlier, and provided you haven't missed both of the missable records, you should now unlock:",
+            "heading": "Renoir's Drafts"
           },
           {
             "type": "achievement",
-            "name": "ConnoisseurFind all 33 music records.",
-            "description": "ConnoisseurFind all 33 music records."
+            "name": "Connoisseur",
+            "description": "Find all 33 music records."
           },
           {
             "type": "text",
@@ -4260,11 +3803,8 @@
           },
           {
             "type": "text",
-            "text": "The Abyss"
-          },
-          {
-            "type": "text",
-            "text": "This is it. There is nothing here but the final super-boss. There are various different ways to beat what is coming up. As usual, I have put the actual fight information in spoilers. For full disclosure, I fought him on the easiest difficulty as I did not want to cheese with super-builds and that kind of thing. It's entirely up to you how you fight him. I will be detailing the mechanics he does and such so that you can fight him normally and learn his patterns if you wish but there are a plethora of cheese videos and guides available also if you want to go down that route. When ready, follow the tunnel and drop off the end of the path."
+            "text": "This is it. There is nothing here but the final super-boss. There are various different ways to beat what is coming up. As usual, I have put the actual fight information in spoilers. For full disclosure, I fought him on the easiest difficulty as I did not want to cheese with super-builds and that kind of thing. It's entirely up to you how you fight him. I will be detailing the mechanics he does and such so that you can fight him normally and learn his patterns if you wish but there are a plethora of cheese videos and guides available also if you want to go down that route. When ready, follow the tunnel and drop off the end of the path.",
+            "heading": "The Abyss"
           },
           {
             "type": "text",
@@ -4272,11 +3812,8 @@
           },
           {
             "type": "text",
-            "text": "Simon - General Information"
-          },
-          {
-            "type": "text",
-            "text": "As with the boss above, I put some general info here first as it's pivotal to know this before fighting Simon. This is a 3 phase fight where in the 3rd phase, Simon will wipe out your party, forcing your \"spare\" characters to come in. Because of this, you actually want to fight the first two phases with the two members of your B team so that you have the main 3 characters coming in at the end of the fight. This is why I mentioned leveling them up as you will learn the bulk of this fight with them."
+            "text": "As with the boss above, I put some general info here first as it's pivotal to know this before fighting Simon. This is a 3 phase fight where in the 3rd phase, Simon will wipe out your party, forcing your \"spare\" characters to come in. Because of this, you actually want to fight the first two phases with the two members of your B team so that you have the main 3 characters coming in at the end of the fight. This is why I mentioned leveling them up as you will learn the bulk of this fight with them.",
+            "heading": "Simon - General Information"
           },
           {
             "type": "text",
@@ -4324,11 +3861,8 @@
           },
           {
             "type": "text",
-            "text": "Phase Two - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Note that everything in this phase is faster and essentially requires you to hit parry twice to reasonably parry in time. Most of the moves are the same as P1 but with more hits added"
+            "text": "Note that everything in this phase is faster and essentially requires you to hit parry twice to reasonably parry in time. Most of the moves are the same as P1 but with more hits added",
+            "heading": "Phase Two - Attacks"
           },
           {
             "type": "text",
@@ -4352,11 +3886,8 @@
           },
           {
             "type": "text",
-            "text": "Phase Three - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "At the start of this phase, Simon will remove all members of your current group. This should ideally still be your two B team members. You now have your best 3 team members in for the last phase."
+            "text": "At the start of this phase, Simon will remove all members of your current group. This should ideally still be your two B team members. You now have your best 3 team members in for the last phase.",
+            "heading": "Phase Three - Attacks"
           },
           {
             "type": "text",
@@ -4368,8 +3899,8 @@
           },
           {
             "type": "achievement",
-            "name": "Peace At LastBeat Simon.",
-            "description": "Peace At LastBeat Simon."
+            "name": "Peace At Last",
+            "description": "Beat Simon."
           },
           {
             "type": "text",
@@ -4377,8 +3908,8 @@
           },
           {
             "type": "achievement",
-            "name": "Follow The TrailFind all of the journals from prior expeditions.",
-            "description": "Follow The TrailFind all of the journals from prior expeditions."
+            "name": "Follow The Trail",
+            "description": "Find all of the journals from prior expeditions."
           },
           {
             "type": "text",
@@ -4395,11 +3926,8 @@
           },
           {
             "type": "text",
-            "text": "Dark Shores"
-          },
-          {
-            "type": "text",
-            "text": "This is actually the beach from the opening cutscenes. There is nothing fancy or technical to this. The enemies here give good amounts of XP and there is a flag nearby to rest and reset. I fought the 3 packs of enemies closest to the flag and then reset and went again. Any end-game areas that give XP are viable but this has good XP in proximity to a flag. Note that you only need one character to hit level 99 to get the achievement. Note that without the no dmg xp bonus, this is slow...very slow. The enemies are basic but have a tonne of health. Once you learn their patterns, it's a good farm but it's frustrating at first. I mixed this up with other methods myself to keep it fresh."
+            "text": "This is actually the beach from the opening cutscenes. There is nothing fancy or technical to this. The enemies here give good amounts of XP and there is a flag nearby to rest and reset. I fought the 3 packs of enemies closest to the flag and then reset and went again. Any end-game areas that give XP are viable but this has good XP in proximity to a flag. Note that you only need one character to hit level 99 to get the achievement. Note that without the no dmg xp bonus, this is slow...very slow. The enemies are basic but have a tonne of health. Once you learn their patterns, it's a good farm but it's frustrating at first. I mixed this up with other methods myself to keep it fresh.",
+            "heading": "Dark Shores"
           },
           {
             "type": "text",
@@ -4407,8 +3935,8 @@
           },
           {
             "type": "achievement",
-            "name": "SurvivorReach level 99.",
-            "description": "SurvivorReach level 99."
+            "name": "Survivor",
+            "description": "Reach level 99."
           },
           {
             "type": "text",
@@ -4422,33 +3950,24 @@
         "steps": [
           {
             "type": "text",
-            "text": "Character Achievements"
-          },
-          {
-            "type": "text",
-            "text": "This page details how to unlock any miscellaneous character achievements you may be missing. It is highly unlikely you finish everything else and still have all of these locked but you may need a couple depending on which characters you play more of. I did not cover the character specific achievements in the guide outside of the Prologue as I felt that most would be unlocked through natural play. They are therefore listed here to be finished off for those who need them."
-          },
-          {
-            "type": "text",
-            "text": "Gustave"
+            "text": "This page details how to unlock any miscellaneous character achievements you may be missing. It is highly unlikely you finish everything else and still have all of these locked but you may need a couple depending on which characters you play more of. I did not cover the character specific achievements in the guide outside of the Prologue as I felt that most would be unlocked through natural play. They are therefore listed here to be finished off for those who need them.",
+            "heading": "Character Achievements"
           },
           {
             "type": "achievement",
-            "name": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy.",
-            "description": "OverchargeWith Gustave, use a fully charged Overcharge that Breaks an enemy."
+            "name": "Overcharge",
+            "description": "With Gustave, use a fully charged Overcharge that Breaks an enemy.",
+            "heading": "Gustave"
           },
           {
             "type": "text",
             "text": "This achievement can be unlocked in the prologue when you fight the Mime. Simply use abilities with Gustave until your Overcharge is full and then attack the Mime. The attack should break it, unlocking the achievement. You can also get this with most enemies throughout Act I."
           },
           {
-            "type": "text",
-            "text": "Lune"
-          },
-          {
             "type": "achievement",
-            "name": "Perfect FlowWith Lune, consume Stains 4 turns in a row.",
-            "description": "Perfect FlowWith Lune, consume Stains 4 turns in a row."
+            "name": "Perfect Flow",
+            "description": "With Lune, consume Stains 4 turns in a row.",
+            "heading": "Lune"
           },
           {
             "type": "text",
@@ -4459,13 +3978,10 @@
             "text": "There are many ways this can be done but an easy way to follow along with uses the \"Electrify\" and \"Earth Rising\" abilities. Use \"Electrify\" twice to generate 4 electric/yellow stains and then use \"Earth Rising\" 4 times. Each use of \"Earth Rising\" will consume on electric stain. When all 4 electric stains are consumed, the achievement will pop."
           },
           {
-            "type": "text",
-            "text": "Maelle"
-          },
-          {
             "type": "achievement",
-            "name": "SynergyWith Maelle, use Percée on a Marked enemy while in Virtuose Stance.",
-            "description": "SynergyWith Maelle, use Percée on a Marked enemy while in Virtuose Stance."
+            "name": "Synergy",
+            "description": "With Maelle, use Percée on a Marked enemy while in Virtuose Stance.",
+            "heading": "Maelle"
           },
           {
             "type": "text",
@@ -4476,13 +3992,10 @@
             "text": "If you don't have Medalum, there are a couple more steps but the achievement is still easy. A quick way to get Maelle into Virtuoso stance is to apply the burn effect either with Maelle herself with abilities like \"Rain of Fire\", \"Pyrolyse\" or \"Spark\". Then use \"Swift Stride\" to trigger Virtuoso on her next turn and go from there."
           },
           {
-            "type": "text",
-            "text": "Monoco"
-          },
-          {
             "type": "achievement",
-            "name": "Wheel ControlWith Monoco, cast an Upgraded Skill 4 turns in a row.",
-            "description": "Wheel ControlWith Monoco, cast an Upgraded Skill 4 turns in a row."
+            "name": "Wheel Control",
+            "description": "With Monoco, cast an Upgraded Skill 4 turns in a row.",
+            "heading": "Monoco"
           },
           {
             "type": "text",
@@ -4517,13 +4030,10 @@
             "text": "Once you have the skills set up, I'd again advise either turning the enemy health modifier on or going into endgame battles where they won't die easily. Keep Monoco topped up with energy tints from the other characters. This, combined with a spread of low AP abilities on each mask, should make it quite easy to match the wheel four times. Once 4 upgraded/matched abilities have been used, the achievement will unlock."
           },
           {
-            "type": "text",
-            "text": "Sciel"
-          },
-          {
             "type": "achievement",
-            "name": "MaximisationWith Sciel, consume 20 Foretell on a single target during Twilight.",
-            "description": "MaximisationWith Sciel, consume 20 Foretell on a single target during Twilight."
+            "name": "Maximisation",
+            "description": "With Sciel, consume 20 Foretell on a single target during Twilight.",
+            "heading": "Sciel"
           },
           {
             "type": "text",
@@ -4538,13 +4048,10 @@
             "text": "On the next turn, provided you are still in Twilight mode, use any ability which consumes ALL Foretell such as \"Harvest\" or \"Phantom Blade\" etc. Consuming all 20 Foretell at once will unlock the achievement. If you are no longer in Twilight mode, don't worry. The Foretell stacks will not time out. Just use a combination of sun and moon abilities, making sure not to consume any Foretell until you re-enter Twilight mode. Then use the consuming ability next time around."
           },
           {
-            "type": "text",
-            "text": "Verso"
-          },
-          {
             "type": "achievement",
-            "name": "PerfectionWith Verso, reach Rank S.",
-            "description": "PerfectionWith Verso, reach Rank S."
+            "name": "Perfection",
+            "description": "With Verso, reach Rank S.",
+            "heading": "Verso"
           },
           {
             "type": "text",
@@ -4562,19 +4069,12 @@
         "steps": [
           {
             "type": "text",
-            "text": "Collectible Checklist"
-          },
-          {
-            "type": "text",
-            "text": "This page covers all of the collectibles related to or required for achievements in the game, from records to Monoco skills and so on. Each item is under spoiler tags to keep the page a little cleaner. Note that there are potential spoilers with some of the names, so browse at your caution if you haven't finished the story."
+            "text": "This page covers all of the collectibles related to or required for achievements in the game, from records to Monoco skills and so on. Each item is under spoiler tags to keep the page a little cleaner. Note that there are potential spoilers with some of the names, so browse at your caution if you haven't finished the story.",
+            "heading": "Collectible Checklist"
           },
           {
             "type": "text",
             "text": "Note that almost all of the collectibles can be picked up in the postgame and any that aren't, are highlighted heavily in the walkthrough."
-          },
-          {
-            "type": "text",
-            "text": "Records (34)"
           },
           {
             "type": "spoiler",
@@ -4715,11 +4215,8 @@
                 "type": "text",
                 "text": "34) Verso - The Manor - Entered from Visages"
               }
-            ]
-          },
-          {
-            "type": "text",
-            "text": "Journals (49)"
+            ],
+            "heading": "Records (34)"
           },
           {
             "type": "spoiler",
@@ -4920,11 +4417,8 @@
                 "type": "text",
                 "text": "49) Verso - The Continent - West of Stone Quarry."
               }
-            ]
-          },
-          {
-            "type": "text",
-            "text": "Nevron Quests (10)"
+            ],
+            "heading": "Journals (49)"
           },
           {
             "type": "spoiler",
@@ -4973,11 +4467,8 @@
                 "type": "text",
                 "text": "10) Blanche - The Fountain - Provided you didn't kill any of the previous Nevrons, the NPC will give you 100 Lumina Points. If you did kill any, you will have to fight."
               }
-            ]
-          },
-          {
-            "type": "text",
-            "text": "Lost Gestrals (9)"
+            ],
+            "heading": "Nevron Quests (10)"
           },
           {
             "type": "spoiler",
@@ -5022,11 +4513,8 @@
                 "type": "text",
                 "text": "9) North-East of the Reacher - Postgame Part I"
               }
-            ]
-          },
-          {
-            "type": "text",
-            "text": "Monoco Skills (46)"
+            ],
+            "heading": "Lost Gestrals (9)"
           },
           {
             "type": "spoiler",
@@ -5219,11 +4707,12 @@
                 "type": "text",
                 "text": "46) Danseuse Waltz - Balanced Mask - Stage 6: Trial 1"
               }
-            ]
+            ],
+            "heading": "Monoco Skills (46)"
           }
         ]
       }
     ],
-    "importedAt": "2026-10-03T22:25:46.504Z"
+    "importedAt": "2026-10-03T23:36:26.814Z"
   }
 ]
