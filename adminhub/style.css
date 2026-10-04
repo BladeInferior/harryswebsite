@@ -913,14 +913,15 @@ footer {
     background: rgba(239, 68, 68, .12);
 }
 
-/* Reading-aloud tracking (Step mode only, see sentenceReadIndex/
-   matchSpokenSentence() in walkthroughs.js) — dimmed, never hidden, so a
-   sentence already read is still a glance away, not gone. */
-.walkthrough-sentence {
+/* Reading-aloud tracking (Step mode only, see wordReadIndex/
+   matchSpokenWords() in walkthroughs.js) — word-level, not sentence-level,
+   so a rewind can land mid-sentence. Dimmed, never hidden, so a word
+   already read is still a glance away, not gone. */
+.walkthrough-word {
     transition: opacity .2s ease, color .2s ease;
 }
 
-.walkthrough-sentence--read {
+.walkthrough-word--read {
     opacity: 0.4;
 }
 

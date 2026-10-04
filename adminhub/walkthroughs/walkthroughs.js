@@ -75,11 +75,12 @@ let currentSectionIndex = null;
 let currentStepIndex = 0;
 let currentMode = 'scroll'; // 'scroll' | 'step'
 
-// Which sentence of the *current* text step reading-aloud has reached, -1
-// meaning none yet — only meaningful in Step mode on a 'text' step. Reset
-// whenever the displayed step actually changes (goToStep()/openSection()),
-// not on every re-render.
-let sentenceReadIndex = -1;
+// Which word of the *current* text step (flattened, whitespace-split) reading-
+// aloud has reached, -1 meaning none yet — only meaningful in Step mode on a
+// 'text' step. Reset whenever the displayed step actually changes
+// (goToStep()/openSection()), not on every re-render. Word-level rather than
+// sentence-level so a rewind can land mid-sentence (see matchSpokenWords()).
+let wordReadIndex = -1;
 
 requireAdminAuth().then(() => {
     adminContent.classList.remove('hidden');
@@ -323,7 +324,7 @@ function openSection(walkthroughIndex, sectionIndex, mode, stepIndex = 0) {
     currentSectionIndex = sectionIndex;
     currentStepIndex = stepIndex;
     currentMode = mode;
-    sentenceReadIndex = -1;
+    wordReadIndex = -1;
 
     showPanel(readerPanel);
     renderReader();
@@ -399,7 +400,7 @@ function renderReader() {
 function openStepFromScroll(stepIndex) {
     currentStepIndex = stepIndex;
     currentMode = 'step';
-    sentenceReadIndex = -1;
+    wordReadIndex = -1;
     renderReader();
     saveProgress();
 }
@@ -425,12 +426,12 @@ function renderStepElement(step, options = {}) {
     return wrapper;
 }
 
-// `trackSentences` is only ever true for Step mode's own text step (see
+// `trackWords` is only ever true for Step mode's own text step (see
 // renderStepView()) — scroll mode shows a whole section at once, where
 // "which sentence have you reached" isn't a meaningful question. `onClickText`
 // is scroll mode's own thing instead — jump into Step mode at this exact
 // step when its text is clicked (see renderReader()'s scroll branch).
-function renderStepContent(step, { trackSentences = false, onClickText = null } = {}) {
+function renderStepContent(step, { trackWords = false, onClickText = null } = {}) {
     if (step.type === 'image') {
         const img = document.createElement('img');
         img.loading = 'lazy';
@@ -490,7 +491,7 @@ function renderStepContent(step, { trackSentences = false, onClickText = null } 
     const p = document.createElement('p');
     p.className = 'walkthrough-step-text';
 
-    if (!trackSentences) {
+    if (!trackWords) {
         p.textContent = step.text || '';
         if (onClickText) {
             p.classList.add('walkthrough-step-text--clickable');
@@ -499,33 +500,33 @@ function renderStepContent(step, { trackSentences = false, onClickText = null } 
         return p;
     }
 
-    // Reading-aloud tracking: one <span> per sentence so individual
-    // sentences (not the whole step) can be dimmed as they're read, without
-    // ever removing/hiding anything — see updateSentenceDimming().
-    splitSentences(step.text || '').forEach((sentence, i) => {
+    // Reading-aloud tracking: one <span> per word (not per sentence) so a
+    // rewind can land mid-sentence — saying "cat" can un-dim just "The cat"
+    // out of an already-dimmed "The cat is strong", not the whole sentence.
+    // Never removes/hides anything — see updateWordDimming().
+    splitWords(step.text || '').forEach((word, i) => {
         const span = document.createElement('span');
-        span.className = 'walkthrough-sentence';
-        span.dataset.sentenceIndex = String(i);
-        span.textContent = sentence + ' ';
+        span.className = 'walkthrough-word';
+        span.dataset.wordIndex = String(i);
+        span.textContent = word + ' ';
         p.appendChild(span);
     });
     return p;
 }
 
-// Loose sentence splitter — good enough for walkthrough prose, not a real
-// parser (doesn't special-case abbreviations like "Mr." etc.).
-function splitSentences(text) {
-    const matches = text.match(/[^.!?]+[.!?]+(\s+|$)|[^.!?]+$/g);
-    return matches ? matches.map(s => s.trim()).filter(Boolean) : (text.trim() ? [text.trim()] : []);
+// Whitespace-split — keeps each word's own punctuation/casing intact for
+// display; matchSpokenWords() normalizes separately for comparison.
+function splitWords(text) {
+    return text.split(/\s+/).filter(Boolean);
 }
 
-// Dims every sentence up to and including sentenceReadIndex, leaving the
-// rest at normal brightness — never hides anything, so re-reading something
+// Dims every word up to and including wordReadIndex, leaving the rest at
+// normal brightness — never hides anything, so re-reading something
 // already passed is still just a glance away.
-function updateSentenceDimming() {
-    readerStepContent.querySelectorAll('.walkthrough-sentence').forEach(span => {
-        const i = Number(span.dataset.sentenceIndex);
-        span.classList.toggle('walkthrough-sentence--read', i <= sentenceReadIndex);
+function updateWordDimming() {
+    readerStepContent.querySelectorAll('.walkthrough-word').forEach(span => {
+        const i = Number(span.dataset.wordIndex);
+        span.classList.toggle('walkthrough-word--read', i <= wordReadIndex);
     });
 }
 
@@ -537,20 +538,52 @@ function renderStepView() {
     const step = steps[currentStepIndex];
 
     readerStepContent.innerHTML = '';
-    if (step) readerStepContent.appendChild(renderStepElement(step, { trackSentences: true }));
-    updateSentenceDimming();
+    if (step) readerStepContent.appendChild(renderStepElement(step, { trackWords: true }));
+    updateWordDimming();
 
     readerStepPosition.textContent = `Step ${currentStepIndex + 1} of ${steps.length}`;
 }
 
-// The current step's own sentence list, for voice matching — [] for
-// anything that isn't a plain text step (image/achievement/spoiler have no
-// "sentences" to read along with).
-function currentStepSentences() {
+// The current step's own word list, for voice matching — [] for anything
+// that isn't a plain text step (image/achievement/spoiler have no "words"
+// to read along with).
+function currentStepWords() {
     const section = currentSection();
     const step = section?.steps?.[currentStepIndex];
     if (!step || step.type !== 'text') return [];
-    return splitSentences(step.text || '');
+    return splitWords(step.text || '');
+}
+
+// Word indices where a sentence ends (its last word carries ., ! or ?) —
+// the trailing run of words after the last such punctuation (if any) counts
+// as its own final "sentence" too, so nothing at the end is ever left out.
+function sentenceBoundaries(rawWords) {
+    const ends = [];
+    rawWords.forEach((word, i) => {
+        if (/[.!?]$/.test(word)) ends.push(i);
+    });
+    if (ends.length === 0 || ends[ends.length - 1] !== rawWords.length - 1) {
+        ends.push(rawWords.length - 1);
+    }
+    return ends;
+}
+
+// The "back" command — unlike matchSpokenWords() advancing/rewinding by
+// exactly the words said, this un-dims the *whole* most recently affected
+// sentence (whether it was fully read or only partway through), since
+// that's what's actually useful as a quick undo mid-step.
+function rewindCurrentSentence() {
+    if (wordReadIndex < 0) return;
+
+    const rawWords = currentStepWords();
+    if (rawWords.length === 0) return;
+
+    const ends = sentenceBoundaries(rawWords);
+    const currentBoundaryPos = ends.findIndex(end => end >= wordReadIndex);
+    const sentenceStart = currentBoundaryPos > 0 ? ends[currentBoundaryPos - 1] + 1 : 0;
+
+    wordReadIndex = sentenceStart - 1;
+    updateWordDimming();
 }
 
 // Mirrors openAdjacentPokemon() in collection-hub/pokedexes/pokedexes.js —
@@ -581,7 +614,7 @@ function goToStep(offset) {
         currentStepIndex = nextStepIndex;
     }
 
-    sentenceReadIndex = -1;
+    wordReadIndex = -1;
     renderReader();
     saveProgress();
 }
@@ -613,14 +646,16 @@ function escapeHtml(str) {
 }
 
 // ---------------------------
-// VOICE — "next"/"previous" move a whole step; "back" undoes one sentence
-// of reading-aloud tracking instead (see sentenceReadIndex below); "stop"
-// ends dictation. Anything else said is matched against the current step's
-// own text to advance that tracking — see matchSpokenSentence(). A small
-// dedicated listener rather than reusing collection-hub/voice-search.js's
-// matcher, which solves a different problem (snapping spoken words to
-// Pokémon names). No button at all where SpeechRecognition is unsupported,
-// same guard voice-search.js itself uses.
+// VOICE — "next"/"previous" move a whole step; "back" undoes a single word
+// of reading-aloud tracking instead (see wordReadIndex below); "stop" ends
+// dictation. Anything else said is matched against the current step's own
+// text — forward first (advancing tracking, same as before but word- not
+// sentence-grained), and if nothing ahead matches, backward for the most
+// recent already-read occurrence instead, rewinding to just before it — see
+// matchSpokenWords(). A small dedicated listener rather than reusing
+// collection-hub/voice-search.js's matcher, which solves a different
+// problem (snapping spoken words to Pokémon names). No button at all where
+// SpeechRecognition is unsupported, same guard voice-search.js itself uses.
 // ---------------------------
 (function attachWalkthroughMic() {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -630,7 +665,7 @@ function escapeHtml(str) {
     micBtn.id = 'walkthrough-mic';
     micBtn.className = 'voice-search';
     micBtn.textContent = '🎤';
-    micBtn.title = '"next"/"previous" moves a step, "back" undoes a sentence, "stop" stops — or just read aloud and it tracks you';
+    micBtn.title = '"next"/"previous" moves a step, "back" undoes a word, "stop" stops — or just read aloud and it tracks you (saying something already read rewinds to its most recent spot)';
     document.getElementById('reader-step-position').insertAdjacentElement('afterend', micBtn);
 
     const recognition = new SpeechRecognition();
@@ -674,14 +709,11 @@ function escapeHtml(str) {
             if (command === 'previous') { goToStep(-1); continue; }
             if (command === 'next') { goToStep(1); continue; }
             if (command === 'back') {
-                if (sentenceReadIndex >= 0) {
-                    sentenceReadIndex -= 1;
-                    updateSentenceDimming();
-                }
+                rewindCurrentSentence();
                 continue;
             }
 
-            matchSpokenSentence(transcript);
+            matchSpokenWords(transcript);
         }
     });
 
@@ -717,45 +749,67 @@ function escapeHtml(str) {
 })();
 
 // At least this fraction of the spoken words have to actually appear in a
-// candidate sentence before it counts as a match.
-const SENTENCE_MATCH_THRESHOLD = 0.6;
+// candidate window before it counts as a match.
+const WORD_MATCH_THRESHOLD = 0.6;
 
 function wordsOf(text) {
     return text.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
 }
 
-// Advances sentenceReadIndex to whichever upcoming sentence best matches
-// what was just said, if any clears the threshold — checks every remaining
-// sentence in the step, not just the next one or two, since reading aloud
-// can legitimately skip or paraphrase several sentences at once. On a tie
-// the nearest (lowest-index) sentence wins (score has to strictly improve
-// to move bestIndex), which leans toward the smaller jump when more than
-// one sentence matches equally well. E.g. saying "bricks" while reading "He
-// jumped the wall. He picks up the bricks. He throws the item." matches
-// sentence index 1, dimming sentences 0 and 1 and leaving 2 untouched (not
-// hidden — just not yet marked read). Step mode on a 'text' step only; a
-// no-op everywhere else, since there's nothing to match against.
-function matchSpokenSentence(transcript) {
+// Overlap score for the window of `normalizedWords` starting at `start`,
+// the same length as `spokenWords` — order-insensitive (speech doesn't
+// always come back in a clean sequence), just "how much of what was said
+// shows up here."
+function windowScore(normalizedWords, start, spokenWords) {
+    const windowSet = new Set(normalizedWords.slice(start, start + spokenWords.length));
+    const matched = spokenWords.filter(w => windowSet.has(w)).length;
+    return matched / spokenWords.length;
+}
+
+// Advances wordReadIndex to wherever what was just said matches, checked
+// against the *whole* step, not just the next word or two, since reading
+// aloud can legitimately skip or paraphrase ahead. Forward progress
+// (something not yet read) always wins when it clears the threshold — the
+// *first* (nearest) qualifying window wins, not whichever scores highest
+// further ahead, so a word said once goes to its next real occurrence
+// rather than possibly jumping past it to a later, better-scoring match.
+// Only once there's *no* forward match does it look backward, for the most
+// recent (highest-start, i.e. closest to the current position) already-read
+// occurrence, and rewind to just before it — so saying "cat" again after
+// reading "...The cat is big. The cat is strong." un-dims from that second
+// "cat" onward, not the whole sentence, and not the first "cat" either,
+// since the second is more recent. Step mode on a 'text' step only; a no-op
+// everywhere else, since there's nothing to match against.
+function matchSpokenWords(transcript) {
     if (currentMode !== 'step') return;
 
-    const sentences = currentStepSentences();
-    if (sentences.length === 0) return;
+    const rawWords = currentStepWords();
+    if (rawWords.length === 0) return;
 
     const spokenWords = wordsOf(transcript);
     if (spokenWords.length === 0) return;
 
-    let bestIndex = -1;
-    let bestScore = 0;
+    const normalizedWords = rawWords.map(w => wordsOf(w)[0] || '');
+    const windowLen = spokenWords.length;
+    const lastStart = normalizedWords.length - windowLen;
 
-    for (let i = sentenceReadIndex + 1; i < sentences.length; i++) {
-        const sentenceWords = new Set(wordsOf(sentences[i]));
-        const matched = spokenWords.filter(w => sentenceWords.has(w)).length;
-        const score = matched / spokenWords.length;
-        if (score > bestScore) { bestScore = score; bestIndex = i; }
+    for (let start = wordReadIndex + 1; start <= lastStart; start++) {
+        if (windowScore(normalizedWords, start, spokenWords) >= WORD_MATCH_THRESHOLD) {
+            wordReadIndex = start + windowLen - 1;
+            updateWordDimming();
+            return;
+        }
     }
 
-    if (bestIndex !== -1 && bestScore >= SENTENCE_MATCH_THRESHOLD) {
-        sentenceReadIndex = bestIndex;
-        updateSentenceDimming();
+    let backwardBestStart = -1;
+    let backwardBestScore = 0;
+    for (let start = 0; start <= Math.min(wordReadIndex, lastStart); start++) {
+        const score = windowScore(normalizedWords, start, spokenWords);
+        if (score >= backwardBestScore) { backwardBestScore = score; backwardBestStart = start; }
+    }
+
+    if (backwardBestStart !== -1 && backwardBestScore >= WORD_MATCH_THRESHOLD) {
+        wordReadIndex = backwardBestStart - 1;
+        updateWordDimming();
     }
 }
