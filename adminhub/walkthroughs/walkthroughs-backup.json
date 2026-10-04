@@ -1163,11 +1163,8 @@
           },
           {
             "type": "text",
-            "text": "The Lampmaster - Attacks - Phase 1"
-          },
-          {
-            "type": "text",
-            "text": "Jump Attack: This is quite delayed so you may get baited into dodging early at first. If it hits, it will put \"Defenceless\" on your character. This increases damage taken by 25%."
+            "text": "Jump Attack: This is quite delayed so you may get baited into dodging early at first. If it hits, it will put \"Defenceless\" on your character. This increases damage taken by 25%.",
+            "heading": "The Lampmaster - Attacks - Phase 1"
           },
           {
             "type": "text",
@@ -1334,11 +1331,8 @@
           },
           {
             "type": "text",
-            "text": "Dualliste - Attacks - Phase 1"
-          },
-          {
-            "type": "text",
-            "text": "Swiping Combo: A slow, 4 hit attack that is quite easily timed. It is one hit, one jump and then two more hits."
+            "text": "Swiping Combo: A slow, 4 hit attack that is quite easily timed. It is one hit, one jump and then two more hits.",
+            "heading": "Dualliste - Attacks - Phase 1"
           },
           {
             "type": "text",
@@ -1354,11 +1348,8 @@
           },
           {
             "type": "text",
-            "text": "Dualliste - Attacks - Phase 2"
-          },
-          {
-            "type": "text",
-            "text": "Expedition Attack: Do not be fooled by this. In phase 2, there are TWO hits. Parry the first as usual and then listen for the \"ping\" sound cue, indicating a second parry."
+            "text": "Expedition Attack: Do not be fooled by this. In phase 2, there are TWO hits. Parry the first as usual and then listen for the \"ping\" sound cue, indicating a second parry.",
+            "heading": "Dualliste - Attacks - Phase 2"
           },
           {
             "type": "text",
@@ -1741,11 +1732,8 @@
           },
           {
             "type": "text",
-            "text": "Visages - Phase 1 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Determination Mask: This is just a simple 3 hit combo. A long windup for the first hit, parrying just before it slams into the ground followed by a jump counter and another parry."
+            "text": "Determination Mask: This is just a simple 3 hit combo. A long windup for the first hit, parrying just before it slams into the ground followed by a jump counter and another parry.",
+            "heading": "Visages - Phase 1 - Attacks"
           },
           {
             "type": "text",
@@ -1765,11 +1753,8 @@
           },
           {
             "type": "text",
-            "text": "Mask Keeper - Phase 2 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Swing Combo: A 3 hit combo. There is a little windup before the first hit. Hits 2 and 3 follow quick."
+            "text": "Swing Combo: A 3 hit combo. There is a little windup before the first hit. Hits 2 and 3 follow quick.",
+            "heading": "Mask Keeper - Phase 2 - Attacks"
           },
           {
             "type": "text",
@@ -2355,11 +2340,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Phase 1 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Vanish - The boss will attempt to vanish a character, removing them from the fight permanently. This is a 2 hit combo. The first hit is parried as the boss jumps and the second hit needs a gradient counter."
+            "text": "Vanish - The boss will attempt to vanish a character, removing them from the fight permanently. This is a 2 hit combo. The first hit is parried as the boss jumps and the second hit needs a gradient counter.",
+            "heading": "??? - Phase 1 - Attacks"
           },
           {
             "type": "text",
@@ -2409,11 +2391,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Phase 1 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Void Meteors - The boss summons 7 spikes that will pulse and fire one at a time."
+            "text": "Void Meteors - The boss summons 7 spikes that will pulse and fire one at a time.",
+            "heading": "??? - Phase 1 - Attacks"
           },
           {
             "type": "text",
@@ -2654,11 +2633,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Phase 1 - 100% - 50% - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Black Hole - Very simple. There is a distinct sound cue for this as the hole expands. When you hear the cue, parry."
+            "text": "Black Hole - Very simple. There is a distinct sound cue for this as the hole expands. When you hear the cue, parry.",
+            "heading": "??? - Phase 1 - 100% - 50% - Attacks"
           },
           {
             "type": "text",
@@ -2674,11 +2650,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Phase 1 - Sub 50% - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Visages - Shields the boss. This doesn't really affect you as it is assumed at this point you can easily remove shields."
+            "text": "Visages - Shields the boss. This doesn't really affect you as it is assumed at this point you can easily remove shields.",
+            "heading": "??? - Phase 1 - Sub 50% - Attacks"
           },
           {
             "type": "text",
@@ -2694,11 +2667,8 @@
           },
           {
             "type": "text",
-            "text": "??? - Phase 2 - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Dessendre Canvas - At the start of Phase 2, the boss will summon the Dessendre Family Canvas and enter it. When he returns, he will be buffed with Powerful, Shell and Rush."
+            "text": "Dessendre Canvas - At the start of Phase 2, the boss will summon the Dessendre Family Canvas and enter it. When he returns, he will be buffed with Powerful, Shell and Rush.",
+            "heading": "??? - Phase 2 - Attacks"
           },
           {
             "type": "text",
@@ -3833,11 +3803,8 @@
           },
           {
             "type": "text",
-            "text": "Simon - Phase One - Attacks"
-          },
-          {
-            "type": "text",
-            "text": "Remove Dead - If any party member dies, Simon will remove them from the fight. Note that if you get a turn before his next one, you can revive."
+            "text": "Remove Dead - If any party member dies, Simon will remove them from the fight. Note that if you get a turn before his next one, you can revive.",
+            "heading": "Simon - Phase One - Attacks"
           },
           {
             "type": "text",
@@ -4713,6 +4680,6 @@
         ]
       }
     ],
-    "importedAt": "2026-10-03T23:36:26.814Z"
+    "importedAt": "2026-10-04T01:12:35.145Z"
   }
 ]
