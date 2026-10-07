@@ -1114,7 +1114,7 @@
   },
   {
     "name": "clefable",
-    "masterDex": false,
+    "masterDex": true,
     "tradeDex": true,
     "wonderTradeDex": true,
     "pogoDex": true,
