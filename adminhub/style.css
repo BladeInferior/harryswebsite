@@ -1036,6 +1036,17 @@ footer {
     line-height: 1.7;
 }
 
+/* The ◀ ▶ arrows are pinned at a fixed spot — where they sit beside a
+   single-line text step (centred in the 160px minimum) — for every step,
+   whatever its height, so they never move. */
+.reader-step-nav {
+    align-items: flex-start;
+}
+
+.reader-step-nav .walkthrough-step-nav-btn {
+    margin-top: 60px;
+}
+
 .reader-step-content .walkthrough-step-text,
 .reader-step-content .walkthrough-step-image,
 .reader-step-content .walkthrough-achievement-card,

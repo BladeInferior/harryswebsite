@@ -540,7 +540,6 @@ function renderStepView() {
     readerStepContent.innerHTML = '';
     if (step) readerStepContent.appendChild(renderStepElement(step, { trackWords: true }));
     updateWordDimming();
-
     readerStepPosition.textContent = `Step ${currentStepIndex + 1} of ${steps.length}`;
 }
 
@@ -723,6 +722,25 @@ function escapeHtml(str) {
             // thrown out for not matching exactly (a genuine misrecognition
             // into a non-command word still can't be helped, since nothing
             // here can know what was actually meant instead).
+            // Runs of any length are accepted, and a run of "next"s is
+            // forgiving of the recognizer's usual mangling ("nexts", "necks",
+            // "nex", a stray filler word): once at least half the words are
+            // next-like, every next-like word counts as one "next" and the
+            // rest are ignored, so "next next next" always moves exactly as
+            // many steps as were said.
+            const isNextLike = (w) => w === 'next' || w === 'nexts' || /^nex/.test(w) || w === 'necks' || w === 'neck';
+            const nextCount = words.filter(isNextLike).length;
+            if (words.length > 1 && nextCount >= 2 && nextCount * 2 >= words.length) {
+                for (const w of words) {
+                    if (isNextLike(w)) runCommand('next');
+                    else if (COMMANDS.has(w)) {
+                        runCommand(w);
+                        if (w === 'stop') return;
+                    }
+                }
+                continue;
+            }
+
             if (words.length > 1 && words.every(w => COMMANDS.has(w))) {
                 for (const w of words) {
                     runCommand(w);
@@ -742,13 +760,38 @@ function escapeHtml(str) {
         }
     });
 
-    recognition.addEventListener('end', () => {
-        if (!listening) return;
-        try {
-            recognition.start();
-        } catch {
-            stop();
+    // After a navigation command, start a fresh recognition session so the
+    // next "next" isn't waiting on a session that's gone quiet. abort()
+    // fires 'end', which restarts it.
+    const baseRunCommand = runCommand;
+    runCommand = function (cmd) {
+        baseRunCommand(cmd);
+        if (cmd !== 'stop' && listening) {
+            try { recognition.abort(); } catch { /* restarts via 'end' */ }
         }
+    };
+
+    // The engine's continuous session tends to stall or end after a couple of
+    // results, so keep restarting it for as long as the mic is on — retrying
+    // (start() throws until the old session has fully ended) rather than
+    // giving up and leaving the mic looking on but deaf.
+    function restartSoon(delay = 100) {
+        setTimeout(() => {
+            if (!listening) return;
+            try {
+                recognition.start();
+            } catch {
+                restartSoon(250);
+            }
+        }, delay);
+    }
+
+    recognition.addEventListener('end', () => restartSoon(50));
+
+    recognition.addEventListener('error', (e) => {
+        if (e.error === 'not-allowed' || e.error === 'service-not-allowed') stop();
+        // Anything else (no-speech, network, aborted) is followed by 'end',
+        // which restarts.
     });
 
     micBtn.addEventListener('click', () => {
