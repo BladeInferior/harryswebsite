@@ -4681,5 +4681,1704 @@
       }
     ],
     "importedAt": "2026-10-04T01:12:35.145Z"
+  },
+  {
+    "gameName": "Mafia III Walkthrough",
+    "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough",
+    "sections": [
+      {
+        "title": "1. Mafia III: Definitive Edition (Xbox One) Walkthrough Overview",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/1",
+        "steps": [
+          {
+            "type": "text",
+            "text": "Welcome to the Mafia III walkthrough!"
+          },
+          {
+            "type": "text",
+            "text": "Mafia III follows a Vietnam veteran, Lincoln Clay, as he returns home from war to a city that is controlled by the mob. Lincoln reminds me very much of Sylvester Stallone’s “Rambo” character, a Special Forces veteran that desires to leave his experience of war behind as he looks forward to life away from combat. However, when faced with an injustice, he sets out on a path of revenge against those who wronged him."
+          },
+          {
+            "type": "text",
+            "text": "Mafia III takes place in New Bordeaux, a re-imagining of New Orleans in the late 1960’s, a city that has only recently moved beyond segregation, but has yet to fully accept minority communities intermingling in white society. With this in mind, this game takes a more serious approach to the culture of this time period, which may be considered offensive and repulsive. Comparing this to a game like GTA, which takes on a more satirical perspective, this one is grim, but honest to the American culture of the time period. With strong racist and bigoted language throughout much of the dialogue, this may not be suitable for all ages."
+          },
+          {
+            "type": "text",
+            "text": "The achievement list, while fairly straightforward, is notoriously glitchy. I experienced this first hand, having some of the most time consuming achievements not unlock despite meeting the requirements more than once; more on this in the General Hints and Tips page. Long story short, the game can crash and erase or corrupt your progress towards cumulative achievements. It has also been implied that some progress appears to be erased when you exit the game or turn off the Xbox, but this is not definitive. Erasing your hard drive's saved game data, then reinstalling and replaying the game may help, but that may not be a complete fix. From what I can tell from going through the numerous threads about glitched achievements, the issue has arisen from patches and updates released in March 2017. Therefore, your best chance to reach 100% in the base game may be to install the game from a disc while offline, essentially avoiding the suspected updates; a more detailed method is provided in the General Hints and Tips page or you can visit any number of threads linked to this game or specific achievements for the guidance.",
+            "heading": "Disclaimer!"
+          },
+          {
+            "type": "text",
+            "text": "Potential issues aside, this should only require two playthroughs. A second playthrough will not need to complete the final story mission, but is needed due to competing story actions that must be taken during your takeover of the city. As you progress through the story, you will be taking over control of Rackets and Districts one-by-one, then reassigning operational control of these to your own underbosses. Your first playthrough should be your more time consuming run, paving the way for a focused and efficient second playthrough to reduce your overall time played.",
+            "heading": "Playthrough Breakdown"
+          },
+          {
+            "type": "text",
+            "text": "During your first playthrough, you will want to rack up specific kills/takedowns, perform various feats in vehicles, and acquire/spend enough money to complete the various non-story related achievements. You will also be getting each story related achievement as you slowly dismantle the mob operation. You must decide on the first run whether to flip or kill all informants and racket bosses, then do the opposite on the second run to complete those requirements. There is little to no room for error on this, so be consistent or else a third playthrough may be needed. I strongly recommend flipping all possible targets on the first run then focusing on a lethal second run."
+          },
+          {
+            "type": "text",
+            "text": "Some good news is that there aren't really any collectible based achievements, despite having several items of interest. The only caveat to this is that in order to flip bosses, you will need to wiretap specific junction boxes; for which you will need to collect a portion of the available fuses that can be found throughout the city. As long as you concentrate on the junction boxes that are needed, this shouldn’t be too cumbersome to accomplish. Difficulty is also not an issue, so feel free to play on the easiest difficulty to help you breeze through combat. Glitched achievements aside, the achievement list is quite straightforward and should be relatively easy to complete."
+          },
+          {
+            "type": "text",
+            "text": "At the time of writing the walkthrough, all the DLC was free so there should be no reason to miss these achievements as well. The DLC introduces three new story lines, optional side missions, additional vehicles, and new weapons; each with their own set of related achievements to unlock. Achievements not directly story related can be earned while progress through the main story or during the covered DLC campaign. These additional achievements should come easy enough, not requiring much additional work to complete each of these to 100%.",
+            "heading": "DLC"
+          },
+          {
+            "type": "text",
+            "text": "NOTE: If playing from a disc, you may want to wait until the base game achievements are 100% earned before installing the DLC, due to the known issues with glitched achievement progress that are present due to updates made to make way for the DLC."
+          }
+        ]
+      },
+      {
+        "title": "2. Mafia III: Definitive Edition (Xbox One) General Hints and Tips",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/2",
+        "steps": [
+          {
+            "type": "text",
+            "text": "BE WARNED! I experienced plenty of glitches and bugs that caused some disruption during gameplay and frustration over achievements not unlocking. As far as gameplay, the game froze for a few seconds, quite frequently, and even crashed on several occasions. Another issue was that there were times when the mission target or objective didn’t appear where the marker indicated. Additionally, the prompt to open a door or speak to a mission contact didn’t appear, effectively stalling progress. While this was a nuisance, this was easily corrected by going into the game’s menu and reloading to the last checkpoint. Another common occurrence was that the selected mission’s waypoint would switch to a different mission and objective while driving, or the waypoint marker would direct me to the previously selected mission objective, despite manually selecting a new objective. These were all annoying, but fall far short in comparison to the numerous achievements that didn’t not unlock.",
+            "heading": "Glitches & Bugs"
+          },
+          {
+            "type": "text",
+            "text": "After two playthroughs, while playing online and with the most recent updates, here are the achievements that didn't unlock for me; which unfortunately align with some of the more common threads/complaints with this game: Earn/Spend $500k, Kill/Flip Racket Bosses, 100/300 takedowns, 10 Molotov kills, and earn Loyalty with all underbosses. I was able to correct most of the failures to pop these achievements by deleting the game and saved profile data, then reinstalling the game and playing while offline, or doing all the requirements in one session. However, after six playthroughs I still did not get the following: Family, The New Boss, and No Loose Ends. According to the site, all of these achievements are showing recent activity with getting unlocked, so some may just be more unlucky than others. At the bottom of this page, I will include a potential work around for some of the known glitchy achievements that have worked for some, according to the threads."
+          },
+          {
+            "type": "text",
+            "text": "Combat Related Cumulative Achievements",
+            "heading": "General Tips"
+          },
+          {
+            "type": "text",
+            "text": "For the combat related achievements, you will need to accumulate kills by doing specific tasks or by using specific weapons/equipment against hostile combatants. The achievements listed below can be progressed at pretty much any point in the game, so I have them detailed here. The related achievements not included here will be discussed during the story portion of the walkthrough, once the specifics for those are acquired, become accessible, or where it makes sense to do so. Unfortunately none of the achievements track via the app counter, at least they did not for me when playing in 2020. If you manually track your progress, you can better know if you are close to unlocking the achievement or whether your progress may be glitched. Either way, you will know where you stand prior to completing the game and it can potentially inform you on how other achievement progress may be affected.",
+            "heading": "Achievement Progress"
+          },
+          {
+            "type": "text",
+            "text": "Please take note: Progress towards combat achievements is only earned when killing hostiles. Police Officers, indicated by blue markers on the map, are not considered as hostile unless first provoked into attacking. You can instigate police either by committing a crime in front of an officer or allowing a witness to report your crime and being subsequently spotted by a patrol. Police become hostile once you are being actively pursued within a Red Zone, while the Blue Zone indicates they are searching for you. However, it is unclear if kills in this phase contribute towards your overall progress. All other enemies, indicated by red markers on the map, will always be considered hostile and kills against them will contribute towards the associated achievements."
+          },
+          {
+            "type": "text",
+            "text": "Melee Takedown",
+            "heading": "Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "While in combat, pressing will simply punch the target, do this several times to eventually get a takedown prompt."
+          },
+          {
+            "type": "text",
+            "text": "Sprint at an unaware or fleeing enemy, pressing when within range.",
+            "heading": "Charge Takedown"
+          },
+          {
+            "type": "text",
+            "text": "Press when prompted during an enemy melee. (Unknown if this contributes to the 300 takedowns needed)",
+            "heading": "Counter “Takedown”"
+          },
+          {
+            "type": "text",
+            "text": "Press on an unsuspecting enemy. Can be done from cover (press to get into cover), from behind (press to enter “sneak mode”), or on an enemy who is caught off guard. Can be paired with Whistling to lure enemies to more discrete areas. This is helpful to help increase your chances of remaining unnoticed longer, as you thin the ranks. Accumulate 100 Stealth Takedowns to earn an achievement.",
+            "heading": "Stealth Takedowns"
+          },
+          {
+            "type": "achievement",
+            "name": "Shh, shh",
+            "description": "Performed 100 Stealth Takedowns on enemies"
+          },
+          {
+            "type": "text",
+            "text": "When facing an alerted enemy, Press and Hold , releasing the button when the meter falls within the window, to unleash a vicious assault on your target and terrorize any witnesses. A terrorized onlooker will fall to the ground, panicked, which allows you to charge at them, shoot back, or run for cover while they are unable to engage for a short period. Do this on 50 targets in total for an achievement.",
+            "heading": "Brutal Takedown"
+          },
+          {
+            "type": "achievement",
+            "name": "Closed Casket",
+            "description": "Performed 50 Brutal Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "If you chain three brutal takedowns back-to-back-to-back, with no other kills in-between, you will unlock the other achievement. Make sure you don’t go after a terrorized enemy too early, otherwise you will simply get the normal takedown prompt. This is easily done at any racket related mission with at least three enemies available. Make sure you have adrenaline shots on hand, just in case, as you will likely be shot trying to charge at an enemy."
+          },
+          {
+            "type": "achievement",
+            "name": "Sending A Message",
+            "description": "Chained together 3 or more Brutal Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "With the first two achievements for stealth and brutal takedowns unlocked, that leaves another 150 kills to be completed as you see fit. Once you reach 300 total takedowns, you should unlock the remaining takedown achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Combat Specialist",
+            "description": "Killed 300 enemies using Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "Molotov",
+            "heading": "Weapons/Equipment"
+          },
+          {
+            "type": "text",
+            "text": "Enemies will occasionally throw a molotov or grenade. You will need to have 10 enemies kill themselves with their own molotov. This is accomplished by punching or shooting an enemy before he can throw the incendiary, causing it to drop nearby and hopefully engulfing themselves instead. Enemies can often be heard yelling various phrases prior to throwing the device, such as “Light him up” or “Tossing a Molotov!” Once you know a Molotov is imminent, shoot them before the incendiary is released. Once you have caused 10 enemies to kill themselves, the achievement will unlock."
+          },
+          {
+            "type": "text",
+            "text": "NOTE: Remember that the target must be killed by the fire for this to count. If your target survives the flames, chances are your weapon of choice isn't reducing their health enough for them to become fully engulfed. If you notice this, try shooting them in the body twice before the Molotov explodes on the ground; this worked for me while using the Silenced Masterson handgun."
+          },
+          {
+            "type": "achievement",
+            "name": "Flambé",
+            "description": "Made 10 enemies kill themselves with their own Molotovs"
+          },
+          {
+            "type": "text",
+            "text": "These were added in an update and are available for purchase in the main story, once you gain access to the Weapon Dealer associate. These can be thrown like other equipment, or dropped while driving to destroy a pursuing vehicle by pressing . On foot, this is best paired with the Screaming Zemi, which will help concentrate a group of enemies, allowing you to toss a mine into the group and get multiple kills. This will help increase your kill count quickly and reduce the number of times needed to replenish your stock. Rack up 30 kills with this item to earn the associated achievement under the Faster, Baby! DLC list.",
+            "heading": "(DLC/Update) Proximity Mine"
+          },
+          {
+            "type": "achievement",
+            "name": "Danger Close",
+            "description": "Killed 30 enemies using Proximity Mines"
+          },
+          {
+            "type": "text",
+            "text": "This was added in an update and becomes accessible shortly into the first Racket takeover. Pressing while aiming will enter Slow-Mo shooting, allowing you to gain the upper hand in a firefight. This mode is helpful in numerous scenarios to help either turn the tide of a firefight or end one before it can even start. Pairing this with the use of a Screaming Zemi can help group up multiple enemies and allow you to quickly dispatch them in a single activation of Slow-Mo. This method is ideal to help you work towards two related achievements.",
+            "heading": "(DLC/Update) Slow-Mo Shooting"
+          },
+          {
+            "type": "text",
+            "text": "The first will be to get five headshots within five seconds. After the first Racket is taken over, you will have access to the Zemi. With this item in hand, find an area with at least five enemies, such as an Enforcer location. Toss the Zemi in the middle of the area to attract all enemies towards the device, effectively confining them into a small cluster. Once you can target five effectively, enter Slow-Mo shooting and a quickly shoot the five hostiles in the head. I personally had problems with weapon accuracy resulting in an enemy getting shot in the upper body or shoulder rather than head, meaning I had to retry this a few times. Once you achieve this feat, you will get the first intended achievement."
+          },
+          {
+            "type": "text",
+            "text": "***This can be done without Slow-Mo as well, it is just that much more difficult. If playing the base game offline, you will not have access to Slow-Mo shooting. You can use the same process, but I would just add the recommendation that you should use a silenced weapon and work to target enemies that are not in view of the others first, to avoid alerting them all and driving them into cover."
+          },
+          {
+            "type": "achievement",
+            "name": "Recruited to 5th SFG",
+            "description": "Performed 5 headshots in 5 seconds"
+          },
+          {
+            "type": "text",
+            "text": "The second is essentially a repeat of the previous achievement, without the five second limitation and only requiring four kills during a single use of Slow-Mo. Headshots are not required but are recommended for quick kills. After 10 instances of earning 4+ kills in a single use of Slow-Mo, you will unlock the other achievement, this one being listed under the DLC list for Sign of the Times."
+          },
+          {
+            "type": "achievement",
+            "name": "Pop, Pop",
+            "description": "Killed 4 enemies using Slow-Mo Shooting 10 Times"
+          },
+          {
+            "type": "text",
+            "text": "There are several achievements pertaining to vehicles, only one of which will require a really fast car. Two of the three fastest cars are only acquired after specific progress in the story, one of which I will point out in the story portion of the guide and direct you back here for the tips listed in the relevant section below.",
+            "heading": "Vehicle Related Achievements"
+          },
+          {
+            "type": "text",
+            "text": "Just take note, the in-game driving is not as polished as some other open world games. I found the vehicles' handling mechanic to be difficult to get used to, especially with faster cars. Taking turns at any significant speed will undoubtedly cause you to skid across the road and into the building or whatever is on the other side of the curb; this is if you don't ram into one of vehicles at the intersection before then. The environment is also troublesome, most objects along the way are solid and any sort of contact will stop you in your tracks. Some of the items that can be broken down or driven through, only do so if hit just right. Just be aware of these issues, as it will hinder your ability to flee police or hit squads effectively until you can get the hang of what your vehicle is capable of."
+          },
+          {
+            "type": "text",
+            "text": "These are shown on the mini-map as a blue car indicator, and are commonly found driving around the city; or you can influence a cop to come to you by committing a crime and allowing a witness to call the police. Either hijack the vehicle or jump into one that the driver already exited.",
+            "heading": "Steal a Police Car"
+          },
+          {
+            "type": "achievement",
+            "name": "Code 112",
+            "description": "Stole a Police car"
+          },
+          {
+            "type": "text",
+            "text": "Escape a Police Chase after two minutes"
+          },
+          {
+            "type": "text",
+            "text": "Since the above action will likely result in the police chasing you, this would be a good time to escape after being chased for two minutes. This is relatively easy to do, just make sure that you remain in a red zone, which means the police can see you and are actively in pursuit. Drive around the block a few times, make sure you let them catch up so they don't lose visual and you downgrade to a blue zone, which is where police are searching for you. After two straight minutes in a red zone, you can either do vehicle takedowns, cut through some alleys, or speed away to enter the blue zone. After remaining unseen for about 30 seconds in the blue zone, the search is called off and you will earn an achievement for your effort. There is an associate upgrade (Dispatcher, under Burke) that you can call in as a favor to call off the cops, but I am not sure if that will count as an \"escape\" to unlock the achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Insurance Risk",
+            "description": "Escaped a Police Zone after being chased for 2 minutes"
+          },
+          {
+            "type": "text",
+            "text": "Equipping your handgun while driving will prompt a targeting reticle to appear when viewing a hostile or police vehicle. With a vehicle in view, press to cycle through the available vehicle targets and to shoot once the reticule turns green. Shooting out both the back or front tires will cause the vehicle to spin out of control or flip over and explode. This can be done while giving chase or the more likely scenario of being chased. While being chased, press and hold to look backwards to view and target the pursuing vehicle first. There is an alternative ramming option, but that is more complicated and not recommended as you risk wrecking your car, so stick to shooting tires. Once 10 vehicles have been taken out of action, you will earn the associated achievement.",
+            "heading": "Vehicle Takedowns"
+          },
+          {
+            "type": "achievement",
+            "name": "Wrecker",
+            "description": "Executed 10 Vehicle Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "While traveling at 75mph or higher, turn left or right while using the handbrake (hold ) to perform a high speed U-turn. As long as you accomplish a 180 degree turn without colliding into anything, then the next achievement should unlock.",
+            "heading": "High Speed U-Turn"
+          },
+          {
+            "type": "achievement",
+            "name": "One Good Turn",
+            "description": "Made a 180 degree turn at high speed without hitting anything"
+          },
+          {
+            "type": "text",
+            "text": "The next achievement requires you to hold a drift for five seconds. This is easiest done off-road as you do not maintain the same level of traction as you do on a road, which will help extend your drift. You want to find a good place with a lot of open grass and few obstacles. Once in an ideal location, accelerate into the grass/dirt, then tap the handbrake and swerve left to right, to have your vehicle fishtail. Do this for five seconds, as long as your back tires don’t completely regain traction, you will get the next achievement.",
+            "heading": "Long Drift"
+          },
+          {
+            "type": "achievement",
+            "name": "New Bordeaux Drifter",
+            "description": "While driving, drifted for at least 5 seconds"
+          },
+          {
+            "type": "text",
+            "text": "Accomplish this by driving your vehicle off any one of the numerous ramps found around the city. As long as you don't flip upside down while in the air, you should land on your wheels and earn the achievement, provided you travelled at least 50 meters. Obviously the faster you are traveling when you take the ramp, the further you can expect to travel; so having a faster vehicle will improve your success.",
+            "heading": "50 Meter Jump"
+          },
+          {
+            "type": "achievement",
+            "name": "Testing the Shocks",
+            "description": "While driving, performed a 50-meter jump and landed on your wheels"
+          },
+          {
+            "type": "text",
+            "text": "You will need a vehicle with a speed rating of at least 73 to even reach 120mph, but realistically 75 is necessary to offset loss in speed for traveling slightly uphill or minor turning. There are three vehicles in the base game that can reach this feat without relying on vehicle upgrades: De’Leo Stiletto (77), Griffin Marauder (77), and De’Leo Traviata (79). The Traviata is granted through story progression and is recommended to make this feat obtainable, as you can even have this vehicle delivered from the Burke associate. As you increase your underbosses earn, certain vehicle upgrades will also be provided automatically, which further improves your vehicle's performance and makes this even more obtainable. With your capable car of choice, use one of the long stretches of road, most likely a bridge or interstate that runs between or through several districts; an example is the elevated interstate that runs North to South, between Tickfaw Harbor and Southdowns. Wherever you can, make sure to keep your vehicle traveling over 120mph for at least 20 seconds. Once you reach this feat and your speed drops below 120mph the achievement will pop.",
+            "heading": "120mph for 20 seconds"
+          },
+          {
+            "type": "achievement",
+            "name": "Custom 358",
+            "description": "Drove at 120 mph or faster for 20 seconds"
+          },
+          {
+            "type": "text",
+            "text": "There are a few achievements related to money that you should be aware of. Most of the games involves Lincoln disrupting the flow of money from the racket operations, thus crippling the Marcano operation. Therefore, almost everything you do to dismantle this operation will have some cash value that you profit from, either directly from picking up stacks of cash found in hostile areas, killing hostiles, or completing racket objectives; or indirectly from a kickback, a percentage of a controlled rackets earnings. The DLC Faster, Baby! added the Herbalism operation that is another source for earning additional funds during your playthrough.",
+            "heading": "Money Related Achievements"
+          },
+          {
+            "type": "text",
+            "text": "For starters, all money picked up or earned from your endeavors will accumulate in your wallet, until it is either taken to your stash (a safe in Sammy's Bar) or handed over to the consigliere (Vito perk). Money in the wallet is at risk of loss, as it will be cut in half if you are killed during the playthrough. Therefore, it is best to regularly deposit funds in the safe to avoid losing large sums. This process become exponentially easier once you acquire the Consigliere perk, as your contact will come to you and will safely hold onto your funds, rather than having to drive across town to place it in the safe yourself. Money in the stash is still accessible when purchasing items, as any purchases made in excess of the funds in your wallet will be deducted from the stash; so there is no downside to depositing your money regularly.",
+            "heading": "Wallet vs Stash"
+          },
+          {
+            "type": "text",
+            "text": "Once you have a combined total (current wallet $ + current stash $) of $150,000 you will earn an achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Cash in Hand",
+            "description": "Saved $150,000 between your wallet and the bank"
+          },
+          {
+            "type": "text",
+            "text": "Taking over rackets allows you to assign those operations to one of three potential assets. Lincoln in turn is provided with a kickback, a percentage of the asset's total earn. The kickback varies based on the loyalty of said asset, maxing out at 2% every 24 hours in-game; which is roughly 1 hour of real time in gameplay. This kickback does not accumulate, so it will need to be picked up regularly; again the consigliere perk can help here, once upgraded it will automatically pick up your kickback when called. Assigning more rackets, completing trafficking missions, or flipping and recruiting informants and racket bosses are ways to help increase the rackets earn.",
+            "heading": "Racket Earn & Kickback"
+          },
+          {
+            "type": "text",
+            "text": "There is an achievement for earning $10,000 in a kickback from a single underboss. In order to accomplish this, you will need an underboss to have a total earn in excess of $500,000 and with maximum loyalty (2% of 500k = 10k). This is best paired with the Just You And Me achievement, as you will need to assign most of the rackets to one underboss to get their earn high enough. After that, it is a matter of allowing the earn to accumulate until there is at least $10,000 to be picked up. Retrieve it in person or use the upgraded consigliere perk to unlock the achievement. This is outlined in the Story - Part 2 page as well."
+          },
+          {
+            "type": "achievement",
+            "name": "Big Earner",
+            "description": "Received $10,000 in earn from one Underboss"
+          },
+          {
+            "type": "text",
+            "text": "All money earned and spent is supposed to count toward the final two achievements. Therefore, all funds lost upon a death or money spent on equipment, weapons, or upgrades should accumulate toward the $500,000 earned and spent. Given that money can be lost upon a death, you will likely need to accumulate more than $500,000 in order to spend $500,000, depending on how often you are killed and/or how diligent you are about moving your funds to the stash. Progress on these two achievements are known to be glitchy, and progress towards them will likely be lost; please see the achievement workaround in the section below if you experience this issue.",
+            "heading": "Cumulative Progress"
+          },
+          {
+            "type": "text",
+            "text": "However, you should unlock an achievement once you have accumulated $500,000 and another for spending an accumulated $500,000; both of which can easily be earned in one playthrough."
+          },
+          {
+            "type": "achievement",
+            "name": "Baby, You're a Rich Man",
+            "description": "Earned $500,000"
+          },
+          {
+            "type": "achievement",
+            "name": "Hole in Your Pocket",
+            "description": "Spent at least $500,000"
+          },
+          {
+            "type": "text",
+            "text": "GLITCHED ACHIEVEMENT STARTING POINT & WORK AROUND"
+          },
+          {
+            "type": "text",
+            "text": "There are a few options that are floating around the threads as solutions or even a work around for some achievement glitches. Some players have reported success, while others were still unlucky and continued to have issues. Therefore, these tips may or may not help, but what other options do you have?"
+          },
+          {
+            "type": "text",
+            "text": "Below are the two main methods that have shown promise, which will depend on which game media you have in your possession, and should be your starting point."
+          },
+          {
+            "type": "text",
+            "text": "If you are in possession of the Mafia III game on disc, your best option would be to install the original version of the game from the start while offline, then continue to play through the game offline to avoid having the updates installed.",
+            "heading": "Hard Disc - Initial Release"
+          },
+          {
+            "type": "text",
+            "text": "This is likely your best option to complete the base achievement list, as the evidence suggests the root cause of certain achievements glitching and not unlocking arose from a March 2017 update. Therefore, theoretically, playing the base game or a version of it prior to March 2017 should limit the risk of the glitches and allow you to complete the full base achievement list unhindered. Just note, achievements will not pop while playing offline, it is only after reconnecting to Xbox Live that you will know if you have earned any of the cumulative achievements. To aid in tracking, keeping a side record of takedowns and Molotov kills may help, but just know that you can easily grind all of these achievement requirements in one session while online if you didn't unlock them over the course of your playthroughs."
+          },
+          {
+            "type": "text",
+            "text": "The main purpose of your offline playthroughs will be to flip/kill the required number of bosses, earn $500k, and gain the loyalty of each underboss. These are the achievements that are known to be glitched, whereas the other problematic achievements can be earned through grinding in one session, or by using the work around listed below. You will need to complete the story on the first run, but the second should only require completion up to assigning the ninth district to your underboss. At this point, you should be able to go online to sync up your progress earned between the two playthroughs. Then, install the game updates and the DLC. When you load up your second run progress, you are already far enough into the story to access the new missions, effectively avoiding the need to start a third playthrough."
+          },
+          {
+            "type": "text",
+            "text": "If you purchased the digital version of the game recently, then you will be automatically upgraded to Mafia III: Definitive Edition during installation/update. The Definitive Edition has replaced the base game on the marketplace, so I am not sure you can even find or download the base version from a digital source going forward. Since this version is automatically updated, there will be no benefit or protection from corruption/glitches when playing offline. Fewer issues have been reported since the release so there is hope that this issue has been resolved, but since I played online from a hard copy initially, I cannot confirm one way or the other.",
+            "heading": "Digital Download - Definitive Edition Upgrade"
+          },
+          {
+            "type": "text",
+            "text": "If you had purchased and installed the game prior to the Definitive Edition upgrade, then you may still be at risk since you will likely need to install some updates or already have the defective updates installed to play the game. If you are able, deleting the game and your saved profile data, then reinstalling the game may be an option to help limit this risk. Again, I cannot be certain this will help or not. Your playthrough using this method will follow the guide as is, as you are already online and should unlock your achievements as you meet the criteria. It may be worth keeping a side record of kills, to make sure you unlock those achievements when you should, and to know whether or not you are impacted by game save corruption before you complete an entire playthrough."
+          },
+          {
+            "type": "text",
+            "text": "A game crash will likely reset your progress toward these achievements, and some are reportedly reset upon exiting the game or turning off the Xbox. Therefore, one workaround for this is to grind all the requirements in one sitting. Some achievements would be easier to accomplish this way than others.",
+            "heading": "Cumulative Achievements"
+          },
+          {
+            "type": "text",
+            "text": "Shh, Shh / Closed Casket / Combat Specialist"
+          },
+          {
+            "type": "text",
+            "text": "To avoid progress resetting, you will want to grind all the required kills in one sitting, which is actually easier than it sounds. Some enemy locations will reset when you travel far enough away from the location, essentially repopulating the enemies in the previously cleared area. Such locations are the Racket Base of Operations, where the racket boss will be located once you have destroyed enough of the racket's earnings. Delray Hollow has two locations, Perla's Nightclub (Prostitution) and the First Baptist Church (Smack) that are discovered during the story mission The Way of Flesh. Either location can be repeatedly raided up until the racket boss reveals himself. The church has a better easier layout to move through and is recommended to use. This location normally contains nine enemies, of which one will arrive via a truck from the south alley shortly after entering the area. Once all hostiles are taken out, exit the area via the south alley and continue south a little ways until the enemies respawn. Once you are roughly just past the building on the corner, with a telephone booth, you should be able to see the hostile markers on the mini-map pop up again. Now you can re-enter the area and repeat the kills as need to earn the takedown achievements. Both stealth and brutal takedowns contribute to the 300 needed, so make sure to get both of those completed (if needed) on your way to 300."
+          },
+          {
+            "type": "text",
+            "text": "Use the same location as the above, the church in Delray Hollow, to grind these kills as well. At least two enemies in this location will throw molotovs when in the combat state. Like the above method, flee the area to respawn the enemies and repeat to grind all 10 kills in a relatively quick manner.",
+            "heading": "Flambe"
+          },
+          {
+            "type": "text",
+            "text": "There is a money earning glitch that can help you rack up $500,000 relatively quickly. In the French Ward, start the racket takeover for drugs. Interrogate informants until you receive the mission to Tail bagman to the find Gaston's stash. Drive around until you locate the target vehicle and tail them to the stash location. Clear the area of hostiles, then grab the $10,000 off the table in the back of the warehouse before leaving the area. Similar to resetting the hostiles in the above achievements, you will need to leave the area, roughly 100m away, to essentially reset the cash bundle. Re-enter the warehouse to find that the cash bundle has respawned on the table in the back corner once more. Repeat this until earning $500k and the achievement unlocks, or if you are offline, repeat up to 50 times to have picked up all $500k in one go. Please note that repeating this pick up will easily meet your cash destruction requirement for the racket, but if you return to the detective to advance the racket takeover this glitch will no longer be available.",
+            "heading": "Baby, You're a Rich Man"
+          },
+          {
+            "type": "text",
+            "text": "This glitch is still available as of November 2020 and is yet to be patched, and likely never will be as support for this game seems non-existent."
+          },
+          {
+            "type": "text",
+            "text": "Accumulate $500,000 between your stash and wallet during normal progress (or by using the above money glitch) in one playthrough, then spend it all in one go to avoid your progress being reset. Without using the glitch, you will need to focus on grabbing the money pickups, retrieving your kickbacks, and completing most of the available racket missions during the story. Additionally, be sure to call the consigliere often so you are not killed while holding a large sum of cash in your wallet. Once you have banked $500k, call the weapon dealer and go on a spending spree, buying weapons and available upgrades will allow you to spend over $500k in a matter of seconds to earn the achievement.",
+            "heading": "Hole in Your Pocket"
+          },
+          {
+            "type": "text",
+            "text": "No Loose Ends / The New Boss"
+          },
+          {
+            "type": "text",
+            "text": "Reportedly, this can be earned in one sitting. Which means you cannot turn off or exit the game. You will need to know exactly what needs to be done to limit your game time on this run and hope the game doesn't crash in the process. A focused path is ideal here, don't worry about killing every mobster or grabbing every small stack of cash. Instead focus on the primary targets, just clip the enforcer, rush in and grab the stash, or plant the explosive and get out. When it comes to the boss takedown, head straight for main target, as the rest of the hostiles will disappear after grabbing the boss anyway. Just remember that you will need to eliminate the district bosses in the first six locations, in order to access the final three district's racket mission: Frisco Fields, Southdowns, and the French Ward. For the New Boss achievement, you can ignore the Frisco Fields district, as you cannot flip that boss anyway. These would be several hour long endeavors, so this may only be an option for the most dedicated players out there."
+          },
+          {
+            "type": "text",
+            "text": "You should be able to able to unlock this by completing all five tasks for each of agenda missions for the respective underbosses in one go. You will need to leave this mission series untouched until late in the story, as it will only become fully accessible after entrusting each underboss with three districts. If you still don't unlock this while online, you may have to complete a few trafficking missions as well. The idea here is that these trafficking missions will help earn additional loyalty that may have been earned but reset in previous sittings where districts/rackets were assigned. I cannot independently verify whether or not this will work, as I gave up on trying to get this after three failed attempts but also did not attempt this method.",
+            "heading": "Loyalty"
+          },
+          {
+            "type": "text",
+            "text": "This has a bugged flag so I am adding it here. I personally didn't have any issues with this, but would assume this suffers the same accumulation problem that the takedowns or Molotov achievements experience; resetting upon a game crash and/or exiting the game. Like those achievements, a work around would be to grind all the kills in one sitting. Due to limited availability and only being able to stock up on your supply via the weapon dealer, this one is a bit harder to grind. Luckily, there is a location where you can earn 10+ kills with one usage, but it is during the Sign of the Times DLC storyline. I will point this location out in the story portion of the walkthrough; but essentially, you will travel to a mission location and are required to cross a balcony where 20+ cult members are congregating below. These hostiles tend to run away at the first sign of trouble, but if you can toss a mine into the middle of the group before they are spooked, you can easily kill 10+ cultists. If you don't get the achievement on the first attempt, reload the latest checkpoint to be returned to the previous room and have another go of it. Repeat as many times as necessary, but really two or three should earn you the 30 kills needed for the achievement.",
+            "heading": "DLC - Danger Close"
+          }
+        ]
+      },
+      {
+        "title": "3. Mafia III: Definitive Edition (Xbox One) Story - Part 1",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/3",
+        "steps": [
+          {
+            "type": "text",
+            "text": "Welcome to the beginning of your adventure in New Bordeaux. In the section below, I aim to help walk you through your mission progress, as you work to complete the various story related achievements. Story mission progress is fairly linear, as completing one will lead to the next; therefore I don't list each mission in the section below. I do try to provide useful tips where they may be helpful, but I do not intend to provide a detailed breakdown of how to complete each task set before you on your path through the story. The bulk of the story missions can be approached in many different ways, and the mission waypoints will generally direct you to where you need to go anyway. Further on in the guide, I will outline the racket mission objectives so you know what is available and hopefully help provide you with some helpful mission details to better steer you in the right direction. This guide is intended to be more of a reference than a step by step walkthrough of each task set before you, I encourage you to play as you see fit and enjoy the game for what it is."
+          },
+          {
+            "type": "text",
+            "text": "The first few missions are limited on what you can do, so you really want to get through them as quickly as possible. I will provide additional insights at a later point in the story when you really have a greater sense of freedom to explore the city and start working on non-story related achievements."
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – New Bordeaux – The Home Fires Burn"
+          },
+          {
+            "type": "text",
+            "text": "From the beginning, enter the next room as directed. Pick up the body (hold ) and carry it to the northwest exit to reach a small pond. Approach the rail near the “Feed a Gator” sign and press to “Toss Body Over” ,which the alligators will then consume.",
+            "heading": "Mission - Why Take the Chance?"
+          },
+          {
+            "type": "achievement",
+            "name": "Bon Appétit!",
+            "description": "Fed a body to an alligator"
+          },
+          {
+            "type": "text",
+            "text": "Now go ahead and climb over the rail () and allow yourself to be eaten as well."
+          },
+          {
+            "type": "achievement",
+            "name": "Next Time Swim Faster",
+            "description": "Got eaten by an alligator"
+          },
+          {
+            "type": "text",
+            "text": "Reload the latest save and progress through this mission and the next few missions as directed."
+          },
+          {
+            "type": "text",
+            "text": "Mission - Never Going to Be Over"
+          },
+          {
+            "type": "text",
+            "text": "Shortly into this mission, you will learn about whistling (hold ). This is one of the best tools to help aid in maintaining stealth, and should be used often to draw targets to less visible locations for a discrete takedown. If you need additional info on the achievements related to this, please reference the General Hints and Tips page."
+          },
+          {
+            "type": "text",
+            "text": "After dealing with Baka, enemies start tossing molotovs into the building as you attempt to exit. Keep an eye out for enemies that are preparing to throw these, and shoot them before they can toss it; this will cause the incendiary to drop nearby and hopefully engulf the thrower in flames. Make 10 enemies kill themselves with their own device over the course of your playthrough (or reload this checkpoint to grind this now) to earn an achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Flambé",
+            "description": "Made 10 enemies kill themselves with their own Molotovs"
+          },
+          {
+            "type": "text",
+            "text": "Complete the next few missions as directed."
+          },
+          {
+            "type": "text",
+            "text": "Now you will have to make your way through the Mardi Gras festivities. Eventually, you are forced to flee from the police in order to reach the getaway car. This is your scripted introduction to Red and Blue Police Zones. In a Red Zone, police are actively pursuing you and will shoot on sight. You will need to break their line of sight to transition to the next phase. In a Blue Zone, police are aware of your presence and are looking for you, and if spotted you will return to the red zone. If you can escape the blue zone, or remain unseen for a period of time, then the pursuit is called off and you can return to normal activities.",
+            "heading": "Mission - …A Friend in Jesus"
+          },
+          {
+            "type": "text",
+            "text": "TIP: Police tend to stick to the roads, only occasionally following you off the standard driving surface if they are in close proximity or you are driving slowly. Therefore, you can often use railroad tracks, alleys, and paths between building to help break line of sight and help you lose your pursuer. You can also use vehicle takedowns or equipment to destroy pursuing vehicles and further aid in you escaping."
+          },
+          {
+            "type": "text",
+            "text": "If you can drag on the chase for two minutes while in the red zone, before escaping, you will earn an achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Insurance Risk",
+            "description": "Escaped a Police Zone after being chased for 2 minutes"
+          },
+          {
+            "type": "text",
+            "text": "You can always go for this later on as well. After ditching the police you will automatically return to Sammy’s for a cutscene."
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – Delray Hollow – Thicker Than Blood"
+          },
+          {
+            "type": "text",
+            "text": "Mission - Somethin’ I’ve Got to Do"
+          },
+          {
+            "type": "text",
+            "text": "Drive to the waypoint and recover your belongings from the basement."
+          },
+          {
+            "type": "achievement",
+            "name": "Somethin' I've Gotta Do",
+            "description": "You collected your things from Sammy's"
+          },
+          {
+            "type": "text",
+            "text": "Meet Donovan at the motel to discuss your next steps and begin recruiting assets.",
+            "heading": "Mission - That’s the Plan Padre"
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – Delray Hollow – The Way of Flesh"
+          },
+          {
+            "type": "text",
+            "text": "This mission will introduce you to the Racket Informant. This is the first (of 20) total informants in the game, of which you will need to kill or recruit 15 to unlock the achievements Live Another Day and Can’t Trust a Rat. Unfortunately this one is scripted to be knocked out, and will not contribute to the 15 needed for either related achievement. Keep in mind which path you want to stick to and be consistent, otherwise you may end up short and may have to do a third playthrough. It is best to pair this up with how you approach the racket bosses as well, for No Loose Ends and The New Boss. Flip both bosses and informants, or kill both, just be consistent. I strongly recommend that you recruit/flip both informants and bosses on this playthrough.",
+            "heading": "Mission - Old Times’ Sake"
+          },
+          {
+            "type": "text",
+            "text": "Once you uncover the Haitian leader’s identity, you will acquire your first Underboss and gain access to your first associate, the Weapon Dealer [1/6 Associate]."
+          },
+          {
+            "type": "achievement",
+            "name": "For Old Time's Sake",
+            "description": "Cassandra agreed to help you kill Marcano"
+          },
+          {
+            "type": "text",
+            "text": "This will be your introduction to the racket takeover, which is the majority of the remaining game, so be prepared to repeat this process many more times. Essentially, you will need to damage the racket’s earnings by the amount listed, which will drive the racket boss out of hiding and allow you to confront them and take over control of the racket. Killing mobsters, stealing cash, destroying racket supplies, and completing objectives all reduce the rackets earn. The first two are more scripted than the rest, so simply follow the mission objectives and the guide below until the next district.",
+            "heading": "Racket - Prostitution - $15,000"
+          },
+          {
+            "type": "text",
+            "text": "Speak to your contact, The Voice, to begin the racket takeover mission. Every racket takeover will begin by speaking to a contact person, who are marked on the map once the story mission for that district begins and they will give you a few objectives to get started.",
+            "heading": "Talk to the Voice"
+          },
+          {
+            "type": "text",
+            "text": "Enter the area and kill enemies as you proceed to the second floor. If you happen to be spotted and enter the combat state, this is actually a pretty good place to chain brutal takedowns as the enemies are spread out and won’t overwhelm you as you move through the area. A brutal takedown is earned by holding B then releasing when the meter falls within the indicated window. This will brutally kill the target and terrorize anyone within line of sight. Do three brutal kills back-to-back-to-back to earn an achievement.",
+            "heading": "Free the strung-out girls"
+          },
+          {
+            "type": "achievement",
+            "name": "Sending A Message",
+            "description": "Chained together 3 or more Brutal Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "The prostitutes are upstairs, locked up in three rooms next to each other. You can either pry them open or hit to kick them in. The far left door has an enemy inside, which makes for a good place to go for Never Saw It Coming. With a weapon in hand, kick open the door then quickly target the enemy inside and fire repeatedly until he is killed. If you did this in less than two seconds, you will earn another achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Never Saw it Coming",
+            "description": "Killed an enemy within 2 seconds of kicking open a door"
+          },
+          {
+            "type": "text",
+            "text": "Finish up at the club and then head out to the next waypoint."
+          },
+          {
+            "type": "text",
+            "text": "Donovan provides you with a radio, which can be used by holding , and allows you to call unlocked associates.",
+            "heading": "Talk to Donovan"
+          },
+          {
+            "type": "text",
+            "text": "Kill Merle’s Pimps (0/2)",
+            "heading": "Return to The Voice"
+          },
+          {
+            "type": "text",
+            "text": "This is where you will be introduced to Racket Enforcers. Any remaining enforcers are recalled to the boss' side once he comes out of hiding, supposedly making the attempt on the boss more hazardous. While noteworthy as their death is to the racket earnings, they provide little additional challenge in combat."
+          },
+          {
+            "type": "text",
+            "text": "Make sure you eliminate both pimps, even if you met the destruction limit after eliminating the first. Killing both will immediately unlock an achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Softened 'Em Up",
+            "description": "Completely weakened a Racket by killing all of its Enforcers"
+          },
+          {
+            "type": "text",
+            "text": "Track Down and Kill Dixie Patrols"
+          },
+          {
+            "type": "text",
+            "text": "This is an unmarked and open ended mission objective that is available as well. Selecting this objective will not produce a waypoint location. Several other rackets have similar objectives as well, and these tend to be helpful to offset any damage shortcomings you may have experienced from missing cash pickups or destroying crates. While unmarked, these can usually be identified by the enemy blimps that appear on the map in an otherwise non-hostile territory. Enemies for this mission are usually in pairs and are in the midst of getting rough with a random pedestrian. Other missions vary slightly but the similar constraint is that they are unmarked; I will note these in the later missions as well, for awareness."
+          },
+          {
+            "type": "text",
+            "text": "With the damage limit met, returning to your contact will have them ask if you want to proceed; doing so will reveal the boss location, but also remove all remaining open objectives for the mission. This only matters in subsequent missions if you missed an informant interrogation, or want to earn additional cash that may have been available at the remaining objective locations. Usually if you meet the damage limit, there is little reason to delay moving on.",
+            "heading": "Return to The Voice"
+          },
+          {
+            "type": "text",
+            "text": "Return to the brothel where you freed the girls previously and you can now confront the racket boss, Merle Jackson. You may have noticed, but when the boss shows up to a location, additional enemies will be on site as well. You can find Merle in the office on the second floor. The interaction with Merle is scripted and you won't get an option to flip him for The New Boss.",
+            "heading": "Kill Merle Jackson"
+          },
+          {
+            "type": "text",
+            "text": "TIP: Once you interact with the boss, all hostiles leave the area. Therefore, you can run straight to the main target, avoiding most enemies and saving some time if you wish."
+          },
+          {
+            "type": "text",
+            "text": "1/18 Boss Killed or 0/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "This racket will be automatically assigned to Cassandra, but later on you will be able to choose which underboss gets the racket/district."
+          },
+          {
+            "type": "text",
+            "text": "At this point, you will also unlock the Screaming Zemi equipment item for reaching enough earn for Cassandra. This is a distraction device and is helpful for gathering targets into a small area, which is quite essential when attempting to unlock the Recruited to 5th SFG, refer to the General Hints and Tips page for more details."
+          },
+          {
+            "type": "achievement",
+            "name": "Recruited to 5th SFG",
+            "description": "Performed 5 headshots in 5 seconds"
+          },
+          {
+            "type": "text",
+            "text": "Wait for Donovan",
+            "heading": "Racket - Smack - $20,000"
+          },
+          {
+            "type": "text",
+            "text": "Reach the next waypoint and interact with the bus bench to start this mission. Here Donovan introduces you to the art of wiretapping. Pry open the box to place the device, completing this step will earn the next achievement.",
+            "heading": "Wiretap the First Baptist Church"
+          },
+          {
+            "type": "achievement",
+            "name": "Standard Communication Grid",
+            "description": "Wiretapped the Delray Hollow Smack Racket"
+          },
+          {
+            "type": "text",
+            "text": "IMPORTANT NOTE: Wiretapping consumes three TL-49 fuses (similar icon as the junction box, but colored in green), and will reveal all noteworthy items and locations within the region associated with that junction box; such as medicine cabinets, TL-49 fuses, and random collectibles, in addition to identifying racket earning operations and hostile locations that are otherwise unmarked. Additionally, wiretapping the junction box linked to the Racket's Base of Operations is required in order to be able to flip the racket boss. While such a location is not usually revealed until the boss is exposed, tapping the correct box before then will mark the location on your map with a white building icon. With 16 flip-able bosses, that means you need a total of 48 (really 40 more as you start off with 8) TL-49 fuses, so be sure to grab nearby ones as you move throughout the city. These can often be found around racket operations, so you won't really need to go out of your way to acquire enough of these."
+          },
+          {
+            "type": "text",
+            "text": "For achievement purposes, you will want to complete this racket without killing any of the enforcers. Kill hostile gang members, steal stacks of money, and smash crates of drugs to deplete the $ and force the boss out without having to kill the enforcers.",
+            "heading": "Back to Racket Busting..."
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Charlie’s Pushers (1/2) – 1/15 Informant - Kill or Recruit"
+          },
+          {
+            "type": "text",
+            "text": "The area where you will be directed is actually the racket's base of operations. Having wiretapped this location, you should see the icon on the map for this as well. These locations will respawn enemies once you exit the area and move away a set distance, which is helpful so that you can grind enemy kills, such as takedowns, in one session. You can respawn this area up until you get the boss to come out. This is a work around for the potential achievement progress glitch, which I described in the General Hints and Tips page.",
+            "heading": "Destroy Charlie's Heroin"
+          },
+          {
+            "type": "text",
+            "text": "Enter the church grounds, eliminate all the hostiles, pick up all the cash, and destroy the smack crates to complete the mission objective."
+          },
+          {
+            "type": "text",
+            "text": "If you so choose, now is a good time to reset the area and grind takedowns and Molotov kills. There are nine enemies within the church grounds, and at least two of them are known to throw molotovs. You can grind all 300 takedowns here to make sure these achievements unlock, which doesn't take as long as it may sound. The easiest way to reset the area is to exit via the back alley to the south, this is opposite the church main entrance and where one enemy drives in once you get into the area. Travel down the alley to the street, continuing south just past the first building should be just enough distance away to reset the area. If you are in a vehicle, you should see the enemies reappear on the mini-map, indicating the area is reset.",
+            "heading": "Grind Takedowns & Molotov Kills*"
+          },
+          {
+            "type": "achievement",
+            "name": "Shh, shh",
+            "description": "Performed 100 Stealth Takedowns on enemies",
+            "heading": "Reach 100 stealth takedowns:"
+          },
+          {
+            "type": "achievement",
+            "name": "Closed Casket",
+            "description": "Performed 50 Brutal Takedowns",
+            "heading": "Reach 50 brutal takedowns:"
+          },
+          {
+            "type": "achievement",
+            "name": "Combat Specialist",
+            "description": "Killed 300 enemies using Takedowns",
+            "heading": "Reach 300 total takedowns:"
+          },
+          {
+            "type": "text",
+            "text": "Finally, if you still need to, also grind 10 enemies killed with their own molotov."
+          },
+          {
+            "type": "achievement",
+            "name": "Flambé",
+            "description": "Made 10 enemies kill themselves with their own Molotovs"
+          },
+          {
+            "type": "text",
+            "text": "Once these are complete, continue with the racket takeover mission. If you grind kills, you will have likely reached the damage limit for the racket takeover, however, be sure you do the next objective at least."
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Charlie’s Pushers (2/2) – 2/15 Informant - Kill or Recruit"
+          },
+          {
+            "type": "text",
+            "text": "Now you will have waypoints for two enforcers, marked with the skull icon. Remember that you do not want to kill either of them in order to get an achievement. If you still need to deplete funds, you should focus on killing the normal enemies, stealing the cash pickups, and/or destroying the smack crates in the enforcer areas; or you can repeat the church area and grind kills to avoid the enforcer area all together, reducing your risk of accidentally killing one of the targets. Once the cash is depleted to zero, you are ready to confront the boss.",
+            "heading": "Kill Charlie's Enforcers (0/2)"
+          },
+          {
+            "type": "text",
+            "text": "If you didn't kill any enforcers, once you agree to progress and forfeit all remaining objectives, you will unlock the achievement.",
+            "heading": "Talk to Donovan"
+          },
+          {
+            "type": "achievement",
+            "name": "I'm Goin' In!",
+            "description": "Attacked a Racket without killing any Enforcers"
+          },
+          {
+            "type": "text",
+            "text": "Enter the church grounds once more and reach the boss. Since the area was wiretapped, you now have the choice between killing () or flipping () the boss.",
+            "heading": "Confront \"Four Finger\" Charlie Kincaid"
+          },
+          {
+            "type": "text",
+            "text": "2/18 Boss Killed or 1/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – Delray Hollow – Pray on the Way Up"
+          },
+          {
+            "type": "text",
+            "text": "Now that both rackets are controlled, you can start the mission to take over the district.",
+            "heading": "Mission - Kill Ritchie Doucet"
+          },
+          {
+            "type": "text",
+            "text": "Go to Baron Saturday's",
+            "heading": "Talk to Cassandra"
+          },
+          {
+            "type": "text",
+            "text": "Head to the theme park and work your way through to the end, where you will find Ritchie in an office overlooking the Bayou Beast ride.",
+            "heading": "Confront Ritchie"
+          },
+          {
+            "type": "text",
+            "text": "NOTE: Ritchie and all the other lieutenants and capos have scripted outcomes, which does not have an impact on the achievement progress regarding racket bosses."
+          },
+          {
+            "type": "achievement",
+            "name": "Pray on the Way Up",
+            "description": "You hung Ritchie Doucet from a Ferris wheel"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Cassandra",
+            "heading": "Mission - That Goes Both Ways"
+          },
+          {
+            "type": "text",
+            "text": "Return to Cassandra to assign her control of Delray Hollow. You will now gain access to the trafficking mission: Are We Cool, as well. These are repeatable missions, but you will want to do at least the first one now."
+          },
+          {
+            "type": "text",
+            "text": "Each underboss has an associated trafficking mission that becomes available after assigning them their first district. These missions, while optional, can maximize your racket's earn and increase the assigned underboss's earning potential. These can be repeated as many times as you have rackets controlled by the associated underboss. You will want to complete at least one of these missions, for any underboss, as doing so will maximize a single racket and net you an achievement. You can go ahead and do this now, or wait until later when you have access to all three trafficking missions.",
+            "heading": "Trafficking Mission Overview"
+          },
+          {
+            "type": "text",
+            "text": "Note: There is a potential need to complete two (maybe even more) of these, for each underboss, after completing the agenda missions; to help increase an underboss's loyalty for the family achievement. I cannot be certain of this, as I did not acquire the achievement myself, but it is suggested to be needed from some of the comments in threads on this topic."
+          },
+          {
+            "type": "text",
+            "text": "If you choose to do this now, return to the First Baptist Church and talk to Cassandra's number two, Emmanuel. Travel to the waypoint in the bayou and steal the boat. Head out to the drop point and retrieve the three air-dropped bundles. Take the boat to the indicated location to move the goods to a truck. Deliver the truck to the racket location to increase it's earn by up to $20,000, which is more than enough to maximize the racket's total earn and unlock an achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Racketeer",
+            "description": "Got the maximum earn from one of your Rackets"
+          },
+          {
+            "type": "text",
+            "text": "You will need to return to Emmanuel to conclude the mission and reset the bayou waypoint to repeat the mission. You can repeat this mission as many times as you have rackets that are not yet maximized. The other trafficking missions are similarly set up... go get the vehicle, and return to the racket."
+          },
+          {
+            "type": "text",
+            "text": "Continue with the story when you are ready."
+          },
+          {
+            "type": "text",
+            "text": "Talk to Donovan",
+            "heading": "Mission - Friend Like These"
+          },
+          {
+            "type": "text",
+            "text": "Grab both Case Files to kick off new missions to recruit additional assets. Since Vito is closest, that is our next destination."
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – River Row – Work the Man Who Bleeds"
+          },
+          {
+            "type": "text",
+            "text": "Head to Vito's",
+            "heading": "Mission - We Partners Now?"
+          },
+          {
+            "type": "text",
+            "text": "Free Vito",
+            "heading": "Find Vito"
+          },
+          {
+            "type": "text",
+            "text": "Reach the waypoint and eliminate the hostiles to rescue Vito. Vito becomes an underboss and you will gain the Consigliere Associate [2/6 Associate]."
+          },
+          {
+            "type": "achievement",
+            "name": "We Partners Now",
+            "description": "Vito agreed to help you kill Marcano"
+          },
+          {
+            "type": "text",
+            "text": "You now have access to start the River Row racket takeover missions. Since you should have Soften them Up and Im Goin’ In out of the way, approach these as you see fit. To avoid a lot of back and forth, it is better to activate both racket missions as quickly as possible, so you make progress on each racket as you move across the district."
+          },
+          {
+            "type": "text",
+            "text": "REMINDER: If you want to flip the boss, be sure to wiretap the region where the racket's base of operations (BoO) is located. This can be done at any point before you physically confront the boss. Most racket missions will have you go to the BoO for one of the objectives in the mission, and I will point this out where applicable in the sections below. With knowing the BoO location, pull up the main map and press to toggle the wiretap map overlay. This will show you which junction box covers what region within the district, allowing you to pinpoint which junction box needs tapping."
+          },
+          {
+            "type": "text",
+            "text": "Talk to Jock Blanchard",
+            "heading": "Racket - Union Extortion - $30,000"
+          },
+          {
+            "type": "text",
+            "text": "Sabotage the union trailersNortheast Trailer - Racket Base of Operations Northwest TrailerSoutheast Trailer"
+          },
+          {
+            "type": "text",
+            "text": "Tail Bagman to Steal Union Stash – tail spawned enemy vehicle to location",
+            "heading": "Kill Union Enforcers (0/2)"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Jock Blanchard",
+            "heading": "-"
+          },
+          {
+            "type": "text",
+            "text": "3/18 Boss Killed or 2/16 Boss Flipped",
+            "heading": "Confront Andy Turetto"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Connie Demarco",
+            "heading": "Racket - Contraband - $20,000"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Roy's guard – 3/15 Informant - Kill or RecruitSteal or Destroy Medical Supply Truck - Racket Base of Operations"
+          },
+          {
+            "type": "text",
+            "text": "Rob the Warehouse",
+            "heading": "Kill Roy's Enforcers (0/2)"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Connie Demarco",
+            "heading": "-"
+          },
+          {
+            "type": "text",
+            "text": "4/18 Boss Killed or 3/16 Boss Flipped",
+            "heading": "Confront Roy Thibideaux"
+          },
+          {
+            "type": "text",
+            "text": "Taking over the first racket will put you over $30k earn, and unlock Vito’s second associate, Hit Squad [3/6 Associate]."
+          },
+          {
+            "type": "text",
+            "text": "Story Mission – River Row – Fish Gotta Eat"
+          },
+          {
+            "type": "text",
+            "text": "Get Grecco",
+            "heading": "Meet Vito"
+          },
+          {
+            "type": "text",
+            "text": "Confront Grecco",
+            "heading": "Kill Marcano's men"
+          },
+          {
+            "type": "text",
+            "text": "This mission can be a bit difficult, just FYI. Meet up with Vito then give chase in Vito's car. Here is where you technically learn the about Vehicle Takedown, if you haven't figured it out already. The mission is a bit annoying because as you give chase, you are also being chased and your pursuers have a tendency to blow out your tires leading you to fall behind; allowing your target to escape and failing the mission. Hopefully you won't have this problem and you can catch up to Grecco, shoot out enough tires or ram him until he stops."
+          },
+          {
+            "type": "text",
+            "text": "Equip your weapon while driving, and cycle between available target on an enemy vehicle with . Once the reticle turns green, you can shoot () for a guaranteed hit. Shooting out two tires, back or front, is usually enough to take the vehicle out, possibly even having it flip over and explode. Repeat this 10 times for an achievement. This should come naturally over the course of your playthrough as you will have several scripted chase events; otherwise you can quickly grind this out on police cars at anytime.",
+            "heading": "Vehicle Takedown"
+          },
+          {
+            "type": "achievement",
+            "name": "Wrecker",
+            "description": "Executed 10 Vehicle Takedowns"
+          },
+          {
+            "type": "text",
+            "text": "Once Grecco's car stops, he will get out, at which point you need to shoot him or do a takedown so he doesn't get in another car and take off again. Before you can confront him, you will need to eliminate the rest of Marcano's men."
+          },
+          {
+            "type": "text",
+            "text": "Head back to Vito's",
+            "heading": "Lose the Police"
+          },
+          {
+            "type": "text",
+            "text": "With Grecco captured, you will have to flee the police and return to Vito's place."
+          },
+          {
+            "type": "achievement",
+            "name": "Fish Gotta Eat",
+            "description": "You helped Vito capture Michael Grecco"
+          },
+          {
+            "type": "text",
+            "text": "After the cutscene, you will assign the district to Vito and gain access to his trafficking mission: Seems Simple Enough. This is a repeatable mission, to get started you will have to speak to Alma at the former base of operations for the contraband racket."
+          },
+          {
+            "type": "text",
+            "text": "Next up, go recruit Burke in Pointe Verdun."
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – Pointe Verdun – The Blade Stained Red"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Burke",
+            "heading": "Mission - Cut and Run"
+          },
+          {
+            "type": "text",
+            "text": "Get in Burke's car",
+            "heading": "Try the back door"
+          },
+          {
+            "type": "text",
+            "text": "Stop the car and get out",
+            "heading": "Drive like a madman"
+          },
+          {
+            "type": "text",
+            "text": "Reach the waypoint to find Burke. Seemingly unimpressed by your efforts thus far, hijack his car and prove your worth by showing him you are just crazy enough to pull this plan off. Keep your car moving and drive erratically/recklessly to increase the meter, driving slow or stopping will lower it and potentially lead to failing the mission. Once you have maxed out the meter, Burke agrees to join you and kicks you out of the car."
+          },
+          {
+            "type": "achievement",
+            "name": "Cut & Run",
+            "description": "Burke agreed to help you kill Marcano"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Burke",
+            "heading": "Mission - A Nation Once Again"
+          },
+          {
+            "type": "text",
+            "text": "Head to the Salvage yard to continue the mission, gaining the last underboss and a new associate, Vehicle Delivery [4/6 Associate]."
+          },
+          {
+            "type": "text",
+            "text": "Talk to Nicki Burke",
+            "heading": "Racket - Moonshine - $30,000"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Bootleggers – 4/15 Informant - Kill or RecruitRob the cop bar"
+          },
+          {
+            "type": "text",
+            "text": "Destroy the Moonshine CampsSteal Map to Moonshine Camps - Racket Base of OperationsWest Moonshine CampEast Moonshine Camp",
+            "heading": "Kill Bevers' Enforcers (0/2)"
+          },
+          {
+            "type": "text",
+            "text": "Locate and Destroy Moonshine Trucks (0/5) – Spawned enemy vehicle"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Nicki Burke",
+            "heading": "-"
+          },
+          {
+            "type": "text",
+            "text": "5/18 Boss Killed or 4/16 Boss Flipped",
+            "heading": "Confront Carl Bevers"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Bear Donnelly",
+            "heading": "Racket - Protection - $20,000"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Loan Sharks – 5/15 Informant - Kill or RecruitTrash protected liquor stores (0/3)"
+          },
+          {
+            "type": "text",
+            "text": "Rescue Ralph McNairy - Racket Base of Operations",
+            "heading": "Kill Sonny's Enforcers (0/2)"
+          },
+          {
+            "type": "text",
+            "text": "Take out the beat down crews (0/5) – unmarked locations unless revealed by wiretapping, can otherwise be identified by spotting enemy markers on the mini-map"
+          },
+          {
+            "type": "text",
+            "text": "Talk to Bear Donnelly",
+            "heading": "-"
+          },
+          {
+            "type": "text",
+            "text": "6/18 Boss Killed or 5/16 Boss Flipped",
+            "heading": "Confront Sonny Blue"
+          },
+          {
+            "type": "text",
+            "text": "Once the first racket is taken over, you will have enough “earn” to unlock Burke’s second associate, Police Dispatcher [5/6 Associate]."
+          },
+          {
+            "type": "text",
+            "text": "After both are taken over, return to the scrapyard and talk to Burke."
+          },
+          {
+            "type": "text",
+            "text": "Story Chapter – Pointe Verdun – Brave New World"
+          },
+          {
+            "type": "text",
+            "text": "Defend Burke's Iron & Metal",
+            "heading": "Return to Burke's Iron & Metal"
+          },
+          {
+            "type": "text",
+            "text": "Kill The Butcher's men",
+            "heading": "Confront The Butcher"
+          },
+          {
+            "type": "text",
+            "text": "Return to Burke and defend the area from The Butcher's men. Use the provided rifles if needed, and make use of the explosive barrels to eliminate cars loaded with mobsters as they drive into the area. Eventually the big man himself shows up. He usually takes cover behind an explosive barrel, which makes for a quick incapacitation. Deal with the remaining hostiles then go confront him.",
+            "heading": "Get to The Butcher"
+          },
+          {
+            "type": "achievement",
+            "name": "It's a Brave New World",
+            "description": "You turned the Butcher over to Burke"
+          },
+          {
+            "type": "text",
+            "text": "Meet Burke at the Distillery",
+            "heading": "Mission - Only Way's Forward"
+          },
+          {
+            "type": "text",
+            "text": "When you reach Burke, you will assign the district to him and gain access to his trafficking mission: The Righteously Fucked. This is a repeatable mission, to get started you will have to speak to Nicki Burke at the former base of operations for the moonshine racket."
+          },
+          {
+            "type": "text",
+            "text": "Mission - An Emotional Attachment",
+            "heading": "Story Chapter – Bayou – Sit Down"
+          },
+          {
+            "type": "text",
+            "text": "Head to the waypoint in the bayou, to the southeast, to call a sit-down with your three underbosses. In the future, you will return here to hand over newly controlled districts to your underbosses as you eliminate Marcano's Lieutenants and Capos. This is really just a meeting of the minds right now, and there isn't much that comes out of this event.",
+            "heading": "Call a sitdown"
+          },
+          {
+            "type": "text",
+            "text": "Once the scene is over, you will leave with each underboss on equal footing, each with one district controlled and demanding control of more. At this point, you will also unlock the next three story missions, agenda missions, racing (an utter waste of time), and you can start the DLC missions; if these are installed."
+          },
+          {
+            "type": "text",
+            "text": "The next page will continue the story walkthrough."
+          }
+        ]
+      },
+      {
+        "title": "4. Mafia III: Definitive Edition (Xbox One) Story - Part 2",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/4",
+        "steps": [
+          {
+            "type": "achievement",
+            "name": "The Connection to Cuba",
+            "description": "In this part of the story, you will now be given the option to decide how to assign rackets and districts that you take over. This is a rather important decision, as your choices can have major ramifications on your relationship to each partner. Assigning control of rackets and districts, and completing their agenda missions, is a good way to improve your relationship and gain an underboss' loyalty. Repeatedly giving more control of the city to one boss over another, or taking that control away by giving a district to a different boss than who was assigned the racket is a great way to lose favor and potentially earn a new enemy."
+          }
+        ]
+      },
+      {
+        "title": "5. Mafia III: Definitive Edition (Xbox One) 2nd Playthrough",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/5",
+        "steps": [
+          {
+            "type": "text",
+            "text": "For this playthrough, you will need to do the opposite of what you did on the first playthrough! This means either killing or flipping the informants and bosses, whichever is still needed. Additionally, you will need to interact with your underbosses differently than the previous run, a quick review of this is outlined under Option 1 and Option 2."
+          },
+          {
+            "type": "text",
+            "text": "Reminder: To flip the racket boss, you will need to acquire TL-49 Fuses (48 in total) and wiretap the junction boxes that relates to the boss location prior to confronting them."
+          },
+          {
+            "type": "text",
+            "text": "Hopefully you have earned all the non-story related achievements on the first run, so this one can be laser-focused on completing the story objectives as quickly as possible to limit your time required on this playthrough. The story walkthrough below only highlights a few key tasks for achievement tracking purposes only. You should already be familiar with the story and its completion requirements, so I have reduced the previous story pages down to the barebones for a quick outline of the highlights in the section below. There is no new content in the below section, I have simply deleted 75% of the content to make it easier to follow."
+          },
+          {
+            "type": "text",
+            "text": "Assign districts equally, each underboss getting control of three in total. Be sure to plan ahead by assigning both rackets to the intended district manager, otherwise you risk angering the person who lost control of a racket. Since each will control three districts, you can also complete each of the underboss' five part agenda mission as well, earning those respective achievements. Completing the agenda missions should be enough to earn the loyalty all three underbosses and the prized Family achievement, but you may have to complete a few trafficking missions for each boss as well. *My progress was corrupted so I didn't actually earn this achievement, so I am not 100% sure that the trafficking missions are needed to obtain Family.",
+            "heading": "Option 1"
+          },
+          {
+            "type": "text",
+            "text": "Result - We're in This Together/IRA Don't Ask/I Need a Favor/.45 in My Hand/Trust/Family"
+          },
+          {
+            "type": "text",
+            "text": "Decide on one underboss that you want to stick with until the end, and assign all districts to them. Whomever you chose, will not be getting assigned rackets ahead of time. Instead, be sure to assign a racket to each of the non-chosen underbosses. These two will then become increasingly upset by the loss of influence when handing over the district, which subsequently reassigns all associated rackets, to your chosen underboss. Eventually, both undesired underbosses will turn hostile, and begin to retaliate against your management style. You will then need to kill the two dissenters, before assigning the last district to the only remaining underboss to complete the achievement requirements. As an added bonus, putting all your eggs in one basket will maximize that underbosses earn and reward you with a larger individual kickback. Since you earn 2% of the underboss' total earn in kickback, once their total earn exceeds $500,000 you can go pick up your cut of $10,000 or more for another achievement.",
+            "heading": "Option 2"
+          },
+          {
+            "type": "text",
+            "text": "Result - Just You and Me/Big Earner"
+          },
+          {
+            "type": "text",
+            "text": "Story Mission – The Home Fires Burn"
+          },
+          {
+            "type": "text",
+            "text": "Beginning – Rush through the first few story missions, not much to do until after your return to Sammy’s with Donovan."
+          },
+          {
+            "type": "text",
+            "text": "Prostitution - $15,000",
+            "heading": "Delray Hollow"
+          },
+          {
+            "type": "text",
+            "text": "1/18 Boss Killed or 0/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Charlie’s Pushers – 1/15 & 2/15 Informant - Kill or Recruit",
+            "heading": "Smack - $20,000"
+          },
+          {
+            "type": "text",
+            "text": "2/18 Boss Killed or 1/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Eliminate Ritchie and assign the district to Cassandra. Return to Donovan to grab both files on the other underbosses."
+          },
+          {
+            "type": "text",
+            "text": "Free Vito",
+            "heading": "River Row"
+          },
+          {
+            "type": "text",
+            "text": "3/18 Boss Killed or 2/16 Boss Flipped",
+            "heading": "Union Extortion – $30,000"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Roy's Guard – 3/15 Informant - Kill or Recruit",
+            "heading": "Contraband - $20,000"
+          },
+          {
+            "type": "text",
+            "text": "4/18 Boss Killed or 3/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Capture Grecco and assign the district to Vito."
+          },
+          {
+            "type": "text",
+            "text": "Recruit Burke",
+            "heading": "Pointe Verdun"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Bootleggers – 4/15 Informant - Kill or Recruit",
+            "heading": "Moonshine – $30,000"
+          },
+          {
+            "type": "text",
+            "text": "5/18 Boss Killed or 4/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Loan Sharks – 5/15 Informant - Kill or Recruit",
+            "heading": "Protection – $20,000"
+          },
+          {
+            "type": "text",
+            "text": "6/18 Boss Killed or 5/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Survive the Butcher’s assault and assign the district to Burke."
+          },
+          {
+            "type": "text",
+            "text": "Decide Option 1 or Option 2",
+            "heading": "Story Mission – Sit Down"
+          },
+          {
+            "type": "text",
+            "text": "Auto Theft – $40,000",
+            "heading": "Tickfaw Harbor"
+          },
+          {
+            "type": "text",
+            "text": "7/18 Boss Killed or 6/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "8/18 Boss Killed or 7/16 Boss Flipped",
+            "heading": "Smuggling – $30,000"
+          },
+          {
+            "type": "text",
+            "text": "Kill Frank Pagani, then assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "Construction – $50,000",
+            "heading": "Downtown"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Cavar's Foremen – 6/15 Informant - Kill or Recruit"
+          },
+          {
+            "type": "text",
+            "text": "9/18 Boss Killed or 8/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Blackmail Couriers (0/2) – 7/15 & 8/15 Informant - Kill or Recruit",
+            "heading": "Blackmail – $50,000"
+          },
+          {
+            "type": "text",
+            "text": "10/18 Boss Killed or 9/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Kill Tony Derazio, assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "Guns – $30,000",
+            "heading": "Barclay Mills"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Train Robbers – 9/15 Informant - Kill or Recruit"
+          },
+          {
+            "type": "text",
+            "text": "11/18 Boss Killed or 10/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate the Extortionists – 10/15 Informant - Kill or Recruit",
+            "heading": "Garbage – $50,000"
+          },
+          {
+            "type": "text",
+            "text": "12/18 Boss Killed or 11/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Deliver Enzo to the hotel safely, assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "*unlocked after controlling Tickfaw Harbor",
+            "heading": "Southdowns"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Two-Dicks' Runners – 11/15 Informant - Kill or Recruit",
+            "heading": "Gambling - $50,000"
+          },
+          {
+            "type": "text",
+            "text": "13/18 Boss Killed or 12/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Artie's Hustlers – 12/15 Informant - Kill or Recruit",
+            "heading": "Black Market – $60,000"
+          },
+          {
+            "type": "text",
+            "text": "14/18 Boss Killed or 13/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Deliver Alvarez to Father James, then confront Tommy Marcano. Assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "*unlocked after controlling Downtown",
+            "heading": "French Ward"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate the Pushers (0/2) – 13/15 & 14/15 Informant - Kill or Recruit",
+            "heading": "Drugs – $50,000"
+          },
+          {
+            "type": "text",
+            "text": "Tail Bagmen to find Gaston's Stash* - infinite money exploit, refer to the previous page if needed."
+          },
+          {
+            "type": "text",
+            "text": "15/18 Boss Killed or 14/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Pimps (0/2) – 15/15 & 16/15 Informant - Kill or Recruit",
+            "heading": "Sex – $100,000"
+          },
+          {
+            "type": "achievement",
+            "name": "Live Another Day",
+            "description": "Recruited 15 Racket Informants"
+          },
+          {
+            "type": "achievement",
+            "name": "Can't Trust a Rat",
+            "description": "Killed 15 Racket Informants",
+            "heading": "or"
+          },
+          {
+            "type": "text",
+            "text": "16/18 Boss Killed or 15/16 Boss Flipped"
+          },
+          {
+            "type": "text",
+            "text": "Eliminate the judge, then raid the boat in the bayou to confront Lou. Assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "Story Mission – In Comes the Devil"
+          },
+          {
+            "type": "text",
+            "text": "Draw out and confront Santangelo after killing the second capo."
+          },
+          {
+            "type": "text",
+            "text": "unlocked after Barclay Mills",
+            "heading": "Frisco Fields"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Bobby's Dealers – 17/15 Informant - Kill or Recruit",
+            "heading": "PCP – $50,000"
+          },
+          {
+            "type": "text",
+            "text": "17/18 Boss Killed or 16/16 Boss Flipped"
+          },
+          {
+            "type": "achievement",
+            "name": "The New Boss",
+            "description": "Flipped 16 Racket Bosses"
+          },
+          {
+            "type": "text",
+            "text": "Interrogate Sothern Union Brothers – 18/15 & 19/15 Informant - Kill or Recruit",
+            "heading": "Southern Union – $100,000"
+          },
+          {
+            "type": "text",
+            "text": "18/18 Boss Killed or 16/16 Boss Flipped"
+          },
+          {
+            "type": "achievement",
+            "name": "No Loose Ends",
+            "description": "Killed all of the Racket Bosses"
+          },
+          {
+            "type": "text",
+            "text": "Confront the Deacon, then crash the rally. Assign the district accordingly."
+          },
+          {
+            "type": "text",
+            "text": "Depending on how you approached the story, you should either be assigning your third underboss with their third district, having everyone ending with equal control, or handing over the final district to your only surviving underboss."
+          },
+          {
+            "type": "achievement",
+            "name": "We're in This Together",
+            "description": "Kept all Underbosses alive until \"Yet Here We Are\""
+          },
+          {
+            "type": "achievement",
+            "name": "Just You and Me",
+            "description": "Kept only one Underboss alive until \"Yet Here We Are\"",
+            "heading": "or"
+          },
+          {
+            "type": "text",
+            "text": "If you still need to earn the loyalty of your underbosses and all three are alive this playthrough, feel free to check out the Agenda Mission section in the previous page, Story - Part 2. Otherwise, this should conclude the second playthrough and remaining story related achievements. Feel free to continue on if you missed any of the cumulative achievements or want to finish the story again just for the fun of it."
+          },
+          {
+            "type": "text",
+            "text": "Congrats on completing your second playthrough! Hopefully you were able to obtain all the achievements thus far, meaning you have the base game 100% complete. If you are unfortunate enough to have suffered some issues with achievements not unlocking, feel free to check out the GLITCHED ACHIEVEMENT STARTING POINT & WORK AROUND section in the General Hints and Tips page for some potential methods to still unlocking them."
+          },
+          {
+            "type": "text",
+            "text": "If you still need the DLC missions, please check out that breakdown on the next page, DLC Walkthrough."
+          }
+        ]
+      },
+      {
+        "title": "6. Mafia III: Definitive Edition (Xbox One) DLC Walkthrough",
+        "sourceUrl": "https://www.trueachievements.com/game/Mafia-III-Xbox-One/walkthrough/6",
+        "steps": [
+          {
+            "type": "text",
+            "text": "Each of the three DLCs offers an additional story, with achievements related to completing specific missions in each DLC. The corresponding stories are fairly linear, and should be considered standalone campaigns. Each DLC will also offer a new assignment or task that becomes available once the related storyline is complete, which contributes to about half of the effort to completing the achievement list for a given add-on. New vehicles, weapons, or equipment are also available throughout the three campaigns, all of which can be carried into your progress of the main story once acquired. Since the DLC stories are fairly straightforward, I will limit the mission details in the guide below; this is to reduce the amount of content you will need to read through and limit spoilers. Honestly, I found the DLC stories more interesting and fun than the main campaign, so enjoy!"
+          },
+          {
+            "type": "text",
+            "text": "This additional story revolves around a new area in New Bordeaux, called Sinclair Parish. Here, hostilities escalate between minority civil rights activists and the local Sheriff Department; whom are notorious for unjustly persecuting persons of color entering the area in an effort to preserve the parish's all-white population. All police within the parish immediately turn hostile towards Lincoln when seen, making this a potentially dangerous location to traverse, be warned!",
+            "heading": "DLC – Faster, Baby!"
+          },
+          {
+            "type": "text",
+            "text": "Upon entering Sinclair Parish, you are soon confronted by local Sheriff's Deputies; these cops pursue you more aggressively than other places in New Bordeaux. During the attempt to escape, you will learn about vehicle traps. Utilize these to help shake off the fuzz so you can complete the remaining mission objectives.",
+            "heading": "Story Mission – Another Brother Falls"
+          },
+          {
+            "type": "text",
+            "text": "Traps are indicated on the mini-map by blue triangles, and are only found within the Sinclair Parish region. Similar to a vehicle takedown, the trap is auto-targeted when a weapon is equipped while driving. Once you get close enough to the trap, you can shoot the trigger to engage the trap, which activates as you drive past; potentially disrupting the chase and allowing you to escape. The locations of traps don't move, and are conveniently placed along many of the routes you will likely find yourself on as you progress through the many scripted chase sequences throughout this DLC story. If you reach the end of story and you have yet to get the related achievement, you can grind this by resetting a trap (drive far enough away) and reusing it until you trigger 10 during chases. Just gain the attention of the cops and take them to the known trap location, drive far enough away to have it reset, then rinse and repeat.",
+            "heading": "Vehicle Traps"
+          },
+          {
+            "type": "achievement",
+            "name": "Trap Game Strong",
+            "description": "Successfully triggered 10 Vehicle Traps"
+          },
+          {
+            "type": "text",
+            "text": "Throughout the many chases, you can also utilize proximity mines to destroy pursuing vehicles. You may have earned several kills in a similar manner during the main story already, but just be aware you should be using these when it makes sense to do so. You can use them outside of the vehicle to earn kills as well; which is best when paired with the Screaming Zemi to pull unsuspecting enemies together before tossing a mine into the middle of the group for an easy multi-kill. If you don't get this achievement here, there is an excellent place to earn many kills, quickly, in the Sign of the Times DLC story as well, FYI. Once you kill 30 enemies with mines, you will unlock an achievement.",
+            "heading": "Proximity Mines"
+          },
+          {
+            "type": "achievement",
+            "name": "Danger Close",
+            "description": "Killed 30 enemies using Proximity Mines"
+          },
+          {
+            "type": "text",
+            "text": "By completing this story mission you will earn the first DLC story related achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Another Brother Falls",
+            "description": "You survived the drive into Sinclair Parish"
+          },
+          {
+            "type": "text",
+            "text": "Continue with the next few missions as directed."
+          },
+          {
+            "type": "text",
+            "text": "Once you acquire the target vehicle from the impound lot, you will be directed to take the ramp straight ahead to flee the area. Doing so will likely cause you to crash through one of Slim’s Re-Election Billboards. Keep an eye out for these across town, as you will need to destroy 10 in total for an achievement. These are often conveniently located near ramps and they can only be destroyed by crashing into the sign portion via driving off a ramp. You will come across several during this mission, just keep an eye out for ramps as you cause destruction. If you still need more after the mission is over, you can simply grind the rest on the same sign; as it will respawn once you drive far enough away (~500 meters).",
+            "heading": "Story Mission – Kickin’ Up Dust"
+          },
+          {
+            "type": "achievement",
+            "name": "Campaign Strategy",
+            "description": "Destroyed 10 of Slim's re-election billboards"
+          },
+          {
+            "type": "text",
+            "text": "This mission can be tricky, but the goal is to keep the distraction meter filled and avoid having the timer reach zero, as it will fail the mission if it does. You will need to crash into the objects with blue markers and/or shoot the orange items to cause explosions, which will increase the meter and add to the timer. Keep an eye out for vehicle trap indicators and re-election billboards as you move between locations and repeat the process to keep up the destruction."
+          },
+          {
+            "type": "text",
+            "text": "Complete the mission to earn another achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Kickin' Up Dust",
+            "description": "You helped MJ and Roxy get the Witnesses free"
+          },
+          {
+            "type": "text",
+            "text": "Completion of this mission will earn an achievement and unlock the Herbalism activity.",
+            "heading": "Story Mission – Ain’t Nowhere Safer"
+          },
+          {
+            "type": "achievement",
+            "name": "Ain't Nowhere Safer",
+            "description": "You captured Slim Beaumont"
+          },
+          {
+            "type": "text",
+            "text": "Talk to the Voice to initiate three \"optional” missions. Once all three are complete, you will conclude the final story mission and earn the final story related achievement.",
+            "heading": "Story Mission – Concerned Citizen"
+          },
+          {
+            "type": "text",
+            "text": "Optional DLC Mission – Sinclair Parish – A Good Man"
+          },
+          {
+            "type": "text",
+            "text": "Optional DLC Mission – Sinclair Parish – An Instrument of Justice"
+          },
+          {
+            "type": "text",
+            "text": "Optional DLC Mission – Sinclair Parish – The Proverbial Canary"
+          },
+          {
+            "type": "text",
+            "text": "Return to the Voice to complete this DLC story."
+          },
+          {
+            "type": "achievement",
+            "name": "Concerned Citizens",
+            "description": "You helped Irma, Jeremiah, and Christian"
+          },
+          {
+            "type": "text",
+            "text": "This activity will have you working with MJ to start growing weed, which will eventually be harvested and sold wholesale to districts for a profit. You will need to invest a lot of time and money to improve your strains and therefore increase how much money you can earn per harvest.",
+            "heading": "Optional Task – Herbalism"
+          },
+          {
+            "type": "text",
+            "text": "You will start off with Ditch Weed, plant it and you will have to wait some in-game hours before you can harvest it. The time needed will vary based on the plant's stats, but this can be sped up with fertilization once the plant reaches a certain growth level. Additionally, certain story missions will advance the in-game time, effectively fast tracking the growth as well. Once the plant is mature, you can Harvest and then select which district to sell it in. The value of your grow varies, based on your plant’s attribute, its yield, as well as the selected district’s demand/supply. You can eventually cross breed strains in the lab, to create improved hybrid variants that will become more profitable as the attribute improve over time. Be sure to collect new base strains as they are identified, and check in regularly to harvest, sell, and plant more crops to keep your operation progressing. As you earn money from selling, you will eventually max out your Herbalism level."
+          },
+          {
+            "type": "text",
+            "text": "Rank 2 – Earn $1,000 in crops sold, then collect Ruderalis (0/2)",
+            "heading": "Rank 1 – Starting level"
+          },
+          {
+            "type": "text",
+            "text": "Rank 3 – Earn $10,000 in crops sold, then collect Indica (0/3)"
+          },
+          {
+            "type": "text",
+            "text": "Rank 4 – Earn $25,000 in crops sold, then collect Sativa (0/3)"
+          },
+          {
+            "type": "text",
+            "text": "MAX – Earn $50,000 in crops sold, then speak to MJ."
+          },
+          {
+            "type": "achievement",
+            "name": "Herbalist",
+            "description": "Reached the Max Herbalism level"
+          },
+          {
+            "type": "text",
+            "text": "Increasing your Herbalism level will unlock additional grow house upgrades to improve the growth rate, yield, quality, or fragility of your crop. Purchasing all available upgrades will cost $100,000 and earn an additional achievement."
+          },
+          {
+            "type": "achievement",
+            "name": "Mr. Green Thumb",
+            "description": "Fully upgraded the Grow House"
+          },
+          {
+            "type": "text",
+            "text": "While working with the higher quality strains and utilizing upgrades, you should eventually be able to craft a batch of weed that can sell for over $10,000, netting you the final weed related achievement. Remember that each district will offer a different price, so always pick the one with the highest profitability."
+          },
+          {
+            "type": "achievement",
+            "name": "That Good Connect",
+            "description": "Sold a single batch of weed for $10,000 or more"
+          },
+          {
+            "type": "text",
+            "text": "In this story add-on, Lincoln is called to assist John Donovan, as his past comes back to haunt him and trouble spills into New Bordeaux. A threat from an old rival quickly grows from a blood feud, to an endeavor to save the entire country from annihilation. Things get personal for Donovan, and he increasingly relies on Lincoln's friendship to deal with the situation at hand.",
+            "heading": "DLC – Stones Unturned"
+          },
+          {
+            "type": "text",
+            "text": "Completing this mission will unlock an achievement and the Sniper Support feature.",
+            "heading": "Story Mission – Creature of Habit"
+          },
+          {
+            "type": "achievement",
+            "name": "Creature of Habit",
+            "description": "You investigated the scene"
+          },
+          {
+            "type": "text",
+            "text": "Once unlocked, this feature can be selected and used like any other equipment item from the equipment tab in the weapon menu. Hold to pull up the weapon menu, then cycle over () to the image of the crosshairs to equip Sniper Support. With this equipped, hold and move the target area over to an enemy to highlight (it will turn green) and release the button for your sniper to take them out. All targets within the target circle will be killed so be sure to group up targets to make effective use of this new item. Just note, this item can only be used outdoors or within view of a window or open door, the target circle will remain red if it is not. You can replenish your available supply by picking up walkie talkies (crosshairs icon, restocks 1 use) or purchasing more from the arms dealer. Get 30 kills with this to unlock the achievement.",
+            "heading": "Sniper Support"
+          },
+          {
+            "type": "achievement",
+            "name": "Spotter",
+            "description": "Killed 30 Enemies Using Sniper Support"
+          },
+          {
+            "type": "text",
+            "text": "Completing this mission will award you with another story related achievement.",
+            "heading": "Story Mission – Devotchka"
+          },
+          {
+            "type": "achievement",
+            "name": "Devotchka",
+            "description": "You survived the trip to Boicherot's"
+          },
+          {
+            "type": "text",
+            "text": "Meet Donovan at the waypoint to travel to a new location, Unknown Island, which is outside of New Bordeaux and where the remaining story for this DLC will take place.",
+            "heading": "Story Mission – In-Country"
+          },
+          {
+            "type": "text",
+            "text": "After landing on the beach, you will head up the pathway to eventually reach a small village, Hermosa Pez. Before you leave the village, be sure to locate and acquire the Hartman 7.62mm machine gun from a shack by the shore. This will replace whatever two-handed weapon you are carrying, and you will need to keep it in your possession for the remainder of the missions until you return to New Bordeaux. This is a required weapon for an upcoming achievement and the only other way to acquire this is to purchase it from the arms dealer, which only becomes available after assigning the final district's racket to an underboss. Either way you get this, you will need this weapon for an achievement later on."
+          },
+          {
+            "type": "text",
+            "text": "Complete the mission to advance the story."
+          },
+          {
+            "type": "text",
+            "text": "Complete the mission for an achievement.",
+            "heading": "Story Mission – Big Money"
+          },
+          {
+            "type": "achievement",
+            "name": "Big Money",
+            "description": "You got a hot tip on a loose nuke"
+          },
+          {
+            "type": "text",
+            "text": "Story Mission – There Are No Dominos"
+          },
+          {
+            "type": "text",
+            "text": "This mission will award two achievements once you complete the objectives and are returned to New Bordeaux."
+          },
+          {
+            "type": "achievement",
+            "name": "Aid and Comfort",
+            "description": "You helped Donovan end Connor Aldridge"
+          },
+          {
+            "type": "achievement",
+            "name": "There Are No Dominos",
+            "description": "You secured the nuke"
+          },
+          {
+            "type": "text",
+            "text": "Once you arrive back in New Bordeaux, you will have access to the Party Animal Outfit and are able to start the side task Bounty Hunting."
+          },
+          {
+            "type": "text",
+            "text": "If you still have the Hartman 7.62MM from the previous missions, equip the Party Animal Outfit (Special) and then proceed to gun down 50 enemies, or hostile cops with the heavy machine gun. Either cause a ruckus to bring the cops to you, or simply proceed with other racket/story missions and use this weapon and outfit combo until you rack up the required kill count."
+          },
+          {
+            "type": "achievement",
+            "name": "Big Fat Party Animal",
+            "description": "Killed 50 enemies using the Hartmann 7.62mm and wearing the Party Animal outfit"
+          },
+          {
+            "type": "text",
+            "text": "Talking to Marshall will officially kick off the Bounty Hunter sub-task, for which he will also provide you with the Dormer B128 Dart Gun to aid in subduing and transporting your targets back to him, alive. There are three targets that you will be tasked to retrieve.",
+            "heading": "Optional Task – Bounty Hunting"
+          },
+          {
+            "type": "text",
+            "text": "Dart Gun – This weapon is intended to be used on your bounty targets but can prove useful against any hostile for a stealthy takedown. A word of warning, just be aware that the drug in the dart takes a few seconds to knock out the target, however, a headshot will render this effect almost immediately. There is an ammo container in the garage section of this holding facility that you can use to replenish your ammo free of charge. There is also a Sniper Support equipment pick up, which you can grab each time you visit to help contribute towards the Spotter achievement, if you still need it. Keep the dart gun equipped until all bounty targets are captured and you have darted a total of 30 enemies."
+          },
+          {
+            "type": "achievement",
+            "name": "Operation: Deep Sleep",
+            "description": "Knocked out 30 people with the Dart Gun"
+          }
+        ]
+      }
+    ],
+    "importedAt": "2026-10-09T21:26:53.241Z"
   }
 ]
