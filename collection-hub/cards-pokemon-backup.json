@@ -147,8 +147,7 @@
     "name": "Pikachu",
     "owned": true,
     "special": true,
-    "dex": "0025",
-    "todo": true
+    "dex": "0025"
   },
   {
     "dex": "0026",
@@ -177,9 +176,8 @@
   {
     "dex": "0030",
     "name": "Nidorina",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0031",
@@ -311,8 +309,7 @@
     "dex": "0052",
     "name": "Meowth",
     "owned": true,
-    "special": false,
-    "todo": true
+    "special": false
   },
   {
     "dex": "0053",
@@ -791,9 +788,8 @@
   {
     "dex": "0132",
     "name": "Ditto",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0133",
@@ -1206,9 +1202,8 @@
   {
     "dex": "0201",
     "name": "Unown",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0202",
@@ -1495,9 +1490,8 @@
   {
     "dex": "0249",
     "name": "Lugia",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0250",
@@ -1694,9 +1688,8 @@
   {
     "dex": "0282",
     "name": "Gardevoir",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0283",
@@ -2241,9 +2234,8 @@
   {
     "dex": "0373",
     "name": "Salamence",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0374",
@@ -2530,9 +2522,8 @@
   {
     "dex": "0421",
     "name": "Cherrim",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0422",
@@ -2556,8 +2547,7 @@
     "dex": "0425",
     "name": "Drifloon",
     "owned": true,
-    "special": false,
-    "todo": true
+    "special": false
   },
   {
     "dex": "0426",
@@ -3901,8 +3891,7 @@
     "dex": "0649",
     "name": "Genesect",
     "owned": true,
-    "special": true,
-    "todo": true
+    "special": true
   },
   {
     "name": "Chespin",
@@ -4130,8 +4119,7 @@
     "dex": "0687",
     "name": "Malamar",
     "owned": true,
-    "special": false,
-    "todo": true
+    "special": false
   },
   {
     "dex": "0688",
@@ -4209,8 +4197,7 @@
     "dex": "0700",
     "name": "Sylveon",
     "owned": true,
-    "special": false,
-    "todo": true
+    "special": false
   },
   {
     "dex": "0701",
@@ -4461,9 +4448,8 @@
   {
     "dex": "0052",
     "name": "Alolan Meowth",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0053",
@@ -4804,9 +4790,8 @@
   {
     "dex": "0103",
     "name": "Alolan Exeggutor",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0782",
@@ -4817,16 +4802,14 @@
   {
     "dex": "0783",
     "name": "Hakamo-o",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0784",
     "name": "Kommo-o",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0785",
@@ -4855,9 +4838,8 @@
   {
     "dex": "0789",
     "name": "Cosmog",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0790",
@@ -4874,9 +4856,8 @@
   {
     "dex": "0792",
     "name": "Lunala",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0793",
@@ -5572,8 +5553,7 @@
     "dex": "0894",
     "name": "Regieleki",
     "owned": true,
-    "special": true,
-    "todo": true
+    "special": true
   },
   {
     "dex": "0895",
@@ -5740,9 +5720,8 @@
   {
     "dex": "0570",
     "name": "Hisuian Zorua",
-    "owned": false,
-    "special": false,
-    "todo": true
+    "owned": true,
+    "special": false
   },
   {
     "dex": "0571",
