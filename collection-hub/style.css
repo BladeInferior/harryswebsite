@@ -1730,7 +1730,10 @@ body.page-mode #page-controls {
     color: white;
     cursor: pointer;
     opacity: 0.6;
-    transition: 0.15s ease;
+    /* No transition: switching modes used to fade the previously active
+       button (and any that appear/disappear under the pointer) out of its
+       green state over 0.15s, which read as a green flash. */
+    transition: none;
 }
 
 #page-controls button.active-mode,
@@ -2245,6 +2248,15 @@ body.page-mode #page-controls {
 
 .item-action-btn.danger:hover {
     background: rgba(231, 76, 60, 0.15);
+}
+
+.item-action-btn.positive {
+    border: 1px solid #22c55e;
+    color: #22c55e;
+}
+
+.item-action-btn.positive:hover {
+    background: rgba(34, 197, 94, 0.15);
 }
 
 .tag-pill {
@@ -3829,4 +3841,13 @@ footer {
     margin: 8px 0 0;
     color: #e74c3c;
     font-size: 13px;
+}
+
+/* Mic paused by saying "pause" (see voice-search.js): solid red, no pulse,
+   until "unpause" is said. */
+.voice-search.listening.paused {
+    opacity: 1;
+    animation: none;
+    background: rgba(231, 76, 60, 0.9);
+    box-shadow: none;
 }

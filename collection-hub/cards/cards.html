@@ -127,6 +127,7 @@
         <button id="todo-add-matches-btn" class="hidden" title="Pick which of your current search's unowned matches to add to the to-do list">📝 Add Matches</button>
         <button id="todo-add-btn" class="hidden" title="Add Pokémon to the to-do list by typing or speaking their names">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one binder page at a time">🔍 Find</button>
+        <button id="todo-owned-btn" class="hidden" title="Mark every card on the to-do list as owned">✅ Make All Owned</button>
         <button id="todo-clear-btn" class="hidden" title="Take every card off the to-do list">🗑 Clear All</button>
         <button id="todo-prev-btn" class="hidden" title="Previous to-do card">◀ Prev</button>
         <button id="todo-next-btn" class="hidden" title="Jump to the page of the next to-do card">Next ▶</button>
@@ -155,10 +156,6 @@
 
             <label class="checkbox-label">
                 <input type="checkbox" id="item-owned"> Owned
-            </label>
-
-            <label class="checkbox-label" id="item-special-row">
-                <input type="checkbox" id="item-special"> Special / Rare
             </label>
 
             <label id="item-position-row">
@@ -260,10 +257,18 @@
     <div id="todo-remove-confirm-modal" class="stats-modal-overlay hidden">
         <div class="stats-modal-box">
             <div id="todo-remove-confirm-close" class="modal-close-btn">✕</div>
-            <h2>Remove From To Do?</h2>
+            <h2 id="todo-remove-confirm-title">Remove From To Do?</h2>
             <p id="todo-remove-confirm-text"></p>
             <button id="todo-remove-confirm-yes" class="item-action-btn danger stats-detail-btn">Yes, remove it</button>
             <button id="todo-remove-confirm-no" class="item-action-btn stats-detail-btn">No</button>
+        </div>
+    </div>
+
+    <div id="todo-notice-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="todo-notice-close" class="modal-close-btn">✕</div>
+            <p id="todo-notice-text"></p>
+            <button id="todo-notice-ok" class="item-action-btn stats-detail-btn">OK</button>
         </div>
     </div>
 

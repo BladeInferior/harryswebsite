@@ -42,6 +42,21 @@ let todoQueuePos = 0;
 // scan is missing — repopulated on every deck switch by detectMissingImages().
 let missingImageItems = new Set();
 
+// Pokémon deck only: a card is "special" when it has its own scan in
+// cards/pokemon/ (a custom image), not because a flag was ticked. Which names
+// have one is found by probing for the files (see refreshCustomImageNames) and
+// cached in localStorage so the first paint doesn't have to wait for that.
+const CUSTOM_IMAGE_CACHE_KEY = "cardsPokemonCustomImages";
+let customImageNames = new Set();
+try {
+    customImageNames = new Set(JSON.parse(localStorage.getItem(CUSTOM_IMAGE_CACHE_KEY) || "[]"));
+} catch { /* cache is optional */ }
+
+function isSpecial(item) {
+    if (activeDeck.key === "pokemon") return customImageNames.has(normalizeCardName(item.name));
+    return !!item.special;
+}
+
 let pokemonMasterList = null;
 let pokemonMasterByName = null;
 
@@ -148,7 +163,7 @@ function setItemImage(imgElement, name) {
 // CSS class (grayscale) is only added for actually-unowned cards, so an
 // owned non-special sprite still renders in full color.
 function resolveItemImage(imgElement, item) {
-    if (activeDeck.spriteFolder && (!item.owned || !item.special)) {
+    if (activeDeck.spriteFolder && (!item.owned || !isSpecial(item))) {
         const base = normalizeCardName(item.name);
         clearImageNotDownloaded(imgElement);
         imgElement.onerror = null;
@@ -163,7 +178,30 @@ function resolveItemImage(imgElement, item) {
 // (which intentionally fall back to a bundled Pokédex sprite, not a photo
 // you'd scan in) never get flagged as "missing".
 function usesRealPhoto(deck, item) {
+    // Pokémon cards are special because the photo exists, so none can be missing.
+    if (deck.key === "pokemon") return false;
     return !(deck.spriteFolder && (!item.owned || !item.special));
+}
+
+// Probes the Pokémon folder for every card's scan and re-renders if the set of
+// custom images changed. Skipped offline, where a failed probe can't be told
+// apart from a missing file (the cached set is used instead).
+async function refreshCustomImageNames(deck, deckItems) {
+    if (!navigator.onLine) return;
+
+    const names = deckItems.filter(item => !item.empty);
+    const found = await Promise.all(names.map(async item => (await imageExistsForDeck(deck, item.name)) ? normalizeCardName(item.name) : null));
+    const fresh = new Set(found.filter(Boolean));
+
+    const changed = fresh.size !== customImageNames.size || [...fresh].some(n => !customImageNames.has(n));
+    if (!changed) return;
+
+    customImageNames = fresh;
+    try {
+        localStorage.setItem(CUSTOM_IMAGE_CACHE_KEY, JSON.stringify([...fresh]));
+    } catch { /* cache is optional */ }
+
+    if (activeDeck === deck) renderItems();
 }
 
 function imageExistsForDeck(deck, name) {
@@ -292,6 +330,8 @@ async function loadDeck(key) {
     // is in flight. Bail if the user has already switched decks again by
     // the time it resolves, so a slow scan for a previous deck can't add
     // its button to whatever deck is now showing.
+    if (deck.key === "pokemon") refreshCustomImageNames(deck, items);
+
     detectMissingImages(deck, items).then(missing => {
         if (activeDeck !== deck) return;
         missingImageItems = missing;
@@ -501,7 +541,7 @@ function renderItems() {
         resolveItemImage(img, item);
         card.appendChild(img);
 
-        if (activeDeck.hasSpecial && item.special) {
+        if (activeDeck.hasSpecial && isSpecial(item)) {
             const badge = document.createElement("div");
             badge.classList.add("special-badge");
             badge.textContent = "★";
@@ -546,7 +586,7 @@ function openModal(index) {
     const specialRow = document.getElementById("modal-special-row");
     if (activeDeck.hasSpecial) {
         specialRow.hidden = false;
-        document.getElementById("modal-special").textContent = item.special ? "Yes" : "No";
+        document.getElementById("modal-special").textContent = isSpecial(item) ? "Yes" : "No";
     } else {
         specialRow.hidden = true;
     }
@@ -663,8 +703,6 @@ function updateModeUI() {
 const addModal = document.getElementById("add-item-modal");
 const titleInput = document.getElementById("item-title");
 const ownedInput = document.getElementById("item-owned");
-const specialInput = document.getElementById("item-special");
-const specialFieldRow = document.getElementById("item-special-row");
 const positionInput = document.getElementById("item-position");
 const positionFieldRow = document.getElementById("item-position-row");
 const errorBox = document.getElementById("item-error");
@@ -676,10 +714,8 @@ document.getElementById("add-item").addEventListener("click", () => {
 
     titleInput.value = "";
     ownedInput.checked = false;
-    specialInput.checked = false;
     positionInput.value = "";
 
-    specialFieldRow.hidden = !activeDeck.hasSpecial;
     positionFieldRow.hidden = false;
 });
 
@@ -701,7 +737,11 @@ document.getElementById("save-item").addEventListener("click", () => {
         owned: ownedInput.checked
     };
 
-    if (activeDeck.hasSpecial) itemData.special = specialInput.checked;
+    // Special is no longer editable here (for Pokémon it comes purely from the
+    // card's custom image); an edit just carries any existing flag through.
+    if (editIndex !== undefined && editIndex !== "" && items[editIndex].special !== undefined) {
+        itemData.special = items[editIndex].special;
+    }
 
     if (activeDeck.hasDex) {
         itemData.dex = (editIndex !== undefined && editIndex !== "") ? items[editIndex].dex : "";
@@ -756,9 +796,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
 
     titleInput.value = item.name;
     ownedInput.checked = !!item.owned;
-    specialInput.checked = !!item.special;
 
-    specialFieldRow.hidden = !activeDeck.hasSpecial;
     positionFieldRow.hidden = true;
 
     addModal.dataset.editIndex = index;
@@ -938,8 +976,8 @@ function filterItems(query) {
 
         if (filterOwned === true && !item.owned) match = false;
         if (filterOwned === false && item.owned) match = false;
-        if (filterSpecial === true && !item.special) match = false;
-        if (filterSpecial === false && item.special) match = false;
+        if (filterSpecial === true && !isSpecial(item)) match = false;
+        if (filterSpecial === false && isSpecial(item)) match = false;
 
         if (activeDeck.key === "pokemon" && filterGeneration !== null) {
             const master = pokemonMasterByName ? pokemonMasterByName.get(normalizeCardName(item.name)) : null;
@@ -1009,6 +1047,7 @@ const todoAddBtn = document.getElementById("todo-add-btn");
 const todoAddMatchesBtn = document.getElementById("todo-add-matches-btn");
 const todoFindBtn = document.getElementById("todo-find-btn");
 const todoClearBtn = document.getElementById("todo-clear-btn");
+const todoOwnedBtn = document.getElementById("todo-owned-btn");
 const todoPrevBtn = document.getElementById("todo-prev-btn");
 const todoNextBtn = document.getElementById("todo-next-btn");
 
@@ -1046,6 +1085,9 @@ function updateTodoButtonUI() {
     todoFindBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive);
     todoFindBtn.classList.toggle("active-mode", todoFindActive);
     todoClearBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive || todoFindActive);
+    // Only worth offering while something on the list isn't owned yet.
+    todoOwnedBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive || todoFindActive
+        || !items.some(item => item.todo && !item.owned));
     todoPrevBtn.classList.toggle("hidden", !todoFindActive);
     todoNextBtn.classList.toggle("hidden", !todoFindActive);
 
@@ -1101,6 +1143,21 @@ todoFilterBtn.addEventListener("click", () => {
     renderItems();
 });
 
+// In-page replacement for alert() so these messages can't be auto-dismissed.
+const todoNoticeModal = document.getElementById("todo-notice-modal");
+
+function showTodoNotice(message) {
+    document.getElementById("todo-notice-text").textContent = message;
+    todoNoticeModal.classList.remove("hidden");
+}
+
+["todo-notice-close", "todo-notice-ok"].forEach(id => {
+    document.getElementById(id).addEventListener("click", () => todoNoticeModal.classList.add("hidden"));
+});
+todoNoticeModal.addEventListener("click", (e) => {
+    if (e.target === todoNoticeModal) todoNoticeModal.classList.add("hidden");
+});
+
 // ---- Find ----
 // Steps through the to-do cards one binder page at a time: Page Mode jumps to
 // the page holding the current target and highlights it; ◀ / ▶ Next move to the
@@ -1141,7 +1198,7 @@ function enterTodoFind() {
     const queue = items.filter(item => !item.empty && item.todo);
 
     if (queue.length === 0) {
-        alert("There are no cards on the to-do list yet.");
+        showTodoNotice("There are no cards on the to-do list yet.");
         return;
     }
 
@@ -1251,6 +1308,11 @@ window.attachVoiceSearch?.({
     row: todoModalSearchRow,
     before: todoModalClear,
     clearBtn: todoModalClear,
+    // Saying "add" presses Add.
+    onAdd() {
+        document.getElementById("todo-modal-submit").click();
+        return true;
+    },
     placeNotice() {
         const rect = todoModalSearchRow.getBoundingClientRect();
         return { top: rect.bottom + 6, left: rect.left, width: rect.width, height: 0 };
@@ -1317,6 +1379,14 @@ todoModal.addEventListener("click", (e) => {
 const todoMatchesModal = document.getElementById("todo-matches-modal");
 const todoMatchesModalList = document.getElementById("todo-matches-modal-list");
 
+// Saying "add" while dictating into the main search bar (see voice-search.js)
+// adds every offered match straight away. False when Add Matches isn't on offer.
+window.voiceSearchAddHandler = () => {
+    if (todoAddMatchesBtn.classList.contains("hidden")) return false;
+    addNamesToTodo(getTodoMatchCandidates());
+    return true;
+};
+
 todoAddMatchesBtn.addEventListener("click", () => {
     const candidates = getTodoMatchCandidates();
     if (candidates.length === 0) return;
@@ -1367,21 +1437,49 @@ let todoRemoveConfirmIndex = null;
 const todoRemoveConfirmModal = document.getElementById("todo-remove-confirm-modal");
 
 const TODO_CLEAR_ALL = -1;
+const TODO_OWN_ALL = -2;
+
+// The confirm modal is shared by single remove, Clear All and Make All Owned.
+function setTodoConfirmCopy(title, yesLabel, positive = false) {
+    document.getElementById("todo-remove-confirm-title").textContent = title;
+    const yesBtn = document.getElementById("todo-remove-confirm-yes");
+    yesBtn.textContent = yesLabel;
+    // Green for a positive action (Make All Owned), red for removals.
+    yesBtn.classList.toggle("danger", !positive);
+    yesBtn.classList.toggle("positive", positive);
+}
 
 function openTodoClearConfirm() {
     const count = items.filter(item => item.todo).length;
     if (count === 0) return;
 
     todoRemoveConfirmIndex = TODO_CLEAR_ALL;
+    setTodoConfirmCopy("Remove From To Do?", "Yes, remove them");
     document.getElementById("todo-remove-confirm-text").textContent =
         `Do you want to remove all ${count} card${count === 1 ? "" : "s"} from the to-do list?`;
     todoRemoveConfirmModal.classList.remove("hidden");
 }
 
+function openTodoOwnConfirm() {
+    const count = items.filter(item => item.todo && !item.owned).length;
+    if (count === 0) {
+        showTodoNotice("Every card on the to-do list is already owned.");
+        return;
+    }
+
+    todoRemoveConfirmIndex = TODO_OWN_ALL;
+    setTodoConfirmCopy("Make All Owned?", "Yes, mark owned", true);
+    document.getElementById("todo-remove-confirm-text").textContent =
+        `Mark ${count} card${count === 1 ? "" : "s"} on the to-do list as owned? They stay on the list.`;
+    todoRemoveConfirmModal.classList.remove("hidden");
+}
+
 todoClearBtn.addEventListener("click", openTodoClearConfirm);
+todoOwnedBtn.addEventListener("click", openTodoOwnConfirm);
 
 function openTodoRemoveConfirm(index) {
     todoRemoveConfirmIndex = index;
+    setTodoConfirmCopy("Remove From To Do?", "Yes, remove it");
     document.getElementById("todo-remove-confirm-text").textContent =
         `Do you want to remove ${items[index].name} from the to-do list?`;
     todoRemoveConfirmModal.classList.remove("hidden");
@@ -1393,6 +1491,16 @@ function closeTodoRemoveConfirm() {
 }
 
 document.getElementById("todo-remove-confirm-yes").addEventListener("click", () => {
+    if (todoRemoveConfirmIndex === TODO_OWN_ALL) {
+        items.forEach(item => { if (item.todo) item.owned = true; });
+        if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+        updateExportGlow();
+        // Re-render: owned cards swap their sprite/greyed look for the real one.
+        renderItems();
+        closeTodoRemoveConfirm();
+        return;
+    }
+
     if (todoRemoveConfirmIndex === TODO_CLEAR_ALL) {
         items.forEach(item => { delete item.todo; });
         if (typeof markDirty === "function") markDirty(JSON.stringify(items));
@@ -1504,7 +1612,9 @@ async function renderStats() {
 
         const total = deckItems.length;
         const owned = deckItems.filter(item => item.owned).length;
-        const specialOwned = deckItems.filter(item => item.special && item.owned).length;
+        const specialOwned = deckItems.filter(item => item.owned && (deck.key === "pokemon"
+            ? customImageNames.has(normalizeCardName(item.name))
+            : item.special)).length;
 
         return { ...deck, total, owned, specialOwned };
     }));

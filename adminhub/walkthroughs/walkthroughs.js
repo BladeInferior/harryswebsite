@@ -664,7 +664,7 @@ function escapeHtml(str) {
     micBtn.id = 'walkthrough-mic';
     micBtn.className = 'voice-search';
     micBtn.textContent = '🎤';
-    micBtn.title = '"next"/"previous" moves a step, "back" undoes a word, "stop" stops — or just read aloud and it tracks you (saying something already read rewinds to its most recent spot)';
+    micBtn.title = '"next"/"previous" moves a step, "back" undoes a word, "stop" stops, "pause" mutes everything until you say "unpause" — or just read aloud and it tracks you (saying something already read rewinds to its most recent spot)';
     document.getElementById('reader-step-position').insertAdjacentElement('afterend', micBtn);
 
     const recognition = new SpeechRecognition();
@@ -673,6 +673,14 @@ function escapeHtml(str) {
     recognition.interimResults = false;
 
     let listening = false;
+    // "pause" turns the mic red and ignores everything (commands and reading
+    // alike) until "unpause" is said.
+    let paused = false;
+
+    function setPaused(value) {
+        paused = value;
+        micBtn.classList.toggle('paused', value);
+    }
 
     function normalize(word) {
         return word.toLowerCase().replace(/[^a-z]/g, '');
@@ -680,13 +688,17 @@ function escapeHtml(str) {
 
     function stop() {
         listening = false;
+        setPaused(false);
         micBtn.classList.remove('listening');
         recognition.abort();
     }
 
-    const COMMANDS = new Set(['stop', 'back', 'previous', 'next']);
+    const COMMANDS = new Set(['stop', 'back', 'previous', 'next', 'pause']);
 
     function runCommand(cmd) {
+        // A "pause" earlier in the same run silences the rest of it.
+        if (paused) return;
+        if (cmd === 'pause') { setPaused(true); return; }
         if (cmd === 'stop') { stop(); return; }
         if (cmd === 'previous') goToStep(-1);
         else if (cmd === 'next') goToStep(1);
@@ -709,6 +721,12 @@ function escapeHtml(str) {
         for (let i = e.resultIndex; i < e.results.length; i++) {
             const transcript = e.results[i][0].transcript.trim();
             const words = transcript.split(/\s+/).map(normalize).filter(Boolean);
+
+            // Paused: only "unpause" (or "un pause") is listened for.
+            if (paused) {
+                if (words.some((w, idx) => w === 'unpause' || (w === 'pause' && words[idx - 1] === 'un'))) setPaused(false);
+                continue;
+            }
 
             // Saying a short command word quickly more than once (or twice
             // more) in a row often gets merged by the recognizer into one

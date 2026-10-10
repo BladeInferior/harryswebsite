@@ -1090,3 +1090,11 @@ footer {
     0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
     50% { box-shadow: 0 0 0 5px rgba(239, 68, 68, 0); }
 }
+
+/* Paused by saying "pause" — solid red, no pulse, until "unpause" is said. */
+#walkthrough-mic.listening.paused {
+    opacity: 1;
+    animation: none;
+    background: rgba(239, 68, 68, 0.9);
+    box-shadow: none;
+}

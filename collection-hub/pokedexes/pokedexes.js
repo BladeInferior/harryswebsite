@@ -1214,6 +1214,11 @@ window.attachVoiceSearch?.({
     row: todoModalSearchRow,
     before: todoModalClear,
     clearBtn: todoModalClear,
+    // Saying "add" presses Add.
+    onAdd() {
+        todoModalSubmit.click();
+        return true;
+    },
     placeNotice() {
         const rect = todoModalSearchRow.getBoundingClientRect();
         return { top: rect.bottom + 6, left: rect.left, width: rect.width, height: 0 };
@@ -1344,6 +1349,15 @@ function addNamesToTodo(names) {
     updateProgress();
     if (pageMode) applyPagination();
 }
+
+// Saying "add" while dictating into the main search bar (see voice-search.js)
+// adds every offered match straight away — the voice equivalent of Add Matches
+// + Add All. Returns false when that button isn't on offer.
+window.voiceSearchAddHandler = () => {
+    if (!todoAddMatchesBtn || todoAddMatchesBtn.classList.contains("hidden")) return false;
+    addNamesToTodo(getTodoMatchCandidates());
+    return true;
+};
 
 todoAddMatchesBtn?.addEventListener("click", () => {
 

@@ -306,7 +306,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     const { normalize, toWords, matchSpokenTerms, splitLooseTerms } = voiceSearchMatcher;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-    const MIC_TITLE = "Search by voice (click again, or say \"stop\", to stop; say \"back\" to undo the last one)";
+    const MIC_TITLE = "Search by voice (click again, or say \"stop\", to stop; say \"back\" to undo the last one; \"pause\" mutes every command until you say \"unpause\")";
     const HEARD_LOG_SIZE = 5;
 
     // Every mic on the page — only one may dictate at a time, so starting
@@ -382,7 +382,9 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     // `placeNotice()` returns where the "didn't catch" notice goes, as
     // { top, left, width, height }. Returns { stop }, or null when the
     // browser has no speech recognition (no mic is added).
-    function attachVoiceSearch({ input, row, before, clearBtn, id, placeNotice, onListenChange }) {
+    // `onAdd` (optional) is called when "add" is said — the to-do boxes use it
+    // to add the current selection; whatever was said before it is committed first.
+    function attachVoiceSearch({ input, row, before, clearBtn, id, placeNotice, onListenChange, onAdd }) {
         if (!SpeechRecognition || !input || !row) return null;
 
         const micBtn = document.createElement("span");
@@ -437,6 +439,9 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         }
 
         let listening = false;
+        // Saying "pause" turns the mic red and ignores everything — every
+        // command, "stop" and "back" included — until "unpause" is said.
+        let paused = false;
         let terms = [];        // committed terms (existing box text + finished speech)
         let resultOffset = 0;  // results already folded into `terms` this session
         let carriedRegion = ""; // region said at the end of the last phrase, e.g. "Hisuian" before a pause
@@ -459,8 +464,20 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         // abort() rather than stop(): anything still being processed would be
         // ignored anyway (see the `listening` check in "result"), and it frees
         // the microphone straight away for another mic to start.
+        function setPaused(value) {
+            paused = value;
+            micBtn.classList.toggle("paused", value);
+        }
+
+        // "unpause", or the recognizer splitting it into "un pause".
+        function isUnpause(words) {
+            return words.some((w, idx) => normalize(w) === "unpause"
+                || (normalize(w) === "pause" && normalize(words[idx - 1] || "") === "un"));
+        }
+
         function stop() {
             listening = false;
+            setPaused(false);
             carriedRegion = "";
             micBtn.classList.remove("listening");
             recognition.abort();
@@ -479,6 +496,39 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                 // Acts on interim results too, so it stops as soon as "stop" is
                 // heard rather than after the browser's end-of-phrase pause.
                 const words = toWords(text);
+
+                // While paused only "unpause" is listened for; any other
+                // phrase is dropped once it finishes.
+                if (paused) {
+                    if (isUnpause(words)) {
+                        setPaused(false);
+                        carriedRegion = "";
+                        interim = "";
+                        resultOffset = i + 1;
+                        shownInterim.delete(i);
+                    } else if (e.results[i].isFinal) {
+                        resultOffset = i + 1;
+                        shownInterim.delete(i);
+                    }
+                    continue;
+                }
+
+                const pauseIdx = words.findIndex((w, idx) => normalize(w) === "pause" && normalize(words[idx - 1] || "") !== "un");
+                if (pauseIdx !== -1) {
+                    const beforePause = interim + " " + words.slice(0, pauseIdx).join(" ");
+                    const split = splitIntoTerms(beforePause);
+                    if (split.terms.length || split.missed.length) logHeard(beforePause, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    carriedRegion = "";
+                    interim = "";
+                    resultOffset = i + 1;
+                    shownInterim.delete(i);
+                    setPaused(true);
+                    render("");
+                    continue;
+                }
+
                 const stopIdx = words.findIndex(w => normalize(w) === "stop");
                 if (stopIdx !== -1) {
                     const beforeStop = interim + " " + words.slice(0, stopIdx).join(" ");
@@ -515,6 +565,25 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     continue;
                 }
 
+                // "add" commits whatever came before it, then hands over to the
+                // to-do box's own add (see the onAdd option above).
+                const addIdx = onAdd ? words.findIndex(w => normalize(w) === "add") : -1;
+                if (addIdx !== -1) {
+                    const beforeAdd = interim + " " + words.slice(0, addIdx).join(" ");
+                    const split = splitIntoTerms(beforeAdd);
+                    if (split.terms.length || split.missed.length) logHeard(beforeAdd, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    carriedRegion = "";
+                    interim = "";
+                    resultOffset = i + 1;
+                    shownInterim.delete(i);
+                    render("");
+                    onAdd();
+                    if (!listening) return;
+                    continue;
+                }
+
                 if (e.results[i].isFinal) {
                     const chosen = carriedRegion + " " + pickBestAlternative(e.results[i], shownInterim.get(i));
                     shownInterim.delete(i);
@@ -530,6 +599,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     interim += " " + text;
                 }
             }
+            if (paused) return;
             render(interim);
         });
 
@@ -608,6 +678,10 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         before: clearSearch,
         clearBtn: clearSearch,
         id: "voice-search",
+        // Saying "add" adds the current search's matches to the to-do list,
+        // when the page has one to add to (see voiceSearchAddHandler in
+        // pokedexes.js / cards.js); returns false when there is nothing to add.
+        onAdd: () => window.voiceSearchAddHandler ? window.voiceSearchAddHandler() : false,
         placeNotice() {
             const toggles = document.getElementById("search-evolutions-row")?.getBoundingClientRect();
             if (toggles && toggles.height > 0) return toggles;
