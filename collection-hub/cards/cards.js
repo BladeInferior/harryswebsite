@@ -33,6 +33,7 @@ let filterSpecial = null;  // null | true | false
 let filterGeneration = null;
 let filterRecentSet = false;
 let filterMissingImage = false; // true = only show items whose card scan failed to load
+let todoFilterActive = false; // Pokémon deck only — show only cards flagged item.todo, in Pokédex order
 
 // Items (by reference, scoped to the currently active deck) whose real card
 // scan is missing — repopulated on every deck switch by detectMissingImages().
@@ -235,6 +236,7 @@ async function loadDeck(key) {
     filterGeneration = null;
     filterRecentSet = false;
     filterMissingImage = false;
+    todoFilterActive = false;
     missingImageItems = new Set();
     if (searchInput) searchInput.value = "";
 
@@ -264,6 +266,13 @@ async function loadDeck(key) {
         // and regional forms (e.g. Slowpoke / Galarian Slowpoke both use 0079).
         pokemonMasterByName = new Map(pokemonMasterList.map(p => [normalizeCardName(p.name), p]));
     }
+
+    // Tells voice-search.js to snap every spoken word to a real Pokémon name,
+    // same as the Pokédex page — only meaningful for the Pokémon deck, so it
+    // is cleared again for every other one.
+    window.voiceSearchNames = deck.key === "pokemon" && pokemonMasterList
+        ? pokemonMasterList.map(p => p.name)
+        : undefined;
 
     renderDeckTabs();
     pageMode = false;
@@ -457,7 +466,7 @@ function refreshFilterButtons() {
 // break the page numbering, so filters are reset and locked while it's active.
 function updateFilterDisabledState() {
     const container = document.getElementById("game-filter-container");
-    if (container) container.classList.toggle("filters-disabled", pageMode);
+    if (container) container.classList.toggle("filters-disabled", pageMode || todoFilterActive);
 }
 
 // =========================
@@ -499,6 +508,12 @@ function renderItems() {
         card.appendChild(label);
 
         card.addEventListener("click", () => {
+            // Browsing the to-do list: clicking offers to take it off the
+            // list instead of opening the card (same as the Pokédex page).
+            if (todoFilterActive) {
+                openTodoRemoveConfirm(items.indexOf(item));
+                return;
+            }
             openModal(items.indexOf(item));
         });
 
@@ -548,6 +563,7 @@ modalOverlay.addEventListener("click", (e) => {
 // =========================
 pageBtn.addEventListener("click", () => {
     pageMode = true;
+    todoFilterActive = false;
     currentPage = 1;
     searchInput.value = "";
     filterOwned = null;
@@ -569,6 +585,7 @@ pageBtn.addEventListener("click", () => {
 
 listBtn.addEventListener("click", () => {
     pageMode = false;
+    todoFilterActive = false;
     currentPage = 1;
     searchInput.value = "";
     updateFilterDisabledState();
@@ -618,6 +635,10 @@ function updateModeUI() {
     listBtn.classList.toggle("active-mode", pageMode === false);
     pagination.classList.toggle("hidden", pageMode === false);
     searchWrapper.classList.toggle("hidden", pageMode);
+    searchWrapper.classList.toggle("filters-disabled", todoFilterActive);
+    listBtn.classList.toggle("active-mode", pageMode === false && !todoFilterActive);
+    boxContainer.classList.toggle("todo-view", todoFilterActive);
+    updateTodoButtonUI();
     document.body.classList.toggle("page-mode", pageMode);
     document.body.classList.toggle("list-mode", !pageMode);
     document.body.classList.toggle("first-page", pageMode && currentPage === 1);
@@ -674,6 +695,8 @@ document.getElementById("save-item").addEventListener("click", () => {
     }
 
     if (editIndex !== undefined && editIndex !== "") {
+        // Edit rebuilds the record from the form, which has no to-do field.
+        if (items[editIndex].todo) itemData.todo = true;
         items[editIndex] = itemData;
     } else {
         const posRaw = positionInput.value.trim();
@@ -871,9 +894,15 @@ function filterItems(query) {
         ? new Set(RECENT_SETS[0].pokemon.map(normalizeCardName))
         : null;
 
+    // To Do view shows cards in Pokédex order (not the order they were
+    // added), via CSS order so the DOM itself is left alone.
+    const todoRank = todoFilterActive ? getTodoRanks() : null;
+
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
         const dataIndex = (card.dataset && card.dataset.itemIndex) ? Number(card.dataset.itemIndex) : index;
         const item = items[dataIndex];
+
+        card.style.order = todoRank && todoRank.has(dataIndex) ? String(todoRank.get(dataIndex)) : "";
 
         if (!item) {
             card.style.display = "none";
@@ -908,10 +937,13 @@ function filterItems(query) {
 
         if (filterMissingImage && !missingImageItems.has(item)) match = false;
 
+        if (todoFilterActive && !item.todo) match = false;
+
         card.style.display = match ? "block" : "none";
     });
 
     updateItemCount();
+    updateTodoButtonUI();
 }
 
 // =========================
@@ -933,6 +965,7 @@ function updateItemCount() {
         filterGeneration !== null ||
         filterRecentSet ||
         filterMissingImage ||
+        todoFilterActive ||
         searchInput.value.trim() !== ""
     );
 
@@ -949,6 +982,309 @@ function updateItemCount() {
     itemCountLabel.textContent = `${activeDeck.label} displayed: ${count}`;
     itemCountLabel.style.display = "block";
 }
+
+// =========================
+// TO DO LIST (Pokémon deck only)
+// Mirrors the Pokédex page's to-do list: a per-card flag (item.todo, saved in
+// the deck's own backup JSON like owned/special) that can be filled by
+// typing/speaking names (➕ Add To Do), by picking from the current search's
+// unowned matches (📝 Add Matches), and browsed with 📝 To Do. No Find button
+// here — the To Do view just lists every flagged card in Pokédex order.
+// =========================
+const todoFilterBtn = document.getElementById("todo-filter-btn");
+const todoAddBtn = document.getElementById("todo-add-btn");
+const todoAddMatchesBtn = document.getElementById("todo-add-matches-btn");
+
+// item index -> position when flagged cards are sorted by Pokédex number
+// (index as the tie-break, so forms sharing a number keep their list order).
+function getTodoRanks() {
+    const todoIndexes = [];
+    items.forEach((item, i) => { if (item.todo && !item.empty) todoIndexes.push(i); });
+    todoIndexes.sort((a, b) => (Number(items[a].dex) || 0) - (Number(items[b].dex) || 0) || a - b);
+    return new Map(todoIndexes.map((itemIndex, rank) => [itemIndex, rank]));
+}
+
+// Visible cards that could actually be added: not owned yet, not already on
+// the list. Page mode / the To Do view itself have nothing to offer.
+function getTodoMatchCandidates() {
+    if (activeDeck.key !== "pokemon" || todoFilterActive || pageMode) return [];
+
+    return getVisibleItemIndexes()
+        .map(i => items[i])
+        .filter(item => item && !item.owned && !item.todo)
+        .map(item => item.name);
+}
+
+function updateTodoButtonUI() {
+    if (!todoFilterBtn) return;
+
+    const isPokemon = activeDeck.key === "pokemon";
+
+    // Pokémon cards are never added by hand — the deck is the fixed Pokédex-ordered list.
+    document.getElementById("add-item").classList.toggle("hidden", isPokemon);
+
+    todoFilterBtn.classList.toggle("hidden", !isPokemon || pageMode);
+    todoFilterBtn.classList.toggle("active-mode", todoFilterActive);
+    todoAddBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive);
+
+    const eligible = isPokemon && !todoFilterActive && !pageMode && searchInput.value.trim() !== "";
+    todoAddMatchesBtn.classList.toggle("hidden", !eligible || getTodoMatchCandidates().length === 0);
+}
+
+function addNamesToTodo(names) {
+    const wanted = new Set(names.map(normalizeCardName));
+    let changed = false;
+
+    items.forEach(item => {
+        if (item.empty || item.todo || !wanted.has(normalizeCardName(item.name))) return;
+        item.todo = true;
+        changed = true;
+    });
+
+    if (!changed) return;
+
+    if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+    updateExportGlow();
+    filterItems(searchInput.value);
+}
+
+todoFilterBtn.addEventListener("click", () => {
+    if (activeDeck.key !== "pokemon") return;
+
+    todoFilterActive = !todoFilterActive;
+
+    if (todoFilterActive) {
+        // Same as the Pokédex: entering To Do clears every other filter.
+        pageMode = false;
+        searchInput.value = "";
+        filterOwned = null;
+        filterSpecial = null;
+        filterGeneration = null;
+        filterRecentSet = false;
+        filterMissingImage = false;
+        window.stopVoiceSearch?.();
+
+        const missingPhotosBtn = document.getElementById("missing-photos-filter");
+        if (missingPhotosBtn) missingPhotosBtn.classList.remove("active");
+        refreshFilterButtons();
+    }
+
+    updateFilterDisabledState();
+    updateModeUI();
+    renderItems();
+});
+
+// ---- Add To Do (typed / spoken) ----
+const todoModal = document.getElementById("todo-modal");
+const todoModalInput = document.getElementById("todo-modal-input");
+const todoModalSearchRow = document.getElementById("todo-modal-search-row");
+const todoModalClear = document.getElementById("todo-modal-clear");
+const todoModalError = document.getElementById("todo-modal-error");
+
+// ▾ list of the comma-separated terms with a ✕ each — same widget as the
+// Pokédex page's createSearchTermsDropdown(), trimmed to what this box needs.
+const todoModalTerms = (() => {
+    const toggle = document.getElementById("todo-modal-terms-toggle");
+    const panel = document.getElementById("todo-modal-terms-panel");
+
+    const currentTerms = () => todoModalInput.value.split(",").map(t => t.trim()).filter(Boolean);
+
+    function render() {
+        panel.innerHTML = "";
+        const terms = currentTerms();
+
+        if (terms.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "search-terms-empty";
+            empty.textContent = "No search terms";
+            panel.appendChild(empty);
+            return;
+        }
+
+        terms.forEach((term, index) => {
+            const row = document.createElement("div");
+            row.className = "search-term-item";
+
+            const label = document.createElement("span");
+            label.textContent = term;
+
+            const removeBtn = document.createElement("button");
+            removeBtn.type = "button";
+            removeBtn.className = "search-term-remove";
+            removeBtn.textContent = "✕";
+            removeBtn.title = `Remove "${term}"`;
+            removeBtn.addEventListener("click", () => {
+                const rest = currentTerms();
+                rest.splice(index, 1);
+                todoModalInput.value = rest.join(", ");
+                todoModalInput.dispatchEvent(new Event("input", { bubbles: true }));
+            });
+
+            row.append(label, removeBtn);
+            panel.appendChild(row);
+        });
+    }
+
+    function setOpen(open) {
+        panel.hidden = !open;
+        toggle.classList.toggle("open", open);
+        if (open) render();
+    }
+
+    toggle.addEventListener("click", () => setOpen(panel.hidden));
+    todoModalInput.addEventListener("input", () => { if (!panel.hidden) render(); });
+
+    return { setOpen };
+})();
+
+window.attachVoiceSearch?.({
+    input: todoModalInput,
+    row: todoModalSearchRow,
+    before: todoModalClear,
+    clearBtn: todoModalClear,
+    placeNotice() {
+        const rect = todoModalSearchRow.getBoundingClientRect();
+        return { top: rect.bottom + 6, left: rect.left, width: rect.width, height: 0 };
+    }
+});
+
+todoModalClear.addEventListener("click", () => {
+    todoModalInput.value = "";
+    todoModalInput.dispatchEvent(new Event("input", { bubbles: true }));
+    todoModalInput.focus();
+});
+
+// Every way out of the modal also turns its mic off.
+function closeTodoModal() {
+    window.stopVoiceSearch?.();
+    todoModalTerms.setOpen(false);
+    todoModal.classList.add("hidden");
+}
+
+todoAddBtn.addEventListener("click", () => {
+    // Otherwise the main search bar's mic would keep dictating behind it.
+    window.stopVoiceSearch?.();
+
+    todoModalInput.value = "";
+    todoModalError.classList.add("hidden");
+    todoModalTerms.setOpen(false);
+    todoModal.classList.remove("hidden");
+    todoModalInput.focus();
+});
+
+document.getElementById("todo-modal-submit").addEventListener("click", () => {
+    const names = todoModalInput.value.split(",").map(n => n.trim()).filter(Boolean);
+    const known = new Set(items.filter(i => !i.empty).map(i => normalizeCardName(i.name)));
+
+    const found = names.filter(n => known.has(normalizeCardName(n)));
+    const unknown = names.filter(n => !known.has(normalizeCardName(n)));
+
+    addNamesToTodo(found);
+
+    // Names with no card in this deck stay in the box instead of silently vanishing.
+    if (unknown.length > 0) {
+        todoModalInput.value = unknown.join(", ");
+        todoModalInput.dispatchEvent(new Event("input", { bubbles: true }));
+        todoModalError.textContent = `No card found for: ${unknown.join(", ")}`;
+        todoModalError.classList.remove("hidden");
+        return;
+    }
+
+    closeTodoModal();
+});
+
+todoModalInput.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    e.preventDefault();
+    document.getElementById("todo-modal-submit").click();
+});
+
+document.getElementById("todo-modal-close").addEventListener("click", closeTodoModal);
+todoModal.addEventListener("click", (e) => {
+    if (e.target === todoModal) closeTodoModal();
+});
+
+// ---- Add Matches (from the current search) ----
+const todoMatchesModal = document.getElementById("todo-matches-modal");
+const todoMatchesModalList = document.getElementById("todo-matches-modal-list");
+
+todoAddMatchesBtn.addEventListener("click", () => {
+    const candidates = getTodoMatchCandidates();
+    if (candidates.length === 0) return;
+
+    // Nothing to choose between — add the one card straight away.
+    if (candidates.length === 1) {
+        addNamesToTodo(candidates);
+        return;
+    }
+
+    todoMatchesModalList.innerHTML = "";
+
+    candidates.forEach(name => {
+        const row = document.createElement("div");
+        row.classList.add("custom-list-row");
+
+        const label = document.createElement("label");
+        label.classList.add("checkbox-label");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.dataset.pokemon = name;
+
+        label.appendChild(checkbox);
+        label.append(` ${name}`);
+        row.appendChild(label);
+        todoMatchesModalList.appendChild(row);
+    });
+
+    todoMatchesModal.classList.remove("hidden");
+});
+
+function submitTodoMatches(onlyChecked) {
+    const selector = onlyChecked ? "input[type=checkbox]:checked" : "input[type=checkbox]";
+    addNamesToTodo(Array.from(todoMatchesModalList.querySelectorAll(selector)).map(c => c.dataset.pokemon));
+    todoMatchesModal.classList.add("hidden");
+}
+
+document.getElementById("todo-matches-modal-submit").addEventListener("click", () => submitTodoMatches(true));
+document.getElementById("todo-matches-modal-add-all").addEventListener("click", () => submitTodoMatches(false));
+document.getElementById("todo-matches-modal-close").addEventListener("click", () => todoMatchesModal.classList.add("hidden"));
+todoMatchesModal.addEventListener("click", (e) => {
+    if (e.target === todoMatchesModal) todoMatchesModal.classList.add("hidden");
+});
+
+// ---- Remove (clicking a card in the To Do view) ----
+let todoRemoveConfirmIndex = null;
+const todoRemoveConfirmModal = document.getElementById("todo-remove-confirm-modal");
+
+function openTodoRemoveConfirm(index) {
+    todoRemoveConfirmIndex = index;
+    document.getElementById("todo-remove-confirm-text").textContent =
+        `Do you want to remove ${items[index].name} from the to-do list?`;
+    todoRemoveConfirmModal.classList.remove("hidden");
+}
+
+function closeTodoRemoveConfirm() {
+    todoRemoveConfirmIndex = null;
+    todoRemoveConfirmModal.classList.add("hidden");
+}
+
+document.getElementById("todo-remove-confirm-yes").addEventListener("click", () => {
+    const item = items[todoRemoveConfirmIndex];
+    if (item) {
+        delete item.todo;
+        if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+        updateExportGlow();
+        filterItems(searchInput.value);
+    }
+    closeTodoRemoveConfirm();
+});
+
+document.getElementById("todo-remove-confirm-no").addEventListener("click", closeTodoRemoveConfirm);
+document.getElementById("todo-remove-confirm-close").addEventListener("click", closeTodoRemoveConfirm);
+todoRemoveConfirmModal.addEventListener("click", (e) => {
+    if (e.target === todoRemoveConfirmModal) closeTodoRemoveConfirm();
+});
 
 // =========================
 // MODAL NAVIGATION

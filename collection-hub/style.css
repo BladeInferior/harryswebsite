@@ -3823,3 +3823,10 @@ footer {
     overflow-y: auto;
 }
 
+
+/* Cards page: names the To Do box could not match to a card. */
+#todo-modal-error {
+    margin: 8px 0 0;
+    color: #e74c3c;
+    font-size: 13px;
+}
