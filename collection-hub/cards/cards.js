@@ -34,6 +34,9 @@ let filterGeneration = null;
 let filterRecentSet = false;
 let filterMissingImage = false; // true = only show items whose card scan failed to load
 let todoFilterActive = false; // Pokémon deck only — show only cards flagged item.todo, in Pokédex order
+let todoFindActive = false; // stepping through todoQueue one binder page at a time (genuine Page Mode)
+let todoQueue = []; // cards (item objects) flagged item.todo, in deck order
+let todoQueuePos = 0;
 
 // Items (by reference, scoped to the currently active deck) whose real card
 // scan is missing — repopulated on every deck switch by detectMissingImages().
@@ -237,6 +240,9 @@ async function loadDeck(key) {
     filterRecentSet = false;
     filterMissingImage = false;
     todoFilterActive = false;
+    todoFindActive = false;
+    todoQueue = [];
+    todoQueuePos = 0;
     missingImageItems = new Set();
     if (searchInput) searchInput.value = "";
 
@@ -507,7 +513,12 @@ function renderItems() {
         label.textContent = item.name;
         card.appendChild(label);
 
+        if (todoFindActive && todoQueue[todoQueuePos] === item) card.classList.add("todo-find-highlight");
+
         card.addEventListener("click", () => {
+            // Find only navigates — cards are inert while it runs.
+            if (todoFindActive) return;
+
             // Browsing the to-do list: clicking offers to take it off the
             // list instead of opening the card (same as the Pokédex page).
             if (todoFilterActive) {
@@ -562,6 +573,7 @@ modalOverlay.addEventListener("click", (e) => {
 // MODE BUTTONS
 // =========================
 pageBtn.addEventListener("click", () => {
+    resetTodoFind();
     pageMode = true;
     todoFilterActive = false;
     currentPage = 1;
@@ -584,6 +596,7 @@ pageBtn.addEventListener("click", () => {
 });
 
 listBtn.addEventListener("click", () => {
+    resetTodoFind();
     pageMode = false;
     todoFilterActive = false;
     currentPage = 1;
@@ -637,7 +650,7 @@ function updateModeUI() {
     searchWrapper.classList.toggle("hidden", pageMode);
     searchWrapper.classList.toggle("filters-disabled", todoFilterActive);
     listBtn.classList.toggle("active-mode", pageMode === false && !todoFilterActive);
-    boxContainer.classList.toggle("todo-view", todoFilterActive);
+    boxContainer.classList.toggle("todo-view", todoFilterActive && !todoFindActive);
     updateTodoButtonUI();
     document.body.classList.toggle("page-mode", pageMode);
     document.body.classList.toggle("list-mode", !pageMode);
@@ -896,7 +909,7 @@ function filterItems(query) {
 
     // To Do view shows cards in Pokédex order (not the order they were
     // added), via CSS order so the DOM itself is left alone.
-    const todoRank = todoFilterActive ? getTodoRanks() : null;
+    const todoRank = todoFilterActive && !todoFindActive ? getTodoRanks() : null;
 
     document.querySelectorAll(".pokemon-card").forEach((card, index) => {
         const dataIndex = (card.dataset && card.dataset.itemIndex) ? Number(card.dataset.itemIndex) : index;
@@ -937,7 +950,7 @@ function filterItems(query) {
 
         if (filterMissingImage && !missingImageItems.has(item)) match = false;
 
-        if (todoFilterActive && !item.todo) match = false;
+        if (todoFilterActive && !todoFindActive && !item.todo) match = false;
 
         card.style.display = match ? "block" : "none";
     });
@@ -965,7 +978,7 @@ function updateItemCount() {
         filterGeneration !== null ||
         filterRecentSet ||
         filterMissingImage ||
-        todoFilterActive ||
+        (todoFilterActive && !todoFindActive) ||
         searchInput.value.trim() !== ""
     );
 
@@ -994,6 +1007,10 @@ function updateItemCount() {
 const todoFilterBtn = document.getElementById("todo-filter-btn");
 const todoAddBtn = document.getElementById("todo-add-btn");
 const todoAddMatchesBtn = document.getElementById("todo-add-matches-btn");
+const todoFindBtn = document.getElementById("todo-find-btn");
+const todoClearBtn = document.getElementById("todo-clear-btn");
+const todoPrevBtn = document.getElementById("todo-prev-btn");
+const todoNextBtn = document.getElementById("todo-next-btn");
 
 // item index -> position when flagged cards are sorted by Pokédex number
 // (index as the tie-break, so forms sharing a number keep their list order).
@@ -1023,9 +1040,14 @@ function updateTodoButtonUI() {
     // Pokémon cards are never added by hand — the deck is the fixed Pokédex-ordered list.
     document.getElementById("add-item").classList.toggle("hidden", isPokemon);
 
-    todoFilterBtn.classList.toggle("hidden", !isPokemon || pageMode);
+    todoFilterBtn.classList.toggle("hidden", !isPokemon || (pageMode && !todoFindActive));
     todoFilterBtn.classList.toggle("active-mode", todoFilterActive);
     todoAddBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive);
+    todoFindBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive);
+    todoFindBtn.classList.toggle("active-mode", todoFindActive);
+    todoClearBtn.classList.toggle("hidden", !isPokemon || !todoFilterActive || todoFindActive);
+    todoPrevBtn.classList.toggle("hidden", !todoFindActive);
+    todoNextBtn.classList.toggle("hidden", !todoFindActive);
 
     const eligible = isPokemon && !todoFilterActive && !pageMode && searchInput.value.trim() !== "";
     todoAddMatchesBtn.classList.toggle("hidden", !eligible || getTodoMatchCandidates().length === 0);
@@ -1053,6 +1075,11 @@ todoFilterBtn.addEventListener("click", () => {
 
     todoFilterActive = !todoFilterActive;
 
+    if (!todoFilterActive && todoFindActive) {
+        resetTodoFind();
+        pageMode = false;
+    }
+
     if (todoFilterActive) {
         // Same as the Pokédex: entering To Do clears every other filter.
         pageMode = false;
@@ -1072,6 +1099,88 @@ todoFilterBtn.addEventListener("click", () => {
     updateFilterDisabledState();
     updateModeUI();
     renderItems();
+});
+
+// ---- Find ----
+// Steps through the to-do cards one binder page at a time: Page Mode jumps to
+// the page holding the current target and highlights it; ◀ / ▶ Next move to the
+// previous / next flagged card. Purely navigation — nothing is changed or
+// removed from the list, and cards can't be clicked while it runs.
+function pageForIndex(index) {
+    const firstPageSize = (activeDeck.pageBlockRows || 3) * 4;
+    if (index < firstPageSize) return 1;
+    return 2 + Math.floor((index - firstPageSize) / (firstPageSize * 2));
+}
+
+function showTodoQueuePage() {
+    const target = todoQueue[todoQueuePos];
+    if (!target) return;
+
+    currentPage = pageForIndex(items.indexOf(target));
+    renderItems();
+    updateModeUI();
+}
+
+function resetTodoFind() {
+    todoFindActive = false;
+    todoQueue = [];
+    todoQueuePos = 0;
+}
+
+// Back to the filtered to-do list (List Mode, To Do still on).
+function exitTodoFind() {
+    resetTodoFind();
+    pageMode = false;
+    currentPage = 1;
+    updateFilterDisabledState();
+    updateModeUI();
+    renderItems();
+}
+
+function enterTodoFind() {
+    const queue = items.filter(item => !item.empty && item.todo);
+
+    if (queue.length === 0) {
+        alert("There are no cards on the to-do list yet.");
+        return;
+    }
+
+    todoQueue = queue;
+    todoQueuePos = 0;
+    todoFindActive = true;
+    pageMode = true;
+    currentPage = 1;
+
+    updateFilterDisabledState();
+    showTodoQueuePage();
+}
+
+// Moving on from the last card finishes Find; backing up from the first stays put.
+function stepTodoFind(offset) {
+    if (!todoFindActive) return;
+
+    const next = todoQueuePos + offset;
+    if (next >= todoQueue.length) {
+        exitTodoFind();
+        return;
+    }
+    if (next < 0) return;
+
+    todoQueuePos = next;
+    showTodoQueuePage();
+}
+
+todoNextBtn.addEventListener("click", () => stepTodoFind(1));
+todoPrevBtn.addEventListener("click", () => stepTodoFind(-1));
+
+todoFindBtn.addEventListener("click", () => {
+    if (!todoFilterActive) return;
+
+    if (todoFindActive) {
+        exitTodoFind();
+    } else {
+        enterTodoFind();
+    }
 });
 
 // ---- Add To Do (typed / spoken) ----
@@ -1257,6 +1366,20 @@ todoMatchesModal.addEventListener("click", (e) => {
 let todoRemoveConfirmIndex = null;
 const todoRemoveConfirmModal = document.getElementById("todo-remove-confirm-modal");
 
+const TODO_CLEAR_ALL = -1;
+
+function openTodoClearConfirm() {
+    const count = items.filter(item => item.todo).length;
+    if (count === 0) return;
+
+    todoRemoveConfirmIndex = TODO_CLEAR_ALL;
+    document.getElementById("todo-remove-confirm-text").textContent =
+        `Do you want to remove all ${count} card${count === 1 ? "" : "s"} from the to-do list?`;
+    todoRemoveConfirmModal.classList.remove("hidden");
+}
+
+todoClearBtn.addEventListener("click", openTodoClearConfirm);
+
 function openTodoRemoveConfirm(index) {
     todoRemoveConfirmIndex = index;
     document.getElementById("todo-remove-confirm-text").textContent =
@@ -1270,6 +1393,15 @@ function closeTodoRemoveConfirm() {
 }
 
 document.getElementById("todo-remove-confirm-yes").addEventListener("click", () => {
+    if (todoRemoveConfirmIndex === TODO_CLEAR_ALL) {
+        items.forEach(item => { delete item.todo; });
+        if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+        updateExportGlow();
+        filterItems(searchInput.value);
+        closeTodoRemoveConfirm();
+        return;
+    }
+
     const item = items[todoRemoveConfirmIndex];
     if (item) {
         delete item.todo;
