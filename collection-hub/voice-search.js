@@ -144,22 +144,34 @@ const voiceSearchMatcher = (() => {
         return index;
     }
 
-    // Region prefix starting at words[i], possibly split across words by
-    // speech ("his UI and" → Hisuian) or a letter off ("Hisuyan"). Returns
-    // the region and the index of the first word after it.
-    function findRegion(words, i) {
+    // Region prefixes starting at words[i], best first, possibly split across
+    // words by speech ("his UI and" → Hisuian) or heard as something close
+    // ("alone", "a low and"). Each is { region, next } where next is the index
+    // of the first word after it. Loose candidates are only ever accepted by
+    // the caller when a real species of that region follows, so they can be
+    // generous about spelling.
+    function findRegions(words, i, exactNames) {
+        const out = [];
         for (let n = Math.min(3, words.length - i); n >= 1; n--) {
             let key = normalize(words.slice(i, i + n).join(""));
             if (n > 1 && key.endsWith("and")) key = key.slice(0, -3);
             const exact = REGIONS[key];
-            if (exact) return { region: exact, next: i + n };
-            if (key.length >= 5) {
-                const near = Object.keys(REGIONS).find(r =>
-                    r.length >= 5 && distance(key, r) <= (r.length >= 7 ? 2 : 1));
-                if (near) return { region: REGIONS[near], next: i + n };
+            if (exact) { out.push({ region: exact, next: i + n, loose: false }); continue; }
+            if (key.length < 4 || exactNames.has(key)) continue;
+            let bestRegion = null;
+            let bestDist = Infinity;
+            for (const r of Object.keys(REGIONS)) {
+                if (r.length < 5) continue;
+                const d = distance(key, r, 5);
+                if (d < bestDist) { bestDist = d; bestRegion = r; }
+            }
+            const limit = key.length >= 8 ? 4 : key.length >= 5 ? 3 : 2;
+            if (bestRegion && bestDist <= limit) {
+                out.push({ region: REGIONS[bestRegion], next: i + n, loose: true });
             }
         }
-        return null;
+        // Exact spellings first, then the closest loose ones (longer span first).
+        return out.sort((a, b) => a.loose - b.loose);
     }
 
     function matchSpokenTerms(rawWords, names) {
@@ -179,8 +191,9 @@ const voiceSearchMatcher = (() => {
             // "Hisui (and) sligu" → Hisuian Sliggoo. The species is only
             // compared against that region's own forms, a small enough set
             // to allow one extra letter of slack, plus sound-alikes.
-            const regionHit = findRegion(words, i);
-            if (regionHit) {
+            let regionHandled = false;
+            const regionHits = findRegions(words, i, idx.exact);
+            for (const regionHit of regionHits) {
                 const region = regionHit.region;
                 let j = regionHit.next;
                 if (j < words.length && FILLER_AFTER_REGION.has(normalize(words[j]))) j++;
@@ -194,7 +207,11 @@ const voiceSearchMatcher = (() => {
                     terms.push(matched.name);
                     i = matched.next;
                     lastWasMissed = false;
-                } else if (j >= words.length) {
+                    regionHandled = true;
+                    break;
+                }
+                if (regionHit.loose) continue;
+                if (j >= words.length) {
                     // Region as the very last thing heard — likely a pause
                     // before the species, which the browser can send as the
                     // next phrase. Handed back so the caller can prepend it.
@@ -209,8 +226,10 @@ const voiceSearchMatcher = (() => {
                     i = j;
                     lastWasMissed = true;
                 }
-                continue;
+                regionHandled = true;
+                break;
             }
+            if (regionHandled) continue;
 
             // Tries this word alone and joined with the next one or two:
             // real multi-word names ("Tapu Koko", "Iron Moth", "Ho-Oh"), and
@@ -296,7 +315,19 @@ const voiceSearchMatcher = (() => {
         return terms;
     }
 
-    return { normalize, toWords, matchSpokenTerms, splitLooseTerms };
+    // "regional": swaps a term for its regional form. Already regional →
+    // the next form of the same species (Meowth: Alolan → Galarian → Alolan).
+    // Returns null when the species has no regional form.
+    const REGION_PREFIX = /^(Alolan|Galarian|Hisuian|Paldean) /;
+    function regionalVariant(term, names) {
+        const base = term.replace(REGION_PREFIX, "");
+        const forms = names.filter(n => REGION_PREFIX.test(n) && n.replace(REGION_PREFIX, "") === base);
+        if (!forms.length) return null;
+        const at = forms.indexOf(term);
+        return forms[(at + 1) % forms.length];
+    }
+
+    return { normalize, toWords, matchSpokenTerms, splitLooseTerms, regionalVariant };
 })();
 
 if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
@@ -341,10 +372,20 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
     }
 
     // { terms, missed, trailingRegion }
+    const REGIONAL_WORDS = new Set(["regional", "regionals", "region"]);
+
     function splitIntoTerms(text) {
         const words = toWords(text);
         if (strictMode()) return matchSpokenTerms(words, window.voiceSearchNames);
         return { terms: splitLooseTerms(words, looseNames || []), missed: [] };
+    }
+
+    // How well a guess lines up with real names: each name is worth 10, a
+    // regional form 6 more, each unplaced word costs 1.
+    function interimScore(text) {
+        const { terms: found, missed } = splitIntoTerms(text);
+        const regional = found.filter(t => /^(Alolan|Galarian|Hisuian|Paldean) /.test(t)).length;
+        return found.length * 10 + regional * 6 - missed.length;
     }
 
     // Of the browser's guesses for one phrase, the one that places the most
@@ -357,18 +398,13 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         const alternatives = Array.from(result, alt => alt.transcript);
         if (!strictMode() || (alternatives.length < 2 && !shown)) return shown || alternatives[0];
 
-        const score = text => {
-            const { terms: found, missed } = splitIntoTerms(text);
-            return found.length * 10 - missed.length;
-        };
-
-        // Only switch away from what was shown for a guess with strictly more
-        // names (a whole name's worth of score, not just fewer misses).
         let best = shown || alternatives[0];
-        let bestScore = score(best);
-        const margin = shown ? 10 : 1;
+        let bestScore = interimScore(best);
+        // A regional form counts for more than its plain species, so a final
+        // guess that drops "Alolan" never beats one that kept it.
+        const margin = shown ? 5 : 1;
         for (const text of alternatives) {
-            const s = score(text);
+            const s = interimScore(text);
             if (s >= bestScore + margin) {
                 best = text;
                 bestScore = s;
@@ -565,6 +601,27 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     continue;
                 }
 
+                // "regional" turns the most recent term into its regional form
+                // (when it has one), after committing what came before it.
+                const regionalIdx = words.findIndex(w => REGIONAL_WORDS.has(normalize(w)));
+                if (regionalIdx !== -1) {
+                    const beforeRegional = interim + " " + words.slice(0, regionalIdx).join(" ");
+                    const split = splitIntoTerms(beforeRegional);
+                    if (split.terms.length || split.missed.length) logHeard(beforeRegional, split);
+                    showMissed(split.missed);
+                    terms.push(...split.terms);
+                    const variant = terms.length
+                        ? voiceSearchMatcher.regionalVariant(terms[terms.length - 1], window.voiceSearchNames || looseNames || [])
+                        : null;
+                    if (variant) terms[terms.length - 1] = variant;
+                    carriedRegion = "";
+                    interim = "";
+                    resultOffset = i + 1;
+                    shownInterim.delete(i);
+                    render("");
+                    continue;
+                }
+
                 // "add" commits whatever came before it, then hands over to the
                 // to-do box's own add (see the onAdd option above).
                 const addIdx = onAdd ? words.findIndex(w => normalize(w) === "add") : -1;
@@ -595,7 +652,12 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     interim = carriedRegion;
                     resultOffset = i + 1;
                 } else {
-                    shownInterim.set(i, text);
+                    // Keeps the best-scoring interim seen, not the latest: the
+                    // recognizer often drops a word ("Alolan") from a later one.
+                    const prev = shownInterim.get(i);
+                    if (!prev || interimScore(text) >= interimScore(prev)) {
+                        shownInterim.set(i, text);
+                    }
                     interim += " " + text;
                 }
             }
