@@ -5597,7 +5597,7 @@
     "wonderTradeDexTodo": false,
     "pogoDexTodo": false,
     "shinyDex": true,
-    "shinyDexTodo": false,
+    "shinyDexTodo": true,
     "shinyDexData": {
       "correctStage": true,
       "originalRegion": false,
