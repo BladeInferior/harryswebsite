@@ -7266,7 +7266,8 @@
     "dex": "0618",
     "type": "Ground, Electric",
     "games": [
-      "plza"
+      "plza",
+      "swsh"
     ],
     "tags": []
   },
