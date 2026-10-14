@@ -3358,6 +3358,8 @@ function renderModalState(pokemonKey) {
 // without this the button stayed stuck showing whatever it last was until
 // something else (nav arrows, reopening) happened to touch the modal.
 function updatePlzaCombosButtonUI() {
+    document.getElementById("plza-zone-btn")?.classList.toggle("hidden", gameFilterState.plza !== "include");
+
     const plzaCombosBtn = document.getElementById("plza-combos-btn");
     if (!plzaCombosBtn || modalOverlay.classList.contains("hidden")) return;
 
@@ -3378,6 +3380,69 @@ function updatePlzaCombosButtonUI() {
 const plzaCombosModal = document.getElementById("plza-combos-modal");
 const plzaCombosModalTitle = document.getElementById("plza-combos-modal-title");
 const plzaCombosModalBody = document.getElementById("plza-combos-modal-body");
+
+// A pokemon is still worth finding in a Legends Z-A distortion when it isn't
+// shiny yet, or is missing Correct Stage, or is missing Original Region (only
+// a real gap for Kalos/Gen 6 pokemon — see GAME_NATIVE_GENERATION). Luxury
+// Ball is deliberately not a reason on its own, so a pokemon that only lacks
+// that doesn't make a combination worth showing.
+function plzaMemberMissing(name) {
+    const key = normalizeName(name);
+    const data = savedDexData[key];
+    if (!data?.shinyDex) return ["Not shiny yet"];
+    const s = data.shinyDexData || {};
+    const pokemon = allPokemon.find(p => normalizeName(p.name) === key);
+    const missing = [];
+    if (!s.correctStage) missing.push("Correct Stage");
+    if (pokemon?.generation === GAME_NATIVE_GENERATION.plza && !s.originalRegion) missing.push("Original Region");
+    return missing;
+}
+
+function plzaMemberNeedsShiny(name) {
+    return plzaMemberMissing(name).length > 0;
+}
+
+// Fills `cardsRow` with a distortion's pokemon. Compact (default) shows only
+// the ones still missing something, each labelled with what; full shows the
+// whole distortion, missing ones still labelled. `highlight` is the set of
+// names to pick out (the searched-for pokemon).
+function fillPlzaCardsRow(cardsRow, members, highlight, full, showMissing = true) {
+    cardsRow.innerHTML = "";
+    const shown = full ? members : members.filter(plzaMemberNeedsShiny);
+    if (!shown.length) {
+        cardsRow.innerHTML = `<div class="plza-zone-note">Nothing missing here</div>`;
+        return;
+    }
+    shown.forEach(memberName => {
+        const missing = showMissing ? plzaMemberMissing(memberName) : [];
+        const card = document.createElement("div");
+        card.classList.add("plza-combo-card");
+        card.classList.toggle("plza-combo-card--self", highlight.has(memberName));
+        card.classList.toggle("plza-combo-card--missing", missing.length > 0);
+        card.innerHTML = `
+            <img loading="lazy" src="${getPokemonSpritePath(memberName, true)}">
+            <div class="pokemon-name">${memberName}</div>
+            ${missing.length ? `<div class="plza-combo-missing">Missing: ${missing.join(", ")}</div>` : ""}
+        `;
+        cardsRow.appendChild(card);
+    });
+}
+
+// Adds the "Show full distortion" button to `row` and wires it to re-render
+// every { cardsRow, members } part between compact and full.
+function addPlzaFullToggle(row, parts, highlight) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.classList.add("plza-full-toggle");
+    btn.textContent = "Show full distortion";
+    let full = false;
+    btn.addEventListener("click", () => {
+        full = !full;
+        btn.textContent = full ? "Show only missing" : "Show full distortion";
+        parts.forEach(({ cardsRow, members }) => fillPlzaCardsRow(cardsRow, members, highlight, full));
+    });
+    row.appendChild(btn);
+}
 
 function renderPlzaCombosModal(name) {
 
@@ -3431,6 +3496,186 @@ document.getElementById("plza-combos-modal-close")?.addEventListener("click", ()
 plzaCombosModal?.addEventListener("click", (e) => {
     if (e.target === plzaCombosModal) plzaCombosModal.classList.add("hidden");
 });
+
+// ---------------------------
+// LEGENDS Z-A SEARCH ZONE
+// Type a list of pokemon and pick 1-3 types: results are every zone
+// combination — one distortion cluster per picked type — whose clusters
+// together contain every pokemon entered. A cluster's type(s) are the
+// per-type Serebii pages it was scraped from (`types` in
+// plza-distortions.json). Each picked type's cluster must hold at least one
+// of the entered pokemon (otherwise that type could be any cluster at all,
+// which isn't a useful answer); one cluster can't fill two type slots.
+// ---------------------------
+const plzaZoneModal = document.getElementById("plza-zone-modal");
+const plzaZoneInput = document.getElementById("plza-zone-input");
+const plzaZoneTypesEl = document.getElementById("plza-zone-types");
+const plzaZoneResultsEl = document.getElementById("plza-zone-results");
+const PLZA_ZONE_TYPES = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"];
+const PLZA_ZONE_MAX_TYPES = 3;
+const PLZA_ZONE_MAX_RESULTS = 200;
+let plzaZoneSelectedTypes = [];
+let plzaZoneUpgradeOnly = false; // the "To Upgrade Only" button
+let plzaZoneClusters = null; // built lazily: [{ id, star, members: Set, types: Set }]
+
+function getPlzaZoneClusters() {
+    if (plzaZoneClusters) return plzaZoneClusters;
+    const byId = new Map();
+    Object.entries(plzaDistortions).forEach(([name, combos]) => {
+        combos.forEach(({ star, mates, types }) => {
+            const members = [name, ...mates].sort();
+            const id = `${star}|${members.join("\u0000")}`;
+            if (!byId.has(id)) byId.set(id, { id, star, members: new Set(members), types: new Set() });
+            (types || []).forEach(t => byId.get(id).types.add(t));
+        });
+    });
+    plzaZoneClusters = Array.from(byId.values());
+    return plzaZoneClusters;
+}
+
+function plzaZoneNormalize(text) {
+    return text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// Comma/newline separated names first; anything not an exact name on its
+// own is split on spaces and matched greedily (longest name first), so
+// "absol sharpedo venusaur" and "Alolan Marowak Absol" both work.
+function parsePlzaZoneNames(text) {
+    const byKey = new Map(allPokemon.map(p => [plzaZoneNormalize(p.name), p.name]));
+    const found = [];
+    const unknown = [];
+    const add = n => { if (!found.includes(n)) found.push(n); };
+
+    text.split(/[,\n;]+/).forEach(chunk => {
+        if (!chunk.trim()) return;
+        const whole = byKey.get(plzaZoneNormalize(chunk));
+        if (whole) return add(whole);
+
+        const words = chunk.trim().split(/\s+/);
+        let i = 0;
+        while (i < words.length) {
+            let matched = false;
+            for (let len = Math.min(4, words.length - i); len >= 1 && !matched; len--) {
+                const name = byKey.get(plzaZoneNormalize(words.slice(i, i + len).join(" ")));
+                if (name) { add(name); i += len; matched = true; }
+            }
+            if (!matched) { unknown.push(words[i]); i++; }
+        }
+    });
+
+    return { found, unknown };
+}
+
+function findPlzaZoneCombos(names, types) {
+    const clusters = getPlzaZoneClusters();
+    const perType = types.map(t => clusters.filter(c => c.types.has(t) && names.some(n => c.members.has(n))));
+    const results = [];
+    const seen = new Set();
+
+    const pick = (slot, chosen) => {
+        if (slot === types.length) {
+            if (!names.every(n => chosen.some(c => c.members.has(n)))) return;
+            const key = chosen.map(c => c.id).sort().join("\u0001");
+            if (seen.has(key)) return;
+            seen.add(key);
+            results.push(chosen.map((c, i) => ({ cluster: c, type: types[i] })));
+            return;
+        }
+        perType[slot].forEach(c => {
+            if (!chosen.includes(c)) pick(slot + 1, [...chosen, c]);
+        });
+    };
+    pick(0, []);
+    return results;
+}
+
+function renderPlzaZoneTypeChips() {
+    plzaZoneTypesEl.innerHTML = "";
+    PLZA_ZONE_TYPES.forEach(type => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.classList.add("plza-zone-type-chip");
+        chip.classList.toggle("active", plzaZoneSelectedTypes.includes(type));
+        chip.textContent = type;
+        chip.addEventListener("click", () => {
+            const i = plzaZoneSelectedTypes.indexOf(type);
+            if (i >= 0) plzaZoneSelectedTypes.splice(i, 1);
+            else if (plzaZoneSelectedTypes.length < PLZA_ZONE_MAX_TYPES) plzaZoneSelectedTypes.push(type);
+            renderPlzaZoneTypeChips();
+        });
+        plzaZoneTypesEl.appendChild(chip);
+    });
+}
+
+function runPlzaZoneSearch() {
+    plzaZoneResultsEl.innerHTML = "";
+    const note = text => {
+        const el = document.createElement("div");
+        el.classList.add("plza-zone-note");
+        el.textContent = text;
+        plzaZoneResultsEl.appendChild(el);
+    };
+
+    const { found, unknown } = parsePlzaZoneNames(plzaZoneInput.value);
+    if (unknown.length) note(`Not recognised: ${unknown.join(", ")}`);
+    if (!found.length) return note("Enter at least one pokemon.");
+    if (!plzaZoneSelectedTypes.length) return note("Pick at least one type.");
+
+    const noZone = found.filter(n => !getPlzaZoneClusters().some(c => c.members.has(n)));
+    if (noZone.length) return note(`${noZone.join(", ")} never spawn in a Hyperspace Wild Zone.`);
+
+    // "To Upgrade Only" on: only combinations with at least one pokemon still
+    // missing something, shown compactly. Off: every match, full distortions.
+    let results = findPlzaZoneCombos(found, plzaZoneSelectedTypes);
+    if (plzaZoneUpgradeOnly) {
+        results = results.filter(parts => parts.some(({ cluster }) => Array.from(cluster.members).some(plzaMemberNeedsShiny)));
+    }
+    if (!results.length) return note("No zone combination found for those pokemon and types.");
+
+    note(results.length > PLZA_ZONE_MAX_RESULTS
+        ? `${results.length} combinations (showing the first ${PLZA_ZONE_MAX_RESULTS})`
+        : `${results.length} combination${results.length === 1 ? "" : "s"}`);
+
+    results.slice(0, PLZA_ZONE_MAX_RESULTS).forEach(parts => {
+        const row = document.createElement("div");
+        row.classList.add("plza-combo-row");
+
+        const cardParts = [];
+        const highlight = new Set(found);
+        parts.forEach(({ cluster, type }) => {
+            const label = document.createElement("div");
+            label.classList.add("plza-combo-row-star");
+            label.textContent = `${type} — ${cluster.star}★ distortion`;
+            row.appendChild(label);
+
+            const cardsRow = document.createElement("div");
+            cardsRow.classList.add("plza-combo-row-cards");
+            const ordered = Array.from(cluster.members).sort((a, b) =>
+                (found.includes(b) - found.includes(a)) || plzaDexNumber(a) - plzaDexNumber(b));
+            fillPlzaCardsRow(cardsRow, ordered, highlight, !plzaZoneUpgradeOnly, plzaZoneUpgradeOnly);
+            row.appendChild(cardsRow);
+            cardParts.push({ cardsRow, members: ordered });
+        });
+        if (plzaZoneUpgradeOnly) addPlzaFullToggle(row, cardParts, highlight);
+
+        plzaZoneResultsEl.appendChild(row);
+    });
+}
+
+document.getElementById("plza-zone-btn")?.addEventListener("click", () => {
+    renderPlzaZoneTypeChips();
+    plzaZoneModal.classList.remove("hidden");
+    plzaZoneInput.focus();
+});
+document.getElementById("plza-zone-submit")?.addEventListener("click", runPlzaZoneSearch);
+document.getElementById("plza-zone-upgrade-btn")?.addEventListener("click", e => {
+    plzaZoneUpgradeOnly = !plzaZoneUpgradeOnly;
+    e.currentTarget.classList.toggle("active", plzaZoneUpgradeOnly);
+    if (plzaZoneResultsEl.children.length) runPlzaZoneSearch();
+});
+plzaZoneInput?.addEventListener("keydown", e => { if (e.key === "Enter") runPlzaZoneSearch(); });
+document.getElementById("plza-zone-modal-close")?.addEventListener("click", () => plzaZoneModal.classList.add("hidden"));
+plzaZoneModal?.addEventListener("click", e => { if (e.target === plzaZoneModal) plzaZoneModal.classList.add("hidden"); });
 
 function createFilterButtons() {
 

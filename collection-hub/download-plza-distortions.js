@@ -4,7 +4,7 @@
 // DLC wave) — see "Asset-download scripts" in CLAUDE.md for the convention
 // this follows.
 //
-// Output shape: { "<Pokemon name>": [{ star, mates: [...other names] }, ...] }
+// Output shape: { "<Pokemon name>": [{ star, mates: [...other names], types: [...] }, ...] }
 // — one entry per distinct Hyperspace Wild Zone cluster that pokemon spawns
 // in, "mates" being every other pokemon sharing that same cluster (so the
 // Pokédex's "Combinations" modal can show, for any one pokemon, every
@@ -12,6 +12,8 @@
 // it (a solo spawn) still gets an entry with mates: [] — needed so that
 // pokemon's star rating still shows up on its card (see plzaDistortions in
 // pokedexes.js), even though there's nothing to list in Combinations for it.
+// "types" lists every per-type page the cluster appeared on (the zone's
+// type(s), used by the Search Zone feature); the Legendary page is "special".
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
@@ -22,9 +24,10 @@ const TYPES = [
     "dragon", "dark", "steel", "fairy"
 ];
 
-const PAGES = [...TYPES, "special"].map(
-    key => `https://www.serebii.net/legendsz-a/hyperspacewildzone/${key}.shtml`
-);
+const PAGES = [...TYPES, "special"].map(key => ({
+    key,
+    url: `https://www.serebii.net/legendsz-a/hyperspacewildzone/${key}.shtml`
+}));
 
 // Serebii's icon filenames suffix regional forms (e.g. "105-a.png" for
 // Alolan Marowak) rather than saying so in the alt text/link, which just
@@ -138,7 +141,7 @@ async function main() {
 
     const byName = new Map(); // normalized -> { name, combos: Map(signature -> {star, mates}) }
 
-    for (const url of PAGES) {
+    for (const { key: pageType, url } of PAGES) {
         console.log(`Fetching ${url}`);
         let html;
         try {
@@ -157,7 +160,9 @@ async function main() {
             // is the same real in-game cluster, so it's only kept once.
             const signature = `${star}|${[...mates].sort().join("\u0000")}`;
             const entryCombos = byName.get(key).combos;
-            if (!entryCombos.has(signature)) entryCombos.set(signature, { star, mates });
+            if (!entryCombos.has(signature)) entryCombos.set(signature, { star, mates, types: [] });
+            const combo = entryCombos.get(signature);
+            if (!combo.types.includes(pageType)) combo.types.push(pageType);
         });
     }
 

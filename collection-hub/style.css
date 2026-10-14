@@ -177,6 +177,77 @@ h1 {
     font-weight: 600;
 }
 
+/* What a missing pokemon in a distortion is missing, plus the per-row
+   "Show full distortion" toggle (Combinations + Search Zone). */
+.plza-combo-missing {
+    font-size: 9px;
+    line-height: 1.15;
+    color: #ff7b7b;
+}
+
+.plza-full-toggle {
+    align-self: center;
+    margin-top: 4px;
+    padding: 3px 10px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+/* Legends Z-A "Search Zone" modal (#plza-zone-modal) — reuses the
+   Combinations modal's row/card styles for its results. */
+#plza-zone-modal .stats-modal-box {
+    width: 640px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+#plza-zone-input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#plza-zone-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.plza-zone-type-chip {
+    text-transform: capitalize;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.plza-zone-type-chip.active {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+}
+
+.plza-zone-note {
+    margin: 10px 0 4px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+}
+
+#plza-zone-results .plza-combo-row {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 8px;
+}
+
 /* Finished hunts — same mint-green "selected" treatment as .active-dex uses
    for a caught pokemon on the currently-edited dex, applied here instead to
    mark a hunt as done rather than still in progress (which stays plain). */

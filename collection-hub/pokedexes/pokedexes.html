@@ -107,6 +107,7 @@
         <button id="todo-add-matches-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only: pick which of your current search's missing matches to add to the to-do list">📝 Add Matches</button>
         <button id="todo-add-btn" class="hidden" title="Trade Dex / Wonder Trade Dex / PoGo Dex / Shiny Dex only: add pokemon to the to-do list">➕ Add To Do</button>
         <button id="todo-find-btn" class="hidden" title="Step through the to-do list one page at a time">🔍 Find</button>
+        <button id="plza-zone-btn" class="hidden" title="Legends ZA filter only: enter pokemon and up to 3 types to see every Hyperspace Wild Zone combination they can spawn in together">🔎 Search Zone</button>
         <button id="pogo-shiny-mode-btn" class="hidden" title="PoGo Dex only: click a caught pokemon to flip its shiny sprite. On the to-do list, turn this on before selecting a pokemon to mark it shiny at the same time.">✨ Shiny Mode</button>
         <button id="hunts-mode-btn" class="hidden" title="Shiny Dex only: an archive of shiny hunts and their total encounter counts">🎯 Hunts</button>
         <button id="hunts-add-btn" class="hidden" title="Add a new shiny hunt">➕ Add Hunt</button>
@@ -231,6 +232,22 @@
             <div id="plza-combos-modal-close" class="modal-close-btn">✕</div>
             <h2 id="plza-combos-modal-title">Combinations</h2>
             <div id="plza-combos-modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Legends Z-A "Search Zone" — type a list of pokemon, pick up to 3
+         types, and get every zone combination (one distortion per type)
+         that can spawn all of them together. See the LEGENDS Z-A SEARCH ZONE
+         block in pokedexes.js. -->
+    <div id="plza-zone-modal" class="stats-modal-overlay hidden">
+        <div class="stats-modal-box">
+            <div id="plza-zone-modal-close" class="modal-close-btn">✕</div>
+            <h2>Search Zone</h2>
+            <input type="text" id="plza-zone-input" placeholder="Absol, Sharpedo, Venusaur...">
+            <div id="plza-zone-types"></div>
+            <button id="plza-zone-upgrade-btn" class="plza-zone-type-chip" title="On: only combinations containing a pokemon that is not shiny yet or is missing Correct Stage / Original Region (Gen 6 only), showing just those pokemon. Off: every matching zone.">To Upgrade Only</button>
+            <button id="plza-zone-submit" class="item-action-btn stats-detail-btn">Search</button>
+            <div id="plza-zone-results"></div>
         </div>
     </div>
 
