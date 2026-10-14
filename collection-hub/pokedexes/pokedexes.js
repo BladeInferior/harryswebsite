@@ -3383,23 +3383,44 @@ const plzaCombosModalBody = document.getElementById("plza-combos-modal-body");
 
 // A pokemon is still worth finding in a Legends Z-A distortion when it isn't
 // shiny yet, or is missing Correct Stage, or is missing Original Region (only
-// a real gap for Kalos/Gen 6 pokemon — see GAME_NATIVE_GENERATION). Luxury
-// Ball is deliberately not a reason on its own, so a pokemon that only lacks
-// that doesn't make a combination worth showing.
-function plzaMemberMissing(name) {
+// a real gap for Kalos/Gen 6 pokemon — see GAME_NATIVE_GENERATION). Those
+// three are the "main" constraints: only they make a combination worth
+// showing (plzaMemberNeedsShiny). Luxury Ball and Alpha are labelled as
+// missing too, but never trigger anything on their own. Alpha only counts for
+// a pokemon that can actually still be upgraded to one: it's a Gen 6 pokemon
+// (right region), or it doesn't have Original Region yet.
+function plzaMemberStatus(name) {
     const key = normalizeName(name);
     const data = savedDexData[key];
-    if (!data?.shinyDex) return ["Not shiny yet"];
+    if (!data?.shinyDex) return { main: ["Not shiny yet"], extra: [], alphaMissing: false };
     const s = data.shinyDexData || {};
     const pokemon = allPokemon.find(p => normalizeName(p.name) === key);
-    const missing = [];
-    if (!s.correctStage) missing.push("Correct Stage");
-    if (pokemon?.generation === GAME_NATIVE_GENERATION.plza && !s.originalRegion) missing.push("Original Region");
-    return missing;
+    const inRegion = pokemon?.generation === GAME_NATIVE_GENERATION.plza;
+    const main = [];
+    if (!s.correctStage) main.push("Correct Stage");
+    if (inRegion && !s.originalRegion) main.push("Original Region");
+    const extra = [];
+    if (!s.luxuryBall) extra.push("Luxury Ball");
+    const alphaMissing = !s.alpha && (inRegion || !s.originalRegion);
+    if (alphaMissing) extra.push("Alpha");
+    return { main, extra, alphaMissing };
+}
+
+function plzaMemberMissing(name) {
+    const { main, extra } = plzaMemberStatus(name);
+    return [...main, ...extra];
 }
 
 function plzaMemberNeedsShiny(name) {
-    return plzaMemberMissing(name).length > 0;
+    return plzaMemberStatus(name).main.length > 0;
+}
+
+// Compact view: pokemon missing a main constraint, plus any alpha-upgradable
+// ones alongside them (a row is only offered at all when something in it
+// passes plzaMemberNeedsShiny).
+function plzaMemberShownCompact(name) {
+    const { main, alphaMissing } = plzaMemberStatus(name);
+    return main.length > 0 || alphaMissing;
 }
 
 // Fills `cardsRow` with a distortion's pokemon. Compact (default) shows only
@@ -3408,7 +3429,7 @@ function plzaMemberNeedsShiny(name) {
 // names to pick out (the searched-for pokemon).
 function fillPlzaCardsRow(cardsRow, members, highlight, full, showMissing = true) {
     cardsRow.innerHTML = "";
-    const shown = full ? members : members.filter(plzaMemberNeedsShiny);
+    const shown = full ? members : members.filter(plzaMemberShownCompact);
     if (!shown.length) {
         cardsRow.innerHTML = `<div class="plza-zone-note">Nothing missing here</div>`;
         return;
@@ -3444,15 +3465,92 @@ function addPlzaFullToggle(row, parts, highlight) {
     row.appendChild(btn);
 }
 
-function renderPlzaCombosModal(name) {
+let plzaCombosUpgradeOnly = false; // the Combinations modal's own "To Upgrade Only" button (off by default)
+let plzaCombosStarFilter = new Set(); // stars ticked in the Combinations modal's filter; empty = show all
+let plzaCombosTypeFilter = new Set(); // types ticked in the Combinations modal's top-right filter; empty = show all
+
+function plzaComboTypes(combo) {
+    return (combo.types || []).filter(t => t !== "special");
+}
+
+function createPlzaTypeIcon(type) {
+    const icon = document.createElement("img");
+    icon.src = `../icons/types/${type}.png`;
+    icon.alt = type;
+    icon.title = type.charAt(0).toUpperCase() + type.slice(1);
+    return icon;
+}
+
+function renderPlzaCombosModal(name, resetFilter = true) {
 
     plzaCombosModalTitle.textContent = `${name} — Legends Z-A Combinations`;
     plzaCombosModalBody.innerHTML = "";
+    if (resetFilter) {
+        plzaCombosTypeFilter = new Set();
+        plzaCombosStarFilter = new Set();
+    }
 
-    getPlzaCombosWithMates(name).forEach(({ star, mates }) => {
+    const allCombos = getPlzaCombosWithMates(name);
+
+    // Top-right type filter: only the distortion types this pokemon
+    // actually has combos in.
+    const filterEl = document.getElementById("plza-combos-type-filter");
+    const presentTypes = PLZA_ZONE_TYPES.filter(t => allCombos.some(c => plzaComboTypes(c).includes(t)));
+    filterEl.innerHTML = "";
+
+    // Star filter, just left of the types: only stars this pokemon has.
+    Array.from(new Set(allCombos.map(c => c.star))).sort((a, b) => a - b).forEach(star => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.classList.add("type-filter-btn", "plza-star-filter-btn");
+        btn.classList.toggle("active", plzaCombosStarFilter.has(star));
+        btn.title = `${star}★ distortions`;
+        btn.textContent = `${star}★`;
+        btn.addEventListener("click", () => {
+            if (plzaCombosStarFilter.has(star)) plzaCombosStarFilter.delete(star);
+            else plzaCombosStarFilter.add(star);
+            renderPlzaCombosModal(name, false);
+        });
+        filterEl.appendChild(btn);
+    });
+
+    presentTypes.forEach(type => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.classList.add("type-filter-btn");
+        btn.classList.toggle("active", plzaCombosTypeFilter.has(type));
+        btn.title = type.charAt(0).toUpperCase() + type.slice(1);
+        btn.appendChild(createPlzaTypeIcon(type));
+        btn.addEventListener("click", () => {
+            if (plzaCombosTypeFilter.has(type)) plzaCombosTypeFilter.delete(type);
+            else plzaCombosTypeFilter.add(type);
+            renderPlzaCombosModal(name, false);
+        });
+        filterEl.appendChild(btn);
+    });
+
+    const upgradeBtn = document.getElementById("plza-combos-upgrade-btn");
+    upgradeBtn.classList.toggle("active", plzaCombosUpgradeOnly);
+    upgradeBtn.onclick = () => {
+        plzaCombosUpgradeOnly = !plzaCombosUpgradeOnly;
+        renderPlzaCombosModal(name, false);
+    };
+
+    allCombos
+        .filter(c => plzaCombosTypeFilter.size === 0 || plzaComboTypes(c).some(t => plzaCombosTypeFilter.has(t)))
+        .filter(c => plzaCombosStarFilter.size === 0 || plzaCombosStarFilter.has(c.star))
+        .filter(c => !plzaCombosUpgradeOnly || [name, ...c.mates].some(plzaMemberNeedsShiny))
+        .forEach(combo => {
+        const { star, mates } = combo;
 
         const row = document.createElement("div");
         row.classList.add("plza-combo-row");
+
+        // Small corner indicator(s) of which type(s) this distortion is.
+        const badge = document.createElement("div");
+        badge.classList.add("plza-combo-type-badge");
+        plzaComboTypes(combo).forEach(t => badge.appendChild(createPlzaTypeIcon(t)));
+        row.appendChild(badge);
 
         const starLabel = document.createElement("div");
         starLabel.classList.add("plza-combo-row-star");
@@ -3466,18 +3564,12 @@ function renderPlzaCombosModal(name) {
         // easier to read the combo as a whole than to have to remember what
         // was clicked to get here. orderPlzaComboMembers() puts it, and the
         // rest of its own evolution line, first.
-        orderPlzaComboMembers(name, mates).forEach(memberName => {
-            const card = document.createElement("div");
-            card.classList.add("plza-combo-card");
-            card.classList.toggle("plza-combo-card--self", memberName === name);
-            card.innerHTML = `
-                <img loading="lazy" src="${getPokemonSpritePath(memberName, true)}">
-                <div class="pokemon-name">${memberName}</div>
-            `;
-            cardsRow.appendChild(card);
-        });
+        const members = orderPlzaComboMembers(name, mates);
+        const highlight = new Set([name]);
+        fillPlzaCardsRow(cardsRow, members, highlight, !plzaCombosUpgradeOnly, plzaCombosUpgradeOnly);
 
         row.appendChild(cardsRow);
+        if (plzaCombosUpgradeOnly) addPlzaFullToggle(row, [{ cardsRow, members }], highlight);
         plzaCombosModalBody.appendChild(row);
     });
 

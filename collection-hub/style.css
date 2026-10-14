@@ -125,9 +125,50 @@ h1 {
    at a smaller scale. */
 #plza-combos-modal .stats-modal-box {
     width: 640px;
+    position: relative;
+}
+
+/* Top-right type filter (left of the close button) and each row's corner
+   type indicator — the same type icons the Pokédex type filter uses. */
+#plza-combos-type-filter {
+    position: absolute;
+    top: 14px;
+    right: 52px;
+    display: flex;
+    gap: 4px;
+}
+
+#plza-combos-type-filter .type-filter-btn {
+    width: 28px;
+    height: 28px;
+    padding: 2px;
+}
+
+/* Star buttons share the type buttons' look but hold text, not an icon. */
+#plza-combos-type-filter .plza-star-filter-btn {
+    width: auto;
+    min-width: 28px;
+    padding: 2px 6px;
+    margin-right: 6px;
+    font-size: 11px;
+    color: var(--text);
+}
+
+.plza-combo-type-badge {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    display: flex;
+    gap: 2px;
+}
+
+.plza-combo-type-badge img {
+    width: 18px;
+    height: 18px;
 }
 
 .plza-combo-row {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 6px;
