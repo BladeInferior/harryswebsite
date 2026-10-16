@@ -3,6 +3,9 @@
 // page's search logic already listens for the input's "input" event, so this
 // just sets the value and fires that event — no page-specific wiring needed.
 // Browsers without speech recognition (e.g. Firefox) never get the button.
+// Saying "clear" empties the box. On the Pokédex, a phrase the recognizer
+// struggled with (the guess flickered between names, or part couldn't be
+// placed) pops up a "Did you mean…?" picker of up to three candidates.
 // Other inputs get their own mic via window.attachVoiceSearch() (e.g. the
 // Pokédex's Add To Do box); only one mic dictates at a time, and
 // window.stopVoiceSearch() stops whichever is on.
@@ -327,7 +330,28 @@ const voiceSearchMatcher = (() => {
         return forms[(at + 1) % forms.length];
     }
 
-    return { normalize, toWords, matchSpokenTerms, splitLooseTerms, regionalVariant };
+    // Closest real names to whatever was said, best first — for the "Did you
+    // mean…?" picker. Unlike matchSpokenTerms() there's no cut-off, so it
+    // always has a best guess even for words that couldn't be placed. Ranked
+    // by spelling distance or sound-alike (whichever is closer); a name that
+    // starts with, or contains, what was said counts as very close.
+    function rankNear(spokenWords, names, count) {
+        const key = normalize(spokenWords.filter(w => !DROPPED.has(normalize(w))).join(""));
+        if (key.length < 2) return [];
+        const spokenSound = soundKey(key);
+        return buildIndex(names).all
+            .map(entry => {
+                let score = Math.min(distance(key, entry.key, Infinity),
+                    distance(spokenSound, entry.sound, Infinity) * 1.5);
+                if (key.length >= 3 && entry.key.includes(key)) score = Math.min(score, 0.5);
+                return { name: entry.name, score };
+            })
+            .sort((a, b) => a.score - b.score)
+            .slice(0, count)
+            .map(r => r.name);
+    }
+
+    return { normalize, toWords, matchSpokenTerms, splitLooseTerms, regionalVariant, rankNear };
 })();
 
 if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
@@ -474,6 +498,73 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
             noticeTimer = setTimeout(() => { notice.hidden = true; }, 4000);
         }
 
+        // "Did you mean…?" picker, shown (Pokédex only) when a phrase was a
+        // struggle: the guess flickered between several names while speaking,
+        // or part of it couldn't be placed. Up to three candidate cards plus a
+        // red "None of these". Stays up until a choice is made, or until the
+        // next phrase/command replaces it.
+        const suggest = document.createElement("div");
+        suggest.className = "voice-search-suggest";
+        suggest.hidden = true;
+        document.body.appendChild(suggest);
+
+        function hideSuggest() {
+            suggest.hidden = true;
+            suggest.textContent = "";
+        }
+
+        // `guess` is the term the phrase already added (or null if none was);
+        // picking replaces it, "None of these" removes it.
+        function showSuggest(candidates, guess) {
+            hideSuggest();
+            // Full-screen backdrop (like the Pokémon modal) with the panel centred.
+            const panel = document.createElement("div");
+            panel.className = "voice-search-suggest-panel";
+            suggest.appendChild(panel);
+            const title = document.createElement("div");
+            title.className = "voice-search-suggest-title";
+            title.textContent = "Did you mean…?";
+            panel.appendChild(title);
+
+            const cards = document.createElement("div");
+            cards.className = "voice-search-suggest-cards";
+            const replaceGuess = (replacement) => {
+                const at = guess ? terms.lastIndexOf(guess) : -1;
+                if (at !== -1 && replacement) terms[at] = replacement;
+                else if (at !== -1) terms.splice(at, 1);
+                else if (replacement) terms.push(replacement);
+                terms = terms.filter((t, i) => terms.indexOf(t) === i);
+                hideSuggest();
+                render("");
+            };
+            for (const name of candidates) {
+                const card = document.createElement("button");
+                card.type = "button";
+                card.className = "voice-search-suggest-card";
+                if (window.voiceSearchSprite) {
+                    const img = document.createElement("img");
+                    img.src = window.voiceSearchSprite(name);
+                    img.alt = "";
+                    card.appendChild(img);
+                }
+                const label = document.createElement("span");
+                label.textContent = name;
+                card.appendChild(label);
+                card.addEventListener("click", () => replaceGuess(name));
+                cards.appendChild(card);
+            }
+            panel.appendChild(cards);
+
+            const none = document.createElement("button");
+            none.type = "button";
+            none.className = "voice-search-suggest-none";
+            none.textContent = "No — none of these";
+            none.addEventListener("click", () => replaceGuess(null));
+            panel.appendChild(none);
+
+            suggest.hidden = false;
+        }
+
         let listening = false;
         // Saying "pause" turns the mic red and ignores everything — every
         // command, "stop" and "back" included — until "unpause" is said.
@@ -484,6 +575,50 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         let rendering = false;
         // Last interim text shown for each in-progress phrase, by result index.
         const shownInterim = new Map();
+        // Every real name the top guess has shown for each in-progress phrase,
+        // by result index → Map(name → times seen). A phrase that showed
+        // several different names is one the recognizer struggled with.
+        const displayedNames = new Map();
+
+        function noteDisplayed(i, text) {
+            if (!strictMode()) return;
+            const seen = displayedNames.get(i) || new Map();
+            for (const name of splitIntoTerms(text).terms) {
+                if (window.voiceSearchNames.includes(name)) seen.set(name, (seen.get(name) || 0) + 1);
+            }
+            displayedNames.set(i, seen);
+        }
+
+        // Up to three names to offer for a finished phrase, or null when it
+        // wasn't a struggle. Most-shown names first, then the browser's backup
+        // guesses for the final result.
+        function suggestionsFor(result, i, split, heardText) {
+            if (!strictMode() || split.terms.length > 1) return null;
+            const seen = displayedNames.get(i) || new Map();
+            const heardWords = toWords(heardText);
+            // Unsure = the guess flickered between names, part couldn't be
+            // placed, or the one name placed isn't spelled the way it was heard
+            // (it was snapped to the nearest, not matched exactly).
+            const snapped = split.terms.length === 1
+                && normalize(heardWords.join("")) !== normalize(split.terms[0]);
+            const unsure = seen.size >= 2 || split.missed.length > 0 || snapped;
+            if (!unsure) return null;
+
+            const ranked = [...seen].sort((a, b) => b[1] - a[1]).map(([name]) => name);
+            const add = name => { if (name && !ranked.includes(name)) ranked.push(name); };
+            split.terms.forEach(add);
+            for (const alt of Array.from(result, a => a.transcript)) {
+                for (const name of splitIntoTerms(alt).terms) {
+                    if (window.voiceSearchNames.includes(name)) add(name);
+                }
+            }
+            // Still short: the closest names by spelling/sound, so even a
+            // phrase nothing matched gets a best guess.
+            const spoken = split.missed.length ? split.missed.join(" ") : heardWords.join(" ");
+            voiceSearchMatcher.rankNear(toWords(spoken), window.voiceSearchNames, 3).forEach(add);
+            const candidates = ranked.slice(0, 3);
+            return candidates.length >= 2 ? candidates : null;
+        }
 
         function render(interimText) {
             const all = [...terms, ...splitIntoTerms(interimText || "").terms];
@@ -515,6 +650,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
             listening = false;
             setPaused(false);
             carriedRegion = "";
+            hideSuggest();
             micBtn.classList.remove("listening");
             recognition.abort();
             onListenChange?.(false);
@@ -601,6 +737,21 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     continue;
                 }
 
+                // "clear" wipes everything in the box (typed text included),
+                // discarding anything said earlier in this same phrase too.
+                const clearIdx = words.findIndex(w => normalize(w) === "clear");
+                if (clearIdx !== -1) {
+                    terms = [];
+                    carriedRegion = "";
+                    interim = "";
+                    resultOffset = i + 1;
+                    shownInterim.delete(i);
+                    displayedNames.delete(i);
+                    hideSuggest();
+                    render("");
+                    continue;
+                }
+
                 // "regional" turns the most recent term into its regional form
                 // (when it has one), after committing what came before it.
                 const regionalIdx = words.findIndex(w => REGIONAL_WORDS.has(normalize(w)));
@@ -646,8 +797,17 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     shownInterim.delete(i);
                     const split = splitIntoTerms(chosen);
                     logHeard(chosen, split);
-                    showMissed(split.missed);
+                    noteDisplayed(i, chosen);
+                    const candidates = suggestionsFor(e.results[i], i, split, chosen);
+                    displayedNames.delete(i);
+                    if (candidates) {
+                        // The picker replaces the plain "didn't catch" notice.
+                        notice.hidden = true;
+                    } else {
+                        showMissed(split.missed);
+                    }
                     terms.push(...split.terms);
+                    if (candidates) showSuggest(candidates, split.terms[0] || null);
                     carriedRegion = split.trailingRegion || "";
                     interim = carriedRegion;
                     resultOffset = i + 1;
@@ -658,6 +818,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
                     if (!prev || interimScore(text) >= interimScore(prev)) {
                         shownInterim.set(i, text);
                     }
+                    noteDisplayed(i, text);
                     interim += " " + text;
                 }
             }
@@ -670,6 +831,7 @@ if (typeof module !== "undefined") module.exports = voiceSearchMatcher;
         recognition.addEventListener("end", () => {
             resultOffset = 0;
             shownInterim.clear();
+            displayedNames.clear();
             if (!listening) return;
             try {
                 recognition.start();

@@ -16,6 +16,8 @@ let allPokemon = [];
 // each spoken word becomes its own term. Filled with every name once
 // fullPokemonList.json loads, so multi-word names stay one term.
 window.voiceSearchNames = [];
+// Lets voice-search.js's "Did you mean…?" picker show each candidate's sprite.
+window.voiceSearchSprite = name => getPokemonSpritePath(name);
 let evolutionFamilies = {}; // name -> array of other pokemon names in the same evolution line, from evolutionFamilies.json
 let plzaDistortions = {}; // name -> array of { star, mates } Hyperspace Wild Zone combos it spawns in in Legends Z-A, from plza-distortions.json (see download-plza-distortions.js and getPlzaStars()/getPlzaCombosWithMates())
 let cardMap = new Map();
