@@ -77,6 +77,30 @@ fetch(new URL('../navbar.html', QUIZ_NAV_SCRIPT_URL))
         divider.className = 'nav-divider';
         groupStart.insertAdjacentElement('beforebegin', divider);
 
+        // "Ideas" is the owner's private scratchpad, so its link only exists
+        // while signed in as the owner (same state the site-wide admin widget
+        // uses). Dynamic import(): this file is a classic script, not a module.
+        const ideasPage = "quizhub/ideas/ideas.html";
+        import(new URL('../admin-auth-core.js', QUIZ_NAV_SCRIPT_URL).href)
+            .then(({ onAdminStateChange }) => {
+                onAdminStateChange(authorized => {
+                    const existing = linksContainer.querySelector('[data-ideas-link]');
+                    if (!authorized) {
+                        if (existing) existing.remove();
+                        return;
+                    }
+                    if (existing) return;
+
+                    const a = document.createElement('a');
+                    a.dataset.ideasLink = "true";
+                    a.textContent = "💡 Ideas";
+                    a.href = basePath + ideasPage;
+                    if (window.location.pathname.endsWith('ideas.html')) a.classList.add('active-link');
+                    divider.insertAdjacentElement('beforebegin', a);
+                });
+            })
+            .catch(err => console.error('Ideas link auth check failed:', err));
+
         const hubLink = Array.from(linksContainer.querySelectorAll('a'))
             .find(a => a.dataset.page === "quizhub/quizhub.html");
 

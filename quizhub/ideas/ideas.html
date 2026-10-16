@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Ideas</title>
+
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="ideas.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+<script src="../quiz-nav.js"></script>
+
+<a class="back-button" href="../quizhub.html">← Back</a>
+
+<section class="hero">
+    <h1>💡 Quiz Ideas</h1>
+    <p>A private scratchpad for question, category and topic ideas.</p>
+</section>
+
+<!-- Shown to everyone until the owner is signed in. The page's data is only
+     readable through the owner-only Firestore rules, so this is a UI gate. -->
+<section id="gate" class="gate" hidden>
+    <div class="gate-box">
+        <h2>🔒 Owner only</h2>
+        <p>Sign in with Google to open your ideas.</p>
+        <button type="button" id="gate-signin-btn" class="btn">Sign in with Google</button>
+        <p id="gate-error" class="gate-error" hidden></p>
+    </div>
+</section>
+
+<main id="ideas-content" class="ideas-main" hidden>
+
+    <div class="tabs" role="tablist">
+        <button type="button" class="tab active" data-tab="notes">📝 Notes</button>
+        <button type="button" class="tab" data-tab="questions">❓ Question drafts</button>
+    </div>
+
+    <!-- ===================== NOTES ===================== -->
+    <section id="tab-notes" class="ideas-app">
+        <aside class="ideas-sidebar">
+            <button type="button" id="new-note-btn" class="btn">+ New Note</button>
+            <input type="search" id="note-search" class="side-search" placeholder="Search notes…">
+            <div id="notes-list" class="ideas-list"></div>
+        </aside>
+
+        <div class="ideas-pane">
+            <div id="note-empty" class="pane-empty">Select a note, or create a new one.</div>
+
+            <div id="note-editor" hidden>
+                <button type="button" class="btn btn-secondary btn-small back-to-list-btn" data-back="notes">← Notes</button>
+
+                <input type="text" id="note-title" class="field-input title-input" placeholder="Untitled">
+
+                <div class="editor-toolbar">
+                    <button type="button" id="note-mic-btn" class="mic-btn" title="Dictate (say “pause”, “unpause”, “new line”, or “stop”)">🎤 Dictate</button>
+                    <span class="hint">Say “new line” / “new paragraph”, “pause” / “unpause”, “stop”.</span>
+                </div>
+
+                <textarea id="note-body" class="field-input note-body" placeholder="Topic ideas, categories, rough question wording…"></textarea>
+
+                <div class="editor-footer">
+                    <span id="note-status" class="save-status"></span>
+                    <button type="button" id="note-delete-btn" class="btn btn-danger btn-small">Delete</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== QUESTION DRAFTS ===================== -->
+    <section id="tab-questions" class="ideas-app" hidden>
+        <aside class="ideas-sidebar">
+            <button type="button" id="new-draft-btn" class="btn">+ Add Question</button>
+            <div class="chips" id="draft-filter">
+                <button type="button" class="chip active" data-status="all">All</button>
+                <button type="button" class="chip" data-status="rough">Rough</button>
+                <button type="button" class="chip" data-status="ready">Ready</button>
+            </div>
+            <div id="drafts-list" class="ideas-list"></div>
+        </aside>
+
+        <div class="ideas-pane">
+            <div id="draft-empty" class="pane-empty">Select a draft, or add a new question.</div>
+
+            <div id="draft-editor" hidden>
+                <button type="button" class="btn btn-secondary btn-small back-to-list-btn" data-back="questions">← Drafts</button>
+
+                <div class="draft-columns">
+                    <div class="draft-form">
+                        <div class="form-row two">
+                            <label>Type
+                                <select id="d-type" class="field-input"></select>
+                            </label>
+                            <label>Status
+                                <select id="d-status" class="field-input">
+                                    <option value="rough">Rough idea</option>
+                                    <option value="ready">Ready to use</option>
+                                </select>
+                            </label>
+                        </div>
+
+                        <label class="form-row">Topic / category (just a label)
+                            <input type="text" id="d-topic" class="field-input" list="topic-options" placeholder="e.g. Gen 1 trivia">
+                            <datalist id="topic-options"></datalist>
+                        </label>
+
+                        <label class="form-row">Question
+                            <textarea id="d-prompt" class="field-input" rows="3" placeholder="What would you ask?"></textarea>
+                        </label>
+
+                        <div id="d-type-fields"></div>
+
+                        <div class="form-row two">
+                            <label>Points
+                                <input type="number" id="d-points" class="field-input" min="1" value="1">
+                            </label>
+                            <label>Image / video / audio link (optional)
+                                <input type="text" id="d-media" class="field-input" placeholder="https://…">
+                            </label>
+                        </div>
+
+                        <label class="form-row">Explanation (optional)
+                            <textarea id="d-explanation" class="field-input" rows="2" placeholder="Shown after the answer is revealed"></textarea>
+                        </label>
+
+                        <div class="editor-footer">
+                            <span id="draft-status" class="save-status"></span>
+                            <button type="button" id="draft-delete-btn" class="btn btn-danger btn-small">Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="draft-side">
+                        <h3 class="side-heading">Preview</h3>
+                        <div id="d-preview"></div>
+                        <div class="preview-actions">
+                            <button type="button" id="preview-check-btn" class="btn btn-secondary btn-small">Check answer</button>
+                            <button type="button" id="preview-reset-btn" class="btn btn-secondary btn-small">Reset</button>
+                        </div>
+                        <p id="preview-result" class="preview-result" hidden></p>
+                        <p id="preview-problems" class="preview-problems" hidden></p>
+
+                        <button type="button" id="send-btn" class="btn send-btn">➡ Send to a quiz…</button>
+                        <p id="sent-note" class="sent-note" hidden></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Send to quiz -->
+<div id="send-modal" class="modal-overlay" hidden>
+    <div class="modal-box">
+        <h2>Send to a quiz</h2>
+        <p class="hint">Adds this question to the end of the chosen quiz. You can reorder it in the builder afterwards.</p>
+
+        <label class="form-row">Quiz
+            <select id="send-quiz" class="field-input"></select>
+        </label>
+
+        <label class="form-row">Category
+            <select id="send-category" class="field-input"></select>
+        </label>
+
+        <label class="form-row" id="send-new-category-row" hidden>New category name
+            <input type="text" id="send-new-category" class="field-input">
+        </label>
+
+        <p id="send-error" class="gate-error" hidden></p>
+
+        <div class="modal-buttons">
+            <button type="button" id="send-cancel-btn" class="btn btn-secondary">Cancel</button>
+            <button type="button" id="send-confirm-btn" class="btn">Add to quiz</button>
+        </div>
+    </div>
+</div>
+
+<!-- Generic confirm -->
+<div id="confirm-modal" class="modal-overlay" hidden>
+    <div class="modal-box">
+        <h2 id="confirm-title">Are you sure?</h2>
+        <p id="confirm-message"></p>
+        <div class="modal-buttons">
+            <button type="button" id="confirm-no-btn" class="btn btn-secondary">Cancel</button>
+            <button type="button" id="confirm-yes-btn" class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<script src="../engine/answer-matching.js"></script>
+<script src="../engine/answer-types.js"></script>
+<script src="../engine/media-utils.js"></script>
+<script type="module" src="ideas.js"></script>
+
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
+</body>
+</html>
