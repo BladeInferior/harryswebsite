@@ -660,11 +660,18 @@ function createPokemonCards(pokemonList) {
 
         card.innerHTML = `
             <div class="not-in-dex-badge">*</div>
+            <button type="button" class="search-remove-btn" title="Remove from search">✕</button>
             <img loading="lazy" src="${getPokemonSpritePath(name, useShinySpriteFor(cardKey))}">
             <div class="pokemon-name">${name}</div>
             <div class="plza-distortion-note hidden"></div>
             <div class="shiny-plus">➕</div>
         `;
+
+        card.querySelector(".search-remove-btn").addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            removeCardFromSearch(name);
+        });
 
         const plusBtn = card.querySelector(".shiny-plus");
 
@@ -1237,6 +1244,7 @@ todoModalClear.addEventListener("click", () => {
 function closeTodoModal() {
     window.stopVoiceSearch?.();
     todoModalTerms.setOpen(false);
+    todoModalSuggestions?.hide();
     todoModal.classList.add("hidden");
 }
 
@@ -1834,6 +1842,31 @@ function matchesNameTerm(pokemonEntry, fullName, term) {
     return strippedPrefix.includes(strippedTerm) || strippedTerm.includes(strippedPrefix);
 }
 
+// The small ✕ on each card while a search is narrowing the grid: drops the
+// search term(s) responsible for that pokemon from the box. Name matches are
+// preferred (so ✕ on Pikachu removes "pikachu", not a broader "electric");
+// only if none match by name does it fall back to a type match, then to the
+// term whose evolution family pulled the pokemon in.
+function removeCardFromSearch(name) {
+    const terms = searchInput.value.split(",").map(t => t.trim()).filter(t => t);
+    const pokemonData = allPokemon.find(p => p.name === name);
+    const types = (pokemonData?.type || "").toLowerCase().replace(/\s/g, "").split(",");
+
+    const byName = terms.filter(term => matchesNameTerm(pokemonData, name, term));
+    const byType = terms.filter(term => types.some(t =>
+        exactMatchToggle.checked ? t === term.toLowerCase() : t.includes(term.toLowerCase())
+    ));
+    const byEvolution = terms.filter(term => allPokemon.some(p =>
+        matchesNameTerm(p, p.name, term) && (evolutionFamilies[p.name] || []).includes(name)
+    ));
+
+    const toRemove = new Set(byName.length ? byName : byType.length ? byType : byEvolution);
+    if (toRemove.size === 0) return;
+
+    searchInput.value = terms.filter(t => !toRemove.has(t)).join(", ");
+    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
 function applyFilters() {
 
     // Hunts is its own archive, not a filtered view of allPokemon — search
@@ -1853,6 +1886,8 @@ function applyFilters() {
     const searchTerms = query
         ? query.split(",").map(term => term.trim()).filter(term => term.length > 0)
         : [];
+
+    boxContainer.classList.toggle("searching", searchTerms.length > 0 && query !== "*");
 
     // With "Include evolutions" ticked, a query that name-matches a pokemon
     // also pulls in every other stage in its evolution line (e.g. "pikac"
@@ -2544,6 +2579,124 @@ createSearchTermsDropdown({
         searchTermsPanel.style.width = `${rect.width}px`;
     }
 });
+
+// ---------------------------
+// NAME SUGGESTIONS WHILE TYPING
+// ---------------------------
+// A floating list of the closest Pokémon names to the comma-separated term
+// currently being typed (the last one), for the main search bar and the Add
+// To Do box. Prefix matches first, then substring, then the nearest by
+// spelling/sound (voiceSearchMatcher.rankNear) so a typo still gets help.
+// Picking one replaces that term with the full name and adds ", " ready for
+// the next. Arrow keys + Enter also work, but Enter only gets intercepted
+// while a row is highlighted — otherwise it does whatever it did before
+// (the Add To Do box's Enter still submits). Dictated input is skipped
+// (voice search already snaps to real names).
+function attachNameSuggestions(input) {
+
+    const MAX = 6;
+    const panel = document.createElement("div");
+    panel.className = "name-suggestions";
+    panel.hidden = true;
+    document.body.appendChild(panel);
+
+    let items = [];
+    let active = -1;
+
+    const squash = s => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    function suggestionsFor(term) {
+        const key = squash(term);
+        if (key.length < 1) return [];
+
+        const names = allPokemon.map(p => p.name);
+        if (names.some(n => squash(n) === key)) return [];
+
+        const starts = names.filter(n => squash(n).startsWith(key));
+        const contains = names.filter(n => !starts.includes(n) && squash(n).includes(key));
+        const result = [...starts, ...contains];
+
+        if (result.length < MAX && key.length >= 2 && typeof voiceSearchMatcher !== "undefined") {
+            voiceSearchMatcher.rankNear([term], names, MAX).forEach(n => {
+                if (!result.includes(n)) result.push(n);
+            });
+        }
+        return result.slice(0, MAX);
+    }
+
+    function hide() {
+        panel.hidden = true;
+        items = [];
+        active = -1;
+    }
+
+    function setActive(index) {
+        active = index;
+        [...panel.children].forEach((el, i) => el.classList.toggle("active", i === index));
+    }
+
+    function pick(name) {
+        const terms = input.value.split(",");
+        terms[terms.length - 1] = ` ${name}`;
+        input.value = terms.map(t => t.trim()).filter(Boolean).join(", ") + ", ";
+        hide();
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+        input.focus();
+    }
+
+    function show() {
+        const lastTerm = input.value.split(",").pop().trim();
+        items = lastTerm === "*" ? [] : suggestionsFor(lastTerm);
+        if (items.length === 0) return hide();
+
+        panel.innerHTML = "";
+        items.forEach(name => {
+            const row = document.createElement("div");
+            row.className = "name-suggestion-item";
+            row.textContent = name;
+            // mousedown (not click) + preventDefault keeps focus in the box.
+            row.addEventListener("mousedown", e => {
+                e.preventDefault();
+                pick(name);
+            });
+            panel.appendChild(row);
+        });
+
+        const rect = input.getBoundingClientRect();
+        panel.style.top = `${rect.bottom + 6}px`;
+        panel.style.left = `${rect.left}px`;
+        panel.style.minWidth = `${rect.width}px`;
+        active = -1;
+        panel.hidden = false;
+    }
+
+    input.addEventListener("input", (e) => {
+        if (e.fromVoice || document.activeElement !== input) return hide();
+        show();
+    });
+
+    input.addEventListener("keydown", (e) => {
+        if (panel.hidden) return;
+        if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+            e.preventDefault();
+            const step = e.key === "ArrowDown" ? 1 : -1;
+            setActive((active + step + items.length) % items.length);
+        } else if (e.key === "Enter" && active >= 0) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            pick(items[active]);
+        } else if (e.key === "Escape") {
+            hide();
+        }
+    }, true);
+
+    input.addEventListener("blur", hide);
+    window.addEventListener("resize", hide);
+    return { hide };
+}
+
+attachNameSuggestions(searchInput);
+const todoModalSuggestions = attachNameSuggestions(todoModalInput);
 
 // ---------------------------
 // CUSTOM LISTS
@@ -3548,16 +3701,20 @@ function renderPlzaCombosModal(name, resetFilter = true) {
         const row = document.createElement("div");
         row.classList.add("plza-combo-row");
 
-        // Small corner indicator(s) of which type(s) this distortion is.
-        const badge = document.createElement("div");
-        badge.classList.add("plza-combo-type-badge");
-        plzaComboTypes(combo).forEach(t => badge.appendChild(createPlzaTypeIcon(t)));
-        row.appendChild(badge);
+        const head = document.createElement("div");
+        head.classList.add("plza-combo-row-head");
 
         const starLabel = document.createElement("div");
         starLabel.classList.add("plza-combo-row-star");
         starLabel.textContent = `${star}★ distortion`;
-        row.appendChild(starLabel);
+        head.appendChild(starLabel);
+
+        // Type icon(s) of this distortion, beside the star label.
+        const badge = document.createElement("div");
+        badge.classList.add("plza-combo-type-badge");
+        plzaComboTypes(combo).forEach(t => badge.appendChild(createPlzaTypeIcon(t)));
+        head.appendChild(badge);
+        row.appendChild(head);
 
         const cardsRow = document.createElement("div");
         cardsRow.classList.add("plza-combo-row-cards");

@@ -9204,7 +9204,8 @@
     "dex": "0027",
     "type": "Ice, Steel",
     "games": [
-      "bdsp"
+      "bdsp",
+      "scvi"
     ],
     "tags": ["Regional"]
   },
@@ -9214,7 +9215,8 @@
     "dex": "0028",
     "type": "Ice, Steel",
     "games": [
-      "bdsp"
+      "bdsp",
+      "scvi"
     ],
     "tags": ["Regional"]
   },
@@ -10575,7 +10577,8 @@
     "games": [
       "scvi",
       "plza",
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Regional"]
   },
@@ -10587,7 +10590,8 @@
     "games": [
       "scvi",
       "plza",
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Regional"]
   },
@@ -10599,7 +10603,8 @@
     "games": [
       "scvi",
       "plza",
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Regional"]
   },
@@ -10659,7 +10664,8 @@
     "dex": "0144",
     "type": "Psychic, Flying",
     "games": [
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Legendary", "Regional"]
   },
@@ -10669,7 +10675,8 @@
     "dex": "0145",
     "type": "Fighting, Flying",
     "games": [
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Legendary", "Regional"]
   },
@@ -10679,7 +10686,8 @@
     "dex": "0146",
     "type": "Dark, Flying",
     "games": [
-      "bdsp"
+      "bdsp",
+      "swsh"
     ],
     "tags": ["Legendary", "Regional"]
   },

@@ -100,6 +100,38 @@ h1 {
     object-fit: contain;
 }
 
+/* Top-left ✕ that removes a pokemon from the active search (see
+   removeCardFromSearch in pokedexes.js). Only while #box-container is
+   .searching, and not in the To Do view where search is disabled. */
+.search-remove-btn {
+    display: none;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    line-height: 1;
+    color: var(--text);
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.search-remove-btn:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+}
+
+#box-container.searching:not(.todo-view) .pokemon-card .search-remove-btn {
+    display: flex;
+}
+
 .pokemon-name {
     margin-top: 8px;
     text-transform: capitalize;
@@ -130,41 +162,57 @@ h1 {
 
 /* Top-right type filter (left of the close button) and each row's corner
    type indicator — the same type icons the Pokédex type filter uses. */
+/* Sits in normal flow under the title (it used to be absolutely positioned
+   top-right and covered the title once stars + types piled up). */
 #plza-combos-type-filter {
-    position: absolute;
-    top: 14px;
-    right: 52px;
     display: flex;
-    gap: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 8px 0 12px;
 }
 
+/* The type icons are wide pills (200x40), so size by height and let the
+   width follow — square boxes squashed them. */
 #plza-combos-type-filter .type-filter-btn {
-    width: 28px;
-    height: 28px;
-    padding: 2px;
+    width: auto;
+    height: auto;
+    padding: 4px 6px;
+}
+
+#plza-combos-type-filter .type-filter-btn img {
+    width: auto;
+    height: 17px;
 }
 
 /* Star buttons share the type buttons' look but hold text, not an icon. */
 #plza-combos-type-filter .plza-star-filter-btn {
     width: auto;
-    min-width: 28px;
-    padding: 2px 6px;
-    margin-right: 6px;
-    font-size: 11px;
+    min-width: 40px;
+    padding: 4px 12px;
+    margin-right: 8px;
+    font-size: 16px;
     color: var(--text);
 }
 
-.plza-combo-type-badge {
-    position: absolute;
-    top: 8px;
-    right: 0;
+/* Each row's header: star label with its type icons beside it. */
+.plza-combo-row-head {
     display: flex;
-    gap: 2px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.plza-combo-type-badge {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
 }
 
 .plza-combo-type-badge img {
-    width: 18px;
-    height: 18px;
+    width: auto;
+    height: 19px;
 }
 
 .plza-combo-row {
@@ -779,6 +827,39 @@ ul.stats-note {
     font-size: 12px;
     text-align: center;
     padding: 4px 0;
+}
+
+/* Closest-name dropdown under the search / Add To Do boxes (see
+   attachNameSuggestions in pokedexes.js). Above every modal (custom-list
+   confirm is 4200). */
+.name-suggestions {
+    position: fixed;
+    z-index: 4300;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    background: rgba(28, 31, 38, 0.97);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius);
+}
+
+.name-suggestions[hidden] {
+    display: none;
+}
+
+.name-suggestion-item {
+    padding: 5px 10px;
+    border-radius: 6px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.name-suggestion-item:hover,
+.name-suggestion-item.active {
+    background: rgba(var(--accent-rgb), 0.3);
 }
 
 /* Both are display:flex, which would otherwise override the hidden
@@ -1896,7 +1977,11 @@ ul.stats-note {
    .filter-relocating class above — just a different class name since this
    one is about sizing in place, not relocating into another container. */
 .width-sync-pending {
-    display: none;
+    /* !important: #custom-list-controls (and similar ID rules) set their own
+       display, which outranks a bare class and left them visible, unpositioned
+       at the far left, until the JS sync ran. The mobile pop-out rule is
+       !important with ID specificity, so it still overrides this. */
+    display: none !important;
 }
 
 /* Keeps mode/pagination controls reachable while paging through a long grid
