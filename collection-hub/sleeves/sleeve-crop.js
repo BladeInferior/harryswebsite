@@ -59,8 +59,40 @@ const SleeveCrop = (() => {
             poly.setAttribute("fill", "rgba(255,80,80,.12)");
             poly.setAttribute("stroke", "#ff4d4d");
             poly.setAttribute("stroke-width", "2");
-            svg.appendChild(poly);
+            // The quad's top edge (corner 0 -> 1) in yellow with a "TOP" tag, so Rotate 90° visibly turns it.
+            const topLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            topLine.setAttribute("stroke", "#ffd23f");
+            topLine.setAttribute("stroke-width", "4");
+            const topTag = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            topTag.textContent = "TOP";
+            topTag.setAttribute("fill", "#ffd23f");
+            topTag.setAttribute("font-size", "13");
+            topTag.setAttribute("font-weight", "bold");
+            topTag.setAttribute("text-anchor", "middle");
+            topTag.setAttribute("stroke", "#000");
+            topTag.setAttribute("stroke-width", "0.6");
+            svg.append(poly, topLine, topTag);
             stage.append(canvas, svg);
+
+            // Small live thumbnail of what will be saved; refreshed after each drag/rotate.
+            const thumbWrap = document.createElement("div");
+            thumbWrap.style.cssText = "position:fixed;right:14px;bottom:70px;padding:6px;border-radius:8px;background:rgba(0,0,0,.7);border:1px solid #666;color:#ddd;font-size:12px;text-align:center;";
+            const thumb = document.createElement("img");
+            thumb.style.cssText = "display:block;max-width:180px;max-height:180px;background:#fff;margin-top:4px;";
+            thumbWrap.append(document.createTextNode("Result"), thumb);
+            let thumbUrl = null, thumbBusy = false, thumbAgain = false;
+            async function updateThumb() {
+                if (thumbBusy) { thumbAgain = true; return; }
+                thumbBusy = true;
+                try {
+                    const blob = await warp(bitmap, quad, 240);
+                    if (thumbUrl) URL.revokeObjectURL(thumbUrl);
+                    thumbUrl = URL.createObjectURL(blob);
+                    thumb.src = thumbUrl;
+                } catch (e) { /* thumbnail only */ }
+                thumbBusy = false;
+                if (thumbAgain) { thumbAgain = false; updateThumb(); }
+            }
 
             // See-through rings so the image underneath stays visible.
             const ringCss = "position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(255,77,77,.12);border:2px solid #ff4d4d;box-shadow:0 0 0 1px rgba(255,255,255,.7);cursor:grab;touch-action:none;";
@@ -72,7 +104,7 @@ const SleeveCrop = (() => {
                     hd.setPointerCapture(e.pointerId);
                     const start = onDrag.begin(e);
                     const move = ev => { onDrag.move(start, ev); draw(); };
-                    const up = () => { hd.removeEventListener("pointermove", move); hd.removeEventListener("pointerup", up); };
+                    const up = () => { hd.removeEventListener("pointermove", move); hd.removeEventListener("pointerup", up); updateThumb(); };
                     hd.addEventListener("pointermove", move);
                     hd.addEventListener("pointerup", up);
                 });
@@ -128,6 +160,14 @@ const SleeveCrop = (() => {
 
             function draw() {
                 poly.setAttribute("points", quad.map(p => `${p[0] * fit},${p[1] * fit}`).join(" "));
+                topLine.setAttribute("x1", quad[0][0] * fit); topLine.setAttribute("y1", quad[0][1] * fit);
+                topLine.setAttribute("x2", quad[1][0] * fit); topLine.setAttribute("y2", quad[1][1] * fit);
+                // Tag sits just outside the top edge, on the side away from the quad's centre.
+                const mx = (quad[0][0] + quad[1][0]) / 2 * fit, my = (quad[0][1] + quad[1][1]) / 2 * fit;
+                const cx = quad.reduce((s, p) => s + p[0], 0) / 4 * fit, cy = quad.reduce((s, p) => s + p[1], 0) / 4 * fit;
+                const d = Math.hypot(mx - cx, my - cy) || 1;
+                topTag.setAttribute("x", mx + (mx - cx) / d * 18);
+                topTag.setAttribute("y", my + (my - cy) / d * 18 + 4);
                 handles.forEach((hd, i) => { hd.style.left = `${quad[i][0] * fit}px`; hd.style.top = `${quad[i][1] * fit}px`; });
                 edgeHandles.forEach((hd, i) => {
                     const j = (i + 1) % 4;
@@ -139,28 +179,32 @@ const SleeveCrop = (() => {
             const bar = document.createElement("div");
             bar.style.cssText = "display:flex;gap:10px;align-items:center;color:#ddd;font-size:14px;flex-wrap:wrap;justify-content:center;";
             const mk = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.style.cssText = "padding:6px 16px;border-radius:6px;border:1px solid #666;background:#2a2a2a;color:#fff;cursor:pointer;"; b.addEventListener("click", fn); return b; };
-            const close = result => { overlay.remove(); resolve(result); };
+            const close = result => { overlay.remove(); if (thumbUrl) URL.revokeObjectURL(thumbUrl); resolve(result); };
             bar.append(
-                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to slide that whole edge in or out. Sideways sleeve? Use Rotate 90° until the top is where the sleeve's top is."),
-                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); }),
-                mk("⟳ Rotate 90°", () => { quad.unshift(quad.pop()); draw(); }),
+                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to slide that whole edge in or out. The result keeps the shape you draw; Rotate 90° turns it."),
+                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); updateThumb(); }),
+                mk("⟳ Rotate 90°", () => { quad.unshift(quad.pop()); draw(); updateThumb(); }),
                 mk("Apply crop", () => close(quad)),
                 mk("Cancel", () => close(null))
             );
-            overlay.append(stage, bar);
+            overlay.append(stage, bar, thumbWrap);
             document.body.appendChild(overlay);
             draw();
+            updateThumb();
         });
     }
 
     // Unit square -> quad projective map (Heckbert), then sample bilinearly.
-    async function warp(bitmap, quad) {
+    async function warp(bitmap, quad, maxSide = 2048) {
         const [p0, p1, p2, p3] = quad;
         const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
-        // Output no larger than the source sleeve itself (no upscaling), capped at the existing images' size.
-        let H = Math.round(Math.max(dist(p0, p3), dist(p1, p2)));
-        H = Math.max(50, Math.min(2048, H));
-        const W = Math.round(H * RATIO);
+        // Output has the crop's own proportions (a sideways sleeve stays sideways),
+        // no larger than the source (no upscaling), longest side capped at 2048.
+        let W = Math.max(dist(p0, p1), dist(p3, p2));
+        let H = Math.max(dist(p0, p3), dist(p1, p2));
+        const shrink = Math.min(1, maxSide / Math.max(W, H));
+        W = Math.max(50, Math.round(W * shrink));
+        H = Math.max(50, Math.round(H * shrink));
 
         const sx = p0[0] - p1[0] + p2[0] - p3[0], sy = p0[1] - p1[1] + p2[1] - p3[1];
         let g = 0, h = 0;
