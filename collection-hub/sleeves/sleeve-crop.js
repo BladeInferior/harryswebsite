@@ -94,11 +94,9 @@ const SleeveCrop = (() => {
                 }
             }));
 
-            // Edge-middle squares slide a whole edge (both corners) straight inwards,
-            // perpendicular to itself. It can be pulled back out, but never past
-            // where it started (`inset[i]` = how far in it has been pushed), and
-            // never across the opposite edge.
-            const inset = [0, 0, 0, 0];
+            // Edge-middle squares slide a whole edge (both corners) straight in or
+            // out, perpendicular to itself: in until just short of the opposite
+            // edge, out until a corner reaches the image border.
             const edgeHandles = quad.map((p, i) => {
                 const j = (i + 1) % 4;
                 return makeHandle(ringCss + "border-radius:6px;width:16px;height:16px;margin:-8px 0 0 -8px;", {
@@ -110,14 +108,20 @@ const SleeveCrop = (() => {
                         const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
                         const o1 = quad[(i + 2) % 4], o2 = quad[(i + 3) % 4];
                         const room = ((o1[0] + o2[0]) / 2 - mid[0]) * n[0] + ((o1[1] + o2[1]) / 2 - mid[1]) * n[1];
-                        return { at: toImage(ev), a, b, n, base: inset[i], max: Math.max(0, room - 20 / fit) };
+                        // Furthest this edge can go either way while both its corners stay inside the image.
+                        let lo = -Infinity, hi = Math.max(0, room - 20 / fit);
+                        [[a, bitmap.width, 0], [a, bitmap.height, 1], [b, bitmap.width, 0], [b, bitmap.height, 1]].forEach(([pt, dim, c]) => {
+                            if (Math.abs(n[c]) < 1e-9) return;
+                            const t0 = -pt[c] / n[c], t1 = (dim - pt[c]) / n[c];
+                            lo = Math.max(lo, Math.min(t0, t1));
+                        });
+                        return { at: toImage(ev), a, b, n, lo: Math.min(0, lo), hi };
                     },
                     move: (s, ev) => {
                         const [x, y] = toImage(ev);
-                        const t = Math.max(-s.base, Math.min(s.max, (x - s.at[0]) * s.n[0] + (y - s.at[1]) * s.n[1]));
+                        const t = Math.max(s.lo, Math.min(s.hi, (x - s.at[0]) * s.n[0] + (y - s.at[1]) * s.n[1]));
                         quad[i] = [s.a[0] + s.n[0] * t, s.a[1] + s.n[1] * t];
                         quad[j] = [s.b[0] + s.n[0] * t, s.b[1] + s.n[1] * t];
-                        inset[i] = s.base + t;
                     }
                 });
             });
@@ -137,8 +141,9 @@ const SleeveCrop = (() => {
             const mk = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.style.cssText = "padding:6px 16px;border-radius:6px;border:1px solid #666;background:#2a2a2a;color:#fff;cursor:pointer;"; b.addEventListener("click", fn); return b; };
             const close = result => { overlay.remove(); resolve(result); };
             bar.append(
-                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to push that whole edge inwards."),
-                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); inset.fill(0); draw(); }),
+                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to slide that whole edge in or out. Sideways sleeve? Use Rotate 90° until the top is where the sleeve's top is."),
+                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); }),
+                mk("⟳ Rotate 90°", () => { quad.unshift(quad.pop()); draw(); }),
                 mk("Apply crop", () => close(quad)),
                 mk("Cancel", () => close(null))
             );
