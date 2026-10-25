@@ -2050,6 +2050,92 @@ document.getElementById("save-item").addEventListener("click", () => {
 
     const editIndex = addModal.dataset.editIndex;
 
+    // Sleeves / pop figures / completions: same first three words plus the
+    // same date-field (and franchise, except sleeves) = possible dupe, so ask
+    // before saving (the item being edited never counts).
+    if (DUPE_CHECK_COLLECTIONS.includes(COLLECTION.name)) {
+        const dupes = findPossibleDupes(title, date, custom, editIndex);
+        if (dupes.length) {
+            askSleeveDupe(dupes).then(isDupe => {
+                if (isDupe) {
+                    addModal.classList.add("hidden");
+                    delete addModal.dataset.editIndex;
+                    resetSleeveImportUI();
+                } else {
+                    commitSave(title, date, custom, tags, editIndex);
+                }
+            });
+            return;
+        }
+    }
+
+    commitSave(title, date, custom, tags, editIndex);
+});
+
+// Possible-duplicate check (run from Save). Sleeves match on release date;
+// pop figures (variant + franchise) and completions (date completed +
+// franchise) also need the franchise to match. Title is always first three words.
+const DUPE_CHECK_COLLECTIONS = ["sleeves", "popfigures", "completions"];
+
+function dupeTitleKey(title) {
+    return stripAccents(title).toLowerCase().split(/[^a-z0-9]+/).filter(Boolean).slice(0, 3).join(" ");
+}
+
+function findPossibleDupes(title, date, custom, editIndex) {
+    const key = dupeTitleKey(title);
+    if (!key) return [];
+    const f = COLLECTION.fields;
+    const norm = v => String(v || "").trim().toLowerCase();
+    const needsCustom = COLLECTION.name !== "sleeves";
+    return items.filter((it, i) =>
+        String(i) !== String(editIndex) &&
+        norm(it[f.date]) === norm(date) &&
+        (!needsCustom || norm(it[f.custom]) === norm(custom)) &&
+        dupeTitleKey(it[f.title] || "") === key
+    );
+}
+
+// Resolves true when the owner says "yes, it's a dupe", false for "no, keep adding".
+function askSleeveDupe(dupes) {
+    return new Promise(resolve => {
+        const overlay = document.createElement("div");
+        overlay.id = "sleeve-dupe-overlay";
+        overlay.innerHTML = `
+            <div class="sleeve-dupe-box">
+                <h2>Potential dupe</h2>
+                <p>You already have ${dupes.length > 1 ? "these" : "this"} with a similar name and the same details:</p>
+                <div class="sleeve-dupe-list"></div>
+                <div class="modal-buttons">
+                    <button type="button" class="sleeve-dupe-yes">Yes, it's a dupe — cancel adding</button>
+                    <button type="button" class="sleeve-dupe-no">No — continue adding</button>
+                </div>
+            </div>`;
+
+        const list = overlay.querySelector(".sleeve-dupe-list");
+        dupes.forEach(it => {
+            const card = document.createElement("div");
+            card.className = "sleeve-dupe-card";
+            const img = document.createElement("img");
+            img.alt = "";
+            setItemImage(img, it[COLLECTION.fields.title]);
+            const label = document.createElement("div");
+            label.textContent = it[COLLECTION.fields.title];
+            card.append(img, label);
+            list.appendChild(card);
+        });
+
+        const done = answer => {
+            overlay.remove();
+            resolve(answer);
+        };
+        overlay.querySelector(".sleeve-dupe-yes").addEventListener("click", () => done(true));
+        overlay.querySelector(".sleeve-dupe-no").addEventListener("click", () => done(false));
+        document.body.appendChild(overlay);
+    });
+}
+
+function commitSave(title, date, custom, tags, editIndex) {
+
     const itemData = {};
 
     itemData[COLLECTION.fields.title] = title;
@@ -2094,10 +2180,11 @@ document.getElementById("save-item").addEventListener("click", () => {
         downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value]);
     }
     resetSleeveImportUI();
-});
+}
 
 document.addEventListener("keydown", (e) => {
     if (addModal.classList.contains("hidden")) return;
+    if (document.getElementById("sleeve-dupe-overlay")) return;
 
     if (e.key === "Enter") {
         e.preventDefault();
