@@ -1836,9 +1836,50 @@ function stepImageChoice(delta) {
 document.getElementById("item-image-up")?.addEventListener("click", () => stepImageChoice(-1));
 document.getElementById("item-image-down")?.addEventListener("click", () => stepImageChoice(1));
 
+// Own image (file picker / paste / drop): becomes the one and only entry in the
+// same list the artofpkm images use, so crop, preview and download-on-save all
+// work on it unchanged. Its blob: URL is read directly (no helper proxy needed).
+function useOwnSleeveImage(file) {
+    if (!file || !file.type.startsWith("image/")) return;
+    fetchedImageUrls = [URL.createObjectURL(file)];
+    sleeveCropQuads = {};
+    imageChoice.innerHTML = `<option value="0">1</option>`;
+    imageChoice.value = "0";
+    imageRow.classList.remove("hidden");
+    downloadImageBox.checked = true;
+    updateCropStateLabel();
+    setCodeStatus("Using your own image — crop it, then fill in the name and Save.");
+}
+
+const ownImageFile = document.getElementById("item-own-image-file");
+document.getElementById("item-own-image-btn")?.addEventListener("click", () => ownImageFile.click());
+ownImageFile?.addEventListener("change", () => {
+    useOwnSleeveImage(ownImageFile.files[0]);
+    ownImageFile.value = "";
+});
+document.addEventListener("paste", e => {
+    if (!codeInput || addModal.classList.contains("hidden")) return;
+    const file = [...(e.clipboardData?.files || [])].find(f => f.type.startsWith("image/"));
+    if (!file) return; // plain text pastes into the fields as usual
+    e.preventDefault();
+    useOwnSleeveImage(file);
+});
+document.addEventListener("dragover", e => {
+    if (codeInput && !addModal.classList.contains("hidden")) e.preventDefault();
+});
+document.addEventListener("drop", e => {
+    if (!codeInput || addModal.classList.contains("hidden")) return;
+    const file = [...(e.dataTransfer?.files || [])].find(f => f.type.startsWith("image/"));
+    if (!file) return;
+    e.preventDefault();
+    useOwnSleeveImage(file);
+});
+
 async function loadSleeveBitmap(url) {
     if (!sleeveBitmaps.has(url)) {
-        const r = await fetch(`${SLEEVE_HELPER}/image?url=${encodeURIComponent(url)}`);
+        const r = url.startsWith("blob:")
+            ? await fetch(url)
+            : await fetch(`${SLEEVE_HELPER}/image?url=${encodeURIComponent(url)}`);
         if (!r.ok) throw new Error("Image download failed");
         sleeveBitmaps.set(url, await createImageBitmap(await r.blob()));
     }
