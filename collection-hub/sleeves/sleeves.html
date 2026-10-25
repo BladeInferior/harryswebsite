@@ -73,6 +73,10 @@
     ========================== -->
     <div id="box-container"></div>
 
+    <div id="sleeve-image-preview-overlay" class="hidden">
+        <img id="sleeve-image-preview-img" alt="" referrerpolicy="no-referrer">
+    </div>
+
     <div id="add-item-modal" class="hidden">
 
         <div class="add-item-box">
@@ -94,6 +98,11 @@
                 <label class="inline-check">
                     Image
                     <select id="item-image-choice"></select>
+                    <span class="image-step-btns">
+                        <button type="button" id="item-image-up" title="Previous image">▲</button>
+                        <button type="button" id="item-image-down" title="Next image">▼</button>
+                    </span>
+                    <button type="button" id="item-image-preview">Preview</button>
                 </label>
             </div>
 

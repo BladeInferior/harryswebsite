@@ -1811,6 +1811,91 @@ if (codeInput) {
     });
 }
 
+// ▲/▼ beside the image picker: ▲ lowers the image number, ▼ raises it.
+function stepImageChoice(delta) {
+    const next = imageChoice.selectedIndex + delta;
+    if (next >= 0 && next < imageChoice.options.length) imageChoice.selectedIndex = next;
+}
+document.getElementById("item-image-up")?.addEventListener("click", () => stepImageChoice(-1));
+document.getElementById("item-image-down")?.addEventListener("click", () => stepImageChoice(1));
+
+// Preview the chosen image full-screen (loaded straight from the CDN; nothing is saved).
+const previewOverlay = document.getElementById("sleeve-image-preview-overlay");
+document.getElementById("item-image-preview")?.addEventListener("click", () => {
+    const url = fetchedImageUrls[+imageChoice.value];
+    if (!url) return;
+    document.getElementById("sleeve-image-preview-img").src = url;
+    previewOverlay.classList.remove("hidden");
+});
+previewOverlay?.addEventListener("click", () => previewOverlay.classList.add("hidden"));
+
+// Nationality dropdown: focusing the box lists every nationality already used
+// (most common first); typing narrows it. Reuses the tag dropdown's styling.
+if (codeInput) {
+    const natBox = document.createElement("div");
+    natBox.id = "nationality-suggestions";
+    natBox.className = "tag-suggestions-box hidden";
+    document.body.appendChild(natBox);
+
+    function renderNationalities() {
+        const counts = {};
+        items.forEach(i => {
+            const v = (i[COLLECTION.fields.custom] || "").trim();
+            if (v) counts[v] = (counts[v] || 0) + 1;
+        });
+        const typed = customInput.value.trim().toLowerCase();
+        const list = Object.keys(counts)
+            .sort((a, b) => counts[b] - counts[a])
+            .filter(v => !typed || v.toLowerCase().includes(typed));
+        natBox.innerHTML = "";
+        if (!list.length) { natBox.classList.add("hidden"); return; }
+        list.forEach(v => {
+            const opt = document.createElement("div");
+            opt.className = "tag-suggestion-option";
+            opt.textContent = v;
+            // mousedown beats the input's blur, which would hide the box first
+            opt.addEventListener("mousedown", (e) => {
+                e.preventDefault();
+                customInput.value = v;
+                natBox.classList.add("hidden");
+            });
+            natBox.appendChild(opt);
+        });
+        const rect = customInput.getBoundingClientRect();
+        natBox.style.left = `${rect.left}px`;
+        natBox.style.top = `${rect.bottom + 2}px`;
+        natBox.style.width = `${rect.width}px`;
+        natBox.classList.remove("hidden");
+    }
+    customInput.addEventListener("focus", renderNationalities);
+    customInput.addEventListener("click", renderNationalities);
+    customInput.addEventListener("input", renderNationalities);
+    customInput.addEventListener("blur", () => natBox.classList.add("hidden"));
+}
+
+// ✕ at the end of each Add Sleeve field to clear it. Wraps the input rather
+// than touching the label markup; the date picker's ✕ clears its paste box too.
+if (codeInput) {
+    [codeInput, titleInput, dateInput, dateTextInput, customInput, tagsInput].forEach(input => {
+        const wrap = document.createElement("span");
+        wrap.className = "clearable-field";
+        input.parentNode.insertBefore(wrap, input);
+        wrap.appendChild(input);
+        const x = document.createElement("button");
+        x.type = "button";
+        x.className = "field-clear-btn" + (input.type === "date" ? " field-clear-btn--date" : "");
+        x.textContent = "✕";
+        x.title = "Clear";
+        x.addEventListener("click", () => {
+            input.value = "";
+            if (input === dateInput) dateTextInput.value = "";
+            input.dispatchEvent(new Event("input", { bubbles: true }));
+            input.focus();
+        });
+        wrap.appendChild(x);
+    });
+}
+
 // Lowercase, letters and digits only — matches the existing sleeves/ file names.
 function sleeveImageName(title) {
     return title.toLowerCase().replace(/[^a-z0-9]/g, "") + ".jpg";
