@@ -62,29 +62,62 @@ const SleeveCrop = (() => {
             svg.appendChild(poly);
             stage.append(canvas, svg);
 
-            const handles = quad.map((p, i) => {
+            // See-through rings so the image underneath stays visible.
+            const ringCss = "position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:rgba(255,77,77,.12);border:2px solid #ff4d4d;box-shadow:0 0 0 1px rgba(255,255,255,.7);cursor:grab;touch-action:none;";
+            const makeHandle = (css, onDrag) => {
                 const hd = document.createElement("div");
-                hd.style.cssText = "position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:#ff4d4d;border:2px solid #fff;cursor:grab;touch-action:none;";
+                hd.style.cssText = css;
                 hd.addEventListener("pointerdown", e => {
                     e.preventDefault();
                     hd.setPointerCapture(e.pointerId);
-                    const move = ev => {
-                        const r = stage.getBoundingClientRect();
-                        quad[i][0] = Math.max(0, Math.min(bitmap.width, (ev.clientX - r.left) / fit));
-                        quad[i][1] = Math.max(0, Math.min(bitmap.height, (ev.clientY - r.top) / fit));
-                        draw();
-                    };
+                    const start = onDrag.begin(e);
+                    const move = ev => { onDrag.move(start, ev); draw(); };
                     const up = () => { hd.removeEventListener("pointermove", move); hd.removeEventListener("pointerup", up); };
                     hd.addEventListener("pointermove", move);
                     hd.addEventListener("pointerup", up);
                 });
                 stage.appendChild(hd);
                 return hd;
+            };
+            const toImage = ev => {
+                const r = stage.getBoundingClientRect();
+                return [(ev.clientX - r.left) / fit, (ev.clientY - r.top) / fit];
+            };
+
+            // Corner dots move one corner.
+            const handles = quad.map((p, i) => makeHandle(ringCss, {
+                begin: () => null,
+                move: (_, ev) => {
+                    const [x, y] = toImage(ev);
+                    quad[i][0] = Math.max(0, Math.min(bitmap.width, x));
+                    quad[i][1] = Math.max(0, Math.min(bitmap.height, y));
+                }
+            }));
+
+            // Edge-middle dots slide a whole edge (both of its corners) by the same amount.
+            const edgeHandles = quad.map((p, i) => {
+                const j = (i + 1) % 4;
+                return makeHandle(ringCss + "border-radius:6px;width:16px;height:16px;margin:-8px 0 0 -8px;", {
+                    begin: ev => ({ at: toImage(ev), a: quad[i].slice(), b: quad[j].slice() }),
+                    move: (s, ev) => {
+                        const [x, y] = toImage(ev);
+                        let dx = x - s.at[0], dy = y - s.at[1];
+                        dx = Math.max(-Math.min(s.a[0], s.b[0]), Math.min(bitmap.width - Math.max(s.a[0], s.b[0]), dx));
+                        dy = Math.max(-Math.min(s.a[1], s.b[1]), Math.min(bitmap.height - Math.max(s.a[1], s.b[1]), dy));
+                        quad[i] = [s.a[0] + dx, s.a[1] + dy];
+                        quad[j] = [s.b[0] + dx, s.b[1] + dy];
+                    }
+                });
             });
 
             function draw() {
                 poly.setAttribute("points", quad.map(p => `${p[0] * fit},${p[1] * fit}`).join(" "));
                 handles.forEach((hd, i) => { hd.style.left = `${quad[i][0] * fit}px`; hd.style.top = `${quad[i][1] * fit}px`; });
+                edgeHandles.forEach((hd, i) => {
+                    const j = (i + 1) % 4;
+                    hd.style.left = `${(quad[i][0] + quad[j][0]) / 2 * fit}px`;
+                    hd.style.top = `${(quad[i][1] + quad[j][1]) / 2 * fit}px`;
+                });
             }
 
             const bar = document.createElement("div");
@@ -92,7 +125,7 @@ const SleeveCrop = (() => {
             const mk = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.style.cssText = "padding:6px 16px;border-radius:6px;border:1px solid #666;background:#2a2a2a;color:#fff;cursor:pointer;"; b.addEventListener("click", fn); return b; };
             const close = result => { overlay.remove(); resolve(result); };
             bar.append(
-                document.createTextNode("Drag the four dots onto the sleeve's corners."),
+                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to move that whole edge."),
                 mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); }),
                 mk("Apply crop", () => close(quad)),
                 mk("Cancel", () => close(null))

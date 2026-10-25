@@ -1999,10 +1999,18 @@ async function downloadSleeveImage(url, title, quad) {
     }
 }
 
+// Put the cursor in the Add/Edit modal's first visible text box (the
+// artofpkm product code on Sleeves, otherwise the name).
+function focusFirstModalField() {
+    const first = [...addModal.querySelectorAll('input[type="text"]')].find(el => el.offsetParent !== null);
+    if (first) first.focus();
+}
+
 // OPEN MODAL
 document.getElementById("add-item").addEventListener("click", () => {
 
     addModal.classList.remove("hidden");
+    focusFirstModalField();
     itemModalTitle.textContent =
         COLLECTION.name === "steelbooks" && activeSteelbookTab === "wishlist"
             ? "Add Wishlist Item"
@@ -2279,6 +2287,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
     });
 
     addModal.classList.remove("hidden");
+    focusFirstModalField();
     modalOverlay.classList.add("hidden");
 
     // store edit index
