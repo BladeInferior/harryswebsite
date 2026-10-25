@@ -305,7 +305,16 @@ modalImage.addEventListener("click", () => {
 // on any device without copying a key around.
 const adminAuthReady = import('../admin-auth-core.js');
 
+function stripAccents(text) {
+    return text.normalize("NFD").replace(/[̀-ͯ]/g, "");
+}
+
 function getItemImagePath(name) {
+
+    // Sleeves: é -> e (Pokémon -> pokemon) before everything else is
+    // stripped, matching sleeveImageName() below. Other collections keep
+    // the old drop-the-character behaviour their existing files rely on.
+    if (COLLECTION.name === "sleeves") name = stripAccents(name);
 
     const base = name
         .toLowerCase()
@@ -1729,6 +1738,9 @@ const downloadImageBox = document.getElementById("item-download-image");
 const imageChoice = document.getElementById("item-image-choice");
 const dateTextInput = document.getElementById("item-date-text");
 let fetchedImageUrls = [];
+const sleeveBitmaps = new Map(); // image url -> decoded bitmap
+let sleeveCropQuads = {};        // image index -> [TL, TR, BR, BL] in image pixels
+const cropStateLabel = document.getElementById("item-image-crop-state");
 
 function setCodeStatus(msg, isError) {
     codeStatus.textContent = msg;
@@ -1743,6 +1755,8 @@ function resetSleeveImportUI() {
     dateTextInput.classList.remove("invalid");
     setCodeStatus("");
     fetchedImageUrls = [];
+    sleeveCropQuads = {};
+    updateCropStateLabel();
     imageRow.classList.add("hidden");
     downloadImageBox.checked = false;
     imageChoice.innerHTML = "";
@@ -1794,6 +1808,8 @@ if (codeInput) {
             if (data.date) { dateInput.value = data.date; dateTextInput.value = ""; }
             if (!customInput.value.trim()) customInput.value = "JPN";
             fetchedImageUrls = data.images;
+            sleeveCropQuads = {};
+            updateCropStateLabel();
             imageChoice.innerHTML = data.images
                 .map((_, i) => `<option value="${i}">${i + 1}</option>`).join("");
             if (data.images.length) {
@@ -1815,22 +1831,71 @@ if (codeInput) {
 function stepImageChoice(delta) {
     const next = imageChoice.selectedIndex + delta;
     if (next >= 0 && next < imageChoice.options.length) imageChoice.selectedIndex = next;
+    updateCropStateLabel();
 }
 document.getElementById("item-image-up")?.addEventListener("click", () => stepImageChoice(-1));
 document.getElementById("item-image-down")?.addEventListener("click", () => stepImageChoice(1));
 
+async function loadSleeveBitmap(url) {
+    if (!sleeveBitmaps.has(url)) {
+        const r = await fetch(`${SLEEVE_HELPER}/image?url=${encodeURIComponent(url)}`);
+        if (!r.ok) throw new Error("Image download failed");
+        sleeveBitmaps.set(url, await createImageBitmap(await r.blob()));
+    }
+    return sleeveBitmaps.get(url);
+}
+
+function updateCropStateLabel() {
+    if (cropStateLabel) cropStateLabel.classList.toggle("hidden", !sleeveCropQuads[imageChoice.value]);
+}
+imageChoice?.addEventListener("change", updateCropStateLabel);
+
+// ✂ Crop: drag four corners onto the sleeve; applied when the image is saved.
+document.getElementById("item-image-crop")?.addEventListener("click", async () => {
+    const idx = imageChoice.value;
+    const url = fetchedImageUrls[+idx];
+    if (!url) return;
+    try {
+        const bitmap = await loadSleeveBitmap(url);
+        const quad = await SleeveCrop.edit(bitmap, sleeveCropQuads[idx] || SleeveCrop.guessQuad(bitmap));
+        if (quad) {
+            sleeveCropQuads[idx] = quad;
+            downloadImageBox.checked = true; // a crop is pointless unless the image is saved
+        }
+        updateCropStateLabel();
+    } catch (err) {
+        showToast(`Can't crop: ${err.message}`, true);
+    }
+});
+
 // Preview the chosen image full-screen (loaded straight from the CDN; nothing is saved).
 const previewOverlay = document.getElementById("sleeve-image-preview-overlay");
-document.getElementById("item-image-preview")?.addEventListener("click", () => {
-    const url = fetchedImageUrls[+imageChoice.value];
+let previewObjectUrl = null;
+document.getElementById("item-image-preview")?.addEventListener("click", async () => {
+    const idx = imageChoice.value;
+    const url = fetchedImageUrls[+idx];
     if (!url) return;
-    document.getElementById("sleeve-image-preview-img").src = url;
+    const img = document.getElementById("sleeve-image-preview-img");
+    // With a crop applied, show the straightened result that would be saved.
+    if (sleeveCropQuads[idx]) {
+        try {
+            const blob = await SleeveCrop.warp(await loadSleeveBitmap(url), sleeveCropQuads[idx]);
+            if (previewObjectUrl) URL.revokeObjectURL(previewObjectUrl);
+            previewObjectUrl = URL.createObjectURL(blob);
+            img.src = previewObjectUrl;
+        } catch (err) {
+            showToast(`Can't preview crop: ${err.message}`, true);
+            return;
+        }
+    } else {
+        img.src = url;
+    }
     previewOverlay.classList.remove("hidden");
 });
 previewOverlay?.addEventListener("click", () => previewOverlay.classList.add("hidden"));
 
-// Nationality dropdown: focusing the box lists every nationality already used
-// (most common first); typing narrows it. Reuses the tag dropdown's styling.
+// Nationality dropdown: focusing/clicking the (read-only) box always lists every
+// nationality already used (most common first); you pick exactly one. Reuses the tag dropdown's styling.
 if (codeInput) {
     const natBox = document.createElement("div");
     natBox.id = "nationality-suggestions";
@@ -1843,10 +1908,7 @@ if (codeInput) {
             const v = (i[COLLECTION.fields.custom] || "").trim();
             if (v) counts[v] = (counts[v] || 0) + 1;
         });
-        const typed = customInput.value.trim().toLowerCase();
-        const list = Object.keys(counts)
-            .sort((a, b) => counts[b] - counts[a])
-            .filter(v => !typed || v.toLowerCase().includes(typed));
+        const list = Object.keys(counts).sort((a, b) => counts[b] - counts[a]);
         natBox.innerHTML = "";
         if (!list.length) { natBox.classList.add("hidden"); return; }
         list.forEach(v => {
@@ -1867,9 +1929,10 @@ if (codeInput) {
         natBox.style.width = `${rect.width}px`;
         natBox.classList.remove("hidden");
     }
+    customInput.readOnly = true; // pick exactly one existing nationality from the list
+    customInput.style.cursor = "pointer";
     customInput.addEventListener("focus", renderNationalities);
     customInput.addEventListener("click", renderNationalities);
-    customInput.addEventListener("input", renderNationalities);
     customInput.addEventListener("blur", () => natBox.classList.add("hidden"));
 }
 
@@ -1896,9 +1959,9 @@ if (codeInput) {
     });
 }
 
-// Lowercase, letters and digits only — matches the existing sleeves/ file names.
+// Accents folded (é -> e), lowercase, letters and digits only — matches the existing sleeves/ file names.
 function sleeveImageName(title) {
-    return title.toLowerCase().replace(/[^a-z0-9]/g, "") + ".jpg";
+    return stripAccents(title).toLowerCase().replace(/[^a-z0-9]/g, "") + ".jpg";
 }
 
 function showToast(msg, isError) {
@@ -1910,20 +1973,23 @@ function showToast(msg, isError) {
 }
 
 // Fetch via the helper (the CDN has no CORS), WebP -> JPEG on a canvas, save into sleeves/.
-async function downloadSleeveImage(url, title) {
+async function downloadSleeveImage(url, title, quad) {
     const name = sleeveImageName(title);
     try {
-        const img = await fetch(`${SLEEVE_HELPER}/image?url=${encodeURIComponent(url)}`);
-        if (!img.ok) throw new Error("Image download failed");
-        const bitmap = await createImageBitmap(await img.blob());
-        const canvas = document.createElement("canvas");
-        canvas.width = bitmap.width;
-        canvas.height = bitmap.height;
-        const ctx = canvas.getContext("2d");
-        ctx.fillStyle = "#fff"; // WebP may be transparent; JPEG can't be
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(bitmap, 0, 0);
-        const jpeg = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.92));
+        const bitmap = await loadSleeveBitmap(url);
+        let jpeg;
+        if (quad) {
+            jpeg = await SleeveCrop.warp(bitmap, quad);
+        } else {
+            const canvas = document.createElement("canvas");
+            canvas.width = bitmap.width;
+            canvas.height = bitmap.height;
+            const ctx = canvas.getContext("2d");
+            ctx.fillStyle = "#fff"; // WebP may be transparent; JPEG can't be
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(bitmap, 0, 0);
+            jpeg = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.92));
+        }
         const saved = await fetch(`${SLEEVE_HELPER}/save-image?name=${name}`, { method: "POST", body: jpeg });
         const result = await saved.json();
         if (!saved.ok) throw new Error(result.error || "Save failed");
@@ -2025,7 +2091,7 @@ document.getElementById("save-item").addEventListener("click", () => {
     addModal.classList.add("hidden");
 
     if (downloadImageBox?.checked && fetchedImageUrls.length) {
-        downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title);
+        downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value]);
     }
     resetSleeveImportUI();
 });
