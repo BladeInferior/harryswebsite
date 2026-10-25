@@ -42,19 +42,29 @@ const SleeveCrop = (() => {
             const overlay = document.createElement("div");
             overlay.style.cssText = "position:fixed;inset:0;z-index:4600;background:rgba(0,0,0,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;";
             const stage = document.createElement("div");
-            const fit = Math.min((window.innerWidth * 0.92) / bitmap.width, (window.innerHeight * 0.78) / bitmap.height);
-            const dw = Math.round(bitmap.width * fit), dh = Math.round(bitmap.height * fit);
-            stage.style.cssText = `position:relative;width:${dw}px;height:${dh}px;touch-action:none;user-select:none;`;
+            // Rotate 90° turns the picture itself: `cur` is the image being shown (the
+            // original or a rotated canvas copy) and `quad` is always in `cur`'s pixels.
+            // `stack[k]` is the image after k rotations, so close() can map back to the original.
+            const stack = [bitmap];
+            let cur = bitmap;
+            let fit = 1;
+            stage.style.cssText = "position:relative;touch-action:none;user-select:none;";
             const canvas = document.createElement("canvas");
-            canvas.width = dw; canvas.height = dh;
             const cctx = canvas.getContext("2d");
-            cctx.fillStyle = "#fff";
-            cctx.fillRect(0, 0, dw, dh);
-            cctx.drawImage(bitmap, 0, 0, dw, dh);
             canvas.style.cssText = "position:absolute;inset:0;";
             const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("width", dw); svg.setAttribute("height", dh);
             svg.style.cssText = "position:absolute;inset:0;pointer-events:none;";
+            function relayout() {
+                fit = Math.min((window.innerWidth * 0.92) / cur.width, (window.innerHeight * 0.78) / cur.height);
+                const dw = Math.round(cur.width * fit), dh = Math.round(cur.height * fit);
+                stage.style.width = `${dw}px`; stage.style.height = `${dh}px`;
+                canvas.width = dw; canvas.height = dh;
+                cctx.fillStyle = "#fff";
+                cctx.fillRect(0, 0, dw, dh);
+                cctx.drawImage(cur, 0, 0, dw, dh);
+                svg.setAttribute("width", dw); svg.setAttribute("height", dh);
+            }
+            relayout();
             const poly = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
             poly.setAttribute("fill", "rgba(255,80,80,.12)");
             poly.setAttribute("stroke", "#ff4d4d");
@@ -85,7 +95,7 @@ const SleeveCrop = (() => {
                 if (thumbBusy) { thumbAgain = true; return; }
                 thumbBusy = true;
                 try {
-                    const blob = await warp(bitmap, quad, 240);
+                    const blob = await warp(cur, quad, 240);
                     if (thumbUrl) URL.revokeObjectURL(thumbUrl);
                     thumbUrl = URL.createObjectURL(blob);
                     thumb.src = thumbUrl;
@@ -121,8 +131,8 @@ const SleeveCrop = (() => {
                 begin: () => null,
                 move: (_, ev) => {
                     const [x, y] = toImage(ev);
-                    quad[i][0] = Math.max(0, Math.min(bitmap.width, x));
-                    quad[i][1] = Math.max(0, Math.min(bitmap.height, y));
+                    quad[i][0] = Math.max(0, Math.min(cur.width, x));
+                    quad[i][1] = Math.max(0, Math.min(cur.height, y));
                 }
             }));
 
@@ -142,7 +152,7 @@ const SleeveCrop = (() => {
                         const room = ((o1[0] + o2[0]) / 2 - mid[0]) * n[0] + ((o1[1] + o2[1]) / 2 - mid[1]) * n[1];
                         // Furthest this edge can go either way while both its corners stay inside the image.
                         let lo = -Infinity, hi = Math.max(0, room - 20 / fit);
-                        [[a, bitmap.width, 0], [a, bitmap.height, 1], [b, bitmap.width, 0], [b, bitmap.height, 1]].forEach(([pt, dim, c]) => {
+                        [[a, cur.width, 0], [a, cur.height, 1], [b, cur.width, 0], [b, cur.height, 1]].forEach(([pt, dim, c]) => {
                             if (Math.abs(n[c]) < 1e-9) return;
                             const t0 = -pt[c] / n[c], t1 = (dim - pt[c]) / n[c];
                             lo = Math.max(lo, Math.min(t0, t1));
@@ -180,11 +190,40 @@ const SleeveCrop = (() => {
             bar.style.cssText = "display:flex;gap:10px;align-items:center;color:#ddd;font-size:14px;flex-wrap:wrap;justify-content:center;";
             const mk = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.style.cssText = "padding:6px 16px;border-radius:6px;border:1px solid #666;background:#2a2a2a;color:#fff;cursor:pointer;"; b.addEventListener("click", fn); return b; };
             const close = result => { overlay.remove(); if (thumbUrl) URL.revokeObjectURL(thumbUrl); resolve(result); };
+            // Undo every rotation so the returned quad is in the original image's pixels.
+            const toOriginal = () => {
+                let pts = quad.map(p => p.slice());
+                for (let k = stack.length - 1; k >= 1; k--) {
+                    const wNew = stack[k].width;
+                    pts = pts.map(([X, Y]) => [Y, wNew - X]);
+                    pts.push(pts.shift());
+                }
+                return pts;
+            };
             bar.append(
-                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to slide that whole edge in or out. The result keeps the shape you draw; Rotate 90° turns it."),
-                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); updateThumb(); }),
-                mk("⟳ Rotate 90°", () => { quad.unshift(quad.pop()); draw(); updateThumb(); }),
-                mk("Apply crop", () => close(quad)),
+                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to slide that whole edge in or out. Rotate 90° turns the picture; the result keeps the shape you draw."),
+                mk("Reset", () => {
+                    stack.length = 1; cur = bitmap;
+                    startQuad.forEach((p, i) => { quad[i] = p.slice(); });
+                    relayout(); draw(); updateThumb();
+                }),
+                mk("⟳ Rotate 90°", () => {
+                    // Turn the picture clockwise; the crop turns with it, so its corners are
+                    // re-labelled (old bottom-left becomes the new top-left).
+                    const h = cur.height;
+                    const rc = document.createElement("canvas");
+                    rc.width = h; rc.height = cur.width;
+                    const rctx = rc.getContext("2d");
+                    rctx.translate(h, 0);
+                    rctx.rotate(Math.PI / 2);
+                    rctx.drawImage(cur, 0, 0);
+                    for (let i = 0; i < 4; i++) quad[i] = [h - quad[i][1], quad[i][0]];
+                    quad.unshift(quad.pop());
+                    cur = rc;
+                    stack.push(rc);
+                    relayout(); draw(); updateThumb();
+                }),
+                mk("Apply crop", () => close(toOriginal())),
                 mk("Cancel", () => close(null))
             );
             overlay.append(stage, bar, thumbWrap);
