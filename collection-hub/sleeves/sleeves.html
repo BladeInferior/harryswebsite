@@ -82,6 +82,22 @@
             <div id="item-error" class="hidden"></div>
 
             <label>
+                artofpkm product code (press Enter to autofill)
+                <input type="text" id="item-code" inputmode="numeric" placeholder="e.g. 1234" autocomplete="off">
+            </label>
+            <div id="item-code-status" class="hidden"></div>
+
+            <div id="item-image-row" class="hidden">
+                <label class="inline-check">
+                    <input type="checkbox" id="item-download-image"> Download image on save
+                </label>
+                <label class="inline-check">
+                    Image
+                    <select id="item-image-choice"></select>
+                </label>
+            </div>
+
+            <label>
                 Name
                 <input type="text" id="item-title">
             </label>
@@ -89,6 +105,7 @@
             <label>
                 Date
                 <input type="date" id="item-date">
+                <input type="text" id="item-date-text" placeholder="or paste a date (25/10/2026, 25 Oct 2026…)" autocomplete="off">
                 <button type="button" id="item-date-today" class="today-btn">Today</button>
             </label>
 

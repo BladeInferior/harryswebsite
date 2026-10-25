@@ -4123,3 +4123,11 @@ footer {
     background: rgba(231, 76, 60, 0.9);
     box-shadow: none;
 }
+
+/* Sleeves add/edit modal: artofpkm code autofill + paste-a-date */
+#item-code-status { font-size: 0.8rem; margin: -4px 0 8px; color: var(--text); opacity: .85; }
+#item-code-status.error { color: #ff6b6b; opacity: 1; }
+#item-image-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+#item-image-row .inline-check { display: flex; flex-direction: row; align-items: center; gap: 6px; }
+#item-date-text { margin-top: 6px; }
+#item-date-text.invalid { border-color: #ff6b6b; }

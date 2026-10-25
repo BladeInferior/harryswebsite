@@ -1718,6 +1718,136 @@ document.getElementById("item-date-today")?.addEventListener("click", () => {
     dateInput.value = new Date(d - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 });
 
+// SLEEVES: artofpkm product-code autofill, paste-friendly date, image download.
+// Fetching/saving goes through the local sleeve-helper server (see
+// sleeve-helper/server.js) — browsers can't read artofpkm or write to the repo.
+const SLEEVE_HELPER = "http://127.0.0.1:5501";
+const codeInput = document.getElementById("item-code");
+const codeStatus = document.getElementById("item-code-status");
+const imageRow = document.getElementById("item-image-row");
+const downloadImageBox = document.getElementById("item-download-image");
+const imageChoice = document.getElementById("item-image-choice");
+const dateTextInput = document.getElementById("item-date-text");
+let fetchedImageUrls = [];
+
+function setCodeStatus(msg, isError) {
+    codeStatus.textContent = msg;
+    codeStatus.classList.toggle("error", !!isError);
+    codeStatus.classList.toggle("hidden", !msg);
+}
+
+function resetSleeveImportUI() {
+    if (!codeInput) return;
+    codeInput.value = "";
+    dateTextInput.value = "";
+    dateTextInput.classList.remove("invalid");
+    setCodeStatus("");
+    fetchedImageUrls = [];
+    imageRow.classList.add("hidden");
+    downloadImageBox.checked = false;
+    imageChoice.innerHTML = "";
+}
+
+// Accepts 2026-10-25, 25/10/2026 (day first), 25 Oct 2026, Oct 25, 2026.
+function parsePastedDate(text) {
+    text = text.trim();
+    const pad = n => String(n).padStart(2, "0");
+    const valid = (y, m, d) => {
+        const dt = new Date(y, m - 1, d);
+        return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d
+            ? `${y}-${pad(m)}-${pad(d)}` : null;
+    };
+    const months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+    let m = text.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})$/);
+    if (m) return valid(+m[1], +m[2], +m[3]);
+    m = text.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})$/);
+    if (m) return valid(+m[3], +m[2], +m[1]);
+    m = text.match(/^(\d{1,2})(?:st|nd|rd|th)?\s+([a-z]{3,})\.?,?\s+(\d{4})$/i);
+    if (m) { const mi = months.indexOf(m[2].slice(0, 3).toLowerCase()); return mi < 0 ? null : valid(+m[3], mi + 1, +m[1]); }
+    m = text.match(/^([a-z]{3,})\.?\s+(\d{1,2})(?:st|nd|rd|th)?,?\s+(\d{4})$/i);
+    if (m) { const mi = months.indexOf(m[1].slice(0, 3).toLowerCase()); return mi < 0 ? null : valid(+m[3], mi + 1, +m[2]); }
+    return null;
+}
+
+if (dateTextInput) {
+    dateTextInput.addEventListener("input", () => {
+        const iso = parsePastedDate(dateTextInput.value);
+        dateTextInput.classList.toggle("invalid", !!dateTextInput.value.trim() && !iso);
+        if (iso) dateInput.value = iso;
+    });
+}
+
+if (codeInput) {
+    codeInput.addEventListener("keydown", async (e) => {
+        if (e.key !== "Enter") return;
+        // Stop the modal-wide Enter-to-save handler below from also firing.
+        e.preventDefault();
+        e.stopPropagation();
+        const code = codeInput.value.trim();
+        if (!/^\d+$/.test(code)) { setCodeStatus("Enter the numeric product code.", true); return; }
+        setCodeStatus("Fetching…");
+        try {
+            const r = await fetch(`${SLEEVE_HELPER}/product/${code}`);
+            const data = await r.json();
+            if (!r.ok) throw new Error(data.error || "Lookup failed");
+            titleInput.value = data.title;
+            if (data.date) { dateInput.value = data.date; dateTextInput.value = ""; }
+            if (!customInput.value.trim()) customInput.value = "JPN";
+            fetchedImageUrls = data.images;
+            imageChoice.innerHTML = data.images
+                .map((_, i) => `<option value="${i}">${i + 1}</option>`).join("");
+            if (data.images.length) {
+                imageChoice.value = String(Math.min(1, data.images.length - 1)); // default: image 2
+                imageRow.classList.remove("hidden");
+            } else {
+                imageRow.classList.add("hidden");
+            }
+            setCodeStatus(`Filled from artofpkm — check everything before saving.${data.date ? "" : " (No release date found.)"}`);
+        } catch (err) {
+            setCodeStatus(err instanceof TypeError
+                ? "Can't reach the sleeve helper — run collection-hub/sleeve-helper/start-sleeve-helper.bat."
+                : err.message, true);
+        }
+    });
+}
+
+// Lowercase, letters and digits only — matches the existing sleeves/ file names.
+function sleeveImageName(title) {
+    return title.toLowerCase().replace(/[^a-z0-9]/g, "") + ".jpg";
+}
+
+function showToast(msg, isError) {
+    const t = document.createElement("div");
+    t.textContent = msg;
+    t.style.cssText = `position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:5000;padding:10px 16px;border-radius:8px;color:#fff;font-size:14px;background:${isError ? "#a33" : "#2a7a4b"}`;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), isError ? 8000 : 4000);
+}
+
+// Fetch via the helper (the CDN has no CORS), WebP -> JPEG on a canvas, save into sleeves/.
+async function downloadSleeveImage(url, title) {
+    const name = sleeveImageName(title);
+    try {
+        const img = await fetch(`${SLEEVE_HELPER}/image?url=${encodeURIComponent(url)}`);
+        if (!img.ok) throw new Error("Image download failed");
+        const bitmap = await createImageBitmap(await img.blob());
+        const canvas = document.createElement("canvas");
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#fff"; // WebP may be transparent; JPEG can't be
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bitmap, 0, 0);
+        const jpeg = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.92));
+        const saved = await fetch(`${SLEEVE_HELPER}/save-image?name=${name}`, { method: "POST", body: jpeg });
+        const result = await saved.json();
+        if (!saved.ok) throw new Error(result.error || "Save failed");
+        showToast(`Saved sleeves/${name}`);
+    } catch (err) {
+        showToast(`Image not saved: ${err.message}`, true);
+    }
+}
+
 // OPEN MODAL
 document.getElementById("add-item").addEventListener("click", () => {
 
@@ -1736,6 +1866,7 @@ document.getElementById("add-item").addEventListener("click", () => {
         imagesInput.value = "";
     }
 
+    resetSleeveImportUI();
     titleInput.value = "";
     dateInput.value = "";
     customInput.value = "";
@@ -1807,6 +1938,11 @@ document.getElementById("save-item").addEventListener("click", () => {
     renderItems();
 
     addModal.classList.add("hidden");
+
+    if (downloadImageBox?.checked && fetchedImageUrls.length) {
+        downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title);
+    }
+    resetSleeveImportUI();
 });
 
 document.addEventListener("keydown", (e) => {
@@ -1868,6 +2004,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
     const index = modalOverlay.dataset.index;
     const item = items[index];
 
+    resetSleeveImportUI();
     if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
         imagesInput.value = (item.images || []).join(", ");
     }
