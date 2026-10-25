@@ -139,34 +139,65 @@ const SleeveCrop = (() => {
             // Edge-middle squares slide a whole edge (both corners) straight in or
             // out, perpendicular to itself: in until just short of the opposite
             // edge, out until a corner reaches the image border.
-            const edgeHandles = quad.map((p, i) => {
+            // Edge i runs from corner i to corner i+1: its two corners, inward unit
+            // normal `n`, and how far (t, in image pixels) it may move along n.
+            const edgeInfo = i => {
                 const j = (i + 1) % 4;
-                return makeHandle(ringCss + "border-radius:6px;width:16px;height:16px;margin:-8px 0 0 -8px;", {
-                    begin: ev => {
-                        const a = quad[i].slice(), b = quad[j].slice();
-                        const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
-                        // Corners run clockwise on screen, so (-dy, dx) points into the quad.
-                        const n = [-(b[1] - a[1]) / len, (b[0] - a[0]) / len];
-                        const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-                        const o1 = quad[(i + 2) % 4], o2 = quad[(i + 3) % 4];
-                        const room = ((o1[0] + o2[0]) / 2 - mid[0]) * n[0] + ((o1[1] + o2[1]) / 2 - mid[1]) * n[1];
-                        // Furthest this edge can go either way while both its corners stay inside the image.
-                        let lo = -Infinity, hi = Math.max(0, room - 20 / fit);
-                        [[a, cur.width, 0], [a, cur.height, 1], [b, cur.width, 0], [b, cur.height, 1]].forEach(([pt, dim, c]) => {
-                            if (Math.abs(n[c]) < 1e-9) return;
-                            const t0 = -pt[c] / n[c], t1 = (dim - pt[c]) / n[c];
-                            lo = Math.max(lo, Math.min(t0, t1));
-                        });
-                        return { at: toImage(ev), a, b, n, lo: Math.min(0, lo), hi };
-                    },
-                    move: (s, ev) => {
-                        const [x, y] = toImage(ev);
-                        const t = Math.max(s.lo, Math.min(s.hi, (x - s.at[0]) * s.n[0] + (y - s.at[1]) * s.n[1]));
-                        quad[i] = [s.a[0] + s.n[0] * t, s.a[1] + s.n[1] * t];
-                        quad[j] = [s.b[0] + s.n[0] * t, s.b[1] + s.n[1] * t];
-                    }
+                const a = quad[i].slice(), b = quad[j].slice();
+                const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+                // Corners run clockwise on screen, so (-dy, dx) points into the quad.
+                const n = [-(b[1] - a[1]) / len, (b[0] - a[0]) / len];
+                const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+                const o1 = quad[(i + 2) % 4], o2 = quad[(i + 3) % 4];
+                const room = ((o1[0] + o2[0]) / 2 - mid[0]) * n[0] + ((o1[1] + o2[1]) / 2 - mid[1]) * n[1];
+                // Furthest this edge can go either way while both its corners stay inside the image.
+                let lo = -Infinity, hi = Math.max(0, room - 20 / fit);
+                [[a, cur.width, 0], [a, cur.height, 1], [b, cur.width, 0], [b, cur.height, 1]].forEach(([pt, dim, c]) => {
+                    if (Math.abs(n[c]) < 1e-9) return;
+                    const t0 = -pt[c] / n[c], t1 = (dim - pt[c]) / n[c];
+                    lo = Math.max(lo, Math.min(t0, t1));
                 });
-            });
+                return { a, b, n, lo: Math.min(0, lo), hi };
+            };
+            const moveEdge = (i, s, t) => {
+                t = Math.max(s.lo, Math.min(s.hi, t));
+                quad[i] = [s.a[0] + s.n[0] * t, s.a[1] + s.n[1] * t];
+                quad[(i + 1) % 4] = [s.b[0] + s.n[0] * t, s.b[1] + s.n[1] * t];
+            };
+            const edgeHandles = quad.map((p, i) => makeHandle(ringCss + "border-radius:6px;width:16px;height:16px;margin:-8px 0 0 -8px;", {
+                begin: ev => ({ ...edgeInfo(i), at: toImage(ev) }),
+                move: (s, ev) => {
+                    const [x, y] = toImage(ev);
+                    moveEdge(i, s, (x - s.at[0]) * s.n[0] + (y - s.at[1]) * s.n[1]);
+                }
+            }));
+
+            // − / + beside each edge square, on its outer side: nudge that edge 1 image
+            // pixel in (−) or out (+) per click, repeating while held.
+            const nudgeBtns = quad.map((p, i) => [["−", 1], ["+", -1]].map(([label, dir]) => {
+                const b = document.createElement("button");
+                b.type = "button";
+                b.textContent = label;
+                b.title = dir > 0 ? "Move this edge 1px inwards" : "Move this edge 1px outwards";
+                b.style.cssText = "position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;padding:0;line-height:1;border-radius:4px;border:1px solid #fff;background:rgba(0,0,0,.45);color:#fff;font-size:14px;cursor:pointer;touch-action:none;";
+                let delay = null, rep = null;
+                const step = () => { const s = edgeInfo(i); moveEdge(i, s, dir); draw(); };
+                const stop = () => {
+                    if (delay === null && rep === null) return;
+                    clearTimeout(delay); clearInterval(rep); delay = rep = null;
+                    updateThumb();
+                };
+                b.addEventListener("pointerdown", e => {
+                    e.preventDefault();
+                    b.setPointerCapture(e.pointerId);
+                    step();
+                    delay = setTimeout(() => { delay = null; rep = setInterval(step, 60); }, 400);
+                });
+                b.addEventListener("pointerup", stop);
+                b.addEventListener("pointercancel", stop);
+                stage.appendChild(b);
+                return b;
+            }));
 
             function draw() {
                 poly.setAttribute("points", quad.map(p => `${p[0] * fit},${p[1] * fit}`).join(" "));
@@ -181,8 +212,19 @@ const SleeveCrop = (() => {
                 handles.forEach((hd, i) => { hd.style.left = `${quad[i][0] * fit}px`; hd.style.top = `${quad[i][1] * fit}px`; });
                 edgeHandles.forEach((hd, i) => {
                     const j = (i + 1) % 4;
-                    hd.style.left = `${(quad[i][0] + quad[j][0]) / 2 * fit}px`;
-                    hd.style.top = `${(quad[i][1] + quad[j][1]) / 2 * fit}px`;
+                    const mx = (quad[i][0] + quad[j][0]) / 2 * fit, my = (quad[i][1] + quad[j][1]) / 2 * fit;
+                    hd.style.left = `${mx}px`;
+                    hd.style.top = `${my}px`;
+                    // Nudge buttons: 34px out from the edge square, side by side along the edge.
+                    const dx = quad[j][0] - quad[i][0], dy = quad[j][1] - quad[i][1];
+                    const len = Math.hypot(dx, dy) || 1;
+                    const ux = dx / len, uy = dy / len;      // along the edge
+                    const ox = uy, oy = -ux;                 // outward (away from the quad)
+                    nudgeBtns[i].forEach((b, k) => {
+                        const side = k === 0 ? -1 : 1;      // − first, + second
+                        b.style.left = `${mx + ox * 34 + ux * 12 * side}px`;
+                        b.style.top = `${my + oy * 34 + uy * 12 * side}px`;
+                    });
                 });
             }
 
