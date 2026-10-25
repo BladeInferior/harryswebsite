@@ -1758,7 +1758,7 @@ function resetSleeveImportUI() {
     sleeveCropQuads = {};
     updateCropStateLabel();
     imageRow.classList.add("hidden");
-    downloadImageBox.checked = false;
+    downloadImageBox.checked = true;
     imageChoice.innerHTML = "";
 }
 

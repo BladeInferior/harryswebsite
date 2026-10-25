@@ -94,18 +94,30 @@ const SleeveCrop = (() => {
                 }
             }));
 
-            // Edge-middle dots slide a whole edge (both of its corners) by the same amount.
+            // Edge-middle squares slide a whole edge (both corners) straight inwards,
+            // perpendicular to itself. It can be pulled back out, but never past
+            // where it started (`inset[i]` = how far in it has been pushed), and
+            // never across the opposite edge.
+            const inset = [0, 0, 0, 0];
             const edgeHandles = quad.map((p, i) => {
                 const j = (i + 1) % 4;
                 return makeHandle(ringCss + "border-radius:6px;width:16px;height:16px;margin:-8px 0 0 -8px;", {
-                    begin: ev => ({ at: toImage(ev), a: quad[i].slice(), b: quad[j].slice() }),
+                    begin: ev => {
+                        const a = quad[i].slice(), b = quad[j].slice();
+                        const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+                        // Corners run clockwise on screen, so (-dy, dx) points into the quad.
+                        const n = [-(b[1] - a[1]) / len, (b[0] - a[0]) / len];
+                        const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+                        const o1 = quad[(i + 2) % 4], o2 = quad[(i + 3) % 4];
+                        const room = ((o1[0] + o2[0]) / 2 - mid[0]) * n[0] + ((o1[1] + o2[1]) / 2 - mid[1]) * n[1];
+                        return { at: toImage(ev), a, b, n, base: inset[i], max: Math.max(0, room - 20 / fit) };
+                    },
                     move: (s, ev) => {
                         const [x, y] = toImage(ev);
-                        let dx = x - s.at[0], dy = y - s.at[1];
-                        dx = Math.max(-Math.min(s.a[0], s.b[0]), Math.min(bitmap.width - Math.max(s.a[0], s.b[0]), dx));
-                        dy = Math.max(-Math.min(s.a[1], s.b[1]), Math.min(bitmap.height - Math.max(s.a[1], s.b[1]), dy));
-                        quad[i] = [s.a[0] + dx, s.a[1] + dy];
-                        quad[j] = [s.b[0] + dx, s.b[1] + dy];
+                        const t = Math.max(-s.base, Math.min(s.max, (x - s.at[0]) * s.n[0] + (y - s.at[1]) * s.n[1]));
+                        quad[i] = [s.a[0] + s.n[0] * t, s.a[1] + s.n[1] * t];
+                        quad[j] = [s.b[0] + s.n[0] * t, s.b[1] + s.n[1] * t];
+                        inset[i] = s.base + t;
                     }
                 });
             });
@@ -125,8 +137,8 @@ const SleeveCrop = (() => {
             const mk = (label, fn) => { const b = document.createElement("button"); b.type = "button"; b.textContent = label; b.style.cssText = "padding:6px 16px;border-radius:6px;border:1px solid #666;background:#2a2a2a;color:#fff;cursor:pointer;"; b.addEventListener("click", fn); return b; };
             const close = result => { overlay.remove(); resolve(result); };
             bar.append(
-                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to move that whole edge."),
-                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); draw(); }),
+                document.createTextNode("Drag the corner circles onto the sleeve's corners, or the square in the middle of an edge to push that whole edge inwards."),
+                mk("Reset", () => { startQuad.forEach((p, i) => { quad[i] = p.slice(); }); inset.fill(0); draw(); }),
                 mk("Apply crop", () => close(quad)),
                 mk("Cancel", () => close(null))
             );
