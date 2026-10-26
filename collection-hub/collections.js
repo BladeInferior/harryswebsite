@@ -13,7 +13,6 @@ const untaggedBtn = document.getElementById("untagged-filter");
 
 const modalTitle = document.getElementById("modal-title");
 const itemModalTitle = document.getElementById("item-modal-title");
-const previewBtn = document.getElementById("preview-image-btn");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalImage = document.getElementById("modal-image");
 const navLeft = document.getElementById("modal-nav-left");
@@ -2040,6 +2039,21 @@ async function downloadSleeveImage(url, title, quad) {
     }
 }
 
+// Editing: the item's current image, big, beside the form (replaces the old
+// "View Image" button). Hidden when adding — there's no saved image yet.
+const editSideImage = document.createElement("img");
+editSideImage.id = "edit-side-image";
+editSideImage.className = "hidden";
+editSideImage.alt = "";
+addModal.appendChild(editSideImage);
+
+function showEditSideImage(item) {
+    const useFirstImage =
+        (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") && item.images?.length;
+    setItemImage(editSideImage, useFirstImage ? item.images[0] : item[COLLECTION.fields.title]);
+    editSideImage.classList.remove("hidden");
+}
+
 // Put the cursor in the Add/Edit modal's first visible text box (the
 // artofpkm product code on Sleeves, otherwise the name).
 function focusFirstModalField() {
@@ -2056,7 +2070,7 @@ document.getElementById("add-item").addEventListener("click", () => {
         COLLECTION.name === "steelbooks" && activeSteelbookTab === "wishlist"
             ? "Add Wishlist Item"
             : "Add Item";
-    previewBtn.style.display = "none";
+    editSideImage.classList.add("hidden");
 
     if (moveToOwnedBtn) moveToOwnedBtn.classList.add("hidden");
 
@@ -2310,7 +2324,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
 
     addModal.dataset.editIndex = index;
     itemModalTitle.textContent = "Edit Item";
-    previewBtn.style.display = "inline-block";
+    showEditSideImage(item);
 
     if (moveToOwnedBtn) {
         moveToOwnedBtn.classList.toggle(
@@ -2689,26 +2703,6 @@ function updateItemCount() {
     positionItemCountLabel();
 }
 
-previewBtn.addEventListener("click", () => {
-
-    const index = addModal.dataset.editIndex;
-    if (index === undefined) return;
-
-    const item = items[index];
-
-    hideDlcZoomNav();
-
-    if (
-        (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks")
-        && item.images?.length
-    ) {
-        setItemImage(zoomImage, item.images[0]);
-    } else {
-        setItemImage(zoomImage, item[COLLECTION.fields.title]);
-    }
-
-    imageZoomOverlay.classList.remove("hidden");
-});
 
 untaggedBtn.addEventListener("click", () => {
 
