@@ -182,7 +182,21 @@
     "name": "Strong Battle Veterans",
     "date": "2018-09-16",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "rayquaza",
+      "shaymin",
+      "joltik",
+      "seismitoad",
+      "lampent",
+      "trevenant",
+      "pumpkaboo",
+      "yveltal",
+      "n",
+      "skyla",
+      "team plasma",
+      "mega",
+      "event"
+    ]
   },
   {
     "name": "Dragon Majesty ETB",
@@ -255,7 +269,23 @@
     "name": "JCS 2019",
     "date": "2019-06-08",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "venusaur",
+      "charizard",
+      "blastoise",
+      "pikachu",
+      "eevee",
+      "mewtwo",
+      "mew",
+      "celebi",
+      "kyogre",
+      "rayquaza",
+      "zekrom",
+      "reshiram",
+      "xerneas",
+      "incineroar",
+      "event"
+    ]
   },
   {
     "name": "Unified Minds ETB",
@@ -642,7 +672,15 @@
     "name": "Deck Sleeves Type Fighters Dragon",
     "date": "2021-07-09",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "dragonite",
+      "salamence",
+      "druddigon",
+      "axew",
+      "hydreigon",
+      "alolan exeggutor",
+      "flapple"
+    ]
   },
   {
     "name": "Rubber Playmat Set Sonia",
@@ -1113,7 +1151,17 @@
     "name": "Deck Sleeves Pokemon GO",
     "date": "2022-06-17",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "gyarados",
+      "mewtwo",
+      "aipom",
+      "blissey",
+      "larvitar",
+      "conkeldurr",
+      "professor willow",
+      "item"
+    ]
   },
   {
     "name": "NAIC 2022",
@@ -1175,7 +1223,23 @@
     "name": "Deck Sleeves Pokémon Center Okinawa",
     "date": "2022-08-11",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "psyduck",
+      "arcanine",
+      "eevee",
+      "cyndaquil",
+      "bellossom",
+      "corsola",
+      "luvdisc",
+      "wailord",
+      "gastrodon",
+      "mantyke",
+      "popplio",
+      "oricorio",
+      "alolan exeggutor",
+      "grookey"
+    ]
   },
   {
     "name": "World Championships London 2022",
@@ -1581,7 +1645,8 @@
     "tags": [
       "honchkrow",
       "gyarados",
-      "cyrus"
+      "cyrus",
+      "team galactic"
     ]
   },
   {
@@ -1762,6 +1827,7 @@
       "rhydon",
       "nidoqueen",
       "giovanni",
+      "team rocket",
       "item"
     ]
   },
@@ -1872,7 +1938,21 @@
     "name": "Great Wave Pikachu & Friends",
     "date": "2023-08-16",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "squirtle",
+      "pikachu",
+      "poliwag",
+      "horsea",
+      "dewgong",
+      "lapras",
+      "dratini",
+      "dragonair",
+      "totodile",
+      "marill",
+      "corsola",
+      "politoed",
+      "lugia"
+    ]
   },
   {
     "name": "151 ETB",
@@ -2048,7 +2128,8 @@
     "tags": [
       "houndoom",
       "armarouge",
-      "mela"
+      "mela",
+      "team star"
     ]
   },
   {
@@ -2318,7 +2399,9 @@
     "name": "Deck Sleeve Collection Ancient / Future, Iron Hands",
     "date": "2024-01-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "iron hands"
+    ]
   },
   {
     "name": "Deck Sleeve Collection Ancient / Future, Iron Jugulis",
@@ -3179,6 +3262,7 @@
     "tags": [
       "zoroark",
       "N",
+      "team plasma",
       "etb"
     ]
   },
@@ -3229,7 +3313,8 @@
       "murkrow",
       "giovanni",
       "ariana",
-      "petrel"
+      "petrel",
+      "team rocket"
     ]
   },
   {
@@ -3276,7 +3361,9 @@
     "name": "Deck Sleeves Pro Team Rocket",
     "date": "2025-04-18",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "team rocket"
+    ]
   },
   {
     "name": "Deck Sleeves Mimikyu & Wobbuffet",
@@ -3362,6 +3449,7 @@
     "tags": [
       "mewtwo",
       "giovanni",
+      "team rocket",
       "etb"
     ]
   },
@@ -3606,7 +3694,25 @@
     "date": "2025-07-18",
     "nationality": "JPN",
     "tags": [
-      "s"
+      "eevee",
+      "vaporeon",
+      "jolteon",
+      "flareon",
+      "umbreon",
+      "leafeon",
+      "pawniard",
+      "sylveon",
+      "cyclizar",
+      "varoom",
+      "revavroom",
+      "mela",
+      "giacomo",
+      "eri",
+      "atticus",
+      "ortega",
+      "penny",
+      "team star",
+      "item"
     ]
   },
   {
@@ -4245,6 +4351,22 @@
     "name": "World Championships 2026 San Francisco (3)",
     "date": "2026-08-28",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "ditto",
+      "spheal",
+      "kirlia",
+      "elgyem",
+      "meltan",
+      "drifloon",
+      "wingull",
+      "elekid",
+      "latias",
+      "latios",
+      "orbeetle",
+      "jirachi",
+      "item",
+      "event"
+    ]
   }
 ]
