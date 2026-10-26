@@ -2113,6 +2113,16 @@ editSideImage.className = "hidden";
 editSideImage.alt = "";
 addModal.appendChild(editSideImage);
 
+// Same height as the form box beside it; width follows from the image's own
+// proportions (capped by max-width in style.css). Kept in step as the box
+// grows/shrinks (autofill rows, crop state, etc.).
+const editFormBox = addModal.querySelector(".add-item-box");
+if (editFormBox && typeof ResizeObserver === "function") {
+    new ResizeObserver(() => {
+        editSideImage.style.height = editFormBox.offsetHeight + "px";
+    }).observe(editFormBox);
+}
+
 function showEditSideImage(item) {
     const useFirstImage =
         (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") && item.images?.length;
