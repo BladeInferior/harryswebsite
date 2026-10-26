@@ -2101,8 +2101,9 @@ document.getElementById("save-item").addEventListener("click", () => {
 
     // Sleeves / pop figures / completions: same first three words plus the
     // same date-field (and franchise, except sleeves) = possible dupe, so ask
-    // before saving (the item being edited never counts).
-    if (DUPE_CHECK_COLLECTIONS.includes(COLLECTION.name)) {
+    // before saving. Only when adding a new item, never on edit.
+    const isNewItem = editIndex === undefined || editIndex === "";
+    if (isNewItem && DUPE_CHECK_COLLECTIONS.includes(COLLECTION.name)) {
         const dupes = findPossibleDupes(title, date, custom, editIndex);
         if (dupes.length) {
             askSleeveDupe(dupes).then(isDupe => {
