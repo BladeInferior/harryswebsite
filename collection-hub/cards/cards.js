@@ -1588,7 +1588,7 @@ if (modalCloseBtn) {
 const syncMobileFilterPopout = createMobilePopout({
     toggleId: "mobile-filter-toggle",
     icon: "⚙",
-    top: 130,
+    top: 116,
     heading: "Filters",
     elementIds: ["game-filter-container"]
 });

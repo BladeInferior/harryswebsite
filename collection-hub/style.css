@@ -3815,13 +3815,13 @@ footer {
         position: fixed;
         /* top/right set inline per-instance by mobile-popout.js */
         z-index: 3000;
-        width: 44px;
-        height: 44px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
         background: #2d2d2d;
         border: 1px solid #555;
         color: var(--accent);
-        font-size: 20px;
+        font-size: 16px;
         align-items: center;
         justify-content: center;
         cursor: pointer;
@@ -3891,6 +3891,20 @@ footer {
         min-width: 0;
     }
 
+    /* Dex Progress (and the others) must never scroll sideways: #dex-key has
+       padding on a width:100% content box, so it overran the panel and made
+       it pan left/right. Border-box sizing plus no horizontal overflow or
+       horizontal touch-panning fixes that. */
+    .mobile-popout-panel {
+        overflow-x: hidden;
+        touch-action: pan-y;
+    }
+
+    .mobile-popout-list > * {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+
     .mobile-popout-list #untagged-filter.hidden {
         display: none !important;
     }
@@ -3903,9 +3917,16 @@ footer {
         gap: 5px !important;
     }
 
-    .mobile-popout-list #game-filter-container .filter-row,
-    .mobile-popout-list #game-filter-container .generation-filter-row {
+    .mobile-popout-list #game-filter-container .filter-row {
         gap: 5px !important;
+    }
+
+    /* Generation buttons size themselves as (100% - gaps) / 4 for the
+       page's 3px row gap (see .pokemon-page .generation-filter-btn). A 5px
+       gap here made four of them overflow the row, so they wrapped 3-up and
+       sat out of position — the gap has to stay 3px. */
+    .mobile-popout-list #game-filter-container .generation-filter-row {
+        gap: 3px !important;
     }
 
     .mobile-popout-list #game-filter-container .game-filter-btn,
@@ -3915,6 +3936,57 @@ footer {
         padding: 6px 8px !important;
         min-height: 0 !important;
         font-size: 12px !important;
+    }
+
+    /* Compact search bar. The input keeps navbar.css's 16px font (iOS zooms
+       smaller ones), so only its width and the wrapper's padding shrink. */
+    #search-wrapper {
+        top: 70px;
+        right: 12px;
+        padding: 3px 8px;
+    }
+
+    #search {
+        width: 105px;
+    }
+
+    /* The typed text stays 16px (iOS zoom); only the hint is smaller. */
+    #search::placeholder {
+        font-size: 12px;
+    }
+
+    /* Sits just left of the search bar (right offset set by mobile-popout.js
+       from the bar's measured edge). Hidden state: a small tab peeping out of
+       the right screen edge instead. */
+    html #mobile-bar-arrow {
+        display: flex;
+        position: fixed;
+        top: 74px;
+        right: 150px; /* overridden inline once measured */
+        width: 24px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: #2d2d2d;
+        border: 1px solid #555;
+        color: var(--accent);
+        font-size: 11px;
+        cursor: pointer;
+        z-index: 3000;
+    }
+
+    html.mobile-bar-hidden #mobile-bar-arrow {
+        right: 0 !important;
+        width: 18px;
+        border-right: none;
+        border-radius: 8px 0 0 8px;
+    }
+
+    html.mobile-bar-hidden #search-wrapper,
+    html.mobile-bar-hidden .mobile-popout-toggle,
+    html.mobile-bar-hidden .mobile-popout-panel {
+        display: none !important;
     }
 
     #item-count-label {
@@ -4199,6 +4271,7 @@ footer {
 .sleeve-dupe-list { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: 12px 0; }
 .sleeve-dupe-card { max-width: 220px; font-size: 0.85rem; }
 .sleeve-dupe-card img { max-width: 220px; max-height: 50vh; object-fit: contain; border-radius: 6px; background: #fff; }
+#mobile-bar-arrow { display: none; }
 .reorder-overlay { position: fixed; inset: 0; z-index: 4600; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.8); }
 #reorder-row-overlay { z-index: 4700; }
 .reorder-box { position: relative; max-width: 95vw; max-height: 92vh; overflow: auto; padding: 24px; border-radius: 10px; background: var(--surface-2, #1e1e1e); color: var(--text, #fff); border: 1px solid var(--border, #555); text-align: center; }
@@ -4221,3 +4294,19 @@ footer {
 #item-image-crop { padding: 2px 10px; cursor: pointer; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text); }
 #item-image-crop-state { font-size: 0.75rem; color: #4cd48a; }
 #item-image-crop-state.hidden { display: none; }
+
+/* Sleeves: Trainers / Items toggles highlight while on (generation buttons
+   already do via .generation-filter-btn.game-filter-active). */
+.sleeves-page .game-filter-btn.game-filter-active {
+    background: rgba(var(--accent-rgb), 0.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+}
+
+/* The ✕ sits in the top corner; keep titles clear of it. */
+.sleeves-page #modal-title {
+    padding: 0 44px;
+}
+.reorder-box h2 {
+    padding: 0 40px;
+}

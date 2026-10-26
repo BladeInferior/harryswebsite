@@ -41,7 +41,52 @@ function _handleTouchMove(e) {
 // preventDefault() unless explicitly opted out of.
 document.addEventListener("touchmove", _handleTouchMove, { passive: false });
 
-function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementIds }) {
+// Small arrow left of the search bar / mini-menu buttons that hides or shows
+// all of them (mobile only; CSS hides the arrow itself on desktop). State is
+// remembered per browser.
+function _ensureMobileBarArrow() {
+    if (document.getElementById("mobile-bar-arrow")) return;
+
+    const arrow = document.createElement("div");
+    arrow.id = "mobile-bar-arrow";
+    document.body.appendChild(arrow);
+
+    const root = document.documentElement;
+    const apply = hidden => {
+        root.classList.toggle("mobile-bar-hidden", hidden);
+        arrow.textContent = hidden ? "◀" : "▶"; // ◀ = pull the bar back out, ▶ = tuck it away
+        arrow.setAttribute("aria-label", hidden ? "Show search and menus" : "Hide search and menus");
+        if (hidden) {
+            _allMobilePopoutPanels.forEach(p => p.classList.remove("open"));
+            _updateBodyScrollLock();
+        }
+        try { localStorage.setItem("mobileBarHidden", hidden ? "1" : "0"); } catch (e) {}
+    };
+
+    // Park the arrow against the search bar's left edge (it moves with the
+    // bar if its width changes, e.g. when the page's controls re-lay-out).
+    const place = () => {
+        const bar = document.getElementById("search-wrapper");
+        if (!bar || root.classList.contains("mobile-bar-hidden")) { arrow.style.right = ""; return; }
+        const r = bar.getBoundingClientRect();
+        arrow.style.right = r.width ? `${window.innerWidth - r.left + 6}px` : "";
+    };
+    const barEl = document.getElementById("search-wrapper");
+    if (barEl && typeof ResizeObserver === "function") new ResizeObserver(place).observe(barEl);
+    window.addEventListener("resize", place);
+
+    let saved = false;
+    try { saved = localStorage.getItem("mobileBarHidden") === "1"; } catch (e) {}
+    apply(saved);
+    place();
+    arrow.addEventListener("click", () => setTimeout(place, 0));
+
+    arrow.addEventListener("click", () => apply(!root.classList.contains("mobile-bar-hidden")));
+}
+
+function createMobilePopout({ toggleId, icon, top, right = 12, heading, elementIds }) {
+
+    _ensureMobileBarArrow();
 
     const toggleBtn = document.createElement("div");
     toggleBtn.id = toggleId;
@@ -53,7 +98,7 @@ function createMobilePopout({ toggleId, icon, top, right = 16, heading, elementI
 
     const panel = document.createElement("div");
     panel.classList.add("mobile-popout-panel");
-    panel.style.top = `${top + 54}px`;
+    panel.style.top = `${top + 44}px`;
     panel.innerHTML = `<h4>${heading}</h4><div class="mobile-popout-list"></div>`;
     document.body.appendChild(panel);
 

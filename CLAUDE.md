@@ -41,6 +41,10 @@ Root-level shared files used across multiple hubs: `firebase-config.js`, `admin-
 - `admin-auth.js` — wraps the core module and self-mounts the generic bottom-right sign-in widget site-wide.
 - `adminhub/auth.js` (`requireAdminAuth()`) — a heavier full-page lockout gate + session pill, built on the same core module, used by pages under `adminhub/` (and conceptually by anything needing a hard "this whole page is admin-only" wall rather than just a corner widget).
 
+**Mobile sign-in:** `signInAdmin()` in `admin-auth-core.js` tries `signInWithPopup` first on phone/tablet browsers (opened synchronously in the click) and only falls back to `signInWithRedirect` if the popup is blocked/unsupported; an installed PWA (standalone) goes straight to redirect. Redirect was bouncing back before Google's chooser showed because `authDomain` (`quiz-mobile-data-retrieval.firebaseapp.com`) is a different site from this one and mobile browsers partition the storage the redirect needs. Untested on a real phone. If popup also fails, the durable fixes are Google Identity Services + `signInWithCredential` (needs the OAuth web client ID and this site's origin added in Google Cloud), or serving `/__/auth/` from this site's own domain; also check the site's domain is in Firebase Auth → Authorized domains.
+
+**Testing on a phone:** `D:\Libraries\Desktop\start-mobile-test.bat` (deliberately outside the repo so it isn't pushed) runs `ngrok http --domain=retiree-chamomile-surprise.ngrok-free.dev 5500` (older ngrok builds only know `--domain`, not `--url`), sharing Live Server over a fixed HTTPS address; that domain has to be in Firebase → Authentication → Authorized domains. Needs ngrok installed and its authtoken configured; Live Server must already be running.
+
 All three resolve to the same signed-in identity, so signing in via one satisfies the others in the same browser. **Client-side gating is not real enforcement** — the actual security boundary is the Firestore/Storage rules requiring `request.auth.token.email == OWNER_EMAIL`, which live in the Firebase console, not in this repo. Adding a new admin-only Firestore collection or Storage path means updating those rules out-of-band.
 
 ## Collection Hub data model: localStorage + static JSON + Cloudflare export
@@ -86,6 +90,10 @@ The Add/Edit item modal (every collection) focuses its first visible text box on
 ## Collections: merged list is written back to localStorage on load
 
 `collections.js` writes the merged `items` back to localStorage right after `setRemoteBaseline()`. Without that, an item pulled in from the backup JSON (never edited on this device) sat in the baseline but not in local, and the next load's `reconcileList()` read it as "deleted on this device" and hid it (8 sleeves, incl. Deck Sleeves Exhausted, vanished from Live Server this way). The no-baseline fallback also adopts the remote's item order (local-only items last): keeping the local order there made a stale order look like an unsynced Reorder on every later load (see `reconcileList()`'s order rule) and overrode newer exported orders. To recover a browser already in that state, remove its `<storageKey>__remoteBaseline` localStorage entry once so the next load falls back to pulling the missing items in. `pokedexes.js` has the same shape of risk with `reconcileDict()` and hasn't been checked.
+
+## Sleeves: Trainers / Items / Gen filters (`collections.js`)
+
+Independent toggles that AND with each other and the search/nationality filter; Reset Filters clears them. **Trainers**: a sleeve has a tag that exactly equals (case-insensitive) a name in `cards-trainers-backup.json` — exact on purpose, as "N" is a trainer and a substring match would hit nearly everything — or any tag containing "team" except "tag team". `SLEEVE_TRAINER_EXCLUDE` (lowercased sleeve names) leaves out specific sleeves, currently "Deck Sleeves Pro Team Rocket". **Items**: has the tag `item`. **Gen 1–9**: multi-select (any ticked gen matches); a sleeve qualifies when a tag is a Pokémon name in `fullPokemonList.json` with that `generation` (regional forms count under their own entry's generation, e.g. Alolan Vulpix = Gen 7). Both JSON files are fetched on load by `loadSleeveFilterData()`.
 
 ## Sleeves: image-only grid (trial)
 
@@ -210,6 +218,12 @@ Imported game achievement walkthroughs from TrueAchievements, read on-site in tw
 ## Mobile pop-out pattern (`collection-hub/mobile-popout.js`)
 
 `createMobilePopout()` doesn't build a separate mobile UI — it *relocates* the real, already-wired desktop controls (e.g. the whole `#game-filter-container`) into a floating panel below a toggle button on narrow screens, moving them back to their original DOM position above the mobile breakpoint. Returns a `sync()` function that must be re-called if the tracked container gets rebuilt (e.g. `createFilterButtons()` re-running). Only one panel can be open at a time across the page. The Pokédex has four: ⚙ Filters (`right: 16`), 📊 Dex Progress (`right: 72`), 🗂 Custom Lists (`right: 128`), 🔎 Search Options (`right: 184`, `#search-evolutions-row` — Include evos/regionals, Exact match). Any element handed to `createMobilePopout()` this way needs its *own* desktop-positioning code (if it has any, e.g. `syncSearchControlsLayout()`) to skip it on mobile too — see the fixed-side-stack note above for why.
+
+## Mobile compact bar, collapse arrow, back to top
+
+On phones the search bar is compact (`#search` 105px wide, small wrapper padding; its font stays 16px, see below) and the pop-out toggles are 34px circles at `top: 116`, 40px apart (Pokédex `right`: 12/52/92/132). `mobile-popout.js` adds `#mobile-bar-arrow` (▶ sits just left of the search bar, its `right` measured from the bar's edge; once hidden it becomes a small ◀ tab peeping out of the right screen edge) on first `createMobilePopout()`; it toggles `html.mobile-bar-hidden`, which hides `#search-wrapper`, the toggles and panels, and is remembered in localStorage `mobileBarHidden`. Pop-out panels never scroll sideways (`overflow-x: hidden`, `touch-action: pan-y`, border-box children: `#dex-key` used to overrun the panel by its padding). Generation filter rows in the pop-out must keep a 3px gap: their buttons are sized `(100% - 9px) / 4` for that gap, and the old 5px override made them wrap 3-up out of position.
+
+`scroll-to-top.js` (loaded on every page) shows its button on phones everywhere, and on desktop only under `/collection-hub/` when the body isn't `.page-mode`. A body class `MutationObserver` re-evaluates it when the mode changes.
 
 ## Mobile input zoom
 

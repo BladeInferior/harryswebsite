@@ -5428,8 +5428,8 @@ if (statsModal) {
 createMobilePopout({
     toggleId: "mobile-filter-toggle",
     icon: "⚙",
-    top: 130,
-    right: 16,
+    top: 116,
+    right: 12,
     heading: "Filters",
     elementIds: ["game-filter-container"]
 });
@@ -5437,8 +5437,8 @@ createMobilePopout({
 createMobilePopout({
     toggleId: "mobile-lists-toggle",
     icon: "🗂",
-    top: 130,
-    right: 128,
+    top: 116,
+    right: 92,
     heading: "Custom Lists",
     elementIds: ["custom-list-controls"]
 });
@@ -5446,8 +5446,8 @@ createMobilePopout({
 createMobilePopout({
     toggleId: "mobile-progress-toggle",
     icon: "📊",
-    top: 130,
-    right: 72,
+    top: 116,
+    right: 52,
     heading: "Dex Progress",
     elementIds: ["dex-key", "stats-btn", "progress-container"]
 });
@@ -5455,8 +5455,8 @@ createMobilePopout({
 createMobilePopout({
     toggleId: "mobile-search-options-toggle",
     icon: "🔎",
-    top: 130,
-    right: 184,
+    top: 116,
+    right: 132,
     heading: "Search Options",
     elementIds: ["search-evolutions-row"]
 });

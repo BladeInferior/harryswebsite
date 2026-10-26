@@ -75,6 +75,15 @@ let currentImages = [];
 
 // collection-specific filter state
 let selectedNationality = null; // for sleeves: 'english','japanese','chinese' (mutually exclusive)
+// sleeves: Trainers / Items toggles and the set of picked generations (any of them matches)
+let filterSleeveTrainers = false;
+let filterSleeveItems = false;
+const selectedSleeveGens = new Set();
+// Loaded for the sleeves page by loadSleeveFilterData() below.
+let sleeveTrainerNames = new Set();   // lowercased names from cards-trainers-backup.json
+let sleeveGenByName = new Map();      // lowercased pokemon name -> generation (fullPokemonList.json)
+// Sleeves left out of Trainers even though a tag would qualify (lowercased names).
+const SLEEVE_TRAINER_EXCLUDE = new Set(["deck sleeves pro team rocket"]);
 let filterHasDlc = null; // for completions: true = only show items with at least one DLC attached
 let filterDlcAvailable = false; // for completions: true = only show items tagged "dlc available"
 let filterUnnamedDlc = false; // for completions: true = only show items with an auto-linked, not-yet-named DLC
@@ -785,12 +794,42 @@ function createCollectionFilters() {
 
         container.appendChild(generationRow);
 
-        ["Trainers", "Items", "Generations"].forEach(label => {
+        // Trainers / Items: independent toggles. Trainers = a tag that exactly
+        // equals a name from the Trainers card deck (exact, since e.g. "N" is
+        // a trainer and a substring match would hit most tags), or any tag
+        // containing "team". Items = the "item" tag.
+        [
+            { label: "Trainers", set: on => { filterSleeveTrainers = on; } },
+            { label: "Items", set: on => { filterSleeveItems = on; } }
+        ].forEach(({ label, set }) => {
             const btn = document.createElement("button");
             btn.textContent = label;
-            btn.classList.add("game-filter-btn", "placeholder-filter-btn");
+            btn.classList.add("game-filter-btn");
+            btn.addEventListener("click", () => {
+                const on = btn.classList.toggle("game-filter-active");
+                set(on);
+                filterItems(searchInput.value);
+            });
             container.appendChild(btn);
         });
+
+        // One toggle per generation (any ticked generation matches); a sleeve
+        // qualifies when one of its tags is a Pokémon of that generation.
+        const genGrid = document.createElement("div");
+        genGrid.classList.add("generation-filter-row");
+        for (let gen = 1; gen <= 9; gen++) {
+            const btn = document.createElement("button");
+            btn.textContent = `Gen ${gen}`;
+            btn.classList.add("generation-filter-btn");
+            btn.style.flex = "0 0 calc((100% - 12px) / 3)";
+            btn.addEventListener("click", () => {
+                const on = btn.classList.toggle("game-filter-active");
+                if (on) selectedSleeveGens.add(gen); else selectedSleeveGens.delete(gen);
+                filterItems(searchInput.value);
+            });
+            genGrid.appendChild(btn);
+        }
+        container.appendChild(genGrid);
     }
 
     if (COLLECTION.name === "completions") {
@@ -959,6 +998,9 @@ function createCollectionFilters() {
     resetBtn.addEventListener("click", () => {
         // clear state
         selectedNationality = null;
+        filterSleeveTrainers = false;
+        filterSleeveItems = false;
+        selectedSleeveGens.clear();
         filterHasDlc = null;
         selectedVariant = null;
         selectedFranchise = null;
@@ -2649,6 +2691,23 @@ function isoDateToSlashFormat(dateStr) {
     return `${d}/${m}/${y}`;
 }
 
+// Reference data for the sleeves Trainers / Generations filters. Re-filters
+// once loaded in case a button was clicked first.
+function loadSleeveFilterData() {
+    if (COLLECTION.name !== "sleeves") return;
+
+    fetch("../cards-trainers-backup.json").then(r => r.json()).then(list => {
+        sleeveTrainerNames = new Set(list.map(t => String(t.name).toLowerCase().trim()));
+        filterItems(searchInput.value);
+    }).catch(() => {});
+
+    fetch("../fullPokemonList.json").then(r => r.json()).then(list => {
+        sleeveGenByName = new Map(list.map(p => [String(p.name).toLowerCase().trim(), Number(p.generation)]));
+        filterItems(searchInput.value);
+    }).catch(() => {});
+}
+loadSleeveFilterData();
+
 function filterItems(query) {
 
     // A comma separates independent search terms (an item matching any one
@@ -2696,6 +2755,17 @@ function filterItems(query) {
         if (COLLECTION.name === "sleeves" && selectedNationality !== null) {
             const nat = (realItem[COLLECTION.fields.custom] || "").toLowerCase();
             if (!nat.includes(selectedNationality)) match2 = false;
+        }
+
+        // Sleeves: Trainers / Items / Generations (see createCollectionFilters)
+        if (COLLECTION.name === "sleeves") {
+            if (filterSleeveTrainers && (
+                SLEEVE_TRAINER_EXCLUDE.has(title) ||
+                !tags.some(t => sleeveTrainerNames.has(t) || (t.includes("team") && t !== "tag team"))
+            )) match2 = false;
+            if (filterSleeveItems && !tags.some(t => t === "item")) match2 = false;
+            if (selectedSleeveGens.size > 0 &&
+                !tags.some(t => selectedSleeveGens.has(sleeveGenByName.get(t)))) match2 = false;
         }
 
         // Popfigures: variant filter (mutually exclusive)
@@ -2759,6 +2829,7 @@ function hasActiveFilters() {
     return (
         searchInput.value.trim() !== "" ||
         selectedNationality !== null ||
+        filterSleeveTrainers || filterSleeveItems || selectedSleeveGens.size > 0 ||
         filterHasDlc !== null ||
         filterDlcAvailable ||
         selectedVariant !== null ||
@@ -3812,7 +3883,7 @@ if (statsDetailModal) {
 const syncMobileFilterPopout = createMobilePopout({
     toggleId: "mobile-filter-toggle",
     icon: "⚙",
-    top: 130,
+    top: 116,
     heading: "Filters",
     elementIds: ["untagged-filter", "game-filter-container"]
 });

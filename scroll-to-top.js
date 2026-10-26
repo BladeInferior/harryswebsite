@@ -1,4 +1,5 @@
-// Mobile-only "return to top" button, shared across every page on the site.
+// "Return to top" button, shared across every page on the site (phones
+// everywhere; desktop only in the collection hub's list views).
 // Self-contained (injects its own styles) so adding it anywhere is just one
 // <script> tag, rather than a script + stylesheet pair on every page.
 (function () {
@@ -56,12 +57,6 @@
         #scroll-to-top-btn.visible {
             display: flex;
         }
-
-        @media (min-width: 769px) {
-            #scroll-to-top-btn.visible {
-                display: none;
-            }
-        }
     `;
     document.head.appendChild(style);
 
@@ -91,9 +86,22 @@
 
     let threshold = getThreshold();
 
-    function updateVisibility() {
-        btn.classList.toggle("visible", window.scrollY > threshold);
+    // Phones: every page. Desktop: only the collection hub's list-style
+    // views (long scrolling grids), not Page Mode, which fits the screen.
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
+    function allowedHere() {
+        if (mobileQuery.matches) return true;
+        return location.pathname.includes("/collection-hub/")
+            && !document.body.classList.contains("page-mode");
     }
+
+    function updateVisibility() {
+        btn.classList.toggle("visible", allowedHere() && window.scrollY > threshold);
+    }
+
+    // Page/List Mode switches change a body class without any scroll event.
+    new MutationObserver(updateVisibility)
+        .observe(document.body, { attributes: true, attributeFilter: ["class"] });
 
     window.addEventListener("scroll", updateVisibility, { passive: true });
     window.addEventListener("resize", () => {

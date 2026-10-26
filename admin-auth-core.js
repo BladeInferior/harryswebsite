@@ -91,10 +91,29 @@ function isMobileBrowser() {
 // explicitly before the redirect starts so the round trip has something to
 // come back to.
 export function signInAdmin() {
+    const redirect = () => setPersistence(auth, indexedDBLocalPersistence)
+        .catch(() => {}) // fall through to the redirect attempt either way
+        .then(() => signInWithRedirect(auth, googleProvider));
+
+    // Installed PWA: popups don't work there, redirect is the only option.
+    if (window.matchMedia('(display-mode: standalone)').matches) return redirect();
+
+    // Phone/tablet browser: try a popup FIRST. Redirect sign-in is what
+    // bounces back before Google's chooser ever shows — the auth handler on
+    // <project>.firebaseapp.com is a different site from this one, and mobile
+    // browsers partition/block the storage it needs to resume the redirect.
+    // A popup talks back via postMessage and doesn't depend on that storage.
+    // It must be opened synchronously inside the click (no awaits before it),
+    // or the browser blocks it. Only fall back to redirect when the popup
+    // genuinely can't open; a user closing it is a cancel, not a failure.
     if (isMobileBrowser()) {
-        return setPersistence(auth, indexedDBLocalPersistence)
-            .catch(() => {}) // fall through to the redirect attempt either way
-            .then(() => signInWithRedirect(auth, googleProvider));
+        return signInWithPopup(auth, googleProvider).catch(err => {
+            if (err.code === 'auth/popup-blocked'
+                || err.code === 'auth/operation-not-supported-in-this-environment') {
+                return redirect();
+            }
+            throw err;
+        });
     }
     return signInWithPopup(auth, googleProvider);
 }
