@@ -2000,6 +2000,14 @@
     ]
   },
   {
+    "name": "Pikachu Inspired by Self-Portrait with Grey Felt Hat",
+    "date": "2023-09-29",
+    "nationality": "ENG",
+    "tags": [
+      "pikachu"
+    ]
+  },
+  {
     "name": "Smeargle Inspired by Self-Portrait as a Painter",
     "date": "2023-09-29",
     "nationality": "ENG",
@@ -2013,14 +2021,6 @@
     "nationality": "ENG",
     "tags": [
       "sunflora"
-    ]
-  },
-  {
-    "name": "Pikachu Inspired by Self-Portrait with Grey Felt Hat",
-    "date": "2023-09-29",
-    "nationality": "ENG",
-    "tags": [
-      "pikachu"
     ]
   },
   {
@@ -2273,30 +2273,6 @@
     ]
   },
   {
-    "name": "Deck Sleeve Collection Ancient / Future, Scream Tail",
-    "date": "2024-01-26",
-    "nationality": "JPN",
-    "tags": [
-      "scream tail"
-    ]
-  },
-  {
-    "name": "Deck Sleeve Collection Ancient / Future, Iron Jugulis",
-    "date": "2024-01-26",
-    "nationality": "JPN",
-    "tags": [
-      "iron jugulis"
-    ]
-  },
-  {
-    "name": "Deck Sleeve Collection Ancient / Future, Iron Leaves",
-    "date": "2024-01-26",
-    "nationality": "JPN",
-    "tags": [
-      "iron leaves"
-    ]
-  },
-  {
     "name": "Deck Sleeve Collection Ancient / Future, Great Tusk",
     "date": "2024-01-26",
     "nationality": "JPN",
@@ -2306,11 +2282,11 @@
     ]
   },
   {
-    "name": "Deck Sleeve Collection Ancient / Future, Iron Bundle",
+    "name": "Deck Sleeve Collection Ancient / Future, Scream Tail",
     "date": "2024-01-26",
     "nationality": "JPN",
     "tags": [
-      "iron bundle"
+      "scream tail"
     ]
   },
   {
@@ -2331,6 +2307,28 @@
     ]
   },
   {
+    "name": "Deck Sleeve Collection Ancient / Future, Iron Bundle",
+    "date": "2024-01-26",
+    "nationality": "JPN",
+    "tags": [
+      "iron bundle"
+    ]
+  },
+  {
+    "name": "Deck Sleeve Collection Ancient / Future, Iron Hands",
+    "date": "2024-01-26",
+    "nationality": "JPN",
+    "tags": []
+  },
+  {
+    "name": "Deck Sleeve Collection Ancient / Future, Iron Jugulis",
+    "date": "2024-01-26",
+    "nationality": "JPN",
+    "tags": [
+      "iron jugulis"
+    ]
+  },
+  {
     "name": "Deck Sleeve Collection Ancient / Future, Walking Wake",
     "date": "2024-01-26",
     "nationality": "JPN",
@@ -2339,10 +2337,12 @@
     ]
   },
   {
-    "name": "Deck Sleeve Collection Ancient / Future, Iron Hands",
+    "name": "Deck Sleeve Collection Ancient / Future, Iron Leaves",
     "date": "2024-01-26",
     "nationality": "JPN",
-    "tags": []
+    "tags": [
+      "iron leaves"
+    ]
   },
   {
     "name": "Polychromatic Gathering Sleeves: Umbreon / Mew",
@@ -2420,6 +2420,16 @@
     ]
   },
   {
+    "name": "EUIC 2024",
+    "date": "2024-04-05",
+    "nationality": "ENG",
+    "tags": [
+      "armarouge",
+      "ceruledge",
+      "event"
+    ]
+  },
+  {
     "name": "EUIC 2024 (2)",
     "date": "2024-04-05",
     "nationality": "ENG",
@@ -2435,16 +2445,6 @@
     "tags": [
       "bellibolt",
       "iono"
-    ]
-  },
-  {
-    "name": "EUIC 2024",
-    "date": "2024-04-05",
-    "nationality": "ENG",
-    "tags": [
-      "armarouge",
-      "ceruledge",
-      "event"
     ]
   },
   {
@@ -3476,19 +3476,19 @@
     ]
   },
   {
-    "name": "Special Departure Package - Toedscool",
-    "date": "2025-06-13",
-    "nationality": "CHN",
-    "tags": [
-      "toedscool"
-    ]
-  },
-  {
     "name": "Special Departure Package - Omanyte",
     "date": "2025-06-13",
     "nationality": "CHN",
     "tags": [
       "omanyte"
+    ]
+  },
+  {
+    "name": "Special Departure Package - Toedscool",
+    "date": "2025-06-13",
+    "nationality": "CHN",
+    "tags": [
+      "toedscool"
     ]
   },
   {
@@ -4224,10 +4224,13 @@
     ]
   },
   {
-    "name": "World Championships 2026 San Francisco (3)",
+    "name": "World Championships 2026 San Francisco",
     "date": "2026-08-28",
     "nationality": "ENG",
-    "tags": []
+    "tags": [
+      "pikachu",
+      "event"
+    ]
   },
   {
     "name": "World Championships 2026 San Francisco (2)",
@@ -4239,12 +4242,9 @@
     ]
   },
   {
-    "name": "World Championships 2026 San Francisco",
+    "name": "World Championships 2026 San Francisco (3)",
     "date": "2026-08-28",
     "nationality": "ENG",
-    "tags": [
-      "pikachu",
-      "event"
-    ]
+    "tags": []
   }
 ]
