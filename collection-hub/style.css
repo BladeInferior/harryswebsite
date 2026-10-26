@@ -4152,6 +4152,20 @@ footer {
 .sleeve-dupe-list { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: 12px 0; }
 .sleeve-dupe-card { max-width: 220px; font-size: 0.85rem; }
 .sleeve-dupe-card img { max-width: 220px; max-height: 50vh; object-fit: contain; border-radius: 6px; background: #fff; }
+#reorder-overlay { position: fixed; inset: 0; z-index: 4600; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.8); }
+.reorder-box { position: relative; max-width: 95vw; max-height: 92vh; overflow: auto; padding: 24px; border-radius: 10px; background: var(--surface-2, #1e1e1e); color: var(--text, #fff); border: 1px solid var(--border, #555); text-align: center; }
+.reorder-hint { color: #999; margin: 4px 0 12px; }
+.reorder-list, .reorder-row { display: flex; gap: 14px; justify-content: center; margin: 12px 0; }
+.reorder-list { flex-wrap: wrap; }
+.reorder-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 6px; }
+.reorder-card { width: 140px; font-size: 0.8rem; cursor: pointer; }
+.reorder-card:hover { outline: 2px solid #4cd48a; border-radius: 6px; }
+.reorder-card img, .reorder-cell img { width: 100%; max-height: 40vh; object-fit: contain; border-radius: 6px; background: #fff; }
+.reorder-date { color: #999; }
+.reorder-cell { flex: 0 0 150px; font-size: 0.8rem; }
+.reorder-arrows { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.reorder-arrows button { padding: 2px 12px; cursor: pointer; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text); }
+.reorder-arrows button:disabled { opacity: .3; cursor: default; }
 #sleeve-image-preview-img { max-width: 90vw; max-height: 90vh; object-fit: contain; background: #fff; border-radius: 8px; }
 #item-image-preview { padding: 2px 10px; cursor: pointer; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text); }
 #nationality-suggestions { position: fixed; z-index: 3100; background: #1e1e1e; border: 1px solid #555; border-radius: 6px; max-height: 160px; overflow-y: auto; box-shadow: var(--shadow); }

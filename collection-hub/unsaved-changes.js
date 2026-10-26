@@ -154,6 +154,21 @@ function reconcileList(localList, remoteList, storageKey, idField) {
 
         result.push(base ? reconcileRecord(local, base, remote) : local);
     });
+
+    // Order is data too (sleeves' binder order). Records otherwise come out in
+    // remote order, which would undo an unexported local reorder — so if this
+    // device's order differs from the baseline's, follow the local order.
+    const seq = list => list.map(x => x[idField]);
+    const common = new Set(seq(localList).filter(id => baseById.has(id)));
+    const sameOrder = seq(baseline).filter(id => common.has(id)).join("\u0000") ===
+                      seq(localList).filter(id => common.has(id)).join("\u0000");
+    if (!sameOrder) {
+        const localPos = new Map(seq(localList).map((id, i) => [id, i]));
+        const known = result.filter(r => localPos.has(r[idField]))
+            .sort((a, b) => localPos.get(a[idField]) - localPos.get(b[idField]));
+        let k = 0;
+        return result.map(r => localPos.has(r[idField]) ? known[k++] : r);
+    }
     return result;
 }
 

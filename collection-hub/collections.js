@@ -2737,6 +2737,11 @@ function openAdjacent(offset) {
     const visible = getVisibleItemIndexes();
     if (visible.length === 0) return;
 
+    // Page Mode's DOM interleaves the left and right page row by row, so DOM
+    // order isn't reading order. `items` is already in binder order, so its
+    // indexes are — step through those instead.
+    if (pageMode) visible.sort((a, b) => a - b);
+
     let pos = visible.indexOf(current);
     if (pos === -1) pos = 0;
 
@@ -2768,6 +2773,140 @@ document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowRight") openAdjacent(1);
     if (e.key === "Escape") modalOverlay.classList.add("hidden");
 });
+
+// =========================
+// SLEEVES: reorder same-date sleeves
+// =========================
+// `items` is date-sorted with a stable sort, so sleeves sharing a release date
+// sit together in whatever order the array holds them — that array order is
+// the binder order. Reordering = swapping neighbours inside that group, which
+// can never move a sleeve past a different date.
+function sleeveDateKey(item) {
+    return parseDate(item[COLLECTION.fields.date]);
+}
+
+function sleeveHasDateMate(item) {
+    const key = sleeveDateKey(item);
+    return !!key && items.some(o => o !== item && sleeveDateKey(o) === key);
+}
+
+function closeReorder() {
+    const o = document.getElementById("reorder-overlay");
+    if (o) o.remove();
+}
+
+function openReorderOverlay(build) {
+    closeReorder();
+    const overlay = document.createElement("div");
+    overlay.id = "reorder-overlay";
+    const box = document.createElement("div");
+    box.className = "reorder-box";
+    overlay.appendChild(box);
+    overlay.addEventListener("click", e => { if (e.target === overlay) closeReorder(); });
+    build(box);
+    document.body.appendChild(overlay);
+}
+
+function reorderCloseBtn(box) {
+    const x = document.createElement("div");
+    x.className = "modal-close-btn";
+    x.textContent = "✕";
+    x.addEventListener("click", closeReorder);
+    box.appendChild(x);
+}
+
+// Every sleeve whose release date is shared with at least one other sleeve.
+function showReorderList() {
+    openReorderOverlay(box => {
+        reorderCloseBtn(box);
+        const h = document.createElement("h2");
+        h.textContent = "Sleeves sharing a release date";
+        box.appendChild(h);
+        const hint = document.createElement("p");
+        hint.className = "reorder-hint";
+        hint.textContent = "Click one to reorder everything released that day.";
+        box.appendChild(hint);
+
+        const list = document.createElement("div");
+        list.className = "reorder-list";
+        items.filter(sleeveHasDateMate).forEach(item => {
+            const card = document.createElement("div");
+            card.className = "reorder-card";
+            const img = document.createElement("img");
+            setItemImage(img, item[COLLECTION.fields.title]);
+            const name = document.createElement("div");
+            name.textContent = item[COLLECTION.fields.title];
+            const date = document.createElement("div");
+            date.className = "reorder-date";
+            date.textContent = formatDateDisplay(item[COLLECTION.fields.date]);
+            card.append(img, name, date);
+            card.addEventListener("click", () => showReorderRow(item));
+            list.appendChild(card);
+        });
+        box.appendChild(list);
+    });
+}
+
+// One line of every sleeve released on `anchor`'s date, with ◀ ▶ above each.
+function showReorderRow(anchor) {
+    const key = sleeveDateKey(anchor);
+    openReorderOverlay(box => {
+        reorderCloseBtn(box);
+        const h = document.createElement("h2");
+        h.textContent = `Released ${formatDateDisplay(anchor[COLLECTION.fields.date])}`;
+        box.appendChild(h);
+
+        const group = items.filter(o => sleeveDateKey(o) === key);
+
+        const row = document.createElement("div");
+        row.className = "reorder-row";
+        group.forEach((item, i) => {
+            const cell = document.createElement("div");
+            cell.className = "reorder-cell";
+
+            const arrows = document.createElement("div");
+            arrows.className = "reorder-arrows";
+            const left = document.createElement("button");
+            left.textContent = "◀";
+            left.disabled = i === 0;
+            left.addEventListener("click", () => moveSleeve(item, group[i - 1], anchor));
+            const right = document.createElement("button");
+            right.textContent = "▶";
+            right.disabled = i === group.length - 1;
+            right.addEventListener("click", () => moveSleeve(item, group[i + 1], anchor));
+            arrows.append(left, right);
+
+            const img = document.createElement("img");
+            setItemImage(img, item[COLLECTION.fields.title]);
+            const name = document.createElement("div");
+            name.className = "reorder-name";
+            name.textContent = item[COLLECTION.fields.title];
+
+            cell.append(arrows, img, name);
+            row.appendChild(cell);
+        });
+        box.appendChild(row);
+
+        const back = document.createElement("button");
+        back.className = "item-action-btn";
+        back.textContent = "← Back to list";
+        back.addEventListener("click", showReorderList);
+        box.appendChild(back);
+    });
+}
+
+function moveSleeve(a, b, anchor) {
+    const i = items.indexOf(a), j = items.indexOf(b);
+    if (i < 0 || j < 0) return;
+    items[i] = b;
+    items[j] = a;
+    saveItems();
+    renderItems();
+    showReorderRow(anchor);
+}
+
+const reorderMenuBtn = document.getElementById("reorder-btn");
+if (reorderMenuBtn) reorderMenuBtn.addEventListener("click", showReorderList);
 
 if (document.body.classList.contains("completions-page")) {
 
