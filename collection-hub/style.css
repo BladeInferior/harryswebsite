@@ -2568,6 +2568,53 @@ body.page-mode #page-controls {
     grid-template-columns: repeat(8, 1fr);
 }
 
+/* Sleeves trial: image-only grid. Cards lose their frame and the sleeve
+   scan fills the cell at its own portrait ratio; names are hidden unless
+   "Titles" is on (body.show-sleeve-titles), then sit under each image. */
+.sleeves-page .pokemon-card {
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+}
+/* Hover keeps only the small lift — no accent border or shadow. */
+.sleeves-page .pokemon-card:hover {
+    border: none;
+    box-shadow: none;
+}
+.sleeves-page .pokemon-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1487 / 2048;
+    object-fit: contain;
+    border-radius: 4px;
+}
+.sleeve-rotate-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1487 / 2048;
+}
+.sleeves-page .sleeve-rotate-box img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 137.7%;   /* 2048 / 1487 of the box width */
+    height: 72.6%;   /* 1487 / 2048 of the box height */
+    aspect-ratio: auto;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+#page-display { cursor: pointer; }
+#page-jump-input { width: 3.5em; text-align: center; font: inherit; }
+.sleeves-page .pokemon-card.empty-card { aspect-ratio: 1487 / 2048; }
+.sleeves-page .pokemon-name { display: none; }
+.sleeves-page.show-sleeve-titles .pokemon-name {
+    display: block;
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
 /* =========================
    HOME PAGE
 ========================= */
@@ -4152,7 +4199,8 @@ footer {
 .sleeve-dupe-list { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin: 12px 0; }
 .sleeve-dupe-card { max-width: 220px; font-size: 0.85rem; }
 .sleeve-dupe-card img { max-width: 220px; max-height: 50vh; object-fit: contain; border-radius: 6px; background: #fff; }
-#reorder-overlay { position: fixed; inset: 0; z-index: 4600; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.8); }
+.reorder-overlay { position: fixed; inset: 0; z-index: 4600; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,.8); }
+#reorder-row-overlay { z-index: 4700; }
 .reorder-box { position: relative; max-width: 95vw; max-height: 92vh; overflow: auto; padding: 24px; border-radius: 10px; background: var(--surface-2, #1e1e1e); color: var(--text, #fff); border: 1px solid var(--border, #555); text-align: center; }
 .reorder-hint { color: #999; margin: 4px 0 12px; }
 .reorder-list, .reorder-row { display: flex; gap: 14px; justify-content: center; margin: 12px 0; }

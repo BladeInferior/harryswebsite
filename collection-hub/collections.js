@@ -245,6 +245,16 @@ Promise.all([
                 itemList.forEach(source => {
                     if (!localTitles.has(source[titleKey])) items.push(source);
                 });
+
+                // With no baseline there's no way to tell a deliberate local
+                // reorder from a stale one, so take the remote's order (local
+                // -only items go last). Keeping the local order here made it
+                // look like an unsynced reorder on every later load and
+                // overrode newer orders exported from another device.
+                const remotePos = new Map(itemList.map((s, i) => [s[titleKey], i]));
+                items.sort((a, b) =>
+                    (remotePos.has(a[titleKey]) ? remotePos.get(a[titleKey]) : Infinity) -
+                    (remotePos.has(b[titleKey]) ? remotePos.get(b[titleKey]) : Infinity));
             }
         } catch {
             items = itemList;
@@ -254,6 +264,13 @@ Promise.all([
     }
 
     if (typeof setRemoteBaseline === "function") setRemoteBaseline(COLLECTION.storageKey, itemList);
+
+    // The baseline now says "remote has these items", so localStorage must
+    // agree with the merged list too. Otherwise an item pulled in from the
+    // backup (never edited here, so never written to localStorage) is in the
+    // baseline but not in local on the next load, which reconcileList() reads
+    // as "deleted on this device" and hides it. Doesn't mark anything dirty.
+    try { localStorage.setItem(COLLECTION.storageKey, JSON.stringify(items)); } catch (e) {}
 
     if (typeof initUnsavedChangesSnapshot === "function") {
         initUnsavedChangesSnapshot(JSON.stringify(items), COLLECTION.storageKey);
@@ -1162,6 +1179,19 @@ function renderItems() {
 
         card.appendChild(img);
 
+        // Page Mode (sleeves): a landscape scan is turned 90° left so it
+        // fills the portrait slot like the rest. Wrapped in a portrait box
+        // the rotated image is absolutely positioned inside.
+        if (COLLECTION.name === "sleeves" && pageMode) {
+            img.addEventListener("load", () => {
+                if (img.naturalWidth <= img.naturalHeight || img.parentElement !== card) return;
+                const box = document.createElement("div");
+                box.className = "sleeve-rotate-box";
+                card.insertBefore(box, img);
+                box.appendChild(img);
+            });
+        }
+
         const label = document.createElement("div");
         label.classList.add("pokemon-name");
         label.textContent = item[COLLECTION.fields.title];
@@ -1475,15 +1505,51 @@ if (ownedTabBtn && wishlistTabBtn) {
 // =========================
 // PAGINATION
 // =========================
-document.getElementById("next-page").addEventListener("click", () => {
-
+function getMaxPage() {
     const visibleCount = getVisibleTabItems().length;
     const remaining = Math.max(0, visibleCount - 12);
+    return visibleCount <= 12 ? 1 : 1 + Math.ceil(remaining / 24);
+}
 
-    const maxPage =
-        visibleCount <= 12
-            ? 1
-            : 1 + Math.ceil(remaining / 24);
+// Click the page number to type a page and jump straight to it.
+pageDisplay.title = "Click to jump to a page";
+pageDisplay.addEventListener("click", () => {
+    if (pageDisplay.querySelector("input")) return;
+    const input = document.createElement("input");
+    input.id = "page-jump-input";
+    input.type = "number";
+    input.min = 1;
+    input.max = getMaxPage();
+    input.value = currentPage;
+    pageDisplay.textContent = "";
+    pageDisplay.appendChild(input);
+    input.focus();
+    input.select();
+
+    let done = false;
+    const finish = go => {
+        if (done) return;
+        done = true;
+        const n = parseInt(input.value, 10);
+        if (go && !isNaN(n)) {
+            currentPage = Math.min(Math.max(n, 1), getMaxPage());
+            renderItems();
+            updateModeUI();
+        }
+        pageDisplay.textContent = currentPage;
+    };
+    input.addEventListener("keydown", e => {
+        e.stopPropagation();
+        if (e.key === "Enter") finish(true);
+        if (e.key === "Escape") finish(false);
+    });
+    input.addEventListener("blur", () => finish(true));
+    input.addEventListener("click", e => e.stopPropagation());
+});
+
+document.getElementById("next-page").addEventListener("click", () => {
+
+    const maxPage = getMaxPage();
 
     if (currentPage < maxPage) {
         currentPage++;
@@ -2501,6 +2567,14 @@ function formatDateForInput(dateStr) {
 
     const pageItems = items.slice(start, end);
 
+    // Page 1 is a single right-hand page (4 columns, 12 sleeves) — it must
+    // not go through the two-page interleave below, which padded it to 24
+    // cells and scattered its sleeves with empty gaps between them.
+    if (currentPage === 1) {
+        while (pageItems.length < 12) pageItems.push({ empty: true });
+        return pageItems;
+    }
+
     // ---------------------------------
     // PAD FINAL PAGE TO 24 ITEMS
     // ---------------------------------
@@ -2790,109 +2864,109 @@ function sleeveHasDateMate(item) {
     return !!key && items.some(o => o !== item && sleeveDateKey(o) === key);
 }
 
+// Two stacked layers: the list (#reorder-overlay) stays open underneath while
+// the single-date row (#reorder-row-overlay) sits on top. Closing the row
+// returns to the list exactly as it was (scroll included).
 function closeReorder() {
+    closeReorderRow();
     const o = document.getElementById("reorder-overlay");
     if (o) o.remove();
 }
 
-function openReorderOverlay(build) {
-    closeReorder();
+function closeReorderRow() {
+    const o = document.getElementById("reorder-row-overlay");
+    if (o) o.remove();
+}
+
+function makeReorderOverlay(id, onClose) {
     const overlay = document.createElement("div");
-    overlay.id = "reorder-overlay";
+    overlay.id = id;
+    overlay.className = "reorder-overlay";
     const box = document.createElement("div");
     box.className = "reorder-box";
     overlay.appendChild(box);
-    overlay.addEventListener("click", e => { if (e.target === overlay) closeReorder(); });
-    build(box);
-    document.body.appendChild(overlay);
-}
-
-function reorderCloseBtn(box) {
+    overlay.addEventListener("click", e => { if (e.target === overlay) onClose(); });
     const x = document.createElement("div");
     x.className = "modal-close-btn";
     x.textContent = "✕";
-    x.addEventListener("click", closeReorder);
+    x.addEventListener("click", onClose);
     box.appendChild(x);
+    document.body.appendChild(overlay);
+    return box;
 }
 
 // Every sleeve whose release date is shared with at least one other sleeve.
-function showReorderList() {
-    openReorderOverlay(box => {
-        reorderCloseBtn(box);
-        const h = document.createElement("h2");
-        h.textContent = "Sleeves sharing a release date";
-        box.appendChild(h);
-        const hint = document.createElement("p");
-        hint.className = "reorder-hint";
-        hint.textContent = "Click one to reorder everything released that day.";
-        box.appendChild(hint);
-
-        const list = document.createElement("div");
-        list.className = "reorder-list";
-        items.filter(sleeveHasDateMate).forEach(item => {
-            const card = document.createElement("div");
-            card.className = "reorder-card";
-            const img = document.createElement("img");
-            setItemImage(img, item[COLLECTION.fields.title]);
-            const name = document.createElement("div");
-            name.textContent = item[COLLECTION.fields.title];
-            const date = document.createElement("div");
-            date.className = "reorder-date";
-            date.textContent = formatDateDisplay(item[COLLECTION.fields.date]);
-            card.append(img, name, date);
-            card.addEventListener("click", () => showReorderRow(item));
-            list.appendChild(card);
-        });
-        box.appendChild(list);
+function fillReorderList(list) {
+    list.innerHTML = "";
+    items.filter(sleeveHasDateMate).forEach(item => {
+        const card = document.createElement("div");
+        card.className = "reorder-card";
+        const img = document.createElement("img");
+        setItemImage(img, item[COLLECTION.fields.title]);
+        const name = document.createElement("div");
+        name.textContent = item[COLLECTION.fields.title];
+        const date = document.createElement("div");
+        date.className = "reorder-date";
+        date.textContent = formatDateDisplay(item[COLLECTION.fields.date]);
+        card.append(img, name, date);
+        card.addEventListener("click", () => showReorderRow(item));
+        list.appendChild(card);
     });
+}
+
+function showReorderList() {
+    closeReorder();
+    const box = makeReorderOverlay("reorder-overlay", closeReorder);
+    const h = document.createElement("h2");
+    h.textContent = "Sleeves sharing a release date";
+    const hint = document.createElement("p");
+    hint.className = "reorder-hint";
+    hint.textContent = "Click one to reorder everything released that day.";
+    const list = document.createElement("div");
+    list.className = "reorder-list";
+    box.append(h, hint, list);
+    fillReorderList(list);
 }
 
 // One line of every sleeve released on `anchor`'s date, with ◀ ▶ above each.
 function showReorderRow(anchor) {
+    closeReorderRow();
     const key = sleeveDateKey(anchor);
-    openReorderOverlay(box => {
-        reorderCloseBtn(box);
-        const h = document.createElement("h2");
-        h.textContent = `Released ${formatDateDisplay(anchor[COLLECTION.fields.date])}`;
-        box.appendChild(h);
+    const box = makeReorderOverlay("reorder-row-overlay", closeReorderRow);
+    const h = document.createElement("h2");
+    h.textContent = `Released ${formatDateDisplay(anchor[COLLECTION.fields.date])}`;
+    box.appendChild(h);
 
-        const group = items.filter(o => sleeveDateKey(o) === key);
+    const group = items.filter(o => sleeveDateKey(o) === key);
 
-        const row = document.createElement("div");
-        row.className = "reorder-row";
-        group.forEach((item, i) => {
-            const cell = document.createElement("div");
-            cell.className = "reorder-cell";
+    const row = document.createElement("div");
+    row.className = "reorder-row";
+    group.forEach((item, i) => {
+        const cell = document.createElement("div");
+        cell.className = "reorder-cell";
 
-            const arrows = document.createElement("div");
-            arrows.className = "reorder-arrows";
-            const left = document.createElement("button");
-            left.textContent = "◀";
-            left.disabled = i === 0;
-            left.addEventListener("click", () => moveSleeve(item, group[i - 1], anchor));
-            const right = document.createElement("button");
-            right.textContent = "▶";
-            right.disabled = i === group.length - 1;
-            right.addEventListener("click", () => moveSleeve(item, group[i + 1], anchor));
-            arrows.append(left, right);
+        const arrows = document.createElement("div");
+        arrows.className = "reorder-arrows";
+        const left = document.createElement("button");
+        left.textContent = "◀";
+        left.disabled = i === 0;
+        left.addEventListener("click", () => moveSleeve(item, group[i - 1], anchor));
+        const right = document.createElement("button");
+        right.textContent = "▶";
+        right.disabled = i === group.length - 1;
+        right.addEventListener("click", () => moveSleeve(item, group[i + 1], anchor));
+        arrows.append(left, right);
 
-            const img = document.createElement("img");
-            setItemImage(img, item[COLLECTION.fields.title]);
-            const name = document.createElement("div");
-            name.className = "reorder-name";
-            name.textContent = item[COLLECTION.fields.title];
+        const img = document.createElement("img");
+        setItemImage(img, item[COLLECTION.fields.title]);
+        const name = document.createElement("div");
+        name.className = "reorder-name";
+        name.textContent = item[COLLECTION.fields.title];
 
-            cell.append(arrows, img, name);
-            row.appendChild(cell);
-        });
-        box.appendChild(row);
-
-        const back = document.createElement("button");
-        back.className = "item-action-btn";
-        back.textContent = "← Back to list";
-        back.addEventListener("click", showReorderList);
-        box.appendChild(back);
+        cell.append(arrows, img, name);
+        row.appendChild(cell);
     });
+    box.appendChild(row);
 }
 
 function moveSleeve(a, b, anchor) {
@@ -2903,6 +2977,30 @@ function moveSleeve(a, b, anchor) {
     saveItems();
     renderItems();
     showReorderRow(anchor);
+
+    // Refresh the list underneath in place so it matches, keeping its scroll.
+    const list = document.querySelector("#reorder-overlay .reorder-list");
+    if (list) {
+        const scroller = list.closest(".reorder-box");
+        const top = scroller.scrollTop;
+        fillReorderList(list);
+        scroller.scrollTop = top;
+    }
+}
+
+// Sleeves: show/hide the name under each image (remembered per browser).
+const titlesBtn = document.getElementById("titles-btn");
+if (titlesBtn) {
+    const setTitles = on => {
+        document.body.classList.toggle("show-sleeve-titles", on);
+        titlesBtn.classList.toggle("active-mode", on);
+        try { localStorage.setItem("sleeveTitles", on ? "1" : "0"); } catch (e) {}
+    };
+    let saved = false;
+    try { saved = localStorage.getItem("sleeveTitles") === "1"; } catch (e) {}
+    setTitles(saved);
+    titlesBtn.addEventListener("click", () =>
+        setTitles(!document.body.classList.contains("show-sleeve-titles")));
 }
 
 const reorderMenuBtn = document.getElementById("reorder-btn");
