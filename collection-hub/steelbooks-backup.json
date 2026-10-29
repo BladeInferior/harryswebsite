@@ -1,5 +1,133 @@
 [
   {
+    "title": "Marvel's Avengers",
+    "franchise": "Marvel",
+    "images": [
+      "marvelsavengersfront",
+      "marvelsavengersboth",
+      "marvelsavengersback"
+    ]
+  },
+  {
+    "title": "Star Wars Battlefront",
+    "franchise": "Star Wars",
+    "images": [
+      "starwarsbattlefrontfront",
+      "starwarsbattlefrontboth"
+    ]
+  },
+  {
+    "title": "Fallout 4",
+    "franchise": "Fallout",
+    "images": [
+      "fallout4front",
+      "fallout4both",
+      "fallout4insidenodisc"
+    ]
+  },
+  {
+    "title": "Starfield Premium Edition",
+    "franchise": "Starfield",
+    "images": [
+      "starfieldfront",
+      "starfieldboth"
+    ]
+  },
+  {
+    "title": "Guardians of the Galaxy",
+    "franchise": "Marvel",
+    "images": [
+      "guardiansofthegalaxyfront"
+    ]
+  },
+  {
+    "title": "Guardians of the Galaxy Cosmic Edition",
+    "franchise": "Marvel"
+  },
+  {
+    "title": "FIFA 16",
+    "franchise": "FIFA",
+    "images": [
+      "fifa16front",
+      "fifa16both"
+    ]
+  },
+  {
+    "title": "FIFA 16 Messi Edition",
+    "franchise": "FIFA",
+    "images": [
+      "fifa16lionelmessifront",
+      "fifa16lionelmessiboth",
+      "fifa16lionelmessiinsidenodisc"
+    ]
+  },
+  {
+    "title": "LEGO Star Wars: The Skywalker Saga",
+    "franchise": "Star Wars",
+    "images": [
+      "legostarwarstheskywalkersagafront"
+    ]
+  },
+  {
+    "title": "Assassin's Creed Origins",
+    "franchise": "Assassin's Creed",
+    "images": [
+      "assassinscreedoriginsboth"
+    ]
+  },
+  {
+    "title": "Watch Dogs: Legion",
+    "franchise": "Watch Dogs",
+    "images": [
+      "watchdogslegionfront",
+      "watchdogslegionboth"
+    ]
+  },
+  {
+    "title": "Sifu",
+    "franchise": "Sifu",
+    "images": [
+      "sifuboth"
+    ]
+  },
+  {
+    "title": "Assassin's Creed Shadows",
+    "franchise": "Assassin's Creed",
+    "images": [
+      "assassinscreedshadowsfront",
+      "assassinscreedshadowsboth",
+      "assassinscreedshadowsback"
+    ]
+  },
+  {
+    "title": "Deathloop",
+    "franchise": "Deathloop",
+    "images": [
+      "deathloopfront",
+      "deathloopboth",
+      "deathloopback",
+      "deathloopinsidenodisc"
+    ]
+  },
+  {
+    "title": "Among Us",
+    "franchise": "Among Us",
+    "images": [
+      "amongusfront",
+      "amongusinsidenodisc"
+    ]
+  },
+  {
+    "title": "Red Dead Redemption 2",
+    "franchise": "Red Dead",
+    "images": [
+      "reddeadredemption2front",
+      "reddeadredemption2both",
+      "reddeadredemption2back",
+      "reddeadredemption2insidenodisc"
+    ]
+  },
+  {
     "title": "Hitman",
     "releaseDate": "2014-02-05",
     "franchise": "Hitman",
@@ -7,6 +135,158 @@
       "Action",
       "Stealth",
       "Third-Person"
+    ],
+    "images": [
+      "hitmanfront",
+      "hitmanboth",
+      "hitmaninsidenodisc"
     ]
+  },
+  {
+    "title": "Hitman 2",
+    "franchise": "Hitman"
+  },
+  {
+    "title": "Call of Duty: Advanced Warfare",
+    "franchise": "Call of Duty",
+    "images": [
+      "callofdutyadvancedwarfarefront",
+      "callofdutyadvancedwarfareboth"
+    ]
+  },
+  {
+    "title": "Incredibles Mondo Steelbook",
+    "franchise": "Incredibles",
+    "images": [
+      "mondoincrediblesfront",
+      "mondoincrediblesboth",
+      "mondoincrediblesback",
+      "mondoincrediblesinsidedisc",
+      "mondoincrediblesinsidenodisc"
+    ]
+  },
+  {
+    "title": "Incredibles 2",
+    "franchise": "Incredibles",
+    "images": [
+      "incredibles2front",
+      "incredibles2both",
+      "incredibles2insidenodisc"
+    ]
+  },
+  {
+    "title": "Assassin's Creed III",
+    "franchise": "Assassin's Creed"
+  },
+  {
+    "title": "Call of Duty: Black Ops II",
+    "franchise": "Call of Duty",
+    "images": [
+      "callofdutyblackops2both"
+    ]
+  },
+  {
+    "title": "Watch Dogs",
+    "franchise": "Watch Dogs",
+    "images": [
+      "watchdogsfront",
+      "watchdogsboth",
+      "watchdogsinsidenodisc"
+    ]
+  },
+  {
+    "title": "Watch Dogs Special Edition",
+    "franchise": "Watch Dogs",
+    "images": [
+      "watchdogsdeluxeboth"
+    ]
+  },
+  {
+    "title": "Grand Theft Auto V",
+    "franchise": "Grand Theft Auto",
+    "images": [
+      "grandtheftautovfront",
+      "grandtheftautovboth"
+    ]
+  },
+  {
+    "title": "Injustice: Gods Among Us",
+    "franchise": "Injustice",
+    "images": [
+      "injusticegodsamongusboth",
+      "injusticegodsamongusback"
+    ]
+  },
+  {
+    "title": "Batman: Arkham City (Joker)",
+    "franchise": "Batman"
+  },
+  {
+    "title": "Batman: Arkham City (Penguin)",
+    "franchise": "Batman"
+  },
+  {
+    "title": "Iron Man",
+    "franchise": "Marvel",
+    "images": [
+      "ironmanfront"
+    ]
+  },
+  {
+    "title": "Pokémon Moon",
+    "franchise": "Pokémon"
+  },
+  {
+    "title": "Pokémon Alpha Sapphire",
+    "franchise": "Pokémon",
+    "images": [
+      "pokemonalphasapphirefront",
+      "pokemonalphasapphireinside"
+    ]
+  },
+  {
+    "title": "Pokémon Sword",
+    "franchise": "Pokémon",
+    "images": [
+      "pokemonswordboth"
+    ]
+  },
+  {
+    "title": "Pokémon Sword and Shield Gold",
+    "franchise": "Pokémon",
+    "images": [
+      "pokemonswordandshieldgoldboth"
+    ]
+  },
+  {
+    "title": "Pokémon Scarlet and Violet Gold",
+    "franchise": "Pokémon",
+    "images": [
+      "pokemonscarletandvioletgoldboth"
+    ]
+  },
+  {
+    "title": "Kung Fu Panda",
+    "franchise": "Kung Fu Panda"
+  },
+  {
+    "title": "The Incredibles",
+    "franchise": "Incredibles"
+  },
+  {
+    "title": "Avatar: Frontiers of Pandora",
+    "franchise": "Avatar"
+  },
+  {
+    "title": "Pokémon Brilliant Diamond and Shining Pearl",
+    "franchise": "Pokémon"
+  },
+  {
+    "title": "Assassin's Creed IV Black Flag Resynced",
+    "franchise": "Assassin's Creed"
+  },
+  {
+    "title": "Goat Simulator 3",
+    "franchise": "Goat Simulator"
   }
 ]

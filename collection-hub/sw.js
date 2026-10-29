@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v19';
+const CACHE_VERSION = 'collection-hub-v20';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -28,7 +28,7 @@ const SHELL_URLS = [
     'collection-nav.js',
     'mobile-popout.js',
     'voice-search.js',
-    'export-to-github.js',
+    'data-store.js',
     'cards/recent-set.js',
     'cards/cards.js',
     'pokedexes/pokedexes.js',

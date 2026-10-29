@@ -103,7 +103,7 @@ function setMilestoneImage(imgElement, name) {
 // LOAD
 // =========================
 function loadMilestones() {
-    return fetch(MILESTONES_JSON_PATH).then(res => res.json()).then(sourceList => {
+    return DataStore.load(MILESTONES_JSON_FILE, MILESTONES_JSON_PATH).then(sourceList => {
 
         const local = localStorage.getItem(MILESTONES_STORAGE_KEY);
 
@@ -153,6 +153,7 @@ function loadMilestones() {
 }
 
 function saveMilestones() {
+    if (window.isViewerMode && isViewerMode()) return;
     const serialized = JSON.stringify(milestoneItems);
     localStorage.setItem(MILESTONES_STORAGE_KEY, serialized);
     if (typeof markDirty === "function") markDirty(serialized, MILESTONES_STORAGE_KEY);

@@ -113,6 +113,7 @@ function isUncaughtTodo(key) {
 
 
 function saveData() {
+    if (window.isViewerMode && isViewerMode()) return;
     const serialized = JSON.stringify(savedDexData);
     localStorage.setItem("dexData", serialized);
     if (typeof markDirty === "function") markDirty(serialized, "dexData");
@@ -125,6 +126,7 @@ function saveData() {
 // localStorage key/tracker, but the same Export button commits both (see
 // the export-pokedex handler) so one Export always covers everything.
 function saveHunts() {
+    if (window.isViewerMode && isViewerMode()) return;
     const serialized = JSON.stringify(shinyHunts);
     localStorage.setItem("shinyHunts", serialized);
     if (typeof markDirty === "function") markDirty(serialized, "shinyHunts");
@@ -219,8 +221,8 @@ window.addEventListener("resize", () => {
 
 Promise.all([
     fetch("../fullPokemonList.json").then(res => res.json()),
-    fetch("../pokedex-backup.json").then(res => res.json()),
-    fetch("../shiny-hunts-backup.json").then(res => res.json()),
+    DataStore.load("pokedex-backup.json", "../pokedex-backup.json"),
+    DataStore.load("shiny-hunts-backup.json", "../shiny-hunts-backup.json"),
     fetch("../evolutionFamilies.json").then(res => res.json()),
     fetch("../plza-distortions.json").then(res => res.json())
 ])
@@ -680,6 +682,8 @@ function createPokemonCards(pokemonList) {
             e.preventDefault();
             e.stopPropagation();
 
+            if (window.isViewerMode && isViewerMode()) return;
+
             const key = normalizeName(name);
 
             toggleShinyDex(key);
@@ -704,6 +708,30 @@ function createPokemonCards(pokemonList) {
             // EDIT MODE → SPECIAL SHINYDEX BEHAVIOUR
             // =====================================================
             if (activeDexEdit) {
+
+                // Viewer mode (not signed in as admin, or offline): a dex can
+                // be browsed but a click must never toggle anything. The
+                // Legends Z-A combinations lookup is read-only, so it stays.
+                if (window.isViewerMode && isViewerMode()) {
+                    if (activeDexEdit === "shinyDex") {
+                        if (!pokemonData.shinyDex) {
+                            if (gameFilterState.plza === "include" && getPlzaCombosWithMates(name).length > 0) {
+                                renderPlzaCombosModal(name);
+                            }
+                            return;
+                        }
+
+                        // Already shiny: open the constraints modal (its
+                        // controls are locked in viewer mode).
+                        currentPokemon = key;
+                        todoFindShinyModalActive = false;
+                        document.getElementById("modal-name").textContent = name;
+                        modalImage.src = getPokemonSpritePath(name, true);
+                        modalOverlay.classList.remove("hidden");
+                        renderModalState(key);
+                    }
+                    return;
+                }
 
                 // -----------------------------
                 // TRADE/WONDER TRADE/POGO TO-DO FILTER ACTIVE → CLICK REMOVES
@@ -2284,6 +2312,7 @@ document.querySelectorAll(".dex-entry").forEach((entry) => {
 
     entry.addEventListener("click", () => {
 
+        if (window.isViewerMode && isViewerMode()) return;
         if (!currentPokemon) return;
 
         const dex = entry.dataset.dex;
@@ -2333,6 +2362,7 @@ modalOverlay.addEventListener("click", (e) => {
     const variant = e.target.closest(".variant");
     if (!variant) return;
 
+    if (window.isViewerMode && isViewerMode()) return;
     if (!currentPokemon) return;
 
     const pokemonData = savedDexData[currentPokemon] || {};
@@ -2396,6 +2426,11 @@ document.getElementById("todo-find-save-btn").addEventListener("click", () => {
 // ignores it. Drives the small "*" badge on the card (see
 // updateCardHighlights) and the "*" search shortcut (see applyFilters).
 document.getElementById("not-in-dex-checkbox").addEventListener("change", (e) => {
+
+    if (window.isViewerMode && isViewerMode()) {
+        e.target.checked = !e.target.checked;
+        return;
+    }
 
     if (!currentPokemon) return;
 

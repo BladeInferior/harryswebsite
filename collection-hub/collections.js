@@ -22,6 +22,25 @@ const imagePrevBtn = document.getElementById("image-prev");
 const imageNextBtn = document.getElementById("image-next");
 const toggleGlowBtn = document.getElementById("toggle-glow-image");
 let useUnboxedImage = false;
+
+// Label for the grid's front-image toggle (#toggle-front-image): pop figures
+// flip boxed/unboxed, steelbooks flip front/front + back.
+function frontToggleLabel(on) {
+    if (COLLECTION.name === "steelbooks") return on ? "Front + Back" : "Front";
+    return on ? "Unboxed" : "Boxed";
+}
+
+// Which of an item's images the toggle's "on" state shows. Pop figures keep
+// that in slot 2 (index 1); steelbooks don't always have every angle, so the
+// front + back shot is found by its "both" name instead of a fixed slot.
+function altImageIndex(item) {
+    const images = item.images || [];
+    if (COLLECTION.name === "steelbooks") {
+        const i = images.findIndex(n => /both$/i.test(n));
+        return i === -1 ? 0 : i;
+    }
+    return images.length > 1 ? 1 : 0;
+}
 let useGlowImage = false;
 
 const dlcInput = document.getElementById("dlc-name");
@@ -172,7 +191,7 @@ function deactivateOtherTopButtons(exceptBtn) {
     if (toggleBtn && toggleBtn !== exceptBtn && useUnboxedImage) {
         useUnboxedImage = false;
         toggleBtn.classList.remove("active");
-        toggleBtn.textContent = "Boxed";
+        toggleBtn.textContent = frontToggleLabel(false);
     }
 
     if (signedFilterBtn && signedFilterBtn !== exceptBtn && filterSigned) {
@@ -203,7 +222,7 @@ Promise.all([
     // COLLECTION.jsonFile itself stays a bare filename, since that's also
     // used as the GitHub export commit name and download attribute further
     // down, both of which need the plain filename rather than a relative path.
-    fetch(COLLECTION.jsonPath || COLLECTION.jsonFile).then(res => res.json())
+    DataStore.load(COLLECTION.jsonFile, COLLECTION.jsonPath || COLLECTION.jsonFile)
 ])
 .then(([itemList]) => {
 
@@ -1037,7 +1056,7 @@ function createCollectionFilters() {
         const toggleBtn = document.getElementById("toggle-front-image");
         if (toggleBtn) {
             toggleBtn.classList.remove("active");
-            toggleBtn.textContent = "Boxed";
+            toggleBtn.textContent = frontToggleLabel(false);
         }
 
         renderItems();
@@ -1135,6 +1154,7 @@ function getCurrentPageSize() {
 // SAVE
 // =========================
 function saveItems() {
+    if (window.isViewerMode && isViewerMode()) return;
     const serialized = JSON.stringify(items);
     localStorage.setItem(COLLECTION.storageKey, serialized);
     if (typeof markDirty === "function") markDirty(serialized, COLLECTION.storageKey);
@@ -1206,7 +1226,7 @@ function renderItems() {
             } else {
                 imgName = (useGlowImage && item.images?.[2])
                     ? item.images[2]
-                    : item.images?.[useUnboxedImage ? 1 : 0];
+                    : item.images?.[useUnboxedImage ? altImageIndex(item) : 0];
             }
 
             if (imgName) {
@@ -1400,8 +1420,8 @@ function openModal(index) {
         currentImageIndex =
             (COLLECTION.name === "popfigures" && filterSigned && isSignedPop(item) && hasSignedImage(item))
                 ? getSignedImageIndex(item)
-                : (COLLECTION.name === "popfigures" && useUnboxedImage && currentImages.length > 1)
-                    ? 1
+                : (useUnboxedImage && currentImages.length > 1)
+                    ? altImageIndex(item)
                     : 0;
 
         if (currentImages.length > 0) {
@@ -2696,7 +2716,7 @@ function isoDateToSlashFormat(dateStr) {
 function loadSleeveFilterData() {
     if (COLLECTION.name !== "sleeves") return;
 
-    fetch("../cards-trainers-backup.json").then(r => r.json()).then(list => {
+    DataStore.load("cards-trainers-backup.json", "../cards-trainers-backup.json").then(list => {
         sleeveTrainerNames = new Set(list.map(t => String(t.name).toLowerCase().trim()));
         filterItems(searchInput.value);
     }).catch(() => {});
@@ -3591,7 +3611,7 @@ if (toggleBtn) {
         useUnboxedImage = !useUnboxedImage;
 
         toggleBtn.classList.toggle("active", useUnboxedImage);
-        toggleBtn.textContent = useUnboxedImage ? "Unboxed" : "Boxed";
+        toggleBtn.textContent = frontToggleLabel(useUnboxedImage);
 
         renderItems();
     });

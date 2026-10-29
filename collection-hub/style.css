@@ -421,8 +421,7 @@ h1 {
 
     justify-content: center;
     align-items: center;
-2
-    z-index: 1000;
+    z-index: 2500;
 }
 
 /* #milestone-modal shares this base (simple flex, no DLC grid) rather than
@@ -4309,4 +4308,52 @@ footer {
 }
 .reorder-box h2 {
     padding: 0 40px;
+}
+
+/* ===== VIEWER MODE =====
+   Set on <body> by data-store.js unless you're signed in as admin, online and
+   looking at live data. Everything stays browsable (modals still open); only
+   the controls that change or save data are hidden. The save functions also
+   bail out in this mode, so nothing can be persisted by accident. */
+body.viewer-mode #import-button,
+body.viewer-mode #export-items,
+body.viewer-mode #export-pokedex,
+body.viewer-mode #pokedex-changes-btn,
+body.viewer-mode #add-item,
+body.viewer-mode #reorder-btn,
+body.viewer-mode #edit-item,
+body.viewer-mode #delete-item,
+body.viewer-mode #edit-hunt,
+body.viewer-mode #delete-hunt,
+body.viewer-mode #hunts-add-btn,
+body.viewer-mode #todo-add-btn,
+body.viewer-mode #todo-add-matches-btn,
+body.viewer-mode #todo-owned-btn,
+body.viewer-mode #todo-clear-btn,
+body.viewer-mode #pogo-shiny-mode-btn,
+body.viewer-mode #custom-list-add-btn,
+body.viewer-mode #custom-list-save-btn,
+body.viewer-mode #custom-list-clear-btn,
+body.viewer-mode #custom-list-load-btn,
+body.viewer-mode #scan-dlc-btn,
+body.viewer-mode #add-milestone,
+body.viewer-mode #import-milestones-button,
+body.viewer-mode #export-milestones,
+body.viewer-mode #edit-milestone,
+body.viewer-mode #delete-milestone,
+body.viewer-mode #mark-dlc-available-btn,
+body.viewer-mode #delete-dlcs-btn,
+body.viewer-mode #reorder-dlcs-btn,
+body.viewer-mode #add-dlc-btn,
+body.viewer-mode #modal-dlc-name-btn,
+body.viewer-mode .shiny-plus {
+    display: none !important;
+}
+
+/* The Pokémon modal's dex / shiny-constraint / "not in dex" controls stay
+   visible (they show the state) but can't be changed. */
+body.viewer-mode #pokemon-modal .dex-entry,
+body.viewer-mode #pokemon-modal .variant,
+body.viewer-mode #not-in-dex-toggle {
+    pointer-events: none;
 }

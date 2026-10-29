@@ -290,7 +290,7 @@ async function loadDeck(key) {
     const needsMasterList = deck.key === "pokemon" && !pokemonMasterList;
 
     const [deckItems, masterList] = await Promise.all([
-        fetch(deck.jsonPath).then(res => res.json()),
+        DataStore.load(deck.jsonFile, deck.jsonPath),
         needsMasterList ? fetch("../fullPokemonList.json").then(res => res.json()) : Promise.resolve(null)
     ]);
 
@@ -1607,7 +1607,7 @@ async function renderStats() {
 
     const deckStats = await Promise.all(DECKS.map(async deck => {
 
-        const deckItems = (await fetch(deck.jsonPath).then(res => res.json()))
+        const deckItems = (await DataStore.load(deck.jsonFile, deck.jsonPath))
             .filter(item => !item.empty);
 
         const total = deckItems.length;

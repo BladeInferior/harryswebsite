@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Collection Data — Admin Hub</title>
+
+    <link rel="stylesheet" href="../navbar.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div id="navbar"></div>
+
+<script src="admin-nav.js"></script>
+
+<a class="back-button" href="adminhub.html">← Back</a>
+
+<section class="hero">
+    <h1>🗄 Collection Data</h1>
+
+    <p>
+        Collection Hub data lives in the database. Seed it from the old JSON
+        files, download a backup, or restore from one.
+    </p>
+</section>
+
+<main id="admin-content" class="hidden">
+
+    <section class="section">
+
+        <div class="counter-card">
+            <h2>Seed from repo files</h2>
+            <p>Copies every <code>collection-hub/*-backup.json</code> into the database, replacing what's there. Safe to re-run until the old files are deleted.</p>
+            <div class="counter-buttons">
+                <button type="button" id="seed-btn" class="counter-btn counter-btn-primary">Seed database</button>
+            </div>
+        </div>
+
+        <div class="counter-card">
+            <h2>Backup</h2>
+            <p>Downloads everything currently in the database as one JSON file.</p>
+            <div class="counter-buttons">
+                <button type="button" id="backup-btn" class="counter-btn">Download backup</button>
+            </div>
+        </div>
+
+        <div class="counter-card">
+            <h2>Restore</h2>
+            <p>Replaces the database with the contents of a backup file downloaded above.</p>
+            <div class="counter-buttons">
+                <input type="file" id="restore-file" accept="application/json">
+                <button type="button" id="restore-btn" class="counter-btn">Restore</button>
+            </div>
+        </div>
+
+        <pre id="log" class="counter-status" style="white-space:pre-wrap;text-align:left"></pre>
+
+    </section>
+
+</main>
+
+<footer>
+    Admin Hub
+</footer>
+
+<script src="../collection-hub/data-store.js"></script>
+<script type="module">
+    import { requireAdminAuth } from './auth.js';
+
+    const log = text => { document.getElementById('log').textContent += text + '\n'; };
+
+    // Dataset name → where its static file lives today (relative to this page).
+    const fileFor = name => `../collection-hub/${name}-backup.json`;
+
+    async function run(button, work) {
+        button.disabled = true;
+        try { await work(); } catch (e) { log('✖ ' + e.message); console.error(e); }
+        button.disabled = false;
+    }
+
+    // Goes straight to the server copy (never a cached/static one) so a
+    // backup is always what the database actually holds.
+    async function loadLive(name) {
+        const data = await DataStore.load(name, null);
+        return data;
+    }
+
+    requireAdminAuth().then(() => {
+        document.getElementById('admin-content').classList.remove('hidden');
+
+        document.getElementById('seed-btn').addEventListener('click', e => run(e.target, async () => {
+            for (const name of DataStore.DATASETS) {
+                const res = await fetch(fileFor(name));
+                if (!res.ok) { log(`– ${name}: no file, skipped`); continue; }
+                const data = await res.json();
+                await DataStore.save(name, data);
+                log(`✔ ${name} (${JSON.stringify(data).length.toLocaleString()} chars)`);
+            }
+            log('Done.');
+        }));
+
+        document.getElementById('backup-btn').addEventListener('click', e => run(e.target, async () => {
+            const backup = { exportedAt: new Date().toISOString(), datasets: {} };
+            for (const name of DataStore.DATASETS) {
+                try { backup.datasets[name] = await loadLive(name); log(`✔ ${name}`); }
+                catch { log(`– ${name}: not in database, skipped`); }
+            }
+            const blob = new Blob([JSON.stringify(backup)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `collection-backup-${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }));
+
+        document.getElementById('restore-btn').addEventListener('click', e => run(e.target, async () => {
+            const file = document.getElementById('restore-file').files[0];
+            if (!file) throw new Error('Choose a backup file first');
+            const backup = JSON.parse(await file.text());
+            if (!backup.datasets) throw new Error('Not a collection backup file');
+            if (!confirm('Replace the database with this backup?')) return;
+            for (const [name, data] of Object.entries(backup.datasets)) {
+                await DataStore.save(name, data);
+                log(`✔ restored ${name}`);
+            }
+            log('Done.');
+        }));
+    });
+</script>
+</body>
+</html>
