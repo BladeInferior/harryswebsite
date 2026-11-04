@@ -3,14 +3,19 @@
 // tiny server (built-ins only, no npm install) does both:
 //   GET  /product/<code>     -> { title, date, images: [url, ...] }
 //   GET  /image?url=<cdn>    -> the image bytes (cdn.artofpkm.com only)
-//   POST /save-image?name=x  -> writes the request body to ../sleeves/x
+//   POST /save-image?name=x[&dir=steelbooks]
+//                            -> writes the request body to ../sleeves/x (or ../steelbooks/x)
 // Start it with start-sleeve-helper.bat; close its window to stop it.
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
 const PORT = 5501;
-const SLEEVES_DIR = path.join(__dirname, "..", "sleeves");
+// dir param -> folder images may be saved into (sleeves is the default).
+const SAVE_DIRS = {
+    sleeves: path.join(__dirname, "..", "sleeves"),
+    steelbooks: path.join(__dirname, "..", "steelbooks")
+};
 const UA = { "User-Agent": "Mozilla/5.0" };
 
 function cors(res) {
@@ -83,8 +88,10 @@ http.createServer(async (req, res) => {
 
         if (req.method === "POST" && url.pathname === "/save-image") {
             const name = url.searchParams.get("name") || "";
-            if (!/^[a-z0-9]+\.jpg$/.test(name)) return json(res, 400, { error: "Bad file name" });
-            const dest = path.join(SLEEVES_DIR, name);
+            const dir = SAVE_DIRS[url.searchParams.get("dir") || "sleeves"];
+            if (!dir) return json(res, 400, { error: "Bad folder" });
+            if (!/^[a-z0-9]+\.(jpg|png)$/.test(name)) return json(res, 400, { error: "Bad file name" });
+            const dest = path.join(dir, name);
             if (fs.existsSync(dest)) return json(res, 409, { error: `${name} already exists — not overwritten` });
             const chunks = [];
             for await (const c of req) chunks.push(c);

@@ -1,7 +1,7 @@
 // Four-corner crop for sleeve images (Sleeves page only; used by collections.js).
 //   SleeveCrop.guessQuad(bitmap)        -> starting corners [TL, TR, BR, BL] in image pixels
 //   SleeveCrop.edit(bitmap, quad)       -> Promise<quad | null>  (null = cancelled)
-//   SleeveCrop.warp(bitmap, quad)       -> Promise<Blob>  straightened JPEG of just that quad
+//   SleeveCrop.warp(bitmap, quad, maxSide?, mime?) -> Promise<Blob>  straightened JPEG (or mime, e.g. image/png) of just that quad
 // Corners are always ordered top-left, top-right, bottom-right, bottom-left.
 const SleeveCrop = (() => {
     const RATIO = 1487 / 2048; // width / height of the existing sleeve images
@@ -276,7 +276,7 @@ const SleeveCrop = (() => {
     }
 
     // Unit square -> quad projective map (Heckbert), then sample bilinearly.
-    async function warp(bitmap, quad, maxSide = 2048) {
+    async function warp(bitmap, quad, maxSide = 2048, mime = "image/jpeg") {
         const [p0, p1, p2, p3] = quad;
         const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
         // Output has the crop's own proportions (a sideways sleeve stays sideways),
@@ -328,7 +328,7 @@ const SleeveCrop = (() => {
             }
         }
         octx.putImageData(O, 0, 0);
-        return new Promise(res => out.toBlob(res, "image/jpeg", 0.92));
+        return new Promise(res => out.toBlob(res, mime, 0.92));
     }
 
     return { guessQuad, edit, warp };

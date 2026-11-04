@@ -2241,8 +2241,16 @@ document.getElementById("save-item").addEventListener("click", () => {
         : [];
 
 
-    if (!title || !date || !custom) {
+    // Steelbooks' release dates are filled in later, so only title + franchise are required there.
+    if (!title || (!date && COLLECTION.name !== "steelbooks") || !custom) {
         errorBox.textContent = "Please fill out all required fields";
+        errorBox.classList.remove("hidden");
+        return;
+    }
+
+    const stagedError = window.SteelbookImages?.validate();
+    if (stagedError) {
+        errorBox.textContent = stagedError;
         errorBox.classList.remove("hidden");
         return;
     }
@@ -2352,6 +2360,9 @@ function commitSave(title, date, custom, tags, editIndex) {
         itemData.images = rawImages
             ? rawImages.split(",").map(x => x.trim()).filter(Boolean)
             : [];
+
+        // steelbook-images.js: images added in the modal join the list in their fixed order.
+        if (window.SteelbookImages) itemData.images = window.SteelbookImages.mergeNames(itemData.images, title);
     }
 
     // Only stamped on brand-new steelbooks — an edit's Object.assign merge
@@ -2377,6 +2388,8 @@ function commitSave(title, date, custom, tags, editIndex) {
     renderItems();
 
     addModal.classList.add("hidden");
+
+    window.SteelbookImages?.saveAll(title);
 
     if (downloadImageBox?.checked && fetchedImageUrls.length) {
         downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value]);

@@ -123,15 +123,8 @@
             <button id="next-page">▶</button>
         </div>
 
-        <button id="todo-filter-btn" class="hidden" title="Pokémon cards only: show only the cards on the to-do list, in Pokédex order">📝 To Do</button>
-        <button id="todo-add-matches-btn" class="hidden" title="Pick which of your current search's unowned matches to add to the to-do list">📝 Add Matches</button>
-        <button id="todo-add-btn" class="hidden" title="Add Pokémon to the to-do list by typing or speaking their names">➕ Add To Do</button>
-        <button id="todo-find-btn" class="hidden" title="Step through the to-do list one binder page at a time">🔍 Find</button>
-        <button id="todo-owned-btn" class="hidden" title="Mark every card on the to-do list as owned">✅ Make All Owned</button>
-        <button id="todo-clear-btn" class="hidden" title="Take every card off the to-do list">🗑 Clear All</button>
-        <button id="todo-prev-btn" class="hidden" title="Previous to-do card">◀ Prev</button>
-        <button id="todo-next-btn" class="hidden" title="Jump to the page of the next to-do card">Next ▶</button>
         <button id="add-item">Add Card</button>
+        <button id="reorder-btn" title="Swap around the order of the cards in this deck">🔀 Edit Order</button>
         <button id="stats-btn">Stats</button>
 
     </div>
@@ -158,10 +151,23 @@
                 <input type="checkbox" id="item-owned"> Owned
             </label>
 
-            <label id="item-position-row">
-                Insert at position (blank = end)
-                <input type="number" id="item-position" min="1">
-            </label>
+            <div id="item-position-row">
+                Position
+                <label class="checkbox-label"><input type="checkbox" id="item-end-of-list" checked> End of list</label>
+                <div class="position-pick-row">
+                    <button type="button" id="item-position-btn">Choose position…</button>
+                    <span id="item-position-label">Current position: End of list</span>
+                </div>
+                <input type="hidden" id="item-position">
+            </div>
+
+            <div id="position-picker" class="hidden">
+                <div class="position-picker-box">
+                    <h3>Click between two to place it</h3>
+                    <div id="position-picker-list"></div>
+                    <button type="button" id="position-picker-cancel">Cancel</button>
+                </div>
+            </div>
 
             <div class="modal-buttons">
                 <button id="save-item">Save</button>
@@ -223,52 +229,19 @@
 
     </div>
 
-    <!-- To Do list (Pokémon deck only) — same three pieces as the Pokédex
-         page: typed/spoken Add To Do box, Add Matches checklist, and the
-         remove confirmation. See the TO DO LIST block in cards.js. -->
-    <div id="todo-modal" class="stats-modal-overlay hidden">
-        <div class="stats-modal-box">
-            <div id="todo-modal-close" class="modal-close-btn">✕</div>
-            <h2 id="todo-modal-title">Add To Card To Do List</h2>
-            <div id="todo-modal-search-row">
-                <input type="text" id="todo-modal-input" placeholder="Pikachu, Charizard, Bulbasaur...">
-                <span id="todo-modal-terms-toggle" class="search-terms-toggle" title="Show pokemon to add">▾</span>
-                <span id="todo-modal-clear" class="clear-search" title="Clear">✕</span>
+
+
+
+    <div id="reorder-picker" class="hidden">
+        <div class="position-picker-box">
+            <h3>Edit order</h3>
+            <p id="reorder-hint"></p>
+            <div id="reorder-picker-list"></div>
+            <div class="reorder-actions">
+                <button type="button" id="reorder-undo">↩ Undo</button>
+                <button type="button" id="reorder-cancel">Cancel (discard moves)</button>
+                <button type="button" id="reorder-done">Done</button>
             </div>
-            <div id="todo-modal-terms-panel" class="search-terms-panel" hidden></div>
-            <p id="todo-modal-error" class="hidden"></p>
-            <button id="todo-modal-submit" class="item-action-btn stats-detail-btn">Add</button>
-        </div>
-    </div>
-
-    <div id="todo-matches-modal" class="stats-modal-overlay hidden">
-        <div class="stats-modal-box">
-            <div id="todo-matches-modal-close" class="modal-close-btn">✕</div>
-            <h2>Add To Card To Do List</h2>
-            <p>Select which of these should be added to the to-do list:</p>
-            <div id="todo-matches-modal-list"></div>
-            <div class="todo-matches-actions">
-                <button id="todo-matches-modal-submit" class="item-action-btn stats-detail-btn">Add</button>
-                <button id="todo-matches-modal-add-all" class="item-action-btn stats-detail-btn">Add All</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="todo-remove-confirm-modal" class="stats-modal-overlay hidden">
-        <div class="stats-modal-box">
-            <div id="todo-remove-confirm-close" class="modal-close-btn">✕</div>
-            <h2 id="todo-remove-confirm-title">Remove From To Do?</h2>
-            <p id="todo-remove-confirm-text"></p>
-            <button id="todo-remove-confirm-yes" class="item-action-btn danger stats-detail-btn">Yes, remove it</button>
-            <button id="todo-remove-confirm-no" class="item-action-btn stats-detail-btn">No</button>
-        </div>
-    </div>
-
-    <div id="todo-notice-modal" class="stats-modal-overlay hidden">
-        <div class="stats-modal-box">
-            <div id="todo-notice-close" class="modal-close-btn">✕</div>
-            <p id="todo-notice-text"></p>
-            <button id="todo-notice-ok" class="item-action-btn stats-detail-btn">OK</button>
         </div>
     </div>
 
