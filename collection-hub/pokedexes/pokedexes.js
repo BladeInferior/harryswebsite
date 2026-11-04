@@ -3483,6 +3483,15 @@ function renderModalState(pokemonKey) {
 
     modalOverlay.classList.toggle("shiny-edit-layout", isShinyEdit);
 
+    // Correct Stage icon is this pokemon's own menu icon (icons/correctstageicons/<key>.png).
+    const stageDot = modalOverlay.querySelector('.variant[data-variant="correctStage"] .dot');
+    if (stageDot) {
+        // ?v= busts caches that still hold the old small 120x112 icons — bump it if the files are regenerated.
+        const stageSrc = `../icons/correctstageicons/${pokemonKey}.png?v=4`;
+        stageDot.onerror = () => { stageDot.onerror = null; stageDot.src = "../icons/correctstageicons/rampardos.png?v=4"; };
+        if (!stageDot.src.endsWith(stageSrc.slice(2))) stageDot.src = stageSrc;
+    }
+
     const dexEntries = modalOverlay.querySelectorAll(".dex-entry");
 
     dexEntries.forEach(entry => {
