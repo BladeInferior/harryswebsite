@@ -116,13 +116,19 @@ let filterMissingImage = false; // true = only show items whose image failed to 
 // this just decides which slice of `items` renderItems() draws from.
 let activeSteelbookTab = "owned";
 
+// Steelbooks and plushes both have the Owned / Wishlist tabs.
+const HAS_WISHLIST_TABS = COLLECTION.name === "steelbooks" || COLLECTION.name === "plushes";
+
+// plushes: the one picked Plush Type filter (original casing), null = all.
+let selectedPlushType = null;
+
 // Returns the slice of `items` the current view should actually render.
-// A no-op passthrough on every collection except steelbooks, where wishlist
-// items (item.wishlist === true) and owned items (falsy/absent) are split
-// into two full-featured tabs sharing one storage array/backup file rather
-// than being tracked as separate collections.
+// A no-op passthrough on every collection except steelbooks/plushes, where
+// wishlist items (item.wishlist === true) and owned items (falsy/absent) are
+// split into two full-featured tabs sharing one storage array/backup file
+// rather than being tracked as separate collections.
 function getVisibleTabItems() {
-    if (COLLECTION.name !== "steelbooks") return items;
+    if (!HAS_WISHLIST_TABS) return items;
 
     return items.filter(item =>
         !!item.wishlist === (activeSteelbookTab === "wishlist")
@@ -750,6 +756,65 @@ async function scanForNewDlcImages() {
     return addedCount;
 }
 
+// Plushes: the Plush Type filter buttons are built from the types the plushes
+// actually have (so a new type shows up as soon as a plush using it is saved,
+// and disappears with its last plush). One at a time, like the sleeves'
+// language filter. Also keeps the Add/Edit modal's type suggestions in step.
+function plushTypes() {
+    const seen = new Map();
+    items.forEach(item => {
+        const t = String(item[COLLECTION.fields.custom] || "").trim();
+        if (t && !seen.has(t.toLowerCase())) seen.set(t.toLowerCase(), t);
+    });
+    return [...seen.values()].sort((a, b) => a.localeCompare(b));
+}
+
+function refreshPlushTypeFilters() {
+    if (COLLECTION.name !== "plushes") return;
+
+    const types = plushTypes();
+
+    const list = document.getElementById("plush-type-list");
+    if (list) list.innerHTML = types.map(t => `<option value="${t.replace(/"/g, "&quot;")}">`).join("");
+
+    const row = document.getElementById("plush-type-row");
+    if (!row) return;
+
+    // A picked type whose last plush was just deleted/renamed no longer exists.
+    if (selectedPlushType !== null && !types.some(t => t.toLowerCase() === selectedPlushType.toLowerCase())) {
+        selectedPlushType = null;
+    }
+
+    const key = types.join("\n") + "|" + (selectedPlushType || "");
+    if (row.dataset.key === key) return;
+    row.dataset.key = key;
+
+    row.innerHTML = "";
+    types.forEach(type => {
+        const btn = document.createElement("button");
+        btn.textContent = type;
+        btn.classList.add("generation-filter-btn");
+        btn.style.flex = "0 0 calc((100% - 3px) / 2)";
+        const isSelected = selectedPlushType !== null && selectedPlushType.toLowerCase() === type.toLowerCase();
+        btn.classList.toggle("game-filter-active", isSelected);
+
+        btn.addEventListener("click", () => {
+            const wasActive = btn.classList.contains("game-filter-active");
+            row.querySelectorAll(".generation-filter-btn").forEach(b => b.classList.remove("game-filter-active"));
+            if (wasActive) {
+                selectedPlushType = null;
+            } else {
+                btn.classList.add("game-filter-active");
+                selectedPlushType = type;
+            }
+            row.dataset.key = types.join("\n") + "|" + (selectedPlushType || "");
+            filterItems(searchInput.value);
+        });
+
+        row.appendChild(btn);
+    });
+}
+
 function createCollectionFilters() {
 
     // avoid creating twice
@@ -849,6 +914,14 @@ function createCollectionFilters() {
             genGrid.appendChild(btn);
         }
         container.appendChild(genGrid);
+    }
+
+    if (COLLECTION.name === "plushes") {
+        const typeRow = document.createElement("div");
+        typeRow.id = "plush-type-row";
+        typeRow.classList.add("generation-filter-row");
+        container.appendChild(typeRow);
+        refreshPlushTypeFilters();
     }
 
     if (COLLECTION.name === "completions") {
@@ -1022,6 +1095,7 @@ function createCollectionFilters() {
         selectedSleeveGens.clear();
         filterHasDlc = null;
         selectedVariant = null;
+        selectedPlushType = null;
         selectedFranchise = null;
         filterSigned = false;
         filterMissingImage = false;
@@ -1173,6 +1247,7 @@ function updateExportGlow() {
 }
 
 function hasAnyUntaggedItems() {
+    if (COLLECTION.name === "plushes") return false; // plushes have no tags
     return getVisibleTabItems().some(item => {
         const tags = item[COLLECTION.fields.tags];
         return !tags || (Array.isArray(tags) && tags.length === 0);
@@ -1270,6 +1345,7 @@ function renderItems() {
     });
 
     applyPagination();
+    refreshPlushTypeFilters();
     filterItems(searchInput.value);
     adjustFilterSidebarWidth();
 }
@@ -1540,8 +1616,10 @@ function setActiveSteelbookTab(tab) {
     if (ownedTabBtn) ownedTabBtn.classList.toggle("active-mode", tab === "owned");
     if (wishlistTabBtn) wishlistTabBtn.classList.toggle("active-mode", tab === "wishlist");
 
-    if (addItemBtn && COLLECTION.name === "steelbooks") {
-        addItemBtn.textContent = tab === "wishlist" ? "Add to Wishlist" : "Add Steelbook";
+    if (addItemBtn && HAS_WISHLIST_TABS) {
+        addItemBtn.textContent = tab === "wishlist"
+            ? "Add to Wishlist"
+            : (COLLECTION.name === "plushes" ? "Add Plush" : "Add Steelbook");
     }
 
     // Page numbers reset since the two tabs have different item counts —
@@ -2205,7 +2283,7 @@ document.getElementById("add-item").addEventListener("click", () => {
     addModal.classList.remove("hidden");
     focusFirstModalField();
     itemModalTitle.textContent =
-        COLLECTION.name === "steelbooks" && activeSteelbookTab === "wishlist"
+        HAS_WISHLIST_TABS && activeSteelbookTab === "wishlist"
             ? "Add Wishlist Item"
             : "Add Item";
     editSideImage.classList.add("hidden");
@@ -2242,7 +2320,8 @@ document.getElementById("save-item").addEventListener("click", () => {
 
 
     // Steelbooks' release dates are filled in later, so only title + franchise are required there.
-    if (!title || (!date && COLLECTION.name !== "steelbooks") || !custom) {
+    // Plushes only have a name and a Plush Type (and one picture).
+    if (!title || (!date && COLLECTION.name !== "steelbooks" && COLLECTION.name !== "plushes") || !custom) {
         errorBox.textContent = "Please fill out all required fields";
         errorBox.classList.remove("hidden");
         return;
@@ -2349,9 +2428,11 @@ function commitSave(title, date, custom, tags, editIndex) {
     const itemData = {};
 
     itemData[COLLECTION.fields.title] = title;
-    itemData[COLLECTION.fields.date] = date;
     itemData[COLLECTION.fields.custom] = custom;
-    itemData[COLLECTION.fields.tags] = tags;
+    if (COLLECTION.name !== "plushes") {
+        itemData[COLLECTION.fields.date] = date;
+        itemData[COLLECTION.fields.tags] = tags;
+    }
 
     if (COLLECTION.name === "popfigures" || COLLECTION.name === "steelbooks") {
 
@@ -2369,7 +2450,7 @@ function commitSave(title, date, custom, tags, editIndex) {
     // (below) otherwise leaves an existing item's wishlist flag untouched,
     // which is what lets "Move to Owned" flip it without this overwriting
     // it back on the next unrelated edit.
-    if (COLLECTION.name === "steelbooks" && (editIndex === undefined || editIndex === "")) {
+    if (HAS_WISHLIST_TABS && (editIndex === undefined || editIndex === "")) {
         itemData.wishlist = activeSteelbookTab === "wishlist";
     }
 
@@ -2390,6 +2471,8 @@ function commitSave(title, date, custom, tags, editIndex) {
     addModal.classList.add("hidden");
 
     window.SteelbookImages?.saveAll(title);
+    window.PlushImages?.saveAll(title);
+    window.PopfigureImages?.saveAll();
 
     if (downloadImageBox?.checked && fetchedImageUrls.length) {
         downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value]);
@@ -2480,7 +2563,7 @@ document.getElementById("edit-item").addEventListener("click", () => {
     if (moveToOwnedBtn) {
         moveToOwnedBtn.classList.toggle(
             "hidden",
-            !(COLLECTION.name === "steelbooks" && item.wishlist)
+            !(HAS_WISHLIST_TABS && item.wishlist)
         );
     }
 
@@ -2801,6 +2884,11 @@ function filterItems(query) {
                 !tags.some(t => selectedSleeveGens.has(sleeveGenByName.get(t)))) match2 = false;
         }
 
+        // Plushes: Plush Type filter (mutually exclusive)
+        if (COLLECTION.name === "plushes" && selectedPlushType !== null) {
+            if ((realItem[COLLECTION.fields.custom] || "").trim().toLowerCase() !== selectedPlushType.toLowerCase()) match2 = false;
+        }
+
         // Popfigures: variant filter (mutually exclusive)
         if (COLLECTION.name === "popfigures" && selectedVariant !== null) {
             const variantTokens = (realItem[COLLECTION.fields.date] || "")
@@ -2866,6 +2954,7 @@ function hasActiveFilters() {
         filterHasDlc !== null ||
         filterDlcAvailable ||
         selectedVariant !== null ||
+        selectedPlushType !== null ||
         selectedFranchise !== null ||
         filterSigned ||
         filterMissingImage ||

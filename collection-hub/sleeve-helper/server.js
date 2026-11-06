@@ -3,8 +3,9 @@
 // tiny server (built-ins only, no npm install) does both:
 //   GET  /product/<code>     -> { title, date, images: [url, ...] }
 //   GET  /image?url=<cdn>    -> the image bytes (cdn.artofpkm.com only)
-//   POST /save-image?name=x[&dir=steelbooks]
-//                            -> writes the request body to ../sleeves/x (or ../steelbooks/x)
+//   POST /save-image?name=x[&dir=steelbooks|plushes|popfigures][&overwrite=1]
+//                            -> writes the request body to ../sleeves/x (or ../<dir>/x);
+//                               never overwrites unless overwrite=1 (which also removes the old jpg/png/webp)
 // Start it with start-sleeve-helper.bat; close its window to stop it.
 const http = require("http");
 const fs = require("fs");
@@ -14,7 +15,9 @@ const PORT = 5501;
 // dir param -> folder images may be saved into (sleeves is the default).
 const SAVE_DIRS = {
     sleeves: path.join(__dirname, "..", "sleeves"),
-    steelbooks: path.join(__dirname, "..", "steelbooks")
+    steelbooks: path.join(__dirname, "..", "steelbooks"),
+    plushes: path.join(__dirname, "..", "plushes"),
+    popfigures: path.join(__dirname, "..", "popfigures")
 };
 const UA = { "User-Agent": "Mozilla/5.0" };
 
@@ -92,9 +95,20 @@ http.createServer(async (req, res) => {
             if (!dir) return json(res, 400, { error: "Bad folder" });
             if (!/^[a-z0-9]+\.(jpg|png)$/.test(name)) return json(res, 400, { error: "Bad file name" });
             const dest = path.join(dir, name);
-            if (fs.existsSync(dest)) return json(res, 409, { error: `${name} already exists — not overwritten` });
+            // overwrite=1 (replacing an item's existing picture): the old file may have a
+            // different extension (jpg vs png), and the page tries .jpg first, so remove
+            // every other format of the same picture too or the old one would keep winning.
+            const overwrite = url.searchParams.get("overwrite") === "1";
+            if (!overwrite && fs.existsSync(dest)) return json(res, 409, { error: `${name} already exists — not overwritten` });
             const chunks = [];
             for await (const c of req) chunks.push(c);
+            if (overwrite) {
+                const stem = name.replace(/\.(jpg|png)$/, "");
+                for (const ext of ["jpg", "png", "webp"]) {
+                    const old = path.join(dir, `${stem}.${ext}`);
+                    if (fs.existsSync(old)) fs.unlinkSync(old);
+                }
+            }
             fs.writeFileSync(dest, Buffer.concat(chunks));
             return json(res, 200, { saved: name });
         }

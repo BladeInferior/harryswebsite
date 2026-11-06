@@ -6,7 +6,7 @@
 // Bump this on any change to SHELL_URLS or the caching strategy — it's
 // what forces old clients to pick up the new service worker and re-run
 // install() instead of serving a stale cache forever.
-const CACHE_VERSION = 'collection-hub-v23';
+const CACHE_VERSION = 'collection-hub-v24';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
@@ -23,6 +23,7 @@ const SHELL_URLS = [
     'popfigures/popfigures.html',
     'sleeves/sleeves.html',
     'steelbooks/steelbooks.html',
+    'plushes/plushes.html',
     'pins/pins.html',
     'completions/completions.html',
     'collection-nav.js',
@@ -51,6 +52,7 @@ const SHELL_URLS = [
     'popfigures-backup.json',
     'sleeves-backup.json',
     'steelbooks-backup.json',
+    'plushes-backup.json',
     'pins-backup.json'
 ];
 

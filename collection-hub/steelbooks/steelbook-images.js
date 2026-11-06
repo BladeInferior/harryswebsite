@@ -79,6 +79,39 @@
         return (SLOTS.find(([s]) => !used.has(s)) || SLOTS[0])[0];
     }
 
+    // ---------- replacing an image the steelbook already has ----------
+    // A replacement is a staged item with `name` set (the existing image's
+    // base name) and `overwrite` true: it is saved over the old file.
+    const slotOf = name => (SLOTS.find(([s]) => name.endsWith(s)) || [null])[0];
+    const nameOf = (item, base) => item.name || `${base}${item.slot}`;
+    const replacementFor = name => staged.find(s => s.overwrite && s.name === name);
+
+    const carousel = ExistingImages.create({
+        anchor: box,
+        getNames: existingNames,
+        getStagedUrl: name => replacementFor(name)?.resultUrl || replacementFor(name)?.srcUrl || null,
+        onReplace: async (name, file) => {
+            try {
+                const bitmap = await createImageBitmap(file);
+                const old = replacementFor(name);
+                if (old) { dropItem(old); staged.splice(staged.indexOf(old), 1); }
+                staged.push({
+                    id: nextId++, file, bitmap, srcUrl: URL.createObjectURL(file),
+                    slot: slotOf(name), name, overwrite: true, quad: null, cutout: false, result: null
+                });
+                render();
+            } catch {
+                showToast(`Can't read ${file.name || "that image"}`, true);
+            }
+        },
+        onUndo: name => {
+            const old = replacementFor(name);
+            if (old) { dropItem(old); staged.splice(staged.indexOf(old), 1); }
+            render();
+        },
+        onCrop: name => { const it = replacementFor(name); if (it) cropItem(it); }
+    });
+
     // ---------- adding / removing ----------
     async function addFiles(files) {
         const images = [...files].filter(f => f.type.startsWith("image/"));
@@ -202,6 +235,7 @@
     }
 
     function render() {
+        carousel.refresh();
         strip.innerHTML = "";
         const has = staged.length > 0;
         strip.classList.toggle("hidden", !has);
@@ -216,10 +250,19 @@
             img.src = item.resultUrl || item.srcUrl;
             img.addEventListener("click", () => openPreview(sorted().indexOf(item)));
 
-            const select = document.createElement("select");
-            select.className = "sb-slot";
-            SLOTS.forEach(([s, label]) => select.add(new Option(label, s, false, s === item.slot)));
-            select.addEventListener("change", () => { item.slot = select.value; render(); });
+            // A replacement keeps its image's name, so there is no slot to pick.
+            let select;
+            if (item.overwrite) {
+                select = document.createElement("div");
+                select.className = "sb-slot sb-replace-label";
+                select.textContent = `Replaces: ${item.name}`;
+                select.title = item.name;
+            } else {
+                select = document.createElement("select");
+                select.className = "sb-slot";
+                SLOTS.forEach(([s, label]) => select.add(new Option(label, s, false, s === item.slot)));
+                select.addEventListener("change", () => { item.slot = select.value; render(); });
+            }
 
             const btns = document.createElement("div");
             btns.className = "sb-btns";
@@ -290,7 +333,8 @@
         previewIndex = (index + list.length) % list.length;
         const item = list[previewIndex];
         overlay.classList.remove("hidden");
-        prevCaption.textContent = `${SLOTS.find(([s]) => s === item.slot)[1]} (${previewIndex + 1}/${list.length})`;
+        const label = item.overwrite ? `Replaces ${item.name}` : SLOTS.find(([s]) => s === item.slot)[1];
+        prevCaption.textContent = `${label} (${previewIndex + 1}/${list.length})`;
         prevImg.src = item.resultUrl || item.srcUrl;
         await ensureResult(item);
         if (!overlay.classList.contains("hidden") && sorted()[previewIndex] === item) prevImg.src = item.resultUrl;
@@ -320,6 +364,7 @@
         e.preventDefault();
         addFiles(files);
     });
+    // (Dropping on the "Current images" picture replaces that image instead — see existing-images.js.)
     document.addEventListener("dragover", e => { if (modalOpen()) e.preventDefault(); });
     document.addEventListener("drop", e => {
         if (!modalOpen()) return;
@@ -339,7 +384,9 @@
         validate() {
             if (!staged.length) return "";
             if (staged.some(s => s.busy)) return "Wait for the images to finish processing.";
-            const slots = staged.map(s => s.slot);
+            // Replacements overwrite an existing image, so only brand-new images are slot-checked.
+            const fresh = staged.filter(s => !s.overwrite);
+            const slots = fresh.map(s => s.slot);
             const dup = slots.find((s, i) => slots.indexOf(s) !== i);
             if (dup) return `Two images are both set to "${SLOTS.find(([k]) => k === dup)[1]}" — give each its own slot.`;
             const clash = slots.find(s => existingNames().some(n => n.endsWith(s)));
@@ -351,7 +398,7 @@
         mergeNames(existing, title) {
             const base = baseName(title);
             const all = [...existing];
-            staged.forEach(s => { if (!all.includes(base + s.slot)) all.push(base + s.slot); });
+            staged.forEach(s => { const n = nameOf(s, base); if (!all.includes(n)) all.push(n); });
             return all
                 .map((n, i) => [n, i])
                 .sort((a, b) => slotRank(a[0]) - slotRank(b[0]) || a[1] - b[1])
@@ -364,11 +411,11 @@
             const base = baseName(title);
             staged.length = 0;
             for (const item of list) {
-                const name = `${base}${item.slot}`;
+                const name = nameOf(item, base);
                 try {
                     await ensureResult(item);
                     if (!item.result) throw new Error("image could not be processed");
-                    const r = await fetch(`${SLEEVE_HELPER}/save-image?dir=steelbooks&name=${name}.${item.ext}`, { method: "POST", body: item.result });
+                    const r = await fetch(`${SLEEVE_HELPER}/save-image?dir=steelbooks&name=${name}.${item.ext}${item.overwrite ? "&overwrite=1" : ""}`, { method: "POST", body: item.result });
                     const body = await r.json();
                     if (!r.ok) throw new Error(body.error || "Save failed");
                     showToast(`Saved steelbooks/${name}.${item.ext}`);

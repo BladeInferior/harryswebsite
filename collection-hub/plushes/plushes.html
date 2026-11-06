@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Plushes</title>
+
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../icons/app-icon.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Collection Hub">
+    <meta name="theme-color" content="#14161a">
+
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="../style.css" />
+</head>
+<body class="item-page plushes-page">
+
+    <div id="navbar"></div>
+
+    <script src="../collection-nav.js"></script>
+
+    <a class="back-button" href="../collectionhub.html">← Back</a>
+
+    <h1>Plushes</h1>
+
+    <!-- =========================
+        OWNED / WISHLIST TABS
+    ========================== -->
+    <div id="plush-tabs">
+        <button id="owned-tab" class="active-mode">Owned</button>
+        <button id="wishlist-tab">Wishlist</button>
+    </div>
+
+    <!-- =========================
+        SEARCH
+    ========================== -->
+    <div id="search-wrapper">
+        <div id="search-row">
+            <input id="search" type="text" placeholder="Search Plushes..." />
+            <span id="clear-search">✕</span>
+        </div>
+    </div>
+
+    <div id="import-export-controls" class="filter-row width-sync-pending">
+        <input type="file" id="import-items" accept=".json" hidden>
+        <button id="import-button" class="game-filter-btn">Import</button>
+        <button id="export-items" class="game-filter-btn">Export</button>
+    </div>
+
+    <!-- Plushes have no tags; collections.js still expects this button (kept hidden). -->
+    <button id="untagged-filter" class="hidden">Untagged</button>
+
+    <!-- =========================
+        MODE + PAGINATION
+    ========================== -->
+    <div id="page-controls">
+
+        <button id="list-mode">List Mode</button>
+        <button id="page-mode">Page Mode</button>
+
+        <div id="pagination-controls" class="hidden">
+
+            <button id="prev-page">◀</button>
+            <span id="page-display">1</span>
+            <button id="next-page">▶</button>
+
+        </div>
+
+        <button id="add-item">Add Plush</button>
+
+    </div>
+
+    <!-- =========================
+        GRID
+    ========================== -->
+    <div id="box-container"></div>
+
+    <div id="add-item-modal" class="hidden">
+
+        <div class="add-item-box">
+
+            <h2 id="item-modal-title">Add Plush</h2>
+
+            <div id="item-error" class="hidden"></div>
+
+            <label>
+                Name
+                <input type="text" id="item-title" placeholder="e.g., Pikachu 25th Anniversary">
+            </label>
+
+            <label>
+                Plush Type
+                <input type="text" id="item-custom" list="plush-type-list" placeholder="e.g., Sitting Cuties">
+                <datalist id="plush-type-list"></datalist>
+            </label>
+
+            <!-- Not used for plushes; collections.js still reads these, so they stay (hidden). -->
+            <label class="hidden">
+                <input type="text" id="item-images">
+                <input type="date" id="item-date">
+                <button type="button" id="item-date-today" class="today-btn">Today</button>
+                <input type="text" id="item-tags">
+            </label>
+
+            <div class="modal-buttons">
+                <button id="save-item">Save</button>
+                <button id="move-to-owned-btn" class="hidden">Move to Owned</button>
+                <button id="cancel-item">Cancel</button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+        MODAL
+    ========================== -->
+    <div id="modal-overlay" class="hidden">
+
+        <div id="modal-nav-left" class="modal-nav">◀</div>
+
+        <div id="pokemon-modal">
+
+            <div id="modal-close" class="modal-close-btn">✕</div>
+
+            <div class="modal-left">
+
+                <div id="modal-title"></div>
+
+                <div class="modal-image-wrapper">
+
+                    <button id="image-prev" class="image-nav">◀</button>
+
+                        <img id="modal-image" src="">
+
+                    <button id="image-next" class="image-nav">▶</button>
+
+                </div>
+
+            </div>
+
+            <div class="modal-right">
+
+                <div class="item-field">
+                    <strong>Plush Type:</strong>
+                    <div id="modal-custom"></div>
+                </div>
+
+                <!-- Unused for plushes; openModal() still fills them, so they stay (hidden). -->
+                <div class="item-field hidden">
+                    <div id="modal-date"></div>
+                    <div id="modal-tags"></div>
+                </div>
+
+                <div class="item-actions">
+
+                    <button id="edit-item" class="item-action-btn">Edit Plush</button>
+                    <button id="delete-item" class="item-action-btn danger">Delete Plush</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div id="modal-nav-right" class="modal-nav">▶</div>
+
+    </div>
+
+    <div id="image-zoom-overlay" class="hidden">
+        <img id="zoom-image" />
+    </div>
+
+    <script>
+    const COLLECTION = {
+        name: "plushes",
+        storageKey: "plushes",
+        jsonFile: "plushes-backup.json",
+        jsonPath: "../plushes-backup.json",
+        imageFolder: ".",
+
+        fields: {
+            title: "title",
+            date: "releaseDate",
+            custom: "plushType",
+            tags: "tags"
+        }
+    };
+    </script>
+
+    <script src="../mobile-popout.js"></script>
+    <script src="../voice-search.js"></script>
+    <script src="../unsaved-changes.js"></script>
+    <script src="../data-store.js"></script>
+    <script src="../sleeves/sleeve-crop.js"></script>
+    <script src="../collections.js"></script>
+    <script src="plush-images.js"></script>
+
+<script src="../../scroll-to-top.js"></script>
+<script type="module" src="../../admin-auth.js"></script>
+</body>
+</html>

@@ -222,7 +222,7 @@
 
     // Every dataset the Collection Hub keeps (used by backup/restore).
     const DATASETS = [
-        "pokedex", "shiny-hunts", "sleeves", "steelbooks", "pins", "popfigures",
+        "pokedex", "shiny-hunts", "sleeves", "steelbooks", "plushes", "pins", "popfigures",
         "completions", "milestones", "cards-pokemon", "cards-trainers",
         "cards-pokeballs", "cards-stadiums", "cards-rampardos"
     ];

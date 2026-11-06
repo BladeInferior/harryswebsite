@@ -45,6 +45,7 @@ fetch(new URL('../navbar.html', COLLECTION_NAV_SCRIPT_URL))
             { label: "Pokédex", page: "collection-hub/pokedexes/pokedexes.html" },
             { label: "Sleeves", page: "collection-hub/sleeves/sleeves.html" },
             { label: "Cards", page: "collection-hub/cards/cards.html" },
+            { label: "Plushes", page: "collection-hub/plushes/plushes.html" },
             { label: "Steelbooks", page: "collection-hub/steelbooks/steelbooks.html" },
             { label: "Completions", page: "collection-hub/completions/completions.html" },
             { label: "Pop Figures", page: "collection-hub/popfigures/popfigures.html" },
