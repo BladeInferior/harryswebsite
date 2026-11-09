@@ -435,6 +435,14 @@ footer {
     word-break: break-word;
 }
 
+.note-line-text {
+    min-height: 1.6em;
+}
+
+.note-line-image {
+    user-select: none;
+}
+
 .note-line-text:only-child:empty:before {
     content: 'Start typing…';
     color: var(--secondary);
