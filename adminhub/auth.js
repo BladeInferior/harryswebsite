@@ -101,9 +101,19 @@ function showSessionPill(user) {
     const pill = document.createElement('div');
     pill.id = 'admin-session-pill';
     pill.innerHTML = `
+        <span class="asp-dot" title="Online"></span>
         <span>Harry</span>
         <button type="button">Sign out</button>
     `;
+    const dot = pill.querySelector('.asp-dot');
+    const updateDot = () => {
+        const offline = navigator.onLine === false;
+        dot.classList.toggle('asp-offline', offline);
+        dot.title = offline ? 'Offline' : 'Online';
+    };
+    window.addEventListener('online', updateDot);
+    window.addEventListener('offline', updateDot);
+    updateDot();
     pill.querySelector('button').addEventListener('click', () => signOutAdmin());
 
     document.body.appendChild(pill);

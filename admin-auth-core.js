@@ -95,10 +95,11 @@ export function signInAdmin() {
         .catch(() => {}) // fall through to the redirect attempt either way
         .then(() => signInWithRedirect(auth, googleProvider));
 
-    // Installed PWA: popups don't work there, redirect is the only option.
-    if (window.matchMedia('(display-mode: standalone)').matches) return redirect();
-
-    // Phone/tablet browser: try a popup FIRST. Redirect sign-in is what
+    // Installed PWA / home-screen web app: redirect used to be forced here,
+    // but that is exactly the flow that bounces straight back to the page from
+    // <project>.firebaseapp.com (cross-site storage partitioned), so it now
+    // gets the same popup-first treatment as a mobile browser (below).
+    // Phone/tablet browser or installed app: try a popup FIRST. Redirect sign-in is what
     // bounces back before Google's chooser ever shows — the auth handler on
     // <project>.firebaseapp.com is a different site from this one, and mobile
     // browsers partition/block the storage it needs to resume the redirect.

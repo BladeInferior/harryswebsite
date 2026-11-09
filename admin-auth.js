@@ -130,38 +130,22 @@ function mountWidget() {
             color: #14161a;
         }
 
-        /* Online/offline status: a glowing dot (+ short label) in front of the
-           sign-in/out control. Green = online and live data; red = offline or
-           the database couldn't be reached, so the page is showing the copy
-           saved on this device (the label then says when). */
-        #admin-auth-widget .gaa-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: rgba(20, 20, 20, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #bdbdbd;
-            white-space: nowrap;
-        }
-
+        /* Online/offline status: a glowing dot inside the pill / sign-in
+           button, same as adminhub's #admin-session-pill. */
         #admin-auth-widget .gaa-dot {
+            display: inline-block;
             width: 9px;
             height: 9px;
             border-radius: 50%;
             background: #4ade80;
             box-shadow: 0 0 6px 2px rgba(74, 222, 128, 0.8);
             flex: 0 0 auto;
+            vertical-align: middle;
         }
 
-        #admin-auth-widget .gaa-status.gaa-offline .gaa-dot {
+        #admin-auth-widget .gaa-dot.gaa-offline {
             background: #f87171;
             box-shadow: 0 0 6px 2px rgba(248, 113, 113, 0.8);
-        }
-
-        #admin-auth-widget .gaa-status.gaa-offline {
-            color: #f87171;
         }
 
         #admin-auth-widget .gaa-error {
@@ -189,14 +173,8 @@ function mountWidget() {
                screen's width sitting bottom-right — collapse it down to just
                the lock icon there; the label still reads fine as a title
                attribute (tooltip) and returns once the screen is wide enough. */
-            #admin-auth-widget .gaa-signin-label,
-            #admin-auth-widget .gaa-status-text {
+            #admin-auth-widget .gaa-signin-label {
                 display: none;
-            }
-
-            #admin-auth-widget .gaa-status.gaa-offline .gaa-status-text {
-                display: inline;
-                font-size: 11px;
             }
 
             #admin-auth-widget .gaa-signin-btn {
@@ -215,25 +193,25 @@ function mountWidget() {
     widget.style.setProperty('--gaa-accent-rgb', pageAccent.rgb);
     document.body.appendChild(widget);
 
-    // Lives outside the widget's own render() (which wipes innerHTML on
-    // every auth change) and is re-attached at the front each time.
-    const status = document.createElement('div');
-    status.className = 'gaa-status';
-    status.innerHTML = '<span class="gaa-dot"></span><span class="gaa-status-text"></span>';
+    // Status is a glowing dot inside the pill/button (green = online and
+    // live data, red = offline or showing the copy saved on this device).
+    // Details are in the tooltip. Dots are recreated on every render().
+    function makeDot() {
+        const dot = document.createElement('span');
+        dot.className = 'gaa-dot';
+        return dot;
+    }
 
     function updateStatus() {
         const ds = window.DataStore && window.DataStore.status;
         const offline = navigator.onLine === false || !!(ds && ds.stale);
-        status.classList.toggle('gaa-offline', offline);
-
-        let text = 'Online';
-        if (offline) {
-            text = ds && ds.savedAtText ? `Offline · saved ${ds.savedAtText}` : 'Offline';
-        }
-        status.querySelector('.gaa-status-text').textContent = text;
-        status.title = offline
+        const title = offline
             ? (ds && ds.savedAtText ? `Offline — showing the copy saved on this device at ${ds.savedAtText}` : 'Offline')
             : 'Online';
+        widget.querySelectorAll('.gaa-dot').forEach(dot => {
+            dot.classList.toggle('gaa-offline', offline);
+            dot.title = title;
+        });
     }
 
     window.addEventListener('online', updateStatus);
@@ -243,8 +221,6 @@ function mountWidget() {
     function render(isAdmin, user) {
 
         widget.innerHTML = '';
-        updateStatus();
-        widget.appendChild(status);
 
         if (isAdmin) {
             const pill = document.createElement('div');
@@ -258,9 +234,11 @@ function mountWidget() {
             signOutBtn.textContent = 'Sign out';
             signOutBtn.addEventListener('click', () => signOutAdmin());
 
+            pill.appendChild(makeDot());
             pill.appendChild(label);
             pill.appendChild(signOutBtn);
             widget.appendChild(pill);
+            updateStatus();
             return;
         }
 
@@ -278,9 +256,11 @@ function mountWidget() {
             signOutBtn.textContent = 'Sign out';
             signOutBtn.addEventListener('click', () => signOutAdmin());
 
+            pill.appendChild(makeDot());
             pill.appendChild(label);
             pill.appendChild(signOutBtn);
             widget.appendChild(pill);
+            updateStatus();
             return;
         }
 
@@ -288,7 +268,8 @@ function mountWidget() {
         signInBtn.type = 'button';
         signInBtn.className = 'gaa-signin-btn';
         signInBtn.title = 'Admin Sign-In';
-        signInBtn.innerHTML = '🔒<span class="gaa-signin-label"> Admin Sign-In</span>';
+        signInBtn.appendChild(makeDot());
+        signInBtn.insertAdjacentHTML('beforeend', ' 🔒<span class="gaa-signin-label"> Admin Sign-In</span>');
 
         signInBtn.addEventListener('click', async () => {
             signInBtn.disabled = true;
@@ -304,6 +285,7 @@ function mountWidget() {
         });
 
         widget.appendChild(signInBtn);
+        updateStatus();
     }
 
     function showError(message) {
