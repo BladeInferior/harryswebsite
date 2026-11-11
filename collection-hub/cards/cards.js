@@ -38,18 +38,10 @@ let filterMissingImage = false; // true = only show items whose card scan failed
 // scan is missing — repopulated on every deck switch by detectMissingImages().
 let missingImageItems = new Set();
 
-// Pokémon deck only: a card is "special" when it has its own scan in
-// cards/pokemon/ (a custom image), not because a flag was ticked. Which names
-// have one is found by probing for the files (see refreshCustomImageNames) and
-// cached in localStorage so the first paint doesn't have to wait for that.
-const CUSTOM_IMAGE_CACHE_KEY = "cardsPokemonCustomImages";
-let customImageNames = new Set();
-try {
-    customImageNames = new Set(JSON.parse(localStorage.getItem(CUSTOM_IMAGE_CACHE_KEY) || "[]"));
-} catch { /* cache is optional */ }
-
+// "Special" is a flag ticked in the Edit modal (item.special) for every deck. Only
+// owned + special cards ever request a scan file; everything else uses the
+// Pokédex sprite, so no per-card probing happens (see resolveItemImage()).
 function isSpecial(item) {
-    if (activeDeck.key === "pokemon") return customImageNames.has(normalizeCardName(item.name));
     return !!item.special;
 }
 
@@ -174,30 +166,8 @@ function resolveItemImage(imgElement, item) {
 // (which intentionally fall back to a bundled Pokédex sprite, not a photo
 // you'd scan in) never get flagged as "missing".
 function usesRealPhoto(deck, item) {
-    // Pokémon cards are special because the photo exists, so none can be missing.
-    if (deck.key === "pokemon") return false;
+    // Only owned + special cards use a scan, so only those are ever checked.
     return !(deck.spriteFolder && (!item.owned || !item.special));
-}
-
-// Probes the Pokémon folder for every card's scan and re-renders if the set of
-// custom images changed. Skipped offline, where a failed probe can't be told
-// apart from a missing file (the cached set is used instead).
-async function refreshCustomImageNames(deck, deckItems) {
-    if (!navigator.onLine) return;
-
-    const names = deckItems.filter(item => !item.empty);
-    const found = await Promise.all(names.map(async item => (await imageExistsForDeck(deck, item.name)) ? normalizeCardName(item.name) : null));
-    const fresh = new Set(found.filter(Boolean));
-
-    const changed = fresh.size !== customImageNames.size || [...fresh].some(n => !customImageNames.has(n));
-    if (!changed) return;
-
-    customImageNames = fresh;
-    try {
-        localStorage.setItem(CUSTOM_IMAGE_CACHE_KEY, JSON.stringify([...fresh]));
-    } catch { /* cache is optional */ }
-
-    if (activeDeck === deck) renderItems();
 }
 
 function imageExistsForDeck(deck, name) {
@@ -323,8 +293,6 @@ async function loadDeck(key) {
     // is in flight. Bail if the user has already switched decks again by
     // the time it resolves, so a slow scan for a previous deck can't add
     // its button to whatever deck is now showing.
-    if (deck.key === "pokemon") refreshCustomImageNames(deck, items);
-
     detectMissingImages(deck, items).then(missing => {
         if (activeDeck !== deck) return;
         missingImageItems = missing;
@@ -736,6 +704,8 @@ function updateModeUI() {
 const addModal = document.getElementById("add-item-modal");
 const titleInput = document.getElementById("item-title");
 const ownedInput = document.getElementById("item-owned");
+const specialInput = document.getElementById("item-special");
+const specialLabel = document.getElementById("item-special-label");
 const positionInput = document.getElementById("item-position");
 const positionFieldRow = document.getElementById("item-position-row");
 const errorBox = document.getElementById("item-error");
@@ -747,6 +717,8 @@ document.getElementById("add-item").addEventListener("click", () => {
 
     titleInput.value = "";
     ownedInput.checked = false;
+    specialInput.checked = false;
+    specialLabel.hidden = !activeDeck.hasSpecial;
     positionInput.value = "";
     endOfListInput.checked = true;
     updatePositionLabel();
@@ -952,9 +924,10 @@ document.getElementById("save-item").addEventListener("click", () => {
         owned: ownedInput.checked
     };
 
-    // Special is no longer editable here (for Pokémon it comes purely from the
-    // card's custom image); an edit just carries any existing flag through.
-    if (editIndex !== undefined && editIndex !== "" && items[editIndex].special !== undefined) {
+    // Decks with a Special tickbox save it; other decks carry any flag through.
+    if (activeDeck.hasSpecial) {
+        itemData.special = specialInput.checked;
+    } else if (editIndex !== undefined && editIndex !== "" && items[editIndex].special !== undefined) {
         itemData.special = items[editIndex].special;
     }
 
@@ -1013,6 +986,8 @@ document.getElementById("edit-item").addEventListener("click", () => {
 
     titleInput.value = item.name;
     ownedInput.checked = !!item.owned;
+    specialInput.checked = !!item.special;
+    specialLabel.hidden = !activeDeck.hasSpecial;
 
     positionFieldRow.hidden = true;
 
@@ -1327,9 +1302,7 @@ async function renderStats() {
 
         const total = deckItems.length;
         const owned = deckItems.filter(item => item.owned).length;
-        const specialOwned = deckItems.filter(item => item.owned && (deck.key === "pokemon"
-            ? customImageNames.has(normalizeCardName(item.name))
-            : item.special)).length;
+        const specialOwned = deckItems.filter(item => item.owned && item.special).length;
 
         return { ...deck, total, owned, specialOwned };
     }));
