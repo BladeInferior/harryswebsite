@@ -237,7 +237,7 @@
     "dex": "0040",
     "name": "Wigglytuff",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "name": "Zubat",
@@ -309,7 +309,7 @@
     "dex": "0052",
     "name": "Meowth",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0053",
@@ -345,7 +345,7 @@
     "dex": "0058",
     "name": "Growlithe",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0059",
@@ -513,7 +513,7 @@
     "dex": "0086",
     "name": "Seel",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0087",
@@ -1227,7 +1227,7 @@
     "dex": "0205",
     "name": "Forretress",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0206",
@@ -1455,7 +1455,7 @@
     "dex": "0243",
     "name": "Raikou",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0244",
@@ -2235,7 +2235,7 @@
     "dex": "0373",
     "name": "Salamence",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0374",
@@ -2289,7 +2289,7 @@
     "dex": "0382",
     "name": "Kyogre",
     "owned": false,
-    "special": false
+    "special": true
   },
   {
     "dex": "0383",
@@ -2301,7 +2301,7 @@
     "dex": "0384",
     "name": "Rayquaza",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0385",
@@ -2547,7 +2547,7 @@
     "dex": "0425",
     "name": "Drifloon",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0426",
@@ -2913,7 +2913,7 @@
     "dex": "0486",
     "name": "Regigigas",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0487",
@@ -3117,7 +3117,7 @@
     "dex": "0520",
     "name": "Tranquill",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0521",
@@ -3735,7 +3735,7 @@
     "dex": "0623",
     "name": "Golurk",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0624",
@@ -3975,7 +3975,7 @@
     "dex": "0663",
     "name": "Talonflame",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0664",
@@ -4119,7 +4119,7 @@
     "dex": "0687",
     "name": "Malamar",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0688",
@@ -4197,7 +4197,7 @@
     "dex": "0700",
     "name": "Sylveon",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0701",
@@ -4317,7 +4317,7 @@
     "dex": "0720",
     "name": "Hoopa",
     "owned": false,
-    "special": false
+    "special": true
   },
   {
     "dex": "0721",
@@ -4665,7 +4665,7 @@
     "dex": "0768",
     "name": "Golisopod",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0769",
@@ -4791,7 +4791,7 @@
     "dex": "0103",
     "name": "Alolan Exeggutor",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0782",
@@ -4815,7 +4815,7 @@
     "dex": "0785",
     "name": "Tapu Koko",
     "owned": false,
-    "special": false
+    "special": true
   },
   {
     "dex": "0786",
@@ -4953,7 +4953,7 @@
     "dex": "0808",
     "name": "Meltan",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0809",
@@ -5925,7 +5925,7 @@
     "dex": "0936",
     "name": "Armarouge",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0937",
@@ -6099,7 +6099,7 @@
     "dex": "0964",
     "name": "Palafin",
     "owned": true,
-    "special": false
+    "special": true
   },
   {
     "dex": "0965",
