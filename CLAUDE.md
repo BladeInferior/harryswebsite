@@ -119,7 +119,7 @@ The main menu on the Sleeves page has a "🔀 Reorder" button (`#reorder-btn`, n
 
 ## Cards "Recent Set" filter (`collection-hub/cards/recent-set.js`)
 
-`RECENT_SETS[0]` (`{ name, pokemon: [...] }`) drives the Cards page's "Recent Set (name)" filter button; cards match when their normalized name (lowercase, alphanumerics only) is in `pokemon`. Update it by hand when a new set is released. Currently "30th Celebration": the main set's Pokémon plus the Pokémon in its 30-card Classic Collection reprints (trainers like Misty/N left out; regional forms use this site's names, e.g. "Alolan Meowth", "Nidoran-f"). Matching is by exact card name, so forms like Mega/ex/VMAX aren't listed separately.
+`RECENT_SETS[0]` (`{ name, pokemon: [...] }`) drives the Cards page's "Recent Set (name)" filter button; cards match when their normalized name (lowercase, alphanumerics only) is in `pokemon`. Update it by hand when a new set is released. **TEMPORARY (2026-11-11): `RECENT_SETS[0]` is "Delta Reign" (ME06, 87 species from the VICE card list); the 30th Celebration entry is kept as `RECENT_SETS[1]` — move it back to the top once the owner has finished opening those packs (next week).** The description below is of the 30th Celebration entry: "30th Celebration": the main set's Pokémon plus the Pokémon in its 30-card Classic Collection reprints (trainers like Misty/N left out; regional forms use this site's names, e.g. "Alolan Meowth", "Nidoran-f"). Matching is by exact card name, so forms like Mega/ex/VMAX aren't listed separately.
 
 ## Cards: Add Card position picker (`cards/cards.js`)
 
