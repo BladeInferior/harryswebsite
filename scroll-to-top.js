@@ -54,6 +54,15 @@
             }
         }
 
+        /* On desktop the collection hub's "← Back" button is sticky at
+           top: 90px (~32px tall), so sit just below it instead of over it. */
+        @media (min-width: 769px) {
+            #scroll-to-top-btn {
+                top: 86px;
+                left: 100px;
+            }
+        }
+
         #scroll-to-top-btn.visible {
             display: flex;
         }
@@ -95,7 +104,21 @@
             && !document.body.classList.contains("page-mode");
     }
 
+    // Desktop: line up just right of the sticky Back button, measured so it
+    // follows the button's real width (falls back to the CSS position).
+    function placeBesideBack() {
+        const backBtn = document.querySelector(".back-button");
+        if (!backBtn || mobileQuery.matches) {
+            btn.style.left = btn.style.top = "";
+            return;
+        }
+        const r = backBtn.getBoundingClientRect();
+        btn.style.left = (r.right + 8) + "px";
+        btn.style.top = Math.max(8, r.top + r.height / 2 - 20) + "px";
+    }
+
     function updateVisibility() {
+        placeBesideBack();
         btn.classList.toggle("visible", allowedHere() && window.scrollY > threshold);
     }
 

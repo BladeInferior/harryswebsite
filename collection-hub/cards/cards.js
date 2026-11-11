@@ -267,6 +267,7 @@ async function loadDeck(key) {
     if (!deck) return;
 
     activeDeck = deck;
+    if (typeof exitMassMode === "function") exitMassMode();
     currentPage = 1;
     filterOwned = null;
     filterSpecial = null;
@@ -545,7 +546,17 @@ function renderItems() {
         label.textContent = item.name;
         card.appendChild(label);
 
+        if (massSelected.has(item)) card.classList.add("mass-selected");
+
         card.addEventListener("click", () => {
+            if (massMode) {
+                if (item.owned) return; // already owned, nothing to do
+                if (massSelected.has(item)) massSelected.delete(item);
+                else massSelected.add(item);
+                card.classList.toggle("mass-selected", massSelected.has(item));
+                updateMassUI();
+                return;
+            }
             openModal(items.indexOf(item));
         });
 
@@ -555,6 +566,52 @@ function renderItems() {
     applyPagination();
     filterItems(searchInput.value);
 }
+
+// =========================
+// MASS MARK OWNED
+// =========================
+// Click a group of not-owned cards (each highlights), press Done, and they're
+// all marked owned in one go. Cancel (or Esc) discards the selection.
+let massMode = false;
+const massSelected = new Set();
+const massBtn = document.getElementById("mass-owned-btn");
+const massCancelBtn = document.getElementById("mass-owned-cancel");
+
+function updateMassUI() {
+    document.body.classList.toggle("mass-mode", massMode);
+    massCancelBtn.classList.toggle("hidden", !massMode);
+    massBtn.textContent = massMode
+        ? `✔ Done (${massSelected.size} selected)`
+        : "✅ Mass Mark Owned";
+}
+
+function exitMassMode() {
+    massMode = false;
+    massSelected.clear();
+    updateMassUI();
+    document.querySelectorAll(".pokemon-card.mass-selected")
+        .forEach(c => c.classList.remove("mass-selected"));
+}
+
+massBtn.addEventListener("click", () => {
+    if (!massMode) {
+        massMode = true;
+        modalOverlay.classList.add("hidden");
+        updateMassUI();
+        return;
+    }
+    if (massSelected.size > 0) {
+        massSelected.forEach(item => { item.owned = true; });
+        if (typeof markDirty === "function") markDirty(JSON.stringify(items));
+        updateExportGlow();
+    }
+    exitMassMode();
+    renderItems();
+});
+massCancelBtn.addEventListener("click", exitMassMode);
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && massMode) exitMassMode();
+});
 
 function openModal(index) {
     const item = items[index];

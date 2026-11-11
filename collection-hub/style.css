@@ -4372,6 +4372,8 @@ body.viewer-mode #export-pokedex,
 body.viewer-mode #pokedex-changes-btn,
 body.viewer-mode #add-item,
 body.viewer-mode #reorder-btn,
+body.viewer-mode #mass-owned-btn,
+body.viewer-mode #mass-owned-cancel,
 body.viewer-mode #edit-item,
 body.viewer-mode #delete-item,
 body.viewer-mode #edit-hunt,
@@ -4433,3 +4435,28 @@ body.viewer-mode #not-in-dex-toggle {
 #item-position-btn:disabled { opacity: .4; cursor: default; }
 .reorder-actions { display: flex; gap: 10px; justify-content: center; }
 #reorder-undo:disabled, #reorder-cancel:disabled { opacity: .4; cursor: default; }
+
+/* Cards: Mass Mark Owned — selected cards get a green outline + tick */
+body.mass-mode #box-container .pokemon-card { cursor: pointer; }
+.pokemon-card.mass-selected {
+    outline: 3px solid #86efac;
+    outline-offset: -3px;
+    box-shadow: 0 0 14px rgba(134, 239, 172, 0.6);
+    position: relative;
+}
+.pokemon-card.mass-selected::after {
+    content: "✔";
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #22c55e;
+    color: #fff;
+    font-size: 15px;
+    line-height: 24px;
+    text-align: center;
+    z-index: 5;
+}
+body.mass-mode #mass-owned-btn { border-color: #86efac; }

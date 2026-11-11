@@ -127,6 +127,10 @@ The Add modal's old "Insert at position" number box is now a "Choose position…
 
 **Edit Order** (`#reorder-btn`, every deck except Pokémon): opens `#reorder-picker`, the same strip. Click a card to pick it up (green outline), then click a ⬇ gap to move it there; repeat, then Done/Esc. "↩ Undo" steps back one move at a time (`reorderHistory`); "Cancel (discard moves)" restores the order from when the overlay opened (`reorderStart`). Both are greyed until a move has been made. Each move edits the `items` array, marks it dirty and re-renders, so it exports like any other change.
 
+## Cards: Mass Mark Owned (`cards/cards.js`, all decks)
+
+"✅ Mass Mark Owned" (`#mass-owned-btn`, next to Stats) turns on `massMode` (`body.mass-mode`): clicking a not-owned card toggles it into `massSelected` (a Set of item objects; green outline + ✔ via `.mass-selected`) instead of opening its modal; owned cards ignore clicks. The button becomes "✔ Done (N selected)" — pressing it sets `owned = true` on every selected item, marks dirty (exports like any edit) and re-renders. "Cancel" (`#mass-owned-cancel`) or Esc discards; switching decks also exits. Both buttons are in the viewer-mode hide list.
+
 ## Cards: no To Do list
 
 The Pokémon deck's To Do list (To Do / Add To Do / Add Matches / Find / Make All Owned / Clear All buttons, their modals, and the `todo` handling in `cards.js`) was removed on 2026-11-04 — Pokémon cards don't need one. Old `todo: true` flags in `cards-pokemon-backup.json` are now ignored (and dropped on the next edit of that card). `window.voiceSearchNames` is still set to the full Pokémon list on the Pokémon deck so dictation snaps to real names. The "Add Card" and "Edit Order" buttons are hidden on the Pokémon deck (`updateModeUI()`). The Pokédex page's own to-do list is untouched (it shares the `#todo-*` CSS).
@@ -241,7 +245,7 @@ Imported game achievement walkthroughs from TrueAchievements, read on-site in tw
 
 On phones the search bar is compact (`#search` 105px wide, small wrapper padding; its font stays 16px, see below) and the pop-out toggles are 34px circles at `top: 116`, 40px apart (Pokédex `right`: 12/52/92/132). `mobile-popout.js` adds `#mobile-bar-arrow` (▶ sits just left of the search bar, its `right` measured from the bar's edge; once hidden it becomes a small ◀ tab peeping out of the right screen edge) on first `createMobilePopout()`; it toggles `html.mobile-bar-hidden`, which hides `#search-wrapper`, the toggles and panels, and is remembered in localStorage `mobileBarHidden`. Pop-out panels never scroll sideways (`overflow-x: hidden`, `touch-action: pan-y`, border-box children: `#dex-key` used to overrun the panel by its padding). Generation filter rows in the pop-out must keep a 3px gap: their buttons are sized `(100% - 9px) / 4` for that gap, and the old 5px override made them wrap 3-up out of position.
 
-`scroll-to-top.js` (loaded on every page) shows its button on phones everywhere, and on desktop only under `/collection-hub/` when the body isn't `.page-mode`. A body class `MutationObserver` re-evaluates it when the mode changes.
+`scroll-to-top.js`'s button sits at `top: 70px; left: 12px` on phones, but on desktop (≥769px) it sits directly to the right of the sticky "← Back" button (`.back-button`, `top: 90px`), vertically centred on it, so the two never overlap (CSS fallback `top: 86px; left: 100px`; `placeBesideBack()` re-measures the Back button on every scroll/resize). `scroll-to-top.js` (loaded on every page) shows its button on phones everywhere, and on desktop only under `/collection-hub/` when the body isn't `.page-mode`. A body class `MutationObserver` re-evaluates it when the mode changes.
 
 ## Mobile input zoom
 
