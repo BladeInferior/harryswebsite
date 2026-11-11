@@ -8,6 +8,7 @@
 // install() instead of serving a stale cache forever.
 const CACHE_VERSION = 'collection-hub-v24';
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
+const IMAGE_REVALIDATE_MS = 24 * 60 * 60 * 1000; // re-check a cached image at most once a day
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 
 // The "app shell" — small enough to fetch upfront on install, so every
@@ -109,6 +110,16 @@ async function staleWhileRevalidate(request) {
     // instead of trusting the browser's own HTTP cache freshness window —
     // cheap (a 304, no image bytes) for the vast majority that haven't
     // changed, full download only for the handful that actually have.
+    //
+    // But only when the cached copy is more than IMAGE_REVALIDATE_MS old: a
+    // page with hundreds of sprites used to send a request per image on every
+    // single view, which tripped GitHub Pages' own "Rate limit exceeded"
+    // (2026-11-11). A fresh-enough cached image now causes no request at all.
+    if (cached) {
+        const cachedAt = Date.parse(cached.headers.get('date') || '') || 0;
+        if (Date.now() - cachedAt < IMAGE_REVALIDATE_MS) return cached;
+    }
+
     const revalidate = fetch(request, { cache: 'no-cache' })
         .then(response => {
             if (response.ok) cache.put(request, response.clone());

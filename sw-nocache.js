@@ -28,6 +28,11 @@ self.addEventListener('fetch', event => {
     const url = new URL(request.url);
     if (url.origin !== self.location.origin) return;
 
+    // Images are left to the browser's normal HTTP cache: forcing a
+    // revalidation request for every image on every page view is what pushed
+    // the site over GitHub Pages' "Rate limit exceeded" (2026-11-11).
+    if (request.destination === 'image') return;
+
     event.respondWith(
         fetch(request, { cache: 'no-cache' }).catch(() => fetch(request))
     );

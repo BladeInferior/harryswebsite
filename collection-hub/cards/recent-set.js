@@ -1,25 +1,6 @@
 
-// Only RECENT_SETS[0] is used by the Cards page. TEMPORARY: Delta Reign is first;
-// to go back to 30th Celebration, move that entry to the top (or delete Delta Reign).
+// Only RECENT_SETS[0] is used by the Cards page.
 const RECENT_SETS = [
-    {
-        name: "Delta Reign",
-        pokemon: [
-            "Golisopod", "Golurk", "Malamar", "Rayquaza", "Raikou", "Talonflame", "Zoroark",
-            "Wishiwashi", "Rotom", "Meowscarada", "Altaria", "Ariados", "Arcanine", "Arboliva",
-            "Azurill", "Cacnea", "Cacturne", "Carvanha", "Combee", "Cyclizar", "Darkrai",
-            "Delibird", "Dolliv", "Drowzee", "Druddigon", "Eevee", "Electabuzz", "Electivire",
-            "Enamorus", "Floragato", "Fletchinder", "Fletchling", "Frillish", "Giratina", "Golett",
-            "Growlithe", "Groudon", "Hakamo-o", "Heatmor", "Heracross", "Hypno", "Inkay",
-            "Jangmo-o", "Jellicent", "Jolteon", "Kecleon", "Kilowattrel", "Kommo-o", "Kyogre",
-            "Landorus", "Liepard", "Magmar", "Magmortar", "Mantine", "Masquerain", "Miraidon",
-            "Morpeko", "Nidoran-f", "Nidorina", "Nidoqueen", "Onix", "Pawmi", "Pawmo", "Pawmot",
-            "Pincurchin", "Purrloin", "Sableye", "Sandshrew", "Sandslash", "Sharpedo", "Shaymin",
-            "Smoliv", "Spinarak", "Sprigatito", "Steelix", "Surskit", "Swablu", "Tauros",
-            "Thundurus", "Tornadus", "Torkoal", "Vespiquen", "Virizion", "Wattrel", "Wimpod",
-            "Zarude", "Zorua"
-        ]
-    },
     {
         name: "30th Celebration",
         pokemon: [
