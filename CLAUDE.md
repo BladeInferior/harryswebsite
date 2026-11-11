@@ -133,7 +133,7 @@ The Add modal's old "Insert at position" number box is now a "Choose position…
 
 ## Cards: no To Do list
 
-The Pokémon deck's To Do list (To Do / Add To Do / Add Matches / Find / Make All Owned / Clear All buttons, their modals, and the `todo` handling in `cards.js`) was removed on 2026-11-04 — Pokémon cards don't need one. Old `todo: true` flags in `cards-pokemon-backup.json` are now ignored (and dropped on the next edit of that card). `window.voiceSearchNames` is still set to the full Pokémon list on the Pokémon deck so dictation snaps to real names. The "Add Card" and "Edit Order" buttons are hidden on the Pokémon deck (`updateModeUI()`). The Pokédex page's own to-do list is untouched (it shares the `#todo-*` CSS).
+The Pokémon deck's To Do list (To Do / Add To Do / Add Matches / Find / Make All Owned / Clear All buttons, their modals, and the `todo` handling in `cards.js`) was removed on 2026-11-04 — Pokémon cards don't need one. Old `todo: true` flags in `cards-pokemon-backup.json` are now ignored (and dropped on the next edit of that card). `window.voiceSearchNames` is still set to the full Pokémon list on the Pokémon deck so dictation snaps to real names. The "Add Card" and "Edit Order" buttons are hidden on the Pokémon deck (`updateModeUI()`); they also ship with `class="hidden"` in `cards.html` (Pokémon is always the deck loaded first), otherwise they flashed visible until the data finished loading. The Pokédex page's own to-do list is untouched (it shares the `#todo-*` CSS).
 
 ## Cards "special" = custom image (Pokémon deck)
 
