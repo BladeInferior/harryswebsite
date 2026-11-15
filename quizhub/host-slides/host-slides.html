@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz Hub — Host Slides Quiz</title>
+
+    <link rel="stylesheet" href="../../navbar.css">
+
+    <style>
+        :root{
+            --bg:#121212;
+            --card:#1e1e1e;
+            --gold:#d4af37;
+            --text:#ffffff;
+            --secondary:#bdbdbd;
+            --border:#333;
+            --correct:#3fb950;
+            --incorrect:#e5534b;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial,sans-serif;
+        }
+
+        body{
+            background:var(--bg);
+            color:var(--text);
+            min-height:100vh;
+        }
+
+        .back-button{
+            display:inline-block;
+            margin:90px 0 0 20px;
+            padding:6px 10px;
+            border-radius:8px;
+            background:#2d2d2d;
+            border:1px solid #555;
+            color:white;
+            text-decoration:none;
+            font-size:14px;
+            transition:.15s ease;
+        }
+
+        .back-button:hover{
+            border-color:var(--gold);
+            background:rgba(212,175,55,.15);
+        }
+
+        .hero{
+            text-align:center;
+            padding:21.4375px 20px 10px;
+        }
+
+        .hero h1{
+            font-size:2.4rem;
+            padding-top:20px;
+            margin-bottom:10px;
+        }
+
+        .hero p{
+            max-width:650px;
+            margin:auto;
+            color:var(--secondary);
+            line-height:1.6;
+        }
+
+        [hidden]{
+            display:none !important;
+        }
+
+        .layout{
+            max-width:1000px;
+            margin:auto;
+            padding:30px 20px 60px;
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:24px;
+        }
+
+        @media (max-width:700px){
+            .layout{
+                grid-template-columns:1fr;
+            }
+        }
+
+        .card{
+            background:var(--card);
+            border:1px solid var(--border);
+            border-radius:16px;
+            padding:25px;
+        }
+
+        .full-width{
+            grid-column:1 / -1;
+        }
+
+        .code-card{
+            text-align:center;
+        }
+
+        .code-card p{
+            color:var(--secondary);
+            margin-bottom:10px;
+        }
+
+        #code-display{
+            font-size:4rem;
+            font-weight:bold;
+            letter-spacing:8px;
+            color:var(--gold);
+            margin-bottom:20px;
+        }
+
+        #join-qr-img{
+            display:block;
+            margin:0 auto 10px;
+            border-radius:12px;
+            background:#fff;
+            padding:10px;
+            width:180px;
+            height:180px;
+        }
+
+        #join-qr-caption{
+            margin-bottom:20px;
+        }
+
+        .btn{
+            background:var(--gold);
+            color:#121212;
+            border:none;
+            border-radius:10px;
+            padding:14px 32px;
+            font-size:1.05rem;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        .btn:hover:not(:disabled){
+            background:#e6c458;
+        }
+
+        .btn:disabled{
+            opacity:.5;
+            cursor:default;
+        }
+
+        .btn-secondary{
+            background:transparent;
+            border:1px solid var(--border);
+            color:var(--text);
+        }
+
+        .btn-secondary:hover:not(:disabled){
+            border-color:var(--gold);
+            background:transparent;
+        }
+
+        .btn-small{
+            padding:6px 16px;
+            font-size:.85rem;
+        }
+
+        .card h2{
+            margin-bottom:15px;
+            font-size:1.1rem;
+            color:var(--secondary);
+        }
+
+        #player-list,
+        #message-list,
+        #results-list,
+        #scoreboard-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        #player-list li,
+        #message-list li,
+        #results-list li,
+        #scoreboard-list li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:10px 14px;
+        }
+
+        #player-list:empty::after{
+            content:"No one has joined yet.";
+            color:var(--secondary);
+        }
+
+        #message-list:empty::after{
+            content:"No messages yet.";
+            color:var(--secondary);
+        }
+
+        #results-list li.correct{
+            border-color:var(--correct);
+            background:rgba(63,185,80,.15);
+        }
+
+        #results-list li.incorrect{
+            border-color:var(--incorrect);
+            background:rgba(229,83,75,.15);
+        }
+
+        #results-list li{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        #results-list li.no-answer{
+            color:var(--secondary);
+        }
+
+        #locked-controls{
+            margin-top:16px;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:14px;
+        }
+
+        #correct-answer-display{
+            color:var(--gold);
+            font-weight:bold;
+            font-size:1.1rem;
+        }
+
+        #explanation-display{
+            color:var(--secondary);
+            font-size:.95rem;
+            max-width:500px;
+        }
+
+        .question-card{
+            text-align:center;
+        }
+
+        #question-progress{
+            color:var(--secondary);
+            margin-bottom:10px;
+        }
+
+        #host-question-prompt{
+            font-size:1.6rem;
+            margin-bottom:20px;
+            line-height:1.4;
+        }
+
+        #host-question-media img{
+            display:block;
+            max-width:220px;
+            max-height:220px;
+            margin:0 auto 20px;
+            border-radius:8px;
+        }
+
+        #host-question-media img.silhouette{
+            filter:brightness(0);
+        }
+
+        #host-question-media video,
+        #host-question-media iframe.question-video-embed{
+            display:block;
+            width:100%;
+            max-width:480px;
+            aspect-ratio:16/9;
+            margin:0 auto 20px;
+            border-radius:8px;
+            border:none;
+        }
+
+        #host-question-media audio.question-audio{
+            display:block;
+            width:100%;
+            max-width:420px;
+            margin:0 auto 20px;
+        }
+
+        #answer-count{
+            color:var(--secondary);
+            margin-bottom:16px;
+        }
+
+        #buzzer-controls{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:10px;
+        }
+
+        #buzzer-queue{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            width:100%;
+            max-width:420px;
+            margin-bottom:6px;
+        }
+
+        #buzzer-queue:empty::after{
+            content:"Waiting for a player to buzz in...";
+            color:var(--secondary);
+        }
+
+        #buzzer-queue li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:8px;
+            padding:10px 14px;
+            text-align:left;
+        }
+
+        #buzzer-queue li.pending{
+            border-color:var(--gold);
+        }
+
+        #buzzer-queue li.correct{
+            border-color:var(--correct);
+            background:rgba(63,185,80,.15);
+        }
+
+        #buzzer-queue li.incorrect{
+            border-color:var(--incorrect);
+            background:rgba(229,83,75,.15);
+        }
+
+        #buzzer-active-controls{
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            gap:12px;
+            margin-bottom:6px;
+        }
+
+        #buzzer-active-name{
+            font-size:1.1rem;
+            font-weight:bold;
+            color:var(--gold);
+        }
+
+        #ended-view{
+            text-align:center;
+        }
+
+        #ended-view h2{
+            margin-bottom:20px;
+        }
+
+        #results-reveal-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:10px;
+            margin-bottom:16px;
+        }
+
+        #results-reveal-list li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:14px 18px;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+        }
+
+        .done-tag{
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
+        .result-pos{
+            font-weight:bold;
+            color:var(--gold);
+            min-width:36px;
+        }
+
+        .result-score,
+        .result-name{
+            flex:1;
+        }
+
+        /* ---------- category tiles (interactive map) ---------- */
+        #category-select-view{
+            max-width:1300px;
+        }
+
+        #category-select-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+            gap:24px;
+            margin-bottom:20px;
+        }
+
+        .category-tile{
+            position:relative;
+            aspect-ratio:1;
+            min-height:240px;
+            border-radius:20px;
+            border:2px solid var(--border);
+            background-color:var(--bg);
+            background-size:cover;
+            background-position:center;
+            color:#fff;
+            font-size:2rem;
+            font-weight:bold;
+            font-family:inherit;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+            cursor:pointer;
+            text-align:center;
+            overflow:hidden;
+            transition:.15s ease;
+        }
+
+        .category-tile::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:rgba(0,0,0,.55);
+            z-index:0;
+        }
+
+        .category-tile span{
+            position:relative;
+            z-index:1;
+            line-height:1.3;
+        }
+
+        .category-tile:hover:not(:disabled),
+        .category-tile:active:not(:disabled){
+            border-color:var(--gold);
+            transform:translateY(-3px) scale(1.02);
+        }
+
+        .category-tile:disabled{
+            cursor:default;
+            filter:grayscale(1);
+            opacity:.55;
+        }
+
+        #category-review-list{
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+            margin-top:12px;
+        }
+
+        .review-question-row{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:10px;
+            padding:10px 14px;
+        }
+
+        .review-question-row .review-correct-answer{
+            color:var(--secondary);
+            font-size:.85rem;
+            text-align:right;
+        }
+
+        .category-tile .done-tag{
+            position:absolute;
+            top:12px;
+            right:12px;
+            z-index:1;
+            background:rgba(0,0,0,.6);
+            padding:4px 10px;
+            border-radius:8px;
+        }
+
+        /* ---------- category title / example screens ---------- */
+        #category-intro-view .card{
+            text-align:center;
+        }
+
+        #category-intro-label{
+            font-size:1.8rem;
+            margin-bottom:16px;
+        }
+
+        #category-intro-text{
+            color:var(--secondary);
+            max-width:500px;
+            margin:0 auto 24px;
+            line-height:1.6;
+        }
+
+        /* ---------- persistent corner panel (2.1 / 2.5) ---------- */
+        #persistent-panel{
+            position:fixed;
+            top:100px;
+            right:20px;
+            width:220px;
+            z-index:500;
+            display:flex;
+            flex-direction:column;
+            gap:14px;
+            max-height:calc(100vh - 120px);
+            overflow-y:auto;
+        }
+
+        #persistent-panel .card{
+            padding:16px;
+        }
+
+        #persistent-panel .code-card{
+            text-align:center;
+        }
+
+        #corner-code-display{
+            font-size:1.8rem;
+            font-weight:bold;
+            letter-spacing:4px;
+            color:var(--gold);
+            margin-bottom:10px;
+        }
+
+        #corner-join-qr-img{
+            display:block;
+            margin:0 auto;
+            border-radius:8px;
+            background:#fff;
+            padding:6px;
+            width:110px;
+            height:110px;
+        }
+
+        #persistent-panel h2{
+            font-size:.95rem;
+            color:var(--secondary);
+            margin-bottom:10px;
+        }
+
+        #corner-player-list{
+            list-style:none;
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+            font-size:.9rem;
+        }
+
+        #corner-player-list li{
+            background:var(--bg);
+            border:1px solid var(--border);
+            border-radius:6px;
+            padding:6px 10px;
+        }
+
+        #corner-player-list li.disconnected{
+            opacity:.45;
+            font-style:italic;
+        }
+
+        #corner-player-list:empty::after{
+            content:"No one has joined yet.";
+            color:var(--secondary);
+            font-size:.85rem;
+        }
+
+        @media (max-width:900px){
+            #persistent-panel{
+                position:static;
+                width:auto;
+                max-width:1000px;
+                margin:20px auto 0;
+                padding:0 20px;
+                flex-direction:row;
+                flex-wrap:wrap;
+            }
+
+            #persistent-panel .card{
+                flex:1;
+                min-width:200px;
+            }
+        }
+
+        /* ---------- join/reconnect toasts (2.4) ---------- */
+        #toast-container{
+            position:fixed;
+            bottom:20px;
+            left:20px;
+            z-index:1400;
+            display:flex;
+            flex-direction:column;
+            gap:8px;
+        }
+
+        .toast{
+            background:var(--card);
+            border:1px solid var(--gold);
+            color:var(--text);
+            border-radius:8px;
+            padding:10px 16px;
+            font-size:.9rem;
+            box-shadow:0 4px 12px rgba(0,0,0,.4);
+            animation:toast-in .15s ease;
+        }
+
+        .toast.reconnected{
+            border-color:var(--correct);
+        }
+
+        .toast.error{
+            border-color:var(--incorrect);
+        }
+
+        @keyframes toast-in{
+            from{ opacity:0; transform:translateY(8px); }
+            to{ opacity:1; transform:translateY(0); }
+        }
+
+        /* ---------- scoreboard visibility toggle (2.6) ---------- */
+        #scoreboard-toggle-row{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            margin-bottom:10px;
+        }
+
+        /* ---------- question-card themed background ---------- */
+        .question-card.themed-bg{
+            position:relative;
+            background-size:cover;
+            background-position:center;
+            overflow:hidden;
+        }
+
+        .question-card.themed-bg::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background:rgba(18,18,18,.82);
+            border-radius:16px;
+            z-index:0;
+        }
+
+        .question-card.themed-bg > *{
+            position:relative;
+            z-index:1;
+        }
+    
+        /* ---------- slides stage (main shared screen) ---------- */
+        #slides-view{
+            position:fixed; inset:0; background:#000; z-index:900;
+        }
+        #slides-frame{
+            position:absolute; inset:0; width:100%; height:100%; border:0; background:#000;
+        }
+        #slides-hotspots{ position:absolute; inset:0; }
+        #slides-hotspots .hot{
+            position:absolute; cursor:pointer; /* clickable, deliberately not drawn */
+        }
+
+        /* While the slides are live the page is nothing but the slides. */
+        body.slides-live{ overflow:hidden; }
+        #final-controls[hidden]{ display:none !important; }
+
+        /* Closing screen: the players' screen, with the same purple values as
+           join.html (this page's own :root is the host screen's dark grey/gold,
+           so nothing here may rely on those variables). */
+        body.session-ended{
+            overflow:hidden;
+            background-image:radial-gradient(circle at top, #7a2a5c, #3a1d5c 45%, #170f1c);
+            background-attachment:fixed;
+            background-color:#170f1c;
+        }
+        body.session-ended #navbar,
+        body.session-ended .back-button,
+        body.session-ended #lobby-hero,
+        body.session-ended #toast-container,
+        body.session-ended #scroll-to-top{ display:none !important; }
+        #ended-view{
+            position:fixed; inset:0; display:flex; align-items:center; justify-content:center; padding:20px;
+        }
+        #ended-view .card{
+            width:100%; max-width:460px; padding:20px;
+            background:linear-gradient(180deg, #3d2450, #2e1a3d);
+            border:1px solid #3a2c40; border-radius:12px;
+        }
+        #ended-view h2{ text-align:center; margin-bottom:6px; font-size:1.5em; color:#ffffff; }
+        #ended-view p{ text-align:center; color:#bdbdbd; margin-bottom:20px; font-size:1em; }
+
+        #exit-fs-btn{
+            position:fixed; top:8px; right:8px; z-index:1100; width:30px; height:30px;
+            border-radius:50%; border:0; cursor:pointer; background:rgba(0,0,0,.35); color:#fff;
+            font-size:15px; line-height:30px; opacity:.18; transition:opacity .2s ease;
+        }
+        #exit-fs-btn:hover{ opacity:1; }
+        #recover-bar{
+            position:fixed; left:50%; bottom:16px; transform:translateX(-50%); z-index:1100;
+            display:flex; gap:8px; flex-wrap:wrap; justify-content:center; max-width:96vw;
+            padding:10px 14px; border-radius:14px; background:rgba(23,15,28,.94); border:1px solid var(--gold);
+        }
+        #recover-bar .btn{ width:auto; margin:0; }
+        body.slides-live #navbar,
+        body.slides-live .back-button,
+        body.slides-live #toast-container{ display:none !important; }
+
+        /* Scoreboard the host player can pull up over the slides. */
+        #scores-overlay{
+            position:fixed; inset:0; z-index:950; display:flex; align-items:center; justify-content:center;
+            background:radial-gradient(circle at top, #7a2a5c, #3a1d5c 45%, var(--bg)); padding:30px;
+        }
+        #scores-overlay .card{ width:min(720px,100%); max-height:92vh; overflow-y:auto; }
+        #scores-overlay h2{ text-align:center; font-size:2rem; margin-bottom:16px; }
+        #scores-overlay li{
+            list-style:none; display:flex; justify-content:space-between; gap:16px;
+            padding:12px 6px; font-size:1.5rem; border-bottom:1px solid var(--border);
+        }
+        #scores-overlay li:last-child{ border-bottom:0; }
+        #scores-overlay li .rank{ min-width:2.4ch; opacity:.75; }
+        #scores-overlay li .who{ flex:1; }
+
+        .host-player-tag{ margin-left:8px; font-size:.75rem; color:var(--gold); }
+        .player-row{ display:flex; justify-content:space-between; align-items:center; gap:10px; }
+
+</style>
+</head>
+<body>
+
+<div id="navbar"></div>
+
+<script>
+fetch('../../navbar.html')
+    .then(res => res.text())
+    .then(data => {
+        document.getElementById('navbar').innerHTML = data;
+        const basePath = window.location.hostname === "bladeinferior.github.io" ? "/harryswebsite/" : "/";
+        document.querySelectorAll('#navbar [data-page]').forEach(link => {
+            link.href = basePath + link.dataset.page;
+        });
+    });
+</script>
+
+<a class="back-button" id="lobby-back" href="../manage-quizzes/manage-quizzes.html">← Back</a>
+
+<section class="hero" id="lobby-hero">
+    <h1 id="quiz-title">Loading quiz...</h1>
+    <p id="quiz-description"></p>
+</section>
+
+<div id="toast-container"></div>
+
+<div id="lobby-view" class="layout">
+
+    <div class="card code-card full-width">
+        <p>Join code</p>
+        <div id="code-display">----</div>
+        <img id="join-qr-img" alt="QR code to join the quiz" hidden>
+        <p id="join-qr-caption">Or scan to join</p>
+        <button id="begin-btn" class="btn">Begin Quiz</button>
+    </div>
+
+    <div class="card">
+        <h2>Players joined</h2>
+        <p style="color:var(--secondary);font-size:.85rem;margin-bottom:8px;">Pick one player as the host player: their phone gets the slide controls and scores.</p>
+        <ul id="player-list"></ul>
+    </div>
+
+    <div class="card">
+        <h2>Messages</h2>
+        <ul id="message-list"></ul>
+    </div>
+
+</div>
+
+<div id="slides-view" hidden>
+    <iframe id="slides-frame" allowfullscreen></iframe>
+    <div id="slides-hotspots"></div>
+
+</div>
+
+<!-- Escape hatch for the shared screen: a faint ✕ top right leaves full screen
+     and brings up a small control bar, so the quiz can still be run (or full
+     screen re-entered) if the host player's phone has disconnected. -->
+<button id="exit-fs-btn" type="button" title="Exit full screen / show controls" hidden>✕</button>
+<div id="recover-bar" hidden>
+    <button class="btn btn-secondary" id="rb-prev" type="button">◀ Back</button>
+    <button class="btn" id="rb-next" type="button">Next ▶</button>
+    <button class="btn btn-secondary" id="rb-home" type="button">🏠 Home</button>
+    <button class="btn btn-secondary" id="rb-scores" type="button">📊 Scores</button>
+    <button class="btn btn-secondary" id="rb-unhost" type="button">Remove host player</button>
+    <button class="btn btn-secondary" id="rb-full" type="button">⛶ Full screen</button>
+    <button class="btn btn-secondary" id="rb-hide" type="button">Hide</button>
+</div>
+
+<div id="scores-overlay" hidden>
+    <div class="card">
+        <h2 id="scores-overlay-title">Scores</h2>
+        <ul id="scores-overlay-list"></ul>
+        <div id="final-controls" hidden style="display:flex;gap:10px;margin-top:14px;">
+            <button id="reveal-all-btn" class="btn btn-secondary" type="button">Reveal all</button>
+            <button id="close-session-btn" class="btn" type="button">End session</button>
+        </div>
+    </div>
+</div>
+
+<div id="ended-view" hidden>
+    <div class="card">
+        <h2>Quiz Complete!</h2>
+        <p>Thanks for playing!</p>
+    </div>
+</div>
+
+<script src="../engine/answer-matching.js"></script>
+<script src="../engine/answer-types.js"></script>
+<script type="module" src="host-slides.js"></script>
+
+</body>
+</html>

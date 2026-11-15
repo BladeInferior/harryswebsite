@@ -5,7 +5,7 @@
 // might load more than one of these modules together (which admin-auth.js
 // now does, site-wide) needs them all resolving to this one module instance.
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+import { getFirestore, initializeFirestore } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-storage.js";
 
@@ -20,7 +20,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app);
+// Quiz Hub pages run live sessions across phones, often through a tunnel or
+// mobile network, where Firestore's default streaming connection can stall: the
+// page then only sees changes after it makes a write of its own (a host player's
+// phone not following the main screen until they tapped something). Long polling
+// is slower to start but doesn't stall, so the quiz pages use it. Everything
+// else on the site keeps the default connection.
+export const db = window.location.pathname.includes('/quizhub/')
+    ? initializeFirestore(app, { experimentalForceLongPolling: true })
+    : getFirestore(app);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const storage = getStorage(app);

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Hub — Slides Quiz Setup</title>
+    <link rel="stylesheet" href="../../navbar.css">
+    <link rel="stylesheet" href="../slides/slides.css">
+</head>
+<body>
+
+<div id="navbar"></div>
+<script src="../quiz-nav.js"></script>
+
+<a class="back-button" id="back-button-link" href="../manage-quizzes/manage-quizzes.html">← Back</a>
+
+<section class="hero">
+    <h1>🖼️ Slides Quiz Setup</h1>
+    <p>Build your slides in Google Slides, publish them to the web, paste the link here, then say what each slide does.</p>
+</section>
+
+<section class="section">
+
+    <div class="card" id="convert-warning" hidden style="border-color:var(--incorrect);">
+        This quiz is currently a normal quiz. Saving it as a slides quiz will replace its categories and questions.
+    </div>
+
+    <div class="card">
+        <h2>Quiz details</h2>
+        <div class="row">
+            <div class="field">
+                <label for="title-input">Quiz name</label>
+                <input type="text" id="title-input" placeholder="e.g. Pokémon Picture Round">
+            </div>
+            <div class="field">
+                <label for="desc-input">Description</label>
+                <input type="text" id="desc-input" placeholder="A short blurb shown on Manage Quizzes">
+            </div>
+        </div>
+        <div class="field">
+            <label for="embed-input">Google Slides embed link</label>
+            <input type="text" id="embed-input" placeholder="https://docs.google.com/presentation/d/e/2PACX-.../embed?start=false&loop=false&delayms=3000">
+            <p class="hint">In Google Slides: File → Share → Publish to web → Embed → Publish. Paste the link (or the whole iframe code). The slides then need to stay published.</p>
+        </div>
+        <div class="row">
+            <div class="field">
+                <label for="count-input">Number of slides</label>
+                <input type="number" id="count-input" min="1" max="300" value="10">
+            </div>
+            <div class="field">
+                <label for="reveal-input">When are answers shown?</label>
+                <select id="reveal-input">
+                    <option value="immediate">After each question (answer slide follows)</option>
+                    <option value="end">All at the end (questions only, then scores)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="home-input">Home slide (the "Home" button goes here)</label>
+                <select id="home-input"></select>
+            </div>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center;">
+            <input type="checkbox" id="thumbs-toggle" checked style="width:auto;">
+            Show slide thumbnails (untick if the page feels slow)
+        </label>
+    </div>
+
+    <div class="card">
+        <h2>Quick pattern: set up the categories</h2>
+        <div class="row">
+            <div class="field">
+                <label for="pattern-start">Starting at slide</label>
+                <input type="number" id="pattern-start" min="1" value="1">
+            </div>
+            <div class="field">
+                <label for="pattern-count">Questions in the category</label>
+                <input type="number" id="pattern-count" min="1" max="100" value="5">
+            </div>
+            <div class="field">
+                <label for="pattern-layout">Layout</label>
+                <select id="pattern-layout">
+                    <option value="qa">Question, answer, question, answer…</option>
+                    <option value="q-then-a">All the questions, then all the answers</option>
+                    <option value="q">Questions only</option>
+                </select>
+            </div>
+        </div>
+        <label style="display:flex;gap:8px;align-items:center;">
+            <input type="checkbox" id="pattern-title" checked style="width:auto;"> Starts with a title card
+        </label>
+        <label style="display:flex;gap:8px;align-items:center;margin-top:6px;">
+            <input type="checkbox" id="pattern-home" checked style="width:auto;"> The last slide goes back to the home slide
+        </label>
+        <p class="hint" style="margin:8px 0;">Fills every slide from the starting slide to the last slide, repeating this category layout until the slides run out (so five categories of the same shape are one click). Slides before the start, like your home board, are left alone. "Goes back to the home slide" uses the Home slide chosen above. Every slide can still be changed by hand afterwards.</p>
+        <button type="button" class="btn btn-secondary" id="pattern-apply">Apply to these slides</button>
+    </div>
+
+    <div class="editor">
+        <div class="card">
+            <h2>Slides <span class="pill" id="slide-total"></span></h2>
+            <div class="slide-list" id="slide-list"></div>
+        </div>
+
+        <div id="slide-panel">
+            <div class="card" id="missing-card">
+                <button type="button" class="btn btn-secondary" id="missing-toggle" style="width:100%;text-align:left;"></button>
+                <div id="missing-list" hidden></div>
+            </div>
+
+            <div class="card">
+                <h2 id="panel-title">Slide 1</h2>
+                <div class="stage" id="stage">
+                    <iframe id="stage-frame" allowfullscreen></iframe>
+                    <div class="draw-layer" id="draw-layer" hidden></div>
+                </div>
+                <p class="hint" id="stage-hint"></p>
+            </div>
+
+            <div class="card">
+                <h2>This slide</h2>
+                <div class="row">
+                    <div class="field">
+                        <label for="type-input">What is this slide?</label>
+                        <select id="type-input">
+                            <option value="plain">Plain slide (just goes to the next)</option>
+                            <option value="board">Board / home (touchable areas)</option>
+                            <option value="question">Question (players answer)</option>
+                            <option value="answer">Answer slide</option>
+                        </select>
+                    </div>
+                    <div class="field" id="answerfor-field" hidden>
+                        <label for="answerfor-input">Answers which question slide? (blank = the one before)</label>
+                        <input type="number" id="answerfor-input" min="1">
+                    </div>
+                    <div class="field" id="next-field">
+                        <label for="next-input">Then go to slide (blank = the next one)</label>
+                        <input type="number" id="next-input" min="1">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" id="board-card" hidden>
+                <h2>Touchable areas</h2>
+                <p class="hint" style="margin:-6px 0 12px;">Drag on the slide above to draw an area. Give each a short name (that's what the host player's phone shows) and choose where it goes.</p>
+                <div id="hotspot-list"></div>
+            </div>
+
+            <div class="card" id="question-card" hidden>
+                <h2>Question</h2>
+                <div class="row">
+                    <div class="field">
+                        <label for="qtype-input">Answer type</label>
+                        <select id="qtype-input">
+                            <option value="text">Text</option>
+                            <option value="number">Number</option>
+                            <option value="multiple-choice">Multiple choice</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="qpoints-input">Points</label>
+                        <input type="number" id="qpoints-input" min="0" value="1">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="qprompt-input">Text shown on players' phones (optional)</label>
+                    <input type="text" id="qprompt-input" placeholder="e.g. Question 3 — name this Pokémon">
+                </div>
+
+                <div id="q-text-fields">
+                    <div class="field">
+                        <label for="qaccepted-input">Accepted answers (comma separated)</label>
+                        <input type="text" id="qaccepted-input" placeholder="pikachu, pika">
+                    </div>
+                </div>
+
+                <div id="q-number-fields" hidden>
+                    <div class="row">
+                        <div class="field">
+                            <label for="qnummode-input">Match</label>
+                            <select id="qnummode-input">
+                                <option value="exact">Exact number</option>
+                                <option value="range">Any number in a range</option>
+                            </select>
+                        </div>
+                        <div class="field" id="q-num-exact">
+                            <label for="qnumexact-input">Correct number</label>
+                            <input type="number" id="qnumexact-input" step="any">
+                        </div>
+                        <div class="field" id="q-num-range" hidden>
+                            <label for="qnummin-input">Min</label>
+                            <input type="number" id="qnummin-input" step="any">
+                        </div>
+                        <div class="field" id="q-num-range2" hidden>
+                            <label for="qnummax-input">Max</label>
+                            <input type="number" id="qnummax-input" step="any">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="q-mc-fields" hidden>
+                    <label>Options (tick the correct one)</label>
+                    <div id="mc-list"></div>
+                    <button type="button" class="btn btn-secondary btn-small" id="mc-add">+ Add option</button>
+                </div>
+
+                <div class="field" style="margin-top:12px;">
+                    <label for="qexplain-input">Explanation shown after the answer (optional)</label>
+                    <input type="text" id="qexplain-input">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button id="save-btn" class="btn" type="button" style="width:100%;margin-top:6px;">Save Slides Quiz</button>
+    <div id="save-status" class="status"></div>
+
+</section>
+
+<script src="../engine/answer-matching.js"></script>
+<script src="../engine/answer-types.js"></script>
+<script type="module" src="builder-slides.js"></script>
+</body>
+</html>

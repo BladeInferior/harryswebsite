@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slides Embed Test</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #12161c; color: #e8ecf1; margin: 0; padding: 16px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.hint { color: #9aa6b4; margin: 0 0 14px; font-size: 14px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+  label { font-size: 14px; }
+  input[type=text] { flex: 1 1 420px; padding: 8px; border-radius: 6px; border: 1px solid #3a4452; background: #1b212a; color: inherit; }
+  input[type=number] { width: 70px; padding: 8px; border-radius: 6px; border: 1px solid #3a4452; background: #1b212a; color: inherit; }
+  select { padding: 8px; border-radius: 6px; border: 1px solid #3a4452; background: #1b212a; color: inherit; }
+  button { padding: 8px 14px; border-radius: 6px; border: 0; background: #2f9e6b; color: #fff; cursor: pointer; font-size: 14px; }
+  button.alt { background: #3a4452; }
+  #stage { position: relative; width: min(100%, 960px); aspect-ratio: 16 / 9; background: #000; border-radius: 8px; overflow: hidden; margin-top: 8px; }
+  #stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #overlay { position: absolute; inset: 0; display: none; }
+  #overlay.on { display: block; }
+  .hot { position: absolute; border: 2px dashed #ffd24a; background: rgba(255, 210, 74, .18); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #ffd24a; }
+  #log { margin-top: 12px; font-family: ui-monospace, monospace; font-size: 13px; background: #1b212a; padding: 10px; border-radius: 6px; white-space: pre-wrap; word-break: break-all; max-height: 200px; overflow: auto; }
+</style>
+</head>
+<body>
+<h1>Slides embed test</h1>
+<p class="hint">Paste your "Publish to web" embed link (or the whole iframe code). Then try each jump style and see which one lands on the right slide.</p>
+
+<div class="row">
+  <input type="text" id="url" placeholder="https://docs.google.com/presentation/d/e/2PACX-.../embed?start=false&loop=false&delayms=3000">
+</div>
+
+<div class="row">
+  <label>Slide <input type="number" id="slide" value="1" min="1"></label>
+  <label>Jump style
+    <select id="style">
+      <option value="q-slide">A: ?slide=N (query)</option>
+      <option value="q-id">B: ?slide=id.XXXX (query, needs slide ID)</option>
+      <option value="h-slide">C: #slide=N (hash)</option>
+      <option value="h-id">D: #slide=id.XXXX (hash, needs slide ID)</option>
+    </select>
+  </label>
+  <label>Slide ID <input type="text" id="sid" placeholder="e.g. p3 or g1234abc_0_5" style="flex:0 0 190px"></label>
+  <label><input type="checkbox" id="minimal"> rm=minimal (hide toolbar)</label>
+</div>
+
+<div class="row">
+  <button id="load">Load / jump</button>
+  <button class="alt" id="prev">◀ Slide −1</button>
+  <button class="alt" id="next">Slide +1 ▶</button>
+  <label><input type="checkbox" id="recreate" checked> Recreate iframe on each jump (untick = just change src in place)</label>
+</div>
+
+<div class="row">
+  <label><input type="checkbox" id="showOverlay"> Show demo clickable hotspots over the slide (simulates the quiz's board overlay)</label>
+</div>
+
+<div id="stage">
+  <div id="overlay"></div>
+</div>
+
+<div id="log"></div>
+
+<script>
+const $ = id => document.getElementById(id);
+const stage = $('stage');
+let frame = null;
+
+function log(msg) {
+  const t = new Date().toLocaleTimeString();
+  $('log').textContent = `[${t}] ${msg}\n` + $('log').textContent;
+}
+
+function baseUrl() {
+  let v = $('url').value.trim();
+  const m = v.match(/src\s*=\s*["']([^"']+)["']/i); // pasted iframe code
+  if (m) v = m[1];
+  v = v.replace(/&amp;/g, '&');
+  return v;
+}
+
+function buildUrl() {
+  let v = baseUrl();
+  if (!v) return '';
+  const hashAt = v.indexOf('#');
+  if (hashAt >= 0) v = v.slice(0, hashAt);
+  // strip any existing slide param
+  v = v.replace(/([?&])slide=[^&#]*/g, '$1').replace(/[?&]$/, '');
+  const style = $('style').value;
+  const n = $('slide').value;
+  const id = $('sid').value.trim();
+  const val = style.endsWith('id') ? 'id.' + id.replace(/^id\./, '') : n;
+  if ($('minimal').checked) v += (v.includes('?') ? '&' : '?') + 'rm=minimal';
+  if (style.startsWith('q-')) v += (v.includes('?') ? '&' : '?') + 'slide=' + val;
+  else v += '#slide=' + val;
+  return v;
+}
+
+function load() {
+  const url = buildUrl();
+  if (!url) { log('Paste an embed link first.'); return; }
+  if (!frame || $('recreate').checked) {
+    if (frame) frame.remove();
+    frame = document.createElement('iframe');
+    frame.allowFullscreen = true;
+    stage.insertBefore(frame, $('overlay'));
+  }
+  frame.src = url;
+  log('Loaded: ' + url);
+}
+
+$('load').onclick = load;
+$('prev').onclick = () => { $('slide').value = Math.max(1, +$('slide').value - 1); load(); };
+$('next').onclick = () => { $('slide').value = +$('slide').value + 1; load(); };
+
+// demo hotspots (percent-based, like the real feature would be)
+const demo = [
+  { x: 5,  y: 20, w: 28, h: 40, label: 'Slide 2' , go: 2 },
+  { x: 36, y: 20, w: 28, h: 40, label: 'Slide 3' , go: 3 },
+  { x: 67, y: 20, w: 28, h: 40, label: 'Slide 4' , go: 4 },
+];
+const ov = $('overlay');
+demo.forEach(h => {
+  const d = document.createElement('div');
+  d.className = 'hot';
+  d.style.cssText = `left:${h.x}%;top:${h.y}%;width:${h.w}%;height:${h.h}%`;
+  d.textContent = '→ ' + h.label;
+  d.onclick = () => { $('slide').value = h.go; log('Hotspot clicked → slide ' + h.go); load(); };
+  ov.appendChild(d);
+});
+$('showOverlay').onchange = e => ov.classList.toggle('on', e.target.checked);
+</script>
+</body>
+</html>

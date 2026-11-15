@@ -50,7 +50,8 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
         // active, per the ask that Start Quiz never silently resumes.
         // "Rejoin Quiz" (below, added once we know a session exists) is the
         // only way back into an in-progress one.
-        startLink.href = `../host-quiz/host-quiz.html?quiz=${encodeURIComponent(quiz.id)}&new=1`;
+        const hostPage = quiz.kind === 'slides' ? '../host-slides/host-slides.html' : '../host-quiz/host-quiz.html';
+        startLink.href = `${hostPage}?quiz=${encodeURIComponent(quiz.id)}&new=1`;
         startLink.textContent = 'Start Quiz';
         actions.appendChild(startLink);
 
@@ -71,7 +72,7 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
             if (!session || session.status === 'lobby') return;
             rejoinBtn.disabled = false;
             rejoinBtn.addEventListener('click', () => {
-                window.location.href = `../host-quiz/host-quiz.html?quiz=${encodeURIComponent(quiz.id)}`;
+                window.location.href = `${hostPage}?quiz=${encodeURIComponent(quiz.id)}`;
             });
         }).catch(err => console.error('Active session lookup failed:', err));
 
@@ -79,12 +80,13 @@ Promise.all([Promise.all(staticQuizzes), firestoreQuizzes]).then(([staticList, f
         previewLink.className = 'btn btn-secondary';
         previewLink.href = `../play-test/play-test.html?quiz=${encodeURIComponent(quiz.id)}`;
         previewLink.textContent = 'Preview';
-        actions.appendChild(previewLink);
+        // The solo preview plays through questions only, which makes no sense for slides.
+        if (quiz.kind !== 'slides') actions.appendChild(previewLink);
 
         if (quiz.source === 'firestore') {
             const editLink = document.createElement('a');
             editLink.className = 'btn btn-secondary';
-            editLink.href = `../builder/builder.html?quiz=${encodeURIComponent(quiz.id)}`;
+            editLink.href = `${quiz.kind === 'slides' ? '../builder-slides/builder-slides.html' : '../builder/builder.html'}?quiz=${encodeURIComponent(quiz.id)}`;
             editLink.textContent = 'Edit';
             actions.appendChild(editLink);
 

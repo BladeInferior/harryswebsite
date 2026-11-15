@@ -1,5 +1,11 @@
 import { db } from '../firebase/firebase-config.js';
 import { loadQuiz } from '../data/quiz-loader.js';
+import { removePlayer } from '../remove-player.js';
+import { resizePhoto, frameToPhoto, makeAvatar, anyPhoto } from '../player-avatar.js';
+import {
+    isSlidesQuiz, homeSlideOf, goToSlide, goBack, goHome, primaryAction, runPrimaryAction, boardOptions, slideItem,
+    formatAnswer, correctAnswerText, overrideAnswer, setScoresVisible, scoringPlayers, finishSlidesQuiz, revealResult, revealAllResults, rankPlayers, rankPositions, startSlidesQuiz
+} from '../slides/slides-flow.js';
 import {
     doc,
     getDoc,
@@ -111,6 +117,113 @@ let playerReviewModeActive = false;
 
 const joinSubmitBtn = joinForm.querySelector('button[type="submit"]');
 
+// This device's token for the player it joined as; another device joining under
+// the same name overwrites the token on the player doc, which signs this one out.
+let myDeviceToken = null;
+
+// Optional photo, shrunk on this device and stored on the player doc for the
+// length of the quiz only (the doc is deleted when the quiz ends).
+let pendingPhoto = null;
+const photoInput = document.getElementById('photo-input');
+const photoBtn = document.getElementById('photo-btn');
+const photoPreview = document.getElementById('photo-preview');
+const cameraOverlay = document.getElementById('camera-overlay');
+const cameraVideo = document.getElementById('camera-video');
+let cameraStream = null;
+
+function setPhoto(dataUrl) {
+    pendingPhoto = dataUrl;
+    photoPreview.style.backgroundImage = `url("${dataUrl}")`;
+    photoBtn.textContent = '📷 Retake photo';
+}
+
+function closeCamera() {
+    if (cameraStream) cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
+    cameraVideo.srcObject = null;
+    cameraOverlay.hidden = true;
+}
+
+// Own in-page camera rather than the phone's camera app. The preview is shown
+// mirrored (like a mirror, easier to line up) and the saved photo is mirrored
+// the same way, so what you see is what everyone else gets.
+async function openCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        photoInput.click(); // no live camera access (e.g. plain http): use the file picker
+        return;
+    }
+    try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 720 } },
+            audio: false
+        });
+        cameraVideo.srcObject = cameraStream;
+        cameraOverlay.hidden = false;
+        await cameraVideo.play().catch(() => {});
+    } catch (err) {
+        console.error('Camera unavailable:', err);
+        closeCamera();
+        photoInput.click(); // permission refused or no camera: fall back to the picker
+    }
+}
+
+photoBtn.addEventListener('click', openCamera);
+document.getElementById('camera-cancel').addEventListener('click', closeCamera);
+document.getElementById('camera-capture').addEventListener('click', () => {
+    if (!cameraVideo.videoWidth) return; // not ready yet
+    setPhoto(frameToPhoto(cameraVideo));
+    closeCamera();
+});
+photoInput.addEventListener('change', async () => {
+    const file = photoInput.files && photoInput.files[0];
+    if (!file) return;
+    try {
+        setPhoto(await resizePhoto(file));
+    } catch (err) {
+        console.error('Photo failed:', err);
+        joinStatus.className = 'failure';
+        joinStatus.textContent = "That photo couldn't be used. You can join without one.";
+    }
+});
+
+// Phones on patchy connections sometimes leave a Firestore read hanging with no
+// error. Reads (never writes, which could double up) are given 10s and one
+// automatic retry, so a bad moment doesn't need a page refresh.
+function withTimeout(makePromise, ms = 10000) {
+    return Promise.race([
+        makePromise(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))
+    ]);
+}
+
+async function readWithRetry(makePromise) {
+    try {
+        return await withTimeout(makePromise);
+    } catch (err) {
+        joinStatus.className = 'pending';
+        joinStatus.textContent = 'Slow connection, trying again...';
+        return withTimeout(makePromise);
+    }
+}
+
+// Shown once after another device joins under this player's name.
+try {
+    if (sessionStorage.getItem('quizhub_replaced')) {
+        sessionStorage.removeItem('quizhub_replaced');
+        joinStatus.className = 'failure';
+        joinStatus.textContent = 'You joined from another device, so this one was signed out.';
+    }
+} catch (err) { /* storage blocked */ }
+
+// Shown once after the host removes a player.
+try {
+    if (sessionStorage.getItem('quizhub_removed')) {
+        sessionStorage.removeItem('quizhub_removed');
+        joinStatus.className = 'failure';
+        joinStatus.textContent = 'You were removed from the quiz by the host.';
+    }
+} catch (err) { /* storage blocked */ }
+
 joinForm.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -124,11 +237,13 @@ joinForm.addEventListener('submit', async e => {
 
     try {
         const sessionRef = doc(db, 'sessions', code);
-        const snapshot = await getDoc(sessionRef);
+        const snapshot = await readWithRetry(() => getDoc(sessionRef));
 
         if (!snapshot.exists()) {
             joinStatus.className = 'failure';
             joinStatus.textContent = 'That code was not found. Check with the host and try again.';
+            codeFieldWrapper.hidden = false; // a QR link hides this; let them fix the code
+            codeInput.focus();
             return;
         }
 
@@ -136,37 +251,28 @@ joinForm.addEventListener('submit', async e => {
 
         const nameKey = AnswerMatching.normalize(name);
         const playersRef = collection(db, 'sessions', code, 'players');
-        const existingSnap = await getDocs(query(playersRef, where('nameKey', '==', nameKey)));
+        const existingSnap = await readWithRetry(() => getDocs(query(playersRef, where('nameKey', '==', nameKey))));
         const existingDoc = existingSnap.docs[0] || null;
 
         const deviceTokenKey = `quizhub_device_${code}_${nameKey}`;
 
         if (existingDoc) {
             const data = existingDoc.data();
-            const storedToken = localStorage.getItem(deviceTokenKey);
 
-            // Someone else appears to be actively using this name right now —
-            // ask before taking over rather than silently merging two players.
-            if (data.connected && data.deviceToken !== storedToken) {
-                const proceed = confirm(
-                    `"${data.name}" is already active in this quiz. If that's you on another device, reconnecting will take over that session. Continue?`
-                );
-                if (!proceed) {
-                    joinStatus.className = 'failure';
-                    joinStatus.textContent = 'Please choose a different name.';
-                    return;
-                }
-            }
-
+            // Joining under a name that is already in the quiz replaces whoever was
+            // using it (same player, so score, answers and the host player role all
+            // carry over). The old device notices below and is signed out.
             currentPlayerId = existingDoc.id;
             currentName = data.name;
 
             const deviceToken = generateDeviceToken();
+            myDeviceToken = deviceToken;
             localStorage.setItem(deviceTokenKey, deviceToken);
 
             await updateDoc(doc(db, 'sessions', code, 'players', currentPlayerId), {
                 connected: true,
-                deviceToken
+                deviceToken,
+                ...(pendingPhoto ? { photo: pendingPhoto } : {})
             });
 
             // Fire-and-forget — this is just the host's toast notification, and
@@ -182,6 +288,7 @@ joinForm.addEventListener('submit', async e => {
         } else {
             currentName = name;
             const deviceToken = generateDeviceToken();
+            myDeviceToken = deviceToken;
             localStorage.setItem(deviceTokenKey, deviceToken);
 
             const playerRef = await addDoc(playersRef, {
@@ -190,7 +297,8 @@ joinForm.addEventListener('submit', async e => {
                 joinedAt: serverTimestamp(),
                 score: 0,
                 connected: true,
-                deviceToken
+                deviceToken,
+                photo: pendingPhoto || null
             });
             currentPlayerId = playerRef.id;
 
@@ -227,8 +335,30 @@ joinForm.addEventListener('submit', async e => {
             if (snap.exists()) renderSessionState(snap.data());
         });
 
+        let ownDocSeen = false;
         onSnapshot(doc(db, 'sessions', code, 'players', currentPlayerId), snap => {
-            if (!snap.exists()) return;
+            if (!snap.exists()) {
+                // Only counts as "removed" once we've actually seen our own doc,
+                // so a slow first snapshot can't kick someone who just joined.
+                if (ownDocSeen) {
+                    // The host wipes every player (photos included) once a quiz ends;
+                    // that is not "being removed", so look again after a moment.
+                    setTimeout(() => {
+                        if (latestSessionSnapshot && latestSessionSnapshot.status === 'ended') return;
+                        try { sessionStorage.setItem('quizhub_removed', '1'); } catch (err) { /* ignore */ }
+                        window.location.href = 'join.html';
+                    }, 2500);
+                }
+                return;
+            }
+            ownDocSeen = true;
+
+            const remoteToken = snap.data().deviceToken;
+            if (myDeviceToken && remoteToken && remoteToken !== myDeviceToken) {
+                try { sessionStorage.setItem('quizhub_replaced', '1'); } catch (err) { /* ignore */ }
+                window.location.href = 'join.html';
+                return;
+            }
             const score = snap.data().score || 0;
 
             // A running score above the question is only shown for buzzer quizzes
@@ -236,12 +366,14 @@ joinForm.addEventListener('submit', async e => {
             // so it doesn't spoil pacing on a normal paced quiz.
             playerScoreEl.hidden = !(quiz.isBuzzerQuiz && quiz.buzzerShowScoreThroughout);
             playerScoreEl.textContent = `Score: ${score}`;
-            finalScoreEl.textContent = `Your final score: ${score}`;
+            const iAmHost = latestSessionSnapshot && latestSessionSnapshot.hostPlayerId === currentPlayerId;
+            finalScoreEl.textContent = iAmHost ? 'Thanks for playing!' : `Your final score: ${score}`;
         });
 
         onSnapshot(playersRef, snap => {
             latestPlayersForJoin = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             renderWaitingPlayerList();
+            if (latestSessionSnapshot) renderSlidesController(latestSessionSnapshot);
 
             const question = currentQuestionIndex !== null ? quiz.questions[currentQuestionIndex] : null;
             if (question) updateAnswerView(question);
@@ -253,7 +385,8 @@ joinForm.addEventListener('submit', async e => {
         // request had silently failed.
         console.error('Join failed:', err);
         joinStatus.className = 'failure';
-        joinStatus.textContent = 'Something went wrong joining — check your connection and try again.';
+        joinStatus.textContent = 'Something went wrong joining — check your connection and tap Join again.';
+        codeFieldWrapper.hidden = false; // in case the code (not the connection) was the problem
     } finally {
         joinSubmitBtn.disabled = false;
     }
@@ -264,7 +397,11 @@ function renderWaitingPlayerList() {
 
     latestPlayersForJoin.forEach(player => {
         const li = document.createElement('li');
-        li.textContent = player.name;
+        // The host player is only a remote control, so players see them marked
+        // "- host" here (the scoreboards leave them out entirely).
+        const isHost = latestSessionSnapshot && latestSessionSnapshot.hostPlayerId === player.id;
+        li.textContent = isHost ? `${player.name} - host` : player.name;
+        if (anyPhoto(latestPlayersForJoin)) li.prepend(makeAvatar(player, 26));
         li.className = [
             player.id === currentPlayerId ? 'self' : '',
             player.connected === false ? 'disconnected' : ''
@@ -330,6 +467,21 @@ buzzInBtn.addEventListener('click', async () => {
 
 function renderSessionState(session) {
     latestSessionSnapshot = session;
+    renderWaitingPlayerList(); // keeps the "- host" label in step if the host player changes
+    renderSlidesController(session);
+
+    // The host player is a second control device, not a player: while the
+    // slides are running they see only the controls (their join card, with
+    // every question screen in it, is hidden).
+    const hostControllerActive = isSlidesQuiz(quiz)
+        && session.hostPlayerId
+        && session.hostPlayerId === currentPlayerId
+        && (session.status === 'lobby' || session.status === 'slides' || session.status === 'slides-final');
+    joinCard.hidden = hostControllerActive;
+    if (hostControllerActive) {
+        applyCardBackground(null);
+        return;
+    }
 
     waitingSection.hidden = true;
     hostScreenSection.hidden = true;
@@ -372,14 +524,32 @@ function renderSessionState(session) {
         return;
     }
 
+    if (session.status === 'slides-final') {
+        hostScreenSection.hidden = false;
+        hostScreenMessage.textContent = 'The host is revealing the final results...';
+        applyCardBackground(null);
+        return;
+    }
+
     if (session.status === 'ended') {
         endedSection.hidden = false;
+        if (isSlidesQuiz(quiz) && session.hostPlayerId === currentPlayerId) {
+            finalScoreEl.textContent = 'Thanks for playing!';
+        }
         applyCardBackground(null);
 
         reviewAnswersLink.hidden = !quiz.reviewEnabled;
         if (quiz.reviewEnabled) {
             reviewAnswersLink.href = `../review/review.html?name=${encodeURIComponent(currentName)}`;
         }
+        return;
+    }
+
+    // Slides quizzes: on a board/plain slide there's nothing to answer.
+    if (isSlidesQuiz(quiz) && !(session.currentQuestionIndex >= 0)) {
+        hostScreenSection.hidden = false;
+        hostScreenMessage.textContent = 'Watch the main screen.';
+        applyCardBackground(null);
         return;
     }
 
@@ -703,8 +873,9 @@ function renderQuestionContent(question) {
     const catBlock = getCategoryBoundsForReview().find(c => currentQuestionIndex >= c.start && currentQuestionIndex <= c.end)
         || { start: currentQuestionIndex, end: currentQuestionIndex, name: question.category || 'General' };
 
-    questionProgressEl.textContent =
-        `${catBlock.name} — Question ${currentQuestionIndex - catBlock.start + 1} of ${catBlock.end - catBlock.start + 1}`;
+    questionProgressEl.textContent = isSlidesQuiz(quiz)
+        ? `Question ${currentQuestionIndex + 1} of ${quiz.questions.length}`
+        : `${catBlock.name} — Question ${currentQuestionIndex - catBlock.start + 1} of ${catBlock.end - catBlock.start + 1}`;
     questionPromptEl.textContent = question.prompt;
 
     MediaUtils.render(question.media, questionMediaEl, currentPhase === 'answering');
@@ -816,7 +987,8 @@ function showLocked(question, answerData) {
 
     // Live "waiting on X more players" — only meaningful while the host
     // hasn't locked answers yet (once locked, everyone's moved on together).
-    const connectedCount = latestPlayersForJoin.filter(p => p.connected !== false).length;
+    // (the host player of a slides quiz is a remote control, not a contestant)
+    const connectedCount = scoringPlayers(latestPlayersForJoin, latestSessionSnapshot).filter(p => p.connected !== false).length;
     const remaining = Math.max(0, connectedCount - answeredCount);
 
     if (answerData && currentPhase === 'answering' && remaining > 0) {
@@ -898,3 +1070,340 @@ function formatAnswerValue(question, value) {
             return String(value);
     }
 }
+
+
+// =========================
+// SLIDES QUIZ — host player's controls
+// The host picks one player on the main screen; that player's phone shows the
+// same controls the main screen's bar has (back / next / lock / home / board
+// options) plus the scores. Everything goes through slides-flow.js, which
+// writes the session doc the main screen is watching.
+// =========================
+const slidesControllerSection = document.getElementById('slides-controller-section');
+const slidesControllerInfo = document.getElementById('slides-controller-info');
+const slidesBoardOptions = document.getElementById('slides-board-options');
+const slidesMainBtn = document.getElementById('slides-main-btn');
+const slidesPrevBtn = document.getElementById('slides-prev-btn');
+const slidesHomeBtn = document.getElementById('slides-home-btn');
+const slidesControllerScores = document.getElementById('slides-controller-scores');
+const slidesStartBtn = document.getElementById('slides-start-btn');
+const slidesScoresLabel = document.getElementById('slides-scores-label');
+const slidesResultsControls = document.getElementById('slides-results-controls');
+const slidesFinalBoard = document.getElementById('slides-final-board');
+const slidesRevealAllBtn = document.getElementById('slides-reveal-all-btn');
+const slidesCloseSessionBtn = document.getElementById('slides-close-session-btn');
+const slidesEndQuizBtn = document.getElementById('slides-end-quiz-btn');
+const slidesScoresBtn = document.getElementById('slides-scores-btn');
+const slidesScoresHomeBtn = document.getElementById('slides-scores-home-btn');
+
+function slidesCtx() {
+    return { sessionRef: doc(db, 'sessions', currentCode), code: currentCode, session: latestSessionSnapshot };
+}
+
+// This phone loaded the quiz's questions and answers once, when it joined. The
+// host player grades and marks answers from that copy, so a question edited
+// since (an answer filled in, a typo fixed) would be marked against the old
+// version. Fetch a fresh copy once when this device becomes the controller.
+let controllerQuizRefreshed = false;
+function refreshQuizForController(session) {
+    if (controllerQuizRefreshed || !session.quizId) return;
+    controllerQuizRefreshed = true;
+    loadQuiz(session.quizId)
+        .then(fresh => {
+            quiz = fresh;
+            if (latestSessionSnapshot) renderSlidesController(latestSessionSnapshot);
+        })
+        .catch(err => { console.error('Could not refresh the quiz:', err); controllerQuizRefreshed = false; });
+}
+
+function renderSlidesController(session) {
+    const isController = isSlidesQuiz(quiz)
+        && session.hostPlayerId
+        && session.hostPlayerId === currentPlayerId
+        && (session.status === 'lobby' || session.status === 'slides' || session.status === 'slides-final');
+
+    slidesControllerSection.hidden = !isController;
+    if (!isController) return;
+    refreshQuizForController(session);
+
+    // The host player (this device) isn't a scoring player.
+    const sorted = rankPlayers(latestPlayersForJoin, session);
+    slidesControllerScores.innerHTML = '';
+    const positions = rankPositions(sorted);
+    sorted.forEach((p, i) => {
+        const li = document.createElement('li');
+        li.innerHTML = '<span class="rank"></span><span class="nm"></span><strong></strong>';
+        li.children[0].textContent = positions[i];
+        li.children[1].textContent = p.name;
+        li.children[2].textContent = p.score || 0;
+        if (anyPhoto(sorted)) li.insertBefore(makeAvatar(p, 28), li.children[1]);
+        const removeBtn = document.createElement('button');
+        removeBtn.type = 'button';
+        removeBtn.textContent = '✕';
+        removeBtn.title = `Remove ${p.name}`;
+        removeBtn.style.cssText = 'margin-left:10px;background:none;border:1px solid var(--border);color:var(--incorrect);border-radius:6px;padding:0 8px;';
+        removeBtn.addEventListener('click', async () => {
+            if (!(await askConfirm('Remove player?', `"${p.name}" will be sent back to the join screen.`, 'Yes, remove'))) return;
+            try { await removePlayer(currentCode, p.id); }
+            catch (err) { console.error('Failed to remove player:', err); }
+        });
+        li.appendChild(removeBtn);
+        slidesControllerScores.appendChild(li);
+    });
+
+    const inSlides = session.status === 'slides';
+    const inFinal = session.status === 'slides-final';
+    const inLobby = session.status === 'lobby';
+    slidesStartBtn.hidden = !inLobby;
+    slidesScoresLabel.textContent = inLobby ? 'Players joined' : 'Scores';
+    slidesEndQuizBtn.hidden = !inSlides;
+    slidesResultsControls.hidden = !inFinal;
+    // The final results replace the ordinary scores list.
+    slidesScoresLabel.hidden = inFinal;
+    slidesControllerScores.hidden = inFinal;
+    if (inFinal) renderFinalBoard(session);
+    slidesMainBtn.hidden = !inSlides;
+    slidesPrevBtn.hidden = !inSlides;
+    slidesHomeBtn.hidden = !inSlides;
+    slidesBoardOptions.hidden = !inSlides;
+    slidesScoresBtn.hidden = !inSlides;
+    slidesScoresHomeBtn.hidden = !(inSlides && session.scoresVisible);
+    slidesScoresBtn.textContent = session.scoresVisible ? '↩ Back to slide' : '📊 Show scores';
+    if (!inSlides) {
+        slidesControllerInfo.textContent = inLobby
+            ? `${scoringPlayers(latestPlayersForJoin, session).length} player(s) joined. Begin when everyone is in.`
+            : (inFinal ? 'Final results.' : 'Quiz finished.');
+        return;
+    }
+
+    const item = slideItem(quiz, session.currentSlide);
+    const kind = item ? ({ plain: 'slide', board: 'board', question: 'question', answer: 'answer' }[item.type] || 'slide') : 'slide';
+    slidesControllerInfo.textContent = `Slide ${session.currentSlide} of ${quiz.slides.count} · ${kind}`;
+
+    const action = primaryAction(quiz, session);
+    slidesMainBtn.textContent = action.label;
+    slidesMainBtn.disabled = action.disabled;
+    slidesPrevBtn.disabled = !(session.slideTrail && session.slideTrail.length);
+    slidesHomeBtn.disabled = session.currentSlide === homeSlideOf(quiz);
+
+    watchControllerAnswers(session);
+    renderControllerAnswers(session);
+
+    slidesBoardOptions.innerHTML = '';
+    boardOptions(quiz, session).forEach(option => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'btn btn-secondary' + (option.visited ? ' visited' : '');
+        btn.textContent = option.visited ? `✔ ${option.label}` : option.label;
+        btn.addEventListener('click', () => {
+            const c = slidesCtx();
+            goToSlide(c.sessionRef, c.code, quiz, c.session, option.target)
+                .catch(err => console.error('Failed to open that option:', err));
+        });
+        slidesBoardOptions.appendChild(btn);
+    });
+}
+
+// The host player sees every player's answer for the current question and can
+// flip any mark once answers are locked (same idea as the host page's override).
+let controllerAnswersQuestionId = null;
+let controllerAnswersUnsub = null;
+let controllerAnswers = [];
+
+function watchControllerAnswers(session) {
+    const idx = session.currentQuestionIndex;
+    const question = idx >= 0 ? quiz.questions[idx] : null;
+    const qid = question ? question.id : null;
+    if (qid === controllerAnswersQuestionId) return;
+
+    controllerAnswersQuestionId = qid;
+    controllerAnswers = [];
+    if (controllerAnswersUnsub) { controllerAnswersUnsub(); controllerAnswersUnsub = null; }
+    if (!qid) return;
+
+    controllerAnswersUnsub = onSnapshot(
+        query(collection(db, 'sessions', currentCode, 'answers'), where('questionId', '==', qid)),
+        snap => {
+            controllerAnswers = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            if (latestSessionSnapshot) renderControllerAnswers(latestSessionSnapshot);
+        }
+    );
+}
+
+function renderControllerAnswers(session) {
+    const wrap = document.getElementById('slides-answers-wrap');
+    const idx = session.currentQuestionIndex;
+    const question = idx >= 0 ? quiz.questions[idx] : null;
+    wrap.hidden = !question;
+    if (!question) return;
+
+    document.getElementById('slides-correct-answer').textContent = `Correct: ${correctAnswerText(question)}`;
+
+    const list = document.getElementById('slides-answers');
+    list.innerHTML = '';
+
+    const names = new Map(latestPlayersForJoin.map(p => [p.id, p.name]));
+    const rows = [...controllerAnswers].sort((a, b) => (names.get(a.playerId) || '').localeCompare(names.get(b.playerId) || ''));
+
+    if (!rows.length) {
+        const li = document.createElement('li');
+        li.textContent = 'No answers yet.';
+        list.appendChild(li);
+        return;
+    }
+
+    rows.forEach(answer => {
+        // Once locked the stored grade is used. Before that, each answer is marked
+        // the moment it arrives by running the same grader the lock uses (display
+        // only, nothing is written), so the host player sees right/wrong straight away.
+        // (A just-sent answer is stored with correct: null, so null counts as ungraded.)
+        let correct = answer.correct;
+        if (correct === null || correct === undefined) {
+            try { correct = AnswerTypeRegistry.get(question.type).grade(answer.value, question).correct; }
+            catch (err) { correct = undefined; }
+        }
+        const graded = correct !== undefined;
+        const li = document.createElement('li');
+
+        const who = document.createElement('div');
+        who.className = 'who';
+        who.textContent = names.get(answer.playerId) || answer.playerId;
+        const small = document.createElement('small');
+        small.textContent = formatAnswer(question, answer.value);
+        who.appendChild(small);
+        li.appendChild(who);
+
+        if (graded) {
+            const mark = document.createElement('span');
+            mark.className = correct ? 'mark-correct' : 'mark-incorrect';
+            mark.textContent = correct ? '✔' : '✘';
+            li.appendChild(mark);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'btn btn-secondary';
+            btn.textContent = correct ? 'Mark wrong' : 'Mark right';
+            btn.addEventListener('click', async () => {
+                btn.disabled = true;
+                try {
+                    // flips whatever is showing now, even if it has not been locked/graded yet
+                    await overrideAnswer(currentCode, quiz, idx, answer.id, { ...answer, correct });
+                } catch (err) {
+                    console.error('Override failed:', err);
+                    btn.disabled = false;
+                }
+            });
+            li.appendChild(btn);
+        }
+
+        list.appendChild(li);
+    });
+}
+
+// In-page yes/no (the native confirm() can be silently suppressed on phones,
+// which is how an accidental End quiz could slip through without a warning).
+function askConfirm(title, text, yesLabel) {
+    return new Promise(resolve => {
+        const overlay = document.getElementById('slides-confirm');
+        const yes = document.getElementById('slides-confirm-yes');
+        const no = document.getElementById('slides-confirm-no');
+        document.getElementById('slides-confirm-title').textContent = title;
+        document.getElementById('slides-confirm-text').textContent = text;
+        yes.textContent = yesLabel;
+        overlay.hidden = false;
+
+        const finish = result => {
+            overlay.hidden = true;
+            yes.removeEventListener('click', onYes);
+            no.removeEventListener('click', onNo);
+            resolve(result);
+        };
+        const onYes = () => finish(true);
+        const onNo = () => finish(false);
+        yes.addEventListener('click', onYes);
+        no.addEventListener('click', onNo);
+    });
+}
+
+// The host player sees the whole scoreboard; whatever is still hidden on the
+// main screen is red, and tapping it reveals just that name or score there.
+function renderFinalBoard(session) {
+    const names = new Set(session.revealedNames || []);
+    const scores = new Set(session.revealedScores || []);
+    slidesFinalBoard.innerHTML = '';
+
+    const rankedPlayers = rankPlayers(latestPlayersForJoin, session);
+    const positions = rankPositions(rankedPlayers);
+    rankedPlayers.forEach((p, i) => {
+        const li = document.createElement('li');
+
+        const rank = document.createElement('span');
+        rank.className = 'rank';
+        rank.textContent = positions[i];
+        li.appendChild(rank);
+
+        const makeCell = (text, revealed, kind) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.textContent = text;
+            if (kind === 'score') btn.classList.add('score-cell');
+            if (revealed) {
+                btn.disabled = true;
+            } else {
+                btn.classList.add('hidden-on-screen');
+                btn.addEventListener('click', () => {
+                    btn.disabled = true;
+                    revealResult(doc(db, 'sessions', currentCode), kind, p.id)
+                        .catch(err => { console.error('Failed to reveal:', err); btn.disabled = false; });
+                });
+            }
+            return btn;
+        };
+
+        li.appendChild(makeCell(p.name, names.has(p.id), 'name'));
+        li.appendChild(makeCell(String(p.score || 0), scores.has(p.id), 'score'));
+        slidesFinalBoard.appendChild(li);
+    });
+}
+
+function runSlidesControl(button, fn) {
+    button.addEventListener('click', async () => {
+        if (!isSlidesQuiz(quiz) || !latestSessionSnapshot) return;
+        button.disabled = true;
+        try {
+            await fn(slidesCtx());
+        } catch (err) {
+            console.error('Slide control failed:', err);
+        }
+        // The next session snapshot re-renders the button's real state.
+        button.disabled = false;
+    });
+}
+
+runSlidesControl(slidesEndQuizBtn, async c => {
+    if (!(await askConfirm('End the quiz?', 'This stops the quiz now and goes to the final results. It can\'t be undone.', 'Yes, end quiz'))) return;
+    await finishSlidesQuiz(c.sessionRef, c.code, quiz, c.session);
+});
+runSlidesControl(slidesStartBtn, c => startSlidesQuiz(c.sessionRef, c.code, quiz, c.session));
+runSlidesControl(slidesRevealAllBtn, c => revealAllResults(c.sessionRef, rankPlayers(latestPlayersForJoin, c.session)));
+runSlidesControl(slidesCloseSessionBtn, async c => {
+    if (!(await askConfirm('End the session?', 'This closes the quiz for everyone.', 'Yes, end session'))) return;
+    await updateDoc(c.sessionRef, { status: 'ended' });
+});
+runSlidesControl(slidesMainBtn, async c => {
+    // "Finish quiz" ends the whole thing, so it gets the same warning as End quiz.
+    if (primaryAction(quiz, c.session).kind === 'finish') {
+        if (!(await askConfirm('Finish the quiz?', 'This was the last slide. Finishing goes to the final results.', 'Yes, finish'))) return;
+    }
+    await runPrimaryAction(c.sessionRef, c.code, quiz, c.session);
+});
+runSlidesControl(slidesPrevBtn, c => goBack(c.sessionRef, c.code, quiz, c.session));
+// Scores go up over the slides on the main screen; this brings them down again
+// either to the slide that was showing or to the home slide.
+runSlidesControl(slidesScoresBtn, c => setScoresVisible(c.sessionRef, !c.session.scoresVisible));
+runSlidesControl(slidesScoresHomeBtn, c => {
+    const home = homeSlideOf(quiz);
+    if (c.session.currentSlide === home) return setScoresVisible(c.sessionRef, false);
+    return goHome(c.sessionRef, c.code, quiz, c.session); // moving slides also closes the scores
+});
+runSlidesControl(slidesHomeBtn, c => goHome(c.sessionRef, c.code, quiz, c.session));

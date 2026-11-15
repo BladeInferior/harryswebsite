@@ -135,6 +135,22 @@ const params = new URLSearchParams(window.location.search);
 const editingQuizId = params.get('quiz');
 let activeQuizId = editingQuizId;
 
+// "Make this a slides quiz": carries the name/description over to the
+// slides setup page (categories and questions don't apply there).
+document.getElementById('make-slides-quiz-btn').addEventListener('click', () => {
+    try {
+        sessionStorage.setItem('slidesQuizDraft', JSON.stringify({
+            title: titleInput.value.trim(),
+            description: descInput.value.trim()
+        }));
+    } catch (err) { /* storage blocked — the page just opens blank */ }
+
+    const target = activeQuizId
+        ? `../builder-slides/builder-slides.html?quiz=${encodeURIComponent(activeQuizId)}`
+        : '../builder-slides/builder-slides.html';
+    window.location.href = target;
+});
+
 if (editingQuizId) {
     document.getElementById('back-button-link').href = '../manage-quizzes/manage-quizzes.html';
     loadQuizForEditing(editingQuizId);
@@ -152,6 +168,13 @@ async function loadQuizForEditing(quizId) {
     }
 
     const quiz = snap.data();
+
+    // Slides quizzes have their own setup page.
+    if (quiz.kind === 'slides') {
+        window.location.replace(`../builder-slides/builder-slides.html?quiz=${encodeURIComponent(quizId)}`);
+        return;
+    }
+
     existingPasswordHash = quiz.editPasswordHash || null;
 
     if (existingPasswordHash) {

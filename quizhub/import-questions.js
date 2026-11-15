@@ -13,11 +13,11 @@ export const IMPORT_TYPES = ['text', 'number', 'multiple-choice', 'multi-answer'
 
 const TEMPLATE_CSV = [
     'question,type,answer(s),points,media_url,category',
-    '"Who\'s that Pokémon?",text,snorlax; snorlacks,100,../collection-hub/sprites/pokemon_sprites/snorlax.png,General',
-    'What type is Squirtle?,multiple-choice,Water*; Fire; Grass; Electric,100,,General',
-    'Name 3 starter Pokémon types.,multi-answer,grass; fire; water,50,,General',
-    'Buzz in if you know this one!,buzzer,,100,,General',
-    'How many Pokémon are there in Gen 1?,number,151,50,,General'
+    '"Who\'s that Pokémon?",text,snorlax; snorlacks,1,../collection-hub/sprites/pokemon_sprites/snorlax.png,General',
+    'What type is Squirtle?,multiple-choice,Water*; Fire; Grass; Electric,1,,General',
+    'Name 3 starter Pokémon types.,multi-answer,grass; fire; water,1,,General',
+    'Buzz in if you know this one!,buzzer,,1,,General',
+    'How many Pokémon are there in Gen 1?,number,151,1,,General'
 ].join('\r\n');
 
 export function downloadTemplate() {

@@ -553,6 +553,217 @@
             margin-bottom:16px;
             font-weight:bold;
         }
+
+        /* Optional player photo on the join form */
+        #photo-field{
+            margin-bottom:16px;
+        }
+        #photo-row{
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+        #photo-row .btn{
+            margin-top:0;
+            flex:1;
+        }
+        #photo-preview{
+            flex:0 0 56px;
+            width:56px;
+            height:56px;
+            border-radius:50%;
+            background:var(--bg) center/cover no-repeat;
+            border:1px solid var(--border);
+        }
+
+        /* In-page selfie camera: the preview is mirrored like a mirror, and the
+           saved photo is mirrored the same way so it matches what was lined up. */
+        #camera-overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.85);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1600;
+            padding:20px;
+        }
+        #camera-overlay[hidden]{
+            display:none;
+        }
+        #camera-overlay .card{
+            width:100%;
+            max-width:360px;
+        }
+        #camera-video{
+            width:100%;
+            aspect-ratio:1 / 1;
+            object-fit:cover;
+            border-radius:12px;
+            background:#000;
+            transform:scaleX(-1);
+            margin-bottom:12px;
+        }
+
+        /* In-page confirmation (native confirm() can be suppressed on phones) */
+        #slides-confirm{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.78);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            z-index:1500;
+            padding:20px;
+        }
+        #slides-confirm[hidden]{
+            display:none;
+        }
+        #slides-confirm .card{
+            max-width:380px;
+            width:100%;
+            border-color:var(--incorrect);
+        }
+        #slides-confirm h2{
+            color:var(--incorrect);
+            margin-bottom:10px;
+            font-size:18px;
+        }
+        #slides-confirm p{
+            color:var(--secondary);
+            margin-bottom:16px;
+            line-height:1.5;
+            font-size:14px;
+        }
+
+        /* Host player's slide controls (slides quizzes only) */
+        #slides-controller{
+            margin-top:16px;
+        }
+        #slides-controller h2{
+            font-size:16px;
+            margin-bottom:6px;
+        }
+        #slides-controller-info{
+            color:var(--secondary);
+            font-size:13px;
+            margin-bottom:12px;
+        }
+        #slides-controller .btn{
+            margin-top:0;
+            margin-bottom:8px;
+        }
+        #slides-controller-row{
+            display:flex;
+            gap:8px;
+        }
+        #slides-controller-row .btn,
+        #slides-controller-row2 .btn{
+            flex:1;
+        }
+        #slides-controller-row2{
+            display:flex;
+            gap:8px;
+        }
+        #slides-board-options{
+            margin-bottom:8px;
+        }
+        #slides-board-options .btn.visited{
+            opacity:.45;
+        }
+        #slides-correct-answer{
+            font-size:13px;
+            color:var(--correct);
+            margin-bottom:6px;
+        }
+        #slides-answers{
+            list-style:none;
+            padding:0;
+        }
+        #slides-answers li{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            padding:7px 0;
+            border-bottom:1px solid var(--border);
+            font-size:14px;
+        }
+        #slides-answers .who{
+            flex:1;
+            min-width:0;
+        }
+        #slides-answers .who small{
+            display:block;
+            color:var(--secondary);
+            overflow-wrap:anywhere;
+        }
+        #slides-answers .mark-correct{
+            color:var(--correct);
+        }
+        #slides-answers .mark-incorrect{
+            color:var(--incorrect);
+        }
+        #slides-answers .btn{
+            width:auto;
+            margin:0;
+            padding:6px 10px;
+            font-size:12px;
+        }
+        #slides-results-hint{
+            font-size:13px;
+            color:var(--secondary);
+            margin-bottom:8px;
+        }
+        #slides-final-board{
+            list-style:none;
+            padding:0;
+            margin-bottom:10px;
+        }
+        #slides-final-board li{
+            display:flex;
+            gap:8px;
+            padding:5px 0;
+        }
+        #slides-final-board button{
+            flex:1;
+            padding:10px 8px;
+            border-radius:8px;
+            border:1px solid var(--border);
+            background:var(--card);
+            color:var(--text);
+            font-size:14px;
+            overflow-wrap:anywhere;
+        }
+        #slides-final-board button.hidden-on-screen{
+            background:rgba(229,83,75,.25);
+            border-color:var(--incorrect);
+            font-weight:bold;
+        }
+        #slides-final-board button.score-cell{
+            flex:0 0 38%;
+        }
+        #slides-controller-scores{
+            list-style:none;
+            padding:0;
+            margin-top:8px;
+        }
+        #slides-controller-scores .rank,
+        #slides-final-board .rank{
+            min-width:22px;
+            color:var(--secondary);
+            align-self:center;
+        }
+        #slides-controller-scores .nm{
+            flex:1;
+        }
+        #slides-controller-scores li{
+            display:flex;
+            gap:8px;
+            justify-content:space-between;
+            padding:6px 0;
+            border-bottom:1px solid var(--border);
+            font-size:14px;
+        }
     </style>
 </head>
 
@@ -578,6 +789,15 @@
             <div id="code-field-wrapper">
                 <label for="code-input">Join code</label>
                 <input type="text" id="code-input" inputmode="numeric" autocomplete="off" required>
+            </div>
+
+            <div id="photo-field">
+                <label>Photo (optional)</label>
+                <div id="photo-row">
+                    <span id="photo-preview"></span>
+                    <button type="button" class="btn btn-secondary" id="photo-btn">📷 Take a photo</button>
+                </div>
+                <input type="file" id="photo-input" accept="image/*" capture="user" hidden>
             </div>
 
             <button type="submit" class="btn">Join</button>
@@ -674,6 +894,55 @@
 
     </div>
 </section>
+
+<section class="section" id="slides-controller-section" style="padding-top:0;" hidden>
+    <div class="card" id="slides-controller">
+        <h2>🎮 Host controls</h2>
+        <p id="slides-controller-info"></p>
+        <button id="slides-start-btn" class="btn" type="button" hidden>▶ Begin quiz</button>
+        <div id="slides-board-options"></div>
+        <button id="slides-main-btn" class="btn" type="button"></button>
+        <div id="slides-controller-row">
+            <button id="slides-prev-btn" class="btn btn-secondary" type="button">◀ Back</button>
+            <button id="slides-home-btn" class="btn btn-secondary" type="button">🏠 Home</button>
+        </div>
+        <div id="slides-controller-row2">
+            <button id="slides-scores-btn" class="btn btn-secondary" type="button">📊 Show scores</button>
+            <button id="slides-scores-home-btn" class="btn btn-secondary" type="button" hidden>🏠 Scores → Home</button>
+        </div>
+        <div id="slides-answers-wrap" hidden>
+            <label style="margin-top:12px;">Answers</label>
+            <p id="slides-correct-answer"></p>
+            <ul id="slides-answers"></ul>
+        </div>
+        <div id="slides-results-controls" hidden>
+            <p id="slides-results-hint">Red = hidden on the main screen. Tap a name or a score to reveal it.</p>
+            <ul id="slides-final-board"></ul>
+            <button id="slides-reveal-all-btn" class="btn btn-secondary" type="button">Reveal all</button>
+            <button id="slides-close-session-btn" class="btn" type="button">End session</button>
+        </div>
+        <label id="slides-scores-label" style="margin-top:12px;">Scores</label>
+        <ul id="slides-controller-scores"></ul>
+        <button id="slides-end-quiz-btn" class="btn btn-secondary" type="button" style="margin-top:14px;border-color:var(--incorrect);color:var(--incorrect);">🏁 End quiz &amp; show results</button>
+    </div>
+</section>
+
+<div id="camera-overlay" hidden>
+    <div class="card">
+        <video id="camera-video" playsinline muted autoplay></video>
+        <button id="camera-capture" class="btn" type="button">📷 Take photo</button>
+        <button id="camera-cancel" class="btn btn-secondary" type="button">Cancel</button>
+    </div>
+</div>
+
+<div id="slides-confirm" hidden>
+    <div class="card">
+        <h2 id="slides-confirm-title"></h2>
+        <p id="slides-confirm-text"></p>
+        <button id="slides-confirm-yes" class="btn" type="button"></button>
+        <button id="slides-confirm-no" class="btn btn-secondary" type="button">Cancel</button>
+    </div>
+</div>
 
 <script src="../engine/answer-matching.js"></script>
 <script src="../engine/answer-types.js"></script>

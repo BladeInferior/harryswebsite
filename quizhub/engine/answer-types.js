@@ -311,6 +311,12 @@ const AnswerTypeRegistry = (function () {
                 return { correct: false, correctValue };
             }
 
+            // Question saved before its answer was filled in: nobody can be right.
+            const unanswered = cfg.mode === 'range'
+                ? (cfg.min === null || cfg.min === undefined || cfg.max === null || cfg.max === undefined)
+                : (cfg.correctValue === null || cfg.correctValue === undefined);
+            if (unanswered) return { correct: false, correctValue: '' };
+
             const correct = cfg.mode === 'range'
                 ? (value >= cfg.min && value <= cfg.max)
                 : value === cfg.correctValue;

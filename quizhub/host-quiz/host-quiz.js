@@ -1,6 +1,8 @@
 import { db } from '../firebase/firebase-config.js';
 import { loadQuiz } from '../data/quiz-loader.js';
 import { findActiveSessionForQuiz, deleteAllSessionsForQuiz } from '../session-lookup.js';
+import { makeRemoveButton } from '../remove-player.js';
+import { makeAvatar } from '../player-avatar.js';
 import {
     doc,
     setDoc,
@@ -282,6 +284,7 @@ function attachSessionListenersAndControls() {
 }
 
 function renderPlayers(snapshot) {
+    const hasPhotos = snapshot.docs.some(d => d.data().photo);
     latestPlayers = [];
     playerList.innerHTML = '';
     scoreboardList.innerHTML = '';
@@ -293,6 +296,8 @@ function renderPlayers(snapshot) {
 
         const li = document.createElement('li');
         li.textContent = data.name;
+        if (hasPhotos) li.prepend(makeAvatar(data, 30));
+        li.appendChild(makeRemoveButton(code, { id: docSnap.id, name: data.name }, () => showErrorToast('⚠ Failed to remove that player.')));
         playerList.appendChild(li);
 
         const scoreLi = document.createElement('li');
@@ -303,7 +308,9 @@ function renderPlayers(snapshot) {
         // disappearing, so the host can see who might come back (2.5).
         const cornerLi = document.createElement('li');
         cornerLi.textContent = data.name;
+        if (hasPhotos) cornerLi.prepend(makeAvatar(data, 24));
         cornerLi.className = data.connected === false ? 'disconnected' : '';
+        cornerLi.appendChild(makeRemoveButton(code, { id: docSnap.id, name: data.name }, () => showErrorToast('⚠ Failed to remove that player.')));
         cornerPlayerList.appendChild(cornerLi);
     });
 
@@ -1146,6 +1153,7 @@ function ensureResultsRows() {
         .sort((a, b) => (b.score || 0) - (a.score || 0))
         .map(player => ({
             name: player.name,
+            photo: player.photo || null,
             score: player.score || 0,
             scoreRevealed: alreadyRevealed,
             nameRevealed: alreadyRevealed
@@ -1168,6 +1176,7 @@ function renderResultsView() {
         nameEl.className = 'result-name';
         if (row.nameRevealed) {
             nameEl.textContent = row.name;
+            if (resultsRows.some(r => r.photo)) nameEl.prepend(makeAvatar(row, 30));
         } else {
             const revealNameBtn = document.createElement('button');
             revealNameBtn.type = 'button';
