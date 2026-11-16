@@ -2219,7 +2219,7 @@ function showToast(msg, isError) {
 }
 
 // Fetch via the helper (the CDN has no CORS), WebP -> JPEG on a canvas, save into sleeves/.
-async function downloadSleeveImage(url, title, quad) {
+async function downloadSleeveImage(url, title, quad, overwrite) {
     const name = sleeveImageName(title);
     try {
         const bitmap = await loadSleeveBitmap(url);
@@ -2236,7 +2236,7 @@ async function downloadSleeveImage(url, title, quad) {
             ctx.drawImage(bitmap, 0, 0);
             jpeg = await new Promise(res => canvas.toBlob(res, "image/jpeg", 0.92));
         }
-        const saved = await fetch(`${SLEEVE_HELPER}/save-image?name=${name}`, { method: "POST", body: jpeg });
+        const saved = await fetch(`${SLEEVE_HELPER}/save-image?name=${name}${overwrite ? "&overwrite=1" : ""}`, { method: "POST", body: jpeg });
         const result = await saved.json();
         if (!saved.ok) throw new Error(result.error || "Save failed");
         showToast(`Saved sleeves/${name}`);
@@ -2475,7 +2475,7 @@ function commitSave(title, date, custom, tags, editIndex) {
     window.PopfigureImages?.saveAll();
 
     if (downloadImageBox?.checked && fetchedImageUrls.length) {
-        downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value]);
+        downloadSleeveImage(fetchedImageUrls[+imageChoice.value], title, sleeveCropQuads[imageChoice.value], editIndex !== undefined && editIndex !== "");
     }
     resetSleeveImportUI();
 }
